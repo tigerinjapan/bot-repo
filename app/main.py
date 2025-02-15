@@ -7,6 +7,7 @@ from server import server_thread
 dotenv.load_dotenv()
 
 TOKEN = os.environ.get("LINE_CHANNEL_ID")
+print(TOKEN)
 intents = discord.Intents.default()
 intents.message_content = True
 intents.voice_states = True
