@@ -24,5 +24,4 @@ async def on_message(message):
 
 # Koyeb用 サーバー立ち上げ
 server_thread()
-print(TOKEN)
-client.run(TOKEN)
+# client.run(TOKEN)
