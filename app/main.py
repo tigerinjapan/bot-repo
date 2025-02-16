@@ -17,7 +17,10 @@ def main():
     server_thread()
 
     # 条件：毎日指定時間で、実行
-    schedule.every().day.at(JOB_SCHEDULE_TIME).do(job)
+    print(type(JOB_SCHEDULE_TIME), JOB_SCHEDULE_TIME)
+    # schedule.every().day.at(JOB_SCHEDULE_TIME).do(job)
+    job_time = "20:30"
+    schedule.every().day.at(job_time).do(job)
 
     while True:
         # 指定時間で、実行
