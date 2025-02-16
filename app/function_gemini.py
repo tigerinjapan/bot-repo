@@ -23,6 +23,7 @@ NUM_NEWS_CNT = 3
 def get_gemini_response(contents: str):
     client = genai.Client(api_key=GEMINI_API_KEY)
     response = client.models.generate_content(model=GEMINI_MODEL, contents=contents)
+    func.print_info_msg(const.STR_GEMINI, response.text)
     result = response.text.split(const.SYM_COMMA)
     return result
 

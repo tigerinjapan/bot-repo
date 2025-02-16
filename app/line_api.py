@@ -19,6 +19,7 @@ URL_KONEST = "https://www.konest.com"
 # LINE API情報
 LINE_CHANNEL_ID = func.get_env_val("LINE_CHANNEL_ID")
 LINE_CHANNEL_SECRET = func.get_env_val("LINE_CHANNEL_SECRET")
+MAX_MESSAGE_CNT = 200
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -57,19 +58,20 @@ def main(msg_type: str = MSG_TYPE_IMG):
     func.print_start(app_nm)
 
     if LINE_CHANNEL_ID:
-        # メッセージ取得
-        if func.check_local_ip():
-            msg_type = MSG_TYPE_TXT
-        data = get_json_data_for_line(msg_type)
-
         # チャネル・アクセストークン取得
         token = get_channel_access_token()
 
         # メッセージ数チェック
-        check_message_count(token)
+        use_cnt = check_message_count(token)
 
-        # メッセージ送信
-        send_message(token, data)
+        if use_cnt <= (MAX_MESSAGE_CNT - 20):
+            # メッセージ取得
+            if func.check_local_ip():
+                msg_type = MSG_TYPE_TXT
+            data = get_json_data_for_line(msg_type)
+
+            # メッセージ送信
+            # send_message(token, data)
 
     func.print_end(app_nm)
 
@@ -110,16 +112,16 @@ def get_channel_access_token() -> str:
 
 
 # メッセージ件数取得
-def check_message_count(access_token: str):
+def check_message_count(access_token: str) -> int:
     url = f"{URL_LINE_API}/v2/bot/message/quota/consumption"
     headers = {"Content-Type": "application/json", "Authorization": access_token}
     response = func_api.get_response_result(url, headers=headers)
     result = func_api.get_loads_json(response.text)
     total_usage = result["totalUsage"]
 
-    message_limit = 200
-    message_count = f"{total_usage} / {message_limit}"
+    message_count = f"{total_usage} / {MAX_MESSAGE_CNT}"
     func.print_info_msg(const.STR_MESSAGE_JA, message_count)
+    return total_usage
 
 
 # メッセージ送信
@@ -173,6 +175,8 @@ def get_json_data_for_line(msg_type: str):
 def get_msg_list(msg_type: str) -> list[str]:
 
     today_info, forecast = get_today_info(msg_type)
+
+    func.print_info_msg(DIV_WEATHER, today_info)
 
     today_news = get_today_news()
 

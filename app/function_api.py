@@ -48,17 +48,17 @@ def insert_msg_to_img(
     msg: str,
 ):
     workspace_path = get_current_dir()
-    img_folder_path = f"{workspace_path}/{const.STR_INPUT}/{const.STR_IMG}"
+    input_path = f"{workspace_path}/{const.STR_INPUT}"
+    img_folder_path = f"{input_path}/{const.STR_IMG}"
     img_file_path = f"{img_folder_path}/{img_file_nm}.{const.FILE_TYPE_JPEG}"
 
     img = Image.open(img_file_path).rotate(0)
     draw = ImageDraw.Draw(img)
 
-    font = ImageFont.truetype(font_type, font_size)
+    font_path = f"{input_path}/{font_type}"
+    font = ImageFont.truetype(font=font_path, size=font_size)
 
-    # TODO ImageFontエラー：OSError: cannot open resource
-    # draw.text(xy=xy_size, text=msg, fill="black", font=font, align="left")
-    draw.text(xy=xy_size, text=msg, fill="black", align="left")
+    draw.text(xy=xy_size, text=msg, fill="black", font=font, align="left")
 
     output_path = f"{workspace_path}/{const.STR_OUTPUT}/{const.STR_IMG}"
     remove_old_file(output_path, div)
