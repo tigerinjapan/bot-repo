@@ -192,6 +192,7 @@ def get_msg_list(msg_type: str) -> list[str]:
             img_url_list.append(img_url)
 
         msg_list = img_url_list
+        func.print_info_msg(const.STR_URL, img_url_list)
 
     return msg_list
 
@@ -380,17 +381,15 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
     img_no = str(func.get_random_int(NUM_IMG_MAX_SEQ))
     img_no = img_no.zfill(3)
 
-    img_file_nm = f"{img_div}_{img_no}"
+    img_file_org = f"{img_div}_{img_no}"
 
     font_type = "meiryo.ttc"
     font_size = NUM_FONT_SIZE
     xy_size = (75, 185) if div == FILE_DIV_TODAY else (45, 90)
 
     file_path = func_api.insert_msg_to_img(
-        div, img_file_nm, font_type, font_size, xy_size, msg
+        div, img_file_org, font_type, font_size, xy_size, msg
     )
-
-    file_nm = func.get_app_nm(file_path)
 
     if func.check_local_ip():
         protocol = "http"
@@ -400,7 +399,8 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
         protocol = "https"
         host = URL_KOYEB
 
-    img_url = f"{protocol}://{host}/{const.STR_IMG}/{file_nm}"
+    img_file_nm = func.get_app_nm(file_path, extension_flg=const.FLG_OFF)
+    img_url = f"{protocol}://{host}/{const.STR_IMG}/{img_file_nm}"
     return img_url
 
 

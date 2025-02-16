@@ -14,8 +14,10 @@ import message_constants as msg_const
 
 
 # アプリケーション名取得
-def get_app_nm(app_path: str) -> str:
+def get_app_nm(app_path: str, extension_flg: bool = const.FLG_ON) -> str:
     app_nm = os.path.basename(app_path)
+    if not extension_flg:
+        app_nm = os.path.splitext(app_nm)[0]
     return app_nm
 
 
