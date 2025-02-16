@@ -1,5 +1,8 @@
-audioop-lts
-discord.py
-fastapi
+requests
+bs4
+schedule
 python-dotenv
 uvicorn
+fastapi
+google-genai
+Pillow

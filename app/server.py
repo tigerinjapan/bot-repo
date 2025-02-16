@@ -1,14 +1,20 @@
+# 説明：サーバ処理
+
 from threading import Thread
 
+import constants as const
+import function as func
 import uvicorn
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 
+# fast api
 app = FastAPI()
 
 
 @app.get("/")
 async def root():
-    return {"message": "Server is Online."}
+    return {"message": "Server is online."}
 
 
 @app.get("/test")
@@ -16,12 +22,22 @@ async def test():
     return {"message": "Server is on test."}
 
 
+@app.get("/img/{file_name}")
+async def img(file_name: str):
+    image_path = f"{const.STR_OUTPUT}/{const.STR_IMG}/{file_name}"
+    return FileResponse(image_path)
+
+
 def start():
-    local_host = "0.0.0.0"
-    port_number = 8000
-    # local_host =  "127.0.0.1"
-    # port_number = 5000
-    uvicorn.run(app, host=local_host, port=port_number)
+    if func.check_local_ip():
+        host = const.IP_LOCAL_HOST
+        port = const.PORT_NUM
+
+    else:
+        host = const.IP_DEFAULT
+        port = const.PORT_DEFAULT
+
+    uvicorn.run(app, host=host, port=port)
 
 
 def server_thread():
@@ -29,5 +45,5 @@ def server_thread():
     t.start()
 
 
-if __name__ == "__main__":
-    server_thread()
+if __name__ == const.MAIN_FUNCTION:
+    server_thread(app)
