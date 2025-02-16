@@ -26,12 +26,14 @@ def get_current_dir() -> str:
 
 
 # 環境変数取得
-def get_env_val(var_name: str, div: str = const.STR_LINE) -> str:
+def get_env_val(
+    var_name: str, div: str = const.STR_LINE, server_flg: bool = const.FLG_OFF
+) -> str:
     env_val = os.environ.get(var_name)
     if not env_val:
         print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
 
-        if check_local_ip():
+        if not server_flg and check_local_ip():
             auth_data = get_auth_data(div)
 
             if const.STR_ID in var_name.lower():
@@ -43,7 +45,8 @@ def get_env_val(var_name: str, div: str = const.STR_LINE) -> str:
 
             env_val = auth_data[key]
 
-    env_val = get_decoding_masking_data(env_val)
+    if env_val:
+        env_val = get_decoding_masking_data(env_val)
     return env_val
 
 

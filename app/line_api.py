@@ -19,6 +19,7 @@ URL_KONEST = "https://www.konest.com"
 # LINE API情報
 LINE_CHANNEL_ID = func.get_env_val("LINE_CHANNEL_ID")
 LINE_CHANNEL_SECRET = func.get_env_val("LINE_CHANNEL_SECRET")
+URL_KOYEB = func.get_env_val("URL_KOYEB", const.STR_SERVER, server_flg=const.FLG_ON)
 MAX_MESSAGE_CNT = 200
 
 # 改行
@@ -393,15 +394,13 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
     if func.check_local_ip():
         protocol = "http"
-        host = const.IP_LOCAL_HOST
-        port = const.PORT_NUM
+        host = f"{const.IP_LOCAL_HOST}:{const.PORT_NUM}"
 
     else:
         protocol = "https"
-        host = const.IP_DEFAULT
-        port = const.PORT_DEFAULT
+        host = URL_KOYEB
 
-    img_url = f"{protocol}://{host}:{port}/{const.STR_IMG}/{file_nm}"
+    img_url = f"{protocol}://{host}/{const.STR_IMG}/{file_nm}"
     return img_url
 
 
