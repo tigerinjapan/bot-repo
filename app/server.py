@@ -14,17 +14,19 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Server is online."}
+    return {"message": "[root] Server is online."}
 
 
 @app.get("/test")
 async def test():
-    return {"message": "Server is on test."}
+    return {"message": "[test] Server is on test."}
 
 
 @app.get("/img/{file_name}")
 async def img(file_name: str):
-    image_path = f"{const.STR_OUTPUT}/{const.STR_IMG}/{file_name}"
+    image_path = (
+        f"{const.STR_OUTPUT}/{const.STR_IMG}/{file_name}.{const.FILE_TYPE_JPEG}"
+    )
     return FileResponse(image_path)
 
 

@@ -56,7 +56,9 @@ def insert_msg_to_img(
 
     font = ImageFont.truetype(font_type, font_size)
 
-    draw.text(xy=xy_size, text=msg, fill="black", font=font, align="left")
+    # TODO ImageFontエラー：OSError: cannot open resource
+    # draw.text(xy=xy_size, text=msg, fill="black", font=font, align="left")
+    draw.text(xy=xy_size, text=msg, fill="black", align="left")
 
     output_path = f"{workspace_path}/{const.STR_OUTPUT}/{const.STR_IMG}"
     remove_old_file(output_path, div)

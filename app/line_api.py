@@ -377,7 +377,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
     img_file_nm = f"{img_div}_{img_no}"
 
-    font_type = "arial.ttf"
+    font_type = "meiryo.ttc"
     font_size = NUM_FONT_SIZE
     xy_size = (75, 185) if div == FILE_DIV_TODAY else (45, 90)
 
