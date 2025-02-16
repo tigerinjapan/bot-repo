@@ -71,7 +71,7 @@ def main(msg_type: str = MSG_TYPE_IMG):
             data = get_json_data_for_line(msg_type)
 
             # メッセージ送信
-            # send_message(token, data)
+            send_message(token, data)
 
     func.print_end(app_nm)
 
