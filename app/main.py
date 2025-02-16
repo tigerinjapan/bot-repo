@@ -13,14 +13,11 @@ JOB_SCHEDULE_TIME = func.get_env_val("JOB_SCHEDULE_TIME")
 
 
 def main():
-    # Koyeb用 サーバー立ち上げ
+    # サーバ立ち上げ
     server_thread()
 
     # 条件：毎日指定時間で、実行
-    print(type(JOB_SCHEDULE_TIME), JOB_SCHEDULE_TIME)
-    # schedule.every().day.at(JOB_SCHEDULE_TIME).do(job)
-    job_time = "20:30"
-    schedule.every().day.at(job_time).do(job)
+    schedule.every().day.at(JOB_SCHEDULE_TIME).do(job)
 
     while True:
         # 指定時間で、実行
