@@ -28,27 +28,12 @@ def get_current_dir() -> str:
 
 
 # 環境変数取得
-def get_env_val(
-    var_name: str, div: str = const.STR_LINE, server_flg: bool = const.FLG_OFF
-) -> str:
+def get_env_val(var_name: str) -> str:
     env_val = os.environ.get(var_name)
-    if not env_val:
-        print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
-
-        if not server_flg and check_local_ip():
-            auth_data = get_auth_data(div)
-
-            if const.STR_ID in var_name.lower():
-                key = const.STR_ID
-            elif const.STR_TIME in var_name.lower():
-                key = const.STR_TIME
-            else:
-                key = const.STR_KEY
-
-            env_val = auth_data[key]
-
     if env_val:
         env_val = get_decoding_masking_data(env_val)
+    else:
+        print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
     return env_val
 
 
@@ -197,19 +182,22 @@ def get_replace_data(data_str: str) -> str:
     return replace_data
 
 
-# 文字列折り返し
-def get_wrap_text(target_str: str, wrap_width: int) -> str:
-    wrap_text_list = textwrap.wrap(target_str, wrap_width)
-    wrap_text = const.SYM_NEW_LINE.join(wrap_text_list)
-    return wrap_text
+# マスキングデータ取得
+def get_masking_data(target: str):
+    result = get_decoding_masking_data(target, encode_flg=const.FLG_ON)
+    return result
 
 
 # マスキングデータ復号
-def get_decoding_masking_data(target: str):
+def get_decoding_masking_data(target: str, encode_flg: bool = const.FLG_OFF):
     decoding_info = get_auth_data(const.STR_USER)
     masking_list = const.LIST_MASKING
     decoding_list = list(decoding_info.values()) + [str(const.DATE_YEAR)]
 
-    for masking_str, decode_str in zip(masking_list, decoding_list):
-        target = target.replace(masking_str, decode_str)
+    if encode_flg:
+        masking_list = decoding_list
+        decoding_list = const.LIST_MASKING
+
+    for before_str, after_str in zip(masking_list, decoding_list):
+        target = target.replace(before_str, after_str)
     return target

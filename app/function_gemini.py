@@ -9,7 +9,7 @@ app_nm = func.get_app_nm(__file__)
 
 # GEMINI API情報
 GEMINI_MODEL = "gemini-2.0-flash-exp"
-GEMINI_API_KEY = func.get_env_val("GEMINI_API_KEY", const.STR_GEMINI)
+GEMINI_API_KEY = func.get_env_val("GEMINI_API_KEY")
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -21,10 +21,15 @@ NUM_NEWS_CNT = 3
 
 # GEMINI回答取得
 def get_gemini_response(contents: str):
-    client = genai.Client(api_key=GEMINI_API_KEY)
-    response = client.models.generate_content(model=GEMINI_MODEL, contents=contents)
-    func.print_info_msg(const.STR_GEMINI, response.text)
-    result = response.text.split(const.SYM_COMMA)
+    if GEMINI_API_KEY:
+        client = genai.Client(api_key=GEMINI_API_KEY)
+        response = client.models.generate_content(model=GEMINI_MODEL, contents=contents)
+        result = response.text.split(const.SYM_COMMA)
+    else:
+        if "天気" in contents:
+            result = ["素敵なファッション", "美味しい食事"]
+        else:
+            result = ["ニュース要約#1", "ニュース要約#2", "ニュース要約#3"]
     return result
 
 

@@ -15,11 +15,12 @@ URL_LINE_API = "https://api.line.me"
 URL_TENKI = "https://tenki.jp"
 URL_NAVER_FINANCE = "https://finance.naver.com"
 URL_KONEST = "https://www.konest.com"
+URL_KSTYLE = "https://kstyle.com"
 
 # LINE API情報
 LINE_CHANNEL_ID = func.get_env_val("LINE_CHANNEL_ID")
 LINE_CHANNEL_SECRET = func.get_env_val("LINE_CHANNEL_SECRET")
-URL_KOYEB = func.get_env_val("URL_KOYEB", const.STR_SERVER, server_flg=const.FLG_ON)
+URL_KOYEB = func.get_env_val("URL_KOYEB")
 MAX_MESSAGE_CNT = 200
 
 # 改行
@@ -33,28 +34,41 @@ MSG_TYPE_IMG = "image"
 FILE_DIV_TODAY = "today"
 FILE_DIV_NEWS = "news"
 FILE_DIV_AI_NEWS = "ai_news"
-LIST_FILE_DIV = [FILE_DIV_TODAY, FILE_DIV_NEWS, FILE_DIV_AI_NEWS]
+LIST_FILE_DIV = [FILE_DIV_TODAY, FILE_DIV_NEWS]
+LIST_FILE_DIV_ALL = LIST_FILE_DIV + [FILE_DIV_AI_NEWS]
+LIST_MSG_TYPE = [MSG_TYPE_IMG, MSG_TYPE_TXT]
+LIST_MSG_TYPE_ALL = LIST_MSG_TYPE + [MSG_TYPE_IMG]
+LIST_KEYWORD_AI = ["AI", "OpenAI", "ChatGPT", "Gemini"]
+
+# タイトル
+WEEKDAY_JA = const.LIST_WEEKDAY[const.DATE_WEEKDAY]
+DIV_MARK = "*-----*-----*-----*-----*"
+DIV_MARK_TXT = "*--- {} ---*"
+DIV_MARK_IMG = "==== {} ===="
 
 # 定数（日本語）
-STR_TODAY_JA = "■今日の"
 DIV_WEATHER = "[天気] "
 DIV_RATE = "[為替] "
 STR_YEN_JA = "円"
 STR_WON_JA = "ウォン"
 DIV_OUTFIT = "[コーデ] "
 DIV_DINNER = "[夕食] "
+STR_TODAY_JA = "今日の"
 STR_NEWS_JA = "ニュース"
-DIV_NEWS = f"{STR_TODAY_JA}ニュース"
+STR_ENT_JA = "エンタメ"
 STR_AI = "AI"
-DIV_AI_NEWS = f"{STR_TODAY_JA}{STR_AI}{STR_NEWS_JA}"
+
+DIV_NEWS = STR_TODAY_JA + STR_NEWS_JA
+DIV_ENT_NEWS = STR_TODAY_JA + f"{STR_ENT_JA}{STR_NEWS_JA}"
+DIV_AI_NEWS = STR_TODAY_JA + f"{STR_AI}{STR_NEWS_JA}"
 
 # プロパティ
 NUM_FONT_SIZE = 11
 NUM_IMG_MAX_SEQ = 4
-NUM_WRAP_WIDTH = 40
+WEEKDAY_IT_NEWS = "金"
 
 
-def main(msg_type: str = MSG_TYPE_IMG):
+def main():
 
     func.print_start(app_nm)
 
@@ -67,9 +81,7 @@ def main(msg_type: str = MSG_TYPE_IMG):
 
         if use_cnt <= (MAX_MESSAGE_CNT - 20):
             # メッセージ取得
-            if func.check_local_ip():
-                msg_type = MSG_TYPE_TXT
-            data = get_json_data_for_line(msg_type)
+            data = get_json_data()
 
             # メッセージ送信
             send_message(token, data)
@@ -141,67 +153,59 @@ def send_message(access_token: str, json_data):
 
 
 # LINE送信用のJSONデータ取得
-def get_json_data_for_line(msg_type: str):
-
-    msg_list = get_msg_list(msg_type)
-
+def get_json_data():
     messages = []
 
-    if msg_type == MSG_TYPE_IMG:
-        file_path_list = msg_list
+    msg_list, forecast = get_msg_list()
+    for msg_type, msg_div, msg_data in msg_list:
+        json_object = {"type": msg_type}
 
-        for img_url in file_path_list:
-            json_object = {
-                "type": msg_type,
-                "originalContentUrl": img_url,
-                "previewImageUrl": img_url,
-            }
+        text_data = get_title(msg_div, msg_type) + msg_data
+        text_msg = const.SYM_NEW_LINE.join(text_data)
 
-            messages.append(json_object)
-    else:
-        for msg in msg_list:
-            json_object = {"type": msg_type, "text": msg}
-            messages.append(json_object)
+        if msg_type == MSG_TYPE_IMG:
+            img_url = create_msg_img(msg_div, text_msg, forecast)
+            update_data = {"originalContentUrl": img_url, "previewImageUrl": img_url}
+
+        else:
+            update_data = {"text": text_msg}
+
+        info_msg = [msg_type, msg_div, text_msg]
+        func.print_info_msg(const.STR_MESSAGE_JA, info_msg)
+
+        json_object.update(update_data)
+        messages.append(json_object)
 
     data = {"messages": messages}
     json_data = func_api.get_dumps_json(data)
-
-    if msg_type == MSG_TYPE_TXT:
-        json_data = json_data.encode(const.CHARSET_ASCII)
-
+    json_data = json_data.encode(const.CHARSET_ASCII)
     return json_data
 
 
 # LINEメッセージ取得
-def get_msg_list(msg_type: str) -> list[str]:
+def get_msg_list() -> list[str]:
 
-    today_info, forecast = get_today_info(msg_type)
+    msg_type_list = LIST_MSG_TYPE
+    file_div_list = LIST_FILE_DIV
 
-    func.print_info_msg(DIV_WEATHER, today_info)
+    today_info, forecast = get_today_info()
+    # today_news = get_today_news()
+    today_news = get_today_ent_news()
+    msg_list = [today_info, today_news]
 
-    today_news = get_today_news()
+    if WEEKDAY_JA == WEEKDAY_IT_NEWS:
+        msg_type_list = LIST_MSG_TYPE_ALL
+        file_div_list = LIST_FILE_DIV_ALL
 
-    today_ai_news = get_today_ai_news()
+        today_ai_news = get_today_ai_news()
+        msg_list += [today_ai_news]
 
-    msg_list = [today_info, today_news, today_ai_news]
-
-    if msg_type == MSG_TYPE_IMG:
-        img_url_list = []
-        for div, msg in zip(LIST_FILE_DIV, msg_list):
-            img_url = create_msg_img(div, msg, forecast)
-            img_url_list.append(img_url)
-
-        msg_list = img_url_list
-        func.print_info_msg(const.STR_URL, img_url_list)
-
-    return msg_list
+    data_list = zip(msg_type_list, file_div_list, msg_list)
+    return data_list, forecast
 
 
 # 今日の生活情報取得
-def get_today_info(msg_type: str) -> tuple[str, str]:
-    # タイトル
-    today_title = get_today_title(msg_type)
-
+def get_today_info() -> tuple[list[str], str]:
     # 今日の天気
     today_weather, forecast = get_today_weather()
 
@@ -217,35 +221,35 @@ def get_today_info(msg_type: str) -> tuple[str, str]:
     recommend_dinner = recommend_outfit_dinner[1].replace(NEW_LINE, const.SYM_BLANK)
     today_dinner = [f"{DIV_DINNER} {recommend_dinner}"]
 
-    msg_list = today_title
-    msg_list += today_weather
-    msg_list += today_won_rate
-    msg_list += today_outfit
-    msg_list += today_dinner
-    today_info = NEW_LINE.join(msg_list)
+    today_info = today_weather
+    today_info += today_won_rate
+    today_info += today_outfit + today_dinner
     return today_info, forecast
 
 
 # タイトル取得
-def get_today_title(msg_type: str = const.SYM_BLANK) -> list[str]:
-    weekday = const.LIST_WEEKDAY[const.DATE_WEEKDAY]
-    div_mark = "*-----*-----*-----*-----*"
-    title = f"{const.DATE_TODAY_SLASH}({weekday})"
-    title_text = f"*--- {title} ---*"
-    title_img = f"==== {title} ===="
+def get_title(div: str, msg_type: str = const.SYM_BLANK) -> list[str]:
+    title_div = f"{const.DATE_TODAY_SLASH}({WEEKDAY_JA})"
+    if div == FILE_DIV_NEWS:
+        title_div = DIV_NEWS
+    elif div == FILE_DIV_AI_NEWS:
+        title_div = DIV_AI_NEWS
+
+    title_txt = DIV_MARK_TXT.format(title_div)
+    title_img = DIV_MARK_IMG.format(title_div)
 
     if msg_type == MSG_TYPE_TXT:
-        today_title = [div_mark, title_text, div_mark]
+        title = [DIV_MARK, title_txt, DIV_MARK]
     elif msg_type == MSG_TYPE_IMG:
-        today_title = [title_img]
+        title = [title_img]
     else:
-        today_title = [title]
+        title = [title_div]
 
-    return today_title
+    return title
 
 
 # 今日の天気情報取得
-def get_today_weather() -> tuple[str, str]:
+def get_today_weather() -> tuple[list[str], str]:
     # 東京の情報取得
     soup_result = func_bs.get_elem_from_url(
         URL_TENKI, "forecast-map-entry-13101", attr_div=const.ATTR_ID
@@ -272,15 +276,23 @@ def get_today_won() -> list[str]:
 
 
 # 今日のニュース取得
-def get_today_news() -> str:
+def get_today_news() -> list[str]:
     url = f"{URL_KONEST}/contents/news_top.html"
     class_ = "mArticleKonest"
     today_news = get_today_info_common(DIV_NEWS, url, class_, const.TAG_A)
     return today_news
 
 
+# 今日のニュース取得
+def get_today_ent_news() -> list[str]:
+    url = f"{URL_KSTYLE}/ranking.ksn"
+    class_ = "ArticleRankingCard_heading__Xxney"
+    today_ent_news = get_today_info_common(DIV_ENT_NEWS, url, class_, const.TAG_A)
+    return today_ent_news
+
+
 # 今日のAIニュース取得
-def get_today_ai_news() -> str:
+def get_today_ai_news() -> list[str]:
     url = "https://www.itmedia.co.jp/ranking/"
     id = "rank-all"
     today_ai_news = get_today_info_common(
@@ -291,19 +303,41 @@ def get_today_ai_news() -> str:
 
 # 今日の情報取得
 def get_today_info_common(
-    div: str, url: str, attr_val: str, tag_div: str, attr_div: str = const.ATTR_CLASS
-):
+    div: str,
+    url: str,
+    attr_val: str,
+    tag_div: str,
+    attr_div: str = const.ATTR_CLASS,
+) -> list[str]:
+
     elem_list = get_elem_list(url, attr_val, tag_div, attr_div)
 
     if div == DIV_RATE:
         won = elem_list[0].text
         info = f"{div} 100{STR_YEN_JA}={won}{STR_WON_JA}"
-        today_info = [info]
+
     else:
         news_list = []
         news_no = 0
 
-        if div == DIV_NEWS:
+        if div == DIV_ENT_NEWS:
+            for a in elem_list:
+                news_no += 1
+
+                a_href = a.get(const.ATTR_HREF)
+                a_text = func.get_replace_data(a.text)
+                news_text_list = a_text.split("…")
+                news_text = NEW_LINE.join(news_text_list)
+                news_result = f"[{news_no}] {news_text}"
+                news_list.append(news_result)
+
+                if news_no == 1:
+                    url_content = f"{URL_KSTYLE}/{a_href}"
+                    news_list.append(url_content)
+
+            info = NEW_LINE.join(news_list)
+
+        elif div == DIV_NEWS:
             for idx, a in enumerate(elem_list):
                 if idx % 2 == 0:
                     continue
@@ -318,12 +352,14 @@ def get_today_info_common(
                     news_result = f"[{news_no}] {news_contents}"
                     news_list.append(news_result)
 
+            info = func_gemini.get_news_summary(news_list)
+
         elif div == DIV_AI_NEWS:
             for a in elem_list:
                 a_href = a.get(const.ATTR_HREF)
                 a_text = a.text
 
-                if STR_AI.upper() in a_text.upper():
+                if func.check_in_list(a_text, LIST_KEYWORD_AI):
                     news_no += 1
                     p_list = get_elem_list(
                         a_href, "cmsBody", const.TAG_P, const.ATTR_ID
@@ -333,20 +369,28 @@ def get_today_info_common(
                     news_result = f"[{news_no}] {news_contents}"
                     news_list.append(news_result)
 
-        info = func_gemini.get_news_summary(news_list)
-        news_info = [div, info]
-        today_info = NEW_LINE.join(news_info)
+            info = func_gemini.get_news_summary(news_list)
 
+    today_info = [info]
     return today_info
 
 
 # 要素リスト取得
 def get_elem_list(
-    url: str, attr_val: str, tag_div: str, attr_div: str = const.ATTR_CLASS
+    url: str,
+    attr_val: str,
+    tag_div,
+    attr_div: str = const.ATTR_CLASS,
 ):
-    elem = func_bs.get_elem_from_url(url, attr_val, attr_div)
-    tag_list = func_bs.find_elem_list_by_attr(elem, tag_div)
-    return tag_list
+    if URL_KSTYLE in url:
+        elem_list = func_bs.get_elem_list_from_url(url, attr_val)
+        elem_list = [func_bs.find_elem_by_attr(elem, tag_div) for elem in elem_list]
+
+    else:
+        elem = func_bs.get_elem_from_url(url, attr_val, attr_div)
+        elem_list = func_bs.find_elem_list_by_attr(elem, tag_div)
+
+    return elem_list
 
 
 # 要素値取得
@@ -391,19 +435,13 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
         div, img_file_org, font_type, font_size, xy_size, msg
     )
 
-    if func.check_local_ip():
-        protocol = "http"
-        host = f"{const.IP_LOCAL_HOST}:{const.PORT_NUM}"
-
-    else:
-        protocol = "https"
-        host = URL_KOYEB
-
     img_file_nm = func.get_app_nm(file_path, extension_flg=const.FLG_OFF)
-    img_url = f"{protocol}://{host}/{const.STR_IMG}/{img_file_nm}"
+    if not func.check_local_ip:
+        func.print_info_msg(MSG_TYPE_IMG, img_url)
+
+    img_url = f"https://{URL_KOYEB}/{const.STR_IMG}/{img_file_nm}"
     return img_url
 
 
 if __name__ == const.MAIN_FUNCTION:
-    msg_type = MSG_TYPE_IMG
-    main(msg_type)
+    get_json_data()

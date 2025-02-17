@@ -34,6 +34,13 @@ def get_elem_from_url(url: str, attr_val: str, attr_div: str = const.ATTR_CLASS)
     return elem
 
 
+# ページ要素取得
+def get_elem_list_from_url(url: str, attr_val: str, attr_div: str = const.ATTR_CLASS):
+    soup = get_soup(url)
+    elem_list = find_elem_list_by_attr(soup, attr_val, attr_div)
+    return elem_list
+
+
 # 要素取得
 def find_elem_by_attr(soup, attr_val: str, attr_div: str = const.NONE_CONSTANT):
     try:
