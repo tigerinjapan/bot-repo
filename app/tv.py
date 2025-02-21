@@ -68,6 +68,8 @@ def get_tv_info_list(keyword) -> list[str]:
             tv_info = [time, title, channel]
             tv_info_list.append(tv_info)
 
+    return tv_info_list
+
 
 if __name__ == const.MAIN_FUNCTION:
     data_list = get_data_list()

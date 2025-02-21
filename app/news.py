@@ -143,23 +143,7 @@ def get_elem_list(div: str, url: str = const.NONE_CONSTANT):
     attr_div = const.ATTR_CLASS
     tag = const.TAG_A
 
-    if div == DIV_KOREA_NEWS:
-        url = f"{URL_KONEST}/contents/news_top.html"
-        attr_val = "mArticleKonest"
-
-    elif div == DIV_ENT_NEWS:
-        url = f"{URL_KSTYLE}/ranking.ksn"
-        attr_val = "ArticleRankingCard_heading__Xxney"
-
-    elif div == DIV_KPOP_RANKING:
-        attr_val = "image-wrapper"
-        tag = const.TAG_SPAN + '"'
-
-    elif div == DIV_KPOP_NEWS:
-        url = f"{URL_WOWKOREA}/news/kpop/"
-        attr_val = "card-title h6 h5-sm h3-lg mb-1"
-
-    elif div == DIV_NIKKEI_NEWS:
+    if div == DIV_NIKKEI_NEWS:
         url = f"{URL_NIKKEI}/access/"
         attr_val = "m-miM32_itemTitleText"
 
@@ -173,7 +157,23 @@ def get_elem_list(div: str, url: str = const.NONE_CONSTANT):
             url = f"{URL_ITMEDIA}/ranking/"
             attr_val = "rank-all"
 
-    if URL_KSTYLE in url or URL_WOWKOREA in url or URL_NIKKEI in url:
+    elif div == DIV_KOREA_NEWS:
+        url = f"{URL_KONEST}/contents/news_top.html"
+        attr_val = "mArticleKonest"
+
+    elif div in [DIV_ENT_NEWS, DIV_KPOP_NEWS]:
+        url_param = "ranking/day/"
+        if div == DIV_KPOP_NEWS:
+            url_param = "news/kpop/"
+
+        url = f"{URL_WOWKOREA}/{url_param}"
+        attr_val = "card-title h6 h5-sm h3-lg mb-1"
+
+    elif div == DIV_KPOP_RANKING:
+        attr_val = "image-wrapper"
+        tag = const.TAG_SPAN + '"'
+
+    if URL_NIKKEI in url or URL_WOWKOREA in url:
         elem_list = func_bs.get_elem_from_url(
             url, attr_val=attr_val, list_flg=const.FLG_ON
         )
