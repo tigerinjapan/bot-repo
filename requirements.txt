@@ -1,6 +1,7 @@
 requests
 fastapi
 uvicorn
+starlette
 bs4
 jinja2
 schedule
