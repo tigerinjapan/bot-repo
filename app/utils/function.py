@@ -4,21 +4,29 @@ import glob
 import json
 import os
 import random
+import re
 import socket
-import textwrap
 import time
 from datetime import datetime
 
-import constants as const
-import message_constants as msg_const
+import utils.constants as const
+import utils.message_constants as msg_const
 
 
 # アプリケーション名取得
-def get_app_nm(app_path: str, extension_flg: bool = const.FLG_ON) -> str:
-    app_nm = os.path.basename(app_path)
-    if not extension_flg:
-        app_nm = os.path.splitext(app_nm)[0]
-    return app_nm
+def get_app_name(app_path: str, extension_flg: bool = const.FLG_OFF) -> str:
+    file_name = os.path.basename(app_path)
+    app_name = get_path_split(file_name, extension_flg)
+    return app_name
+
+
+# ファイルパス名取得
+def get_path_split(file_name: str, extension_flg: bool = const.FLG_OFF) -> str:
+    idx = const.NUM_ONE if extension_flg else const.NUM_ZERO
+    file_path_name = os.path.splitext(file_name)[idx]
+    if extension_flg:
+        file_path_name = file_path_name.replace(const.SYM_DOT, const.SYM_BLANK)
+    return file_path_name
 
 
 # 現在パス取得
@@ -46,6 +54,18 @@ def check_local_ip():
     if const.IP_PRIVATE in ip:
         ip_flg = const.FLG_ON
     return ip_flg
+
+
+# ホストIP取得
+def get_host_port() -> tuple[str, str]:
+    host = const.IP_DEFAULT
+    port = const.PORT_DEFAULT
+
+    if check_local_ip():
+        host = const.IP_LOCAL_HOST
+        port = const.PORT_NUM
+
+    return host, port
 
 
 # 処理開始メッセージ出力
@@ -190,7 +210,7 @@ def get_masking_data(target: str):
 
 # マスキングデータ復号
 def get_decoding_masking_data(target: str, encode_flg: bool = const.FLG_OFF):
-    decoding_info = get_auth_data(const.STR_USER)
+    decoding_info = get_auth_data(const.STR_DECODE)
     masking_list = const.LIST_MASKING
     decoding_list = list(decoding_info.values()) + [str(const.DATE_YEAR)]
 
@@ -201,3 +221,20 @@ def get_decoding_masking_data(target: str, encode_flg: bool = const.FLG_OFF):
     for before_str, after_str in zip(masking_list, decoding_list):
         target = target.replace(before_str, after_str)
     return target
+
+
+# 文字列の区切り
+def re_split(pattern: str, target: str) -> list[str]:
+    result = re.split(pattern, target)
+    return result
+
+
+# 全角英数字を半角英数字に変換
+def convert_half_char(target: str) -> str:
+    full_width_char = const.SYM_BLANK.join(chr(0xFF01 + i) for i in range(94))
+    half_width_char = const.SYM_BLANK.join(chr(0x21 + i) for i in range(94))
+
+    full_width_to_half_width = str.maketrans(full_width_char, half_width_char)
+
+    result = target.translate(full_width_to_half_width)
+    return result

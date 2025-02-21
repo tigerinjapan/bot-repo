@@ -8,8 +8,11 @@ MSG_DIV_ERR = "[ERROR]"
 MSG_INFO_PROC_START = "処理を開始します。"
 MSG_INFO_PROC_END = "処理を終了します。"
 MSG_INFO_PROC_COMPLETED = "処理を完了しました。"
+MSG_INFO_LOGOUT = "ログアウトしました。"
 
 # エラーメッセージ
+MSG_ERR_USER_NOT_EXIST = "ユーザ情報が存在しません。IDを再確認してください。"
+MSG_ERR_PASSWORD_INCORRECT = "パスワードが一致しません。パスワードを再確認してください。"
 MSG_ERR_API_RESPONSE_NONE = "APIレスポンス結果がありません。"
 MSG_ERR_DATA_NOT_EXIST = "対象データが存在しません。"
 MSG_ERR_ENV_VAR_NOT_EXIST = "環境変数が存在しません。"

@@ -1,8 +1,10 @@
 requests
+fastapi
+uvicorn
 bs4
+jinja2
 schedule
 python-dotenv
-uvicorn
-fastapi
-google-genai
 Pillow
+google-genai
+python-multipart

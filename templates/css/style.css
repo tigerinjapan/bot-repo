@@ -1,0 +1,133 @@
+/*全体の設定*/
+body {
+	margin: 0px;
+	padding: 0px;
+	/*全体の文字色*/
+	color: black;
+	/*フォント種類*/
+	font-family: "メイリオ", "Meiryo", "MS PGothic", sans-serif;
+	font-size: 14px;
+	/*行間*/
+	line-height: 2;
+	/*背景色*/
+	background: lightgray;
+	-webkit-text-size-adjust: none;
+}
+
+input,
+button,
+select {
+	font-size: 14px;
+	font-family: "Meiryo";
+	text-align: center;
+	outline: none;
+}
+
+img {
+	border: none;
+	margin: auto;
+	width: 320px;
+	height: 320px;
+}
+
+.searchTitle {
+	color: black;
+	background: lightgoldenrodyellow;
+}
+
+.searchMain {
+	display: flex;
+	padding: 5px;
+}
+
+.searchForm {
+	border-collapse: collapse;
+	border: 1px gray solid;
+	padding: 0px 0px;
+	width: 50%;
+	height: 75%;
+}
+
+.searchResult {
+	border-collapse: collapse;
+	border: 1px gray solid;
+	padding: 0px 0px;
+	width: auto;
+	height: auto;
+	display: flex;
+	/* overflow: scroll; */
+	margin-inline: auto;
+}
+
+.searchResult th,
+.searchResult td {
+	border-collapse: collapse;
+	border: 1px gray solid;
+	margin-inline: auto;
+}
+
+.searchButton {
+	align-items: center;
+}
+
+.linkButton {
+	padding: 0px 0px 2px 2px;
+	text-decoration: none;
+	color: blue;
+}
+
+.topMenu ul {
+	display: flex;
+	flex-flow: row;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	background-color: gray;
+}
+
+.topMenu li {
+	border-right: 1px solid white;
+}
+
+.topMenu li:last-child {
+	border-right: none;
+	margin-left: auto;
+}
+
+.topMenu li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 14px;
+	text-decoration: none;
+	transition: all .3s;
+}
+
+.topMenu li a:hover:not(.active) {
+	background-color: skyblue;
+}
+
+.loginTbl {
+	width: 320px;
+	height: 320px;
+	margin: auto;
+	font-family: "Meiryo";
+	font-size: 14px;
+	text-align: center;
+}
+
+footer {
+	/* padding: 0px 20px; */
+	font-size: 14px;
+	text-align: center;
+}
+
+/*画面幅480px以下の設定*/
+@media screen and (max-width:480px) {
+
+	/*全体の設定*/
+	body {
+		font-size: 3vw;
+	}
+}

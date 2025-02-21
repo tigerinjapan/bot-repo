@@ -22,7 +22,16 @@ IP_PRIVATE = "192.168"
 IP_LOCAL_HOST = "127.0.0.1"
 PORT_NUM = 5000
 
-##### ユーザエージェント #####
+##### セッション #####
+SESSION_KEY = "admindevguest"
+SESSION_TIMEOUT_SEC = 600
+
+##### ユーザ権限 #####
+AUTH_ADMIN = "admin"
+AUTH_DEV = "dev"
+AUTH_GUEST = "guest"
+
+##### ユーザーエージェント #####
 UA_PC = {"User-Agent": "Chrome/74.0.3729.169"}
 UA_OPT_PC = "--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
 UA_OPT_MO = "--user-agent=Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Mobile Safari/537.36"
@@ -69,6 +78,9 @@ NUM_ONE = 1
 NUM_TWO = 2
 NUM_THREE = 3
 
+# 画面表示件数
+NUM_PRINT_CNT = 5
+
 ##### 型 #####
 TYPE_DICT = "dict"
 TYPE_LIST = "list"
@@ -76,16 +88,7 @@ TYPE_STR = "str"
 TYPE_NUM = "num"
 TYPE_DATE = "date"
 
-##### HTML文字 #####
-HTML_AMP = "&amp;"
-HTML_APOS = "&apos;"
-HTML_QUOT = "&quot;"
-HTML_LT = "&lt;"
-HTML_GT = "&gt;"
-HTML_NBSP = "&nbsp;"
-HTML_BREAK = "<br>"
-
-# tag name
+##### HTMLタグ #####
 TAG_FORM = "form"
 TAG_DIV = "div"
 TAG_DL = "dl"
@@ -109,7 +112,7 @@ TAG_H1 = "h1"
 TAG_H2 = "h2"
 TAG_H3 = "h3"
 
-# attribute
+##### HTML属性 #####
 ATTR_CLASS = "class"
 ATTR_ID = "id"
 ATTR_PROP = "property"
@@ -182,6 +185,9 @@ STR_CONTENTS = "contents"
 STR_SERVER = "server"
 STR_TIME = "time"
 STR_KEY = "key"
+STR_DIV = "div"
+STR_TITLE = "title"
+STR_DECODE = "decode"
 STR_LINE = "line"
 STR_GEMINI = "gemini"
 STR_API = "api"
@@ -195,6 +201,13 @@ STR_TOKEN_JA = "トークン"
 STR_EXPIRE_JA = "有効期限"
 STR_ENV_VAR_JA = "環境変数"
 STR_CHARSET_JA = "文字コード"
+STR_DIV_JA = "区分"
+STR_CONTENTS_JA = "内容"
+STR_COMPANY_JA = "会社"
+STR_TITLE_JA = "タイトル"
+STR_LINK_JA = "リンク"
+STR_TODAY_JA = "今日の"
+STR_NEWS_JA = "ニュース"
 
 ##### マスキング #####
 MASKING_COMPANY = "company"
@@ -249,8 +262,18 @@ LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
 URL_GOOGLE = "https://www.google.com"
 
 # 画面URL
-URL_PATH_ROOT = "/"
+PATH_ROOT = "/"
+PATH_LOGIN = "/login"
+PATH_LOGOUT = "/logout"
+PATH_TODAY = "/today"
+PATH_NEWS = "/news"
+PATH_KOREA = "/korea"
+PATH_LCC = "/lcc"
+PATH_TV = "/tv"
 
+##### HTMLファイル名 #####
+HTML_INDEX = f"index.{FILE_TYPE_HTML}"
+HTML_RESULT = f"result.{FILE_TYPE_HTML}"
 
 if __name__ == MAIN_FUNCTION:
     print(DATE_WEEKDAY)

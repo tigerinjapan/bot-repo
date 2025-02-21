@@ -1,11 +1,11 @@
 # 説明：GEMINI関数
 
-import constants as const
-import function as func
+import utils.constants as const
+import utils.function as func
 from google import genai
 
 # アプリケーション
-app_nm = func.get_app_nm(__file__)
+app_name = func.get_app_name(__file__)
 
 # GEMINI API情報
 GEMINI_MODEL = "gemini-2.0-flash-exp"
@@ -51,7 +51,7 @@ def get_recommend_outfit_dinner(today_weather: str):
 
 # ニュース要約取得
 def get_news_summary(news_list: list[str]):
-    news_list = NEW_LINE.join(news_list[0:NUM_NEWS_CNT])
+    news_list = NEW_LINE.join(news_list[:NUM_NEWS_CNT])
     contents = f"{news_list}{NEW_LINE}上記のニュース内容を要約してください。"
     conditions = (
         "※条件1：記号と絵文字、「。」は、使用しない"

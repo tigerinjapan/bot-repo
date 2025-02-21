@@ -1,16 +1,24 @@
 # bot-repo
 
-bot
+LINE Messaging API Bot
 
-## 参考 URL
+## Python ライブラリ
 
-https://zenn.dev/amano_spica/articles/24c5f288cf9595/
+| ライブラリ    | 説明                        |
+| ------------- | --------------------------- |
+| requests      | HTTP リクエスト処理         |
+| fastapi       | 高速 API フレームワーク     |
+| uvicorn       | 高速 ASGI(非同期処理)サーバ |
+| bs4           | HTML/XML 解析ツール         |
+| jinja2        | HTML テンプレートエンジン   |
+| schedule      | タスク定期実行              |
+| python-dotenv | 環境変数管理                |
+| Pillow        | 画像処理ライブラリ          |
+| google-genai  | Google の AI ツール         |
 
-## 公開サーバ
+## Koyeb サーバ
 
-https://raspy-ranique-kobe-dev-abf65738.koyeb.app/
-
-### 環境変数：secret で登録
+### 環境変数：Koyeb にて、secret 登録
 
 ```
 LINE_CHANNEL_ID
@@ -18,3 +26,11 @@ LINE_CHANNEL_SECRET
 GEMINI_API_KEY
 JOB_SCHEDULE_TIME
 ```
+
+### 公開サーバ
+
+https://raspy-ranique-kobe-dev-abf65738.koyeb.app/
+
+## 参考 URL
+
+https://zenn.dev/amano_spica/articles/24c5f288cf9595/

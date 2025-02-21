@@ -2,10 +2,10 @@
 
 import json
 
-import constants as const
 import requests
-from function import get_current_dir, remove_old_file
+import utils.constants as const
 from PIL import Image, ImageDraw, ImageFont
+from utils.function import get_current_dir, remove_old_file
 
 
 # リクエスト送信
@@ -41,7 +41,7 @@ def get_dumps_json(data):
 # メッセージ画像生成
 def insert_msg_to_img(
     div: str,
-    img_file_nm: str,
+    img_file_name: str,
     font_type: str,
     font_size: int,
     xy_size: tuple[int, int],
@@ -50,7 +50,7 @@ def insert_msg_to_img(
     workspace_path = get_current_dir()
     input_path = f"{workspace_path}/{const.STR_INPUT}"
     img_folder_path = f"{input_path}/{const.STR_IMG}"
-    img_file_path = f"{img_folder_path}/{img_file_nm}.{const.FILE_TYPE_JPEG}"
+    img_file_path = f"{img_folder_path}/{img_file_name}.{const.FILE_TYPE_JPEG}"
 
     img = Image.open(img_file_path).rotate(0)
     draw = ImageDraw.Draw(img)

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title>{{ title }}</title>
+    <script src="/templates/header.js"></script>
+    <script type="text/javascript">
+        writeHeader("{{ user_div }}", "{{ user_name }}", "{{ app_name }}");
+        displayChkMsg();
+    </script>
+</head>
+
+<body>
+    <div id="searchMain">
+        <div>
+            <p id="screenId" hidden>{{ app_name }}</p>
+        </div>
+    </div>
+    <div class="searchResult">
+        {% for data_info in data_list %}
+        {% set col_list = data_info[0] %}
+        {% set data_val_list = data_info[1] %}
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    {% for col in col_list %}
+                    <th>{{ col|e }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for val_list in data_val_list %}
+                {% set idx = loop.index %}
+                <tr>
+                    <td>{{ idx }}</td>
+                    {% for val in val_list %}
+                    {% if 'http' in val | string %}
+                    <td>
+                        <a href="{{ val|e }}" target="_blank" rel="noopener noreferrer">Link{{ idx }}</a>
+                    </td>
+                    {% else %}
+                    <td>{{ val|e }}</td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+    </div>
+</body>
+
+<footer>
+    <script>
+        writeFooter();
+    </script>
+</footer>
+
+</html>
