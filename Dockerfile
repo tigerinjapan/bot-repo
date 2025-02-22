@@ -12,16 +12,11 @@ ENV LC_ALL ja_JP.UTF-8
 ENV TZ Asia/Tokyo
 ENV TERM xterm
 ENV PYTHONPATH /bot
-ENV DRIVER_PATH "/bot/input/chromedriver /bot/input/chromedriver_win64.exe"
 
 # pip install
 COPY requirements.txt /bot/
 RUN pip install -r requirements.txt
 COPY . /bot
-
-# 実行権限付与
-RUN chmod +x /bot/input/chromedriver
-RUN chmod +x /bot/input/chromedriver_win64.exe
 
 # ポート開放 (uvicornで指定したポート)
 EXPOSE 8080

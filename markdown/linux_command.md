@@ -15,18 +15,18 @@
 
 ## ChromeDriver を適切なディレクトリに配置
 
-# sudo mv chromedriver /usr/local/bin
+mv chromedriver /usr/local/bin
 
 ## 権限の設定
 
 ```
-sudo chmod +x /bot/input/chromedriver
+chmod +x /usr/local/bin/chromedriver
 ```
 
 ## ChromeDriver のパスをシステムの PATH に追加
 
 ```
-export PYTHONPATH=$PYTHONPATH:/bot
+export PATH=$PATH:/usr/local/bin/chromedriver
 ```
 
 ## 確認用の Python スクリプトを実行

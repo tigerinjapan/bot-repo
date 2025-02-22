@@ -14,18 +14,14 @@ import apps.utils.message_constants as msg_const
 
 # ドライバーの取得
 def get_webdriver():
-    display = Display(visible=0, size=(1024, 768))
-    display.start()
+    # display = Display(visible=0, size=(1024, 768))
 
     # ローカル環境判定
     local_flg = const.FLG_ON if func.check_local_ip else const.FLG_OFF
 
     # ChromeDriverパス指定
-    driver_file = "chromedriver"
-    # if local_flg:
-    #     driver_file = "chromedriver_win64.exe"
-    # chrome_driver_path = func.get_app_path(const.STR_INPUT, driver_file)
     chrome_driver_path = ChromeDriverManager.install()
+    func.print_info_msg("chrome_driver_path", chrome_driver_path)
 
     # ChromeDriverサービス設定
     service = Service(executable_path=chrome_driver_path)
@@ -92,7 +88,7 @@ def get_webdriver():
     # ドライバー初期化
     driver = webdriver.Chrome(service=service, options=options)
 
-    return display, driver
+    return driver
 
 
 # 要素が特定の条件を満たすまで待機
@@ -140,11 +136,10 @@ def get_element_text(driver, by, value):
 
 # 接続テスト
 def test_access_webdriver():
-    display, driver = get_webdriver()
+    driver = get_webdriver()
     driver.get(const.URL_GOOGLE)
     print(driver.title)
     driver.quit()
-    display.stop()
 
 
 # プログラムのエントリーポイント
