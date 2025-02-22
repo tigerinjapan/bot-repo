@@ -1,10 +1,5 @@
 # 説明：Selenium関数
 
-import os
-
-os.system("chmod +x /bot/input/chromedriver")
-os.system("export PATH=$PATH:/bot/input/chromedriver")
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
@@ -23,8 +18,7 @@ def get_webdriver():
     # ChromeDriverパス指定
     driver_file = "chromedriver"
     if local_flg:
-        func.print_info_msg(driver_file)
-        # driver_file = "chromedriver_win64.exe"
+        driver_file = "chromedriver_win64.exe"
     chrome_driver_path = func.get_app_path(const.STR_INPUT, driver_file)
 
     # ChromeDriverサービス設定

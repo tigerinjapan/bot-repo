@@ -11,6 +11,10 @@ ENV TZ Asia/Tokyo
 ENV TERM xterm
 ENV PYTHONPATH /bot
 
+RUN chmod +x /bot/input/chromedriver
+RUN chmod +x /bot/input/chromedriver_win64.exe
+RUN PATH=$PATH:/bot/input/chromedriver;/bot/input/chromedriver_win64.exe
+
 # pip install
 COPY requirements.txt /bot/
 RUN pip install -r requirements.txt
