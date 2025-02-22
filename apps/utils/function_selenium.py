@@ -1,5 +1,6 @@
 # 説明：Selenium関数
 
+from pyvirtualdisplay import Display
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,6 +13,9 @@ import apps.utils.message_constants as msg_const
 
 # ドライバーの取得
 def get_webdriver():
+    display = Display(visible=0, size=(1024, 768))
+    display.start()
+
     # ローカル環境判定
     local_flg = const.FLG_ON if func.check_local_ip else const.FLG_OFF
 
@@ -86,7 +90,7 @@ def get_webdriver():
     # ドライバー初期化
     driver = webdriver.Chrome(service=service, options=options)
 
-    return driver
+    return display, driver
 
 
 # 要素が特定の条件を満たすまで待機
@@ -134,10 +138,11 @@ def get_element_text(driver, by, value):
 
 # 接続テスト
 def test_access_webdriver():
-    driver = get_webdriver()
+    display, driver = get_webdriver()
     driver.get(const.URL_GOOGLE)
     print(driver.title)
     driver.quit()
+    display.stop()
 
 
 # プログラムのエントリーポイント

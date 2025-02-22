@@ -5,8 +5,7 @@ starlette
 itsdangerous
 bs4
 selenium
-pyautogui
-pygetwindow
+pyvirtualdisplay
 jinja2
 schedule
 python-dotenv
