@@ -1,6 +1,5 @@
 # 説明：Selenium関数
 
-from pyvirtualdisplay import Display
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,13 +13,15 @@ import apps.utils.message_constants as msg_const
 
 # ドライバーの取得
 def get_webdriver():
-    # display = Display(visible=0, size=(1024, 768))
-
     # ローカル環境判定
     local_flg = const.FLG_ON if func.check_local_ip else const.FLG_OFF
 
+    # ChromeDriverパス設定
+    chrome_driver_path = ChromeDriverManager().install()
+    func.print_info_msg("chrome_driver_path", chrome_driver_path)
+
     # ChromeDriverサービス設定
-    service = Service(ChromeDriverManager.install())
+    service = Service(executable_path=chrome_driver_path)
 
     # ブラウザオプション設定
     options = webdriver.ChromeOptions()
