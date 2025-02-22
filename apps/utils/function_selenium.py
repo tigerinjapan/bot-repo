@@ -2,8 +2,8 @@
 
 import os
 
-os.system("apt install libgconf2-4")
 os.system("chmod +x /bot/input/chromedriver")
+os.system("export PATH=$PATH:/bot/input/chromedriver")
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -22,10 +22,10 @@ def get_webdriver():
 
     # ChromeDriverパス指定
     driver_file = "chromedriver"
-    # if local_flg:
-    #     driver_file = "chromedriver_win64.exe"
+    if local_flg:
+        func.print_info_msg(chrome_driver_path)
+        # driver_file = "chromedriver_win64.exe"
     chrome_driver_path = func.get_app_path(const.STR_INPUT, driver_file)
-    func.print_info_msg(chrome_driver_path)
 
     # ChromeDriverサービス設定
     service = Service(chrome_driver_path)
