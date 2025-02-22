@@ -2,8 +2,8 @@
 
 import os
 
-os.system('ls -la')
-os.system('chmod +x /bot/input/chromedriver')
+os.system("apt install libgconf2-4")
+os.system("chmod +x /bot/input/chromedriver")
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service

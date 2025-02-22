@@ -1,8 +1,10 @@
 {
     "cSpell.words": [
+        "chromedriver",
         "dotenv",
         "genai",
         "gethostname",
+        "libgconf",
         "meiryo",
         "prefs"
     ]
