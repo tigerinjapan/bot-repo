@@ -12,7 +12,7 @@ ENV TERM xterm
 ENV PYTHONPATH /bot
 
 RUN chmod +x input/chromedriver
-RUN chmod +x nput/chromedriver_win64.exe
+RUN chmod +x input/chromedriver_win64.exe
 RUN PATH=$PATH:input/chromedriver;input/chromedriver_win64.exe
 
 # pip install
