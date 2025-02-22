@@ -5,6 +5,7 @@ starlette
 itsdangerous
 bs4
 selenium
+webdriver_manager
 pyvirtualdisplay
 jinja2
 schedule

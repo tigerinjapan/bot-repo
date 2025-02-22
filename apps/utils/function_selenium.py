@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from webdriver_manager.chrome import ChromeDriverManager
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -23,7 +24,8 @@ def get_webdriver():
     driver_file = "chromedriver"
     # if local_flg:
     #     driver_file = "chromedriver_win64.exe"
-    chrome_driver_path = func.get_app_path(const.STR_INPUT, driver_file)
+    # chrome_driver_path = func.get_app_path(const.STR_INPUT, driver_file)
+    chrome_driver_path = ChromeDriverManager.install()
 
     # ChromeDriverサービス設定
     service = Service(executable_path=chrome_driver_path)
