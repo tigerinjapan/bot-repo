@@ -19,12 +19,8 @@ def get_webdriver():
     # ローカル環境判定
     local_flg = const.FLG_ON if func.check_local_ip else const.FLG_OFF
 
-    # ChromeDriverパス指定
-    chrome_driver_path = ChromeDriverManager.install()
-    func.print_info_msg("chrome_driver_path", chrome_driver_path)
-
     # ChromeDriverサービス設定
-    service = Service(executable_path=chrome_driver_path)
+    service = Service(ChromeDriverManager.install())
 
     # ブラウザオプション設定
     options = webdriver.ChromeOptions()
