@@ -18,7 +18,7 @@ COPY . /bot
 
 RUN chmod +x /bot/input/chromedriver
 RUN chmod +x /bot/input/chromedriver_win64.exe
-RUN PATH=$PATH:/bot/input/chromedriver;/bot/input/chromedriver_win64.exe
+RUN DRIVER_PATH="/bot/input/chromedriver /bot/input/chromedriver_win64.exe"
 
 # ポート開放 (uvicornで指定したポート)
 EXPOSE 8080
