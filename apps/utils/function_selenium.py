@@ -1,5 +1,10 @@
 # 説明：Selenium関数
 
+import os
+
+os.system('ls -la')
+os.system('sudo chmod +x /bot/input/chromedriver')
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
