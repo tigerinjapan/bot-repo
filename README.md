@@ -21,10 +21,11 @@ LINE Messaging API Bot
 ### 環境変数：Koyeb にて、secret 登録
 
 ```
-LINE_CHANNEL_ID
-LINE_CHANNEL_SECRET
-GEMINI_API_KEY
-JOB_SCHEDULE_TIME
+PYTHONPATH  bot
+LINE_CHANNEL_ID channel_id
+LINE_CHANNEL_SECRET channel_secret
+GEMINI_API_KEY  api_key
+JOB_SCHEDULE_TIME   07:00
 ```
 
 ### 公開サーバ

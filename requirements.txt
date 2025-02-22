@@ -4,6 +4,9 @@ uvicorn
 starlette
 itsdangerous
 bs4
+selenium
+pyautogui
+pygetwindow
 jinja2
 schedule
 python-dotenv

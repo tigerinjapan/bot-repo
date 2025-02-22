@@ -3,6 +3,7 @@
         "dotenv",
         "genai",
         "gethostname",
-        "meiryo"
+        "meiryo",
+        "prefs"
     ]
 }

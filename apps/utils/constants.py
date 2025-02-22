@@ -1,0 +1,300 @@
+# 説明：定数一覧
+
+import os
+from datetime import datetime
+
+from selenium.webdriver.common.by import By
+
+##### main関数 #####
+MAIN_FUNCTION = "__main__"
+
+##### debug定数 #####
+DEBUG_CONSTANT = "__debug__"
+
+##### NoneType #####
+NONE_CONSTANT = None
+
+##### フラグ #####
+FLG_ON = True
+FLG_OFF = False
+
+##### 接続情報 #####
+IP_DEFAULT = "0.0.0.0"
+PORT_DEFAULT = 8000
+IP_PRIVATE = "192.168"
+IP_LOCAL_HOST = "127.0.0.1"
+PORT_NUM = 5000
+
+##### セッション #####
+SESSION_KEY = "admindevguest"
+SESSION_TIMEOUT_SEC = 600
+
+##### ユーザ権限 #####
+AUTH_ADMIN = "admin"
+AUTH_DEV = "dev"
+AUTH_GUEST = "guest"
+
+##### ユーザーエージェント #####
+UA_PC = {"User-Agent": "Chrome/74.0.3729.169"}
+UA_OPT_PC = "--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+UA_OPT_MO = "--user-agent=Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Mobile Safari/537.36"
+UA_DIV_MO = "Mobile"
+UA_DIV_PC = "PC"
+
+##### パス #####
+DIR_CURR_WORK = os.getcwd()
+
+##### 文字コード #####
+CHARSET_UTF_8 = "utf-8"
+CHARSET_ASCII = "ascii"
+CHARSET_SJIS = "sjis"
+
+##### 日付フォーマット #####
+DATE_FORMAT_OUTPUT_FILE = "%Y%m%d%H%M%S"
+DATE_FORMAT_YYYYMMDD = "%Y%m%d"
+DATE_FORMAT_YYYYMMDD_SLASH = "%Y/%m/%d"
+DATE_FORMAT_YYYYMM = "%Y%m"
+
+##### 日付 #####
+DATETIME_NOW = datetime.now()
+DATE_NOW = DATETIME_NOW.strftime(DATE_FORMAT_OUTPUT_FILE)
+DATE_TODAY = DATETIME_NOW.strftime(DATE_FORMAT_YYYYMMDD)
+DATE_TODAY_SLASH = DATETIME_NOW.strftime(DATE_FORMAT_YYYYMMDD_SLASH)
+DATE_YEAR_MONTH = DATETIME_NOW.strftime(DATE_FORMAT_YYYYMM)
+DATE_YEAR = DATETIME_NOW.year
+DATE_MONTH = DATETIME_NOW.month
+DATE_DAY = DATETIME_NOW.day
+DATE_WEEKDAY = DATETIME_NOW.weekday()
+
+##### リクエストタイプ #####
+REQUEST_TYPE_GET = "get"
+REQUEST_TYPE_POST = "post"
+
+##### ステータスコード #####
+STATUS_CODE_NORMAL = [200, 201, 204]
+
+##### 正規表現 #####
+PATTERN_YYYYMMDD = "^[0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$"
+PATTERN_NUMBER = "^[0-9]$"
+PATTERN_NUMBERS = r"(\d+)"
+
+##### 数値 #####
+NUM_ZERO = 0
+NUM_ONE = 1
+NUM_TWO = 2
+NUM_THREE = 3
+
+# 画面表示件数
+NUM_PRINT_CNT = 5
+
+##### 型 #####
+TYPE_DICT = "dict"
+TYPE_LIST = "list"
+TYPE_STR = "str"
+TYPE_NUM = "num"
+TYPE_DATE = "date"
+
+##### HTMLタグ #####
+TAG_FORM = "form"
+TAG_DIV = "div"
+TAG_DL = "dl"
+TAG_DT = "dt"
+TAG_DD = "dd"
+TAG_P = "p"
+TAG_UL = "ul"
+TAG_LI = "li"
+TAG_A = "a"
+TAG_TABLE = "table"
+TAG_THEAD = "thead"
+TAG_TBODY = "tbody"
+TAG_TR = "tr"
+TAG_TH = "th"
+TAG_TD = "td"
+TAG_SPAN = "span"
+TAG_META = "meta"
+TAG_CAPTION = "caption"
+TAG_ABBR = "abbr"
+TAG_H1 = "h1"
+TAG_H2 = "h2"
+TAG_H3 = "h3"
+
+##### HTML属性 #####
+ATTR_CLASS = "class"
+ATTR_ID = "id"
+ATTR_PROP = "property"
+ATTR_HREF = "href"
+ATTR_ALT = "alt"
+ATTR_TITLE = "title"
+
+##### ファイルモード #####
+FILE_MODE_READ = "r"
+FILE_MODE_WRITE = "w"
+FILE_MODE_READ_BINARY = "rb"
+
+##### ファイル拡張子 #####
+FILE_TYPE_HTML = "html"
+FILE_TYPE_CSV = "csv"
+FILE_TYPE_TXT = "txt"
+FILE_TYPE_ZIP = "zip"
+FILE_TYPE_PY = "py"
+FILE_TYPE_JSON = "json"
+FILE_TYPE_LOG = "log"
+FILE_TYPE_PNG = "png"
+FILE_TYPE_JPEG = "jpeg"
+
+##### 入力タイプ #####
+INPUT_TYPE_TEXT = "text"
+INPUT_TYPE_RADIO = "radio"
+INPUT_TYPE_SELECT = "select"
+INPUT_TYPE_DATE = "date"
+INPUT_TYPE_BUTTON = "button"
+
+##### Selenium:By #####
+BY_ID = By.ID
+BY_XPATH = By.XPATH
+BY_LINK = By.LINK_TEXT
+BY_NM = By.NAME
+BY_TAG = By.TAG_NAME
+BY_CLASS = By.CLASS_NAME
+BY_CSS = By.CSS_SELECTOR
+
+##### 入力キー #####
+KEY_BACKSPACE = "backspace"
+KEY_ENTER = "enter"
+KEY_CTRL = "ctrl"
+KEY_ALT = "alt"
+
+##### 記号、特殊文字 #####
+SYM_NEW_LINE = "\n"
+SYM_TAB = "\t"
+SYM_BLANK = ""
+SYM_SPACE = " "
+SYM_COMMA = ","
+SYM_DOT = "."
+SYM_COLON = ":"
+SYM_SEMI_COLON = ";"
+SYM_DASH = "-"
+SYM_UNDER = "_"
+SYM_EQUAL = "="
+SYM_SLASH = "/"
+SYM_AMP = "&"
+SYM_ASTA = "*"
+SYM_PUNC = "。"
+SYM_OPEN = "【"
+SYM_CLOSE = "】"
+SYM_AT = "@"
+
+##### 文字列 #####
+STR_AUTH = "auth"
+STR_INPUT = "input"
+STR_OUTPUT = "output"
+STR_LOGIN = "login"
+STR_LOGOUT = "logout"
+STR_LOG = "log"
+STR_ERROR = "error"
+STR_USER = "user"
+STR_NAME = "name"
+STR_ID = "id"
+STR_REQUEST = "request"
+STR_RESPONSE = "response"
+STR_STATUS = "status"
+STR_MESSAGE = "message"
+STR_URL = "url"
+STR_IP = "IP"
+STR_RESULT = "result"
+STR_CONTENTS = "contents"
+STR_SERVER = "server"
+STR_TIME = "time"
+STR_KEY = "key"
+STR_DIV = "div"
+STR_TITLE = "title"
+STR_DECODE = "decode"
+STR_LINE = "line"
+STR_GEMINI = "gemini"
+STR_API = "api"
+STR_LINE_API = "LINE API"
+STR_IMG = "img"
+
+STR_PATH_JA = "パス"
+STR_FILE_JA = "ファイル"
+STR_MESSAGE_JA = "メッセージ"
+STR_TOKEN_JA = "トークン"
+STR_EXPIRE_JA = "有効期限"
+STR_ENV_VAR_JA = "環境変数"
+STR_CHARSET_JA = "文字コード"
+STR_DIV_JA = "区分"
+STR_CONTENTS_JA = "内容"
+STR_COMPANY_JA = "会社"
+STR_TITLE_JA = "タイトル"
+STR_LINK_JA = "リンク"
+STR_TODAY_JA = "今日の"
+STR_NEWS_JA = "ニュース"
+
+##### マスキング #####
+MASKING_COMPANY = "company"
+MASKING_STR_UPPER = "XXXX"
+MASKING_STR_LOWER = "xxxx"
+MASKING_NUM = "9999"
+MASKING_YEAR = "YYYY"
+
+LIST_MASKING = [
+    MASKING_COMPANY,
+    MASKING_STR_UPPER,
+    MASKING_STR_LOWER,
+    MASKING_NUM,
+    MASKING_YEAR,
+]
+
+##### 置換文字列リスト #####
+LIST_REPLACE = [
+    "-",
+    "=",
+    "　",
+    "?",
+    "!",
+    "？",
+    "！",
+    "〇",
+    "□",
+    "◇",
+    "☆",
+    "●",
+    "■",
+    "◆",
+    "★",
+    "※",
+    "・",
+    "━",
+    "∞",
+    "\u3000",
+    "\u200b",
+    "\t",
+    "\r\n",
+    "<br>",
+    "</br>",
+    "<br/>",
+]
+
+##### 曜日リスト #####
+LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
+
+##### URL #####
+# サイトURL
+URL_GOOGLE = "https://www.google.com"
+
+# 画面URL
+PATH_ROOT = "/"
+PATH_LOGIN = "/login"
+PATH_LOGOUT = "/logout"
+PATH_TODAY = "/today"
+PATH_NEWS = "/news"
+PATH_KOREA = "/korea"
+PATH_LCC = "/lcc"
+PATH_TV = "/tv"
+
+##### HTMLファイル名 #####
+HTML_INDEX = f"index.{FILE_TYPE_HTML}"
+HTML_RESULT = f"result.{FILE_TYPE_HTML}"
+
+if __name__ == MAIN_FUNCTION:
+    print(DATE_WEEKDAY)
