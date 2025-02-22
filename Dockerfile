@@ -4,21 +4,24 @@ WORKDIR /bot
 # 更新・日本語化
 RUN apt-get update && apt-get -y install locales && apt-get -y upgrade && \
 	localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+
+# 環境変数
 ENV LANG ja_JP.UTF-8
 ENV LANGUAGE ja_JP:ja
 ENV LC_ALL ja_JP.UTF-8
 ENV TZ Asia/Tokyo
 ENV TERM xterm
 ENV PYTHONPATH /bot
+ENV DRIVER_PATH "/bot/input/chromedriver /bot/input/chromedriver_win64.exe"
 
 # pip install
 COPY requirements.txt /bot/
 RUN pip install -r requirements.txt
 COPY . /bot
 
+# 実行権限付与
 RUN chmod +x /bot/input/chromedriver
 RUN chmod +x /bot/input/chromedriver_win64.exe
-RUN DRIVER_PATH="/bot/input/chromedriver /bot/input/chromedriver_win64.exe"
 
 # ポート開放 (uvicornで指定したポート)
 EXPOSE 8080
