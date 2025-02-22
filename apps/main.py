@@ -1,17 +1,11 @@
 # 説明：メイン処理
 
-import os
 import sys
 
 import dotenv
 import schedule
 
 print("[sys.path] ", sys.path)  # TODO テスト後削除
-print("[os.getcwd()] ", os.getcwd())  # TODO テスト後削除
-
-import utils.function_selenium as func_sele
-
-print(func_sele.test_access_webdriver())
 
 import apps.utils.function as func
 from apps.line_api import main as line_api

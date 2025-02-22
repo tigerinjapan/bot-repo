@@ -9,6 +9,7 @@ ENV LANGUAGE ja_JP:ja
 ENV LC_ALL ja_JP.UTF-8
 ENV TZ Asia/Tokyo
 ENV TERM xterm
+ENV PYTHONPATH /bot
 
 # pip install
 COPY requirements.txt /bot/
