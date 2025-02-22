@@ -4,7 +4,6 @@
         "dotenv",
         "genai",
         "gethostname",
-        "libgconf",
         "meiryo",
         "prefs"
     ]
