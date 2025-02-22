@@ -11,14 +11,14 @@ ENV TZ Asia/Tokyo
 ENV TERM xterm
 ENV PYTHONPATH /bot
 
-RUN chmod +x input/chromedriver
-RUN chmod +x input/chromedriver_win64.exe
-RUN PATH=$PATH:input/chromedriver;input/chromedriver_win64.exe
-
 # pip install
 COPY requirements.txt /bot/
 RUN pip install -r requirements.txt
 COPY . /bot
+
+RUN chmod +x /bot/input/chromedriver
+RUN chmod +x /bot/input/chromedriver_win64.exe
+RUN PATH=$PATH:/bot/input/chromedriver;/bot/input/chromedriver_win64.exe
 
 # ポート開放 (uvicornで指定したポート)
 EXPOSE 8080
