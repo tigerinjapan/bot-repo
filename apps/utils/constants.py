@@ -158,12 +158,6 @@ BY_TAG = By.TAG_NAME
 BY_CLASS = By.CLASS_NAME
 BY_CSS = By.CSS_SELECTOR
 
-##### 入力キー #####
-KEY_BACKSPACE = "backspace"
-KEY_ENTER = "enter"
-KEY_CTRL = "ctrl"
-KEY_ALT = "alt"
-
 ##### 記号、特殊文字 #####
 SYM_NEW_LINE = "\n"
 SYM_TAB = "\t"

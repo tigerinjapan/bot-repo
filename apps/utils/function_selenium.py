@@ -1,7 +1,5 @@
 # 説明：Selenium関数
 
-import pyautogui as ag
-import pygetwindow as gw
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
@@ -132,36 +130,6 @@ def find_element(driver, by, value, timeout=3):
 def get_element_text(driver, by, value):
     element = find_element(driver, by, value)
     return element.text
-
-
-# アクティブなウィンドウ取得
-def get_active_window():
-    return gw.getActiveWindow()
-
-
-# キー押下
-def press_key(key):
-    ag.press(key)
-
-
-# テキスト入力
-def write_text(text):
-    ag.write(text)
-
-
-# ホットキー押下
-def hotkey(key1, key2):
-    ag.hotkey(key1, key2)
-
-
-# Ctrlキーと組み合わせたホットキー押下
-def hotkey_ctrl(key):
-    hotkey(const.KEY_CTRL, key)
-
-
-# Altキーと組み合わせたホットキー押下
-def hotkey_alt(key):
-    hotkey(const.KEY_ALT, key)
 
 
 # 接続テスト
