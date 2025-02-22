@@ -123,10 +123,35 @@ footer {
 	text-align: center;
 }
 
-/*画面幅480px以下の設定*/
-@media screen and (max-width:480px) {
+/*共通のメディアクエリ設定*/
+@media screen and (max-width:768px) {
+	body {
+		font-size: 4vw;
+	}
 
-	/*全体の設定*/
+	img,
+	.searchForm,
+	.searchResult {
+		width: 100%;
+		height: auto;
+	}
+
+	.topMenu ul {
+		flex-direction: column;
+	}
+
+	.topMenu li {
+		border-right: none;
+		border-bottom: 1px solid white;
+	}
+
+	.topMenu li:last-child {
+		border-bottom: none;
+		margin-left: 0;
+	}
+}
+
+@media screen and (max-width:480px) {
 	body {
 		font-size: 3vw;
 	}
