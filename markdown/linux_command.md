@@ -20,7 +20,7 @@
 ## 権限の設定
 
 ```
-sudo chmod +x input/chromedriver
+sudo chmod +x /bot/input/chromedriver
 ```
 
 ## ChromeDriver のパスをシステムの PATH に追加

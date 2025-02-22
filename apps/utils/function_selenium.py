@@ -17,9 +17,10 @@ def get_webdriver():
 
     # ChromeDriverパス指定
     driver_file = "chromedriver"
-    if local_flg:
-        driver_file = "chromedriver_win64.exe"
+    # if local_flg:
+    #     driver_file = "chromedriver_win64.exe"
     chrome_driver_path = func.get_app_path(const.STR_INPUT, driver_file)
+    func.print_info_msg(chrome_driver_path)
 
     # ChromeDriverサービス設定
     service = Service(chrome_driver_path)
