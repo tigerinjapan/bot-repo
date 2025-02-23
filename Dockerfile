@@ -20,11 +20,12 @@ ENV PATH=$PATH:/root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
 
 # chromedriverダウンロード、解凍し、適切な場所に移動
 RUN wget https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip
-CMD unzip /bot/chromedriver_linux64.zip
-CMD mkdir -p /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
-CMD mv /bot/chromedriver /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
-CMD chmod +x /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/chromedriver
-CMD rm -r /bot/chromedriver_linux64.zip
+RUN unzip /bot/chromedriver_linux64.zip
+RUN mkdir -p /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
+RUN mv /bot/chromedriver /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
+RUN chmod +x /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/chromedriver
+RUN ls -la /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
+RUN rm -r /bot/chromedriver_linux64.zip
 
 # 必要なパッケージをpipでインストール
 COPY requirements.txt /bot/

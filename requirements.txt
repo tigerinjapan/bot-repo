@@ -4,7 +4,7 @@ uvicorn
 starlette
 itsdangerous
 bs4
-selenium
+selenium==4.28
 webdriver_manager
 pyvirtualdisplay
 jinja2
