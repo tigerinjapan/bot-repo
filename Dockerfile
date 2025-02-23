@@ -23,6 +23,8 @@ RUN wget https://storage.googleapis.com/chrome-for-testing-public/${CHROME_DRIVE
 RUN unzip /bot/chromedriver-linux64.zip
 RUN mkdir -p /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
 RUN chmod +x /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
+RUN ls -la /bot/chromedriver-linux64/
+RUN ls -la /bot/chromedriver-linux64/chromedriver-linux64/
 RUN mv /bot/chromedriver-linux64/chromedriver-linux64/chromedriver /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
 
 # 権限設定
