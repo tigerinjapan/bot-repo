@@ -22,6 +22,7 @@ ENV PATH=$PATH:/root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
 RUN wget https://storage.googleapis.com/chrome-for-testing-public/${CHROME_DRIVER_VERSION}/linux64/chromedriver-linux64.zip
 RUN unzip /bot/chromedriver-linux64.zip
 RUN mkdir -p /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
+RUN chmod +x /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
 RUN mv /bot/chromedriver-linux64/chromedriver-linux64/chromedriver /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
 
 # 権限設定
@@ -30,6 +31,7 @@ RUN ls -la /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
 
 # zipファイル削除
 RUN rm -r /bot/chromedriver-linux64.zip
+RUN ls -la /bot/chromedriver-linux64/
 
 # 必要なパッケージをpipでインストール
 COPY requirements.txt /bot/
