@@ -2,9 +2,16 @@
     "cSpell.words": [
         "chromedriver",
         "dotenv",
+        "fastapi",
+        "itsdangerous",
         "genai",
         "gethostname",
+        "localedef",
         "meiryo",
-        "prefs"
+        "prefs",
+        "PYTHONPATH",
+        "pyvirtualdisplay",
+        "starlette",
+        "uvicorn"
     ]
 }
