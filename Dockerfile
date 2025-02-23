@@ -14,10 +14,10 @@ ENV TERM xterm
 ENV PYTHONPATH /bot
 
 RUN wget https://storage.googleapis.com/chrome-for-testing-public/133.0.6943.126/linux64/chromedriver-linux64.zip
-RUN unzip /bot/chromedriver_linux64.zip
-RUN mv /bot/chromedriver /usr/local/bin
-RUN chmod +x /usr/local/bin/chromedriver
-RUN PYTHONPATH /usr/local/bin/chromedriver
+CMD unzip /bot/chromedriver_linux64.zip
+CMD mv /bot/chromedriver /usr/local/bin
+CMD chmod +x /usr/local/bin/chromedriver
+ENV PYTHONPATH /usr/local/bin/chromedriver
 
 # pip install
 COPY requirements.txt /bot/
