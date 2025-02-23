@@ -2,7 +2,7 @@ FROM python:3.13
 WORKDIR /bot
 
 # 更新・日本語化
-RUN apt-get update && apt-get -y install locales && apt-get -y upgrade && \
+RUN apt-get update && apt-get -y install locales unzip && apt-get -y upgrade && \
 	localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
 
 # 環境変数
