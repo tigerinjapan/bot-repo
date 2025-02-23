@@ -14,8 +14,8 @@ ENV TERM xterm
 ENV PYTHONPATH /bot
 
 RUN wget https://storage.googleapis.com/chrome-for-testing-public/133.0.6943.126/linux64/chromedriver-linux64.zip
-RUN unzip chromedriver_linux64.zip
-RUN mv chromedriver /usr/local/bin
+RUN unzip /bot/chromedriver_linux64.zip
+RUN mv /bot/chromedriver /usr/local/bin
 RUN chmod +x /usr/local/bin/chromedriver
 RUN PYTHONPATH /usr/local/bin/chromedriver
 
