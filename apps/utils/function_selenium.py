@@ -16,11 +16,7 @@ def get_webdriver():
     # ローカル環境判定
     local_flg = const.FLG_ON if func.check_local_ip else const.FLG_OFF
 
-    # ChromeDriverパス設定 #TODO
-    chrome_driver_path = (
-        "/root/.wdm/drivers/chromedriver/linux64/114.0.5735.90/chromedriver"
-    )
-    func.print_info_msg("chrome_driver_path_old", chrome_driver_path)
+    # ChromeDriverパス設定
     chrome_driver_path = ChromeDriverManager().install()
     func.print_info_msg("chrome_driver_path", chrome_driver_path)
 
