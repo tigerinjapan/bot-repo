@@ -60,7 +60,7 @@ def run():
 
 # スレッド開始
 def start_thread():
-    test_access_webdriver()  # TODO テスト後、削除
+    # test_access_webdriver()  # TODO テスト後、削除
     t = Thread(target=run)
     t.start()
 
