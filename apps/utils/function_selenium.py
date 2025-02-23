@@ -18,7 +18,11 @@ def get_webdriver():
 
     # ChromeDriverパス設定
     chrome_driver_path = ChromeDriverManager().install()
-    func.print_info_msg("chrome_driver_path", chrome_driver_path)
+    func.print_info_msg("chrome_driver_path_old", chrome_driver_path)
+    chrome_driver_path = (
+        "/root/.wdm/drivers/chromedriver/linux64/133.0.6943.126/chromedriver"
+    )
+    func.print_info_msg("chrome_driver_path_new", chrome_driver_path)
 
     # ChromeDriverサービス設定
     service = Service(executable_path=chrome_driver_path)
