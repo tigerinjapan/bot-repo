@@ -6,17 +6,17 @@
 | python --version    | python バージョン確認 |
 
 ## ChromeDriver のダウンロード
-
-# wget https://chromedriver.storage.googleapis.com/最新バージョン/chromedriver_linux64.zip
-
+```
+wget https://storage.googleapis.com/chrome-for-testing-public/133.0.6943.126/linux64/chromedriver-linux64.zip
+```
 ## ダウンロードしたファイルを解凍
-
-# unzip chromedriver_linux64.zip
-
+```
+unzip chromedriver_linux64.zip
+```
 ## ChromeDriver を適切なディレクトリに配置
-
+```
 mv chromedriver /usr/local/bin
-
+```
 ## 権限の設定
 
 ```
