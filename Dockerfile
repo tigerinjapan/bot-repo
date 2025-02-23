@@ -6,8 +6,8 @@ WORKDIR /bot
 
 # 必要なパッケージ更新・インストールし、日本語ロケール設定
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN dpkg -i google-chrome-stable_current_amd64.deb
 RUN apt-get -f install
+RUN dpkg -i google-chrome-stable_current_amd64.deb
 
 RUN apt-get update && apt-get -y install locales unzip chromium chromium-browser && apt-get -y upgrade && \
     localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
