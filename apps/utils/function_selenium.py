@@ -75,6 +75,9 @@ def get_webdriver():
     for option in options_list:
         options.add_argument(option)
 
+    # Chromeのバイナリパスを指定
+    options.binary_location = "/usr/bin/chromium"
+
     download_path = func.get_app_path(const.STR_OUTPUT)
     prefs = {"download.default_directory": download_path}
     options.add_experimental_option("prefs", prefs)
