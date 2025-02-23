@@ -18,11 +18,12 @@ ENV PYTHONPATH "/bot"
 ENV PATH=$PATH:/usr/local/bin/chromedriver
 
 # chromedriverダウンロード、解凍し、適切な場所に移動
-RUN wget https://storage.googleapis.com/chrome-for-testing-public/133.0.6943.126/linux64/chromedriver-linux64.zip && \
-    unzip chromedriver-linux64.zip && \
-    mv chromedriver /usr/local/bin && \
-    chmod +x /usr/local/bin/chromedriver && \
-    rm chromedriver-linux64.zip
+RUN wget https://storage.googleapis.com/chrome-for-testing-public/133.0.6943.126/linux64/chromedriver-linux64.zip
+CMD unzip /bot/chromedriver_linux64.zip
+CMD mv /bot/chromedriver /usr/local/bin
+CMD chmod +x /usr/local/bin/chromedriver
+CMD rm /bot/chromedriver-linux64.zip
+CMD ls -la /usr/local/bin/chromedriver
 
 # 必要なパッケージをpipでインストール
 COPY requirements.txt /bot/
