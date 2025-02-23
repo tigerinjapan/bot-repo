@@ -18,7 +18,7 @@ ENV PYTHONPATH "/bot"
 ENV PATH=$PATH:/usr/local/bin/chromedriver
 
 # chromedriverダウンロード、解凍し、適切な場所に移動
-RUN wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver-linux64.zip
+RUN wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
 CMD unzip /bot/chromedriver_linux64.zip
 CMD mv /bot/chromedriver_linux64/chromedriver /usr/local/bin/chromedriver
 CMD chmod +x /usr/local/bin/chromedriver
