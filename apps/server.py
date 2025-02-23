@@ -68,7 +68,7 @@ def start_thread():
 @app.get(const.PATH_ROOT)
 async def root(request: Request):
 
-    if func.check_local_ip():
+    if func.is_local_env():
         request.session.clear()
         request.session[const.STR_USER] = users_data.get(const.AUTH_DEV)
 

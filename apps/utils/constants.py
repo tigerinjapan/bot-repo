@@ -22,7 +22,8 @@ FLG_OFF = False
 IP_DEFAULT = "0.0.0.0"
 PORT_DEFAULT = 8000
 IP_PRIVATE = "192.168"
-IP_LOCAL_HOST = "127.0.0.1"
+IP_LOCAL = "127.0.0.1"
+HOST_LOCAL = "kobe"
 PORT_NUM = 5000
 
 ##### セッション #####
@@ -195,6 +196,7 @@ STR_STATUS = "status"
 STR_MESSAGE = "message"
 STR_URL = "url"
 STR_IP = "IP"
+STR_HOST = "host"
 STR_RESULT = "result"
 STR_CONTENTS = "contents"
 STR_SERVER = "server"

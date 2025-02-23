@@ -237,7 +237,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
     )
 
     img_file_name = func.get_app_name(file_path)
-    if not func.check_local_ip:
+    if not func.is_local_env:
         func.print_info_msg(MSG_TYPE_IMG, img_url)
 
     img_url = f"https://{URL_KOYEB}/{const.STR_IMG}/{img_file_name}"

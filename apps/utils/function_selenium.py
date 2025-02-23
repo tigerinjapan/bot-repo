@@ -13,16 +13,17 @@ import apps.utils.message_constants as msg_const
 
 # ドライバーの取得
 def get_webdriver():
-    # ローカル環境判定
-    local_flg = const.FLG_ON if func.check_local_ip else const.FLG_OFF
+    # ローカル環境判定 # TODO 正しい方法を調査
+    local_flg = const.FLG_ON if func.is_local_env else const.FLG_OFF
 
     # ChromeDriverパス設定
-    chrome_driver_path = ChromeDriverManager().install()
-    func.print_info_msg("chrome_driver_path_old", chrome_driver_path)
-    chrome_driver_path = (
-        "/root/.wdm/drivers/chromedriver/linux64/133.0.6943.126/chromedriver"
-    )
-    func.print_info_msg("chrome_driver_path_new", chrome_driver_path)
+    if local_flg:
+        chrome_driver_path = ChromeDriverManager().install()
+    else:
+        chrome_driver_path = (
+            "/root/.wdm/drivers/chromedriver/linux64/133.0.6943.126/chromedriver"
+        )
+    func.print_info_msg(const.STR_PATH_JA, chrome_driver_path)
 
     # ChromeDriverサービス設定
     service = Service(executable_path=chrome_driver_path)
@@ -32,11 +33,14 @@ def get_webdriver():
 
     # オプション：ブラウザの表示
     browser_display_options = [
-        "--headless",  # ヘッドレスモードで実行
         "--start-maximized",  # ウィンドウ最大化
         "--window-size=1920x1080",  # ウィンドウサイズ指定
         "--blink-settings=imagesEnabled=false",  # 画像ロード無効化
     ]
+
+    if local_flg:
+        option_headless = ("--headless",)  # ヘッドレスモードで実行
+        browser_display_options.append(option_headless)
 
     # オプション：セキュリティ
     security_options = [
@@ -79,8 +83,8 @@ def get_webdriver():
     for option in options_list:
         options.add_argument(option)
 
-    # Chromeのバイナリパスを指定
-    options.binary_location = "/usr/bin/chromium"
+    # # Chromeのバイナリパスを指定
+    # options.binary_location = "/usr/bin/chromium"
 
     download_path = func.get_app_path(const.STR_OUTPUT)
     prefs = {"download.default_directory": download_path}

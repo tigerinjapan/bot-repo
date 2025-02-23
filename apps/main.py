@@ -17,7 +17,7 @@ def main():
     # サーバー立ち上げ
     start_thread()
 
-    if not func.check_local_ip():
+    if not func.is_local_env():
         # 条件：毎日指定時間で、実行
         schedule.every().day.at(JOB_SCHEDULE_TIME).do(job)
 

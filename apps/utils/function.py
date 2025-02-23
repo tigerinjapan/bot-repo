@@ -46,13 +46,15 @@ def get_env_val(var_name: str) -> str:
 
 
 # ローカルIPかチェック
-def check_local_ip():
+def is_local_env():
     ip_flg = const.FLG_OFF
     host = socket.gethostname()
     ip = socket.gethostbyname(host)
 
-    if const.IP_PRIVATE in ip:
+    if const.HOST_LOCAL in host and (const.IP_PRIVATE in ip or const.IP_LOCAL in ip):
         ip_flg = const.FLG_ON
+    else:
+        print_info_msg([const.STR_HOST, host], [const.STR_IP, ip])
     return ip_flg
 
 
@@ -61,8 +63,8 @@ def get_host_port() -> tuple[str, str]:
     host = const.IP_DEFAULT
     port = const.PORT_DEFAULT
 
-    if check_local_ip():
-        host = const.IP_LOCAL_HOST
+    if is_local_env():
+        host = const.IP_LOCAL
         port = const.PORT_NUM
 
     return host, port
@@ -241,4 +243,4 @@ def convert_half_char(target: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    print(check_local_ip())
+    print(is_local_env())
