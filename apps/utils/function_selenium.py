@@ -28,14 +28,11 @@ def get_webdriver():
 
     # オプション：ブラウザの表示
     browser_display_options = [
+        "--headless",  # ヘッドレスモードで実行
         "--start-maximized",  # ウィンドウ最大化
         "--window-size=1920x1080",  # ウィンドウサイズ指定
         "--blink-settings=imagesEnabled=false",  # 画像ロード無効化
     ]
-
-    if not local_flg:
-        headless_option = "--headless"  # ヘッドレスモードで実行
-        browser_display_options.append(headless_option)
 
     # オプション：セキュリティ
     security_options = [
