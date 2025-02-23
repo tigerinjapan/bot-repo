@@ -23,7 +23,7 @@ IP_DEFAULT = "0.0.0.0"
 PORT_DEFAULT = 8000
 IP_PRIVATE = "192.168"
 IP_LOCAL = "127.0.0.1"
-HOST_LOCAL = "kobe"
+HOST_LOCAL = "kobe-pc"
 PORT_NUM = 5000
 
 ##### セッション #####

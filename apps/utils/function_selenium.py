@@ -13,7 +13,7 @@ import apps.utils.message_constants as msg_const
 
 # ドライバーの取得
 def get_webdriver():
-    # ローカル環境判定 # TODO 正しい方法を調査
+    # ローカル環境判定
     local_flg = const.FLG_ON if func.is_local_env else const.FLG_OFF
 
     # ChromeDriverパス設定
@@ -23,7 +23,6 @@ def get_webdriver():
         chrome_driver_path = (
             "/root/.wdm/drivers/chromedriver/linux64/133.0.6943.126/chromedriver"
         )
-    func.print_info_msg(const.STR_PATH_JA, chrome_driver_path)
 
     # ChromeDriverサービス設定
     service = Service(executable_path=chrome_driver_path)
@@ -38,7 +37,7 @@ def get_webdriver():
         "--blink-settings=imagesEnabled=false",  # 画像ロード無効化
     ]
 
-    if local_flg:
+    if not local_flg:
         option_headless = ("--headless",)  # ヘッドレスモードで実行
         browser_display_options.append(option_headless)
 
@@ -54,7 +53,7 @@ def get_webdriver():
 
     # オプション：パフォーマンス
     performance_options = [
-        # "--disable-gpu",  # GPU無効化 # ヘッドレスと重複
+        "--disable-gpu",  # GPU無効化
         "--disable-dev-shm-usage",  # 開発共有メモリ無効化
         "--disable-accelerated-2d-canvas",  # ハードウェアアクセラ無効化
     ]
@@ -67,7 +66,7 @@ def get_webdriver():
 
     # オプション：その他
     other_options = [
-        "--disable-javascript",  # JavaScript無効化
+        # "--disable-javascript",  # JavaScript無効化
         "--user-agent=MyCustomUserAgent",  # ユーザーエージェント設定
         "--incognito",  # シークレットモード
         const.UA_OPT_PC,  # ユーザーエージェント設定

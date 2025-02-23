@@ -51,10 +51,10 @@ def is_local_env():
     host = socket.gethostname()
     ip = socket.gethostbyname(host)
 
-    if const.HOST_LOCAL in host and (const.IP_PRIVATE in ip or const.IP_LOCAL in ip):
+    if host == const.HOST_LOCAL and (const.IP_PRIVATE in ip or const.IP_LOCAL in ip):
         ip_flg = const.FLG_ON
     else:
-        print_info_msg([const.STR_HOST, host], [const.STR_IP, ip])
+       print_info_msg([const.STR_HOST, host], [const.STR_IP, ip])
     return ip_flg
 
 

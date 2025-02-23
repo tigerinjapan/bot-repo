@@ -3,6 +3,7 @@
 import dotenv
 import schedule
 
+import apps.utils.constants as const
 import apps.utils.function as func
 from apps.line_api import main as line_api
 from apps.server import start_thread
@@ -27,8 +28,14 @@ def main():
             func.time_sleep(1)
 
 
+# ジョブ
 def job():
     line_api()
 
 
+# メイン実行
 main()
+
+# プログラムのエントリーポイント
+if __name__ == const.MAIN_FUNCTION:
+    print(JOB_SCHEDULE_TIME)
