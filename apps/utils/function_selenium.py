@@ -1,6 +1,7 @@
 # 説明：Selenium関数
 
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -91,7 +92,13 @@ def get_webdriver():
     options.add_experimental_option("prefs", prefs)
 
     # ドライバー初期化
-    driver = webdriver.Chrome(service=service, options=options)
+    try:
+        driver = webdriver.Chrome(service=service, options=options)
+
+    except WebDriverException as wde:
+        func.print_error_msg("get_webdriver()", "WebDriverException")
+        func.print_error_msg(wde)
+        driver = const.NONE_CONSTANT
 
     return driver
 
