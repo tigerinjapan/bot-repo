@@ -24,7 +24,7 @@ def get_korea_weekly_ranking(div: str = "kpop"):
     kpop_weekly_ranking = []
 
     url = f"{news.URL_WOWKOREA}/ranking/weekly/{div}/"
-    elem_list = news.get_elem_list(news.DIV_KPOP_RANKING, url)[: const.NUM_PRINT_CNT]
+    elem_list = news.get_elem_list(news.DIV_KPOP_RANKING, url)[: const.MAX_DISPLAY_CNT]
 
     for elem in elem_list:
         text_data = elem.text

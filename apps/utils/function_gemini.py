@@ -17,7 +17,6 @@ NEW_LINE = const.SYM_NEW_LINE
 
 # プロパティ
 NUM_WRAP_WIDTH = 32
-NUM_NEWS_CNT = 3
 
 
 # GEMINI回答取得
@@ -52,12 +51,13 @@ def get_recommend_outfit_dinner(today_weather: str):
 
 # ニュース要約取得
 def get_news_summary(news_list: list[str]):
-    news_list = NEW_LINE.join(news_list[:NUM_NEWS_CNT])
+    news_item = [str(item) for item in news_list]
+    news_list = NEW_LINE.join(news_item[: const.MAX_MSG_CNT])
     contents = f"{news_list}{NEW_LINE}上記のニュース内容を要約してください。"
     conditions = (
         "※条件1：記号と絵文字、「。」は、使用しない"
         + "※条件2：英数字は、全て半角に変換"
-        + f"※条件3：ニュースは、{NUM_NEWS_CNT}トピックまで"
+        + f"※条件3：ニュースは、{const.MAX_MSG_CNT}トピックまで"
         + f"※条件4：ニュース内容と関係ない内容は不要"
         + f"※条件5：1行で、最大{NUM_WRAP_WIDTH}バイト以内"
         + "※条件6：1行ずつ、文章として、完結"

@@ -17,7 +17,7 @@ URL_KOYEB = func.get_env_val("URL_KOYEB")
 # LINE API情報
 LINE_CHANNEL_ID = func.get_env_val("LINE_CHANNEL_ID")
 LINE_CHANNEL_SECRET = func.get_env_val("LINE_CHANNEL_SECRET")
-MAX_MESSAGE_CNT = 200
+MAX_MSG_API_CNT = 200
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -25,18 +25,13 @@ NEW_LINE = const.SYM_NEW_LINE
 # メッセージタイプ
 MSG_TYPE_TXT = "text"
 MSG_TYPE_IMG = "image"
-LIST_MSG_TYPE = [MSG_TYPE_IMG]
-LIST_MSG_TYPE_ALL = LIST_MSG_TYPE + [MSG_TYPE_TXT, MSG_TYPE_TXT]
 
 # ファイル区分
 FILE_DIV_TODAY = "today"
 FILE_DIV_NEWS = "news"
 FILE_DIV_AI_NEWS = "ai_news"
-LIST_FILE_DIV = [FILE_DIV_TODAY]
-LIST_FILE_DIV_ALL = LIST_FILE_DIV + [FILE_DIV_NEWS, FILE_DIV_AI_NEWS]
 
 # タイトル
-WEEKDAY_JA = const.LIST_WEEKDAY[const.DATE_WEEKDAY]
 DIV_MARK = "*-----*-----*-----*-----*"
 DIV_MARK_TXT = "*--- {} ---*"
 DIV_MARK_IMG = "==== {} ===="
@@ -44,7 +39,7 @@ DIV_MARK_IMG = "==== {} ===="
 # プロパティ
 NUM_FONT_SIZE = 11
 NUM_IMG_MAX_SEQ = 4
-WEEKLY_MSG = "金"
+WEEKLY_DIV_FRI = "金"
 
 
 def main():
@@ -58,9 +53,12 @@ def main():
         # メッセージ数チェック
         use_cnt = check_message_count(token)
 
-        if use_cnt <= (MAX_MESSAGE_CNT - 20):
+        if use_cnt <= (MAX_MSG_API_CNT - 20):
+
+            msg_list = get_msg_list()
+
             # メッセージ取得
-            data = get_json_data()
+            data = get_json_data(msg_list)
 
             # メッセージ送信
             send_message(token, data)
@@ -111,7 +109,7 @@ def check_message_count(access_token: str) -> int:
     result = func_api.get_loads_json(response.text)
     total_usage = result["totalUsage"]
 
-    message_count = f"{total_usage} / {MAX_MESSAGE_CNT}"
+    message_count = f"{total_usage} / {MAX_MSG_API_CNT}"
     func.print_info_msg(const.STR_MESSAGE_JA, message_count)
     return total_usage
 
@@ -132,25 +130,19 @@ def send_message(access_token: str, json_data):
 
 
 # LINE送信用のJSONデータ取得
-def get_json_data():
+def get_json_data(msg_list: list[list[str]]):
     messages = []
 
-    msg_list, forecast = get_msg_list()
-    for msg_type, msg_div, msg_data in msg_list:
+    for msg_data in msg_list:
+        msg_type = msg_data[0]
+        text_msg = msg_data[1]
         json_object = {"type": msg_type}
 
-        text_title = get_title(msg_div, msg_type)
-        text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
-
         if msg_type == MSG_TYPE_IMG:
-            img_url = create_msg_img(msg_div, text_msg, forecast)
+            img_url = text_msg
             update_data = {"originalContentUrl": img_url, "previewImageUrl": img_url}
-
         else:
             update_data = {"text": text_msg}
-
-        info_msg = [msg_type, msg_div]
-        func.print_info_msg(const.STR_MESSAGE_JA, info_msg)
 
         json_object.update(update_data)
         messages.append(json_object)
@@ -161,31 +153,58 @@ def get_json_data():
     return json_data
 
 
-# メッセージ取得
-def get_msg_list() -> list[str]:
+# メッセージリスト取得
+def get_msg_list() -> list[list[str]]:
 
-    msg_type_list = LIST_MSG_TYPE
-    file_div_list = LIST_FILE_DIV
+    today_info, date_today, forecast = today.get_today_info()
 
-    today_info, forecast = today.get_today_info()
-    today_info_list = [f"[{div}] {info}" for div, info in today_info]
-    msg_list = [today_info_list]
+    msg_data_list = get_msg_data_list(
+        FILE_DIV_TODAY, MSG_TYPE_IMG, today_info, date_today, forecast
+    )
+    msg_list = [msg_data_list]
 
-    if WEEKDAY_JA == WEEKLY_MSG:
-        msg_type_list = LIST_MSG_TYPE_ALL
-        file_div_list = LIST_FILE_DIV_ALL
-
-        news_msg = news.get_news_msg_list(news.DIV_NEWS_LIST)
+    if WEEKLY_DIV_FRI in date_today:
         korea_news_msg = news.get_news_msg_list(news.DIV_KOREA_NEWS_LIST)
-        msg_list += [korea_news_msg, news_msg]
+        msg_data_list = get_msg_data_list(
+            FILE_DIV_NEWS, MSG_TYPE_TXT, korea_news_msg, date_today
+        )
+        msg_list.append(msg_data_list)
 
-    data_list = zip(msg_type_list, file_div_list, msg_list)
-    return data_list, forecast
+        ai_news_msg = news.get_news_msg_list(news.DIV_AI_NEWS_LIST)
+        msg_data_list = get_msg_data_list(
+            FILE_DIV_AI_NEWS, MSG_TYPE_TXT, ai_news_msg, date_today
+        )
+        msg_list.append(msg_data_list)
+
+    return msg_list
+
+
+# メッセージ取得
+def get_msg_data_list(
+    msg_div: str,
+    msg_type: str,
+    msg_data: list[str],
+    date_today: str,
+    forecast: str = const.SYM_BLANK,
+) -> str:
+
+    if msg_div == FILE_DIV_TODAY:
+        msg_data = [f"[{div}] {info}" for div, info in msg_data]
+
+    text_title = get_title(msg_div, msg_type, date_today)
+    text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
+
+    if msg_type == MSG_TYPE_IMG:
+        text_msg = create_msg_img(msg_div, text_msg, forecast)
+    msg_data_list = [msg_type, text_msg]
+    return msg_data_list
 
 
 # タイトル取得
-def get_title(div: str, msg_type: str = const.SYM_BLANK) -> list[str]:
-    title_div = f"{const.DATE_TODAY_SLASH}({WEEKDAY_JA})"
+def get_title(
+    div: str, msg_type: str = const.SYM_BLANK, date_today: str = const.SYM_BLANK
+) -> str:
+    title_div = date_today
     if div == FILE_DIV_NEWS:
         title_div = news.DIV_NEWS.format(const.SYM_BLANK)
     elif div == FILE_DIV_AI_NEWS:
@@ -245,4 +264,5 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    get_json_data()
+    msg_list = get_msg_list()
+    print(msg_list)

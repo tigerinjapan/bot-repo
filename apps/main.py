@@ -3,34 +3,46 @@
 import dotenv
 import schedule
 
+import apps.line_msg_api as line_msg_api
 import apps.utils.constants as const
 import apps.utils.function as func
-from apps.line_api import main as line_api
 from apps.server import start_thread
 
+# 環境変数を読み込む
 dotenv.load_dotenv()
 
-# ジョブ実行時間
+# ジョブ実行時間を環境変数から取得
 JOB_SCHEDULE_TIME = func.get_env_val("JOB_SCHEDULE_TIME")
 
 
 def main():
-    # サーバー立ち上げ
+    # サーバーを立ち上げる
     start_thread()
 
+    # ローカル環境でない場合、ジョブをスケジュールする
     if not func.is_local_env():
-        # 条件：毎日指定時間で、実行
-        schedule.every().day.at(JOB_SCHEDULE_TIME).do(job)
+        # 毎日指定された時間に実行
+        schedule.every().day.at(JOB_SCHEDULE_TIME).do(daily_news)
+
+        # 毎日4時間毎に実行
+        schedule.every(4).hours.do(update_news)
 
         while True:
-            # 指定時間で、実行
+            # 保留中のジョブを実行
             schedule.run_pending()
+            # 1秒間スリープする
             func.time_sleep(1)
 
 
-# ジョブ
-def job():
-    line_api()
+# デイリーニュース：LINE APIを呼び出す
+def daily_news():
+    line_msg_api.main()
+
+
+# ニュース更新：ウェブページの更新
+def update_news():
+    # server.pyにて、ウェブページ更新できる共通メソッド作成
+    print("ウェブページの更新自動化準備中")
 
 
 # メイン実行
@@ -38,4 +50,5 @@ main()
 
 # プログラムのエントリーポイント
 if __name__ == const.MAIN_FUNCTION:
+    # 環境変数から取得したジョブスケジュール時間を出力
     print(JOB_SCHEDULE_TIME)

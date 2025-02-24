@@ -73,7 +73,7 @@ def get_data_list() -> list[tuple[list[str], list[str]]]:
             lcc_data = [company, div, title, url_news]
             lcc_data_list.append(lcc_data)
 
-            if len(lcc_data_list) == const.NUM_PRINT_CNT:
+            if len(lcc_data_list) == const.MAX_DISPLAY_CNT:
                 break
 
     data_info = [COL_LIST, lcc_data_list]

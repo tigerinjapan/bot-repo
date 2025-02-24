@@ -44,9 +44,9 @@ def get_data_list() -> list[tuple[list[str], list[str]]]:
 
 
 # 今日の生活情報取得
-def get_today_info() -> tuple[list[str], str]:
+def get_today_info() -> tuple[list[str], str, str]:
     # 今日の天気
-    today_weather, forecast = get_today_weather()
+    today_weather, date_today, forecast = get_today_weather()
 
     # 今日のウォン
     today_won_rate = get_today_won()
@@ -61,23 +61,40 @@ def get_today_info() -> tuple[list[str], str]:
 
     info_list = [today_weather, today_won_rate, today_outfit, today_dinner]
     today_info = zip(DIV_LIST, info_list)
-    return today_info, forecast
+    return today_info, date_today, forecast
 
 
 # 今日の天気情報取得
-def get_today_weather() -> tuple[list[str], str]:
-    # 東京の情報取得
-    soup_result = func_bs.get_elem_from_url(
-        URL_TENKI, attr_div=const.ATTR_ID, attr_val="forecast-map-entry-13101"
+def get_today_weather() -> tuple[list[str], str, str]:
+
+    soup = func_bs.get_soup(URL_TENKI)
+    elem_datetime = func_bs.find_elem_by_attr(
+        soup, attr_div=const.ATTR_ID, attr_val="forecast-map-announce-datetime"
+    )
+    datetime_text = elem_datetime["datetime"]
+    today_text = datetime_text.split("T")[0]
+    datetime_today = func.convert_str_to_date(
+        today_text, const.DATE_FORMAT_YYYYMMDD_DASH
+    )
+    weekday = const.LIST_WEEKDAY[datetime_today.weekday()]
+    date_today = f"{today_text}({weekday})"
+
+    elem_datetime = func_bs.find_elem_by_attr(
+        soup, attr_div=const.ATTR_ID, attr_val="forecast-public-date"
     )
 
-    forecast = get_elem_val_by_class(soup_result, "forecast-image")
-    max_temp = get_elem_val_by_class(soup_result, "max-temp")
-    min_temp = get_elem_val_by_class(soup_result, "min-temp")
-    rain_prob = get_elem_val_by_class(soup_result, "prob-precip")
+    # 東京の情報取得
+    elem_forecast = func_bs.find_elem_by_attr(
+        soup, attr_div=const.ATTR_ID, attr_val="forecast-map-entry-13101"
+    )
+
+    forecast = get_elem_val_by_class(elem_forecast, "forecast-image")
+    max_temp = get_elem_val_by_class(elem_forecast, "max-temp")
+    min_temp = get_elem_val_by_class(elem_forecast, "min-temp")
+    rain_prob = get_elem_val_by_class(elem_forecast, "prob-precip")
 
     today_weather = f"{forecast}・{max_temp}/{min_temp}・{rain_prob}"
-    return today_weather, forecast
+    return today_weather, date_today, forecast
 
 
 # 今日のウォン取得
@@ -104,6 +121,10 @@ def get_elem_val_by_class(soup, class_: str) -> str:
     else:
         elem_val = elem.text
     return elem_val
+
+
+# TODO DF取得できるよう修正
+# df_info, chk_msg = get_search_data_from_df(form)
 
 
 if __name__ == const.MAIN_FUNCTION:

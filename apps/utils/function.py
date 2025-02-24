@@ -53,8 +53,7 @@ def is_local_env():
 
     if host == const.HOST_LOCAL and (const.IP_PRIVATE in ip or const.IP_LOCAL in ip):
         ip_flg = const.FLG_ON
-    else:
-       print_info_msg([const.STR_HOST, host], [const.STR_IP, ip])
+    print_info_msg([const.STR_HOST, host], [const.STR_IP, ip])
     return ip_flg
 
 
@@ -90,6 +89,25 @@ def print_info_msg(div: str, msg: str = const.SYM_BLANK):
 def print_error_msg(div: str, msg: str = const.SYM_BLANK):
     msg_now = f"[{datetime.now()}]"
     print(msg_now, msg_const.MSG_DIV_ERR, div, msg)
+
+
+def convert_str_to_date(str: str, format: str) -> datetime:
+    # func[strptime]:Convert String to Date
+    date = datetime.strptime(str, format)
+    return date
+
+
+def convert_date_to_str(date: datetime, format: str) -> str:
+    # func[strftime]:Convert Date to String
+    date_format = date.strftime(format)
+    return date_format
+
+
+def convert_date_format(str: str, old_format: str, new_format: str) -> str:
+    # func[strptime]:Convert Date to String
+    date = convert_str_to_date(str, old_format)
+    date_format = convert_date_to_str(date, new_format)
+    return date_format
 
 
 # タイムスリップ

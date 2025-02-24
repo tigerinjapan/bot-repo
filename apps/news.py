@@ -31,7 +31,8 @@ DIV_KPOP_RANKING = "週間KPOPランキング"
 DIV_KPOP_NEWS = "KPOP" + const.STR_NEWS_JA
 DIV_NIKKEI_NEWS = DIV_NEWS.format(STR_NIKKEI_JA)
 DIV_AI_NEWS = DIV_NEWS.format(STR_AI)
-DIV_NEWS_LIST = [DIV_NIKKEI_NEWS, DIV_AI_NEWS]
+DIV_AI_NEWS_LIST = [DIV_AI_NEWS]
+DIV_NEWS_LIST = [DIV_NIKKEI_NEWS] + DIV_AI_NEWS_LIST
 DIV_KOREA_NEWS_LIST = [DIV_KOREA_NEWS, DIV_ENT_NEWS, DIV_KPOP_NEWS]
 
 LIST_KEYWORD_AI = ["AI", "OpenAI", "ChatGPT", "Gemini"]
@@ -47,7 +48,7 @@ def get_data_list(
     data_list = []
 
     for div in div_list:
-        news_list = get_news_list(div, list_flg=const.FLG_ON)[: const.NUM_PRINT_CNT]
+        news_list = get_news_list(div, list_flg=const.FLG_ON)[: const.MAX_DISPLAY_CNT]
         col_list = [div, const.STR_LINK_JA]
         news_data = [col_list, news_list]
         data_list.append(news_data)
@@ -58,7 +59,7 @@ def get_data_list(
 def get_news_msg_list(div_list: list[str]):
     news_msg_list = []
     for div in div_list:
-        news_list = get_news_list(div)
+        news_list = get_news_list(div, ai_flg=const.FLG_ON)
         news_msg_list.append(news_list)
     return news_msg_list
 

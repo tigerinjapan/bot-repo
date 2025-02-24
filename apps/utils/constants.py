@@ -53,6 +53,7 @@ CHARSET_SJIS = "sjis"
 ##### 日付フォーマット #####
 DATE_FORMAT_OUTPUT_FILE = "%Y%m%d%H%M%S"
 DATE_FORMAT_YYYYMMDD = "%Y%m%d"
+DATE_FORMAT_YYYYMMDD_DASH = "%Y-%m-%d"
 DATE_FORMAT_YYYYMMDD_SLASH = "%Y/%m/%d"
 DATE_FORMAT_YYYYMM = "%Y%m"
 
@@ -86,7 +87,8 @@ NUM_TWO = 2
 NUM_THREE = 3
 
 # 画面表示件数
-NUM_PRINT_CNT = 5
+MAX_DISPLAY_CNT = 5
+MAX_MSG_CNT = 3
 
 ##### 型 #####
 TYPE_DICT = "dict"
