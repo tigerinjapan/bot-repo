@@ -155,24 +155,26 @@ def get_json_data(msg_list: list[list[str]]):
 
 # メッセージリスト取得
 def get_msg_list() -> list[list[str]]:
+    # 今日の日付取得
+    date_today = today.get_date_today()
 
-    today_info, date_today, forecast = today.get_today_info()
+    today_info, forecast = today.get_today_info()
 
     msg_data_list = get_msg_data_list(
-        FILE_DIV_TODAY, MSG_TYPE_IMG, today_info, date_today, forecast
+        FILE_DIV_TODAY, MSG_TYPE_IMG, date_today, today_info, forecast
     )
     msg_list = [msg_data_list]
 
     if WEEKLY_DIV_FRI in date_today:
         korea_news_msg = news.get_news_msg_list(news.DIV_KOREA_NEWS_LIST)
         msg_data_list = get_msg_data_list(
-            FILE_DIV_NEWS, MSG_TYPE_TXT, korea_news_msg, date_today
+            FILE_DIV_NEWS, MSG_TYPE_TXT, date_today, korea_news_msg
         )
         msg_list.append(msg_data_list)
 
         ai_news_msg = news.get_news_msg_list(news.DIV_AI_NEWS_LIST)
         msg_data_list = get_msg_data_list(
-            FILE_DIV_AI_NEWS, MSG_TYPE_TXT, ai_news_msg, date_today
+            FILE_DIV_AI_NEWS, MSG_TYPE_TXT, date_today, ai_news_msg
         )
         msg_list.append(msg_data_list)
 

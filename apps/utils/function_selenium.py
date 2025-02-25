@@ -83,7 +83,7 @@ def get_webdriver():
     for option in options_list:
         options.add_argument(option)
 
-    # Chromeのバイナリパスを指定 # TODO ちゃんと適用されるか確認
+    # Chromeのバイナリパスを指定
     if not local_flg:
         options.binary_location = "/usr/bin/chromium"
 
@@ -96,7 +96,9 @@ def get_webdriver():
         driver = webdriver.Chrome(service=service, options=options)
 
     except WebDriverException as wde:
-        func.print_error_msg("get_webdriver()", "WebDriverException")
+        func.print_error_msg(
+            "get_webdriver():WebDriverException", f"local_flg:{local_flg}"
+        )
         func.print_error_msg(wde)
         driver = const.NONE_CONSTANT
 
@@ -149,9 +151,14 @@ def get_element_text(driver, by, value):
 # 接続テスト
 def test_access_webdriver():
     driver = get_webdriver()
-    driver.get(const.URL_GOOGLE)
-    print(driver.title)
-    driver.quit()
+    if driver:
+        driver.get(const.URL_GOOGLE)
+        func.print_info_msg(driver.title)
+        driver.quit()
+    else:
+        func.print_error_msg(
+            f"Chrome Driver:{const.STR_PATH_JA}", msg_const.MSG_ERR_FILE_NOT_EXIST
+        )
 
 
 # プログラムのエントリーポイント

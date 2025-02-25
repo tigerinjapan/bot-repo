@@ -17,6 +17,7 @@ COL_LIST = [const.STR_DIV_JA, const.STR_CONTENTS_JA]
 # URL
 URL_TENKI = "https://tenki.jp"
 URL_NAVER_FINANCE = "https://finance.naver.com"
+URL_HINOKOTO = "https://www.hinokoto.com"
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -46,7 +47,7 @@ def get_data_list() -> list[tuple[list[str], list[str]]]:
 # 今日の生活情報取得
 def get_today_info() -> tuple[list[str], str, str]:
     # 今日の天気
-    today_weather, date_today, forecast = get_today_weather()
+    today_weather, forecast = get_today_weather()
 
     # 今日のウォン
     today_won_rate = get_today_won()
@@ -61,31 +62,14 @@ def get_today_info() -> tuple[list[str], str, str]:
 
     info_list = [today_weather, today_won_rate, today_outfit, today_dinner]
     today_info = zip(DIV_LIST, info_list)
-    return today_info, date_today, forecast
+    return today_info, forecast
 
 
 # 今日の天気情報取得
-def get_today_weather() -> tuple[list[str], str, str]:
-
-    soup = func_bs.get_soup(URL_TENKI)
-    elem_datetime = func_bs.find_elem_by_attr(
-        soup, attr_div=const.ATTR_ID, attr_val="forecast-map-announce-datetime"
-    )
-    datetime_text = elem_datetime["datetime"]
-    today_text = datetime_text.split("T")[0]
-    datetime_today = func.convert_str_to_date(
-        today_text, const.DATE_FORMAT_YYYYMMDD_DASH
-    )
-    weekday = const.LIST_WEEKDAY[datetime_today.weekday()]
-    date_today = f"{today_text}({weekday})"
-
-    elem_datetime = func_bs.find_elem_by_attr(
-        soup, attr_div=const.ATTR_ID, attr_val="forecast-public-date"
-    )
-
+def get_today_weather() -> tuple[list[str], str]:
     # 東京の情報取得
-    elem_forecast = func_bs.find_elem_by_attr(
-        soup, attr_div=const.ATTR_ID, attr_val="forecast-map-entry-13101"
+    elem_forecast = func_bs.get_elem_from_url(
+        URL_TENKI, attr_div=const.ATTR_ID, attr_val="forecast-map-entry-13101"
     )
 
     forecast = get_elem_val_by_class(elem_forecast, "forecast-image")
@@ -94,7 +78,7 @@ def get_today_weather() -> tuple[list[str], str, str]:
     rain_prob = get_elem_val_by_class(elem_forecast, "prob-precip")
 
     today_weather = f"{forecast}・{max_temp}/{min_temp}・{rain_prob}"
-    return today_weather, date_today, forecast
+    return today_weather, forecast
 
 
 # 今日のウォン取得
@@ -110,6 +94,16 @@ def get_today_won() -> list[str]:
     won = elem_list[0].text
     today_won_rate = f"100{STR_YEN_JA}={won}{STR_WON_JA}"
     return today_won_rate
+
+
+# 今日の日付取得
+def get_date_today() -> str:
+    elem = func_bs.get_elem_from_url(URL_HINOKOTO, attr_val="indextoday")
+    elem_list = func_bs.find_elem_by_attr(
+        elem, tag=const.TAG_SPAN, list_flg=const.FLG_ON
+    )
+    date_today = elem_list[0].text + elem_list[2].text
+    return date_today
 
 
 # 要素値取得

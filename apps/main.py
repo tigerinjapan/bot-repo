@@ -41,8 +41,8 @@ def daily_news():
 
 # ニュース更新：ウェブページの更新
 def update_news():
-    # server.pyにて、ウェブページ更新できる共通メソッド作成
-    print("ウェブページの更新自動化準備中")
+    # TODO server.pyにて、ウェブページ更新できる共通メソッド作成
+    func.print_info_msg("ウェブページの更新自動化準備中")
 
 
 # メイン実行
