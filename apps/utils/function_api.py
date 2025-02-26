@@ -6,7 +6,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 
 import apps.utils.constants as const
-from apps.utils.function import remove_old_file
+from apps.utils.function import get_file_path
 
 
 # リクエスト送信
@@ -48,21 +48,16 @@ def insert_msg_to_img(
     xy_size: tuple[int, int],
     msg: str,
 ):
-    workspace_path = const.DIR_CURR_WORK
-    input_path = f"{workspace_path}/{const.STR_INPUT}"
-    img_dir_path = f"{input_path}/{const.STR_IMG}"
-    img_file_path = f"{img_dir_path}/{img_file_name}.{const.FILE_TYPE_JPEG}"
+    img_file_path = get_file_path(img_file_name, const.FILE_TYPE_JPEG)
 
     img = Image.open(img_file_path).rotate(0)
     draw = ImageDraw.Draw(img)
 
-    font_path = f"{input_path}/{font_type}"
+    font_path = get_file_path(font_type, const.FILE_TYPE_TTC)
     font = ImageFont.truetype(font=font_path, size=font_size)
 
     draw.text(xy=xy_size, text=msg, fill="black", font=font, align="left")
 
-    output_path = f"{workspace_path}/{const.STR_OUTPUT}/{const.STR_IMG}"
-    remove_old_file(output_path, div)
-    file_path = f"{output_path}/{const.DATE_TODAY}_{div}.{const.FILE_TYPE_JPEG}"
+    file_path = get_file_path(div, const.FILE_TYPE_JPEG, const.STR_OUTPUT)
     img.save(file_path, optimize=const.FLG_ON)
     return file_path

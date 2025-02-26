@@ -8,6 +8,7 @@ selenium
 webdriver_manager
 pyvirtualdisplay
 jinja2
+pandas
 schedule
 python-dotenv
 Pillow

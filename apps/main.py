@@ -4,9 +4,9 @@ import dotenv
 import schedule
 
 import apps.line_msg_api as line_msg_api
+import apps.server as server
 import apps.utils.constants as const
 import apps.utils.function as func
-from apps.server import start_thread
 
 # 環境変数を読み込む
 dotenv.load_dotenv()
@@ -17,7 +17,7 @@ JOB_SCHEDULE_TIME = func.get_env_val("JOB_SCHEDULE_TIME")
 
 def main():
     # サーバーを立ち上げる
-    start_thread()
+    server.start_thread()
 
     # ローカル環境でない場合、ジョブをスケジュールする
     if not func.is_local_env():
@@ -41,8 +41,7 @@ def daily_news():
 
 # ニュース更新：ウェブページの更新
 def update_news():
-    # TODO server.pyにて、ウェブページ更新できる共通メソッド作成
-    func.print_info_msg("ウェブページの更新自動化準備中")
+    server.update_news()
 
 
 # メイン実行

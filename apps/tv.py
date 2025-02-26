@@ -14,7 +14,7 @@ app_title = "韓国TV番組"
 URL_TV = "https://www.tvkingdom.jp"
 
 # カラムリスト
-COL_LIST = ["放送時間", "番組名", "チャンネル"]
+col_list = ["放送時間", "番組名", "チャンネル"]
 
 # 検索キーワード
 KEYWORD_KOREA = "韓国"
@@ -26,13 +26,11 @@ URL_PARAM = (
 )
 
 
-# データリスト取得
-def get_data_list(keyword: str = KEYWORD_KOREA) -> list[tuple[list[str], list[str]]]:
-    data_list = []
-    tv_info_list = get_tv_info_list(keyword)
-    data_info = [COL_LIST, tv_info_list]
-    data_list.append(data_info)
-    return data_list
+# アイテムリスト取得
+def get_item_list():
+    keyword = KEYWORD_KOREA
+    item_list = get_tv_info_list(keyword)
+    return item_list
 
 
 # TV番組情報取得
@@ -72,5 +70,5 @@ def get_tv_info_list(keyword) -> list[str]:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    data_list = get_data_list()
-    print(data_list[0][1])
+    item_list = get_item_list()
+    print(item_list)

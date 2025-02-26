@@ -14,7 +14,7 @@ app_title = "LCC" + const.STR_NEWS_JA
 URL_LCC = "https://dsk.ne.jp/"
 
 # カラムリスト
-COL_LIST = [
+col_list = [
     const.STR_DIV_JA,
     const.STR_COMPANY_JA,
     const.STR_TITLE_JA,
@@ -35,11 +35,9 @@ KEYWORD_LIST = [
 ]
 
 
-# データリスト取得
-def get_data_list() -> list[tuple[list[str], list[str]]]:
-    data_list = []
-
-    lcc_data_list = []
+# アイテムリスト取得
+def get_item_list():
+    item_list = []
     lcc_list = func_bs.get_elem_from_url(
         URL_LCC, tag=const.TAG_DIV, attr_val="dgt3", list_flg=const.FLG_ON
     )
@@ -71,14 +69,11 @@ def get_data_list() -> list[tuple[list[str], list[str]]]:
 
         if func.check_in_list(title, KEYWORD_LIST):
             lcc_data = [company, div, title, url_news]
-            lcc_data_list.append(lcc_data)
+            item_list.append(lcc_data)
 
-            if len(lcc_data_list) == const.MAX_DISPLAY_CNT:
+            if len(item_list) == const.MAX_DISPLAY_CNT:
                 break
-
-    data_info = [COL_LIST, lcc_data_list]
-    data_list.append(data_info)
-    return data_list
+    return item_list
 
 
 # テキスト値取得
@@ -98,5 +93,5 @@ def get_lcc_text(lcc_div, soup):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    data_list = get_data_list()
-    print(data_list[0][1])
+    item_list = get_item_list()
+    print(item_list)

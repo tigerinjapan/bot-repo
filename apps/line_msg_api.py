@@ -185,15 +185,16 @@ def get_msg_list() -> list[list[str]]:
 def get_msg_data_list(
     msg_div: str,
     msg_type: str,
-    msg_data: list[str],
     date_today: str,
+    msg_data: list[str],
     forecast: str = const.SYM_BLANK,
 ) -> str:
+
+    text_title = get_title(msg_div, msg_type, date_today)
 
     if msg_div == FILE_DIV_TODAY:
         msg_data = [f"[{div}] {info}" for div, info in msg_data]
 
-    text_title = get_title(msg_div, msg_type, date_today)
     text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 
     if msg_type == MSG_TYPE_IMG:
@@ -249,7 +250,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
     img_file_org = f"{img_div}_{img_no}"
 
-    font_type = "meiryo.ttc"
+    font_type = "meiryo"
     font_size = NUM_FONT_SIZE
     xy_size = (75, 185) if div == FILE_DIV_TODAY else (45, 90)
 

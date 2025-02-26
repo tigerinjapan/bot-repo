@@ -45,7 +45,7 @@ class AppExec:
 
     # データ取得
     def data(self):
-        data_list = self.app.get_data_list()
+        data_list = get_data_list(self.app, self.name)
         return data_list
 
 
@@ -60,7 +60,7 @@ def run():
 
 # スレッド開始
 def start_thread():
-    test_access_webdriver()  # TODO テスト後、削除
+    # test_access_webdriver()  # TODO テスト後、削除
     t = Thread(target=run)
     t.start()
 
@@ -161,6 +161,34 @@ def exec_result(request: Request, app_div):
     return templates.TemplateResponse(const.HTML_RESULT, context)
 
 
+# データリスト取得
+def get_data_list(app_div, app_name: str) -> list[tuple[list[str], list[str]]]:
+
+    if app_name in ["news", "korea"]:
+        return app_div.get_data_list()  # TODO データリスト修正
+
+    data_list = []
+    df = func.get_df_from_json(app_name)
+    column_list = df.columns.to_list()
+    data_val_list = df.values.tolist()
+
+    data_info = [column_list, data_val_list]
+    data_list.append(data_info)
+    return data_list
+
+
+# ニュース更新：ウェブページの更新
+def update_news():
+    # app_div_list = [today, news, korea, lcc, tv] # TODO
+    app_div_list = [today, lcc, tv]
+    app_name_list = ["today", "lcc", "tv"]
+
+    for app_div, app_name in zip(app_div_list, app_name_list):
+        item_list = app_div.get_item_list()
+        df = func.get_df(item_list, app_div.col_list)
+        func.df_to_json(app_name, df)
+
+
 @app.get("/templates/{file_name}")
 async def temp(file_name: str):
     file_ext = func.get_path_split(file_name, extension_flg=const.FLG_ON)
@@ -171,9 +199,7 @@ async def temp(file_name: str):
 
 @app.get("/img/{file_name}")
 async def img(file_name: str):
-    image_path = (
-        f"{const.STR_OUTPUT}/{const.STR_IMG}/{file_name}.{const.FILE_TYPE_JPEG}"
-    )
+    image_path = func.get_file_path(file_name, const.FILE_TYPE_JPEG, const.STR_OUTPUT)
     return FileResponse(image_path)
 
 

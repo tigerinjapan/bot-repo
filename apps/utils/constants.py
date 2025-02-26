@@ -144,6 +144,7 @@ FILE_TYPE_JSON = "json"
 FILE_TYPE_LOG = "log"
 FILE_TYPE_PNG = "png"
 FILE_TYPE_JPEG = "jpeg"
+FILE_TYPE_TTC = "ttc"
 
 ##### 入力タイプ #####
 INPUT_TYPE_TEXT = "text"

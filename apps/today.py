@@ -12,7 +12,7 @@ app_name = func.get_app_name(__file__)
 app_title = "今日の生活情報"
 
 # カラムリスト
-COL_LIST = [const.STR_DIV_JA, const.STR_CONTENTS_JA]
+col_list = [const.STR_DIV_JA, const.STR_CONTENTS_JA]
 
 # URL
 URL_TENKI = "https://tenki.jp"
@@ -33,15 +33,11 @@ STR_YEN_JA = "円"
 STR_WON_JA = "ウォン"
 
 
-# データリスト取得
-def get_data_list() -> list[tuple[list[str], list[str]]]:
-    data_list = []
-
+# アイテムリスト取得
+def get_item_list():
     today_info = get_today_info()[0]
-    today_info_list = [[div, info] for div, info in today_info]
-    today_info_list = [COL_LIST, today_info_list]
-    data_list.append(today_info_list)
-    return data_list
+    item_list = [[div, info] for div, info in today_info]
+    return item_list
 
 
 # 今日の生活情報取得
@@ -122,5 +118,5 @@ def get_elem_val_by_class(soup, class_: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    data_list = get_data_list()
-    print(data_list)
+    item_list = get_item_list()
+    print(item_list)

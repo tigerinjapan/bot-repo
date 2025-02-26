@@ -96,10 +96,7 @@ def get_webdriver():
         driver = webdriver.Chrome(service=service, options=options)
 
     except WebDriverException as wde:
-        func.print_error_msg(
-            "get_webdriver():WebDriverException", f"local_flg:{local_flg}"
-        )
-        func.print_error_msg(wde)
+        func.print_error_msg("get_webdriver():WebDriverException", wde)
         driver = const.NONE_CONSTANT
 
     return driver

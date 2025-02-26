@@ -124,7 +124,7 @@ footer {
 }
 
 /*共通のメディアクエリ設定*/
-@media screen and (max-width:768px) {
+@media screen and (max-width:640px) {
 	body {
 		font-size: 4vw;
 	}

@@ -48,11 +48,17 @@ def get_data_list(
     data_list = []
 
     for div in div_list:
-        news_list = get_news_list(div, list_flg=const.FLG_ON)[: const.MAX_DISPLAY_CNT]
+        item_list = get_item_list(div)
         col_list = [div, const.STR_LINK_JA]
-        news_data = [col_list, news_list]
-        data_list.append(news_data)
+        data_info = [col_list, item_list]
+        data_list.append(data_info)
     return data_list
+
+
+# アイテムリスト取得
+def get_item_list(div:str):
+    item_list = get_news_list(div, list_flg=const.FLG_ON)[: const.MAX_DISPLAY_CNT]
+    return item_list
 
 
 # ニュースメッセージリスト取得

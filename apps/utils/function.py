@@ -9,6 +9,8 @@ import socket
 import time
 from datetime import datetime
 
+import pandas as pd
+
 import apps.utils.constants as const
 import apps.utils.message_constants as msg_const
 
@@ -24,6 +26,16 @@ def get_app_name(app_path: str, extension_flg: bool = const.FLG_OFF) -> str:
 def get_app_path(dir_path: str, file_path: str = const.SYM_BLANK) -> str:
     app_path = os.path.join(const.DIR_CURR_WORK, dir_path, file_path)
     return app_path
+
+
+# パス存在チェック
+def check_path_exists(file_path: str) -> bool:
+    check_flg = const.FLG_OFF
+    # func[exists]:Check if path exists
+    if os.path.exists(file_path):
+        check_flg = const.FLG_ON
+
+    return check_flg
 
 
 # ファイルパス名取得
@@ -141,11 +153,8 @@ def check_in_list(
 
 
 # ファイルパス取得
-def get_file_path(app_div: str, file_type: str, file_div: str = const.STR_INPUT) -> str:
-    file_path = f"{file_div}/{app_div}"
-    if file_div == const.STR_OUTPUT:
-        file_path += f"_{const.DATE_NOW}"
-    file_path += f".{file_type}"
+def get_file_path(div: str, file_type: str, file_div: str = const.STR_INPUT) -> str:
+    file_path = f"{file_div}/{file_type}/{div}.{file_type}"
     return file_path
 
 
@@ -164,20 +173,27 @@ def remove_old_file(dir_path: str, div: str):
 
 # ファイル読込
 def read_file(file_path: str):
-    data = open_file(
-        file_path, const.FILE_MODE_READ, const.CHARSET_UTF_8, const.NONE_CONSTANT
-    )
+    data = open_file(file_path)
     return data
 
 
+# ファイル書込
+def write_file(file_path: str, contents):
+    open_file(file_path, file_mode=const.FILE_MODE_WRITE, contents=contents)
+
+
 # ファイルオープン
-def open_file(file_path: str, file_mode: str, file_encode: str, contents):
+def open_file(
+    file_path: str,
+    file_mode: str = const.FILE_MODE_READ,
+    contents=const.NONE_CONSTANT,
+    file_encode: str = const.CHARSET_UTF_8,
+):
     try:
         # func[open]:Open file
         file_open = open(file_path, mode=file_mode, encoding=file_encode)
         if file_mode == const.FILE_MODE_READ:
-            # func[exists]:Check if path exists
-            if not (os.path.exists(file_path)):
+            if not check_path_exists(file_path):
                 exception_msg = msg_const.MSG_ERR_FILE_NOT_EXIST
                 raise Exception(exception_msg)
             # func[read]:Reading file
@@ -188,7 +204,7 @@ def open_file(file_path: str, file_mode: str, file_encode: str, contents):
         # func[close]:Close file
         file_open.close()
     except Exception as e:
-        print_error_msg(e, file_path)
+        print_error_msg(file_path, e)
         return const.FLG_OFF
     else:
         if file_mode == const.FILE_MODE_READ:
@@ -196,14 +212,20 @@ def open_file(file_path: str, file_mode: str, file_encode: str, contents):
 
 
 # 権限データ取得
-def get_auth_data(app_div: str = const.NONE_CONSTANT):
-    file_path = get_file_path(const.STR_AUTH, const.FILE_TYPE_JSON)
-    data = read_file(file_path)
-    json_load = object_to_json(data)
-    if app_div:
-        json_data = json_load[app_div]
+def get_auth_data(auth_div: str = const.NONE_CONSTANT):
+    json_data = get_json_data(const.STR_AUTH)
+    if auth_div:
+        auth_data = json_data[auth_div]
     else:
-        json_data = json_load
+        auth_data = json_data
+    return auth_data
+
+
+# JSONデータ取得
+def get_json_data(app_div: str):
+    file_path = get_file_path(app_div, const.FILE_TYPE_JSON)
+    data = read_file(file_path)
+    json_data = object_to_json(data)
     return json_data
 
 
@@ -212,6 +234,48 @@ def object_to_json(data):
     # func[json.loads]:Read JSON file
     response_json = json.loads(data)
     return response_json
+
+
+# DataFrameからJSON出力
+def df_to_json(div: str, df):
+    # DataFrameをJSONファイルに出力
+    file_path = get_file_path(div, const.FILE_TYPE_JSON, const.STR_OUTPUT)
+
+    # データフレームをJSON文字列として取得
+    json_data = df.to_json(orient="records", lines=const.FLG_ON)
+
+    # UTF-8エンコーディングでファイルに保存
+    write_file(file_path, json_data)
+
+
+# JSONからDataFrameデータ取得
+def get_df_from_json(div: str, file_div: str = const.STR_OUTPUT):
+    df = get_df()
+    file_path = get_file_path(div, const.FILE_TYPE_JSON, file_div)
+
+    if check_path_exists(file_path):
+        # func[read_json]:Read JSON file with Pandas
+        df = pd.read_json(file_path)
+    else:
+        print_info_msg(file_path, msg_const.MSG_ERR_FILE_NOT_EXIST)
+
+    return df
+
+
+# DataFrame取得
+def get_df(
+    data_list: list = const.NONE_CONSTANT, columns: list[str] = const.NONE_CONSTANT
+):
+    if data_list:
+        # DataFrame作成
+        df = pd.DataFrame(data_list, columns=columns)
+        if df.empty:
+            print_info_msg(msg_const.MSG_ERR_DATA_NOT_EXIST)
+    else:
+        # DataFrame初期化
+        df = pd.DataFrame()
+
+    return df
 
 
 # 文字列置換
