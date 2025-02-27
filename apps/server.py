@@ -24,6 +24,16 @@ app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="secret_key")
 templates = Jinja2Templates(directory="templates")
 
+# アプリケーションリスト
+LIST_APP_DIV = [today, news, korea, lcc, tv]
+LIST_APP_NAME = [
+    const.APP_TODAY,
+    const.APP_NEWS,
+    const.APP_KOREA,
+    const.APP_LCC,
+    const.APP_TV,
+]
+
 # ユーザーデータ
 users_data = func.get_auth_data(const.STR_USER)
 
@@ -140,6 +150,26 @@ async def tv_list(request: Request):
     return exec_result(request, app_div)
 
 
+@app.get("/templates/{file_name}")
+async def temp(file_name: str):
+    file_ext = func.get_path_split(file_name, extension_flg=const.FLG_ON)
+
+    file_path = f"templates/{file_ext}/{file_name}"
+    return FileResponse(file_path)
+
+
+@app.get("/img/{file_name}")
+async def img(file_name: str):
+    image_path = func.get_file_path(file_name, const.FILE_TYPE_JPEG, const.STR_OUTPUT)
+    return FileResponse(image_path)
+
+
+@app.get("/test")
+async def test():
+    return {"message": "[test] Server is on test."}
+
+
+# 【画面】取得結果
 def exec_result(request: Request, app_div):
     app_name = app_div.app_name
     app_title = app_div.app_title
@@ -161,10 +191,12 @@ def exec_result(request: Request, app_div):
     return templates.TemplateResponse(const.HTML_RESULT, context)
 
 
-# データリスト取得
+# 【画面】データリスト取得
 def get_data_list(app_name: str) -> list[tuple[list[str], list[str]]]:
     data_list = []
     df = func.get_df_from_json(app_name)
+    if df.empty:
+        update_news()
     column_list = df.columns.to_list()
     data_val_list = df.values.tolist()
 
@@ -173,42 +205,14 @@ def get_data_list(app_name: str) -> list[tuple[list[str], list[str]]]:
     return data_list
 
 
-# ニュース更新：ウェブページの更新
+# 【画面】ウェブページの更新
 def update_news():
-    app_div_list = [today, news, korea, lcc, tv]
-    app_name_list = [
-        const.APP_TODAY,
-        const.APP_NEWS,
-        const.APP_KOREA,
-        const.APP_LCC,
-        const.APP_TV,
-    ]
-
-    for app_div, app_name in zip(app_div_list, app_name_list):
+    for app_div, app_name in zip(LIST_APP_DIV, LIST_APP_NAME):
         item_list = app_div.get_item_list()
         df = func.get_df(item_list, app_div.col_list)
         func.df_to_json(app_name, df)
 
     func.print_info_msg(const.FILE_TYPE_JSON, msg_const.MSG_INFO_PROC_COMPLETED)
-
-
-@app.get("/templates/{file_name}")
-async def temp(file_name: str):
-    file_ext = func.get_path_split(file_name, extension_flg=const.FLG_ON)
-
-    file_path = f"templates/{file_ext}/{file_name}"
-    return FileResponse(file_path)
-
-
-@app.get("/img/{file_name}")
-async def img(file_name: str):
-    image_path = func.get_file_path(file_name, const.FILE_TYPE_JPEG, const.STR_OUTPUT)
-    return FileResponse(image_path)
-
-
-@app.get("/test")
-async def test():
-    return {"message": "[test] Server is on test."}
 
 
 if __name__ == const.MAIN_FUNCTION:
