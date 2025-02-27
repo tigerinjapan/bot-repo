@@ -39,7 +39,7 @@ def get_webdriver():
     ]
 
     if not local_flg:
-        option_headless = ("--headless",)  # ヘッドレスモードで実行
+        option_headless = "--headless"  # ヘッドレスモードで実行
         browser_display_options.append(option_headless)
 
     # オプション：セキュリティ
@@ -96,7 +96,7 @@ def get_webdriver():
         driver = webdriver.Chrome(service=service, options=options)
 
     except WebDriverException as wde:
-        func.print_error_msg("get_webdriver():WebDriverException", wde)
+        func.print_error_msg("get_webdriver():WebDriverException", str(wde))
         driver = const.NONE_CONSTANT
 
     return driver
@@ -115,34 +115,40 @@ def implicit_wait(driver, time_sec=10):
 # 要素をクリック
 def click_element(driver, by, value):
     element = find_element(driver, by, value)
-    element.click()
+    if element:
+        element.click()
 
 
 # 要素に入力
 def write_element(driver, by, value, input_value):
     element = find_element(driver, by, value)
-    element.clear()
-    element.send_keys(input_value)
+    if element:
+        element.clear()
+        element.send_keys(input_value)
 
 
 # 要素を検索
-def find_element(driver, by, value, timeout=3):
+def find_element(driver, by: str, value: str, timeout: int = 3):
     try:
         implicit_wait(driver, timeout)
         element = driver.find_element(by, value)
     except AttributeError as ae:
         func.print_error_msg(value, msg_const.MSG_ERR_NO_SUCH_ELEMENT)
-        func.print_error_msg(ae)
+        func.print_error_msg(str(ae))
+        element = const.NONE_CONSTANT
     except Exception as e:
         func.print_error_msg(value, msg_const.MSG_ERR_NO_SUCH_ELEMENT)
-        func.print_error_msg(e)
+        func.print_error_msg(str(e))
+        element = const.NONE_CONSTANT
+
     return element
 
 
 # 要素のテキストを取得
 def get_element_text(driver, by, value):
     element = find_element(driver, by, value)
-    return element.text
+    elem_text = element.text if element else const.SYM_BLANK
+    return elem_text
 
 
 # 接続テスト

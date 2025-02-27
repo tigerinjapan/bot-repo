@@ -200,6 +200,7 @@ STR_MESSAGE = "message"
 STR_URL = "url"
 STR_IP = "IP"
 STR_HOST = "host"
+STR_INDEX = "index"
 STR_RESULT = "result"
 STR_CONTENTS = "contents"
 STR_SERVER = "server"
@@ -223,11 +224,20 @@ STR_ENV_VAR_JA = "環境変数"
 STR_CHARSET_JA = "文字コード"
 STR_DIV_JA = "区分"
 STR_CONTENTS_JA = "内容"
-STR_COMPANY_JA = "会社"
 STR_TITLE_JA = "タイトル"
 STR_LINK_JA = "リンク"
+
+STR_YEN_JA = "円"
+STR_WON_JA = "ウォン"
+STR_JAPAN_JA = "日本"
+STR_KOREA_JA = "韓国"
+STR_COMPANY_JA = "会社"
 STR_TODAY_JA = "今日の"
 STR_NEWS_JA = "ニュース"
+STR_ENT_JA = "エンタメ"
+STR_NIKKEI_JA = "日経"
+STR_AI = "AI"
+STR_KPOP = "KPOP"
 
 ##### マスキング #####
 MASKING_COMPANY = "company"
@@ -281,19 +291,39 @@ LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
 # サイトURL
 URL_GOOGLE = "https://www.google.com"
 
-# 画面URL
+##### アプリケーション名 #####
+APP_TODAY = "today"
+APP_NEWS = "news"
+APP_KOREA = "korea"
+APP_LCC = "lcc"
+APP_TV = "tv"
+
+
+# パス取得
+def get_path(app_name):
+    path = f"/{app_name}"
+    return path
+
+
+# HTML取得
+def get_html(app_name):
+    html = f"{app_name}.{FILE_TYPE_HTML}"
+    return html
+
+
+# 画面パス
 PATH_ROOT = "/"
-PATH_LOGIN = "/login"
-PATH_LOGOUT = "/logout"
-PATH_TODAY = "/today"
-PATH_NEWS = "/news"
-PATH_KOREA = "/korea"
-PATH_LCC = "/lcc"
-PATH_TV = "/tv"
+PATH_LOGIN = get_path(STR_LOGIN)
+PATH_LOGOUT = get_path(STR_LOGOUT)
+PATH_TODAY = get_path(APP_TODAY)
+PATH_NEWS = get_path(APP_NEWS)
+PATH_KOREA = get_path(APP_KOREA)
+PATH_LCC = get_path(APP_LCC)
+PATH_TV = get_path(APP_TV)
 
 ##### HTMLファイル名 #####
-HTML_INDEX = f"index.{FILE_TYPE_HTML}"
-HTML_RESULT = f"result.{FILE_TYPE_HTML}"
+HTML_INDEX = get_html(STR_INDEX)
+HTML_RESULT = get_html(STR_RESULT)
 
 if __name__ == MAIN_FUNCTION:
     print(DATE_WEEKDAY)

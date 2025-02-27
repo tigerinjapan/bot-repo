@@ -4,6 +4,7 @@ from google import genai
 
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.message_constants as msg_const
 
 # アプリケーション
 app_name = func.get_app_name(__file__)
@@ -21,15 +22,20 @@ NUM_WRAP_WIDTH = 32
 
 # GEMINI回答取得
 def get_gemini_response(contents: str):
+    response_flg = const.FLG_OFF
     if GEMINI_API_KEY:
         client = genai.Client(api_key=GEMINI_API_KEY)
         response = client.models.generate_content(model=GEMINI_MODEL, contents=contents)
-        result = response.text.split(const.SYM_COMMA)
-    else:
-        if "天気" in contents:
-            result = ["素敵なファッション", "美味しい食事"]
+        if response:
+            result = response.text.split(const.SYM_COMMA)
+            response_flg = const.FLG_ON
         else:
-            result = ["ニュース要約#1", "ニュース要約#2", "ニュース要約#3"]
+            func.print_error_msg(
+                const.STR_RESPONSE, msg_const.MSG_ERR_API_RESPONSE_NONE
+            )
+
+    if not response_flg:
+        result = ["レスポンス無#1", "レスポンス無#2", "レスポンス無#3"]
     return result
 
 
@@ -52,8 +58,9 @@ def get_recommend_outfit_dinner(today_weather: str):
 # ニュース要約取得
 def get_news_summary(news_list: list[str]):
     news_item = [str(item) for item in news_list]
-    news_list = NEW_LINE.join(news_item[: const.MAX_MSG_CNT])
-    contents = f"{news_list}{NEW_LINE}上記のニュース内容を要約してください。"
+    news_item_list = NEW_LINE.join(news_item[: const.MAX_MSG_CNT])
+
+    contents = f"{news_item_list}{NEW_LINE}上記のニュース内容を要約してください。"
     conditions = (
         "※条件1：記号と絵文字、「。」は、使用しない"
         + "※条件2：英数字は、全て半角に変換"

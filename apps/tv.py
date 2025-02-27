@@ -10,16 +10,11 @@ app_name = func.get_app_name(__file__)
 # タイトル
 app_title = "韓国TV番組"
 
-# URL
-URL_TV = "https://www.tvkingdom.jp"
-
 # カラムリスト
 col_list = ["放送時間", "番組名", "チャンネル"]
 
-# 検索キーワード
-KEYWORD_KOREA = "韓国"
-
 # URL
+URL_TV = "https://www.tvkingdom.jp"
 URL_PARAM = (
     "schedulesBySearch.action?stationPlatformId=1"
     + "&condition.keyword={}&submit=%E6%A4%9C%E7%B4%A2"
@@ -28,7 +23,7 @@ URL_PARAM = (
 
 # アイテムリスト取得
 def get_item_list():
-    keyword = KEYWORD_KOREA
+    keyword = const.STR_KOREA_JA
     item_list = get_tv_info_list(keyword)
     return item_list
 
@@ -50,6 +45,9 @@ def get_tv_info_list(keyword) -> list[str]:
         attr_val="utileListProperty",
         list_flg=const.FLG_ON,
     )
+
+    if not title_list or not program_list:
+        return tv_info_list
 
     for title, program in zip(title_list, program_list):
         title = func.convert_half_char(title.text)

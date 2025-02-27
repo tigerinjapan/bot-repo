@@ -45,7 +45,7 @@ class AppExec:
 
     # データ取得
     def data(self):
-        data_list = get_data_list(self.app, self.name)
+        data_list = get_data_list(self.name)
         return data_list
 
 
@@ -162,11 +162,7 @@ def exec_result(request: Request, app_div):
 
 
 # データリスト取得
-def get_data_list(app_div, app_name: str) -> list[tuple[list[str], list[str]]]:
-
-    if app_name in ["news", "korea"]:
-        return app_div.get_data_list()  # TODO データリスト修正
-
+def get_data_list(app_name: str) -> list[tuple[list[str], list[str]]]:
     data_list = []
     df = func.get_df_from_json(app_name)
     column_list = df.columns.to_list()
@@ -179,14 +175,21 @@ def get_data_list(app_div, app_name: str) -> list[tuple[list[str], list[str]]]:
 
 # ニュース更新：ウェブページの更新
 def update_news():
-    # app_div_list = [today, news, korea, lcc, tv] # TODO
-    app_div_list = [today, lcc, tv]
-    app_name_list = ["today", "lcc", "tv"]
+    app_div_list = [today, news, korea, lcc, tv]
+    app_name_list = [
+        const.APP_TODAY,
+        const.APP_NEWS,
+        const.APP_KOREA,
+        const.APP_LCC,
+        const.APP_TV,
+    ]
 
     for app_div, app_name in zip(app_div_list, app_name_list):
         item_list = app_div.get_item_list()
         df = func.get_df(item_list, app_div.col_list)
         func.df_to_json(app_name, df)
+
+    func.print_info_msg(const.FILE_TYPE_JSON, msg_const.MSG_INFO_PROC_COMPLETED)
 
 
 @app.get("/templates/{file_name}")
@@ -209,4 +212,4 @@ async def test():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    start_thread()
+    update_news()

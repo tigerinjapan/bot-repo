@@ -6,6 +6,7 @@ import os
 import random
 import re
 import socket
+import sys
 import time
 from datetime import datetime
 
@@ -53,24 +54,25 @@ def get_env_val(var_name: str) -> str:
     if env_val:
         env_val = get_decoding_masking_data(env_val)
     else:
+        env_val = const.SYM_BLANK
         print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
     return env_val
 
 
 # ローカルIPかチェック
-def is_local_env():
+def is_local_env() -> bool:
     ip_flg = const.FLG_OFF
     host = socket.gethostname()
     ip = socket.gethostbyname(host)
 
     if host == const.HOST_LOCAL and (const.IP_PRIVATE in ip or const.IP_LOCAL in ip):
         ip_flg = const.FLG_ON
-    print_info_msg([const.STR_HOST, host], [const.STR_IP, ip])
+    print_info_msg(f"[{const.STR_HOST}:{host}]", f"[{const.STR_IP, ip}]")
     return ip_flg
 
 
 # ホストIP取得
-def get_host_port() -> tuple[str, str]:
+def get_host_port() -> tuple[str, int]:
     host = const.IP_DEFAULT
     port = const.PORT_DEFAULT
 
@@ -103,12 +105,20 @@ def print_error_msg(div: str, msg: str = const.SYM_BLANK):
     print(msg_now, msg_const.MSG_DIV_ERR, div, msg)
 
 
+# エラーメッセージ出力し、システム終了
+def print_msg_exit(div: str, msg: str = const.SYM_BLANK):
+    print_error_msg(div, msg)
+    sys.exit()
+
+
+# 文字列を日付型に変換
 def convert_str_to_date(str: str, format: str) -> datetime:
     # func[strptime]:Convert String to Date
     date = datetime.strptime(str, format)
     return date
 
 
+# 日付型を文字列に変換
 def convert_date_to_str(date: datetime, format: str) -> str:
     # func[strftime]:Convert Date to String
     date_format = date.strftime(format)
@@ -135,21 +145,14 @@ def get_random_int(end_num: int) -> int:
 
 
 # 対象文字列がリストに含まれているかチェック
-def check_in_list(
-    target_str: str, target_list: list[str], check_flg: bool = const.FLG_ON
-):
+def check_in_list(target_str: str, target_list: list[str]) -> bool:
     hit_flg = const.FLG_OFF
-    hit_target = const.NONE_CONSTANT
     for target in target_list:
         if target.upper() in target_str.upper():
             hit_flg = const.FLG_ON
-            hit_target = target
             break
 
-    if check_flg:
-        return hit_flg
-    else:
-        return hit_target
+    return hit_flg
 
 
 # ファイルパス取得
@@ -172,47 +175,32 @@ def remove_old_file(dir_path: str, div: str):
 
 
 # ファイル読込
-def read_file(file_path: str):
-    data = open_file(file_path)
-    return data
+def read_file(file_path: str, file_encode: str = const.CHARSET_UTF_8) -> str:
+    with open(file_path, mode=const.FILE_MODE_READ, encoding=file_encode) as f:
+        if not check_path_exists(file_path):
+            print_error_msg(file_path, msg_const.MSG_ERR_FILE_NOT_EXIST)
+
+        # func[read]:Reading file
+        data = f.read()
+        return data
 
 
 # ファイル書込
-def write_file(file_path: str, contents):
-    open_file(file_path, file_mode=const.FILE_MODE_WRITE, contents=contents)
-
-
-# ファイルオープン
-def open_file(
-    file_path: str,
-    file_mode: str = const.FILE_MODE_READ,
-    contents=const.NONE_CONSTANT,
-    file_encode: str = const.CHARSET_UTF_8,
-):
+def write_file(file_path: str, contents, file_encode: str = const.CHARSET_UTF_8):
     try:
-        # func[open]:Open file
-        file_open = open(file_path, mode=file_mode, encoding=file_encode)
-        if file_mode == const.FILE_MODE_READ:
-            if not check_path_exists(file_path):
-                exception_msg = msg_const.MSG_ERR_FILE_NOT_EXIST
-                raise Exception(exception_msg)
-            # func[read]:Reading file
-            data = file_open.read()
-        elif file_mode == const.FILE_MODE_WRITE:
+        with open(file_path, mode=const.FILE_MODE_WRITE, encoding=file_encode) as f:
             # func[write]:Writing file
-            file_open.write(contents)
-        # func[close]:Close file
-        file_open.close()
+            f.write(contents)
+
+            # func[close]:Close file
+            f.close()
+
     except Exception as e:
-        print_error_msg(file_path, e)
-        return const.FLG_OFF
-    else:
-        if file_mode == const.FILE_MODE_READ:
-            return data
+        print_error_msg(file_path, str(e))
 
 
 # 権限データ取得
-def get_auth_data(auth_div: str = const.NONE_CONSTANT):
+def get_auth_data(auth_div: str = const.SYM_BLANK):
     json_data = get_json_data(const.STR_AUTH)
     if auth_div:
         auth_data = json_data[auth_div]
@@ -221,19 +209,26 @@ def get_auth_data(auth_div: str = const.NONE_CONSTANT):
     return auth_data
 
 
+# JSONデータ読み込み
+def get_loads_json(data: str):
+    # func[json.loads]:Read JSON file
+    result = json.loads(data)
+    return result
+
+
+# JSONデータ書き込み
+def get_dumps_json(data):
+    json_data = json.dumps(data)
+    result = json_data.encode(const.CHARSET_ASCII)
+    return result
+
+
 # JSONデータ取得
 def get_json_data(app_div: str):
     file_path = get_file_path(app_div, const.FILE_TYPE_JSON)
     data = read_file(file_path)
-    json_data = object_to_json(data)
+    json_data = get_loads_json(data)
     return json_data
-
-
-# JSONデータ読込
-def object_to_json(data):
-    # func[json.loads]:Read JSON file
-    response_json = json.loads(data)
-    return response_json
 
 
 # DataFrameからJSON出力
@@ -242,7 +237,7 @@ def df_to_json(div: str, df):
     file_path = get_file_path(div, const.FILE_TYPE_JSON, const.STR_OUTPUT)
 
     # データフレームをJSON文字列として取得
-    json_data = df.to_json(orient="records", lines=const.FLG_ON)
+    json_data = df.to_json(orient="records", lines=const.FLG_OFF)
 
     # UTF-8エンコーディングでファイルに保存
     write_file(file_path, json_data)
@@ -250,7 +245,9 @@ def df_to_json(div: str, df):
 
 # JSONからDataFrameデータ取得
 def get_df_from_json(div: str, file_div: str = const.STR_OUTPUT):
-    df = get_df()
+    # DataFrame初期化
+    df = pd.DataFrame()
+
     file_path = get_file_path(div, const.FILE_TYPE_JSON, file_div)
 
     if check_path_exists(file_path):
@@ -263,18 +260,11 @@ def get_df_from_json(div: str, file_div: str = const.STR_OUTPUT):
 
 
 # DataFrame取得
-def get_df(
-    data_list: list = const.NONE_CONSTANT, columns: list[str] = const.NONE_CONSTANT
-):
-    if data_list:
-        # DataFrame作成
-        df = pd.DataFrame(data_list, columns=columns)
-        if df.empty:
-            print_info_msg(msg_const.MSG_ERR_DATA_NOT_EXIST)
-    else:
-        # DataFrame初期化
-        df = pd.DataFrame()
-
+def get_df(data_list: list, columns: list[str]):
+    # DataFrame作成
+    df = pd.DataFrame(data_list, columns=columns)
+    if df.empty:
+        print_info_msg(msg_const.MSG_ERR_DATA_NOT_EXIST)
     return df
 
 

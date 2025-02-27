@@ -10,9 +10,6 @@ app_name = func.get_app_name(__file__)
 # タイトル
 app_title = "LCC" + const.STR_NEWS_JA
 
-# URL
-URL_LCC = "https://dsk.ne.jp/"
-
 # カラムリスト
 col_list = [
     const.STR_DIV_JA,
@@ -21,9 +18,12 @@ col_list = [
     const.STR_LINK_JA,
 ]
 
+# URL
+URL_LCC = "https://dsk.ne.jp/"
+
 # キーワードリスト
 KEYWORD_LIST = [
-    "韓国",
+    const.STR_KOREA_JA,
     "ソウル",
     "沖縄",
     "那覇",
@@ -41,6 +41,9 @@ def get_item_list():
     lcc_list = func_bs.get_elem_from_url(
         URL_LCC, tag=const.TAG_DIV, attr_val="dgt3", list_flg=const.FLG_ON
     )
+    if not lcc_list:
+        return item_list
+
     for lcc_info in lcc_list:
         lcc_data = []
         href = func_bs.get_link_from_soup(lcc_info)
@@ -84,11 +87,7 @@ def get_lcc_text(lcc_div, soup):
     elif lcc_div == const.TYPE_DATE:
         lcc_item = func_bs.find_elem_by_attr(soup, tag=const.TAG_DIV, attr_val="date")
 
-    try:
-        lcc_text = lcc_item.text
-    except:
-        lcc_text = const.SYM_BLANK
-
+    lcc_text = lcc_item.text if lcc_item else const.SYM_BLANK
     return lcc_text
 
 

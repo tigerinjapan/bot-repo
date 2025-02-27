@@ -29,9 +29,6 @@ DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
 DIV_LIST = [DIV_WEATHER, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
 
-STR_YEN_JA = "円"
-STR_WON_JA = "ウォン"
-
 
 # アイテムリスト取得
 def get_item_list():
@@ -41,7 +38,7 @@ def get_item_list():
 
 
 # 今日の生活情報取得
-def get_today_info() -> tuple[list[str], str, str]:
+def get_today_info():
     # 今日の天気
     today_weather, forecast = get_today_weather()
 
@@ -62,7 +59,7 @@ def get_today_info() -> tuple[list[str], str, str]:
 
 
 # 今日の天気情報取得
-def get_today_weather() -> tuple[list[str], str]:
+def get_today_weather() -> tuple[str, str]:
     # 東京の情報取得
     elem_forecast = func_bs.get_elem_from_url(
         URL_TENKI, attr_div=const.ATTR_ID, attr_val="forecast-map-entry-13101"
@@ -78,7 +75,7 @@ def get_today_weather() -> tuple[list[str], str]:
 
 
 # 今日のウォン取得
-def get_today_won() -> list[str]:
+def get_today_won() -> str:
     url = (
         f"{URL_NAVER_FINANCE}/marketindex/exchangeDetail.naver?marketindexCd=FX_JPYKRW"
     )
@@ -87,8 +84,8 @@ def get_today_won() -> list[str]:
     elem = func_bs.get_elem_from_url(url, attr_div=const.ATTR_CLASS, attr_val=class_)
     elem_list = func_bs.find_elem_by_attr(elem, tag=const.TAG_TD, list_flg=const.FLG_ON)
 
-    won = elem_list[0].text
-    today_won_rate = f"100{STR_YEN_JA}={won}{STR_WON_JA}"
+    won = elem_list[0].text if elem_list else "1000"
+    today_won_rate = f"100{const.STR_YEN_JA}={won}{const.STR_WON_JA}"
     return today_won_rate
 
 
@@ -98,23 +95,25 @@ def get_date_today() -> str:
     elem_list = func_bs.find_elem_by_attr(
         elem, tag=const.TAG_SPAN, list_flg=const.FLG_ON
     )
-    date_today = elem_list[0].text + elem_list[2].text
+    if elem_list:
+        date_today = elem_list[0].text + elem_list[2].text
+    else:
+        weekday = const.LIST_WEEKDAY[const.DATE_WEEKDAY]
+        date_today = f"{const.DATE_TODAY_SLASH} ({weekday})"
     return date_today
 
 
 # 要素値取得
 def get_elem_val_by_class(soup, class_: str) -> str:
+    elem_val = const.SYM_BLANK
+
     elem = func_bs.find_elem_by_attr(soup, attr_div=const.ATTR_CLASS, attr_val=class_)
-
-    if class_ == "forecast-image":
-        elem_val = elem.get(const.ATTR_ALT)
-    else:
-        elem_val = elem.text
+    if elem:
+        if class_ == "forecast-image":
+            elem_val = elem.get(const.ATTR_ALT)
+        else:
+            elem_val = elem.text
     return elem_val
-
-
-# TODO DF取得できるよう修正
-# df_info, chk_msg = get_search_data_from_df(form)
 
 
 if __name__ == const.MAIN_FUNCTION:

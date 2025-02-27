@@ -16,7 +16,7 @@ def get_data_from_url(url: str, headers):
 
 
 # soup取得(contents)
-def get_soup_from_contents(contents: str):
+def get_soup_from_contents(contents):
     soup = bs(contents, "html.parser")
     return soup
 
@@ -31,9 +31,9 @@ def get_soup(url: str, headers=const.NONE_CONSTANT):
 # ページ要素取得
 def get_elem_from_url(
     url: str,
-    tag: str = const.NONE_CONSTANT,
+    tag: str = const.SYM_BLANK,
     attr_div: str = const.ATTR_CLASS,
-    attr_val: str = const.NONE_CONSTANT,
+    attr_val: str = const.SYM_BLANK,
     list_flg: bool = const.FLG_OFF,
 ):
 
@@ -45,11 +45,13 @@ def get_elem_from_url(
 # 要素取得
 def find_elem_by_attr(
     soup,
-    tag: str = const.NONE_CONSTANT,
-    attr_div: str = const.NONE_CONSTANT,
-    attr_val: str = const.NONE_CONSTANT,
+    tag: str = const.SYM_BLANK,
+    attr_div: str = const.SYM_BLANK,
+    attr_val: str = const.SYM_BLANK,
     list_flg: bool = const.FLG_OFF,
 ):
+    elem = const.NONE_CONSTANT
+
     try:
         find_func = soup.find_all if list_flg else soup.find
         if tag:
@@ -70,13 +72,13 @@ def find_elem_by_attr(
     except Exception as e:
         div = f"{attr_div} : {attr_val}"
         func.print_error_msg(div, MSG_ERR_NO_SUCH_ELEMENT)
-        func.print_error_msg(e)
-        elem = const.NONE_CONSTANT
+        func.print_error_msg(str(e))
 
     return elem
 
 
 # 要素取得(href)
 def get_link_from_soup(soup) -> str:
-    link = find_elem_by_attr(soup, tag=const.TAG_A, attr_div=const.ATTR_HREF)
+    elem = find_elem_by_attr(soup, tag=const.TAG_A, attr_div=const.ATTR_HREF)
+    link = elem if elem else const.SYM_BLANK
     return link

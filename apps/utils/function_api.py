@@ -1,7 +1,5 @@
 # 説明：API関数
 
-import json
-
 import requests
 from PIL import Image, ImageDraw, ImageFont
 
@@ -25,18 +23,6 @@ def get_response_result(
         response = requests.post(url, headers=headers, data=data)
 
     return response
-
-
-# JSONデータ読み込み
-def get_loads_json(data):
-    result = json.loads(data)
-    return result
-
-
-# JSONデータ書き込み
-def get_dumps_json(data):
-    result = json.dumps(data)
-    return result
 
 
 # メッセージ画像生成

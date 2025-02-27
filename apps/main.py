@@ -49,5 +49,4 @@ main()
 
 # プログラムのエントリーポイント
 if __name__ == const.MAIN_FUNCTION:
-    # 環境変数から取得したジョブスケジュール時間を出力
     print(JOB_SCHEDULE_TIME)

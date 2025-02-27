@@ -79,11 +79,12 @@ def get_channel_access_token() -> str:
 
     response = func_api.get_response_result(
         url, request_type=const.REQUEST_TYPE_POST, headers=headers, data=data
-    ).text
+    )
     if not response:
         func.print_error_msg(const.STR_TOKEN_JA, MSG_ERR_API_RESPONSE_NONE)
+        return const.SYM_BLANK
 
-    result = func_api.get_loads_json(response)
+    result = func.get_loads_json(response.text)
 
     # トークン・タイプ
     token_type = result["token_type"]
@@ -106,8 +107,11 @@ def check_message_count(access_token: str) -> int:
     url = f"{URL_LINE_API}/v2/bot/message/quota/consumption"
     headers = {"Content-Type": "application/json", "Authorization": access_token}
     response = func_api.get_response_result(url, headers=headers)
-    result = func_api.get_loads_json(response.text)
-    total_usage = result["totalUsage"]
+    if response:
+        result = func.get_loads_json(response.text)
+        total_usage = result["totalUsage"]
+    else:
+        total_usage = MAX_MSG_API_CNT
 
     message_count = f"{total_usage} / {MAX_MSG_API_CNT}"
     func.print_info_msg(const.STR_MESSAGE_JA, message_count)
@@ -123,10 +127,13 @@ def send_message(access_token: str, json_data):
         url, request_type=const.REQUEST_TYPE_POST, headers=headers, data=json_data
     )
 
-    result = func_api.get_loads_json(response.text)
-    if result:
-        err_msg = [response.status_code, response.reason, result["message"]]
-        func.print_error_msg(const.STR_LINE_API, err_msg)
+    if response:
+        result = func.get_loads_json(response.text)
+        if result:
+            err_msg = (
+                f"[{response.status_code}, {response.reason}, {result["message"]}]"
+            )
+            func.print_error_msg(const.STR_LINE_API, err_msg)
 
 
 # LINE送信用のJSONデータ取得
@@ -148,8 +155,7 @@ def get_json_data(msg_list: list[list[str]]):
         messages.append(json_object)
 
     data = {"messages": messages}
-    json_data = func_api.get_dumps_json(data)
-    json_data = json_data.encode(const.CHARSET_ASCII)
+    json_data = func.get_dumps_json(data)
     return json_data
 
 
@@ -159,9 +165,10 @@ def get_msg_list() -> list[list[str]]:
     date_today = today.get_date_today()
 
     today_info, forecast = today.get_today_info()
+    msg_data = [f"[{div}] {info}" for div, info in today_info]
 
     msg_data_list = get_msg_data_list(
-        FILE_DIV_TODAY, MSG_TYPE_IMG, date_today, today_info, forecast
+        FILE_DIV_TODAY, MSG_TYPE_IMG, date_today, msg_data, forecast
     )
     msg_list = [msg_data_list]
 
@@ -188,13 +195,9 @@ def get_msg_data_list(
     date_today: str,
     msg_data: list[str],
     forecast: str = const.SYM_BLANK,
-) -> str:
+) -> list[str]:
 
     text_title = get_title(msg_div, msg_type, date_today)
-
-    if msg_div == FILE_DIV_TODAY:
-        msg_data = [f"[{div}] {info}" for div, info in msg_data]
-
     text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 
     if msg_type == MSG_TYPE_IMG:
@@ -259,10 +262,9 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
     )
 
     img_file_name = func.get_app_name(file_path)
+    img_url = f"https://{URL_KOYEB}/{const.STR_IMG}/{img_file_name}"
     if not func.is_local_env:
         func.print_info_msg(MSG_TYPE_IMG, img_url)
-
-    img_url = f"https://{URL_KOYEB}/{const.STR_IMG}/{img_file_name}"
     return img_url
 
 
