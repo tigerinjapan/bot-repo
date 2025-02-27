@@ -55,7 +55,8 @@ def get_env_val(var_name: str) -> str:
         env_val = get_decoding_masking_data(env_val)
     else:
         env_val = const.SYM_BLANK
-        print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
+        if not is_local_env:
+            print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
     return env_val
 
 
@@ -67,7 +68,7 @@ def is_local_env() -> bool:
 
     if host == const.HOST_LOCAL and (const.IP_PRIVATE in ip or const.IP_LOCAL in ip):
         ip_flg = const.FLG_ON
-    print_info_msg(f"[{const.STR_HOST}:{host}]", f"[{const.STR_IP, ip}]")
+    print_info_msg(const.STR_HOST, host)
     return ip_flg
 
 
@@ -157,7 +158,7 @@ def check_in_list(target_str: str, target_list: list[str]) -> bool:
 
 # ファイルパス取得
 def get_file_path(div: str, file_type: str, file_div: str = const.STR_INPUT) -> str:
-    file_path = f"{file_div}/{file_type}/{div}.{file_type}"
+    file_path = f"{const.DIR_CURR_WORK}/{file_div}/{file_type}/{div}.{file_type}"
     return file_path
 
 
@@ -244,6 +245,12 @@ def df_to_json(div: str, df):
 
 
 # JSONからDataFrameデータ取得
+def get_df_read_json(file_path: str):
+    df = pd.read_json(file_path)
+    return df
+
+
+# JSONからDataFrameデータ取得
 def get_df_from_json(div: str, file_div: str = const.STR_OUTPUT):
     # DataFrame初期化
     df = pd.DataFrame()
@@ -252,11 +259,11 @@ def get_df_from_json(div: str, file_div: str = const.STR_OUTPUT):
 
     if check_path_exists(file_path):
         # func[read_json]:Read JSON file with Pandas
-        df = pd.read_json(file_path)
+        df = get_df_read_json(file_path)
     else:
         print_info_msg(file_path, msg_const.MSG_ERR_FILE_NOT_EXIST)
 
-    return df
+    return df, file_path
 
 
 # DataFrame取得

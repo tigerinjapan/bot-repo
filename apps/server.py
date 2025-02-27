@@ -194,9 +194,11 @@ def exec_result(request: Request, app_div):
 # 【画面】データリスト取得
 def get_data_list(app_name: str) -> list[tuple[list[str], list[str]]]:
     data_list = []
-    df = func.get_df_from_json(app_name)
+    df, file_path = func.get_df_from_json(app_name)
     if df.empty:
         update_news()
+        df = func.get_df_read_json(file_path)
+
     column_list = df.columns.to_list()
     data_val_list = df.values.tolist()
 
