@@ -24,8 +24,8 @@ def main():
         # 毎日指定された時間に実行
         schedule.every().day.at(JOB_SCHEDULE_TIME).do(daily_news)
 
-        # 毎日4時間毎に実行
-        schedule.every(4).hours.do(update_news)
+        # 毎日1時間毎に実行
+        schedule.every().hour.do(update_news)
 
         while True:
             # 保留中のジョブを実行

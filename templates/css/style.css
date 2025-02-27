@@ -1,12 +1,12 @@
 /*全体の設定*/
 body {
-	margin: 0px;
-	padding: 0px;
+	margin: 5x;
+	padding: 10px;
 	/*全体の文字色*/
 	color: black;
 	/*フォント種類*/
 	font-family: "メイリオ", "Meiryo", "MS PGothic", sans-serif;
-	font-size: 14px;
+	font-size: 16px;
 	/*行間*/
 	line-height: 2;
 	/*背景色*/
@@ -17,7 +17,7 @@ body {
 input,
 button,
 select {
-	font-size: 14px;
+	font-size: 16px;
 	font-family: "Meiryo";
 	text-align: center;
 	outline: none;
@@ -50,13 +50,22 @@ img {
 
 .searchResult {
 	border-collapse: collapse;
-	border: 1px gray solid;
-	padding: 0px 0px;
+	border: 0px gray solid;
+	padding: 2px 0px;
 	width: auto;
 	height: auto;
 	display: flex;
 	/* overflow: scroll; */
 	margin-inline: auto;
+}
+
+.searchResult th {
+	color: black;
+	background-color: lightsteelblue;
+}
+
+.thNo {
+	text-align: center;
 }
 
 .searchResult th,
@@ -99,7 +108,7 @@ img {
 	display: block;
 	color: white;
 	text-align: center;
-	padding: 14px 14px;
+	padding: 16px 16px;
 	text-decoration: none;
 	transition: all .3s;
 }
@@ -113,18 +122,18 @@ img {
 	height: 320px;
 	margin: auto;
 	font-family: "Meiryo";
-	font-size: 14px;
+	font-size: 16px;
 	text-align: center;
 }
 
 footer {
 	/* padding: 0px 20px; */
-	font-size: 14px;
+	font-size: 16px;
 	text-align: center;
 }
 
 /*共通のメディアクエリ設定*/
-@media screen and (max-width:640px) {
+@media screen and (max-width:480px) {
 	body {
 		font-size: 4vw;
 	}
