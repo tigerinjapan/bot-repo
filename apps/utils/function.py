@@ -177,6 +177,7 @@ def remove_old_file(dir_path: str, div: str):
 
 # ファイル読込
 def read_file(file_path: str, file_encode: str = const.CHARSET_UTF_8) -> str:
+
     with open(file_path, mode=const.FILE_MODE_READ, encoding=file_encode) as f:
         if not check_path_exists(file_path):
             print_error_msg(file_path, msg_const.MSG_ERR_FILE_NOT_EXIST)
@@ -261,7 +262,7 @@ def get_df_from_json(div: str, file_div: str = const.STR_OUTPUT):
         # func[read_json]:Read JSON file with Pandas
         df = get_df_read_json(file_path)
     else:
-        print_info_msg(file_path, msg_const.MSG_ERR_FILE_NOT_EXIST)
+        print_error_msg(file_path, msg_const.MSG_ERR_FILE_NOT_EXIST)
 
     return df, file_path
 

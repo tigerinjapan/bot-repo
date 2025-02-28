@@ -3,14 +3,20 @@ const AUTH_ADMIN = "admin";
 const AUTH_DEV = "dev";
 const AUTH_GUEST = "guest";
 
-// 画面メニュー
+// アプリケーションリスト
+const LIST_APP = ["today", "news", "korea", "ranking", "lcc", "tv"];
+
+// メニュー
 const MENU_TOP = "トップ";
 const MENU_TODAY_INFO = "今日の生活情報";
 const MENU_NEWS = "今日のニュース";
 const MENU_KOREA = "韓国ニュース";
+const MENU_RANKING = "週間ランキング";
 const MENU_LCC = "LCCニュース";
 const MENU_TV = "韓国TV番組";
+const LIST_MENU = [MENU_TODAY_INFO, MENU_NEWS, MENU_KOREA, MENU_RANKING, MENU_LCC, MENU_TV];
 
+// 項目名
 const TITLE_SYSTEM = "開発デモシステム";
 const INPUT_ID = "ID";
 const INPUT_PW = "パスワード";
@@ -36,18 +42,17 @@ function writeHeader(userDiv, userNm, appNm) {
   userNm = "【" + userNm + "】";
 
   // トップメニュー
+  document.write(`<div class="topMenu"><ul>`);
+
+  for (let i = 0; i < LIST_APP.length; i++) {
+    document.write(`
+      <li><a href="/${LIST_APP[i]}" id="${LIST_APP[i]}">${LIST_MENU[i]}</a></li>
+    `);
+  }
+
   document.write(`
-    <div class="topMenu">
-      <ul>
-          <li><a href="/today" id="today">` + MENU_TODAY_INFO + `</a></li>
-          <li><a href="/news" id="news">` + MENU_NEWS + `</a></li>
-          <li><a href="/korea" id="korea">` + MENU_KOREA + `</a></li>
-          <li><a href="/lcc" id="lcc">` + MENU_LCC + `</a></li>
-          <li><a href="/tv" id="tv">` + MENU_TV + `</a></li>
-          <li><a href="/logout"><span>`+ userNm + `</span>` + BUTTON_LOGOUT + `</a></li>
-      </ul>
-    </div>
-  `);
+    <li><a href="/logout"><span>`+ userNm + `</span>` + BUTTON_LOGOUT + `</a></li>
+    </ul></div>`);
 
   // メニュー押下時、背景色設定
   var screenId = document.getElementById(appNm);

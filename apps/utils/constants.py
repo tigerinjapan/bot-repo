@@ -238,6 +238,7 @@ STR_ENT_JA = "エンタメ"
 STR_NIKKEI_JA = "日経"
 STR_AI = "AI"
 STR_KPOP = "KPOP"
+STR_DRAMA = "DRAMA"
 
 ##### マスキング #####
 MASKING_COMPANY = "company"
@@ -295,8 +296,12 @@ URL_GOOGLE = "https://www.google.com"
 APP_TODAY = "today"
 APP_NEWS = "news"
 APP_KOREA = "korea"
+APP_RANKING = "ranking"
 APP_LCC = "lcc"
 APP_TV = "tv"
+LIST_APP_NAME_ITEM = [APP_TODAY, APP_NEWS, APP_KOREA, APP_LCC, APP_TV]
+LIST_APP_NAME_DATA = [APP_RANKING]
+LIST_APP_NAME = LIST_APP_NAME_ITEM + LIST_APP_NAME_DATA
 
 
 # パス取得
@@ -318,6 +323,7 @@ PATH_LOGOUT = get_path(STR_LOGOUT)
 PATH_TODAY = get_path(APP_TODAY)
 PATH_NEWS = get_path(APP_NEWS)
 PATH_KOREA = get_path(APP_KOREA)
+PATH_RANKING = get_path(APP_RANKING)
 PATH_LCC = get_path(APP_LCC)
 PATH_TV = get_path(APP_TV)
 

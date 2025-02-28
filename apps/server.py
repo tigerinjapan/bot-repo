@@ -25,14 +25,9 @@ app.add_middleware(SessionMiddleware, secret_key="secret_key")
 templates = Jinja2Templates(directory="templates")
 
 # アプリケーションリスト
-LIST_APP_DIV = [today, news, korea, lcc, tv]
-LIST_APP_NAME = [
-    const.APP_TODAY,
-    const.APP_NEWS,
-    const.APP_KOREA,
-    const.APP_LCC,
-    const.APP_TV,
-]
+LIST_APP_ITEM = [today, news, korea, lcc, tv]
+LIST_APP_DATA = [korea]
+LIST_APP_DIV = LIST_APP_ITEM + LIST_APP_DATA
 
 # ユーザーデータ
 users_data = func.get_auth_data(const.STR_USER)
@@ -138,6 +133,13 @@ async def korea_info(request: Request):
     return exec_result(request, app_div)
 
 
+@app.get(const.PATH_RANKING)
+async def weekly_ranking(request: Request):
+    app_div = korea
+    app_name = const.APP_RANKING
+    return exec_result(request, app_div, app_name)
+
+
 @app.get(const.PATH_LCC)
 async def lcc_news(request: Request):
     app_div = lcc
@@ -170,9 +172,14 @@ async def test():
 
 
 # 【画面】取得結果
-def exec_result(request: Request, app_div):
+def exec_result(request: Request, app_div: str, sub_div: str = const.SYM_BLANK):
     app_name = app_div.app_name
     app_title = app_div.app_title
+
+    if sub_div:
+        app_name = sub_div
+        if sub_div == const.APP_RANKING:
+            app_title = news.DIV_WEEKLY_RANKING.format(const.SYM_BLANK)
 
     app_exec = AppExec(app_div, app_name)
     app_exec.start()
@@ -209,9 +216,14 @@ def get_data_list(app_name: str) -> list[tuple[list[str], list[str]]]:
 
 # 【画面】ウェブページの更新
 def update_news():
-    for app_div, app_name in zip(LIST_APP_DIV, LIST_APP_NAME):
-        item_list = app_div.get_item_list()
-        df = func.get_df(item_list, app_div.col_list)
+    for app_div, app_name in zip(LIST_APP_DIV, const.LIST_APP_NAME):
+        if app_name in const.LIST_APP_NAME_ITEM:
+            item_list = app_div.get_item_list()
+            df = func.get_df(item_list, app_div.col_list)
+        else:
+            data_list = app_div.get_data_list()[0]
+            df = func.get_df(data_list[1], data_list[0])
+
         func.df_to_json(app_name, df)
 
     func.print_info_msg(const.FILE_TYPE_JSON, msg_const.MSG_INFO_PROC_COMPLETED)

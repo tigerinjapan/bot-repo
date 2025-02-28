@@ -1,5 +1,7 @@
 # 説明：GEMINI関数
 
+import sys
+
 from google import genai
 
 import apps.utils.constants as const
@@ -10,7 +12,7 @@ import apps.utils.message_constants as msg_const
 app_name = func.get_app_name(__file__)
 
 # GEMINI API情報
-GEMINI_MODEL = "gemini-2.0-flash-exp"
+GEMINI_MODEL = "gemini-2.0-flash"
 GEMINI_API_KEY = func.get_env_val("GEMINI_API_KEY")
 
 # 改行
@@ -22,17 +24,23 @@ NUM_WRAP_WIDTH = 32
 
 # GEMINI回答取得
 def get_gemini_response(contents: str):
+    curr_def_nm = sys._getframe().f_code.co_name
     response_flg = const.FLG_OFF
-    if GEMINI_API_KEY:
-        client = genai.Client(api_key=GEMINI_API_KEY)
-        response = client.models.generate_content(model=GEMINI_MODEL, contents=contents)
-        if response:
-            result = response.text.split(const.SYM_COMMA)
-            response_flg = const.FLG_ON
-        else:
-            func.print_error_msg(
-                const.STR_RESPONSE, msg_const.MSG_ERR_API_RESPONSE_NONE
+
+    try:
+        if GEMINI_API_KEY:
+            client = genai.Client(api_key=GEMINI_API_KEY)
+            response = client.models.generate_content(
+                model=GEMINI_MODEL, contents=contents
             )
+            if response:
+                result = response.text.split(const.SYM_COMMA)
+                response_flg = const.FLG_ON
+            else:
+                func.print_error_msg(msg_const.MSG_ERR_API_RESPONSE_NONE)
+    except ConnectionError as ce:
+        func.print_error_msg(curr_def_nm, msg_const.MSG_ERR_API_RESPONSE_NONE)
+        func.print_error_msg(f"[ConnectionError] ", str(ce))
 
     if not response_flg:
         result = ["レスポンス無#1", "レスポンス無#2", "レスポンス無#3"]

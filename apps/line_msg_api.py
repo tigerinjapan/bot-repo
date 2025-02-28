@@ -173,7 +173,7 @@ def get_msg_list() -> list[list[str]]:
     msg_list = [msg_data_list]
 
     if WEEKLY_DIV_FRI in date_today:
-        korea_news_msg = news.get_news_msg_list(news.DIV_KOREA_NEWS_LIST)
+        korea_news_msg = news.get_news_msg_list(news.DIV_KOREA_NEWS_LIST[0])
         msg_data_list = get_msg_data_list(
             FILE_DIV_NEWS, MSG_TYPE_TXT, date_today, korea_news_msg
         )

@@ -1,5 +1,7 @@
 # 説明：Selenium関数
 
+import sys
+
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.chrome.service import Service
@@ -96,7 +98,9 @@ def get_webdriver():
         driver = webdriver.Chrome(service=service, options=options)
 
     except WebDriverException as wde:
-        func.print_error_msg("get_webdriver():WebDriverException", str(wde))
+        curr_def_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(curr_def_nm, msg_const.MSG_ERR_CONNECTION_FAILED)
+        func.print_error_msg("[WebDriverException] ", str(wde))
         driver = const.NONE_CONSTANT
 
     return driver
@@ -129,16 +133,19 @@ def write_element(driver, by, value, input_value):
 
 # 要素を検索
 def find_element(driver, by: str, value: str, timeout: int = 3):
+    exception_div = const.NONE_CONSTANT
     try:
         implicit_wait(driver, timeout)
         element = driver.find_element(by, value)
     except AttributeError as ae:
-        func.print_error_msg(value, msg_const.MSG_ERR_NO_SUCH_ELEMENT)
-        func.print_error_msg(str(ae))
-        element = const.NONE_CONSTANT
+        exception_div = ae
     except Exception as e:
+        exception_div = e
+
+    if exception_div:
+        curr_def_nm = sys._getframe().f_code.co_name
         func.print_error_msg(value, msg_const.MSG_ERR_NO_SUCH_ELEMENT)
-        func.print_error_msg(str(e))
+        func.print_error_msg(f"[{curr_def_nm}] ", str(e))
         element = const.NONE_CONSTANT
 
     return element
@@ -160,7 +167,7 @@ def test_access_webdriver():
         driver.quit()
     else:
         func.print_error_msg(
-            f"Chrome Driver:{const.STR_PATH_JA}", msg_const.MSG_ERR_FILE_NOT_EXIST
+            msg_const.MSG_ERR_FILE_NOT_EXIST, f"Chrome Driver:{const.STR_PATH_JA}"
         )
 
 
