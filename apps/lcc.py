@@ -52,10 +52,10 @@ def get_item_list():
 
         url_news = URL_LCC + href
 
-        # lcc_info_details = func_bs.get_elem_from_url(
-        #     url_news, tag=const.TAG_DIV, attr_val="body"
-        # )
-        # url_news = func_bs.get_link_from_soup(lcc_info_details)
+        lcc_info_details = func_bs.get_elem_from_url(
+            url_news, tag=const.TAG_DIV, attr_val="body"
+        )
+        url_official = func_bs.get_link_from_soup(lcc_info_details)
 
         lcc_line = func_bs.find_elem_by_attr(
             lcc_info, tag=const.TAG_DIV, attr_val="headline"
@@ -71,7 +71,7 @@ def get_item_list():
         title = title_text[1]
 
         if func.check_in_list(title, KEYWORD_LIST):
-            lcc_data = [company, div, title, url_news]
+            lcc_data = [company, div, title, url_official]
             item_list.append(lcc_data)
 
             if len(item_list) == const.MAX_DISPLAY_CNT:

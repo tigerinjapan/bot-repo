@@ -13,7 +13,6 @@ col_list = [const.STR_DIV_JA, const.STR_TITLE_JA, const.STR_LINK_JA]
 
 # URL
 URL_KONEST = "https://www.konest.com"
-URL_KSTYLE = "https://kstyle.com"
 URL_WOWKOREA = "https://www.wowkorea.jp"
 URL_NIKKEI = "https://www.nikkei.com"
 URL_ITMEDIA = "https://www.itmedia.co.jp"
@@ -111,11 +110,9 @@ def get_news_list(
                 continue
 
             a_href = a.get(const.ATTR_HREF)
-            url = URL_NIKKEI
-            if div == DIV_ENT_NEWS:
-                url = URL_KSTYLE
-            elif div == DIV_KPOP_NEWS:
-                url = URL_WOWKOREA
+            url = URL_WOWKOREA
+            if div == DIV_NIKKEI_NEWS:
+                url = URL_NIKKEI
 
             url_news = f"{url}{a_href}"
 
