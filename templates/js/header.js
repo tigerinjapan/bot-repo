@@ -4,17 +4,29 @@ const AUTH_DEV = "dev";
 const AUTH_GUEST = "guest";
 
 // アプリケーションリスト
-const LIST_APP = ["today", "news", "korea", "ranking", "lcc", "tv"];
+const APP_TODAY = "today";
+const APP_NEWS = "news";
+const APP_KOREA = "korea";
+const APP_RANKING = "ranking";
+const APP_LCC = "lcc";
+const APP_TV = "tv";
+const APP_STUDY = "study";
+const LIST_APP = [APP_TODAY, APP_NEWS, APP_KOREA, APP_RANKING, APP_LCC, APP_TV, APP_STUDY];
+const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY];
+const LIST_APP_GUEST = LIST_APP.filter(item => !LIST_APP_NOT_GUEST.includes(item));
 
 // メニュー
 const MENU_TOP = "トップ";
-const MENU_TODAY_INFO = "今日の生活情報";
+const MENU_TODAY = "今日の生活情報";
 const MENU_NEWS = "今日のニュース";
 const MENU_KOREA = "韓国ニュース";
 const MENU_RANKING = "週間ランキング";
 const MENU_LCC = "LCCニュース";
 const MENU_TV = "韓国TV番組";
-const LIST_MENU = [MENU_TODAY_INFO, MENU_NEWS, MENU_KOREA, MENU_RANKING, MENU_LCC, MENU_TV];
+const MENU_STUDY = "ニュース韓国語";
+const LIST_MENU = [MENU_TODAY, MENU_NEWS, MENU_KOREA, MENU_RANKING, MENU_LCC, MENU_TV, MENU_STUDY];
+const LIST_MENU_NOT_GUEST = [MENU_NEWS, MENU_STUDY];
+const LIST_MENU_GUEST = LIST_MENU.filter(item => !LIST_MENU_NOT_GUEST.includes(item));
 
 // 項目名
 const TITLE_SYSTEM = "開発デモシステム";
@@ -44,9 +56,16 @@ function writeHeader(userDiv, userNm, appNm) {
   // トップメニュー
   document.write(`<div class="topMenu"><ul>`);
 
-  for (let i = 0; i < LIST_APP.length; i++) {
+  app_list = LIST_APP;
+  menu_list = LIST_MENU;
+  if (userDiv == AUTH_GUEST) {
+    app_list = LIST_APP_GUEST;
+    menu_list = LIST_MENU_GUEST;
+  }
+
+  for (let i = 0; i < app_list.length; i++) {
     document.write(`
-      <li><a href="/${LIST_APP[i]}" id="${LIST_APP[i]}">${LIST_MENU[i]}</a></li>
+      <li><a href="/${app_list[i]}" id="${app_list[i]}">${menu_list[i]}</a></li>
     `);
   }
 

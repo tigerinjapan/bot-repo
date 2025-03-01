@@ -8,6 +8,7 @@ MSG_DIV_ERR = "[ERROR]"
 MSG_INFO_PROC_START = "処理を開始します。"
 MSG_INFO_PROC_END = "処理を終了します。"
 MSG_INFO_PROC_COMPLETED = "処理を完了しました。"
+MSG_INFO_LOGIN = "ログインしました。"
 MSG_INFO_LOGOUT = "ログアウトしました。"
 
 # エラーメッセージ

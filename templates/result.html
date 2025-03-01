@@ -40,7 +40,9 @@
                         <a href="{{ val|e }}" target="_blank" rel="noopener noreferrer">Link{{ idx }}</a>
                     </td>
                     {% else %}
-                    <td>{{ val|e }}</td>
+                    {% autoescape false %}
+                    <td>{{ val | replace("\n", "<br />")}}</td>
+                    {% endautoescape %}
                     {% endif %}
                     {% endfor %}
                 </tr>

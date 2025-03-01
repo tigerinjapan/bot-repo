@@ -30,8 +30,7 @@ def get_data_list() -> list:
 
     data_val_list = []
     for div in LIST_RANKING_DIV:
-        weekly_ranking = get_weekly_ranking(div)
-        data_val = [raking_info[0] for raking_info in weekly_ranking]
+        data_val = get_weekly_ranking(div)
         data_val_list.append(data_val)
 
     column_list = [news.DIV_WEEKLY_RANKING.format(div) for div in LIST_RANKING_DIV]
@@ -70,7 +69,7 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
                 .replace("「 ", const.SYM_BLANK)
                 .replace("「", const.SYM_BLANK)
             )
-            ranking_info = [f"{singer} - {song}"]
+            ranking_info = f"{singer} - {song}"
 
         elif div == const.STR_DRAMA:
             h2_elem = func_bs.find_elem_by_attr(elem, tag=const.TAG_H2)
@@ -81,14 +80,13 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
             li_elem_list = func_bs.find_elem_by_attr(
                 ul_elem, tag=const.TAG_LI, list_flg=const.FLG_ON
             )
-            li_elem = li_elem_list[4]
-            a_elem_list = func_bs.find_elem_by_attr(
-                li_elem, tag=const.TAG_A, list_flg=const.FLG_ON
-            )[:2]
-            a_elem_text = [a_elem.text for a_elem in a_elem_list]
-            cast = const.SYM_SLASH.join(a_elem_text)
-            # ranking_info = [title, cast, link]
-            ranking_info = [f"{title} - {cast}"]
+            genre = li_elem_list[0].get_text(strip=const.FLG_ON)
+            media = li_elem_list[1].get_text(strip=const.FLG_ON)
+            elem_cast = li_elem_list[4].get_text(strip=const.FLG_ON)
+            cast_text = elem_cast.split(const.SYM_COMMA_JAP)[:2]
+            cast = const.SYM_COMMA_JAP.join(cast_text)
+            ranking_info_list = [title, genre, media, cast]
+            ranking_info = const.SYM_NEW_LINE.join(ranking_info_list)
 
         weekly_ranking.append(ranking_info)
 

@@ -120,6 +120,8 @@ def get_news_list(
             if a_text:
                 news_text_list = func.re_split("[…,]", func.get_replace_data(a_text))
                 news_contents = NEW_LINE.join(news_text_list)
+                if div != DIV_NIKKEI_NEWS:
+                    news_contents = news_contents.replace(const.SYM_COMMA_JAP, NEW_LINE)
 
                 if list_flg:
                     news_contents = [news_contents, url_news]
@@ -147,7 +149,7 @@ def get_news_list(
                 news_list.append(news_contents)
 
     if ai_flg:
-        news_summary = func_gemini.get_news_summary(news_list)
+        news_summary = func_gemini.get_news_summary(news_list)[0]
         news_list = [news_summary]
 
     if not list_flg:

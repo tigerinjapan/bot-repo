@@ -37,12 +37,19 @@ KEYWORD_LIST = [
 
 # アイテムリスト取得
 def get_item_list():
-    item_list = []
+    item_list = get_lcc_info_list()
+    return item_list
+
+
+# LCC情報取得
+def get_lcc_info_list() -> list[str]:
+    lcc_info_list = []
     lcc_list = func_bs.get_elem_from_url(
         URL_LCC, tag=const.TAG_DIV, attr_val="dgt3", list_flg=const.FLG_ON
     )
+
     if not lcc_list:
-        return item_list
+        return lcc_info_list
 
     for lcc_info in lcc_list:
         lcc_data = []
@@ -66,17 +73,17 @@ def get_item_list():
         if not div or not date or not title_org:
             continue
 
-        title_text = title_org.split(date)[1].split("、")
+        title_text = title_org.split(date)[1].split(const.SYM_COMMA_JAP)
         company = title_text[0]
-        title = title_text[1]
+        title = title_text[1].replace("」", f"」{const.SYM_NEW_LINE}")
 
         if func.check_in_list(title, KEYWORD_LIST):
-            lcc_data = [company, div, title, url_official]
-            item_list.append(lcc_data)
+            lcc_data = [div, company, title, url_official]
+            lcc_info_list.append(lcc_data)
 
-            if len(item_list) == const.MAX_DISPLAY_CNT:
+            if len(lcc_info_list) == const.MAX_DISPLAY_CNT:
                 break
-    return item_list
+    return lcc_info_list
 
 
 # テキスト値取得

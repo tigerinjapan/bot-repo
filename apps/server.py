@@ -12,6 +12,7 @@ from uvicorn import Config, Server
 import apps.korea as korea
 import apps.lcc as lcc
 import apps.news as news
+import apps.study as study
 import apps.today as today
 import apps.tv as tv
 import apps.utils.constants as const
@@ -25,7 +26,7 @@ app.add_middleware(SessionMiddleware, secret_key="secret_key")
 templates = Jinja2Templates(directory="templates")
 
 # アプリケーションリスト
-LIST_APP_ITEM = [today, news, korea, lcc, tv]
+LIST_APP_ITEM = [today, news, korea, lcc, tv, study]
 LIST_APP_DATA = [korea]
 LIST_APP_DIV = LIST_APP_ITEM + LIST_APP_DATA
 
@@ -96,6 +97,7 @@ async def login(
     if user and user["userId"] == userId and user["userPassword"] == userPassword:
         request.session[const.STR_USER] = user
         response = RedirectResponse(url=const.PATH_TODAY, status_code=303)
+        func.print_info_msg(user["userName"], msg_const.MSG_INFO_LOGIN)
 
     else:
         chk_msg = msg_const.MSG_ERR_PASSWORD_INCORRECT
@@ -110,6 +112,8 @@ async def login(
 
 @app.get(const.PATH_LOGOUT)
 async def logout(request: Request):
+    user_name = request.session[const.STR_USER]["userName"]
+    func.print_info_msg(user_name, msg_const.MSG_INFO_LOGOUT)
     request.session.clear()
     context = {const.STR_REQUEST: request, "chk_msg": msg_const.MSG_INFO_LOGOUT}
     return templates.TemplateResponse(const.HTML_INDEX, context)
@@ -149,6 +153,12 @@ async def lcc_news(request: Request):
 @app.get(const.PATH_TV)
 async def tv_list(request: Request):
     app_div = tv
+    return exec_result(request, app_div)
+
+
+@app.get(const.PATH_STUDY)
+async def study_korean(request: Request):
+    app_div = study
     return exec_result(request, app_div)
 
 

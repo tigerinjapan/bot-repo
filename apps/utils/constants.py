@@ -177,6 +177,7 @@ SYM_EQUAL = "="
 SYM_SLASH = "/"
 SYM_AMP = "&"
 SYM_ASTA = "*"
+SYM_COMMA_JAP = "、"
 SYM_PUNC = "。"
 SYM_OPEN = "【"
 SYM_CLOSE = "】"
@@ -214,6 +215,7 @@ STR_GEMINI = "gemini"
 STR_API = "api"
 STR_LINE_API = "LINE API"
 STR_IMG = "img"
+STR_ENV_VAR = "env_var"
 
 STR_PATH_JA = "パス"
 STR_FILE_JA = "ファイル"
@@ -231,6 +233,7 @@ STR_YEN_JA = "円"
 STR_WON_JA = "ウォン"
 STR_JAPAN_JA = "日本"
 STR_KOREA_JA = "韓国"
+STR_KOREAN_JA = "韓国語"
 STR_COMPANY_JA = "会社"
 STR_TODAY_JA = "今日の"
 STR_NEWS_JA = "ニュース"
@@ -279,6 +282,7 @@ LIST_REPLACE = [
     "\u3000",
     "\u200b",
     "\t",
+    "\n",
     "\r\n",
     "<br>",
     "</br>",
@@ -299,7 +303,8 @@ APP_KOREA = "korea"
 APP_RANKING = "ranking"
 APP_LCC = "lcc"
 APP_TV = "tv"
-LIST_APP_NAME_ITEM = [APP_TODAY, APP_NEWS, APP_KOREA, APP_LCC, APP_TV]
+APP_STUDY = "study"
+LIST_APP_NAME_ITEM = [APP_TODAY, APP_NEWS, APP_KOREA, APP_LCC, APP_TV, APP_STUDY]
 LIST_APP_NAME_DATA = [APP_RANKING]
 LIST_APP_NAME = LIST_APP_NAME_ITEM + LIST_APP_NAME_DATA
 
@@ -326,6 +331,7 @@ PATH_KOREA = get_path(APP_KOREA)
 PATH_RANKING = get_path(APP_RANKING)
 PATH_LCC = get_path(APP_LCC)
 PATH_TV = get_path(APP_TV)
+PATH_STUDY = get_path(APP_STUDY)
 
 ##### HTMLファイル名 #####
 HTML_INDEX = get_html(STR_INDEX)

@@ -51,12 +51,17 @@ def get_path_split(file_name: str, extension_flg: bool = const.FLG_OFF) -> str:
 # 環境変数取得
 def get_env_val(var_name: str) -> str:
     env_val = os.environ.get(var_name)
+    if not env_val:
+        env_val = const.SYM_BLANK
+        if is_local_env:
+            json_data = get_json_data(const.STR_ENV_VAR)
+            env_val = json_data[var_name]
+        else:
+            print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
+
     if env_val:
         env_val = get_decoding_masking_data(env_val)
-    else:
-        env_val = const.SYM_BLANK
-        if not is_local_env:
-            print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
+
     return env_val
 
 

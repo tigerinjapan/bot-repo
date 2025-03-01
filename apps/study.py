@@ -1,0 +1,98 @@
+# 説明：ニュース韓国語
+
+import apps.utils.constants as const
+import apps.utils.function as func
+import apps.utils.function_beautiful_soup as func_bs
+import apps.utils.function_gemini as func_gemini
+
+# アプリケーション名
+app_name = func.get_app_name(__file__)
+
+# タイトル
+app_title = const.STR_NEWS_JA + const.STR_KOREAN_JA
+
+# カラムリスト
+col_list = ["会話", const.STR_KOREAN_JA]
+
+# 改行
+NEW_LINE = const.SYM_NEW_LINE
+
+# キーワード
+NAVER_SEARCH_KEYWORD = func.get_env_val("NAVER_SEARCH_KEYWORD")
+
+# URL
+URL_NAVER_SEARCH = "https://search.naver.com"
+url_search_param = "/search.naver?where=news&query={}&service_area=1&sort=1"
+
+
+# データリスト取得
+def get_item_list(keyword_list: list[str] = const.NONE_CONSTANT) -> list[str]:
+    item_list = []
+
+    if not keyword_list:
+        keyword_list = NAVER_SEARCH_KEYWORD.split(const.SYM_COMMA)
+
+    for keyword in keyword_list:
+        news_summary = get_naver_news_summary(keyword)[0]
+        study_info = news_summary.split(NEW_LINE * 2)
+        item_list.append(study_info)
+
+    return item_list
+
+
+# NAVERニュース取得
+def get_naver_news_summary(keyword: str) -> list[str]:
+    news_summary = const.SYM_BLANK
+
+    url_param = url_search_param.format(keyword)
+    url = f"{URL_NAVER_SEARCH}{url_param}"
+    a_elem_list = func_bs.get_elem_from_url(
+        url, attr_val="api_txt_lines dsc_txt_wrap", list_flg=const.FLG_ON
+    )
+
+    naver_news = []
+    if a_elem_list:
+        for a_elem in a_elem_list:
+            a_text = a_elem.text
+            naver_news.append(a_text)
+
+    if naver_news:
+        add_conditions = [
+            "韓国語を勉強している初級レベルの人が記事を学習用で使用する目的",
+            "【会話】記事の内容を元に韓国人の女性同士が会話するような内容",
+            "【会話】会話の中で、記事が何の内容かを全て把握したい",
+            f"【会話】会話の中で、「{keyword}」というキーワードを一度は使用",
+            "【熟語】会話の途中にある熟語で、日常でよく使う表現5個をピックアップし、説明",
+            "【熟語】韓国語熟語は、純ハングル語、韓国式略語、韓国式英語の優先順位",
+            "【熟語】韓国語熟語は、日本語の30文字程度で分かりやすく説明",
+            "小数点、4桁以上などの数値の内容は、不要",
+            "コンマは、使用しない",
+            "알겠습니다. 요약해 드리겠습니다. などの内容は、不要",
+            "以下例のように、レイアウトを構成する",
+        ]
+
+        other_reference = [
+            "※例",
+            "A：이번에 우리 오빠들이 음악프로그램 1위를 했데.",
+            "B：짱이다. 정말 축해.",
+            "A：다음 노래도 1위 했음 좋겠다.",
+            "B：그랬으면 좋겠네.",
+            "A：다음 달에는 월드투어도 한다네.",
+            "B：미국이나 일본에서 콘서트 하는거 보고싶다.",
+            NEW_LINE,
+            "[1] 숙어：説明",
+            "[2] 숙어：説明",
+            "[3] 숙어：説明",
+            "[4] 숙어：説明",
+            "[5] 숙어：説明",
+        ]
+        news_summary = func_gemini.get_news_summary(
+            naver_news, add_conditions, other_reference, 1
+        )
+
+    return news_summary
+
+
+if __name__ == const.MAIN_FUNCTION:
+    item_list = get_item_list()
+    print(item_list)
