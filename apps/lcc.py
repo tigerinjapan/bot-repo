@@ -45,15 +45,15 @@ def get_lcc_info_list() -> list[str]:
 
         date = func_bs.find_elem_by_attr(
             lcc_info, attr_div=const.ATTR_CLASS, attr_val="bgdate"
-        ).text
+        ).text  # type: ignore
         title_info = func_bs.find_elem_by_attr(lcc_info, tag=const.TAG_A)
-        title_text = title_info.text.split(const.SYM_COMMA_JAP)
+        title_text = title_info.text.split(const.SYM_COMMA_JAP)  # type: ignore
         company = title_text[0]
         title = title_text[1].replace("」", f"」{const.SYM_NEW_LINE}")
         title_info = func_bs.find_elem_by_attr(lcc_info, tag=const.TAG_A)
 
         if func.check_in_list(title, LIST_KEYWORD):
-            url_news = URL_LCC + title_info.get(const.ATTR_HREF)
+            url_news = URL_LCC + title_info.get(const.ATTR_HREF)  # type: ignore
 
             lcc_info_details = func_bs.get_elem_from_url(
                 url_news, tag=const.TAG_DIV, attr_val="body"

@@ -181,7 +181,7 @@ async def test():
 
 
 # 【画面】取得結果
-def exec_result(request: Request, app_div: str, sub_div: str = const.SYM_BLANK):
+def exec_result(request: Request, app_div, sub_div: str = const.SYM_BLANK):
     app_name = app_div.app_name
     app_title = app_div.app_title
 
@@ -246,6 +246,17 @@ def update_news(app_name: str = const.SYM_BLANK):
             data_list = app_div.get_data_list()[0]
             df = func.get_df(data_list[1], data_list[0])
 
+        if app_name == const.APP_TV:
+            sort_list = ["放送時間","チャンネル"]
+            ascending_div = [True, True]
+            duplicate_item_list = ["放送時間","チャンネル","番組名"]
+
+            df_sort = df.sort_values(
+                by=sort_list,
+                ascending=ascending_div,
+            ).drop_duplicates(subset=duplicate_item_list, keep=const.STR_FIRST)
+            df = df_sort
+
         func.df_to_json(app_name, df)
 
         app_exec.end()
@@ -256,4 +267,5 @@ def update_news(app_name: str = const.SYM_BLANK):
 if __name__ == const.MAIN_FUNCTION:
     # start_thread()
     # update_news()
-    update_news(const.APP_STUDY)
+    app_name = const.APP_TV
+    update_news(app_name)

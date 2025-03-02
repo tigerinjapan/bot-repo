@@ -58,6 +58,8 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
         return weekly_ranking
 
     for elem in elem_list[: const.MAX_DISPLAY_CNT]:
+        ranking_info = const.SYM_BLANK
+
         if div == const.STR_KPOP:
             if not elem:
                 break
@@ -73,20 +75,22 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
 
         elif div == const.STR_DRAMA:
             h2_elem = func_bs.find_elem_by_attr(elem, tag=const.TAG_H2)
-            title = f"<b>{h2_elem.text}</b>"
+            title = f"<b>{h2_elem.text}</b>"  # type: ignore
             ul_elem = func_bs.find_elem_by_attr(elem, tag=const.TAG_UL)
             li_elem_list = func_bs.find_elem_by_attr(
                 ul_elem, tag=const.TAG_LI, list_flg=const.FLG_ON
             )
-            genre = li_elem_list[0].get_text(strip=const.FLG_ON)
-            media = li_elem_list[1].get_text(strip=const.FLG_ON)
-            elem_cast = li_elem_list[4].get_text(strip=const.FLG_ON)
-            cast_text = elem_cast.split(const.SYM_COMMA_JAP)[:2]
-            cast = const.SYM_COMMA_JAP.join(cast_text)
-            ranking_info_list = [title, genre, media, cast]
-            ranking_info = const.SYM_NEW_LINE.join(ranking_info_list)
+            if li_elem_list:
+                genre = li_elem_list[0].get_text(strip=const.FLG_ON)
+                media = li_elem_list[1].get_text(strip=const.FLG_ON)
+                elem_cast = li_elem_list[4].get_text(strip=const.FLG_ON)
+                cast_text = elem_cast.split(const.SYM_COMMA_JAP)[:2]
+                cast = const.SYM_COMMA_JAP.join(cast_text)
+                ranking_info_list = [title, genre, media, cast]
+                ranking_info = const.SYM_NEW_LINE.join(ranking_info_list)
 
-        weekly_ranking.append(ranking_info)
+        if ranking_info:
+            weekly_ranking.append(ranking_info)
 
     return weekly_ranking
 

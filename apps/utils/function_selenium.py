@@ -131,7 +131,9 @@ def write_element(driver, by, value, input_value):
 
 # 要素を検索
 def find_element(driver, by: str, value: str, timeout: int = 3):
+    element = const.NONE_CONSTANT
     exception_div = const.NONE_CONSTANT
+
     try:
         implicit_wait(driver, timeout)
         element = driver.find_element(by, value)
@@ -143,8 +145,7 @@ def find_element(driver, by: str, value: str, timeout: int = 3):
     if exception_div:
         curr_def_nm = sys._getframe().f_code.co_name
         func.print_error_msg(value, msg_const.MSG_ERR_NO_SUCH_ELEMENT)
-        func.print_error_msg(f"[{curr_def_nm}] ", str(e))
-        element = const.NONE_CONSTANT
+        func.print_error_msg(f"[{curr_def_nm}] ", str(exception_div))
 
     return element
 

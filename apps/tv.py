@@ -11,7 +11,7 @@ app_name = func.get_app_name(__file__)
 app_title = "TV番組"
 
 # カラムリスト
-col_list = ["キーワード", "放送時間", "番組名", "チャンネル"]
+col_list = ["放送時間", "チャンネル", "キーワード", "番組名"]
 
 # キーワードリスト
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
@@ -30,6 +30,7 @@ def get_item_list():
     for keyword in LIST_KEYWORD:
         tv_info_list = get_tv_info_list(keyword)
         item_list += tv_info_list
+
     return item_list
 
 
@@ -54,19 +55,22 @@ def get_tv_info_list(keyword) -> list[str]:
     if not title_list or not program_list:
         return tv_info_list
 
-    for title, program in zip(title_list, program_list):
-        title = func.convert_half_char(title.text)
+    for title_elem, program_elem in zip(title_list, program_list):
+        title = func.convert_half_char(title_elem.text)
+        if not title or keyword not in title:
+            continue
+
         tv_info_txt = (
-            func.convert_half_char(program.text)
+            func.convert_half_char(program_elem.text)
             .replace(const.SYM_SPACE, const.SYM_BLANK)
             .split("\r\n")
         )
         time = tv_info_txt[1]
-        min = time.split("分")[0].split("(")[-1]
+        running_min = time.split("分")[0].split("(")[-1]
         hour = time.split(")")[1].split(":")[0]
-        if 30 <= int(min) and 8 <= int(hour):
+        if 30 <= int(running_min) and 10 <= int(hour):
             channel = tv_info_txt[2]
-            tv_info = [keyword, time, title, channel]
+            tv_info = [time, channel, keyword, title]
             tv_info_list.append(tv_info)
 
     return tv_info_list

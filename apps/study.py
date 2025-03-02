@@ -26,7 +26,7 @@ url_search_param = "/search.naver?where=news&query={}&service_area=1&sort=1"
 
 
 # データリスト取得
-def get_item_list(keyword_list: list[str] = const.NONE_CONSTANT) -> list[str]:
+def get_item_list(keyword_list: list[str] = []) -> list[str]:
     item_list = []
 
     if not keyword_list:
@@ -48,7 +48,7 @@ def get_item_list(keyword_list: list[str] = const.NONE_CONSTANT) -> list[str]:
 
 # NAVERニュース取得
 def get_naver_news_summary(keyword: str) -> list[str]:
-    news_summary = const.SYM_BLANK
+    news_summary = []
 
     url_param = url_search_param.format(keyword)
     url = f"{URL_NAVER_SEARCH}{url_param}"

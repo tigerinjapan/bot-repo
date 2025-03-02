@@ -72,12 +72,16 @@ def is_local_env() -> bool:
     try:
         host = socket.gethostname()
         ip = socket.gethostbyname(host)
+
+        if host == const.HOST_LOCAL and (
+            const.IP_PRIVATE in ip or const.IP_LOCAL in ip
+        ):
+            ip_flg = const.FLG_ON
+        print_info_msg(const.STR_HOST, host)
+
     except socket.gaierror as sge:
         print_error_msg(const.STR_IP, str(sge))
 
-    if host == const.HOST_LOCAL and (const.IP_PRIVATE in ip or const.IP_LOCAL in ip):
-        ip_flg = const.FLG_ON
-    print_info_msg(const.STR_HOST, host)
     return ip_flg
 
 
@@ -282,6 +286,12 @@ def get_df(data_list: list, columns: list[str]):
     if df.empty:
         print_info_msg(msg_const.MSG_ERR_DATA_NOT_EXIST)
     return df
+
+
+# 重複削除リスト取得
+def get_duplicate_list(val_list):
+    result_list = list(dict.fromkeys(val_list))
+    return result_list
 
 
 # 文字列置換

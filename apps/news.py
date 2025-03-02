@@ -56,7 +56,7 @@ def get_item_list(div_list: list[str] = DIV_NEWS_LIST):
         if news_list:
             print_news_list = news_list[: const.MAX_DISPLAY_CNT]
             for news in print_news_list:
-                news = news.insert(0, item_div)
+                news = news.insert(0, item_div)  # type: ignore
             item_list += print_news_list
 
     return item_list

@@ -218,6 +218,11 @@ STR_IMG = "img"
 STR_ENV_VAR = "env_var"
 STR_KEYWORD = "keyword"
 STR_NOTIFY = "notify"
+STR_FIRST = "first"
+
+STR_AI = "AI"
+STR_KPOP = "KPOP"
+STR_DRAMA = "DRAMA"
 
 STR_PATH_JA = "パス"
 STR_FILE_JA = "ファイル"
@@ -243,9 +248,6 @@ STR_TODAY_JA = "今日の"
 STR_NEWS_JA = "ニュース"
 STR_ENT_JA = "エンタメ"
 STR_NIKKEI_JA = "日経"
-STR_AI = "AI"
-STR_KPOP = "KPOP"
-STR_DRAMA = "DRAMA"
 
 ##### マスキング #####
 MASKING_COMPANY = "company"

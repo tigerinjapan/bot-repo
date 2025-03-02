@@ -24,6 +24,8 @@ NUM_WRAP_WIDTH = 32
 
 # GEMINI回答取得
 def get_gemini_response(contents: str):
+    result = []
+
     curr_def_nm = sys._getframe().f_code.co_name
     response_flg = const.FLG_OFF
 
@@ -34,7 +36,8 @@ def get_gemini_response(contents: str):
                 model=GEMINI_MODEL, contents=contents
             )
             if response:
-                result = response.text.split(const.SYM_COMMA)
+                response_text = str(response.text)
+                result = response_text.split(const.SYM_COMMA)
                 response_flg = const.FLG_ON
             else:
                 func.print_error_msg(msg_const.MSG_ERR_API_RESPONSE_NONE)
@@ -69,8 +72,8 @@ def get_recommend_outfit_dinner(today_weather: str):
 # ニュース要約取得
 def get_news_summary(
     news_list: list[str],
-    add_conditions: list[str] = const.NONE_CONSTANT,
-    other_reference: list[str] = const.NONE_CONSTANT,
+    add_conditions: list[str] = [],
+    other_reference: list[str] = [],
     max_count: int = const.MAX_MSG_CNT,
 ):
     news_item = [str(item) for item in news_list]
