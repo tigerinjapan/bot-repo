@@ -14,7 +14,7 @@ app_title = const.APP_LCC.upper() + const.STR_NEWS_JA
 col_list = [
     const.STR_DATE_JA,
     const.STR_COMPANY_JA,
-    const.STR_TITLE_JA,
+    app_title,
     const.STR_LINK_JA,
 ]
 

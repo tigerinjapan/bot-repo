@@ -3,6 +3,7 @@
 import sys
 
 from google import genai
+from google.genai.errors import ServerError
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -28,6 +29,7 @@ def get_gemini_response(contents: str):
 
     curr_def_nm = sys._getframe().f_code.co_name
     response_flg = const.FLG_OFF
+    exception_error = const.SYM_BLANK
 
     try:
         if GEMINI_API_KEY:
@@ -42,10 +44,15 @@ def get_gemini_response(contents: str):
             else:
                 func.print_error_msg(msg_const.MSG_ERR_API_RESPONSE_NONE)
     except ConnectionError as ce:
-        func.print_error_msg(curr_def_nm, msg_const.MSG_ERR_API_RESPONSE_NONE)
-        func.print_error_msg(f"[ConnectionError] ", str(ce))
+        exception_error = f"ConnectionError, {str(ce)}"
+    except ServerError as se:
+        exception_error = f"ServerError, {str(se)}"
+    except Exception as e:
+        exception_error = f"Exception, {str(e)}"
 
     if not response_flg:
+        func.print_error_msg(curr_def_nm, msg_const.MSG_ERR_API_RESPONSE_NONE)
+        func.print_error_msg(exception_error)
         result = ["レスポンス無#1", "レスポンス無#2", "レスポンス無#3"]
     return result
 

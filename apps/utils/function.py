@@ -77,7 +77,6 @@ def is_local_env() -> bool:
             const.IP_PRIVATE in ip or const.IP_LOCAL in ip
         ):
             ip_flg = const.FLG_ON
-        print_info_msg(const.STR_HOST, host)
 
     except socket.gaierror as sge:
         print_error_msg(const.STR_IP, str(sge))
@@ -201,11 +200,16 @@ def read_file(file_path: str, file_encode: str = const.CHARSET_UTF_8) -> str:
 
 
 # ファイル書込
-def write_file(file_path: str, contents, file_encode: str = const.CHARSET_UTF_8):
+def write_file(file_path: str, data, file_encode: str = const.CHARSET_UTF_8):
+    file_ext = get_path_split(file_path, extension_flg=const.FLG_ON)
+
     try:
         with open(file_path, mode=const.FILE_MODE_WRITE, encoding=file_encode) as f:
-            # func[write]:Writing file
-            f.write(contents)
+            if file_ext == const.FILE_TYPE_JSON:
+                json.dump(data, f, ensure_ascii=const.FLG_OFF, indent=4)
+            else:
+                # func[write]:Writing file
+                f.write(data)
 
             # func[close]:Close file
             f.close()
@@ -250,11 +254,14 @@ def df_to_json(div: str, df):
     # DataFrameをJSONファイルに出力
     file_path = get_file_path(div, const.FILE_TYPE_JSON, const.STR_OUTPUT)
 
-    # データフレームをJSON文字列として取得
-    json_data = df.to_json(orient="records", lines=const.FLG_OFF)
+    if is_local_env():
+        # DataFrameをリスト形式の辞書に変換
+        data = df.to_dict(orient="records")
+    else:
+        data = df.to_json(orient="records", lines=const.FLG_OFF)
 
-    # UTF-8エンコーディングでファイルに保存
-    write_file(file_path, json_data)
+    # JSONファイルに書き込む
+    write_file(file_path, data)
 
 
 # JSONからDataFrameデータ取得
@@ -288,15 +295,23 @@ def get_df(data_list: list, columns: list[str]):
     return df
 
 
-# 重複削除リスト取得
-def get_duplicate_list(val_list):
-    result_list = list(dict.fromkeys(val_list))
-    return result_list
+# リストの重複削除
+def remove_duplicates(val_list):
+    is_1d = all(not isinstance(i, list) for i in val_list)
+
+    if is_1d:
+        unique_list = list(dict.fromkeys(val_list))
+    else:
+        # 各サブリストをタプルに変換してセットに追加
+        unique_set = {tuple(sub_list) for sub_list in val_list}
+        # セットをリストに戻す
+        unique_list = [list(tup) for tup in unique_set]
+    return unique_list
 
 
 # 文字列置換
 def get_replace_data(data_str: str) -> str:
-    replace_data = data_str
+    replace_data = convert_half_char(data_str)
     for target in const.LIST_REPLACE:
         replace_data = replace_data.replace(target, const.SYM_BLANK)
     return replace_data

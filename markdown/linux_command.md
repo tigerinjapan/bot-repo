@@ -5,6 +5,20 @@
 | printenv PYTHONPATH | 環境変数の確認        |
 | python --version    | python バージョン確認 |
 
+## Git のインデックスから削除する
+
+### フォルダの場合
+
+```
+git rm --cached -r example_folder
+```
+
+### ファイルの場合
+
+```
+git rm --cached file.py
+```
+
 ## ChromeDriver のパスをシステムの PATH に追加
 
 ```

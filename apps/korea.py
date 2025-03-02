@@ -12,7 +12,7 @@ app_name = func.get_app_name(__file__)
 app_title = const.STR_KOREA_JA + const.STR_NEWS_JA
 
 # カラムリスト
-col_list = news.col_list
+col_list = [const.STR_DIV_JA, app_title, const.STR_LINK_JA]
 
 # ランキング区分リスト
 LIST_RANKING_DIV = [const.STR_KPOP, const.STR_DRAMA]

@@ -10,8 +10,15 @@ app_name = func.get_app_name(__file__)
 # タイトル
 app_title = "TV番組"
 
+# ソートリスト
+sort_list = ["放送時間", "チャンネル"]
+ascending_div = [True, True]
+
+# 重複チェックリスト
+duplicates_list = sort_list
+
 # カラムリスト
-col_list = ["放送時間", "チャンネル", "キーワード", "番組名"]
+col_list = sort_list + ["番組名", const.STR_LINK_JA]
 
 # キーワードリスト
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
@@ -56,21 +63,25 @@ def get_tv_info_list(keyword) -> list[str]:
         return tv_info_list
 
     for title_elem, program_elem in zip(title_list, program_list):
-        title = func.convert_half_char(title_elem.text)
+        title = func.get_replace_data(title_elem.text)
         if not title or keyword not in title:
             continue
 
+        title = title.replace(keyword, f"<b>{keyword}</b>")
+
+        link = URL_TV + func_bs.get_link_from_soup(title_elem)
+
         tv_info_txt = (
-            func.convert_half_char(program_elem.text)
+            func.get_replace_data(program_elem.text)
             .replace(const.SYM_SPACE, const.SYM_BLANK)
-            .split("\r\n")
+            .split("\r")
         )
         time = tv_info_txt[1]
         running_min = time.split("分")[0].split("(")[-1]
         hour = time.split(")")[1].split(":")[0]
         if 30 <= int(running_min) and 10 <= int(hour):
             channel = tv_info_txt[2]
-            tv_info = [time, channel, keyword, title]
+            tv_info = [time, channel, title, link]
             tv_info_list.append(tv_info)
 
     return tv_info_list

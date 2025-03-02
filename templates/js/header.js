@@ -65,7 +65,7 @@ function writeHeader(userDiv, userNm, appNm) {
 
   for (let i = 0; i < app_list.length; i++) {
     document.write(`
-      <li><a href="/${app_list[i]}" id="${app_list[i]}">${menu_list[i]}</a></li>
+      <li><a href="/${app_list[i]}" id="${app_list[i]}">${app_list[i]}</a></li>
     `);
   }
 

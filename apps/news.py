@@ -8,9 +8,6 @@ import apps.utils.function_gemini as func_gemini
 # アプリケーション名
 app_name = func.get_app_name(__file__)
 
-# カラムリスト
-col_list = [const.STR_DIV_JA, const.STR_TITLE_JA, const.STR_LINK_JA]
-
 # URL
 URL_KONEST = "https://www.konest.com"
 URL_WOWKOREA = "https://www.wowkorea.jp"
@@ -41,6 +38,9 @@ LIST_KEYWORD_AI = func.get_input_data(const.STR_KEYWORD, const.STR_AI)
 
 # タイトル
 app_title = DIV_NEWS.format(const.SYM_BLANK)
+
+# カラムリスト
+col_list = [const.STR_DIV_JA, app_title, const.STR_LINK_JA]
 
 
 # アイテムリスト取得

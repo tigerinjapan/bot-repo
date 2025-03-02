@@ -12,7 +12,7 @@ app_name = func.get_app_name(__file__)
 app_title = "今日の生活情報"
 
 # カラムリスト
-col_list = [const.STR_DIV_JA, const.STR_CONTENTS_JA]
+col_list = [const.STR_DIV_JA, app_title]
 
 # URL
 URL_TENKI = "https://tenki.jp"
