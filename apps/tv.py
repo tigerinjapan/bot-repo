@@ -8,10 +8,13 @@ import apps.utils.function_beautiful_soup as func_bs
 app_name = func.get_app_name(__file__)
 
 # タイトル
-app_title = "韓国TV番組"
+app_title = "TV番組"
 
 # カラムリスト
-col_list = ["放送時間", "番組名", "チャンネル"]
+col_list = ["キーワード", "放送時間", "番組名", "チャンネル"]
+
+# キーワードリスト
+LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
 
 # URL
 URL_TV = "https://www.tvkingdom.jp"
@@ -23,8 +26,10 @@ URL_PARAM = (
 
 # アイテムリスト取得
 def get_item_list():
-    keyword = const.STR_KOREA_JA
-    item_list = get_tv_info_list(keyword)
+    item_list = []
+    for keyword in LIST_KEYWORD:
+        tv_info_list = get_tv_info_list(keyword)
+        item_list += tv_info_list
     return item_list
 
 
@@ -59,9 +64,9 @@ def get_tv_info_list(keyword) -> list[str]:
         time = tv_info_txt[1]
         min = time.split("分")[0].split("(")[-1]
         hour = time.split(")")[1].split(":")[0]
-        if 20 <= int(min) and 8 <= int(hour):
+        if 30 <= int(min) and 8 <= int(hour):
             channel = tv_info_txt[2]
-            tv_info = [time, title, channel]
+            tv_info = [keyword, time, title, channel]
             tv_info_list.append(tv_info)
 
     return tv_info_list

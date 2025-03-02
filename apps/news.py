@@ -36,7 +36,8 @@ DIV_KOREA_NEWS_LIST = [DIV_KOREA_NEWS, DIV_ENT_NEWS, DIV_KPOP_NEWS]
 ITEM_NEWS_LIST = [const.STR_NIKKEI_JA, const.STR_AI]
 ITEM_KOREA_NEWS_LIST = [const.STR_KOREA_JA, const.STR_ENT_JA, const.STR_KPOP]
 
-LIST_KEYWORD_AI = ["AI", "OpenAI", "ChatGPT", "Gemini"]
+# キーワードリスト
+LIST_KEYWORD_AI = func.get_input_data(const.STR_KEYWORD, const.STR_AI)
 
 # タイトル
 app_title = DIV_NEWS.format(const.SYM_BLANK)

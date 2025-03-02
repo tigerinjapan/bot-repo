@@ -31,7 +31,7 @@ LIST_APP_DATA = [korea]
 LIST_APP_DIV = LIST_APP_ITEM + LIST_APP_DATA
 
 # ユーザーデータ
-users_data = func.get_auth_data(const.STR_USER)
+users_data = func.get_input_data(const.STR_AUTH, const.STR_USER)
 
 
 # クラスの定義
@@ -170,7 +170,7 @@ async def temp(file_name: str):
     return FileResponse(file_path)
 
 
-@app.get("/img/{file_name}")
+@app.get(f"/{const.STR_IMG}" + "/{file_name}")
 async def img(file_name: str):
     image_path = func.get_file_path(file_name, const.FILE_TYPE_JPEG, const.STR_OUTPUT)
     return FileResponse(image_path)
@@ -213,7 +213,7 @@ def get_data_list(app_name: str) -> list[tuple[list[str], list[str]]]:
     data_list = []
     df, file_path = func.get_df_from_json(app_name)
     if df.empty:
-        update_news()
+        update_news(app_name)
         df = func.get_df_read_json(file_path)
 
     column_list = df.columns.to_list()
@@ -225,8 +225,21 @@ def get_data_list(app_name: str) -> list[tuple[list[str], list[str]]]:
 
 
 # 【画面】ウェブページの更新
-def update_news():
-    for app_div, app_name in zip(LIST_APP_DIV, const.LIST_APP_NAME):
+def update_news(app_name: str = const.SYM_BLANK):
+    func.print_info_msg(const.FILE_TYPE_JSON, msg_const.MSG_INFO_PROC_START)
+
+    app_div_list = LIST_APP_DIV
+    app_name_list = const.LIST_APP_NAME
+
+    if app_name:
+        app_div_idx = app_name_list.index(app_name)
+        app_div_list = [app_div_list[app_div_idx]]
+        app_name_list = [app_name]
+
+    for app_div, app_name in zip(app_div_list, app_name_list):
+        app_exec = AppExec(app_div, app_name)
+        app_exec.start()
+
         if app_name in const.LIST_APP_NAME_ITEM:
             item_list = app_div.get_item_list()
             df = func.get_df(item_list, app_div.col_list)
@@ -236,8 +249,11 @@ def update_news():
 
         func.df_to_json(app_name, df)
 
+        app_exec.end()
+
     func.print_info_msg(const.FILE_TYPE_JSON, msg_const.MSG_INFO_PROC_COMPLETED)
 
 
 if __name__ == const.MAIN_FUNCTION:
-    update_news()
+    # update_news()
+    update_news(const.APP_STUDY)

@@ -73,9 +73,7 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
 
         elif div == const.STR_DRAMA:
             h2_elem = func_bs.find_elem_by_attr(elem, tag=const.TAG_H2)
-            title = h2_elem.text
-            a_href = func_bs.get_link_from_soup(h2_elem)
-            link = f"{news.URL_WOWKOREA}{a_href}"
+            title = f"<b>{h2_elem.text}</b>"
             ul_elem = func_bs.find_elem_by_attr(elem, tag=const.TAG_UL)
             li_elem_list = func_bs.find_elem_by_attr(
                 ul_elem, tag=const.TAG_LI, list_flg=const.FLG_ON

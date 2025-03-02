@@ -14,11 +14,11 @@ app_title = const.STR_NEWS_JA + const.STR_KOREAN_JA
 # カラムリスト
 col_list = ["会話", const.STR_KOREAN_JA]
 
+# キーワードリスト
+LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
+
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
-
-# キーワード
-NAVER_SEARCH_KEYWORD = func.get_env_val("NAVER_SEARCH_KEYWORD")
 
 # URL
 URL_NAVER_SEARCH = "https://search.naver.com"
@@ -30,12 +30,18 @@ def get_item_list(keyword_list: list[str] = const.NONE_CONSTANT) -> list[str]:
     item_list = []
 
     if not keyword_list:
-        keyword_list = NAVER_SEARCH_KEYWORD.split(const.SYM_COMMA)
+        keyword_list = LIST_KEYWORD
 
     for keyword in keyword_list:
         news_summary = get_naver_news_summary(keyword)[0]
         study_info = news_summary.split(NEW_LINE * 2)
-        item_list.append(study_info)
+        try:
+            korean = study_info[1]
+        except:
+            continue
+
+        if korean and len(study_info) == 2:
+            item_list.append(study_info)
 
     return item_list
 
@@ -73,13 +79,13 @@ def get_naver_news_summary(keyword: str) -> list[str]:
 
         other_reference = [
             "※例",
-            "A：이번에 우리 오빠들이 음악프로그램 1위를 했데.",
-            "B：짱이다. 정말 축해.",
-            "A：다음 노래도 1위 했음 좋겠다.",
-            "B：그랬으면 좋겠네.",
-            "A：다음 달에는 월드투어도 한다네.",
-            "B：미국이나 일본에서 콘서트 하는거 보고싶다.",
-            NEW_LINE,
+            "유리：이번에 우리 오빠들이 음악프로그램 1위를 했데.",
+            "창빈：짱이다. 정말 축해.",
+            "유리：다음 노래도 1위 했음 좋겠다.",
+            "창빈：그랬으면 좋겠네.",
+            "유리：다음 달에는 월드투어도 한다네.",
+            "창빈：미국이나 일본에서 콘서트 하는거 보고싶다.",
+            NEW_LINE * 2,
             "[1] 숙어：説明",
             "[2] 숙어：説明",
             "[3] 숙어：説明",

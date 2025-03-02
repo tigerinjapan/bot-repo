@@ -206,16 +206,6 @@ def write_file(file_path: str, contents, file_encode: str = const.CHARSET_UTF_8)
         print_error_msg(file_path, str(e))
 
 
-# 権限データ取得
-def get_auth_data(auth_div: str = const.SYM_BLANK):
-    json_data = get_json_data(const.STR_AUTH)
-    if auth_div:
-        auth_data = json_data[auth_div]
-    else:
-        auth_data = json_data
-    return auth_data
-
-
 # JSONデータ読み込み
 def get_loads_json(data: str):
     # func[json.loads]:Read JSON file
@@ -236,6 +226,15 @@ def get_json_data(app_div: str):
     data = read_file(file_path)
     json_data = get_loads_json(data)
     return json_data
+
+
+# 入力データ取得
+def get_input_data(file_div: str, input_div: str):
+    json_data = get_json_data(file_div)
+    input_data = json_data[input_div]
+    if file_div == const.STR_KEYWORD:
+        input_data = input_data.split(const.SYM_COMMA)
+    return input_data
 
 
 # DataFrameからJSON出力
@@ -297,7 +296,7 @@ def get_masking_data(target: str):
 
 # マスキングデータ復号
 def get_decoding_masking_data(target: str, encode_flg: bool = const.FLG_OFF):
-    decoding_info = get_auth_data(const.STR_DECODE)
+    decoding_info = get_input_data(const.STR_AUTH, const.STR_DECODE)
     masking_list = const.LIST_MASKING
     decoding_list = list(decoding_info.values()) + [str(const.DATE_YEAR)]
 

@@ -32,8 +32,8 @@ FILE_DIV_NEWS = "news"
 FILE_DIV_AI_NEWS = "ai_news"
 
 # タイトル
-DIV_MARK = "*-----*-----*-----*-----*"
-DIV_MARK_TXT = "*--- {} ---*"
+DIV_MARK = "*----*----*----*----*----*"
+DIV_MARK_TXT = "*-- {} --*"
 DIV_MARK_IMG = "==== {} ===="
 
 # プロパティ
@@ -42,7 +42,7 @@ NUM_IMG_MAX_SEQ = 4
 WEEKLY_DIV_FRI = "金"
 
 
-def main():
+def main(auto_flg: bool = const.FLG_ON):
 
     func.print_start(app_name)
 
@@ -55,7 +55,10 @@ def main():
 
         if use_cnt <= (MAX_MSG_API_CNT - 20):
 
-            msg_list = get_msg_list()
+            if auto_flg:
+                msg_list = get_msg_list()
+            else:
+                msg_list = get_msg()
 
             # メッセージ取得
             data = get_json_data(msg_list)
@@ -168,23 +171,30 @@ def get_msg_list() -> list[list[str]]:
     msg_data = [f"[{div}] {info}" for div, info in today_info]
 
     msg_data_list = get_msg_data_list(
-        FILE_DIV_TODAY, MSG_TYPE_IMG, date_today, msg_data, forecast
+        FILE_DIV_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast
     )
     msg_list = [msg_data_list]
 
     if WEEKLY_DIV_FRI in date_today:
-        korea_news_msg = news.get_news_msg_list(news.DIV_KOREA_NEWS_LIST[0])
-        msg_data_list = get_msg_data_list(
-            FILE_DIV_NEWS, MSG_TYPE_TXT, date_today, korea_news_msg
-        )
-        msg_list.append(msg_data_list)
-
         ai_news_msg = news.get_news_msg_list(news.DIV_AI_NEWS_LIST)
         msg_data_list = get_msg_data_list(
-            FILE_DIV_AI_NEWS, MSG_TYPE_TXT, date_today, ai_news_msg
+            FILE_DIV_AI_NEWS, MSG_TYPE_TXT, ai_news_msg, date_today
         )
         msg_list.append(msg_data_list)
 
+    return msg_list
+
+
+# メッセージ取得（手動）
+def get_msg(
+    msg_div: str = const.STR_NOTIFY, msg_type: str = MSG_TYPE_TXT
+) -> list[list[str]]:
+
+    msg_data = func.get_input_data(const.STR_MESSAGE, msg_div)
+
+    # TODO LINE Messaging API ImageMap：イメージにリンクを埋込
+    msg_data_list = get_msg_data_list(msg_div, msg_type, msg_data)
+    msg_list = [msg_data_list]
     return msg_list
 
 
@@ -192,12 +202,15 @@ def get_msg_list() -> list[list[str]]:
 def get_msg_data_list(
     msg_div: str,
     msg_type: str,
-    date_today: str,
     msg_data: list[str],
+    date_today: str = const.SYM_BLANK,
     forecast: str = const.SYM_BLANK,
 ) -> list[str]:
+    # 今日の日付取得
+    if not date_today:
+        date_today = today.get_date_today()
 
-    text_title = get_title(msg_div, msg_type, date_today)
+    text_title = get_title(msg_div, date_today, msg_type)
     text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 
     if msg_type == MSG_TYPE_IMG:
@@ -207,10 +220,9 @@ def get_msg_data_list(
 
 
 # タイトル取得
-def get_title(
-    div: str, msg_type: str = const.SYM_BLANK, date_today: str = const.SYM_BLANK
-) -> str:
+def get_title(div: str, date_today: str, msg_type: str = const.SYM_BLANK) -> str:
     title_div = date_today
+
     if div == FILE_DIV_NEWS:
         title_div = news.DIV_NEWS.format(const.SYM_BLANK)
     elif div == FILE_DIV_AI_NEWS:
@@ -251,14 +263,14 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
     img_no = str(func.get_random_int(NUM_IMG_MAX_SEQ))
     img_no = img_no.zfill(3)
 
-    img_file_org = f"{img_div}_{img_no}"
+    img_file_base = f"{img_div}_{img_no}"
 
     font_type = "meiryo"
     font_size = NUM_FONT_SIZE
     xy_size = (75, 185) if div == FILE_DIV_TODAY else (45, 90)
 
     file_path = func_api.insert_msg_to_img(
-        div, img_file_org, font_type, font_size, xy_size, msg
+        div, img_file_base, font_type, font_size, xy_size, msg
     )
 
     img_file_name = func.get_app_name(file_path)
@@ -269,5 +281,6 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    msg_list = get_msg_list()
-    print(msg_list)
+    # msg_list = get_msg_list()
+    # print(msg_list)
+    main(const.FLG_OFF)
