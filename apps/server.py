@@ -66,7 +66,6 @@ def run():
 
 # スレッド開始
 def start_thread():
-    # test_access_webdriver()  # TODO テスト後、削除
     t = Thread(target=run)
     t.start()
 
@@ -255,5 +254,6 @@ def update_news(app_name: str = const.SYM_BLANK):
 
 
 if __name__ == const.MAIN_FUNCTION:
+    # start_thread()
     # update_news()
     update_news(const.APP_STUDY)

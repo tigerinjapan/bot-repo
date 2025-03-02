@@ -23,9 +23,7 @@ def get_webdriver():
     if local_flg:
         chrome_driver_path = ChromeDriverManager().install()
     else:
-        chrome_driver_path = (
-            "/root/.wdm/drivers/chromedriver/linux64/133.0.6943.126/chromedriver"
-        )
+        chrome_driver_path = "/root/.wdm/drivers/chromedriver/linux64/133.0.6943.126/chromedriver"  # TODO chromedriverエラー
 
     # ChromeDriverサービス設定
     service = Service(executable_path=chrome_driver_path)
