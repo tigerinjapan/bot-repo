@@ -26,34 +26,41 @@ NUM_WRAP_WIDTH = 32
 # GEMINI回答取得
 def get_gemini_response(contents: str):
     result = []
-
-    curr_def_nm = sys._getframe().f_code.co_name
-    response_flg = const.FLG_OFF
     exception_error = const.SYM_BLANK
 
     try:
-        if GEMINI_API_KEY:
-            client = genai.Client(api_key=GEMINI_API_KEY)
-            response = client.models.generate_content(
-                model=GEMINI_MODEL, contents=contents
-            )
-            if response:
-                response_text = str(response.text)
-                result = response_text.split(const.SYM_COMMA)
-                response_flg = const.FLG_ON
-            else:
-                func.print_error_msg(msg_const.MSG_ERR_API_RESPONSE_NONE)
-    except ConnectionError as ce:
-        exception_error = f"ConnectionError, {str(ce)}"
-    except ServerError as se:
-        exception_error = f"ServerError, {str(se)}"
-    except Exception as e:
-        exception_error = f"Exception, {str(e)}"
+        result = get_generate_content(contents)
+    except:
+        try:
+            result = get_generate_content(contents)
+        except ConnectionError as ce:
+            exception_error = f"ConnectionError, {str(ce)}"
+        except ServerError as se:
+            exception_error = f"ServerError, {str(se)}"
+        except Exception as e:
+            exception_error = f"Exception, {str(e)}"
 
-    if not response_flg:
+    if exception_error:
+        curr_def_nm = sys._getframe().f_code.co_name
         func.print_error_msg(curr_def_nm, msg_const.MSG_ERR_API_RESPONSE_NONE)
         func.print_error_msg(exception_error)
-        result = ["レスポンス無#1", "レスポンス無#2", "レスポンス無#3"]
+        result = [f"Geminiレスポンスエラー#{i+1}" for i in range(3)]
+    return result
+
+
+# 生成コンテンツ取得
+def get_generate_content(contents: str):
+    result = []
+
+    if GEMINI_API_KEY:
+        client = genai.Client(api_key=GEMINI_API_KEY)
+        response = client.models.generate_content(model=GEMINI_MODEL, contents=contents)
+        if response:
+            response_text = str(response.text)
+            result = response_text.split(const.SYM_COMMA)
+        else:
+            func.print_error_msg(msg_const.MSG_ERR_API_RESPONSE_NONE)
+
     return result
 
 

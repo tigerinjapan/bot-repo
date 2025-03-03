@@ -67,7 +67,7 @@ def get_env_val(var_name: str) -> str:
 
 # ローカルIPかチェック
 def is_local_env() -> bool:
-    ip_flg = const.FLG_OFF
+    local_flg = const.FLG_OFF
 
     try:
         host = socket.gethostname()
@@ -76,12 +76,12 @@ def is_local_env() -> bool:
         if host == const.HOST_LOCAL and (
             const.IP_PRIVATE in ip or const.IP_LOCAL in ip
         ):
-            ip_flg = const.FLG_ON
+            local_flg = const.FLG_ON
 
     except socket.gaierror as sge:
         print_error_msg(const.STR_IP, str(sge))
 
-    return ip_flg
+    return local_flg
 
 
 # ホストIP取得

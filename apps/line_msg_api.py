@@ -246,14 +246,12 @@ def get_title(div: str, date_today: str, msg_type: str = const.SYM_BLANK) -> str
 def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
     if div == FILE_DIV_TODAY:
-        if "晴" in forecast:
-            img_div = "sunny"
-        elif "曇" in forecast:
-            img_div = "cloudy"
-        elif "雨" in forecast:
+        if "雨" in forecast:
             img_div = "rainy"
         elif "雪" in forecast:
             img_div = "snowy"
+        elif "曇" in forecast:
+            img_div = "cloudy"
         else:
             img_div = "sunny"
     else:
@@ -275,12 +273,13 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
     img_file_name = func.get_app_name(file_path)
     img_url = f"https://{URL_KOYEB}/{const.STR_IMG}/{img_file_name}"
-    if not func.is_local_env:
-        func.print_info_msg(MSG_TYPE_IMG, img_url)
+    if func.is_local_env:
+        img_url = file_path
+    func.print_info_msg(MSG_TYPE_IMG, img_url)
     return img_url
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # msg_list = get_msg_list()
-    # print(msg_list)
-    main(const.FLG_OFF)
+    msg_list = get_msg_list()
+    print(msg_list)
+    # main(auto_flg=const.FLG_OFF)
