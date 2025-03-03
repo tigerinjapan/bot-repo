@@ -4,6 +4,7 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
+from apps import korea
 
 # アプリケーション名
 app_name = func.get_app_name(__file__)
@@ -40,7 +41,7 @@ def get_item_list(keyword_list: list[str] = []) -> list[str]:
         except:
             continue
 
-        if korean and len(study_info) == 2:
+        if korean and "[1]" in korean and len(study_info) == 2:
             item_list.append(study_info)
 
     return item_list
