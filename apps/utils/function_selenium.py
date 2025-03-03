@@ -17,7 +17,7 @@ import apps.utils.message_constants as msg_const
 # ドライバーの取得
 def get_webdriver():
     # ローカル環境判定
-    local_flg = const.FLG_ON if func.is_local_env else const.FLG_OFF
+    local_flg = const.FLG_ON if func.is_local_env() else const.FLG_OFF
 
     # ChromeDriverパス設定
     if local_flg:

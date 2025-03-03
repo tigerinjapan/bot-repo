@@ -53,7 +53,7 @@ def get_env_val(var_name: str) -> str:
     env_val = os.environ.get(var_name)
     if not env_val:
         env_val = const.SYM_BLANK
-        if is_local_env:
+        if is_local_env():
             json_data = get_json_data(const.STR_ENV_VAR)
             env_val = json_data[var_name]
         else:
@@ -205,7 +205,7 @@ def write_file(file_path: str, data, file_encode: str = const.CHARSET_UTF_8):
 
     try:
         with open(file_path, mode=const.FILE_MODE_WRITE, encoding=file_encode) as f:
-            if is_local_env and file_ext == const.FILE_TYPE_JSON:
+            if is_local_env() and file_ext == const.FILE_TYPE_JSON:
                 json.dump(data, f, ensure_ascii=const.FLG_OFF, indent=4)
             else:
                 # func[write]:Writing file
