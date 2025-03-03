@@ -9,16 +9,15 @@ from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 
-import apps.korea as korea
 import apps.lcc as lcc
 import apps.news as news
+import apps.ranking as ranking
 import apps.study as study
 import apps.today as today
 import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
-from apps.utils.function_selenium import test_access_webdriver
 
 # fast api
 app = FastAPI()
@@ -26,9 +25,7 @@ app.add_middleware(SessionMiddleware, secret_key="secret_key")
 templates = Jinja2Templates(directory="templates")
 
 # アプリケーションリスト
-LIST_APP_ITEM = [today, news, korea, lcc, tv, study]
-LIST_APP_DATA = [korea]
-LIST_APP_DIV = LIST_APP_ITEM + LIST_APP_DATA
+LIST_APP_DIV = [today, news, news, ranking, lcc, tv, study]
 
 # ユーザーデータ
 users_data = func.get_input_data(const.STR_AUTH, const.STR_USER)
@@ -132,15 +129,15 @@ async def news_info(request: Request):
 
 @app.get(const.PATH_KOREA)
 async def korea_info(request: Request):
-    app_div = korea
-    return exec_result(request, app_div)
+    app_div = news
+    app_name = const.APP_KOREA
+    return exec_result(request, app_div, app_name)
 
 
 @app.get(const.PATH_RANKING)
-async def weekly_ranking(request: Request):
-    app_div = korea
-    app_name = const.APP_RANKING
-    return exec_result(request, app_div, app_name)
+async def ranking_info(request: Request):
+    app_div = ranking
+    return exec_result(request, app_div)
 
 
 @app.get(const.PATH_LCC)
@@ -187,8 +184,8 @@ def exec_result(request: Request, app_div, sub_div: str = const.SYM_BLANK):
 
     if sub_div:
         app_name = sub_div
-        if sub_div == const.APP_RANKING:
-            app_title = news.DIV_WEEKLY_RANKING.format(const.SYM_BLANK)
+        if sub_div == const.APP_KOREA:
+            app_title = news.app_title_korea
 
     app_exec = AppExec(app_div, app_name)
     app_exec.start()
@@ -239,12 +236,14 @@ def update_news(app_name: str = const.SYM_BLANK):
         app_exec = AppExec(app_div, app_name)
         app_exec.start()
 
-        if app_name in const.LIST_APP_NAME_ITEM:
-            item_list = app_div.get_item_list()
-            df = func.get_df(item_list, app_div.col_list)
+        if app_name == const.APP_KOREA:
+            item_list = news.get_item_list(news.DIV_KOREA_NEWS_LIST)
+            col_list = news.col_list_korea
         else:
-            data_list = app_div.get_data_list()[0]
-            df = func.get_df(data_list[1], data_list[0])
+            item_list = app_div.get_item_list()
+            col_list = app_div.col_list
+
+        df = func.get_df(item_list, col_list)
 
         if app_name == const.APP_TV:
             df_sort = df.sort_values(
@@ -263,5 +262,5 @@ def update_news(app_name: str = const.SYM_BLANK):
 if __name__ == const.MAIN_FUNCTION:
     # start_thread()
     # update_news()
-    app_name = const.APP_STUDY
+    app_name = const.APP_RANKING
     update_news(app_name)

@@ -88,7 +88,7 @@ def get_news_summary(
     news_list: list[str],
     add_conditions: list[str] = [],
     other_reference: list[str] = [],
-    max_count: int = const.MAX_MSG_CNT,
+    max_count: int = const.MIN_DISPLAY_CNT,
 ):
     news_item = [str(item) for item in news_list]
     news_item_list = NEW_LINE.join(news_item[:max_count])
@@ -110,7 +110,7 @@ def get_news_conditions(add_conditions: list[str]) -> str:
     condition_list = [
         "記号と絵文字、「。」は、使用しない",
         "英数字は、全て半角に変換",
-        f"ニュースは、{const.MAX_MSG_CNT}トピックまで",
+        f"ニュースは、{const.MIN_DISPLAY_CNT}トピックまで",
         f"ニュース内容と関係ない内容は不要",
         f"1行で、最大{NUM_WRAP_WIDTH}バイト以内",
         "1行ずつ、文章として、完結",

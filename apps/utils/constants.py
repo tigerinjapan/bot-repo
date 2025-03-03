@@ -88,7 +88,7 @@ NUM_THREE = 3
 
 # 画面表示件数
 MAX_DISPLAY_CNT = 5
-MAX_MSG_CNT = 3
+MIN_DISPLAY_CNT = 3
 
 ##### 型 #####
 TYPE_DICT = "dict"
@@ -120,6 +120,7 @@ TAG_ABBR = "abbr"
 TAG_H1 = "h1"
 TAG_H2 = "h2"
 TAG_H3 = "h3"
+TAG_H4 = "h4"
 
 ##### HTML属性 #####
 ATTR_CLASS = "class"
@@ -219,10 +220,10 @@ STR_ENV_VAR = "env_var"
 STR_KEYWORD = "keyword"
 STR_NOTIFY = "notify"
 STR_FIRST = "first"
+STR_KPOP = "kpop"
+STR_DRAMA = "drama"
 
 STR_AI = "AI"
-STR_KPOP = "KPOP"
-STR_DRAMA = "DRAMA"
 
 STR_PATH_JA = "パス"
 STR_FILE_JA = "ファイル"
@@ -248,6 +249,8 @@ STR_TODAY_JA = "今日の"
 STR_NEWS_JA = "ニュース"
 STR_ENT_JA = "エンタメ"
 STR_NIKKEI_JA = "日経"
+STR_X_TREND_JA = "Xトレンド"
+STR_RANKING_JA = "ランキング"
 
 ##### マスキング #####
 MASKING_COMPANY = "company"
@@ -310,9 +313,7 @@ APP_RANKING = "ranking"
 APP_LCC = "lcc"
 APP_TV = "tv"
 APP_STUDY = "study"
-LIST_APP_NAME_ITEM = [APP_TODAY, APP_NEWS, APP_KOREA, APP_LCC, APP_TV, APP_STUDY]
-LIST_APP_NAME_DATA = [APP_RANKING]
-LIST_APP_NAME = LIST_APP_NAME_ITEM + LIST_APP_NAME_DATA
+LIST_APP_NAME = [APP_TODAY, APP_NEWS, APP_KOREA, APP_RANKING, APP_LCC, APP_TV, APP_STUDY]
 
 
 # パス取得

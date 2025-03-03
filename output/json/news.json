@@ -1,28 +1,18 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "セブン&アイ井阪社長退任で最終調整後任に初の外国人",
-        "リンク": "https://www.nikkei.com/article/DGXZQOUC276QV0X20C25A2000000/"
+        "今日のニュース": "セブン買収攻防第2幕カナダ社対抗で世界戦略練り直し",
+        "リンク": "https://www.nikkei.com/article/DGXZQOUC2847M0Y5A220C2000000/"
     },
     {
         "区分": "日経",
-        "今日のニュース": "欧州首脳、国防費増額で一致米国説得へ調整加速",
-        "リンク": "https://www.nikkei.com/article/DGXZQOGR0300X0T00C25A3000000/"
+        "今日のニュース": "コンテナ海運、日系「ONE」が3.7兆円投資輸送力3割増",
+        "リンク": "https://www.nikkei.com/article/DGXZQOUC124KC0S4A910C2000000/"
     },
     {
         "区分": "日経",
-        "今日のニュース": "仮想通貨、1日で時価36兆円増トランプ氏が備蓄に言及",
-        "リンク": "https://www.nikkei.com/article/DGXZQOUB031VL0T00C25A3000000/"
-    },
-    {
-        "区分": "日経",
-        "今日のニュース": "日経平均株価629円高半導体株に透ける業績不安",
-        "リンク": "https://www.nikkei.com/article/DGXZQOUB031B90T00C25A3000000/"
-    },
-    {
-        "区分": "日経",
-        "今日のニュース": "米アカデミー賞作品賞に「アノーラ」日本勢受賞ならず",
-        "リンク": "https://www.nikkei.com/article/DGXZQOGN020LH0S5A300C2000000/"
+        "今日のニュース": "トヨタ、株主優待を初導入電子マネーやレースチケット",
+        "リンク": "https://www.nikkei.com/article/DGXZQOFD036EV0T00C25A3000000/"
     },
     {
         "区分": "AI",
@@ -33,5 +23,10 @@
         "区分": "AI",
         "今日のニュース": "      Amazonが新AIアシスタント「Alexa+」を発表/MicrosoftがCopilotユーザーに「Think Deeper」と「Voice」の無料提供を開始    ",
         "リンク": "https://www.itmedia.co.jp/pcuser/articles/2503/02/news069.html"
+    },
+    {
+        "区分": "AI",
+        "今日のニュース": "      ゼレンスキー氏とトランプ氏が殴り合い──会談決裂でAIフェイク動画がSNSに多数    ",
+        "リンク": "https://www.itmedia.co.jp/news/articles/2503/03/news155.html"
     }
 ]

@@ -21,7 +21,7 @@ NEW_LINE = const.SYM_NEW_LINE
 DIV_NEWS = const.STR_TODAY_JA + "{}" + const.STR_NEWS_JA
 DIV_KOREA_NEWS = DIV_NEWS.format(const.STR_KOREA_JA)
 DIV_ENT_NEWS = DIV_NEWS.format(const.STR_ENT_JA)
-DIV_WEEKLY_RANKING = "{}週間ランキング"
+DIV_WEEKLY_RANKING = "{}週間" + const.STR_RANKING_JA
 DIV_KPOP_RANKING = DIV_WEEKLY_RANKING.format(const.STR_KPOP)
 DIV_KPOP_NEWS = DIV_NEWS.format(const.STR_KPOP)
 DIV_NIKKEI_NEWS = DIV_NEWS.format(const.STR_NIKKEI_JA)
@@ -38,9 +38,11 @@ LIST_KEYWORD_AI = func.get_input_data(const.STR_KEYWORD, const.STR_AI)
 
 # タイトル
 app_title = DIV_NEWS.format(const.SYM_BLANK)
+app_title_korea = const.STR_KOREA_JA + const.STR_NEWS_JA
 
 # カラムリスト
 col_list = [const.STR_DIV_JA, app_title, const.STR_LINK_JA]
+col_list_korea = [const.STR_DIV_JA, app_title_korea, const.STR_LINK_JA]
 
 
 # アイテムリスト取得
@@ -54,7 +56,7 @@ def get_item_list(div_list: list[str] = DIV_NEWS_LIST):
     for div, item_div in zip(div_list, item_div_list):
         news_list = get_news_list(div, list_flg=const.FLG_ON)
         if news_list:
-            print_news_list = news_list[: const.MAX_DISPLAY_CNT]
+            print_news_list = news_list[: const.MIN_DISPLAY_CNT]
             for news in print_news_list:
                 news = news.insert(0, item_div)  # type: ignore
             item_list += print_news_list

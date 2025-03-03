@@ -4,7 +4,6 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
-from apps import korea
 
 # アプリケーション名
 app_name = func.get_app_name(__file__)
