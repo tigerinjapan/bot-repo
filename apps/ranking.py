@@ -121,4 +121,4 @@ def get_daily_ranking(div: str = STR_X_TREND_JA):
 
 if __name__ == const.MAIN_FUNCTION:
     item_list = get_item_list()
-    print(item_list)
+    func.print_test_data(item_list)

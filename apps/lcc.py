@@ -82,4 +82,4 @@ def get_lcc_text(lcc_div, soup):
 
 if __name__ == const.MAIN_FUNCTION:
     item_list = get_item_list()
-    print(item_list)
+    func.print_test_data(item_list)

@@ -10,6 +10,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 
 import apps.lcc as lcc
+import apps.line_msg_api as line
 import apps.news as news
 import apps.ranking as ranking
 import apps.study as study
@@ -67,6 +68,9 @@ def start_thread():
     t = Thread(target=run)
     t.start()
 
+    if not func.is_local_env():
+        update_news()
+
 
 @app.get(const.PATH_ROOT)
 async def root(request: Request):
@@ -117,15 +121,21 @@ async def logout(request: Request):
 
 
 @app.get("/app/{app_name}")
-async def app_data(request: Request, app_name: str):
+async def app_exec(request: Request, app_name: str):
     return exec_result(request, app_name)
 
 
-@app.get(const.PATH_UPDATE)
-async def update(request: Request):
-    update_news()
-    app_name = const.APP_TODAY
-    return exec_result(request, app_name)
+@app.get("/json/{app_name}")
+async def app_json(app_name: str):
+    result = func.get_json_data(app_name, const.STR_OUTPUT)
+    return result
+
+
+@app.get("/line/send")
+async def send_msg():
+    line.main()
+    result = {"message": "Line Message sent."}
+    return result
 
 
 @app.get("/templates/{file_name}")
@@ -232,7 +242,7 @@ def update_news(app_name: str = const.SYM_BLANK):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # start_thread()
-    update_news()
+    start_thread()
+    # update_news()
     # app_name = const.APP_RANKING
     # update_news(app_name)

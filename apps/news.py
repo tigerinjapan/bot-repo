@@ -225,4 +225,4 @@ def get_elem_list(div: str, url: str = const.SYM_BLANK):
 
 if __name__ == const.MAIN_FUNCTION:
     item_list = get_item_list()
-    print(item_list)
+    func.print_test_data(item_list)

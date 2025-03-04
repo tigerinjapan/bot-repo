@@ -62,7 +62,7 @@ def main(auto_flg: bool = const.FLG_ON):
                 msg_list = get_msg()
 
             # メッセージ取得
-            data = get_json_data(msg_list)
+            data = get_json_for_line(msg_list)
 
             # メッセージ送信
             send_message(token, data)
@@ -141,7 +141,7 @@ def send_message(access_token: str, json_data):
 
 
 # LINE送信用のJSONデータ取得
-def get_json_data(msg_list: list[list[str]]):
+def get_json_for_line(msg_list: list[list[str]]):
     messages = []
 
     for msg_data in msg_list:
@@ -282,5 +282,5 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
 if __name__ == const.MAIN_FUNCTION:
     msg_list = get_msg_list()
-    print(msg_list)
+    func.print_test_data(msg_list)
     # main(auto_flg=const.FLG_OFF)

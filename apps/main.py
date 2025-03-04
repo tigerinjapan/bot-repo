@@ -25,7 +25,8 @@ def main():
         schedule.every().day.at(JOB_SCHEDULE_TIME).do(daily_news)
 
         # 毎日1時間毎に実行
-        schedule.every().hour.do(update_news)
+        for hour in range(24):
+            schedule.every().day.at(f"{hour:02d}:00").do(update_news)
 
         while True:
             # 保留中のジョブを実行
@@ -49,4 +50,4 @@ main()
 
 # プログラムのエントリーポイント
 if __name__ == const.MAIN_FUNCTION:
-    print(JOB_SCHEDULE_TIME)
+    func.print_test_data(JOB_SCHEDULE_TIME)
