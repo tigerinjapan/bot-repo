@@ -35,12 +35,14 @@ def get_webdriver():
     browser_display_options = [
         "--start-maximized",  # ウィンドウ最大化
         "--window-size=1920x1080",  # ウィンドウサイズ指定
-        "--blink-settings=imagesEnabled=false",  # 画像ロード無効化
+        # "--blink-settings=imagesEnabled=false",  # 画像ロード無効化
     ]
 
-    if not local_flg:
-        option_headless = "--headless"  # ヘッドレスモードで実行
-        browser_display_options.append(option_headless)
+    if local_flg:
+        option_add_arg = "--incognito"  # シークレットウィンドウ
+    else:
+        option_add_arg = "--headless"  # ヘッドレスモードで実行
+    browser_display_options.append(option_add_arg)
 
     # オプション：セキュリティ
     security_options = [
@@ -158,18 +160,12 @@ def get_element_text(driver, by, value):
 
 
 # 接続テスト
-def test_access_webdriver():
+def test_webdriver():
     driver = get_webdriver()
     if driver:
         driver.get(const.URL_GOOGLE)
         func.print_info_msg(driver.title)
+        func.time_sleep()
         driver.quit()
     else:
-        func.print_error_msg(
-            msg_const.MSG_ERR_FILE_NOT_EXIST, f"Chrome Driver:{const.STR_PATH_JA}"
-        )
-
-
-# プログラムのエントリーポイント
-if __name__ == const.MAIN_FUNCTION:
-    test_access_webdriver()
+        func.print_error_msg("Chrome Driver", msg_const.MSG_ERR_FILE_NOT_EXIST)

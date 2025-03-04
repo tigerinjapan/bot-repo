@@ -29,6 +29,9 @@ DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
 DIV_LIST = [DIV_WEATHER, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
 
+STR_YEN_JA = "円"
+STR_WON_JA = "ウォン"
+
 
 # アイテムリスト取得
 def get_item_list():
@@ -85,7 +88,7 @@ def get_today_won() -> str:
     elem_list = func_bs.find_elem_by_attr(elem, tag=const.TAG_TD, list_flg=const.FLG_ON)
 
     won = elem_list[0].text if elem_list else "1000"
-    today_won_rate = f"100{const.STR_YEN_JA}={won}{const.STR_WON_JA}"
+    today_won_rate = f"100{STR_YEN_JA}={won}{STR_WON_JA}"
     return today_won_rate
 
 

@@ -206,6 +206,7 @@ STR_INDEX = "index"
 STR_RESULT = "result"
 STR_CONTENTS = "contents"
 STR_SERVER = "server"
+STR_UPDATE = "update"
 STR_TIME = "time"
 STR_KEY = "key"
 STR_DIV = "div"
@@ -214,43 +215,26 @@ STR_DECODE = "decode"
 STR_LINE = "line"
 STR_GEMINI = "gemini"
 STR_API = "api"
-STR_LINE_API = "LINE API"
 STR_IMG = "img"
 STR_ENV_VAR = "env_var"
 STR_KEYWORD = "keyword"
 STR_NOTIFY = "notify"
 STR_FIRST = "first"
-STR_KPOP = "kpop"
-STR_DRAMA = "drama"
-
-STR_AI = "AI"
 
 STR_PATH_JA = "パス"
 STR_FILE_JA = "ファイル"
 STR_MESSAGE_JA = "メッセージ"
 STR_TOKEN_JA = "トークン"
 STR_EXPIRE_JA = "有効期限"
-STR_ENV_VAR_JA = "環境変数"
 STR_CHARSET_JA = "文字コード"
 STR_DIV_JA = "区分"
 STR_CONTENTS_JA = "内容"
 STR_TITLE_JA = "タイトル"
 STR_LINK_JA = "リンク"
 STR_NOTIFY_JA = "通知"
-
-STR_YEN_JA = "円"
-STR_WON_JA = "ウォン"
-STR_JAPAN_JA = "日本"
-STR_KOREA_JA = "韓国"
-STR_KOREAN_JA = "韓国語"
 STR_COMPANY_JA = "会社"
 STR_DATE_JA = "日付"
-STR_TODAY_JA = "今日の"
 STR_NEWS_JA = "ニュース"
-STR_ENT_JA = "エンタメ"
-STR_NIKKEI_JA = "日経"
-STR_X_TREND_JA = "Xトレンド"
-STR_RANKING_JA = "ランキング"
 
 ##### マスキング #####
 MASKING_COMPANY = "company"
@@ -313,7 +297,15 @@ APP_RANKING = "ranking"
 APP_LCC = "lcc"
 APP_TV = "tv"
 APP_STUDY = "study"
-LIST_APP_NAME = [APP_TODAY, APP_NEWS, APP_KOREA, APP_RANKING, APP_LCC, APP_TV, APP_STUDY]
+LIST_APP_NAME = [
+    APP_TODAY,
+    APP_NEWS,
+    APP_KOREA,
+    APP_RANKING,
+    APP_LCC,
+    APP_TV,
+    APP_STUDY,
+]
 
 
 # パス取得
@@ -332,13 +324,8 @@ def get_html(app_name):
 PATH_ROOT = "/"
 PATH_LOGIN = get_path(STR_LOGIN)
 PATH_LOGOUT = get_path(STR_LOGOUT)
-PATH_TODAY = get_path(APP_TODAY)
-PATH_NEWS = get_path(APP_NEWS)
-PATH_KOREA = get_path(APP_KOREA)
-PATH_RANKING = get_path(APP_RANKING)
-PATH_LCC = get_path(APP_LCC)
-PATH_TV = get_path(APP_TV)
-PATH_STUDY = get_path(APP_STUDY)
+PATH_TODAY = "/app" + get_path(APP_TODAY)
+PATH_UPDATE = get_path(STR_UPDATE)
 
 ##### HTMLファイル名 #####
 HTML_INDEX = get_html(STR_INDEX)

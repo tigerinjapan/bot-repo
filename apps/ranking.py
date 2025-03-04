@@ -12,9 +12,12 @@ app_name = func.get_app_name(__file__)
 app_title = news.DIV_WEEKLY_RANKING.format(const.SYM_BLANK)
 
 # ランキング区分リスト
-LIST_RANKING_WEEKLY = [const.STR_KPOP, const.STR_DRAMA]
-LIST_RANKING_DAILY = [const.STR_X_TREND_JA]
-DIV_DAILY_RANKING = "{}日間" + const.STR_RANKING_JA
+STR_DRAMA = "drama"
+STR_X_TREND_JA = "Xトレンド"
+
+LIST_RANKING_WEEKLY = [news.STR_KPOP, STR_DRAMA]
+LIST_RANKING_DAILY = [STR_X_TREND_JA]
+DIV_DAILY_RANKING = "{}日間" + news.STR_RANKING_JA
 
 # カラムリスト
 col_list_weekly = [news.DIV_WEEKLY_RANKING.format(div) for div in LIST_RANKING_WEEKLY]
@@ -43,14 +46,14 @@ def get_item_list():
 
 
 # 週間ランキング取得
-def get_weekly_ranking(div: str = const.STR_KPOP):
+def get_weekly_ranking(div: str = news.STR_KPOP):
     weekly_ranking = []
 
     url = f"{news.URL_WOWKOREA}/ranking/weekly/{div}/"
 
     elem_list = news.get_elem_list(news.DIV_KPOP_RANKING, url)
 
-    if div == const.STR_DRAMA:
+    if div == STR_DRAMA:
         attr_val = "card-body pt-3 pt-lg-0"
         elem_list = func_bs.get_elem_from_url(
             url, attr_val=attr_val, list_flg=const.FLG_ON
@@ -62,7 +65,7 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
     for elem in elem_list[: const.MAX_DISPLAY_CNT]:
         ranking_info = const.SYM_BLANK
 
-        if div == const.STR_KPOP:
+        if div == news.STR_KPOP:
             if not elem:
                 break
             text_data = elem.text
@@ -75,7 +78,7 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
             )
             ranking_info = f"{singer} - {song}"
 
-        elif div == const.STR_DRAMA:
+        elif div == STR_DRAMA:
             h2_elem = func_bs.find_elem_by_attr(elem, tag=const.TAG_H2)
             title = f"<b>{h2_elem.text}</b>"  # type: ignore
             ul_elem = func_bs.find_elem_by_attr(elem, tag=const.TAG_UL)
@@ -97,10 +100,10 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
 
 
 # 日間ランキング
-def get_daily_ranking(div: str = const.STR_X_TREND_JA):
+def get_daily_ranking(div: str = STR_X_TREND_JA):
     daily_ranking = []
 
-    if div == const.STR_X_TREND_JA:
+    if div == STR_X_TREND_JA:
         url = f"{URL_ACHIKOCHI}{URL_X_PARAM}"
         soup = func_bs.get_elem_from_url(url, attr_val="panel")
         elem_list = func_bs.find_elem_by_attr(

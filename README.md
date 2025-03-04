@@ -32,7 +32,7 @@ LINE Messaging API Bot
 ### 公開サーバ
 
 ```
-https://raspy-ranique-kobe-dev-abf65738.koyeb.app/
+https://kobe-dev.koyeb.app/
 ```
 
 ## 参考 URL

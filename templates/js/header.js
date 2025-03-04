@@ -56,16 +56,17 @@ function writeHeader(userDiv, userNm, appNm) {
   // トップメニュー
   document.write(`<div class="topMenu"><ul>`);
 
-  app_list = LIST_APP;
-  menu_list = LIST_MENU;
+  appList = LIST_APP;
+  menuList = LIST_MENU;
   if (userDiv == AUTH_GUEST) {
-    app_list = LIST_APP_GUEST;
-    menu_list = LIST_MENU_GUEST;
+    appList = LIST_APP_GUEST;
+    menuList = LIST_MENU_GUEST;
   }
 
-  for (let i = 0; i < app_list.length; i++) {
+  for (let i = 0; i < appList.length; i++) {
+    appDiv = appList[i];
     document.write(`
-      <li><a href="/${app_list[i]}" id="${app_list[i]}">${app_list[i]}</a></li>
+      <li><a href="/app/${appDiv}" id="${appDiv}">${appDiv}</a></li>
     `);
   }
 

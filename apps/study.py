@@ -8,11 +8,14 @@ import apps.utils.function_gemini as func_gemini
 # アプリケーション名
 app_name = func.get_app_name(__file__)
 
+# 定数
+STR_KOREAN_JA = "韓国語"
+
 # タイトル
-app_title = const.STR_NEWS_JA + const.STR_KOREAN_JA
+app_title = const.STR_NEWS_JA + STR_KOREAN_JA
 
 # カラムリスト
-col_list = ["会話", const.STR_KOREAN_JA]
+col_list = ["会話", STR_KOREAN_JA]
 
 # キーワードリスト
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)

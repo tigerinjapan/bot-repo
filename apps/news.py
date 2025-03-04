@@ -18,27 +18,35 @@ URL_ITMEDIA = "https://www.itmedia.co.jp"
 NEW_LINE = const.SYM_NEW_LINE
 
 # 区分
-DIV_NEWS = const.STR_TODAY_JA + "{}" + const.STR_NEWS_JA
-DIV_KOREA_NEWS = DIV_NEWS.format(const.STR_KOREA_JA)
-DIV_ENT_NEWS = DIV_NEWS.format(const.STR_ENT_JA)
-DIV_WEEKLY_RANKING = "{}週間" + const.STR_RANKING_JA
-DIV_KPOP_RANKING = DIV_WEEKLY_RANKING.format(const.STR_KPOP)
-DIV_KPOP_NEWS = DIV_NEWS.format(const.STR_KPOP)
-DIV_NIKKEI_NEWS = DIV_NEWS.format(const.STR_NIKKEI_JA)
-DIV_AI_NEWS = DIV_NEWS.format(const.STR_AI)
+STR_KPOP = "kpop"
+STR_AI = "AI"
+STR_KOREA_JA = "韓国"
+STR_ENT_JA = "エンタメ"
+STR_NIKKEI_JA = "日経"
+STR_RANKING_JA = "ランキング"
+
+# 区分
+DIV_NEWS = "今日の" + "{}" + const.STR_NEWS_JA
+DIV_NIKKEI_NEWS = DIV_NEWS.format(STR_NIKKEI_JA)
+DIV_KOREA_NEWS = DIV_NEWS.format(STR_KOREA_JA)
+DIV_ENT_NEWS = DIV_NEWS.format(STR_ENT_JA)
+DIV_KPOP_NEWS = DIV_NEWS.format(STR_KPOP)
+DIV_WEEKLY_RANKING = "{}週間" + STR_RANKING_JA
+DIV_KPOP_RANKING = DIV_WEEKLY_RANKING.format(STR_KPOP)
+DIV_AI_NEWS = DIV_NEWS.format(STR_AI)
 DIV_AI_NEWS_LIST = [DIV_AI_NEWS]
 DIV_NEWS_LIST = [DIV_NIKKEI_NEWS] + DIV_AI_NEWS_LIST
 DIV_KOREA_NEWS_LIST = [DIV_KOREA_NEWS, DIV_ENT_NEWS, DIV_KPOP_NEWS]
 
-ITEM_NEWS_LIST = [const.STR_NIKKEI_JA, const.STR_AI]
-ITEM_KOREA_NEWS_LIST = [const.STR_KOREA_JA, const.STR_ENT_JA, const.STR_KPOP]
+ITEM_NEWS_LIST = [STR_NIKKEI_JA, STR_AI]
+ITEM_KOREA_NEWS_LIST = [STR_KOREA_JA, STR_ENT_JA, STR_KPOP]
 
 # キーワードリスト
-LIST_KEYWORD_AI = func.get_input_data(const.STR_KEYWORD, const.STR_AI)
+LIST_KEYWORD_AI = func.get_input_data(const.STR_KEYWORD, STR_AI)
 
 # タイトル
 app_title = DIV_NEWS.format(const.SYM_BLANK)
-app_title_korea = const.STR_KOREA_JA + const.STR_NEWS_JA
+app_title_korea = STR_KOREA_JA + const.STR_NEWS_JA
 
 # カラムリスト
 col_list = [const.STR_DIV_JA, app_title, const.STR_LINK_JA]

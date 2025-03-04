@@ -18,6 +18,7 @@ import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
+from apps.utils.function_selenium import test_webdriver
 
 # fast api
 app = FastAPI()
@@ -79,7 +80,7 @@ async def root(request: Request):
         response = RedirectResponse(url=const.PATH_TODAY, status_code=303)
     else:
         response = templates.TemplateResponse(
-            "index.html", {const.STR_REQUEST: request}
+            const.HTML_INDEX, {const.STR_REQUEST: request}
         )
     return response
 
@@ -115,47 +116,16 @@ async def logout(request: Request):
     return templates.TemplateResponse(const.HTML_INDEX, context)
 
 
-@app.get(const.PATH_TODAY)
-async def today_info(request: Request):
-    app_div = today
-    return exec_result(request, app_div)
+@app.get("/app/{app_name}")
+async def app_data(request: Request, app_name: str):
+    return exec_result(request, app_name)
 
 
-@app.get(const.PATH_NEWS)
-async def news_info(request: Request):
-    app_div = news
-    return exec_result(request, app_div)
-
-
-@app.get(const.PATH_KOREA)
-async def korea_info(request: Request):
-    app_div = news
-    app_name = const.APP_KOREA
-    return exec_result(request, app_div, app_name)
-
-
-@app.get(const.PATH_RANKING)
-async def ranking_info(request: Request):
-    app_div = ranking
-    return exec_result(request, app_div)
-
-
-@app.get(const.PATH_LCC)
-async def lcc_news(request: Request):
-    app_div = lcc
-    return exec_result(request, app_div)
-
-
-@app.get(const.PATH_TV)
-async def tv_list(request: Request):
-    app_div = tv
-    return exec_result(request, app_div)
-
-
-@app.get(const.PATH_STUDY)
-async def study_korean(request: Request):
-    app_div = study
-    return exec_result(request, app_div)
+@app.get(const.PATH_UPDATE)
+async def update(request: Request):
+    update_news()
+    app_name = const.APP_TODAY
+    return exec_result(request, app_name)
 
 
 @app.get("/templates/{file_name}")
@@ -174,18 +144,20 @@ async def img(file_name: str):
 
 @app.get("/test")
 async def test():
-    return {"message": "[test] Server is on test."}
+    test_webdriver()
+    return {"message": "Server is on test."}
 
 
 # 【画面】取得結果
-def exec_result(request: Request, app_div, sub_div: str = const.SYM_BLANK):
-    app_name = app_div.app_name
+def exec_result(request: Request, app_name: str):
+
+    app_div_idx = const.LIST_APP_NAME.index(app_name)
+    app_div = LIST_APP_DIV[app_div_idx]
+
     app_title = app_div.app_title
 
-    if sub_div:
-        app_name = sub_div
-        if sub_div == const.APP_KOREA:
-            app_title = news.app_title_korea
+    if app_name == const.APP_KOREA:
+        app_title = news.app_title_korea
 
     app_exec = AppExec(app_div, app_name)
     app_exec.start()
@@ -261,6 +233,6 @@ def update_news(app_name: str = const.SYM_BLANK):
 
 if __name__ == const.MAIN_FUNCTION:
     # start_thread()
-    # update_news()
-    app_name = const.APP_RANKING
-    update_news(app_name)
+    update_news()
+    # app_name = const.APP_RANKING
+    # update_news(app_name)

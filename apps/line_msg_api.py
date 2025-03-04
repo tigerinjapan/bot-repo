@@ -15,6 +15,7 @@ URL_LINE_API = "https://api.line.me"
 URL_KOYEB = func.get_env_val("URL_KOYEB")
 
 # LINE API情報
+STR_LINE_API = "LINE API"
 LINE_CHANNEL_ID = func.get_env_val("LINE_CHANNEL_ID")
 LINE_CHANNEL_SECRET = func.get_env_val("LINE_CHANNEL_SECRET")
 MAX_MSG_API_CNT = 200
@@ -136,7 +137,7 @@ def send_message(access_token: str, json_data):
             err_msg = (
                 f"[{response.status_code}, {response.reason}, {result["message"]}]"
             )
-            func.print_error_msg(const.STR_LINE_API, err_msg)
+            func.print_error_msg(STR_LINE_API, err_msg)
 
 
 # LINE送信用のJSONデータ取得
