@@ -21,18 +21,26 @@ def main():
 
     # ローカル環境でない場合、ジョブをスケジュールする
     if not func.is_local_env():
+        # 毎日1時間毎に実行
+        schedule.every(5).minutes.do(no_sleep)
+
         # 毎日指定された時間に実行
         schedule.every().day.at(JOB_SCHEDULE_TIME).do(daily_news)
 
         # 毎日1時間毎に実行
         for hour in range(24):
-            schedule.every().day.at(f"{hour:02d}:00").do(update_news)
+            schedule.every().day.at(f"{hour:02d}:55").do(update_news)
 
         while True:
             # 保留中のジョブを実行
             schedule.run_pending()
             # 1秒間スリープする
             func.time_sleep(1)
+
+
+# スリーブ防止
+def no_sleep():
+    server.update_news(const.APP_TODAY)
 
 
 # デイリーニュース：LINE APIを呼び出す
