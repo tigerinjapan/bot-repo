@@ -15,16 +15,13 @@ ENV LC_ALL ja_JP.UTF-8
 ENV TZ Asia/Tokyo
 ENV TERM xterm
 ENV PYTHONPATH /bot
-# ENV CHROME_DRIVER_FILE chromedriver-linux64
-ENV CHROME_DRIVER_FILE chromedriver_linux64
+ENV CHROME_DRIVER_FILE chromedriver-linux64
 ENV CHROME_DRIVER_ZIP ${CHROME_DRIVER_FILE}.zip
 ENV CHROME_DRIVER_VERSION 114.0.5735.90
-# ENV CHROME_DRIVER_PATH /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
-ENV CHROME_DRIVER_PATH /usr/bin/chromium/
+ENV CHROME_DRIVER_PATH /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
 ENV PATH=$PATH:${CHROME_DRIVER_PATH}chromedriver
 
 # ChromeDriverダウンロード、解凍し、適切な場所に移動
-# RUN wget https://storage.googleapis.com/chrome-for-testing-public/${CHROME_DRIVER_VERSION}/linux64/chromedriver-linux64.zip
 RUN wget https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/${CHROME_DRIVER_ZIP}
 RUN unzip /bot/${CHROME_DRIVER_ZIP}
 RUN mkdir -p ${CHROME_DRIVER_PATH}
