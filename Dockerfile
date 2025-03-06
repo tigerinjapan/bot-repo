@@ -35,7 +35,6 @@ RUN ls -la ${CHROME_DRIVER_PATH}
 
 # zipファイル削除
 RUN rm -r /bot/${CHROME_DRIVER_ZIP}
-RUN ls -la /bot/chromedriver
 
 # 必要なパッケージをpipでインストール
 COPY requirements.txt /bot/
