@@ -19,8 +19,8 @@ ENV PYTHONPATH /bot
 ENV CHROME_DRIVER_FILE chromedriver_linux64
 ENV CHROME_DRIVER_ZIP ${CHROME_DRIVER_FILE}.zip
 ENV CHROME_DRIVER_VERSION 114.0.5735.90
-ENV CHROME_DRIVER_PATH /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
-# ENV CHROME_DRIVER_PATH /usr/bin/chromium/
+# ENV CHROME_DRIVER_PATH /root/.wdm/drivers/chromedriver/linux64/${CHROME_DRIVER_VERSION}/
+ENV CHROME_DRIVER_PATH /usr/bin/chromium/
 ENV PATH=$PATH:${CHROME_DRIVER_PATH}chromedriver
 
 # ChromeDriverダウンロード、解凍し、適切な場所に移動
