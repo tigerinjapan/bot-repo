@@ -26,8 +26,8 @@ RUN wget https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/${
 RUN unzip /bot/${CHROME_DRIVER_ZIP}
 RUN mkdir -p ${CHROME_DRIVER_PATH}
 RUN chmod +x ${CHROME_DRIVER_PATH}
-RUN ls -la /bot/{CHROME_DRIVER_FILE}/
-RUN mv /bot/{CHROME_DRIVER_FILE}/chromedriver ${CHROME_DRIVER_PATH}
+RUN ls -la /bot/chromedriver
+RUN mv /bot/chromedriver ${CHROME_DRIVER_PATH}
 
 # 権限設定
 RUN chmod +x ${CHROME_DRIVER_PATH}chromedriver
@@ -35,7 +35,7 @@ RUN ls -la ${CHROME_DRIVER_PATH}
 
 # zipファイル削除
 RUN rm -r /bot/${CHROME_DRIVER_ZIP}
-RUN ls -la /bot/${CHROME_DRIVER_FILE}/
+RUN ls -la /bot/chromedriver
 
 # 必要なパッケージをpipでインストール
 COPY requirements.txt /bot/
