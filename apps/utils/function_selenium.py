@@ -20,11 +20,11 @@ def get_webdriver():
     local_flg = const.FLG_ON if func.is_local_env() else const.FLG_OFF
 
     # ChromeDriverパス設定
-    chrome_driver_path = ChromeDriverManager().install() # TODO テスト
-    # if local_flg:
-    #     chrome_driver_path = ChromeDriverManager().install()
-    # else:
-    #     chrome_driver_path = "/root/.wdm/drivers/chromedriver/linux64/133.0.6943.126/chromedriver"  # TODO chromedriverエラー
+    if local_flg:
+        chrome_driver_path = ChromeDriverManager().install()
+    else:
+        CHROME_DRIVER_VERSION = "114.0.5735.90"
+        chrome_driver_path = f"/root/.wdm/drivers/chromedriver/linux64/{CHROME_DRIVER_VERSION}/chromedriver"  # TODO chromedriverエラー
 
     # ChromeDriverサービス設定
     service = Service(executable_path=chrome_driver_path)
