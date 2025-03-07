@@ -23,8 +23,11 @@ def get_webdriver():
     if local_flg:
         chrome_driver_path = ChromeDriverManager().install()
     else:
-        CHROME_DRIVER_VERSION = "114.0.5735.90"
+        CHROME_DRIVER_VERSION = "133.0.6943.126"
         chrome_driver_path = f"/root/.wdm/drivers/chromedriver/linux64/{CHROME_DRIVER_VERSION}/chromedriver"  # TODO chromedriverエラー
+
+# [WebDriverException] This version of ChromeDriver only supports Chrome version 114
+# Current browser version is 133.0.6943.126 with binary path /usr/bin/chromium
 
     # ChromeDriverサービス設定
     service = Service(executable_path=chrome_driver_path)
