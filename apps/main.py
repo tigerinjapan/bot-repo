@@ -16,11 +16,19 @@ JOB_SCHEDULE_TIME = func.get_env_val("JOB_SCHEDULE_TIME")
 
 
 def main():
-    # サーバー起動
-    server.run_server()
+    # スレッド開始
+    server.start_thread()
 
+    # ジョブ実行
+    job_scheduler()
+
+
+def job_scheduler():
     # ローカル環境でない場合、ジョブをスケジュールする
     if not func.is_local_env():
+        # 毎日2分間毎に実行
+        schedule.every(2).minutes.do(no_sleep)
+
         # 毎日指定された時間に実行
         schedule.every().day.at(JOB_SCHEDULE_TIME).do(daily_news)
 
@@ -29,10 +37,15 @@ def main():
             schedule.every().day.at(f"{hour:02d}:55").do(update_news)
 
         while True:
-            # 保留中のジョブを実行
+            # スケジュールされたジョブを確認・実行
             schedule.run_pending()
             # 1秒間スリープする
             func.time_sleep(1)
+
+
+# スリーブ防止
+def no_sleep():
+    func.time_sleep(1)
 
 
 # デイリーニュース：LINE APIを呼び出す
