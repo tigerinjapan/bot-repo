@@ -54,22 +54,27 @@ class AppExec:
         return data_list
 
 
-def run():
-    host, port = func.get_host_port()
+# サーバー起動
+def run_server():
+    while True:
+        def run():
+            host, port = func.get_host_port()
 
-    # uvicornサーバー起動
-    config = Config(app, host=host, port=port)
-    server = Server(config)
-    server.run()
+            # uvicornサーバー起動
+            config = Config(app, host=host, port=port)
+            server = Server(config)
+            server.run()
 
+        # サーバースレッドの起動
+        server_thread = Thread(target=run)
+        server_thread.start()
 
-# スレッド開始
-def start_thread():
-    t = Thread(target=run)
-    t.start()
+        # サーバーの監視
+        while server_thread.is_alive():
+            func.time_sleep(5)
 
-    if not func.is_local_env():
-        update_news()
+        # サーバーが停止した場合の再起動
+        func.print_info_msg(msg_const.MSG_INFO_SERVER_RESTART)
 
 
 @app.get(const.PATH_ROOT)
@@ -242,7 +247,7 @@ def update_news(app_name: str = const.SYM_BLANK):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    start_thread()
+    run_server()
     # update_news()
     # app_name = const.APP_RANKING
     # update_news(app_name)

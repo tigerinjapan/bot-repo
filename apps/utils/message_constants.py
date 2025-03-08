@@ -10,6 +10,7 @@ MSG_INFO_PROC_END = "処理を終了します。"
 MSG_INFO_PROC_COMPLETED = "処理を完了しました。"
 MSG_INFO_LOGIN = "ログインしました。"
 MSG_INFO_LOGOUT = "ログアウトしました。"
+MSG_INFO_SERVER_RESTART = "サーバーを再起動します。"
 
 # エラーメッセージ
 MSG_ERR_USER_NOT_EXIST = "【ログイン】IDを再確認してください。"
