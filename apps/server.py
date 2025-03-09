@@ -237,6 +237,12 @@ def update_news(app_name: str = const.SYM_BLANK):
     func.print_info_msg(const.FILE_TYPE_JSON, msg_const.MSG_INFO_PROC_COMPLETED)
 
 
+# スリープしない
+def no_sleep():
+    func.time_sleep(1)
+    func.print_info_msg(msg_const.MSG_INFO_SERVER_KEEP_ALIVE)
+
+
 if __name__ == const.MAIN_FUNCTION:
     app_name = const.APP_TODAY
     update_news(app_name)

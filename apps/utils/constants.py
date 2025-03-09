@@ -227,6 +227,7 @@ STR_MESSAGE_JA = "メッセージ"
 STR_TOKEN_JA = "トークン"
 STR_EXPIRE_JA = "有効期限"
 STR_CHARSET_JA = "文字コード"
+STR_TYPE_JA = "タイプ"
 STR_DIV_JA = "区分"
 STR_CONTENTS_JA = "内容"
 STR_TITLE_JA = "タイトル"
@@ -332,4 +333,7 @@ HTML_INDEX = get_html(STR_INDEX)
 HTML_RESULT = get_html(STR_RESULT)
 
 if __name__ == MAIN_FUNCTION:
-    print(DATE_WEEKDAY)
+    data = f"[{DATE_WEEKDAY, HTML_INDEX}]"
+    type_name = type(data).__name__
+    print(STR_TYPE_JA, type_name)
+    print(data)

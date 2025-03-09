@@ -26,7 +26,8 @@ LINE Messaging API Bot
 | LINE_CHANNEL_ID     | channel_id        |
 | LINE_CHANNEL_SECRET | channel_secret    |
 | GEMINI_API_KEY      | api_key           |
-| JOB_SCHEDULE_TIME   | 07:00             |
+| NUM_HOUR_DAILY_JOB  | 7                 |
+| NUM_MIN_HOURLY_JOB  | 55                |
 | URL_KOYEB           | https://koyeb.app |
 
 ### 公開サーバ

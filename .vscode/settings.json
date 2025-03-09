@@ -5,6 +5,7 @@
         "fastapi",
         "gaierror",
         "genai",
+        "getframe",
         "gethostname",
         "itsdangerous",
         "localedef",
@@ -12,6 +13,7 @@
         "prefs",
         "PYTHONPATH",
         "pyvirtualdisplay",
+        "SJIS",
         "starlette",
         "uvicorn"
     ]

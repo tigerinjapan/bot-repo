@@ -12,7 +12,8 @@ import apps.utils.function as func
 dotenv.load_dotenv()
 
 # ジョブ実行時間を環境変数から取得
-JOB_SCHEDULE_TIME = func.get_env_val("JOB_SCHEDULE_TIME")
+NUM_HOUR_DAILY_JOB = func.get_env_val("NUM_HOUR_DAILY_JOB")
+NUM_MIN_HOURLY_JOB = func.get_env_val("NUM_MIN_HOURLY_JOB")
 
 
 def main():
@@ -26,15 +27,15 @@ def main():
 def job_scheduler():
     # ローカル環境でない場合、ジョブをスケジュールする
     if not func.is_local_env():
-        # 毎日2分間毎に実行
-        schedule.every(2).minutes.do(no_sleep)
+        # 毎日5分間毎に実行
+        schedule.every(5).minutes.do(min_job)
 
         # 毎日指定された時間に実行
-        schedule.every().day.at(JOB_SCHEDULE_TIME).do(daily_news)
+        schedule.every().day.at(f"{NUM_HOUR_DAILY_JOB:02d}:00").do(daily_job)
 
         # 毎日1時間毎に実行
         for hour in range(24):
-            schedule.every().day.at(f"{hour:02d}:55").do(update_news)
+            schedule.every().day.at(f"{hour:02d}:{NUM_MIN_HOURLY_JOB}").do(hourly_job)
 
         while True:
             # スケジュールされたジョブを確認・実行
@@ -43,24 +44,24 @@ def job_scheduler():
             func.time_sleep(1)
 
 
-# スリーブ防止
-def no_sleep():
-    func.time_sleep(1)
+# 分次ジョブ：スリープしない
+def min_job():
+    server.no_sleep()
 
 
-# デイリーニュース：LINE APIを呼び出す
-def daily_news():
+# 日次ジョブ：LINEメッセージ送信
+def daily_job():
     line_msg_api.main()
 
 
-# ニュース更新：ウェブページの更新
-def update_news():
+# 時次ジョブ：ウェブページの更新
+def hourly_job():
     server.update_news()
 
 
 # メイン実行
-main()
+# main()
 
 # プログラムのエントリーポイント
 if __name__ == const.MAIN_FUNCTION:
-    func.print_test_data(JOB_SCHEDULE_TIME)
+    func.print_test_data(NUM_HOUR_DAILY_JOB, const.FLG_ON)
