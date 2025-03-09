@@ -5,6 +5,9 @@ from datetime import datetime
 
 from selenium.webdriver.common.by import By
 
+##### システム名 #####
+SYSTEM_NAME = "開発デモシステム"
+
 ##### main関数 #####
 MAIN_FUNCTION = "__main__"
 
@@ -221,6 +224,8 @@ STR_KEYWORD = "keyword"
 STR_NOTIFY = "notify"
 STR_FIRST = "first"
 
+STR_LOGIN_JA = "ログイン"
+STR_LOGOUT_JA = "ログアウト"
 STR_PATH_JA = "パス"
 STR_FILE_JA = "ファイル"
 STR_MESSAGE_JA = "メッセージ"
@@ -228,6 +233,7 @@ STR_TOKEN_JA = "トークン"
 STR_EXPIRE_JA = "有効期限"
 STR_CHARSET_JA = "文字コード"
 STR_TYPE_JA = "タイプ"
+STR_SYSTEM_JA = "システム"
 STR_DIV_JA = "区分"
 STR_CONTENTS_JA = "内容"
 STR_TITLE_JA = "タイトル"

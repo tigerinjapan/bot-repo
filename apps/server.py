@@ -19,6 +19,7 @@ import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
+from apps.utils.function_beautiful_soup import get_soup
 from apps.utils.function_selenium import test_webdriver
 
 # fast api
@@ -79,9 +80,8 @@ async def root(request: Request):
     if user:
         response = RedirectResponse(url=const.PATH_TODAY, status_code=303)
     else:
-        response = templates.TemplateResponse(
-            const.HTML_INDEX, {const.STR_REQUEST: request}
-        )
+        context = {const.STR_REQUEST: request, const.STR_TITLE: const.SYSTEM_NAME}
+        response = templates.TemplateResponse(const.HTML_INDEX, context)
     return response
 
 
@@ -101,7 +101,11 @@ async def login(
         if not user or user["userId"] != userId:
             chk_msg = msg_const.MSG_ERR_USER_NOT_EXIST
         request.session.clear()
-        context = {const.STR_REQUEST: request, "chk_msg": chk_msg}
+        context = {
+            const.STR_REQUEST: request,
+            const.STR_TITLE: const.SYSTEM_NAME,
+            "chk_msg": chk_msg,
+        }
         response = templates.TemplateResponse(const.HTML_INDEX, context)
 
     return response
@@ -112,7 +116,11 @@ async def logout(request: Request):
     user_name = request.session[const.STR_USER]["userName"]
     func.print_info_msg(user_name, msg_const.MSG_INFO_LOGOUT)
     request.session.clear()
-    context = {const.STR_REQUEST: request, "chk_msg": msg_const.MSG_INFO_LOGOUT}
+    context = {
+        const.STR_REQUEST: request,
+        const.STR_TITLE: const.SYSTEM_NAME,
+        "chk_msg": msg_const.MSG_INFO_LOGOUT,
+    }
     return templates.TemplateResponse(const.HTML_INDEX, context)
 
 
@@ -176,7 +184,7 @@ def exec_result(request: Request, app_name: str):
         "user_div": user["userDiv"],
         "user_name": user["userName"],
         "app_name": app_name,
-        "title": app_title,
+        const.STR_TITLE: app_title,
         "data_list": data_list,
     }
     return templates.TemplateResponse(const.HTML_RESULT, context)
@@ -239,10 +247,13 @@ def update_news(app_name: str = const.SYM_BLANK):
 
 # スリープしない
 def no_sleep():
-    func.time_sleep(1)
+    url = line.URL_KOYEB_APP
+    title_text = get_soup(url).title
+    func.print_info_msg(const.STR_SYSTEM_JA, title_text)  # type: ignore
     func.print_info_msg(msg_const.MSG_INFO_SERVER_KEEP_ALIVE)
 
 
 if __name__ == const.MAIN_FUNCTION:
-    app_name = const.APP_TODAY
-    update_news(app_name)
+    update_news()
+    # app_name = const.APP_TODAY
+    # update_news(app_name)

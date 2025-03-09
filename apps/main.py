@@ -12,8 +12,9 @@ import apps.utils.function as func
 dotenv.load_dotenv()
 
 # ジョブ実行時間を環境変数から取得
-NUM_HOUR_DAILY_JOB = func.get_env_val("NUM_HOUR_DAILY_JOB")
-NUM_MIN_HOURLY_JOB = func.get_env_val("NUM_MIN_HOURLY_JOB")
+NUM_HOUR_DAILY_JOB = func.get_env_val("NUM_HOUR_DAILY_JOB").zfill(2)
+NUM_MIN_HOURLY_JOB = func.get_env_val("NUM_MIN_HOURLY_JOB").zfill(2)
+NUM_MIN_NO_SLEEP = func.get_env_val("NUM_MIN_NO_SLEEP").zfill(2)
 
 
 def main():
@@ -25,23 +26,22 @@ def main():
 
 
 def job_scheduler():
+    # 毎日1時間毎に実行
+    for hour in range(24):
+        schedule.every().day.at(f"{hour:02d}:{NUM_MIN_NO_SLEEP}").do(min_job)
+
+        schedule.every().day.at(f"{hour:02d}:{NUM_MIN_HOURLY_JOB}").do(hourly_job)
+
     # ローカル環境でない場合、ジョブをスケジュールする
     if not func.is_local_env():
-        # 毎日5分間毎に実行
-        schedule.every(5).minutes.do(min_job)
-
         # 毎日指定された時間に実行
-        schedule.every().day.at(f"{NUM_HOUR_DAILY_JOB:02d}:00").do(daily_job)
+        schedule.every().day.at(f"{NUM_HOUR_DAILY_JOB}:00").do(daily_job)
 
-        # 毎日1時間毎に実行
-        for hour in range(24):
-            schedule.every().day.at(f"{hour:02d}:{NUM_MIN_HOURLY_JOB}").do(hourly_job)
-
-        while True:
-            # スケジュールされたジョブを確認・実行
-            schedule.run_pending()
-            # 1秒間スリープする
-            func.time_sleep(1)
+    while True:
+        # スケジュールされたジョブを確認・実行
+        schedule.run_pending()
+        # 1秒間スリープする
+        func.time_sleep(1)
 
 
 # 分次ジョブ：スリープしない
@@ -49,20 +49,17 @@ def min_job():
     server.no_sleep()
 
 
-# 日次ジョブ：LINEメッセージ送信
-def daily_job():
-    line_msg_api.main()
-
-
 # 時次ジョブ：ウェブページの更新
 def hourly_job():
     server.update_news()
 
 
-# メイン実行
-main()
+# 日次ジョブ：LINEメッセージ送信
+def daily_job():
+    line_msg_api.main()
+
 
 # プログラムのエントリーポイント
 if __name__ == const.MAIN_FUNCTION:
-    if func.is_local_env():
-        func.print_test_data(NUM_HOUR_DAILY_JOB, const.FLG_ON)
+    # メイン実行
+    main()
