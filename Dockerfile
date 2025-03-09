@@ -45,7 +45,7 @@ RUN pip install -r requirements.txt
 COPY . /bot
 
 # ポート開放（uvicornで指定したポート）
-EXPOSE 8080
+EXPOSE 8000
 
 # アプリケーションを実行
 CMD ["python", "apps/main.py"]

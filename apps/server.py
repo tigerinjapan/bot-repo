@@ -19,7 +19,7 @@ import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
-from apps.utils.function_beautiful_soup import get_soup
+from apps.utils.function_beautiful_soup import get_data_from_url
 from apps.utils.function_selenium import test_webdriver
 
 # fast api
@@ -57,6 +57,8 @@ class AppExec:
 
 # uvicornサーバー起動
 def run_server():
+    func.print_info_msg(msg_const.MSG_INFO_SERVER_START)
+
     host, port = func.get_host_port()
     config = Config(app, host=host, port=port)
     server = Server(config)
@@ -245,11 +247,10 @@ def update_news(app_name: str = const.SYM_BLANK):
     func.print_info_msg(const.FILE_TYPE_JSON, msg_const.MSG_INFO_PROC_COMPLETED)
 
 
-# スリープしない
+# スリープ状態にならないようサーバーアクセス
 def no_sleep():
     url = line.URL_KOYEB_APP
-    title_text = get_soup(url).title
-    func.print_info_msg(const.STR_SYSTEM_JA, title_text)  # type: ignore
+    get_data_from_url(url, headers=const.NONE_CONSTANT)
     func.print_info_msg(msg_const.MSG_INFO_SERVER_KEEP_ALIVE)
 
 
