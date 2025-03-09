@@ -60,8 +60,9 @@ def hourly_job():
 
 
 # メイン実行
-# main()
+main()
 
 # プログラムのエントリーポイント
 if __name__ == const.MAIN_FUNCTION:
-    func.print_test_data(NUM_HOUR_DAILY_JOB, const.FLG_ON)
+    if func.is_local_env():
+        func.print_test_data(NUM_HOUR_DAILY_JOB, const.FLG_ON)
