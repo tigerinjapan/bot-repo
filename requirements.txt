@@ -5,7 +5,8 @@ starlette
 itsdangerous
 bs4
 selenium
-webdriver_manager
+# webdriver_manager
+chromedriver_autoinstaller
 pyvirtualdisplay
 jinja2
 pandas

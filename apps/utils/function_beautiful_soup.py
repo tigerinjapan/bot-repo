@@ -8,10 +8,11 @@ import apps.utils.function as func
 from apps.utils.message_constants import MSG_ERR_NO_SUCH_ELEMENT
 
 
-def get_data_from_url(url: str, headers):
+def get_data_from_url(url: str, headers, sleep_flg=const.FLG_ON):
     # func[requests.get]:Get data from web page
     response = requests.get(url, headers=headers)
-    func.time_sleep()
+    if sleep_flg:
+        func.time_sleep()
     return response
 
 

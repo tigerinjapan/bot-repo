@@ -250,7 +250,7 @@ def update_news(app_name: str = const.SYM_BLANK):
 # スリープ状態にならないようサーバーアクセス
 def no_sleep():
     url = line.URL_KOYEB_APP
-    get_data_from_url(url, headers=const.NONE_CONSTANT)
+    get_data_from_url(url, headers=const.NONE_CONSTANT, sleep_flg=const.FLG_OFF)
     func.print_info_msg(msg_const.MSG_INFO_SERVER_KEEP_ALIVE)
 
 

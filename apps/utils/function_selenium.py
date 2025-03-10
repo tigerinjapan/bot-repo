@@ -2,16 +2,19 @@
 
 import sys
 
+import chromedriver_autoinstaller
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from webdriver_manager.chrome import ChromeDriverManager
 
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
+
+# from webdriver_manager.chrome import ChromeDriverManager
+
 
 
 # ドライバーの取得
@@ -21,16 +24,19 @@ def get_webdriver():
 
     # ChromeDriverパス設定
     if local_flg:
-        chrome_driver_path = ChromeDriverManager().install()
+        # chrome_driver_path = ChromeDriverManager().install()
+        chromedriver_autoinstaller.install()
     else:
-        CHROME_DRIVER_VERSION = "133.0.6943.126"
-        chrome_driver_path = f"/root/.wdm/drivers/chromedriver/linux64/{CHROME_DRIVER_VERSION}/chromedriver"  # TODO chromedriverエラー
+        chromedriver_autoinstaller.install()
+        # CHROME_DRIVER_VERSION = "133.0.6943.126"
+        # chrome_driver_path = f"/root/.wdm/drivers/chromedriver/linux64/{CHROME_DRIVER_VERSION}/chromedriver"  # TODO chromedriverエラー
 
-# [WebDriverException] This version of ChromeDriver only supports Chrome version 114
-# Current browser version is 133.0.6943.126 with binary path /usr/bin/chromium
+    # [WebDriverException] This version of ChromeDriver only supports Chrome version 114
+    # Current browser version is 133.0.6943.126 with binary path /usr/bin/chromium
 
     # ChromeDriverサービス設定
-    service = Service(executable_path=chrome_driver_path)
+    # service = Service(executable_path=chrome_driver_path)
+    service = Service()
 
     # ブラウザオプション設定
     options = webdriver.ChromeOptions()
@@ -173,3 +179,7 @@ def test_webdriver():
         driver.quit()
     else:
         func.print_error_msg("Chrome Driver", msg_const.MSG_ERR_FILE_NOT_EXIST)
+
+
+if __name__ == const.MAIN_FUNCTION:
+    test_webdriver()
