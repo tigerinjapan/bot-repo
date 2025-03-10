@@ -3,7 +3,8 @@
 import sys
 
 import chromedriver_autoinstaller
-from chromedriver_autoinstaller.utils import get_linux_executable_path
+from chromedriver_autoinstaller.utils import (get_linux_executable_path,
+                                              print_chromedriver_path)
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.chrome.service import Service
@@ -23,14 +24,15 @@ def get_webdriver():
     # 必要なバージョンを自動インストール
     chromedriver_autoinstaller.install()
 
-    # selenium.common.exceptions.WebDriverException: Message: tab crashed
-    #   (Session info: chrome=133.0.6943.126)
+    # Message: Service /usr/bin/chromium unexpectedly exited. Status code was: 1
 
     # ChromeDriverサービス設定
     if local_flg:
         service = Service()
     else:
+        print_chromedriver_path()
         executable_path = get_linux_executable_path()
+        func.print_info_msg(const.STR_PATH_JA, executable_path)
         service = Service(executable_path=executable_path)
 
     # ブラウザオプション設定

@@ -16,6 +16,9 @@ ENV TZ Asia/Tokyo
 ENV TERM xterm
 ENV PYTHONPATH /bot
 
+# 実行権限付与
+RUN chmod +x /usr/bin/chromium
+
 # 必要なパッケージをpipでインストール
 COPY requirements.txt /bot/
 RUN pip install -r requirements.txt
