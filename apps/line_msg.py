@@ -39,7 +39,7 @@ DIV_MARK_IMG = "==== {} ===="
 
 # プロパティ
 NUM_FONT_SIZE = 11
-NUM_IMG_MAX_SEQ = 4
+NUM_IMG_MAX_SEQ = 8
 WEEKLY_DIV_FRI = "金"
 
 

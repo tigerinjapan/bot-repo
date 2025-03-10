@@ -10,7 +10,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 
 import apps.lcc as lcc
-import apps.line_msg_api as line
+import apps.line_msg as line
 import apps.news as news
 import apps.ranking as ranking
 import apps.study as study
