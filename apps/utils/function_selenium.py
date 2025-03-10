@@ -25,8 +25,9 @@ def get_webdriver():
     chromedriver_autoinstaller.install()
 
     # ChromeDriverサービス設定
-    service = Service() if local_flg else ChromiumService()
+    service = Service()
 
+    # Message: tab crashed  (Session info: chrome=133.0.6943.126)
     # Message: Service /usr/bin/chromium unexpectedly exited. Status code was: 1
 
     # ブラウザオプション設定
