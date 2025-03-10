@@ -3,6 +3,7 @@
 import sys
 
 import chromedriver_autoinstaller
+from chromedriver_autoinstaller.utils import get_linux_executable_path
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.chrome.service import Service
@@ -13,30 +14,24 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
 
-# from webdriver_manager.chrome import ChromeDriverManager
-
-
 
 # ドライバーの取得
 def get_webdriver():
     # ローカル環境判定
     local_flg = const.FLG_ON if func.is_local_env() else const.FLG_OFF
 
-    # ChromeDriverパス設定
-    if local_flg:
-        # chrome_driver_path = ChromeDriverManager().install()
-        chromedriver_autoinstaller.install()
-    else:
-        chromedriver_autoinstaller.install()
-        # CHROME_DRIVER_VERSION = "133.0.6943.126"
-        # chrome_driver_path = f"/root/.wdm/drivers/chromedriver/linux64/{CHROME_DRIVER_VERSION}/chromedriver"  # TODO chromedriverエラー
+    # 必要なバージョンを自動インストール
+    chromedriver_autoinstaller.install()
 
-    # [WebDriverException] This version of ChromeDriver only supports Chrome version 114
-    # Current browser version is 133.0.6943.126 with binary path /usr/bin/chromium
+    # selenium.common.exceptions.WebDriverException: Message: tab crashed
+    #   (Session info: chrome=133.0.6943.126)
 
     # ChromeDriverサービス設定
-    # service = Service(executable_path=chrome_driver_path)
-    service = Service()
+    if local_flg:
+        service = Service()
+    else:
+        executable_path = get_linux_executable_path()
+        service = Service(executable_path=executable_path)
 
     # ブラウザオプション設定
     options = webdriver.ChromeOptions()
@@ -172,13 +167,20 @@ def get_element_text(driver, by, value):
 # 接続テスト
 def test_webdriver():
     driver = get_webdriver()
-    if driver:
-        driver.get(const.URL_GOOGLE)
-        func.print_info_msg(driver.title)
-        func.time_sleep()
-        driver.quit()
-    else:
-        func.print_error_msg("Chrome Driver", msg_const.MSG_ERR_FILE_NOT_EXIST)
+    try:
+        if driver:
+            driver.get(const.URL_GOOGLE)
+            func.print_info_msg(driver.title)
+            func.time_sleep()
+            driver.quit()
+        else:
+            func.print_error_msg("Chrome Driver", msg_const.MSG_ERR_FILE_NOT_EXIST)
+
+    except WebDriverException as wde:
+        curr_def_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(curr_def_nm, msg_const.MSG_ERR_CONNECTION_FAILED)
+        func.print_error_msg("[WebDriverException] ", str(wde))
+        driver = const.NONE_CONSTANT
 
 
 if __name__ == const.MAIN_FUNCTION:
