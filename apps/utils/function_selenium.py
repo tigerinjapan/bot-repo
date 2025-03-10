@@ -3,11 +3,11 @@
 import sys
 
 import chromedriver_autoinstaller
-from chromedriver_autoinstaller.utils import (get_linux_executable_path,
-                                              print_chromedriver_path)
+from chromedriver_autoinstaller.utils import get_linux_executable_path
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chromium.service import ChromiumService
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -24,16 +24,10 @@ def get_webdriver():
     # 必要なバージョンを自動インストール
     chromedriver_autoinstaller.install()
 
-    # Message: Service /usr/bin/chromium unexpectedly exited. Status code was: 1
-
     # ChromeDriverサービス設定
-    if local_flg:
-        service = Service()
-    else:
-        print_chromedriver_path()
-        executable_path = get_linux_executable_path()
-        func.print_info_msg(const.STR_PATH_JA, executable_path)
-        service = Service(executable_path=executable_path)
+    service = Service() if local_flg else ChromiumService()
+
+    # Message: Service /usr/bin/chromium unexpectedly exited. Status code was: 1
 
     # ブラウザオプション設定
     options = webdriver.ChromeOptions()
@@ -102,7 +96,7 @@ def get_webdriver():
 
     # ドライバー初期化
     try:
-        driver = webdriver.Chrome(service=service, options=options)
+        driver = webdriver.Chrome(service=service, options=options)  # type: ignore
 
     except WebDriverException as wde:
         curr_def_nm = sys._getframe().f_code.co_name
