@@ -208,7 +208,7 @@ def get_data_list(app_name: str) -> list[tuple[list[str], list[str]]]:
     return data_list
 
 
-# 【画面】ウェブページの更新
+# データ更新
 def update_news(app_name: str = const.SYM_BLANK):
     func.print_info_msg(const.FILE_TYPE_JSON, msg_const.MSG_INFO_PROC_START)
 

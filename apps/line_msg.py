@@ -35,12 +35,12 @@ FILE_DIV_AI_NEWS = "ai_news"
 # タイトル
 DIV_MARK = "*----*----*----*----*----*"
 DIV_MARK_TXT = "*-- {} --*"
-DIV_MARK_IMG = "==== {} ===="
+DIV_MARK_IMG = "=== {} ==="
 
 # プロパティ
 NUM_FONT_SIZE = 11
 NUM_IMG_MAX_SEQ = 8
-WEEKLY_DIV_FRI = "金"
+WEEKLY_DIV_FRI = "Fri"
 
 
 def main(auto_flg: bool = const.FLG_ON):
@@ -165,10 +165,7 @@ def get_json_for_line(msg_list: list[list[str]]):
 
 # メッセージリスト取得
 def get_msg_list() -> list[list[str]]:
-    # 今日の日付取得
-    date_today = today.get_date_today()
-
-    today_info, forecast = today.get_today_info()
+    today_info, forecast, date_today = today.get_today_info()
     msg_data = [f"[{div}] {info}" for div, info in today_info]
 
     msg_data_list = get_msg_data_list(
@@ -207,10 +204,6 @@ def get_msg_data_list(
     date_today: str = const.SYM_BLANK,
     forecast: str = const.SYM_BLANK,
 ) -> list[str]:
-    # 今日の日付取得
-    if not date_today:
-        date_today = today.get_date_today()
-
     text_title = get_title(msg_div, date_today, msg_type)
     text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 

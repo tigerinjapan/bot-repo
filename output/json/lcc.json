@@ -1,26 +1,32 @@
 [
     {
-        "日付": "2025年3月3日",
-        "会社": "タイ・ライオンエア",
-        "LCCニュース": "「3.3 スペシャルプロモーション」\n開催中！バンコク発着国内線・国際線 最大30％オフ",
-        "リンク": "https://www.lionairthai.com/en/Promotion/3-3?utm_source=website&utm_medium=bannerJP&utm_campaign=PRO_03-09MAR25&Country=JP"
+        "日付": "2025年3月11日",
+        "会社": "スクート",
+        "LCCニュース": "「旅の夢を叶えるセール運賃がここに！」\nセール開催中！台湾/シンガポール国際線 片道13,500円から",
+        "リンク": "https://www.flyscoot.com/jp/promotions/network-sale"
     },
     {
-        "日付": "2025年2月28日",
-        "会社": "JAL",
-        "LCCニュース": "「国内線航空券タイムセール」\n3月4日0時から開催！4～6月搭乗分 片道4,400円から",
-        "リンク": "https://www.jal.co.jp/jp/ja/dom/special/timesale/"
+        "日付": "2025年3月10日",
+        "会社": "アイベックスエアラインズ",
+        "LCCニュース": "「IBEX特価タイムセール」\n3月14日0時から開催！4～7月搭乗分",
+        "リンク": "https://www.ibexair.co.jp/event/ibextokka-time-sale-mar2025.html"
     },
     {
-        "日付": "2025年2月27日",
-        "会社": "タイガーエア台湾",
-        "LCCニュース": "「新規就航 大分－台北線セール」\n2月27日17時から開催！大分－台北線 片道9,000円から",
-        "リンク": "https://www.tigerairtw.com/ja-JP/EVENTS/NEWOIT2503?"
+        "日付": "2025年3月10日",
+        "会社": "ANA",
+        "LCCニュース": "「国内線航空券 タイムセール」\n3月11日0時から開催！5～8月搭乗分",
+        "リンク": "https://www.ana.co.jp/ja/jp/domestic/theme/timesale/sv/"
     },
     {
-        "日付": "2025年2月26日",
-        "会社": "香港エクスプレス",
-        "LCCニュース": "「おかえり！宮古(下地島)線セール」\n開催中！宮古(下地島)/那覇/石垣－香港線 往復4,000円から",
-        "リンク": "https://www.hkexpress.com/ja/Plan/Special-Offers/Promotions/shiisgoka_flashsale_20250220"
+        "日付": "2025年3月8日",
+        "会社": "スターフライヤー",
+        "LCCニュース": "「7日間限定 緊急タイムセール」\n開催中！国内全路線対象",
+        "リンク": "https://www.starflyer.jp/fare/sale/timesale/"
+    },
+    {
+        "日付": "2025年3月6日",
+        "会社": "チェジュ航空",
+        "LCCニュース": "「新生活応援セール」\n開催中！ソウル/釜山線 片道3,000円から",
+        "リンク": "https://www.jejuair.net/ja/event/eventDetail.do?eventNo=0000002688"
     }
 ]

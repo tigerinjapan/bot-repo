@@ -52,7 +52,7 @@ def job_scheduler():
             pending_cnt = 0
 
 
-# 時次ジョブ：ウェブページの更新
+# 時次ジョブ：データ更新
 def hourly_job():
     server.update_news()
 

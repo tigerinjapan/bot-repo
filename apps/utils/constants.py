@@ -59,6 +59,8 @@ DATE_FORMAT_YYYYMMDD = "%Y%m%d"
 DATE_FORMAT_YYYYMMDD_DASH = "%Y-%m-%d"
 DATE_FORMAT_YYYYMMDD_SLASH = "%Y/%m/%d"
 DATE_FORMAT_YYYYMM = "%Y%m"
+DATE_FORMAT_YYYYMMDD_HHMM = "%Y/%m/%d(%a) %H:%M"
+DATE_FORMAT_ISO = "iso"
 
 ##### 日付 #####
 DATETIME_NOW = datetime.now()
@@ -92,6 +94,7 @@ NUM_THREE = 3
 # 画面表示件数
 MAX_DISPLAY_CNT = 5
 MIN_DISPLAY_CNT = 3
+MAX_RETRY_CNT = 3
 
 ##### 型 #####
 TYPE_DICT = "dict"

@@ -23,11 +23,12 @@ URL_HINOKOTO = "https://www.hinokoto.com"
 NEW_LINE = const.SYM_NEW_LINE
 
 # 定数（日本語）
+DIV_DATE = "日時"
 DIV_WEATHER = "天気"
 DIV_RATE = "為替"
 DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
-DIV_LIST = [DIV_WEATHER, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
+DIV_LIST = [DIV_DATE, DIV_WEATHER, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
 
 STR_YEN_JA = "円"
 STR_WON_JA = "ウォン"
@@ -42,13 +43,13 @@ def get_item_list():
 
 # 今日の生活情報取得
 def get_today_info():
-    # 今日の天気
-    today_weather, forecast = get_today_weather()
+    # 天気
+    today_weather, forecast, date_time = get_today_weather()
 
-    # 今日のウォン
+    # 為替
     today_won_rate = get_today_won()
 
-    # 今日のコーデ・夕食
+    # コーデ・夕食
     recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(
         NEW_LINE.join(today_weather)
     )
@@ -56,16 +57,33 @@ def get_today_info():
     today_outfit = recommend_outfit_dinner[0]
     today_dinner = recommend_outfit_dinner[1].replace(NEW_LINE, const.SYM_BLANK)
 
-    info_list = [today_weather, today_won_rate, today_outfit, today_dinner]
+    info_list = [date_time, today_weather, today_won_rate, today_outfit, today_dinner]
     today_info = zip(DIV_LIST, info_list)
-    return today_info, forecast
+    return today_info, forecast, date_time
 
 
 # 今日の天気情報取得
-def get_today_weather() -> tuple[str, str]:
+def get_today_weather() -> tuple[str, str, str]:
+    # 天気マップ取得
+    elem_forecast_map = func_bs.get_elem_from_url(
+        URL_TENKI, attr_div=const.ATTR_ID, attr_val="forecast-map-wrap"
+    )
+
+    # 現在日付
+    elem_date_time = func_bs.find_elem_by_attr(
+        elem_forecast_map,
+        attr_div=const.ATTR_ID,
+        attr_val="forecast-map-announce-datetime",
+    )
+    date_time_text = elem_date_time.get("datetime")  # type: ignore
+
+    date_time = func.convert_date_format(
+        date_time_text, const.DATE_FORMAT_ISO, const.DATE_FORMAT_YYYYMMDD_HHMM
+    )
+
     # 東京の情報取得
-    elem_forecast = func_bs.get_elem_from_url(
-        URL_TENKI, attr_div=const.ATTR_ID, attr_val="forecast-map-entry-13101"
+    elem_forecast = func_bs.find_elem_by_attr(
+        elem_forecast_map, attr_div=const.ATTR_ID, attr_val="forecast-map-entry-13101"
     )
 
     forecast = get_elem_val_by_class(elem_forecast, "forecast-image")
@@ -74,7 +92,7 @@ def get_today_weather() -> tuple[str, str]:
     rain_prob = get_elem_val_by_class(elem_forecast, "prob-precip")
 
     today_weather = f"{forecast}・{max_temp}/{min_temp}・{rain_prob}"
-    return today_weather, forecast
+    return today_weather, forecast, date_time
 
 
 # 今日のウォン取得
@@ -90,20 +108,6 @@ def get_today_won() -> str:
     won = elem_list[0].text if elem_list else "1000"
     today_won_rate = f"100{STR_YEN_JA}={won}{STR_WON_JA}"
     return today_won_rate
-
-
-# 今日の日付取得
-def get_date_today() -> str:
-    elem = func_bs.get_elem_from_url(URL_HINOKOTO, attr_val="indextoday")
-    elem_list = func_bs.find_elem_by_attr(
-        elem, tag=const.TAG_SPAN, list_flg=const.FLG_ON
-    )
-    if elem_list:
-        date_today = elem_list[0].text + elem_list[2].text
-    else:
-        weekday = const.LIST_WEEKDAY[const.DATE_WEEKDAY]
-        date_today = f"{const.DATE_TODAY_SLASH} ({weekday})"
-    return date_today
 
 
 # 要素値取得

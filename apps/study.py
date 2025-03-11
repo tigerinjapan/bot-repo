@@ -35,9 +35,12 @@ def get_item_list(keyword_list: list[str] = []) -> list[str]:
     if not keyword_list:
         keyword_list = LIST_KEYWORD
 
-    for keyword in keyword_list:
-        news_summary = get_naver_news_summary(keyword)
-        if news_summary:
+    for attempt in range(const.MAX_RETRY_CNT):
+        for keyword in keyword_list:
+            news_summary = get_naver_news_summary(keyword)
+            if not news_summary:
+                continue
+
             study_info = news_summary[0].split(NEW_LINE * 2)
             try:
                 korean = study_info[1]
@@ -46,6 +49,9 @@ def get_item_list(keyword_list: list[str] = []) -> list[str]:
 
             if korean and "[1]" in korean and len(study_info) == 2:
                 item_list.append(study_info)
+
+        if item_list:
+            break
 
     return item_list
 
@@ -58,7 +64,7 @@ def get_naver_news_summary(keyword: str) -> list[str]:
     url = f"{URL_NAVER_SEARCH}{url_param}"
     a_elem_list = func_bs.get_elem_from_url(
         url, attr_val="news_area", list_flg=const.FLG_ON
-    )[:const.MAX_DISPLAY_CNT]  # type: ignore
+    )[: const.MAX_DISPLAY_CNT]  # type: ignore
 
     naver_news = []
     if a_elem_list:

@@ -127,8 +127,11 @@ def print_msg_exit(div: str, msg: str = const.SYM_BLANK):
 
 # 文字列を日付型に変換
 def convert_str_to_date(str: str, format: str) -> datetime:
-    # func[strptime]:Convert String to Date
-    date = datetime.strptime(str, format)
+    if format == const.DATE_FORMAT_ISO:
+        date = datetime.fromisoformat(str)
+    else:
+        # func[strptime]:Convert String to Date
+        date = datetime.strptime(str, format)
     return date
 
 
@@ -139,8 +142,8 @@ def convert_date_to_str(date: datetime, format: str) -> str:
     return date_format
 
 
+# 日付フォーマット変換
 def convert_date_format(str: str, old_format: str, new_format: str) -> str:
-    # func[strptime]:Convert Date to String
     date = convert_str_to_date(str, old_format)
     date_format = convert_date_to_str(date, new_format)
     return date_format
