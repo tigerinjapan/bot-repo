@@ -19,7 +19,7 @@ ENV CHROME_DRIVER_FILE chromedriver-linux64
 ENV CHROME_DRIVER_ZIP ${CHROME_DRIVER_FILE}.zip
 ENV CHROME_DRIVER_VERSION 133.0.6943.126
 ENV CHROME_DRIVER_PATH /usr/bin/
-ENV PATH=$PATH:${CHROME_DRIVER_PATH}chromedriver
+ENV PATH=$PATH:${CHROME_DRIVER_PATH}chromium:${CHROME_DRIVER_PATH}chromedriver
 
 # ChromeDriverダウンロード、解凍し、適切な場所に移動
 RUN wget https://storage.googleapis.com/chrome-for-testing-public/${CHROME_DRIVER_VERSION}/linux64/${CHROME_DRIVER_ZIP}
