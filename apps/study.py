@@ -36,15 +36,16 @@ def get_item_list(keyword_list: list[str] = []) -> list[str]:
         keyword_list = LIST_KEYWORD
 
     for keyword in keyword_list:
-        news_summary = get_naver_news_summary(keyword)[0]
-        study_info = news_summary.split(NEW_LINE * 2)
-        try:
-            korean = study_info[1]
-        except:
-            continue
+        news_summary = get_naver_news_summary(keyword)
+        if news_summary:
+            study_info = news_summary[0].split(NEW_LINE * 2)
+            try:
+                korean = study_info[1]
+            except:
+                continue
 
-        if korean and "[1]" in korean and len(study_info) == 2:
-            item_list.append(study_info)
+            if korean and "[1]" in korean and len(study_info) == 2:
+                item_list.append(study_info)
 
     return item_list
 
@@ -56,14 +57,24 @@ def get_naver_news_summary(keyword: str) -> list[str]:
     url_param = url_search_param.format(keyword)
     url = f"{URL_NAVER_SEARCH}{url_param}"
     a_elem_list = func_bs.get_elem_from_url(
-        url, attr_val="api_txt_lines dsc_txt_wrap", list_flg=const.FLG_ON
-    )
+        url, attr_val="news_area", list_flg=const.FLG_ON
+    )[:const.MAX_DISPLAY_CNT]  # type: ignore
 
     naver_news = []
     if a_elem_list:
         for a_elem in a_elem_list:
-            a_text = a_elem.text
-            naver_news.append(a_text)
+            time_elem = func_bs.find_elem_by_attr(
+                a_elem, const.TAG_SPAN, attr_div=const.ATTR_CLASS, attr_val="info"
+            )
+            time_text = time_elem.text  # type: ignore
+            if func.check_in_list(time_text, ["분 전", "시간 전"]):
+                contents_elem = func_bs.find_elem_by_attr(
+                    a_elem,
+                    attr_div=const.ATTR_CLASS,
+                    attr_val="api_txt_lines dsc_txt_wrap",
+                )
+                contents_text = contents_elem.text  # type: ignore
+                naver_news.append(contents_text)
 
     if naver_news:
         add_conditions = [

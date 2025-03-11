@@ -158,7 +158,7 @@ def get_random_int(end_num: int) -> int:
     return rand_int
 
 
-# 対象文字列がリストに含まれているかチェック
+# 対象文字列がリストの文字列を含まれているかチェック
 def check_in_list(target_str: str, target_list: list[str]) -> bool:
     hit_flg = const.FLG_OFF
     for target in target_list:

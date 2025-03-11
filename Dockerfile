@@ -15,24 +15,21 @@ ENV LC_ALL ja_JP.UTF-8
 ENV TZ Asia/Tokyo
 ENV TERM xterm
 ENV PYTHONPATH /bot
-ENV CHROME_DRIVER_PATH /usr/bin/
-ENV PATH=$PATH:${CHROME_DRIVER_PATH}chromium:${CHROME_DRIVER_PATH}chromedriver
-
-# zipファイル削除
-RUN rm -r /bot/${CHROME_DRIVER_ZIP}
+ENV CHROME_DRIVER_PATH /usr/bin
+ENV PATH=$PATH:${CHROME_DRIVER_PATH}/chromium:${CHROME_DRIVER_PATH}/chromedriver
 
 # 実行ファイルの権限設定
-# RUN chmod +x ${CHROME_DRIVER_PATH}chromedriver
-RUN chmod +x ${CHROME_DRIVER_PATH}chromium
+RUN chmod +x ${CHROME_DRIVER_PATH}/chromium
+RUN chmod +x ${CHROME_DRIVER_PATH}/chromedriver
 
 # ソースコードをコンテナ内にコピー
 COPY . /bot
 
-# 必要なパッケージのインストール
-RUN pip install -r requirements.txt
-
 # pipアップグレード
 RUN pip install --upgrade pip
+
+# 必要なパッケージのインストール
+RUN pip install -r requirements.txt
 
 # ポート開放（uvicornで指定したポート）
 EXPOSE 8000

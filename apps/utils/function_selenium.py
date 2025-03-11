@@ -61,11 +61,11 @@ def get_webdriver():
     # オプション：パフォーマンス
     performance_options = [
         "--disable-gpu",  # GPU無効化
-        "--disable-dev-shm-usage",  # 開発共有メモリ無効化
     ]
 
     if local_flg:
         performance_options += [
+            "--disable-dev-shm-usage",  # 開発共有メモリ無効化
             "--disable-accelerated-2d-canvas",  # ハードウェアアクセラ無効化
         ]
 
