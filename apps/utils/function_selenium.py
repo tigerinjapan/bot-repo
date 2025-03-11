@@ -95,8 +95,8 @@ def get_webdriver():
         options.add_argument(option)
 
     # Chromeのバイナリパスを指定
-    if not local_flg:
-        options.binary_location = "/usr/bin/chromium"
+    # if not local_flg:
+    #     options.binary_location = "/usr/bin/chromium"
 
     download_path = func.get_app_path(const.STR_OUTPUT)
     prefs = {"download.default_directory": download_path}
@@ -172,6 +172,7 @@ def get_element_text(driver, by, value):
 def test_webdriver():
     driver = get_webdriver()
     try:
+        func.print_info_msg(driver.name) # type: ignore
         if driver:
             driver.get(const.URL_GOOGLE)
             func.print_info_msg(driver.title)
