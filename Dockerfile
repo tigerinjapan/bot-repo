@@ -25,8 +25,7 @@ ENV PATH=$PATH:${CHROME_DRIVER_PATH}chromium:${CHROME_DRIVER_PATH}chromedriver
 RUN wget https://storage.googleapis.com/chrome-for-testing-public/${CHROME_DRIVER_VERSION}/linux64/${CHROME_DRIVER_ZIP}
 RUN unzip /bot/${CHROME_DRIVER_ZIP}
 RUN mkdir -p ${CHROME_DRIVER_PATH}
-RUN chmod +x ${CHROME_DRIVER_PATH}
-RUN ls -la /bot/${CHROME_DRIVER_FILE}/
+RUN chmod +x ${CHROME_DRIVER_PATH}chromedriver
 RUN mv /bot/${CHROME_DRIVER_FILE}/chromedriver ${CHROME_DRIVER_PATH}
 
 # 権限設定

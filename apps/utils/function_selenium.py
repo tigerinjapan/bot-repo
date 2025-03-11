@@ -38,27 +38,36 @@ def get_webdriver():
     ]
 
     if local_flg:
-        option_add_arg = "--incognito"  # シークレットウィンドウ
+        option_add_arg = "--incognito"  # シークレットモード
     else:
         option_add_arg = "--headless"  # ヘッドレスモードで実行
     browser_display_options.append(option_add_arg)
 
     # オプション：セキュリティ
     security_options = [
-        "--disable-notifications",  # 通知無効化
-        "--disable-popup-blocking",  # ポップアップブロック無効化
         "--no-sandbox",  # サンドボックス無効化
-        "--disable-extensions",  # 拡張機能無効化
-        "--ignore-certificate-errors",  # 証明書エラー無視
-        "--ignore-ssl-errors",  # SSLエラー無視
     ]
+
+    if local_flg:
+        security_options += [
+            "--disable-notifications",  # 通知無効化
+            "--disable-popup-blocking",  # ポップアップブロック無効化
+            "--no-sandbox",  # サンドボックス無効化
+            "--disable-extensions",  # 拡張機能無効化
+            "--ignore-certificate-errors",  # 証明書エラー無視
+            "--ignore-ssl-errors",  # SSLエラー無視
+        ]
 
     # オプション：パフォーマンス
     performance_options = [
         "--disable-gpu",  # GPU無効化
         "--disable-dev-shm-usage",  # 開発共有メモリ無効化
-        "--disable-accelerated-2d-canvas",  # ハードウェアアクセラ無効化
     ]
+
+    if local_flg:
+        performance_options += [
+            "--disable-accelerated-2d-canvas",  # ハードウェアアクセラ無効化
+        ]
 
     # オプション：自動化とログ
     automation_and_log_options = [
@@ -70,15 +79,16 @@ def get_webdriver():
     other_options = [
         # "--disable-javascript",  # JavaScript無効化
         "--user-agent=MyCustomUserAgent",  # ユーザーエージェント設定
-        "--incognito",  # シークレットモード
         const.UA_OPT_PC,  # ユーザーエージェント設定
     ]
 
     options_list = browser_display_options
     options_list += security_options
     options_list += performance_options
-    options_list += automation_and_log_options
-    options_list += other_options
+
+    if local_flg:
+        options_list += automation_and_log_options
+        options_list += other_options
 
     # 各カテゴリーのオプションを追加
     for option in options_list:
@@ -173,7 +183,7 @@ def test_webdriver():
     except WebDriverException as wde:
         curr_def_nm = sys._getframe().f_code.co_name
         func.print_error_msg(curr_def_nm, msg_const.MSG_ERR_CONNECTION_FAILED)
-        func.print_error_msg("[WebDriverException] ", str(wde))
+        func.print_error_msg("[test_webdriver:WebDriverException] ", str(wde))
         driver = const.NONE_CONSTANT
 
 
