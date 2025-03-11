@@ -172,7 +172,6 @@ def get_element_text(driver, by, value):
 def test_webdriver():
     driver = get_webdriver()
     try:
-        func.print_info_msg(driver.name) # type: ignore
         if driver:
             driver.get(const.URL_GOOGLE)
             func.print_info_msg(driver.title)
