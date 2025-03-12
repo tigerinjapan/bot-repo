@@ -23,7 +23,9 @@
         <table>
             <thead>
                 <tr>
+                    {% if num_flg %}
                     <th id="thNo">No</th>
+                    {% endif %}
                     {% for col in col_list %}
                     <th>{{ col|e }}</th>
                     {% endfor %}
@@ -33,7 +35,9 @@
                 {% for val_list in data_val_list %}
                 {% set idx = loop.index %}
                 <tr>
+                    {% if num_flg %}
                     <td>{{ idx }}</td>
+                    {% endif %}
                     {% for val in val_list %}
                     {% if 'http' in val | string %}
                     <td>

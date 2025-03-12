@@ -175,6 +175,10 @@ def exec_result(request: Request, app_name: str):
     if app_name == const.APP_KOREA:
         app_title = news.app_title_korea
 
+    num_flg = const.FLG_ON
+    if func.check_in_list(app_name, [const.APP_TODAY, const.APP_STUDY]):
+        num_flg = const.FLG_OFF
+
     app_exec = AppExec(app_div, app_name)
     app_exec.start()
     data_list = app_exec.data()
@@ -188,6 +192,7 @@ def exec_result(request: Request, app_name: str):
         "app_name": app_name,
         const.STR_TITLE: app_title,
         "data_list": data_list,
+        "num_flg": num_flg,
     }
     return templates.TemplateResponse(const.HTML_RESULT, context)
 
