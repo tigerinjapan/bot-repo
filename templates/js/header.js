@@ -11,7 +11,8 @@ const APP_RANKING = "ranking";
 const APP_LCC = "lcc";
 const APP_TV = "tv";
 const APP_STUDY = "study";
-const LIST_APP = [APP_TODAY, APP_NEWS, APP_KOREA, APP_RANKING, APP_LCC, APP_TV, APP_STUDY];
+const APP_SITE = "site";
+const LIST_APP = [APP_TODAY, APP_NEWS, APP_KOREA, APP_RANKING, APP_LCC, APP_TV, APP_STUDY, APP_SITE];
 const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY];
 const LIST_APP_GUEST = LIST_APP.filter(item => !LIST_APP_NOT_GUEST.includes(item));
 
@@ -24,7 +25,8 @@ const MENU_RANKING = "ランキングニュース";
 const MENU_LCC = "LCCニュース";
 const MENU_TV = "TV番組";
 const MENU_STUDY = "ニュース韓国語";
-const LIST_MENU = [MENU_TODAY, MENU_NEWS, MENU_KOREA, MENU_RANKING, MENU_LCC, MENU_TV, MENU_STUDY];
+const MENU_SITE = "お気に入りサイト";
+const LIST_MENU = [MENU_TODAY, MENU_NEWS, MENU_KOREA, MENU_RANKING, MENU_LCC, MENU_TV, MENU_STUDY, MENU_SITE];
 const LIST_MENU_NOT_GUEST = [MENU_NEWS, MENU_STUDY];
 const LIST_MENU_GUEST = LIST_MENU.filter(item => !LIST_MENU_NOT_GUEST.includes(item));
 

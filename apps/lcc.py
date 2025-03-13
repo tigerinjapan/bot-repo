@@ -11,12 +11,7 @@ app_name = func.get_app_name(__file__)
 app_title = const.APP_LCC.upper() + const.STR_NEWS_JA
 
 # カラムリスト
-col_list = [
-    const.STR_DATE_JA,
-    const.STR_COMPANY_JA,
-    app_title,
-    const.STR_LINK_JA,
-]
+col_list = [const.STR_DATE_JA, const.STR_COMPANY_JA, app_title]
 
 # キーワードリスト
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
@@ -60,7 +55,8 @@ def get_lcc_info_list() -> list[str]:
             )
             url_official = func_bs.get_link_from_soup(lcc_info_details)
 
-            lcc_data = [date, company, title, url_official]
+            company = func.get_df_link(url_official, company)
+            lcc_data = [date, company, title]
             lcc_info_list.append(lcc_data)
 
             if len(lcc_info_list) == const.MAX_DISPLAY_CNT:

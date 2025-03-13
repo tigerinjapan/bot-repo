@@ -56,7 +56,7 @@ def get_env_val(var_name: str) -> str:
         env_val = const.SYM_BLANK
         if is_local_env():
             json_data = get_json_data(const.STR_ENV_VAR)
-            env_val = json_data[var_name] # type: ignore
+            env_val = json_data[var_name]  # type: ignore
         else:
             print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
 
@@ -237,7 +237,7 @@ def get_dumps_json(data):
 
 
 # JSONデータ取得
-def get_json_data(div: str, file_div:str=const.STR_INPUT):
+def get_json_data(div: str, file_div: str = const.STR_INPUT):
     file_path = get_file_path(div, const.FILE_TYPE_JSON, file_div)
     data = read_file(file_path)
     json_data = get_loads_json(data)
@@ -247,7 +247,7 @@ def get_json_data(div: str, file_div:str=const.STR_INPUT):
 # 入力データ取得
 def get_input_data(div: str, input_div: str):
     json_data = get_json_data(div)
-    input_data = json_data[input_div] # type: ignore
+    input_data = json_data[input_div]  # type: ignore
     if div == const.STR_KEYWORD:
         input_data = input_data.split(const.SYM_COMMA)
     return input_data
@@ -297,6 +297,18 @@ def get_df(data_list: list, columns: list[str]):
     if df.empty:
         print_info_msg(msg_const.MSG_ERR_DATA_NOT_EXIST)
     return df
+
+
+# リンク文字列取得
+def get_df_link(url, text):
+    result = (
+        '<a href="'
+        + url
+        + '" target="_blank" rel="noopener noreferrer">'
+        + text
+        + "</a>"
+    )
+    return result
 
 
 # リストの重複削除
@@ -360,7 +372,7 @@ def convert_half_char(target: str) -> str:
 
 
 # テストデータ出力
-def print_test_data(data, type_flg:bool=const.FLG_OFF):
+def print_test_data(data, type_flg: bool = const.FLG_OFF):
     if type_flg:
         type_name = type(data).__name__
         print_info_msg(const.STR_TYPE_JA, type_name)

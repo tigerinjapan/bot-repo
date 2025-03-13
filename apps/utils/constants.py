@@ -38,6 +38,10 @@ AUTH_ADMIN = "admin"
 AUTH_DEV = "dev"
 AUTH_GUEST = "guest"
 
+NUM_AUTH_ADMIN = 3
+NUM_AUTH_DEV = 2
+NUM_AUTH_GUEST = 1
+
 ##### ユーザーエージェント #####
 UA_PC = {"User-Agent": "Chrome/74.0.3729.169"}
 UA_OPT_PC = "--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
@@ -307,6 +311,7 @@ APP_RANKING = "ranking"
 APP_LCC = "lcc"
 APP_TV = "tv"
 APP_STUDY = "study"
+APP_SITE = "site"
 LIST_APP_NAME = [
     APP_TODAY,
     APP_NEWS,
@@ -316,6 +321,7 @@ LIST_APP_NAME = [
     APP_TV,
     APP_STUDY,
 ]
+LIST_ALL_APP_NAME = LIST_APP_NAME + [APP_SITE]
 
 
 # パス取得

@@ -3,7 +3,7 @@
 import dotenv
 import schedule
 
-import apps.line_msg as line_msg
+import apps.line as line
 import apps.server as server
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -59,7 +59,7 @@ def hourly_job():
 
 # 日次ジョブ：LINEメッセージ送信
 def daily_job():
-    line_msg.main()
+    line.main()
 
 
 # プログラムのエントリーポイント

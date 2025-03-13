@@ -10,9 +10,10 @@ from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 
 import apps.lcc as lcc
-import apps.line_msg as line
+import apps.line as line
 import apps.news as news
 import apps.ranking as ranking
+import apps.site as site
 import apps.study as study
 import apps.today as today
 import apps.tv as tv
@@ -29,9 +30,10 @@ templates = Jinja2Templates(directory="templates")
 
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, news, ranking, lcc, tv, study]
+LIST_ALL_APP_DIV = LIST_APP_DIV + [site]
 
 # ユーザーデータ
-users_data = func.get_input_data(const.STR_AUTH, const.STR_USER)
+user_data = func.get_input_data(const.STR_AUTH, const.STR_USER)
 
 
 # クラスの定義
@@ -51,7 +53,8 @@ class AppExec:
 
     # データ取得
     def data(self):
-        data_list = get_data_list(self.name)
+        df = get_df_info(self.name)
+        data_list = get_data_list(df)
         return data_list
 
 
@@ -76,7 +79,7 @@ async def root(request: Request):
 
     if func.is_local_env():
         request.session.clear()
-        request.session[const.STR_USER] = users_data.get(const.AUTH_DEV)
+        request.session[const.STR_USER] = user_data.get(const.AUTH_DEV)
 
     user = request.session.get(const.STR_USER)
     if user:
@@ -92,7 +95,7 @@ async def login(
     request: Request, userId: str = Form(...), userPassword: str = Form(...)
 ):
     user_div = userId.split(const.SYM_AT)[0]
-    user = users_data.get(user_div)
+    user = user_data.get(user_div)
     if user and user["userId"] == userId and user["userPassword"] == userPassword:
         request.session[const.STR_USER] = user
         response = RedirectResponse(url=const.PATH_TODAY, status_code=303)
@@ -166,9 +169,11 @@ async def test():
 
 # 【画面】取得結果
 def exec_result(request: Request, app_name: str):
+    user = request.session[const.STR_USER]
+    user_div, user_name = user["userDiv"], user["userName"]
 
-    app_div_idx = const.LIST_APP_NAME.index(app_name)
-    app_div = LIST_APP_DIV[app_div_idx]
+    app_div_idx = const.LIST_ALL_APP_NAME.index(app_name)
+    app_div = LIST_ALL_APP_DIV[app_div_idx]
 
     app_title = app_div.app_title
 
@@ -176,19 +181,24 @@ def exec_result(request: Request, app_name: str):
         app_title = news.app_title_korea
 
     num_flg = const.FLG_ON
-    if func.check_in_list(app_name, [const.APP_TODAY, const.APP_STUDY]):
+    if func.check_in_list(app_name, [const.APP_TODAY, const.APP_STUDY, const.APP_SITE]):
         num_flg = const.FLG_OFF
 
     app_exec = AppExec(app_div, app_name)
     app_exec.start()
-    data_list = app_exec.data()
+
+    if app_name == const.APP_SITE:
+        df = site.get_df_data(user_div)
+        data_list = get_data_list(df)
+    else:
+        data_list = app_exec.data()
+
     app_exec.end()
 
-    user = request.session[const.STR_USER]
     context = {
         const.STR_REQUEST: request,
-        "user_div": user["userDiv"],
-        "user_name": user["userName"],
+        "user_div": user_div,
+        "user_name": user_name,
         "app_name": app_name,
         const.STR_TITLE: app_title,
         "data_list": data_list,
@@ -198,19 +208,23 @@ def exec_result(request: Request, app_name: str):
 
 
 # 【画面】データリスト取得
-def get_data_list(app_name: str) -> list[tuple[list[str], list[str]]]:
+def get_data_list(df) -> list[tuple[list[str], list[str]]]:
     data_list = []
-    df, file_path = func.get_df_from_json(app_name)
-    if df.empty:
-        update_news(app_name)
-        df = func.get_df_read_json(file_path)
-
     column_list = df.columns.to_list()
     data_val_list = df.values.tolist()
 
     data_info = [column_list, data_val_list]
     data_list.append(data_info)
     return data_list
+
+
+# データフレーム取得
+def get_df_info(app_name: str):
+    df, file_path = func.get_df_from_json(app_name)
+    if df.empty:
+        update_news(app_name)
+        df = func.get_df_read_json(file_path)
+    return df
 
 
 # データ更新

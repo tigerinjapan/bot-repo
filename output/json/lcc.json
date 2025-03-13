@@ -1,32 +1,27 @@
 [
     {
+        "日付": "2025年3月12日",
+        "会社": "<a href=\"https://www.tigerairtw.com/ja-JP/EVENTS/whiteday2503\" target=\"_blank\" rel=\"noopener noreferrer\">タイガーエア台湾</a>",
+        "LCCニュース": "「スプリングセール」\n3月13日11時から開催！台湾国際線 片道8,000円から"
+    },
+    {
+        "日付": "2025年3月12日",
+        "会社": "<a href=\"https://www.eastarjet.com/newstar/PGWTA00002?eventNo=2142&gubun=I&searchIndex=1\" target=\"_blank\" rel=\"noopener noreferrer\">イースター航空</a>",
+        "LCCニュース": "「桜まつり」\nセール開催中！ソウル/釜山線 片道1,500円から"
+    },
+    {
         "日付": "2025年3月11日",
-        "会社": "スクート",
-        "LCCニュース": "「旅の夢を叶えるセール運賃がここに！」\nセール開催中！台湾/シンガポール国際線 片道13,500円から",
-        "リンク": "https://www.flyscoot.com/jp/promotions/network-sale"
+        "会社": "<a href=\"https://www.flyscoot.com/jp/promotions/network-sale\" target=\"_blank\" rel=\"noopener noreferrer\">スクート</a>",
+        "LCCニュース": "「旅の夢を叶えるセール運賃がここに！」\nセール開催中！台湾/シンガポール国際線 片道13,500円から"
     },
     {
         "日付": "2025年3月10日",
-        "会社": "アイベックスエアラインズ",
-        "LCCニュース": "「IBEX特価タイムセール」\n3月14日0時から開催！4～7月搭乗分",
-        "リンク": "https://www.ibexair.co.jp/event/ibextokka-time-sale-mar2025.html"
+        "会社": "<a href=\"https://www.ibexair.co.jp/event/ibextokka-time-sale-mar2025.html\" target=\"_blank\" rel=\"noopener noreferrer\">アイベックスエアラインズ</a>",
+        "LCCニュース": "「IBEX特価タイムセール」\n3月14日0時から開催！4～7月搭乗分"
     },
     {
         "日付": "2025年3月10日",
-        "会社": "ANA",
-        "LCCニュース": "「国内線航空券 タイムセール」\n3月11日0時から開催！5～8月搭乗分",
-        "リンク": "https://www.ana.co.jp/ja/jp/domestic/theme/timesale/sv/"
-    },
-    {
-        "日付": "2025年3月8日",
-        "会社": "スターフライヤー",
-        "LCCニュース": "「7日間限定 緊急タイムセール」\n開催中！国内全路線対象",
-        "リンク": "https://www.starflyer.jp/fare/sale/timesale/"
-    },
-    {
-        "日付": "2025年3月6日",
-        "会社": "チェジュ航空",
-        "LCCニュース": "「新生活応援セール」\n開催中！ソウル/釜山線 片道3,000円から",
-        "リンク": "https://www.jejuair.net/ja/event/eventDetail.do?eventNo=0000002688"
+        "会社": "<a href=\"https://www.ana.co.jp/ja/jp/domestic/theme/timesale/sv/\" target=\"_blank\" rel=\"noopener noreferrer\">ANA</a>",
+        "LCCニュース": "「国内線航空券 タイムセール」\n3月11日0時から開催！5～8月搭乗分"
     }
 ]

@@ -39,15 +39,15 @@
                     <td>{{ idx }}</td>
                     {% endif %}
                     {% for val in val_list %}
-                    {% if 'http' in val | string %}
                     <td>
+                    {% if 'https' in val | string and '/a>' not in val | string %}
                         <a href="{{ val|e }}" target="_blank" rel="noopener noreferrer">Link{{ idx }}</a>
-                    </td>
                     {% else %}
                     {% autoescape false %}
-                    <td>{{ val | replace("\n", "<br />")}}</td>
+                        {{ val | replace("\n", "<br />")}}
                     {% endautoescape %}
                     {% endif %}
+                    </td>
                     {% endfor %}
                 </tr>
                 {% endfor %}

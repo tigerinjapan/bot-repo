@@ -1,32 +1,32 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "ウクライナ、30日間の停戦案受け入れ米は軍事支援再開",
-        "リンク": "https://www.nikkei.com/article/DGXZQOGN11D0M0R10C25A3000000/"
+        "今日のニュース": "石破首相、自民議員に商品券配布「規正法に抵触せず」",
+        "リンク": "https://www.nikkei.com/article/DGXZQOUA13C970T10C25A3000000/"
     },
     {
         "区分": "日経",
-        "今日のニュース": "日産、経営陣の大半刷新業績悪化受け内田社長が退任へエスピノーサ氏後任",
-        "リンク": "https://www.nikkei.com/article/DGKKZO87278740S5A310C2MM8000/"
+        "今日のニュース": "人事の評価異動、AIが提示テルモは1万人マッチング",
+        "リンク": "https://www.nikkei.com/article/DGXZQOUC1771H0X10C23A8000000/"
     },
     {
         "区分": "日経",
-        "今日のニュース": "「関税不況」警戒、マネー収縮トランプ氏「短期の痛み」日米株下落テック7社時価総額、減り幅最大",
-        "リンク": "https://www.nikkei.com/article/DGKKZO87278840S5A310C2MM8000/"
+        "今日のニュース": "トヨタとホンダ「系列」超えた高値TOB物流に相乗効果",
+        "リンク": "https://www.nikkei.com/article/DGXZQOTG27C1P0X20C25A2000000/"
+    },
+    {
+        "区分": "AI",
+        "今日のニュース": "      世界初、“100%”AI生成の論文が査読通過Sakana AIの「The AI Scientist」が達成    ",
+        "リンク": "https://www.itmedia.co.jp/aiplus/articles/2503/12/news168.html"
+    },
+    {
+        "区分": "AI",
+        "今日のニュース": "      さくらインターネット江草CIOは生成AIをこう使うGitHub Copilotやdeep researchを使い分け多彩な活用術    ",
+        "リンク": "https://www.itmedia.co.jp/aiplus/articles/2503/12/news047.html"
     },
     {
         "区分": "AI",
         "今日のニュース": "      千葉銀行に激震「100人の会社」を買って「1万人のAI専門人材」を獲得した──いったい何が起きている    ",
         "リンク": "https://www.itmedia.co.jp/business/articles/2503/10/news111.html"
-    },
-    {
-        "区分": "AI",
-        "今日のニュース": "      15周年を迎えたiPadの集大成M3チップの新型「iPad Air」は買い替える価値があるのか試して分かったこと    ",
-        "リンク": "https://www.itmedia.co.jp/pcuser/articles/2503/10/news190.html"
-    },
-    {
-        "区分": "AI",
-        "今日のニュース": "      中華AIの衝撃、再び──中国発AIエージェント「Manus」が話題OpenAI「deep research」よりも高性能とうたう    ",
-        "リンク": "https://www.itmedia.co.jp/aiplus/articles/2503/10/news164.html"
     }
 ]

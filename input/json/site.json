@@ -1,0 +1,186 @@
+{
+    "item": [
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "Github",
+            "description": "ソース管理",
+            "url": "https://github.com/login/"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "Github API",
+            "description": "gitHub API Docs",
+            "url": "https://docs.github.com/ja/rest/repos/"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "MongoDB",
+            "description": "NoSQL DB",
+            "url": "https://account.mongodb.com/account/login/"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "Koyeb",
+            "description": "デプロイサーバー",
+            "url": "https://app.koyeb.com/"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "キノコード",
+            "description": "プログラミングYouTube",
+            "url": "https://kino-code.com/"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "Qiita",
+            "description": "エンジニアコミュニティ",
+            "url": "https://qiita.com/"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "stackoverflow",
+            "description": "エンジニアコミュニティ",
+            "url": "https://ja.stackoverflow.com/"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "Colab",
+            "description": "Python開発",
+            "url": "https://colab.research.google.com/"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "wikidocs",
+            "description": "オンラインブックプラットフォーム",
+            "url": "https://wikidocs.net/"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "dokojava",
+            "description": "java開発",
+            "url": "https://dokojava.jp/"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "とほほのWWW入門",
+            "description": "HTML基礎",
+            "url": "https://www.tohoho-web.com/www.htm"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "WordPress",
+            "description": "ウェブページ作成",
+            "url": "https://wordpress.com/ja/"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "ITパスポート",
+            "description": "ITパスポートテスト",
+            "url": "https://www3.jitec.ipa.go.jp/JitesCbt/index.html"
+        },
+        {
+            "auth": "2",
+            "category": "it",
+            "title": "aws",
+            "description": "Amazon Web Services",
+            "url": "https://aws.amazon.com/"
+        },
+        {
+            "auth": "1",
+            "category": "it",
+            "title": "aguse",
+            "description": "URL調査",
+            "url": "https://www.aguse.jp/"
+        },
+        {
+            "auth": "1",
+            "category": "life",
+            "title": "住民税",
+            "description": "住民税の自動計算",
+            "url": "https://juuminzei.com/keisan/"
+        },
+        {
+            "auth": "1",
+            "category": "community",
+            "title": "コネスト",
+            "description": "韓国旅行情報",
+            "url": "https://www.konest.com/"
+        },
+        {
+            "auth": "1",
+            "category": "travel",
+            "title": "台北ナビ",
+            "description": "台北旅行情報",
+            "url": "https://www.taipeinavi.com/"
+        },
+        {
+            "auth": "1",
+            "category": "travel",
+            "title": "バンコクナビ",
+            "description": "バンコク旅行情報",
+            "url": "https://www.bangkoknavi.com/"
+        },
+        {
+            "auth": "1",
+            "category": "travel",
+            "title": "Renthub",
+            "description": "タイアパートレンタル",
+            "url": "https://www.renthub.in.th/en"
+        },
+        {
+            "auth": "1",
+            "category": "travel",
+            "title": "エアトリ",
+            "description": "旅行セール情報",
+            "url": "https://www.airtrip.jp/"
+        },
+        {
+            "auth": "1",
+            "category": "travel",
+            "title": "サプライス",
+            "description": "LCCセール情報",
+            "url": "https://www.surpricenow.com/"
+        },
+        {
+            "auth": "1",
+            "category": "travel",
+            "title": "トラベルコ",
+            "description": "旅行セール情報",
+            "url": "https://www.tour.ne.jp/"
+        },
+        {
+            "auth": "1",
+            "category": "travel",
+            "title": "楽天トラベル",
+            "description": "ホテル予約",
+            "url": "https://travel.rakuten.co.jp/"
+        },
+        {
+            "auth": "1",
+            "category": "travel",
+            "title": "Booking.com",
+            "description": "ホテル予約",
+            "url": "https://www.booking.com/"
+        },
+        {
+            "auth": "1",
+            "category": "travel",
+            "title": "バス比較ナビ",
+            "description": "高速バス比較",
+            "url": "https://www.bushikaku.net/"
+        }
+    ]
+}

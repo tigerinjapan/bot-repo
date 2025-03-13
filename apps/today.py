@@ -17,7 +17,6 @@ col_list = [const.STR_DIV_JA, app_title]
 # URL
 URL_TENKI = "https://tenki.jp"
 URL_NAVER_FINANCE = "https://finance.naver.com"
-URL_HINOKOTO = "https://www.hinokoto.com"
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -28,7 +27,7 @@ DIV_WEATHER = "天気"
 DIV_RATE = "為替"
 DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
-DIV_LIST = [DIV_DATE, DIV_WEATHER, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
+DIV_LIST = [DIV_WEATHER, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
 
 STR_YEN_JA = "円"
 STR_WON_JA = "ウォン"
@@ -36,13 +35,13 @@ STR_WON_JA = "ウォン"
 
 # アイテムリスト取得
 def get_item_list():
-    today_info = get_today_info()[0]
+    today_info = get_today_info(const.FLG_OFF)[0]
     item_list = [[div, info] for div, info in today_info]
     return item_list
 
 
 # 今日の生活情報取得
-def get_today_info():
+def get_today_info(msg_flg: bool = const.FLG_ON):
     # 天気
     today_weather, forecast, date_time = get_today_weather()
 
@@ -57,8 +56,13 @@ def get_today_info():
     today_outfit = recommend_outfit_dinner[0]
     today_dinner = recommend_outfit_dinner[1].replace(NEW_LINE, const.SYM_BLANK)
 
-    info_list = [date_time, today_weather, today_won_rate, today_outfit, today_dinner]
-    today_info = zip(DIV_LIST, info_list)
+    col_list = DIV_LIST
+    info_list = [today_weather, today_won_rate, today_outfit, today_dinner]
+    if not msg_flg:
+        info_list = [date_time] + info_list
+        col_list = [DIV_DATE] + col_list
+
+    today_info = zip(col_list, info_list)
     return today_info, forecast, date_time
 
 
