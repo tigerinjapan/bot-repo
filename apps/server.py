@@ -9,6 +9,7 @@ from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 
+import apps.cafe as cafe
 import apps.lcc as lcc
 import apps.line as line
 import apps.news as news
@@ -162,9 +163,11 @@ async def img(file_name: str):
 
 
 @app.get("/test")
-async def test():
-    test_webdriver()
-    return {"message": "Server is on test."}
+def test():
+    message = cafe.main()
+    if not message:
+        message = "Server is on test."
+    return {"message": message}
 
 
 # 【画面】取得結果
