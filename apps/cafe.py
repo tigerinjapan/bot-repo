@@ -1,6 +1,6 @@
 # 説明：カフェ
 import asyncio
-from playwright.sync_api import sync_playwright
+from playwright.async_api import async_playwright
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -20,56 +20,32 @@ col_list = [
 
 
 def main():
-    contents = sync_main()
+    contents = asyncio.run(async_main())
     return contents
 
 
-def sync_main():
+async def async_main():
     # Playwrightのインスタンスを取得
-    playwright = sync_playwright().start()
+    playwright = await async_playwright().start()
     try:
         # ブラウザの起動
-        browser = playwright.chromium.launch()
+        browser = await playwright.chromium.launch()
 
         # 新しいページを作成
-        page = browser.new_page()
+        page = await browser.new_page()
 
         # ページにアクセス
         url = const.URL_GOOGLE
-        page.goto(url)
+        await page.goto(url)
 
         # ページタイトルを出力
-        title = page.title()
+        title = await page.title()
     finally:
         # ブラウザとPlaywrightのインスタンスを閉じる
-        browser.close()
-        playwright.stop()
+        await browser.close()
+        await playwright.stop()
 
         return title
-
-
-# async def async_main():
-#     # Playwrightのインスタンスを取得
-#     playwright = await async_playwright().start()
-#     try:
-#         # ブラウザの起動
-#         browser = await playwright.chromium.launch()
-
-#         # 新しいページを作成
-#         page = await browser.new_page()
-
-#         # ページにアクセス
-#         url = const.URL_GOOGLE
-#         await page.goto(url)
-
-#         # ページタイトルを出力
-#         title = await page.title()
-#     finally:
-#         # ブラウザとPlaywrightのインスタンスを閉じる
-#         await browser.close()
-#         await playwright.stop()
-
-#         return title
 
 
 if __name__ == const.MAIN_FUNCTION:
