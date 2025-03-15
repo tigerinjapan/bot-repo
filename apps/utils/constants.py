@@ -230,6 +230,7 @@ STR_ENV_VAR = "env_var"
 STR_KEYWORD = "keyword"
 STR_NOTIFY = "notify"
 STR_FIRST = "first"
+STR_TEST = "test"
 
 STR_LOGIN_JA = "ログイン"
 STR_LOGOUT_JA = "ログアウト"

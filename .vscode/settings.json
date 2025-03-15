@@ -2,6 +2,7 @@
     "cSpell.words": [
         "autoinstaller",
         "chromedriver",
+        "domcontentloaded",
         "dotenv",
         "fastapi",
         "gaierror",
@@ -9,13 +10,17 @@
         "getframe",
         "gethostname",
         "itsdangerous",
+        "koyeb",
         "localedef",
         "meiryo",
+        "playwright",
+        "postback",
         "prefs",
         "PYTHONPATH",
         "pyvirtualdisplay",
-        "SJIS",
+        "sjis",
         "starlette",
-        "uvicorn"
+        "uvicorn",
+        "venv"
     ]
 }

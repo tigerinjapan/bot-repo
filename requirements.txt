@@ -4,10 +4,11 @@ uvicorn
 starlette
 itsdangerous
 bs4
+pandas
 selenium
+playwright
 pyvirtualdisplay
 jinja2
-pandas
 schedule
 python-dotenv
 Pillow

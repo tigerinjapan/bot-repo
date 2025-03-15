@@ -26,6 +26,7 @@ NEW_LINE = const.SYM_NEW_LINE
 # メッセージタイプ
 MSG_TYPE_TXT = "text"
 MSG_TYPE_IMG = "image"
+MSG_TYPE_TMP = "template"
 
 # ファイル区分
 FILE_DIV_TODAY = "today"
@@ -38,12 +39,16 @@ DIV_MARK_TXT = "*-- {} --*"
 DIV_MARK_IMG = "=== {} ==="
 
 # プロパティ
-NUM_FONT_SIZE = 11
-NUM_IMG_MAX_SEQ = 8
+LINE_IMG_DIV = func.get_env_val("LINE_IMG_DIV")
+IMG_DIV_0 = str(const.NUM_ZERO)
+IMG_DIV_1 = str(const.NUM_ONE)
+IMG_DIV_2 = str(const.NUM_TWO)
+NUM_IMG_MAX_SEQ = 4
+FONT_TYPE = "msgothic"  # meiryo
 WEEKLY_DIV_FRI = "Fri"
 
 
-def main(auto_flg: bool = const.FLG_ON):
+def main(auto_flg: bool = const.FLG_ON, data_flg: bool = const.FLG_ON):
 
     func.print_start(app_name)
 
@@ -55,14 +60,13 @@ def main(auto_flg: bool = const.FLG_ON):
         use_cnt = check_message_count(token)
 
         if use_cnt <= (MAX_MSG_API_CNT - 20):
+            if data_flg:
+                msg_list = get_msg_list(auto_flg)
 
-            if auto_flg:
-                msg_list = get_msg_list()
+                # メッセージ取得
+                data = get_json_for_line(msg_list)
             else:
-                msg_list = get_msg()
-
-            # メッセージ取得
-            data = get_json_for_line(msg_list)
+                data = get_json_data_for_line()
 
             # メッセージ送信
             send_message(token, data)
@@ -131,12 +135,10 @@ def send_message(access_token: str, json_data):
         url, request_type=const.REQUEST_TYPE_POST, headers=headers, data=json_data
     )
 
-    if response:
+    if response.text:
         result = func.get_loads_json(response.text)
         if result:
-            err_msg = (
-                f"[{response.status_code}, {response.reason}, {result["message"]}]"
-            )
+            err_msg = f"[{response.status_code}, {response.reason}], {result}"
             func.print_error_msg(STR_LINE_API, err_msg)
 
 
@@ -164,16 +166,23 @@ def get_json_for_line(msg_list: list[list[str]]):
 
 
 # メッセージリスト取得
-def get_msg_list() -> list[list[str]]:
-    today_info, forecast, date_today = today.get_today_info()
-    msg_data = [f"[{div}] {info}" for div, info in today_info]
+def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
 
-    msg_data_list = get_msg_data_list(
-        FILE_DIV_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast
-    )
+    if auto_flg:
+        today_info, forecast, date_today = today.get_today_info()
+        msg_data = [f"[{div}] {info}" for div, info in today_info]
+
+        msg_data_list = get_msg_data_list(
+            FILE_DIV_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast
+        )
+    else:
+        msg_div = const.STR_NOTIFY
+        msg_data = func.get_input_data(const.STR_MESSAGE, msg_div)
+        msg_data_list = get_msg_data_list(msg_div, MSG_TYPE_TXT, msg_data)
+
     msg_list = [msg_data_list]
 
-    if WEEKLY_DIV_FRI in date_today:
+    if auto_flg and WEEKLY_DIV_FRI in date_today:
         ai_news_msg = news.get_news_msg_list(news.DIV_AI_NEWS_LIST)
         msg_data_list = get_msg_data_list(
             FILE_DIV_AI_NEWS, MSG_TYPE_TXT, ai_news_msg, date_today
@@ -183,17 +192,60 @@ def get_msg_list() -> list[list[str]]:
     return msg_list
 
 
-# メッセージ取得（手動）
-def get_msg(
-    msg_div: str = const.STR_NOTIFY, msg_type: str = MSG_TYPE_TXT
-) -> list[list[str]]:
+# LINEメッセージJSONデータ取得
+def get_json_data_for_line():
+    messages = []
+    json_object = get_json_object()
+    messages.append(json_object)
+    data = {"messages": messages}
+    json_data = func.get_dumps_json(data)
+    return json_data
 
-    msg_data = func.get_input_data(const.STR_MESSAGE, msg_div)
 
-    # TODO LINE Messaging API ImageMap：イメージにリンクを埋込
-    msg_data_list = get_msg_data_list(msg_div, msg_type, msg_data)
-    msg_list = [msg_data_list]
-    return msg_list
+# JSONオブジェクト取得
+def get_json_object(msg_type: str = const.SYM_BLANK):
+    json_object = get_template_msg()
+    # if msg_type == MSG_TYPE_TMP:
+    #     json_object = get_template_msg()
+    return json_object
+
+
+# テンプレート・メッセージ取得
+def get_template_msg():
+    base_url = "https://kobe-dev.koyeb.app"
+    img_url = base_url + "/img/test"
+
+    json_object = {
+        "type": MSG_TYPE_TMP,
+        "altText": "LINEテスト：テンプレート・メッセージ",
+        "template": {
+            "type": "buttons",
+            "thumbnailImageUrl": img_url,
+            "imageAspectRatio": "rectangle",
+            "imageSize": "cover",
+            "imageBackgroundColor": "#FFFFFF",
+            "title": "メニュー",
+            "text": "ボタン選択してください。",
+            "defaultAction": {
+                "type": "uri",
+                "label": "View detail",
+                "uri": base_url,
+            },
+            "actions": [
+                {
+                    "type": "uri",
+                    "label": "今日の生活情報",
+                    "uri": f"{base_url}/json/today",
+                },
+                {
+                    "type": "uri",
+                    "label": "LCCニュース",
+                    "uri": f"{base_url}/json/lcc",
+                },
+            ],
+        },
+    }
+    return json_object
 
 
 # メッセージ取得
@@ -252,14 +304,19 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
         img_div = FILE_DIV_NEWS
 
     # 任意の数値取得
-    img_no = str(func.get_random_int(NUM_IMG_MAX_SEQ))
-    img_no = img_no.zfill(3)
+    img_seq = str(func.get_random_int(NUM_IMG_MAX_SEQ))
+    img_no = LINE_IMG_DIV + img_seq.zfill(2)
 
     img_file_base = f"{img_div}_{img_no}"
 
-    font_type = "meiryo"
-    font_size = NUM_FONT_SIZE
-    xy_size = (75, 185) if div == FILE_DIV_TODAY else (45, 90)
+    font_type = FONT_TYPE
+    font_size = 11
+    xy_size = (45, 90)
+    if div == FILE_DIV_TODAY:
+        xy_size = (75, 185)
+        if LINE_IMG_DIV == IMG_DIV_1:
+            font_size = 15
+            xy_size = (60, 120)
 
     file_path = func_api.insert_msg_to_img(
         div, img_file_base, font_type, font_size, xy_size, msg
@@ -275,5 +332,6 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
 if __name__ == const.MAIN_FUNCTION:
     msg_list = get_msg_list()
-    func.print_test_data(msg_list)
+    # func.print_test_data(msg_list)
     # main(auto_flg=const.FLG_OFF)
+    # main(data_flg=const.FLG_OFF)
