@@ -19,7 +19,7 @@ col_list = [
     const.STR_CONTENTS_JA,
 ]
 
-col_list_cafe = ["店名", "特徴", "住所", "営業時間", "メニュー", "写真#1", "写真#2"]
+col_list_cafe = ["店名", "特徴", "住所", "営業時間", "モーニング", "メニュー", "内観"]
 
 # URL
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
@@ -52,8 +52,8 @@ def get_df_data(user_div: str, app_div: str):
         )
         img_path = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_INPUT}/"
         file_name = df_info[const.STR_IMG]
-        df_info[const.STR_IMG] = func.get_df_img(img_path, file_name, "_in")
-        df_info[const.STR_URL] = func.get_df_img(img_path, file_name, "_menu")
+        df_info[const.STR_IMG] = func.get_df_img(img_path, file_name, "_menu")
+        df_info[const.STR_URL] = func.get_df_img(img_path, file_name, "_in")
         df = df_info
 
     df.columns = col_list_cafe if app_div == const.APP_CAFE else col_list
