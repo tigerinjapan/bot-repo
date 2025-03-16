@@ -23,11 +23,14 @@ LINE Messaging API Bot
 | 変数                | 値                |
 | ------------------- | ----------------- |
 | PYTHONPATH          | bot               |
+| GEMINI_API_KEY      | api_key           |
+| GEMINI_MODEL        | model_name        |
 | LINE_CHANNEL_ID     | channel_id        |
 | LINE_CHANNEL_SECRET | channel_secret    |
-| GEMINI_API_KEY      | api_key           |
+| LINE_IMG_DIV        | 1                 |
 | NUM_HOUR_DAILY_JOB  | 7                 |
 | NUM_MIN_HOURLY_JOB  | 55                |
+| NUM_MIN_NO_SLEEP    | 30                |
 | URL_KOYEB           | https://koyeb.app |
 
 ### 公開サーバ

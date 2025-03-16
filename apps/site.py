@@ -50,13 +50,10 @@ def get_df_data(user_div: str, app_div: str):
         df_info[const.STR_NAME] = func.get_df_link(
             df_info[const.STR_URL], df_info[const.STR_NAME]
         )
-        img_file_div = df_info[const.STR_IMG].values[0]
-        img_file_name = (
-            f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_INPUT}/{img_file_div}"
-        )
-        df_info[const.STR_IMG] = img_file_name + "_in"
-        df_info[const.STR_URL] = img_file_name + "_menu"
-        df_info[const.STR_IMG] = f"{URL_KOYEB_APP}/{const.STR_IMG}/test"
+        img_path = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_INPUT}/"
+        file_name = df_info[const.STR_IMG]
+        df_info[const.STR_IMG] = func.get_df_img(img_path, file_name, "_in")
+        df_info[const.STR_URL] = func.get_df_img(img_path, file_name, "_menu")
         df = df_info
 
     df.columns = col_list_cafe if app_div == const.APP_CAFE else col_list

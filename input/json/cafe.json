@@ -17,6 +17,15 @@
             "menu": "食パンのモーニング",
             "img": "cafe_002",
             "url": "https://r-baker.com/"
+        },
+        {
+            "name": "イデカフェ",
+            "description": "木の温もり溢れる、\n落ち着いた癒しの空間",
+            "addr": "千葉県鎌ケ谷市初富862-24",
+            "time": "9:00～11:00",
+            "menu": "ホットドック",
+            "img": "cafe_003",
+            "url": "https://idecafe.com/"
         }
     ]
 }

@@ -13,7 +13,7 @@ import apps.utils.message_constants as msg_const
 app_name = func.get_app_name(__file__)
 
 # GEMINI API情報
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = func.get_env_val("GEMINI_MODEL")
 GEMINI_API_KEY = func.get_env_val("GEMINI_API_KEY")
 
 # 改行

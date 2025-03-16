@@ -311,6 +311,18 @@ def get_df_link(url: str, text: str):
     return result
 
 
+# イメージ文字列取得
+def get_df_img(img_path: str, file_name: str, text: str):
+    result = (
+        '<img src="'
+        + img_path
+        + file_name
+        + text
+        + '"</img>'
+    )
+    return result
+
+
 # リストの重複削除
 def remove_duplicates(val_list):
     is_1d = all(not isinstance(i, list) for i in val_list)
