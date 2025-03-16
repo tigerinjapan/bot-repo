@@ -10,6 +10,7 @@ app_name = func.get_app_name(__file__)
 
 # タイトル
 app_title = "お気に入りサイト"
+app_title_cafe = "おしゃれカフェ"
 
 # カラムリスト
 col_list = [
@@ -18,25 +19,47 @@ col_list = [
     const.STR_CONTENTS_JA,
 ]
 
+col_list_cafe = ["店名", "特徴", "住所", "営業時間", "メニュー", "写真#1", "写真#2"]
+
+# URL
+URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
+
 
 # データリスト取得
-def get_df_data(user_div: str):
+def get_df_data(user_div: str, app_div: str):
     # JSONデータ取得
-    json_data = func.get_input_data(const.APP_SITE, "item")
+    json_data = func.get_input_data(app_div, const.STR_ITEM)
 
     # DataFrame変換
     df_all = pd.DataFrame(json_data)
-    user_auth = get_user_auth_num(user_div)
-    search_query = f'auth <= "{user_auth}"'
-    df_query = df_all.query(search_query)
+    if app_div == const.APP_SITE:
+        user_auth = get_user_auth_num(user_div)
+        search_query = f'auth <= "{user_auth}"'
+        df_query = df_all.query(search_query)
 
-    column_list = df_query.columns[1:]
-    df_info = df_query[column_list]
-    df_info[const.STR_TITLE] = func.get_df_link(
-        df_info[const.STR_URL], df_info[const.STR_TITLE]
-    )
-    df = df_info[column_list[:3]]
-    df.columns = col_list
+        # column_list = df_query.columns[1:]
+        # df_info = df_query[column_list]
+        df_info = df_query
+        df_info[const.STR_TITLE] = func.get_df_link(
+            df_info[const.STR_URL], df_info[const.STR_TITLE]
+        )
+        column_list = df_info.columns[1:4]
+        df = df_info[column_list]
+    else:
+        df_info = df_all
+        df_info[const.STR_NAME] = func.get_df_link(
+            df_info[const.STR_URL], df_info[const.STR_NAME]
+        )
+        img_file_div = df_info[const.STR_IMG].values[0]
+        img_file_name = (
+            f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_INPUT}/{img_file_div}"
+        )
+        df_info[const.STR_IMG] = img_file_name + "_in"
+        df_info[const.STR_URL] = img_file_name + "_menu"
+        df_info[const.STR_IMG] = f"{URL_KOYEB_APP}/{const.STR_IMG}/test"
+        df = df_info
+
+    df.columns = col_list_cafe if app_div == const.APP_CAFE else col_list
     return df
 
 
@@ -52,5 +75,6 @@ def get_user_auth_num(user_div):
 
 if __name__ == const.MAIN_FUNCTION:
     user_div = const.AUTH_DEV
-    data_list = get_df_data(user_div)
-    func.print_test_data(data_list)
+    app_div = const.APP_CAFE
+    data_list = get_df_data(user_div, app_div)
+    func.print_test_data(data_list.values.tolist())

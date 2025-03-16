@@ -26,8 +26,8 @@ select {
 img {
 	border: none;
 	margin: auto;
-	width: 320px;
-	height: 320px;
+	width: auto;
+	height: 160px;
 }
 
 .searchTitle {
@@ -135,7 +135,7 @@ footer {
 /*共通のメディアクエリ設定*/
 @media screen and (max-width:480px) {
 	body {
-		font-size: 4vw;
+		font-size: 3vw;
 	}
 
 	img,
@@ -160,8 +160,8 @@ footer {
 	}
 }
 
-@media screen and (max-width:480px) {
+@media screen and (max-width:360px) {
 	body {
-		font-size: 3vw;
+		font-size: 4vw;
 	}
 }

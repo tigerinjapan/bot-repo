@@ -9,13 +9,13 @@ from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 
-import apps.cafe as cafe
 import apps.lcc as lcc
 import apps.line as line
 import apps.news as news
 import apps.ranking as ranking
 import apps.site as site
 import apps.study as study
+import apps.test as test
 import apps.today as today
 import apps.tv as tv
 import apps.utils.constants as const
@@ -31,7 +31,9 @@ templates = Jinja2Templates(directory="templates")
 
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, news, ranking, lcc, tv, study]
-LIST_ALL_APP_DIV = LIST_APP_DIV + [site]
+LIST_ALL_APP_DIV = LIST_APP_DIV + [site, site]
+
+LIST_APP_NUM_OFF = [const.APP_TODAY, const.APP_STUDY, const.APP_SITE, const.APP_CAFE]
 
 # ユーザーデータ
 user_data = func.get_input_data(const.STR_AUTH, const.STR_USER)
@@ -156,15 +158,15 @@ async def temp(file_name: str):
     return FileResponse(file_path)
 
 
-@app.get(f"/{const.STR_IMG}" + "/{file_name}")
-async def img(file_name: str):
-    image_path = func.get_file_path(file_name, const.FILE_TYPE_JPEG, const.STR_OUTPUT)
+@app.get(f"/{const.STR_IMG}" + "/{file_div}/{file_name}")
+async def img(file_div: str, file_name: str):
+    image_path = func.get_file_path(file_name, const.FILE_TYPE_JPEG, file_div)
     return FileResponse(image_path)
 
 
 @app.get("/test")
 def test():
-    message = cafe.main()
+    message = test.main()
     if not message:
         message = "Server is on test."
     return {"message": message}
@@ -182,16 +184,18 @@ def exec_result(request: Request, app_name: str):
 
     if app_name == const.APP_KOREA:
         app_title = news.app_title_korea
+    elif app_name == const.APP_CAFE:
+        app_title = site.app_title_cafe
 
     num_flg = const.FLG_ON
-    if func.check_in_list(app_name, [const.APP_TODAY, const.APP_STUDY, const.APP_SITE]):
+    if func.check_in_list(app_name, LIST_APP_NUM_OFF):
         num_flg = const.FLG_OFF
 
     app_exec = AppExec(app_div, app_name)
     app_exec.start()
 
-    if app_name == const.APP_SITE:
-        df = site.get_df_data(user_div)
+    if app_name in [const.APP_SITE, const.APP_CAFE]:
+        df = site.get_df_data(user_div, app_name)
         data_list = get_data_list(df)
     else:
         data_list = app_exec.data()
@@ -277,6 +281,7 @@ def no_sleep():
 
 
 if __name__ == const.MAIN_FUNCTION:
+    # start_thread()
     update_news()
     # app_name = const.APP_TODAY
     # update_news(app_name)

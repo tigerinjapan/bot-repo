@@ -44,7 +44,7 @@ IMG_DIV_0 = str(const.NUM_ZERO)
 IMG_DIV_1 = str(const.NUM_ONE)
 IMG_DIV_2 = str(const.NUM_TWO)
 NUM_IMG_MAX_SEQ = 4
-FONT_TYPE = "msgothic"  # meiryo
+FONT_TYPE = "uzura"
 WEEKLY_DIV_FRI = "Fri"
 
 
@@ -212,8 +212,8 @@ def get_json_object(msg_type: str = const.SYM_BLANK):
 
 # テンプレート・メッセージ取得
 def get_template_msg():
-    base_url = "https://kobe-dev.koyeb.app"
-    img_url = base_url + "/img/test"
+    base_url = URL_KOYEB_APP
+    img_url = base_url + f"/{const.STR_IMG}/{const.STR_OUTPUT}/test"
 
     json_object = {
         "type": MSG_TYPE_TMP,
@@ -315,7 +315,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
     if div == FILE_DIV_TODAY:
         xy_size = (75, 185)
         if LINE_IMG_DIV == IMG_DIV_1:
-            font_size = 15
+            font_size = 14
             xy_size = (60, 120)
 
     file_path = func_api.insert_msg_to_img(
@@ -323,7 +323,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
     )
 
     img_file_name = func.get_app_name(file_path)
-    img_url = f"{URL_KOYEB_APP}/{const.STR_IMG}/{img_file_name}"
+    img_url = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_OUTPUT}/{img_file_name}"
     if func.is_local_env():
         img_url = file_path
     func.print_info_msg(MSG_TYPE_IMG, img_url)

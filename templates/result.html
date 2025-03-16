@@ -40,13 +40,15 @@
                     {% endif %}
                     {% for val in val_list %}
                     <td>
-                    {% if 'https' in val | string and '/a>' not in val | string %}
+                        {% if '/img/' in val | string %}
+                        <img src="{{ val|e }}">
+                        {% elif 'https' in val | string and '/a>' not in val | string %}
                         <a href="{{ val|e }}" target="_blank" rel="noopener noreferrer">Link{{ idx }}</a>
-                    {% else %}
-                    {% autoescape false %}
+                        {% else %}
+                        {% autoescape false %}
                         {{ val | replace("\n", "<br />")}}
-                    {% endautoescape %}
-                    {% endif %}
+                        {% endautoescape %}
+                        {% endif %}
                     </td>
                     {% endfor %}
                 </tr>

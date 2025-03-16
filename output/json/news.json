@@ -1,32 +1,32 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "石破首相、自民議員に商品券配布「規正法に抵触せず」",
-        "リンク": "https://www.nikkei.com/article/DGXZQOUA13C970T10C25A3000000/"
+        "今日のニュース": "日本酒、新規免許｢70年ゼロ｣世界のSAKEブームに逆行",
+        "リンク": "https://www.nikkei.com/article/DGXZQOUA035LO0T00C25A3000000/"
     },
     {
         "区分": "日経",
-        "今日のニュース": "人事の評価異動、AIが提示テルモは1万人マッチング",
-        "リンク": "https://www.nikkei.com/article/DGXZQOUC1771H0X10C23A8000000/"
+        "今日のニュース": "(チャートは語る)長居が増える社外取10年以上「1割」迫る監視の緩み、市場は懸念",
+        "リンク": "https://www.nikkei.com/article/DGKKZO87386290W5A310C2MM8000/"
     },
     {
         "区分": "日経",
-        "今日のニュース": "トヨタとホンダ「系列」超えた高値TOB物流に相乗効果",
-        "リンク": "https://www.nikkei.com/article/DGXZQOTG27C1P0X20C25A2000000/"
+        "今日のニュース": "トランプ氏、フーシへ「強力な」軍事行動を命令",
+        "リンク": "https://www.nikkei.com/article/DGXZQOGN1600U0W5A310C2000000/"
     },
     {
         "区分": "AI",
-        "今日のニュース": "      世界初、“100%”AI生成の論文が査読通過Sakana AIの「The AI Scientist」が達成    ",
-        "リンク": "https://www.itmedia.co.jp/aiplus/articles/2503/12/news168.html"
+        "今日のニュース": "      “GPU2個でGPT4o”並みの性能AIモデル「Command A」登場「Transformer」開発者が発表    ",
+        "リンク": "https://www.itmedia.co.jp/aiplus/articles/2503/14/news181.html"
     },
     {
         "区分": "AI",
-        "今日のニュース": "      さくらインターネット江草CIOは生成AIをこう使うGitHub Copilotやdeep researchを使い分け多彩な活用術    ",
-        "リンク": "https://www.itmedia.co.jp/aiplus/articles/2503/12/news047.html"
+        "今日のニュース": "      Google「Gemini」の画像生成がハイレベルと話題にチャット1つで写真のアングルを違和感なく変更    ",
+        "リンク": "https://www.itmedia.co.jp/aiplus/articles/2503/14/news155.html"
     },
     {
         "区分": "AI",
-        "今日のニュース": "      千葉銀行に激震「100人の会社」を買って「1万人のAI専門人材」を獲得した──いったい何が起きている    ",
-        "リンク": "https://www.itmedia.co.jp/business/articles/2503/10/news111.html"
+        "今日のニュース": "      モバイル端末の「Googleアシスタント」、2025年後半に「Gemini」への移行完了    ",
+        "リンク": "https://www.itmedia.co.jp/news/articles/2503/15/news083.html"
     }
 ]

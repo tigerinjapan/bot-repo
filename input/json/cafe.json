@@ -1,0 +1,22 @@
+{
+    "item": [
+        {
+            "name": "フラットヴィレッジ",
+            "description": "アメリカ西海岸風",
+            "addr": "千葉県船橋市本町2丁目5-3",
+            "time": "9:00～11:00",
+            "menu": "ヴィレッジサンドプレート\nツインブレッドプレート",
+            "img": "cafe_001",
+            "url": "https://flatvillage.flat.or.jp/"
+        },
+        {
+            "name": "R Baker the Green",
+            "description": "緑の中でほっと一息、\nおしゃれで心地いい空間",
+            "addr": "千葉県印西市鹿黒南5-2",
+            "time": "8:00～11:00",
+            "menu": "食パンのモーニング",
+            "img": "cafe_002",
+            "url": "https://r-baker.com/"
+        }
+    ]
+}

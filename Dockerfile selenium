@@ -31,6 +31,10 @@ RUN pip install --upgrade pip
 # 必要なパッケージのインストール
 RUN pip install -r requirements.txt
 
+# Playwrightインストール
+RUN playwright install
+RUN playwright install-deps
+
 # ポート開放（uvicornで指定したポート）
 EXPOSE 8000
 

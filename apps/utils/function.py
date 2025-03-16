@@ -300,7 +300,7 @@ def get_df(data_list: list, columns: list[str]):
 
 
 # リンク文字列取得
-def get_df_link(url, text):
+def get_df_link(url: str, text: str):
     result = (
         '<a href="'
         + url

@@ -215,6 +215,7 @@ STR_HOST = "host"
 STR_INDEX = "index"
 STR_RESULT = "result"
 STR_CONTENTS = "contents"
+STR_ITEM = "item"
 STR_SERVER = "server"
 STR_UPDATE = "update"
 STR_TIME = "time"
@@ -313,6 +314,7 @@ APP_LCC = "lcc"
 APP_TV = "tv"
 APP_STUDY = "study"
 APP_SITE = "site"
+APP_CAFE = "cafe"
 LIST_APP_NAME = [
     APP_TODAY,
     APP_NEWS,
@@ -322,7 +324,7 @@ LIST_APP_NAME = [
     APP_TV,
     APP_STUDY,
 ]
-LIST_ALL_APP_NAME = LIST_APP_NAME + [APP_SITE]
+LIST_ALL_APP_NAME = LIST_APP_NAME + [APP_SITE, APP_CAFE]
 
 
 # パス取得
