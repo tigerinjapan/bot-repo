@@ -60,7 +60,7 @@ def get_naver_news_summary(keyword: str) -> list[str]:
     url = f"{const.URL_NAVER_SEARCH}{url_param}"
     a_elem_list = func_bs.get_elem_from_url(
         url, attr_val="news_area", list_flg=const.FLG_ON
-    )[: const.MAX_DISPLAY_CNT]  # type: ignore
+    )[: const.MAX_DISPLAY_CNT]
 
     naver_news = []
     if a_elem_list:
@@ -68,55 +68,18 @@ def get_naver_news_summary(keyword: str) -> list[str]:
             time_elem = func_bs.find_elem_by_attr(
                 a_elem, const.TAG_SPAN, attr_div=const.ATTR_CLASS, attr_val="info"
             )
-            time_text = time_elem.text  # type: ignore
+            time_text = time_elem.text
             if func.check_in_list(time_text, ["분 전", "시간 전"]):
                 contents_elem = func_bs.find_elem_by_attr(
                     a_elem,
                     attr_div=const.ATTR_CLASS,
                     attr_val="api_txt_lines dsc_txt_wrap",
                 )
-                contents_text = contents_elem.text  # type: ignore
+                contents_text = contents_elem.text
                 naver_news.append(contents_text)
 
     if naver_news:
-        add_conditions = [
-            "韓国語を勉強している初級レベルの人が記事を学習用で使用する目的",
-            "【会話】記事の内容を元に韓国人の女性同士が会話するような内容",
-            "【会話】会話の中で、記事が何の内容かを全て把握したい",
-            f"【会話】会話の中で、「{keyword}」というキーワードを一度は使用",
-            f"【会話】会話の中で、「{keyword}」と説明する韓国語熟語は、<b>と</b>に囲む",
-            "【会話】文章の終わりに絵文字を使用。言葉の代わりには使用しない",
-            "【会話】絵文字は、環境依存せず、全てのデバイスに適用されるものにする",
-            "【熟語】会話の途中にある熟語で、日常でよく使う表現5個をピックアップし、説明",
-            "【熟語】韓国語熟語は、純ハングル語、韓国式略語、韓国式英語の優先順位",
-            "【熟語】日本語で直訳すると、同じ意味の韓国語は、対象外",
-            "【熟語】韓国語熟語の説明は、日本語と同じ表現を使い、20文字以内",
-            "【熟語】韓国語熟語の説明は、日本語以外の言語は、不要",
-            "使用しない：**、コンマ",
-            "小数点、4桁以上などの数値の内容は、不要",
-            "日本語、韓国語、英語以外の言語は、不要",
-            "알겠습니다. 요약해 드리겠습니다. などの内容は、不要",
-            "以下例のように、レイアウトを構成する",
-        ]
-
-        other_reference = [
-            "※例",
-            "유리：이번에 우리 오빠들이 <b>음악</b>프로그램 1위를 했데.",
-            "창빈：대단하다. 정말 축해.",
-            "유리：다음 노래도 1위 했음 좋겠다.",
-            "창빈：그래.",
-            "유리：다음 달에는 월드투어도 한다네.",
-            "창빈：미국이나 일본에서 콘서트 하는거 보고싶다.",
-            NEW_LINE * 2,
-            "[1] 오빠들：お兄ちゃんたち。",
-            "[2] 프로그램：番組、プログラム",
-            "[3] 대단하다：凄い",
-            "[4] 그래：そうね。そうだね。",
-            "[5] 보고싶다：見たい",
-        ]
-        news_summary = func_gemini.get_news_summary(
-            naver_news, add_conditions, other_reference, 1
-        )
+        news_summary = func_gemini.get_news_summary(naver_news, keyword, 1)
 
     return news_summary
 

@@ -11,7 +11,7 @@ app_name = func.get_app_name(__file__)
 app_title = const.STR_DRAMA_JA + const.STR_RANKING_JA
 
 # カラムリスト
-col_list = [const.STR_IMG_JA, const.STR_TITLE_JA, "ジャンル", "キャスト"]
+col_list = [const.STR_IMG_JA, const.STR_CONTENTS_JA]
 
 # ランキング区分
 LIST_RANKING_WEEKLY = [const.APP_DRAMA]
@@ -44,21 +44,21 @@ def get_weekly_ranking(div: str):
 
         if div == const.APP_DRAMA:
             img_path = const.URL_WOWKOREA + img.get("data-src")
-            img_tag = func.get_df_img(img_path)
+            img_tag = func.get_img_tag(img_path)
             h2_elem = func_bs.find_elem_by_attr(elem, tag=const.TAG_H2)
-            title = h2_elem.text
+            title = f"<b>{h2_elem.text}</b>"
             ul_elem = func_bs.find_elem_by_attr(elem, tag=const.TAG_UL)
             li_elem_list = func_bs.find_elem_by_attr(
                 ul_elem, tag=const.TAG_LI, list_flg=const.FLG_ON
             )
             if li_elem_list:
                 genre = li_elem_list[0].get_text(strip=const.FLG_ON)
-                genre = genre.split("ジャンル：")[1]
                 elem_cast = li_elem_list[4].get_text(strip=const.FLG_ON)
                 cast_text = elem_cast.split(const.SYM_COMMA_JAP)[:2]
                 cast = const.SYM_COMMA_JAP.join(cast_text)
-                cast = cast.split("キャスト：")[1]
-                ranking_info = [img_tag, title, genre, cast]
+                contents_tag = ["<p>", title, genre, cast, "</p>"]
+                contents = const.SYM_NEW_LINE.join(contents_tag)
+                ranking_info = [img_tag, contents]
 
         if ranking_info:
             weekly_ranking.append(ranking_info)

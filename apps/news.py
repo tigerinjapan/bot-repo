@@ -8,51 +8,56 @@ import apps.utils.function_gemini as func_gemini
 # アプリケーション名
 app_name = func.get_app_name(__file__)
 
+# タイトル
+app_title = "今日の" + const.STR_NEWS_JA
+
+# カラムリスト
+col_list = [const.STR_DIV_JA, app_title]
+
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
 
 # 区分
-DIV_NEWS = "今日の" + "{}" + const.STR_NEWS_JA
+DIV_NEWS = "{}" + const.STR_NEWS_JA
 DIV_NIKKEI_NEWS = DIV_NEWS.format(const.STR_NIKKEI_JA)
 DIV_KOREA_NEWS = DIV_NEWS.format(const.STR_KOREA_JA)
 DIV_ENT_NEWS = DIV_NEWS.format(const.STR_ENT_JA)
 DIV_KPOP_NEWS = DIV_NEWS.format(const.STR_KPOP)
-DIV_WEEKLY_RANKING = "{}週間" + const.STR_RANKING_JA
-DIV_KPOP_RANKING = DIV_WEEKLY_RANKING.format(const.STR_KPOP)
 DIV_AI_NEWS = DIV_NEWS.format(const.STR_AI)
 DIV_AI_NEWS_LIST = [DIV_AI_NEWS]
-DIV_NEWS_LIST = [DIV_NIKKEI_NEWS] + DIV_AI_NEWS_LIST
-DIV_KOREA_NEWS_LIST = [DIV_KOREA_NEWS, DIV_ENT_NEWS, DIV_KPOP_NEWS]
+DIV_NEWS_LIST = [
+    DIV_NIKKEI_NEWS,
+    DIV_AI_NEWS,
+    DIV_KOREA_NEWS,
+    DIV_ENT_NEWS,
+    DIV_KPOP_NEWS,
+]
 
-ITEM_NEWS_LIST = [const.STR_NIKKEI_JA, const.STR_AI]
-ITEM_KOREA_NEWS_LIST = [const.STR_KOREA_JA, const.STR_ENT_JA, const.STR_KPOP]
+ITEM_NEWS_LIST = [
+    const.STR_NIKKEI_JA,
+    const.STR_AI,
+    const.STR_KOREA_JA,
+    const.STR_ENT_JA,
+    const.STR_KPOP,
+]
+
+DIV_WEEKLY_RANKING = "{}週間" + const.STR_RANKING_JA
+DIV_KPOP_RANKING = DIV_WEEKLY_RANKING.format(const.STR_KPOP)
 
 # キーワードリスト
 LIST_KEYWORD_AI = func.get_input_data(const.STR_KEYWORD, const.STR_AI)
 
-# タイトル
-app_title = DIV_NEWS.format(const.SYM_BLANK)
-app_title_korea = const.STR_KOREA_JA + const.STR_NEWS_JA
-
-# カラムリスト
-col_list = [const.STR_DIV_JA, app_title, const.STR_LINK_JA]
-col_list_korea = [const.STR_DIV_JA, app_title_korea, const.STR_LINK_JA]
-
 
 # アイテムリスト取得
-def get_item_list(div_list: list[str] = DIV_NEWS_LIST):
+def get_item_list():
     item_list = []
 
-    item_div_list = ITEM_NEWS_LIST
-    if div_list == DIV_KOREA_NEWS_LIST:
-        item_div_list = ITEM_KOREA_NEWS_LIST
-
-    for div, item_div in zip(div_list, item_div_list):
+    for div, item_div in zip(DIV_NEWS_LIST, ITEM_NEWS_LIST):
         news_list = get_news_list(div, list_flg=const.FLG_ON)
         if news_list:
-            print_news_list = news_list[: const.MIN_DISPLAY_CNT]
+            print_news_list = news_list[:1]
             for news in print_news_list:
-                news = news.insert(0, item_div)  # type: ignore
+                news = news.insert(0, item_div)
             item_list += print_news_list
 
     return item_list
@@ -85,19 +90,17 @@ def get_news_list(
                 continue
 
             a_title = a.get(const.ATTR_TITLE)
-            if a_title and func.check_in_list(a_title, ["芸能", "文化", "旅行"]):
-                news_contents = func.get_replace_data(a_title)
+            if a_title and func.check_in_list(a_title, ["芸能", "旅行"]):
+                news_text_list = func.re_split("[…,]", func.get_replace_data(a_title))
+                news_text = NEW_LINE.join(news_text_list)
 
                 a_href = a.get(const.ATTR_HREF)
                 url_news = f"{const.URL_KONEST}/contents/{a_href}"
 
-                if ai_flg:
-                    news_contents = func_bs.get_elem_from_url(
-                        url_news, attr_val="size14"
-                    )
+                news_contents = func.get_a_tag(url_news, news_text)
 
                 if list_flg:
-                    news_contents = [news_contents, url_news]
+                    news_contents = [news_contents]
 
                 news_list.append(news_contents)
 
@@ -115,13 +118,14 @@ def get_news_list(
 
             a_text = a.text
             if a_text:
-                news_text_list = func.re_split("[…,]", func.get_replace_data(a_text))
-                news_contents = NEW_LINE.join(news_text_list)
-                if div != DIV_NIKKEI_NEWS:
-                    news_contents = news_contents.replace(const.SYM_COMMA_JAP, NEW_LINE)
+                news_text_list = func.re_split("[…,、]", func.get_replace_data(a_text))
+                news_text = NEW_LINE.join(news_text_list)
+
+                news_contents = func.get_a_tag(url_news, news_text)
 
                 if list_flg:
-                    news_contents = [news_contents, url_news]
+                    news_contents = [news_contents]
+
                 news_list.append(news_contents)
 
     elif div == DIV_AI_NEWS:
@@ -133,7 +137,9 @@ def get_news_list(
             a_text = a.text
 
             if func.check_in_list(a_text, LIST_KEYWORD_AI):
-                news_contents = func.get_replace_data(a_text)
+                news_text = func.get_replace_data(a_text)
+                news_contents = func.get_a_tag(a_href, news_text)
+
                 if ai_flg:
                     p_list = get_elem_list(div, a_href)
                     if p_list:
@@ -141,7 +147,7 @@ def get_news_list(
                         news_contents = NEW_LINE.join(news_contents_list)
 
                 if list_flg:
-                    news_contents = [news_contents, a_href]
+                    news_contents = [news_contents]
 
                 news_list.append(news_contents)
 

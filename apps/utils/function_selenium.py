@@ -104,7 +104,7 @@ def get_webdriver():
 
     # ドライバー初期化
     try:
-        driver = webdriver.Chrome(service=service, options=options)  # type: ignore
+        driver = webdriver.Chrome(service=service, options=options)
 
     except WebDriverException as wde:
         curr_def_nm = sys._getframe().f_code.co_name

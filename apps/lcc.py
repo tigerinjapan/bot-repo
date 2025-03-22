@@ -37,22 +37,22 @@ def get_lcc_info_list() -> list[str]:
 
         date = func_bs.find_elem_by_attr(
             lcc_info, attr_div=const.ATTR_CLASS, attr_val="bgdate"
-        ).text  # type: ignore
+        ).text
         title_info = func_bs.find_elem_by_attr(lcc_info, tag=const.TAG_A)
-        title_text = title_info.text.split(const.SYM_COMMA_JAP)  # type: ignore
+        title_text = title_info.text.split(const.SYM_COMMA_JAP)
         company = title_text[0]
         title = title_text[1].replace("」", f"」{const.SYM_NEW_LINE}")
         title_info = func_bs.find_elem_by_attr(lcc_info, tag=const.TAG_A)
 
         if func.check_in_list(title, LIST_KEYWORD):
-            url_news = const.URL_LCC + title_info.get(const.ATTR_HREF)  # type: ignore
+            url_news = const.URL_LCC + title_info.get(const.ATTR_HREF)
 
             lcc_info_details = func_bs.get_elem_from_url(
                 url_news, tag=const.TAG_DIV, attr_val="body"
             )
             url_official = func_bs.get_link_from_soup(lcc_info_details)
 
-            company = func.get_df_link(url_official, company)
+            company = func.get_a_tag(url_official, company)
             lcc_data = [date, company, title]
             lcc_info_list.append(lcc_data)
 

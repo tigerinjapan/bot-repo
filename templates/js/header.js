@@ -6,7 +6,6 @@ const AUTH_GUEST = "guest";
 // アプリケーションリスト
 const APP_TODAY = "today";
 const APP_NEWS = "news";
-const APP_KOREA = "korea";
 const APP_DRAMA = "drama";
 const APP_RANKING = "ranking";
 const APP_LCC = "lcc";
@@ -14,9 +13,10 @@ const APP_TV = "tv";
 const APP_STUDY = "study";
 const APP_SITE = "site";
 const APP_CAFE = "cafe";
-const LIST_APP = [APP_TODAY, APP_NEWS, APP_KOREA, APP_DRAMA, APP_RANKING, APP_LCC, APP_TV, APP_STUDY, APP_SITE, APP_CAFE];
+const LIST_APP = [APP_TODAY, APP_NEWS, APP_DRAMA, APP_RANKING, APP_LCC, APP_TV, APP_STUDY, APP_SITE, APP_CAFE];
 const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_CAFE];
 const LIST_APP_GUEST = LIST_APP.filter(item => !LIST_APP_NOT_GUEST.includes(item));
+const LIST_APP_MO = [APP_NEWS, APP_DRAMA, APP_RANKING, APP_STUDY, APP_CAFE];
 
 // 項目名
 const TITLE_SYSTEM = "開発デモシステム";
@@ -33,6 +33,7 @@ const SYM_BLANK = "";
 // ヘッダー情報読込
 document.write(`
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/templates/style.css">
   <script src="/templates/footer.js"></script>
   <script src="/templates/jquery-3.6.1.min.js"></script>
@@ -47,7 +48,9 @@ function writeHeader(userDiv, userNm, appNm) {
   document.write(`<div class="topMenu"><ul>`);
 
   appList = LIST_APP;
-  if (userDiv == AUTH_GUEST) {
+  if (isMobile()) {
+    appList = LIST_APP_MO;
+  } else if (userDiv == AUTH_GUEST) {
     appList = LIST_APP_GUEST;
   }
 
@@ -65,6 +68,23 @@ function writeHeader(userDiv, userNm, appNm) {
   // メニュー押下時、背景色設定
   var screenId = document.getElementById(appNm);
   screenId.setAttribute("style", "background-color: peru;");
+}
+
+function isMobile() {
+  // スマホ判定用の変数
+  let isMobileDevice = false;
+
+  // ユーザーエージェントを利用した判定
+  const userAgent = navigator.userAgent;
+
+  // 一般的なスマホデバイスのユーザーエージェントに基づいて判定
+  if (/android/i.test(userAgent)) {
+    isMobileDevice = true; // Androidデバイス
+  } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
+    isMobileDevice = true; // iOSデバイス
+  }
+
+  return isMobileDevice; // デスクトップまたはその他のデバイス
 }
 
 // チェックメッセージ表示

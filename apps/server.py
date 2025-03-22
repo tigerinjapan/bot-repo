@@ -43,7 +43,7 @@ TOKEN_EXPIRATION_MINUTES = 10  # トークン有効期限 (10分)
 VALID_TOKEN = "secret-token"
 
 # アプリケーションリスト
-LIST_APP_DIV = [today, news, news, drama, ranking, lcc, tv, study]
+LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
 LIST_ALL_APP_DIV = LIST_APP_DIV + [site, site]
 
 LIST_APP_NUM_OFF = [const.APP_TODAY, const.APP_STUDY, const.APP_SITE, const.APP_CAFE]
@@ -132,7 +132,7 @@ async def protected_resource(token: str):
 
     if token_store:
         # トークンを検証
-        token_data = token_store.get(token) # TODO 追加テスト要
+        token_data = token_store.get(token)  # TODO 追加テスト要
     else:
         access_token = "token_" + const.DATE_TODAY
 
@@ -259,9 +259,7 @@ def exec_result(request: Request, app_name: str):
 
     app_title = app_div.app_title
 
-    if app_name == const.APP_KOREA:
-        app_title = news.app_title_korea
-    elif app_name == const.APP_CAFE:
+    if app_name == const.APP_CAFE:
         app_title = site.app_title_cafe
 
     num_flg = const.FLG_ON
@@ -330,12 +328,8 @@ def update_news(app_name: str = const.SYM_BLANK):
         app_exec = AppExec(app_div, app_name)
         app_exec.start()
 
-        if app_name == const.APP_KOREA:
-            item_list = news.get_item_list(news.DIV_KOREA_NEWS_LIST)
-            col_list = news.col_list_korea
-        else:
-            item_list = app_div.get_item_list()
-            col_list = app_div.col_list
+        item_list = app_div.get_item_list()
+        col_list = app_div.col_list
 
         df = func.get_df(item_list, col_list)
 
@@ -374,6 +368,6 @@ def test_api():
 if __name__ == const.MAIN_FUNCTION:
     # start_thread()
     # update_news()
-    # app_name = const.APP_TODAY
-    # update_news(app_name)
-    test_api()
+    app_name = const.APP_TODAY
+    update_news(app_name)
+    # test_api()

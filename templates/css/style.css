@@ -133,9 +133,11 @@ footer {
 }
 
 /*共通のメディアクエリ設定*/
-@media screen and (max-width:480px) {
-	body {
-		font-size: 6vw;
+@media (max-width:640px) {
+
+	body,
+	footer {
+		font-size: 3vw;
 	}
 
 	img,
@@ -157,11 +159,5 @@ footer {
 	.topMenu li:last-child {
 		border-bottom: none;
 		margin-left: 0;
-	}
-}
-
-@media screen and (max-width:360px) {
-	body {
-		font-size: 8vw;
 	}
 }

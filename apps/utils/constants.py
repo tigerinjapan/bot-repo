@@ -226,6 +226,7 @@ STR_DECODE = "decode"
 STR_LINE = "line"
 STR_GEMINI = "gemini"
 STR_API = "api"
+STR_ADDR = "addr"
 STR_IMG = "img"
 STR_ENV_VAR = "env_var"
 STR_KEYWORD = "keyword"
@@ -330,7 +331,6 @@ URL_TV = "https://www.tvkingdom.jp"
 ##### アプリケーション名 #####
 APP_TODAY = "today"
 APP_NEWS = "news"
-APP_KOREA = "korea"
 APP_DRAMA = "drama"
 APP_RANKING = "ranking"
 APP_LCC = "lcc"
@@ -341,7 +341,6 @@ APP_CAFE = "cafe"
 LIST_APP_NAME = [
     APP_TODAY,
     APP_NEWS,
-    APP_KOREA,
     APP_DRAMA,
     APP_RANKING,
     APP_LCC,

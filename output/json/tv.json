@@ -1,44 +1,62 @@
 [
     {
-        "放送時間": "3/22(Sat)11:03~13:10(127分)",
-        "チャンネル": "テレビ東京(Ch.7)",
-        "番組名": "<b>世界</b>ニッポン行きたい人応援団予習復習SP【3/24(月)夜8時曲げわっぱ】[字]",
-        "リンク": "https://www.tvkingdom.jp/schedule/101072202503221103.action"
-    },
-    {
-        "放送時間": "3/22(Sat)11:55~13:30(95分)",
-        "チャンネル": "日テレ(Ch.4)",
-        "番組名": "メシドラ[字]ベテラン俳優宇梶剛士と全国旨いメシ探しの<b>旅</b>in神奈川県大磯町",
-        "リンク": "https://www.tvkingdom.jp/schedule/101040202503221155.action"
-    },
-    {
-        "放送時間": "3/22(Sat)18:51~21:56(185分)",
-        "チャンネル": "TBS(Ch.6)",
-        "番組名": "<b>世界</b>ふしぎ発見ウォルトディズニーワールド&万博<b>世界</b>初ゾクゾク春の3時間SP",
-        "リンク": "https://www.tvkingdom.jp/schedule/101048202503221851.action"
-    },
-    {
-        "放送時間": "3/22(Sat)21:30~22:00(30分)",
-        "チャンネル": "NHKEテレ1東京(Ch.2)",
-        "番組名": "阿佐ヶ谷アパートメント[終]2024▽第15話桜色に染まった、<b>旅</b>立ちの夜。[解][字]",
-        "リンク": "https://www.tvkingdom.jp/schedule/101032202503222130.action"
-    },
-    {
-        "放送時間": "3/22(Sat)23:00~23:30(30分)",
-        "チャンネル": "テレビ朝日(Ch.5)",
-        "番組名": "楽しく学ぶ<b>世界</b>動画ニュース傑作選【爆笑&衝撃<b>世界</b>スクープ動画SP】[字]",
-        "リンク": "https://www.tvkingdom.jp/schedule/101064202503222300.action"
-    },
-    {
         "放送時間": "3/23(Sun)12:00~14:00(120分)",
         "チャンネル": "フジテレビ(Ch.8)",
-        "番組名": "なりゆき街道<b>旅</b>【梅が見頃の湯島天満宮を参拝あったか鴨鍋&絶品スイーツに感動】[字]",
-        "リンク": "https://www.tvkingdom.jp/schedule/101056202503231200.action"
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101056202503231200.action\" target=\"_blank\" rel=\"noopener noreferrer\">なりゆき街道<b>旅</b>【梅が見頃の湯島天満宮を参拝あったか鴨鍋&絶品スイーツに感動】[字]</a>"
+    },
+    {
+        "放送時間": "3/23(Sun)12:45~14:00(75分)",
+        "チャンネル": "日テレ(Ch.4)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101040202503231245.action\" target=\"_blank\" rel=\"noopener noreferrer\">超無敵クラス卒業SP最後のチャリ通ジャーニー&秋田ローカル鉄道(秘)絶景<b>旅</b>[字]</a>"
+    },
+    {
+        "放送時間": "3/23(Sun)12:55~13:25(30分)",
+        "チャンネル": "テレビ朝日(Ch.5)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101064202503231255.action\" target=\"_blank\" rel=\"noopener noreferrer\">新婚さんいらっしゃい間取りは13K山奥の小学校に住んでいる剣道<b>世界</b>2位[解][字]</a>"
+    },
+    {
+        "放送時間": "3/23(Sun)13:30~15:00(90分)",
+        "チャンネル": "TBS(Ch.6)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101048202503231330.action\" target=\"_blank\" rel=\"noopener noreferrer\">それSnowManにやらせて下さい28日よる7時~<b>世界</b>的スターLISAが登場[字]</a>"
+    },
+    {
+        "放送時間": "3/23(Sun)15:20~16:30(70分)",
+        "チャンネル": "テレビ朝日(Ch.5)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101064202503231520.action\" target=\"_blank\" rel=\"noopener noreferrer\">路線バスで寄り道の<b>旅</b>【岩崎姉妹が母校でアカペラコンサート】[字]</a>"
+    },
+    {
+        "放送時間": "3/23(Sun)18:00~18:30(30分)",
+        "チャンネル": "TBS(Ch.6)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101048202503231800.action\" target=\"_blank\" rel=\"noopener noreferrer\"><b>世界</b>遺産「海のヴェルサイユ400年現役の灯台」[解][字][デ]</a>"
+    },
+    {
+        "放送時間": "3/23(Sun)18:30~20:50(140分)",
+        "チャンネル": "テレビ東京(Ch.7)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101072202503231830.action\" target=\"_blank\" rel=\"noopener noreferrer\"><b>世界</b>を救えサムライバスターズ6~最恐生物一斉討伐SP~[字]</a>"
+    },
+    {
+        "放送時間": "3/23(Sun)19:00~21:00(120分)",
+        "チャンネル": "フジテレビ(Ch.8)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101056202503231900.action\" target=\"_blank\" rel=\"noopener noreferrer\">危機一髪衝撃映像SP▼<b>世界</b>の爆笑おマヌケ&動物&大爆発奇跡の瞬間95連発[字]</a>"
+    },
+    {
+        "放送時間": "3/23(Sun)21:00~21:50(50分)",
+        "チャンネル": "NHK総合1東京(Ch.1)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101024202503232100.action\" target=\"_blank\" rel=\"noopener noreferrer\">NHKスペシャル新ジャポニズム第3集FOOD日本食が“<b>世界</b>化”する[字]</a>"
+    },
+    {
+        "放送時間": "3/23(Sun)21:00~23:09(129分)",
+        "チャンネル": "フジテレビ(Ch.8)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101056202503232100.action\" target=\"_blank\" rel=\"noopener noreferrer\">国民的マジックの祭典<b>世界</b>が認めた日本人マジシャンNo.1決定戦賞レース開幕[字]</a>"
+    },
+    {
+        "放送時間": "3/24(Mon)12:00~13:40(100分)",
+        "チャンネル": "テレビ東京(Ch.7)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101072202503241200.action\" target=\"_blank\" rel=\"noopener noreferrer\">昼めし<b>旅</b>【一味違うパワフルおじいちゃんの豪快美味飯群馬県伊香保温泉】[字]</a>"
     },
     {
         "放送時間": "3/26(Wed)23:00~23:40(40分)",
         "チャンネル": "フジテレビ(Ch.8)",
-        "番組名": "週刊ナイナイミュージック【東方神起が<b>韓国</b>おもてなし旅】[字]",
-        "リンク": "https://www.tvkingdom.jp/schedule/101056202503262300.action"
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101056202503262300.action\" target=\"_blank\" rel=\"noopener noreferrer\">週刊ナイナイミュージック【東方神起が<b>韓国</b>おもてなし旅】[字]</a>"
     }
 ]

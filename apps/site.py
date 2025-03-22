@@ -19,7 +19,8 @@ col_list = [
     const.STR_CONTENTS_JA,
 ]
 
-col_list_cafe = ["店名", "特徴", "住所", "営業時間", "モーニング", "メニュー", "内観"]
+# col_list_cafe = ["店名", "特徴", "住所", "営業時間", "モーニング", "メニュー", "内観"]
+col_list_cafe = ["店名", "住所", "メニュー", "内観"]
 
 # URL
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
@@ -40,21 +41,21 @@ def get_df_data(user_div: str, app_div: str):
         # column_list = df_query.columns[1:]
         # df_info = df_query[column_list]
         df_info = df_query
-        df_info[const.STR_TITLE] = func.get_df_link(
+        df_info[const.STR_TITLE] = func.get_a_tag(
             df_info[const.STR_URL], df_info[const.STR_TITLE]
         )
         column_list = df_info.columns[1:4]
         df = df_info[column_list]
-    else:
+    elif app_div == const.APP_CAFE:
         df_info = df_all
-        df_info[const.STR_NAME] = func.get_df_link(
+        df_info[const.STR_NAME] = func.get_a_tag(
             df_info[const.STR_URL], df_info[const.STR_NAME]
         )
         img_path = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_INPUT}/"
         file_name = df_info[const.STR_IMG]
-        df_info[const.STR_IMG] = func.get_df_img(img_path, file_name, "_menu")
-        df_info[const.STR_URL] = func.get_df_img(img_path, file_name, "_in")
-        df = df_info
+        df_info[const.STR_IMG] = func.get_img_tag(img_path, file_name, "_menu")
+        df_info[const.STR_URL] = func.get_img_tag(img_path, file_name, "_in")
+        df = df_info[[const.STR_NAME, const.STR_ADDR, const.STR_IMG, const.STR_URL]]
 
     df.columns = col_list_cafe if app_div == const.APP_CAFE else col_list
     return df

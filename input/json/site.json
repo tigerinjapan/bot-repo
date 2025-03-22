@@ -1,35 +1,35 @@
 {
     "item": [
         {
-            "auth": "2",
+            "auth": "3",
             "category": "it",
             "title": "Github",
             "description": "ソース管理",
             "url": "https://github.com/login/"
         },
         {
-            "auth": "2",
+            "auth": "3",
             "category": "it",
             "title": "Github API",
             "description": "gitHub API Docs",
             "url": "https://docs.github.com/ja/rest/repos/"
         },
         {
-            "auth": "2",
+            "auth": "3",
             "category": "it",
             "title": "MongoDB",
             "description": "NoSQL DB",
             "url": "https://account.mongodb.com/account/login/"
         },
         {
-            "auth": "2",
+            "auth": "3",
             "category": "it",
             "title": "Koyeb",
             "description": "デプロイサーバー",
             "url": "https://app.koyeb.com/"
         },
         {
-            "auth": "2",
+            "auth": "3",
             "category": "it",
             "title": "キノコード",
             "description": "プログラミングYouTube",
@@ -78,28 +78,28 @@
             "url": "https://www.tohoho-web.com/www.htm"
         },
         {
-            "auth": "2",
+            "auth": "3",
             "category": "it",
             "title": "WordPress",
             "description": "ウェブページ作成",
             "url": "https://wordpress.com/ja/"
         },
         {
-            "auth": "2",
+            "auth": "3",
             "category": "it",
             "title": "ITパスポート",
             "description": "ITパスポートテスト",
             "url": "https://www3.jitec.ipa.go.jp/JitesCbt/index.html"
         },
         {
-            "auth": "2",
+            "auth": "3",
             "category": "it",
             "title": "aws",
             "description": "Amazon Web Services",
             "url": "https://aws.amazon.com/"
         },
         {
-            "auth": "1",
+            "auth": "2",
             "category": "it",
             "title": "aguse",
             "description": "URL調査",

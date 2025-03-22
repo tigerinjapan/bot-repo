@@ -56,7 +56,7 @@ def get_env_val(var_name: str) -> str:
         env_val = const.SYM_BLANK
         if is_local_env():
             json_data = get_json_data(const.STR_ENV_VAR)
-            env_val = json_data[var_name]  # type: ignore
+            env_val = json_data[var_name]
         else:
             print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
 
@@ -247,7 +247,7 @@ def get_json_data(div: str, file_div: str = const.STR_INPUT):
 # 入力データ取得
 def get_input_data(div: str, input_div: str):
     json_data = get_json_data(div)
-    input_data = json_data[input_div]  # type: ignore
+    input_data = json_data[input_div]
     if div == const.STR_KEYWORD:
         input_data = input_data.split(const.SYM_COMMA)
     return input_data
@@ -300,7 +300,7 @@ def get_df(data_list: list, columns: list[str]):
 
 
 # リンク文字列取得
-def get_df_link(url: str, text: str):
+def get_a_tag(url: str, text: str):
     result = (
         '<a href="'
         + url
@@ -312,7 +312,7 @@ def get_df_link(url: str, text: str):
 
 
 # イメージ文字列取得
-def get_df_img(
+def get_img_tag(
     img_path: str, file_name: str = const.SYM_BLANK, text: str = const.SYM_BLANK
 ):
     result = '<img src="' + img_path + file_name + text + '"</img>'

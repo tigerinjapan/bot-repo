@@ -72,7 +72,7 @@ def get_today_weather() -> tuple[str, str, str]:
         attr_div=const.ATTR_ID,
         attr_val="forecast-map-announce-datetime",
     )
-    date_time_text = elem_date_time.get("datetime")  # type: ignore
+    date_time_text = elem_date_time.get("datetime")
 
     date_time = func.convert_date_format(
         date_time_text, const.DATE_FORMAT_ISO, const.DATE_FORMAT_YYYYMMDD_HHMM

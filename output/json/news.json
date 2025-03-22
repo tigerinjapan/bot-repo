@@ -1,32 +1,18 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "トランプ氏、次世代戦闘機はボーイングに「F47」命名",
-        "リンク": "https://www.nikkei.com/article/DGXZQOGN21C7P0R20C25A3000000/"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGKKZO87532020T20C25A3MM8000/\" target=\"_blank\" rel=\"noopener noreferrer\">(チャートは語る)分厚い教科書\n理想手探り20年でページ3倍知識×思考力の両立途上</a>"
     },
     {
-        "区分": "日経",
-        "今日のニュース": "｢赤いきつね｣CM炎上､1%の批判から連鎖SNS投稿分析",
-        "リンク": "https://www.nikkei.com/article/DGXZQOUC213Y60R20C25A3000000/"
+        "区分": "韓国",
+        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=54764\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 NewJeansメンバーが負けた\n韓国裁判所、「独自活動禁止」仮処分認容</a>"
     },
     {
-        "区分": "日経",
-        "今日のニュース": "ディズニー｢白雪姫｣実写版が物議配役や設定で文化戦争",
-        "リンク": "https://www.nikkei.com/article/DGXZQOGN21C240R20C25A3000000/"
+        "区分": "エンタメ",
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/481742.html\" target=\"_blank\" rel=\"noopener noreferrer\">女優イヨンエ\n娘と2人でいる時はこんな姿\n”幸せ”ただよう温かなツーショット</a>"
     },
     {
-        "区分": "AI",
-        "今日のニュース": "      文系の非エンジニアだけどコーディングエージェントで自分用アプリ作った超便利だけど超怖い「素人AI爆速開発」    ",
-        "リンク": "https://www.itmedia.co.jp/aiplus/articles/2503/18/news057.html"
-    },
-    {
-        "区分": "AI",
-        "今日のニュース": "      「Google Pixel 9a」発表上位モデルと同様のAI体験を、499ドルからで提供    ",
-        "リンク": "https://www.itmedia.co.jp/mobile/articles/2503/20/news100.html"
-    },
-    {
-        "区分": "AI",
-        "今日のニュース": "      キリン、「AI面接官」導入人事が見いだしきれなかった「学生の特徴」をAIが発見    ",
-        "リンク": "https://www.itmedia.co.jp/business/articles/2503/19/news081.html"
+        "区分": "kpop",
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/483668.html\" target=\"_blank\" rel=\"noopener noreferrer\">「BTS」JUNG KOOK\nHYBEの株8億4000万円を失うところだった\n原状復帰措置</a>"
     }
 ]
