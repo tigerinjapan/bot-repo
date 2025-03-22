@@ -135,7 +135,7 @@ footer {
 /*共通のメディアクエリ設定*/
 @media screen and (max-width:480px) {
 	body {
-		font-size: 3vw;
+		font-size: 6vw;
 	}
 
 	img,
@@ -162,6 +162,6 @@ footer {
 
 @media screen and (max-width:360px) {
 	body {
-		font-size: 4vw;
+		font-size: 8vw;
 	}
 }

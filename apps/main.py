@@ -37,7 +37,8 @@ def job_scheduler():
 
     pending_cnt = 0
 
-    while True:
+    exec_flg = const.FLG_ON
+    while exec_flg:
         # スケジュールされたジョブを確認・実行
         schedule.run_pending()
 

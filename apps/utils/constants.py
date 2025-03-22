@@ -232,6 +232,8 @@ STR_KEYWORD = "keyword"
 STR_NOTIFY = "notify"
 STR_FIRST = "first"
 STR_TEST = "test"
+STR_KPOP = "kpop"
+STR_AI = "AI"
 
 STR_LOGIN_JA = "ログイン"
 STR_LOGOUT_JA = "ログアウト"
@@ -246,11 +248,21 @@ STR_SYSTEM_JA = "システム"
 STR_DIV_JA = "区分"
 STR_CONTENTS_JA = "内容"
 STR_TITLE_JA = "タイトル"
+STR_IMG_JA = "イメージ"
 STR_LINK_JA = "リンク"
 STR_NOTIFY_JA = "通知"
 STR_COMPANY_JA = "会社"
 STR_DATE_JA = "日付"
 STR_NEWS_JA = "ニュース"
+STR_KOREA_JA = "韓国"
+STR_ENT_JA = "エンタメ"
+STR_NIKKEI_JA = "日経"
+STR_DRAMA_JA = "ドラマ"
+STR_RANKING_JA = "ランキング"
+STR_X_TREND_JA = "Xトレンド"
+STR_KOREAN_JA = "韓国語"
+STR_YEN_JA = "円"
+STR_WON_JA = "ウォン"
 
 ##### マスキング #####
 MASKING_COMPANY = "company"
@@ -304,11 +316,22 @@ LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
 ##### URL #####
 # サイトURL
 URL_GOOGLE = "https://www.google.com"
+URL_TENKI = "https://tenki.jp"
+URL_NAVER_FINANCE = "https://finance.naver.com"
+URL_NAVER_SEARCH = "https://search.naver.com"
+URL_KONEST = "https://www.konest.com"
+URL_WOWKOREA = "https://www.wowkorea.jp"
+URL_NIKKEI = "https://www.nikkei.com"
+URL_ITMEDIA = "https://www.itmedia.co.jp"
+URL_ACHIKOCHI = "https://achikochi-data.com"
+URL_LCC = "https://dsk.ne.jp"
+URL_TV = "https://www.tvkingdom.jp"
 
 ##### アプリケーション名 #####
 APP_TODAY = "today"
 APP_NEWS = "news"
 APP_KOREA = "korea"
+APP_DRAMA = "drama"
 APP_RANKING = "ranking"
 APP_LCC = "lcc"
 APP_TV = "tv"
@@ -319,6 +342,7 @@ LIST_APP_NAME = [
     APP_TODAY,
     APP_NEWS,
     APP_KOREA,
+    APP_DRAMA,
     APP_RANKING,
     APP_LCC,
     APP_TV,

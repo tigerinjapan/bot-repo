@@ -8,45 +8,31 @@ import apps.utils.function_gemini as func_gemini
 # アプリケーション名
 app_name = func.get_app_name(__file__)
 
-# URL
-URL_KONEST = "https://www.konest.com"
-URL_WOWKOREA = "https://www.wowkorea.jp"
-URL_NIKKEI = "https://www.nikkei.com"
-URL_ITMEDIA = "https://www.itmedia.co.jp"
-
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
 
 # 区分
-STR_KPOP = "kpop"
-STR_AI = "AI"
-STR_KOREA_JA = "韓国"
-STR_ENT_JA = "エンタメ"
-STR_NIKKEI_JA = "日経"
-STR_RANKING_JA = "ランキング"
-
-# 区分
 DIV_NEWS = "今日の" + "{}" + const.STR_NEWS_JA
-DIV_NIKKEI_NEWS = DIV_NEWS.format(STR_NIKKEI_JA)
-DIV_KOREA_NEWS = DIV_NEWS.format(STR_KOREA_JA)
-DIV_ENT_NEWS = DIV_NEWS.format(STR_ENT_JA)
-DIV_KPOP_NEWS = DIV_NEWS.format(STR_KPOP)
-DIV_WEEKLY_RANKING = "{}週間" + STR_RANKING_JA
-DIV_KPOP_RANKING = DIV_WEEKLY_RANKING.format(STR_KPOP)
-DIV_AI_NEWS = DIV_NEWS.format(STR_AI)
+DIV_NIKKEI_NEWS = DIV_NEWS.format(const.STR_NIKKEI_JA)
+DIV_KOREA_NEWS = DIV_NEWS.format(const.STR_KOREA_JA)
+DIV_ENT_NEWS = DIV_NEWS.format(const.STR_ENT_JA)
+DIV_KPOP_NEWS = DIV_NEWS.format(const.STR_KPOP)
+DIV_WEEKLY_RANKING = "{}週間" + const.STR_RANKING_JA
+DIV_KPOP_RANKING = DIV_WEEKLY_RANKING.format(const.STR_KPOP)
+DIV_AI_NEWS = DIV_NEWS.format(const.STR_AI)
 DIV_AI_NEWS_LIST = [DIV_AI_NEWS]
 DIV_NEWS_LIST = [DIV_NIKKEI_NEWS] + DIV_AI_NEWS_LIST
 DIV_KOREA_NEWS_LIST = [DIV_KOREA_NEWS, DIV_ENT_NEWS, DIV_KPOP_NEWS]
 
-ITEM_NEWS_LIST = [STR_NIKKEI_JA, STR_AI]
-ITEM_KOREA_NEWS_LIST = [STR_KOREA_JA, STR_ENT_JA, STR_KPOP]
+ITEM_NEWS_LIST = [const.STR_NIKKEI_JA, const.STR_AI]
+ITEM_KOREA_NEWS_LIST = [const.STR_KOREA_JA, const.STR_ENT_JA, const.STR_KPOP]
 
 # キーワードリスト
-LIST_KEYWORD_AI = func.get_input_data(const.STR_KEYWORD, STR_AI)
+LIST_KEYWORD_AI = func.get_input_data(const.STR_KEYWORD, const.STR_AI)
 
 # タイトル
 app_title = DIV_NEWS.format(const.SYM_BLANK)
-app_title_korea = STR_KOREA_JA + const.STR_NEWS_JA
+app_title_korea = const.STR_KOREA_JA + const.STR_NEWS_JA
 
 # カラムリスト
 col_list = [const.STR_DIV_JA, app_title, const.STR_LINK_JA]
@@ -103,7 +89,7 @@ def get_news_list(
                 news_contents = func.get_replace_data(a_title)
 
                 a_href = a.get(const.ATTR_HREF)
-                url_news = f"{URL_KONEST}/contents/{a_href}"
+                url_news = f"{const.URL_KONEST}/contents/{a_href}"
 
                 if ai_flg:
                     news_contents = func_bs.get_elem_from_url(
@@ -121,9 +107,9 @@ def get_news_list(
                 continue
 
             a_href = a.get(const.ATTR_HREF)
-            url = URL_WOWKOREA
+            url = const.URL_WOWKOREA
             if div == DIV_NIKKEI_NEWS:
-                url = URL_NIKKEI
+                url = const.URL_NIKKEI
 
             url_news = f"{url}{a_href}"
 
@@ -176,7 +162,7 @@ def get_elem_list(div: str, url: str = const.SYM_BLANK):
     tag = const.TAG_A
 
     if div == DIV_NIKKEI_NEWS:
-        url = f"{URL_NIKKEI}/access/"
+        url = f"{const.URL_NIKKEI}/access/"
         attr_val = "m-miM32_itemTitleText"
 
     elif div == DIV_AI_NEWS:
@@ -186,11 +172,11 @@ def get_elem_list(div: str, url: str = const.SYM_BLANK):
             attr_val = "cmsBody"
             tag = const.TAG_P
         else:
-            url = f"{URL_ITMEDIA}/ranking/"
+            url = f"{const.URL_ITMEDIA}/ranking/"
             attr_val = "rank-all"
 
     elif div == DIV_KOREA_NEWS:
-        url = f"{URL_KONEST}/contents/news_top.html"
+        url = f"{const.URL_KONEST}/contents/news_top.html"
         attr_val = "mArticleKonest"
 
     elif div in [DIV_ENT_NEWS, DIV_KPOP_NEWS]:
@@ -198,14 +184,14 @@ def get_elem_list(div: str, url: str = const.SYM_BLANK):
         if div == DIV_KPOP_NEWS:
             url_param = "news/kpop/"
 
-        url = f"{URL_WOWKOREA}/{url_param}"
+        url = f"{const.URL_WOWKOREA}/{url_param}"
         attr_val = "card-title h6 h5-sm h3-lg mb-1"
 
     elif div == DIV_KPOP_RANKING:
         attr_val = "image-wrapper"
         tag = const.TAG_SPAN + '"'
 
-    if URL_NIKKEI in url or URL_WOWKOREA in url:
+    if const.URL_NIKKEI in url or const.URL_WOWKOREA in url:
         elem_list_org = func_bs.get_elem_from_url(
             url, attr_val=attr_val, list_flg=const.FLG_ON
         )

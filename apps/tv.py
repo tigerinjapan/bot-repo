@@ -14,17 +14,16 @@ app_title = "TV番組"
 sort_list = ["放送時間", "チャンネル"]
 ascending_div = [True, True]
 
-# 重複チェックリスト
-duplicates_list = sort_list
-
 # カラムリスト
 col_list = sort_list + ["番組名", const.STR_LINK_JA]
+
+# 重複チェックリスト
+duplicates_list = sort_list
 
 # キーワードリスト
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
 
 # URL
-URL_TV = "https://www.tvkingdom.jp"
 URL_PARAM = (
     "schedulesBySearch.action?stationPlatformId=1"
     + "&condition.keyword={}&submit=%E6%A4%9C%E7%B4%A2"
@@ -45,7 +44,7 @@ def get_item_list():
 def get_tv_info_list(keyword) -> list[str]:
     tv_info_list = []
 
-    url = f"{URL_TV}/{URL_PARAM}".format(keyword)
+    url = f"{const.URL_TV}/{URL_PARAM}".format(keyword)
     soup = func_bs.get_elem_from_url(
         url, const.TAG_FORM, const.STR_NAME, "form_multi_iepg"
     )
@@ -69,7 +68,7 @@ def get_tv_info_list(keyword) -> list[str]:
 
         title = title.replace(keyword, f"<b>{keyword}</b>")
 
-        link = URL_TV + func_bs.get_link_from_soup(title_elem)
+        link = const.URL_TV + func_bs.get_link_from_soup(title_elem)
 
         tv_info_txt = (
             func.get_replace_data(program_elem.text)

@@ -14,10 +14,6 @@ app_title = "今日の生活情報"
 # カラムリスト
 col_list = [const.STR_DIV_JA, app_title]
 
-# URL
-URL_TENKI = "https://tenki.jp"
-URL_NAVER_FINANCE = "https://finance.naver.com"
-
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
 
@@ -28,9 +24,6 @@ DIV_RATE = "為替"
 DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
 DIV_LIST = [DIV_WEATHER, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
-
-STR_YEN_JA = "円"
-STR_WON_JA = "ウォン"
 
 
 # アイテムリスト取得
@@ -70,7 +63,7 @@ def get_today_info(msg_flg: bool = const.FLG_ON):
 def get_today_weather() -> tuple[str, str, str]:
     # 天気マップ取得
     elem_forecast_map = func_bs.get_elem_from_url(
-        URL_TENKI, attr_div=const.ATTR_ID, attr_val="forecast-map-wrap"
+        const.URL_TENKI, attr_div=const.ATTR_ID, attr_val="forecast-map-wrap"
     )
 
     # 現在日付
@@ -101,16 +94,14 @@ def get_today_weather() -> tuple[str, str, str]:
 
 # 今日のウォン取得
 def get_today_won() -> str:
-    url = (
-        f"{URL_NAVER_FINANCE}/marketindex/exchangeDetail.naver?marketindexCd=FX_JPYKRW"
-    )
+    url = f"{const.URL_NAVER_FINANCE}/marketindex/exchangeDetail.naver?marketindexCd=FX_JPYKRW"
     class_ = "tbl_calculator"
 
     elem = func_bs.get_elem_from_url(url, attr_div=const.ATTR_CLASS, attr_val=class_)
     elem_list = func_bs.find_elem_by_attr(elem, tag=const.TAG_TD, list_flg=const.FLG_ON)
 
     won = elem_list[0].text if elem_list else "1000"
-    today_won_rate = f"100{STR_YEN_JA}={won}{STR_WON_JA}"
+    today_won_rate = f"100{const.STR_YEN_JA}={won}{const.STR_WON_JA}"
     return today_won_rate
 
 

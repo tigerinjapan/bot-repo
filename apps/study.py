@@ -8,14 +8,11 @@ import apps.utils.function_gemini as func_gemini
 # アプリケーション名
 app_name = func.get_app_name(__file__)
 
-# 定数
-STR_KOREAN_JA = "韓国語"
-
 # タイトル
-app_title = const.STR_NEWS_JA + STR_KOREAN_JA
+app_title = const.STR_NEWS_JA + const.STR_KOREAN_JA
 
 # カラムリスト
-col_list = ["会話", STR_KOREAN_JA]
+col_list = ["会話", const.STR_KOREAN_JA]
 
 # キーワードリスト
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
@@ -24,7 +21,6 @@ LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
 NEW_LINE = const.SYM_NEW_LINE
 
 # URL
-URL_NAVER_SEARCH = "https://search.naver.com"
 url_search_param = "/search.naver?where=news&query={}&service_area=1&sort=1"
 
 
@@ -61,7 +57,7 @@ def get_naver_news_summary(keyword: str) -> list[str]:
     news_summary = []
 
     url_param = url_search_param.format(keyword)
-    url = f"{URL_NAVER_SEARCH}{url_param}"
+    url = f"{const.URL_NAVER_SEARCH}{url_param}"
     a_elem_list = func_bs.get_elem_from_url(
         url, attr_val="news_area", list_flg=const.FLG_ON
     )[: const.MAX_DISPLAY_CNT]  # type: ignore

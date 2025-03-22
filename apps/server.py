@@ -2,13 +2,18 @@
 
 from threading import Thread
 
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Request, HTTPException, Form
 from fastapi.responses import FileResponse, RedirectResponse
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
+from functools import wraps
+from datetime import datetime, timedelta
+import secrets
+
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 
+import apps.drama as drama
 import apps.lcc as lcc
 import apps.line as line
 import apps.news as news
@@ -20,17 +25,25 @@ import apps.today as today
 import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
 from apps.utils.function_beautiful_soup import get_data_from_url
-from apps.utils.function_selenium import test_webdriver
 
 # fast api
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="secret_key")
 templates = Jinja2Templates(directory="templates")
 
+# トークン認証
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+# トークン情報を保存する辞書 (メモリ内)
+token_store = {}
+TOKEN_EXPIRATION_MINUTES = 10  # トークン有効期限 (10分)
+VALID_TOKEN = "secret-token"
+
 # アプリケーションリスト
-LIST_APP_DIV = [today, news, news, ranking, lcc, tv, study]
+LIST_APP_DIV = [today, news, news, drama, ranking, lcc, tv, study]
 LIST_ALL_APP_DIV = LIST_APP_DIV + [site, site]
 
 LIST_APP_NUM_OFF = [const.APP_TODAY, const.APP_STUDY, const.APP_SITE, const.APP_CAFE]
@@ -75,6 +88,68 @@ def run_server():
 def start_thread():
     t = Thread(target=run_server)
     t.start()
+
+
+# トークン認証
+def token_required(func_):
+    @wraps(func_)
+    async def wrapper(*args, **kwargs):
+        # トークンを検証
+        request: Request = kwargs.get(const.STR_REQUEST)
+
+        try:
+            token = request.query_params.get("token")
+            # token = await oauth2_scheme(request)
+            access_token = "token_" + const.DATE_TODAY
+            if token != access_token:
+                raise HTTPException(status_code=403)
+            return await func_(*args, **kwargs)
+        except HTTPException as e:
+            func.print_error_msg(msg_const.MSG_ERR_INVALID_TOKEN, e.detail)
+            raise e
+
+    return wrapper
+
+
+@app.post("/token")
+async def issue_token():
+    # ランダムなトークンを生成
+    token = secrets.token_hex(16)  # 32文字のランダムなトークン
+    expiration = datetime.now() + timedelta(minutes=TOKEN_EXPIRATION_MINUTES)
+
+    # トークン情報を保存
+    token_data = {
+        "access_token": token,
+        "token_type": "bearer",
+        "expiration": expiration,
+    }
+    return token_data
+
+
+@app.get("/protected-resource")
+async def protected_resource(token: str):
+    expiration = datetime.now() + timedelta(minutes=TOKEN_EXPIRATION_MINUTES)
+
+    if token_store:
+        # トークンを検証
+        token_data = token_store.get(token) # TODO 追加テスト要
+    else:
+        access_token = "token_" + const.DATE_TODAY
+
+    token_data = {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "expiration": expiration,
+    }
+
+    if not token_data or token != token_data["access_token"]:
+        raise HTTPException(status_code=403, detail=msg_const.MSG_ERR_INVALID_TOKEN)
+
+    # トークンの有効期限を確認
+    # if expiration < datetime.now():
+    #     raise HTTPException(status_code=403, detail="Token has expired")
+
+    return {"message": "Access to the protected resource granted."}
 
 
 @app.get(const.PATH_ROOT)
@@ -138,7 +213,9 @@ async def app_exec(request: Request, app_name: str):
 
 
 @app.get("/json/{app_name}")
-async def app_json(app_name: str):
+@token_required
+async def app_json(request: Request):
+    app_name = request.path_params["app_name"]
     result = func.get_json_data(app_name, const.STR_OUTPUT)
     return result
 
@@ -247,6 +324,9 @@ def update_news(app_name: str = const.SYM_BLANK):
         app_name_list = [app_name]
 
     for app_div, app_name in zip(app_div_list, app_name_list):
+        if func.is_local_env() and app_name == const.APP_STUDY:
+            continue
+
         app_exec = AppExec(app_div, app_name)
         app_exec.start()
 
@@ -280,8 +360,20 @@ def no_sleep():
     func.print_info_msg(msg_const.MSG_INFO_SERVER_KEEP_ALIVE)
 
 
+# テストAPI
+def test_api():
+    host, port = func.get_host_port()
+    url = f"http://{host}:{port}/protected-resource?token=token_20250322"
+    headers = {"Content-Type": "application/json"}
+    response = func_api.get_response_result(url, headers=headers)
+    response_json = func.get_loads_json(response.text)
+    func.print_test_data(response_json, type_flg=const.FLG_ON)
+    return response_json
+
+
 if __name__ == const.MAIN_FUNCTION:
     # start_thread()
     # update_news()
-    app_name = const.APP_TODAY
-    update_news(app_name)
+    # app_name = const.APP_TODAY
+    # update_news(app_name)
+    test_api()

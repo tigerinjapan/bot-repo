@@ -1,4 +1,4 @@
-# 説明：韓国ニュース
+# 説明：ランキング
 
 import apps.news as news
 import apps.utils.constants as const
@@ -12,12 +12,9 @@ app_name = func.get_app_name(__file__)
 app_title = news.DIV_WEEKLY_RANKING.format(const.SYM_BLANK)
 
 # ランキング区分リスト
-STR_DRAMA = "drama"
-STR_X_TREND_JA = "Xトレンド"
-
-LIST_RANKING_WEEKLY = [news.STR_KPOP, STR_DRAMA]
-LIST_RANKING_DAILY = [STR_X_TREND_JA]
-DIV_DAILY_RANKING = "{}日間" + news.STR_RANKING_JA
+LIST_RANKING_WEEKLY = [const.STR_KPOP]
+LIST_RANKING_DAILY = [const.STR_X_TREND_JA]
+DIV_DAILY_RANKING = "{}日間" + const.STR_RANKING_JA
 
 # カラムリスト
 col_list_weekly = [news.DIV_WEEKLY_RANKING.format(div) for div in LIST_RANKING_WEEKLY]
@@ -25,7 +22,6 @@ col_list_daily = [DIV_DAILY_RANKING.format(div) for div in LIST_RANKING_DAILY]
 col_list = col_list_weekly + col_list_daily
 
 # URL
-URL_ACHIKOCHI = "https://achikochi-data.com"
 URL_X_PARAM = "/twitter_trend_daily_ranking_all/"
 
 
@@ -46,18 +42,12 @@ def get_item_list():
 
 
 # 週間ランキング取得
-def get_weekly_ranking(div: str = news.STR_KPOP):
+def get_weekly_ranking(div: str = const.STR_KPOP):
     weekly_ranking = []
 
-    url = f"{news.URL_WOWKOREA}/ranking/weekly/{div}/"
+    url = f"{const.URL_WOWKOREA}/ranking/weekly/{div}/"
 
     elem_list = news.get_elem_list(news.DIV_KPOP_RANKING, url)
-
-    if div == STR_DRAMA:
-        attr_val = "card-body pt-3 pt-lg-0"
-        elem_list = func_bs.get_elem_from_url(
-            url, attr_val=attr_val, list_flg=const.FLG_ON
-        )
 
     if not elem_list:
         return weekly_ranking
@@ -65,7 +55,7 @@ def get_weekly_ranking(div: str = news.STR_KPOP):
     for elem in elem_list[: const.MAX_DISPLAY_CNT]:
         ranking_info = const.SYM_BLANK
 
-        if div == news.STR_KPOP:
+        if div == const.STR_KPOP:
             if not elem:
                 break
             text_data = elem.text
@@ -78,21 +68,6 @@ def get_weekly_ranking(div: str = news.STR_KPOP):
             )
             ranking_info = f"{singer} - {song}"
 
-        elif div == STR_DRAMA:
-            h2_elem = func_bs.find_elem_by_attr(elem, tag=const.TAG_H2)
-            title = f"<b>{h2_elem.text}</b>"  # type: ignore
-            ul_elem = func_bs.find_elem_by_attr(elem, tag=const.TAG_UL)
-            li_elem_list = func_bs.find_elem_by_attr(
-                ul_elem, tag=const.TAG_LI, list_flg=const.FLG_ON
-            )
-            if li_elem_list:
-                genre = li_elem_list[0].get_text(strip=const.FLG_ON)
-                elem_cast = li_elem_list[4].get_text(strip=const.FLG_ON)
-                cast_text = elem_cast.split(const.SYM_COMMA_JAP)[:2]
-                cast = const.SYM_COMMA_JAP.join(cast_text)
-                ranking_info_list = [title, genre, cast]
-                ranking_info = const.SYM_NEW_LINE.join(ranking_info_list)
-
         if ranking_info:
             weekly_ranking.append(ranking_info)
 
@@ -100,11 +75,11 @@ def get_weekly_ranking(div: str = news.STR_KPOP):
 
 
 # 日間ランキング
-def get_daily_ranking(div: str = STR_X_TREND_JA):
+def get_daily_ranking(div: str = const.STR_X_TREND_JA):
     daily_ranking = []
 
-    if div == STR_X_TREND_JA:
-        url = f"{URL_ACHIKOCHI}{URL_X_PARAM}"
+    if div == const.STR_X_TREND_JA:
+        url = f"{const.URL_ACHIKOCHI}{URL_X_PARAM}"
         soup = func_bs.get_elem_from_url(url, attr_val="panel")
         elem_list = func_bs.find_elem_by_attr(
             soup, tag=const.TAG_H4, list_flg=const.FLG_ON

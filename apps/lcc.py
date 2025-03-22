@@ -16,9 +16,6 @@ col_list = [const.STR_DATE_JA, const.STR_COMPANY_JA, app_title]
 # キーワードリスト
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
 
-# URL
-URL_LCC = "https://dsk.ne.jp"
-
 
 # アイテムリスト取得
 def get_item_list():
@@ -29,7 +26,7 @@ def get_item_list():
 # LCC情報取得
 def get_lcc_info_list() -> list[str]:
     lcc_info_list = []
-    url = f"{URL_LCC}/news/"
+    url = f"{const.URL_LCC}/news/"
     lcc_list = func_bs.get_elem_from_url(url, attr_val="bgtitle", list_flg=const.FLG_ON)
 
     if not lcc_list:
@@ -48,7 +45,7 @@ def get_lcc_info_list() -> list[str]:
         title_info = func_bs.find_elem_by_attr(lcc_info, tag=const.TAG_A)
 
         if func.check_in_list(title, LIST_KEYWORD):
-            url_news = URL_LCC + title_info.get(const.ATTR_HREF)  # type: ignore
+            url_news = const.URL_LCC + title_info.get(const.ATTR_HREF)  # type: ignore
 
             lcc_info_details = func_bs.get_elem_from_url(
                 url_news, tag=const.TAG_DIV, attr_val="body"

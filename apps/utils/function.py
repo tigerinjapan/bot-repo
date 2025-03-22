@@ -312,14 +312,10 @@ def get_df_link(url: str, text: str):
 
 
 # イメージ文字列取得
-def get_df_img(img_path: str, file_name: str, text: str):
-    result = (
-        '<img src="'
-        + img_path
-        + file_name
-        + text
-        + '"</img>'
-    )
+def get_df_img(
+    img_path: str, file_name: str = const.SYM_BLANK, text: str = const.SYM_BLANK
+):
+    result = '<img src="' + img_path + file_name + text + '"</img>'
     return result
 
 
