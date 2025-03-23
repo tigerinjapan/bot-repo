@@ -1,25 +1,5 @@
 [
     {
-        "放送時間": "3/23(Sun)12:00~14:00(120分)",
-        "チャンネル": "フジテレビ(Ch.8)",
-        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101056202503231200.action\" target=\"_blank\" rel=\"noopener noreferrer\">なりゆき街道<b>旅</b>【梅が見頃の湯島天満宮を参拝あったか鴨鍋&絶品スイーツに感動】[字]</a>"
-    },
-    {
-        "放送時間": "3/23(Sun)12:45~14:00(75分)",
-        "チャンネル": "日テレ(Ch.4)",
-        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101040202503231245.action\" target=\"_blank\" rel=\"noopener noreferrer\">超無敵クラス卒業SP最後のチャリ通ジャーニー&秋田ローカル鉄道(秘)絶景<b>旅</b>[字]</a>"
-    },
-    {
-        "放送時間": "3/23(Sun)12:55~13:25(30分)",
-        "チャンネル": "テレビ朝日(Ch.5)",
-        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101064202503231255.action\" target=\"_blank\" rel=\"noopener noreferrer\">新婚さんいらっしゃい間取りは13K山奥の小学校に住んでいる剣道<b>世界</b>2位[解][字]</a>"
-    },
-    {
-        "放送時間": "3/23(Sun)13:30~15:00(90分)",
-        "チャンネル": "TBS(Ch.6)",
-        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101048202503231330.action\" target=\"_blank\" rel=\"noopener noreferrer\">それSnowManにやらせて下さい28日よる7時~<b>世界</b>的スターLISAが登場[字]</a>"
-    },
-    {
         "放送時間": "3/23(Sun)15:20~16:30(70分)",
         "チャンネル": "テレビ朝日(Ch.5)",
         "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101064202503231520.action\" target=\"_blank\" rel=\"noopener noreferrer\">路線バスで寄り道の<b>旅</b>【岩崎姉妹が母校でアカペラコンサート】[字]</a>"
@@ -50,9 +30,34 @@
         "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101056202503232100.action\" target=\"_blank\" rel=\"noopener noreferrer\">国民的マジックの祭典<b>世界</b>が認めた日本人マジシャンNo.1決定戦賞レース開幕[字]</a>"
     },
     {
+        "放送時間": "3/23(Sun)22:00~23:25(85分)",
+        "チャンネル": "日テレ(Ch.4)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101040202503232200.action\" target=\"_blank\" rel=\"noopener noreferrer\">オーマイゴッド[字]ヒロミが寿司の神様に弟子入り&孝太郎がジブリの<b>世界</b>で神体験</a>"
+    },
+    {
+        "放送時間": "3/23(Sun)23:15~0:30(75分)",
+        "チャンネル": "フジテレビ(Ch.8)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101056202503232315.action\" target=\"_blank\" rel=\"noopener noreferrer\">すぽると稼頭央&岩隈が見たドジャース<b>世界</b>一のワケ▽今永の進化のカギを独占取材</a>"
+    },
+    {
+        "放送時間": "3/23(Sun)23:25~23:55(30分)",
+        "チャンネル": "日テレ(Ch.4)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101040202503232325.action\" target=\"_blank\" rel=\"noopener noreferrer\">ダウンタウンのガキの使いやあらへんで<b>世界</b>のお菓子を食べつくせ特別編[字]</a>"
+    },
+    {
         "放送時間": "3/24(Mon)12:00~13:40(100分)",
         "チャンネル": "テレビ東京(Ch.7)",
         "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101072202503241200.action\" target=\"_blank\" rel=\"noopener noreferrer\">昼めし<b>旅</b>【一味違うパワフルおじいちゃんの豪快美味飯群馬県伊香保温泉】[字]</a>"
+    },
+    {
+        "放送時間": "3/24(Mon)19:00~21:54(174分)",
+        "チャンネル": "テレビ朝日(Ch.5)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101064202503241900.action\" target=\"_blank\" rel=\"noopener noreferrer\">帰れマンデー見っけ隊 3時間SP サンド×金沢美食<b>旅</b>&日本一ドーナツ店帰れま10[字]</a>"
+    },
+    {
+        "放送時間": "3/24(Mon)23:00~23:40(40分)",
+        "チャンネル": "フジテレビ(Ch.8)",
+        "番組名": "<a href=\"https://www.tvkingdom.jp/schedule/101056202503242300.action\" target=\"_blank\" rel=\"noopener noreferrer\">何かオモシロいコトないの風磨グアム<b>旅</b>SP最終章▼本田翼も苦笑ミヤハラ生態[字]</a>"
     },
     {
         "放送時間": "3/26(Wed)23:00~23:40(40分)",

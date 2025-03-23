@@ -161,7 +161,7 @@ async def root(request: Request):
 
     user = request.session.get(const.STR_USER)
     if user:
-        response = RedirectResponse(url=const.PATH_TODAY, status_code=303)
+        response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
     else:
         context = {const.STR_REQUEST: request, const.STR_TITLE: const.SYSTEM_NAME}
         response = templates.TemplateResponse(const.HTML_INDEX, context)
@@ -176,7 +176,7 @@ async def login(
     user = user_data.get(user_div)
     if user and user["userId"] == userId and user["userPassword"] == userPassword:
         request.session[const.STR_USER] = user
-        response = RedirectResponse(url=const.PATH_TODAY, status_code=303)
+        response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
         func.print_info_msg(user["userName"], msg_const.MSG_INFO_LOGIN)
 
     else:
@@ -322,9 +322,6 @@ def update_news(app_name: str = const.SYM_BLANK):
         app_name_list = [app_name]
 
     for app_div, app_name in zip(app_div_list, app_name_list):
-        if func.is_local_env() and app_name == const.APP_STUDY:
-            continue
-
         app_exec = AppExec(app_div, app_name)
         app_exec.start()
 
@@ -357,7 +354,7 @@ def no_sleep():
 # テストAPI
 def test_api():
     host, port = func.get_host_port()
-    url = f"http://{host}:{port}/protected-resource?token=token_20250322"
+    url = f"http://{host}:{port}/protected-resource?token=token_{const.DATE_TODAY}"
     headers = {"Content-Type": "application/json"}
     response = func_api.get_response_result(url, headers=headers)
     response_json = func.get_loads_json(response.text)
@@ -368,6 +365,6 @@ def test_api():
 if __name__ == const.MAIN_FUNCTION:
     # start_thread()
     # update_news()
-    app_name = const.APP_TODAY
+    app_name = const.APP_STUDY
     update_news(app_name)
     # test_api()

@@ -38,13 +38,25 @@ def get_item_list(keyword_list: list[str] = []) -> list[str]:
                 continue
 
             study_info = news_summary[0].split(NEW_LINE * 2)
-            try:
-                korean = study_info[1]
-            except:
+
+            if len(study_info) < 2:
                 continue
 
-            if korean and "[1]" in korean and len(study_info) == 2:
-                item_list.append(study_info)
+            kor_idx = 0
+            for idx, info in enumerate(study_info):
+                if "[1]" in info:
+                    kor_idx = idx
+                    break
+
+            if 1 <= kor_idx:
+                conver_temp = study_info[kor_idx - 1]
+                if 20 < len(conver_temp):
+                    conver = conver_temp
+                else:
+                    conver = study_info[kor_idx - 2]
+
+                study_item = [conver, study_info[kor_idx]]
+                item_list.append(study_item)
 
         if item_list:
             break

@@ -5,12 +5,15 @@
     <title>{{ title }}</title>
     <script src="/templates/header.js"></script>
     <script type="text/javascript">
-        writeHeader("{{ user_div }}", "{{ user_name }}", "{{ app_name }}");
-        displayChkMsg();
+        document.addEventListener('DOMContentLoaded', () => {
+            initDisplay();
+            writeHeader("{{ user_div }}", "{{ user_name }}", "{{ app_name }}");
+        });
     </script>
 </head>
 
 <body>
+    <div class="topMenu"></div>
     <div id="searchMain">
         <div>
             <p id="screenId" hidden>{{ app_name }}</p>
@@ -58,6 +61,7 @@
 </body>
 
 <footer>
+    <script src="/templates/footer.js"></script>
     <script>
         writeFooter();
     </script>

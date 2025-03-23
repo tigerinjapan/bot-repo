@@ -3,6 +3,7 @@
 import sys
 
 from google import genai
+from google.genai.types import Part
 from google.genai.errors import ServerError
 
 import apps.utils.constants as const
@@ -24,7 +25,7 @@ NUM_WRAP_WIDTH = 32
 
 
 # GEMINI回答取得
-def get_gemini_response(contents: str):
+def get_gemini_response(contents):
     result = []
     exception_error = const.SYM_BLANK
 
@@ -49,7 +50,7 @@ def get_gemini_response(contents: str):
 
 
 # 生成コンテンツ取得
-def get_generate_content(contents: str):
+def get_generate_content(contents):
     result = []
 
     if GEMINI_API_KEY:
@@ -75,7 +76,7 @@ def get_recommend_outfit_dinner(today_weather: str):
         "夕食は、1番目が主食、2番目がおかず",
         "コーデ・夕食のそれぞれおすすめしたものを、&で結合",
         f"コーデ・夕食は、コンマ区切り、{NUM_WRAP_WIDTH}バイト未満",
-        "文章の終わりに絵文字を使用。言葉の代わりには使用しない",
+        "絵文字を使用。言葉の代わりには使用しない",
         "絵文字は、環境依存せず、全てのデバイスに適用されるものにする",
         "解説と他の文言は不要",
     ]
@@ -100,7 +101,7 @@ def get_news_summary(
     )
 
     if keyword:
-        add_condition_list = get_add_condition_list()
+        add_condition_list = get_add_condition_list(keyword)
         other_reference = get_other_reference()
     else:
         add_condition_list = []
@@ -156,14 +157,14 @@ def get_news_reference(other_reference: list[str]) -> str:
 
 
 # 追加条件取得
-def get_add_condition_list():
+def get_add_condition_list(keyword: str):
     add_condition_list = [
         "韓国語を勉強している初級レベルの人が記事を学習用で使用する目的",
         "【会話】記事の内容を元に韓国人同士が会話する内容",
         "【会話】会話の中で、記事が何の内容かを全て把握したい",
-        f"【会話】会話の中で、検索したキーワードを一度は使用",
-        f"【会話】会話の中で、説明する韓国語熟語は、<b>と</b>に囲む",
-        "【会話】20文字以内",
+        f"【会話】会話の中で、{keyword}を一度は使用",
+        "【会話】会話の中で、説明する韓国語熟語は、太字にする：<b>と</b>に囲む",
+        "【会話】1行に、20文字以内",
         "【会話】文章の終わりに絵文字を使用。言葉の代わりには使用しない",
         "【会話】絵文字は、環境依存せず、全てのデバイスに適用されるものにする",
         "【熟語】会話の途中にある熟語で、日常でよく使う表現5個をピックアップし、説明",
@@ -185,11 +186,11 @@ def get_other_reference():
     other_reference = [
         "※例",
         "유리：<b>오빠들</b>이 <b>음악프로</b> 1등했데.",
-        "창빈：<b>대단하다.</b> 정말 축해.",
+        "창빈：<b>대단하다</b>. 정말 축하해.",
         "유리：다음 노래도 1위 했음 좋겠다.",
-        "창빈：그래.",
-        "유리：다음 달에는 월드투어도 한데.",
-        "창빈：일본에서 콘서트 하는거 보고싶다.",
+        "창빈：<b>그래</b>.",
+        "유리：일본에서 콘서트 하는거 <b>보고싶다</b>.",
+        "창빈：그랬으면 좋겠네.",
         NEW_LINE * 2,
         "[1] 오빠들",
         "お兄ちゃんたち。",
@@ -216,3 +217,41 @@ def get_prompt_conditions(
         + [f"条件{i+1}：{condition}" for i, condition in enumerate(condition_list_all)]
     )
     return prompt_conditions
+
+
+# テスト
+def test_gemini():
+    contents = "これからの未来について、100文字以内で説明お願いします。"
+    response = get_gemini_response(contents)
+    result = const.SYM_NEW_LINE.join(response)
+    func.print_test_data(result)
+
+
+# テストイメージ #TODO 現在、無料版では実装不可
+def test_gemini_image():
+    # クライアントの初期化
+    client = genai.Client(api_key=GEMINI_API_KEY)
+
+    # イメージ生成リクエストの送信
+    try:
+        response = client.models.generate_images(
+            model="imagen-3.0",  # 無料版で利用可能なモデル名を確認
+            prompt="A serene landscape with mountains and a clear blue lake",  # イメージの説明
+            # size="360x360",  # 対応する画像サイズを指定
+        )
+        response.generated_images[0].image.show()
+
+        # レスポンスから生成された画像URLを取得
+        if response and "image_url" in response:
+            func.print_test_data(f"Generated Image URL: {response['image_url']}")
+        else:
+            func.print_test_data(
+                "Image generation failed or not available in the free version."
+            )
+    except Exception as e:
+        func.print_error_msg(e)
+
+
+if __name__ == const.MAIN_FUNCTION:
+    # test_gemini()
+    test_gemini_image()

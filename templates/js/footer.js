@@ -4,7 +4,7 @@ function writeFooter() {
   var tel = "042-1234-567";
   var mailAddr = "kobe_dev@jh.com";
 
-  document.write(`
+  footerContents = (`
     <div class="footer">
       <p>
         <address>` + addr + `</address>
@@ -13,4 +13,5 @@ function writeFooter() {
         <small>COPYRIGHT@KOBE_DEV CORP. ALL RIGHTS RESERVED.</small>
       </p>
     </div>`);
+  document.getElementsByTagName("footer")[0].innerHTML = footerContents;
 }
