@@ -16,7 +16,7 @@ const APP_CAFE = "cafe";
 const LIST_APP = [APP_TODAY, APP_NEWS, APP_DRAMA, APP_RANKING, APP_LCC, APP_TV, APP_STUDY, APP_SITE, APP_CAFE];
 const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_CAFE];
 const LIST_APP_GUEST = LIST_APP.filter(item => !LIST_APP_NOT_GUEST.includes(item));
-const LIST_APP_MO = [APP_NEWS, APP_DRAMA, APP_RANKING, APP_STUDY, APP_CAFE];
+const LIST_APP_MO = [APP_NEWS, APP_DRAMA, APP_STUDY, APP_CAFE];
 
 // 項目名
 const TITLE_SYSTEM = "開発デモシステム";
@@ -56,9 +56,7 @@ function writeHeader(userDiv, userNm, appNm) {
   // ユーザ名
   userNm = "【" + userNm + "】";
 
-  // トップメニュー
-  ulMenu = `<ul>`;
-
+  // アプリケーションリスト
   appList = LIST_APP;
   if (isMobile()) {
     appList = LIST_APP_MO;
@@ -82,9 +80,13 @@ function writeHeader(userDiv, userNm, appNm) {
   // ログアウトメニュー
   liMenuLogout = `<li><a href="/logout"><span>` + userNm + `</span>` + BUTTON_LOGOUT + `</a></li>`;
 
-  ulMenuClose = `</ul>`;
+  // トップメニュー
+  topMenu = liMenu + liMenuLogout;
+  if (isMobile()) {
+    topMenu = liMenuLogout + liMenu;
+  }
 
-  topMenuList = ulMenu + liMenu + liMenuLogout + ulMenuClose;
+  topMenuList = `<ul>` + topMenu + `</ul>`;
 
   document.getElementsByClassName("topMenu")[0].innerHTML = topMenuList;
 
