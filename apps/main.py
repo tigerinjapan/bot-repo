@@ -35,7 +35,7 @@ def job_scheduler():
         # 毎日指定された時間に実行
         schedule.every().day.at(f"{NUM_HOUR_DAILY_JOB}:00").do(daily_job)
 
-    # pending_cnt = 0
+    pending_cnt = 0
 
     exec_flg = const.FLG_ON
     while exec_flg:
@@ -45,12 +45,12 @@ def job_scheduler():
         # 1秒間スリープする
         func.time_sleep(1)
 
-        # pending_cnt += 1
+        pending_cnt += 1
 
         # スリープ状態にならないよう、約10分毎に、サーバーアクセス
-        # if pending_cnt % 600 == 0:
-        #     server.no_sleep()
-        #     pending_cnt = 0
+        if pending_cnt % 600 == 0:
+            server.no_sleep()
+            pending_cnt = 0
 
 
 # 時次ジョブ：データ更新

@@ -1,7 +1,11 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOGS0699Y0W5A300C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">世界の富裕層バンコクへドバイに続く「億万長者の街」</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGKKZO87537820U5A320C2MM8000/\" target=\"_blank\" rel=\"noopener noreferrer\">人財立国への道国富を考える(1)人手消滅\n眠れる力を発掘1人3役\n売上高8倍導く</a>"
+    },
+    {
+        "区分": "AI",
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/pcuser/articles/2503/23/news070.html\" target=\"_blank\" rel=\"noopener noreferrer\">      無料画像編集ソフト「GIMP」が約7年ぶりの大規模アップデートで3.0に/Google アシスタントが「Gemini」に完全移行今後数カ月で    </a>"
     },
     {
         "区分": "韓国",
@@ -9,10 +13,10 @@
     },
     {
         "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/481742.html\" target=\"_blank\" rel=\"noopener noreferrer\">女優イヨンエ\n娘と2人でいる時はこんな姿\n”幸せ”ただよう温かなツーショット</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/483716.html\" target=\"_blank\" rel=\"noopener noreferrer\">「NewJeans(NJZ)」\n結局活動中断を宣言...「裁判所の決定を尊重」</a>"
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/483696.html\" target=\"_blank\" rel=\"noopener noreferrer\">「Xdinary Heroes」\n「Beautiful Life」MVティーザー追加公開\n23日カムバック</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/483724.html\" target=\"_blank\" rel=\"noopener noreferrer\">「DRIPPIN」ファンユンソン\n本日(24日)陸軍現役入隊\n「最善を尽くして国防の義務を果たす」</a>"
     }
 ]

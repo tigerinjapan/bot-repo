@@ -157,7 +157,7 @@ async def root(request: Request):
 
     if func.is_local_env():
         request.session.clear()
-        request.session[const.STR_USER] = user_data.get(const.AUTH_DEV)
+        request.session[const.STR_USER] = user_data.get(const.AUTH_ADMIN)
 
     user = request.session.get(const.STR_USER)
     if user:
@@ -180,14 +180,14 @@ async def login(
         func.print_info_msg(user["userName"], msg_const.MSG_INFO_LOGIN)
 
     else:
-        chk_msg = msg_const.MSG_ERR_PASSWORD_INCORRECT
+        msg = msg_const.MSG_ERR_PASSWORD_INCORRECT
         if not user or user["userId"] != userId:
-            chk_msg = msg_const.MSG_ERR_USER_NOT_EXIST
+            msg = msg_const.MSG_ERR_USER_NOT_EXIST
         request.session.clear()
         context = {
             const.STR_REQUEST: request,
             const.STR_TITLE: const.SYSTEM_NAME,
-            "chk_msg": chk_msg,
+            const.STR_MESSAGE: msg,
         }
         response = templates.TemplateResponse(const.HTML_INDEX, context)
 
@@ -202,7 +202,7 @@ async def logout(request: Request):
     context = {
         const.STR_REQUEST: request,
         const.STR_TITLE: const.SYSTEM_NAME,
-        "chk_msg": msg_const.MSG_INFO_LOGOUT,
+        const.STR_MESSAGE: msg_const.MSG_INFO_LOGOUT,
     }
     return templates.TemplateResponse(const.HTML_INDEX, context)
 
@@ -330,6 +330,10 @@ def update_news(app_name: str = const.SYM_BLANK):
 
         df = func.get_df(item_list, col_list)
 
+        if df.empty:
+            func.print_info_msg(msg_const.MSG_ERR_DATA_NOT_EXIST)
+            continue
+
         if app_name == const.APP_TV:
             df_sort = df.sort_values(
                 by=app_div.sort_list,
@@ -364,7 +368,7 @@ def test_api():
 
 if __name__ == const.MAIN_FUNCTION:
     # start_thread()
-    # update_news()
-    app_name = const.APP_STUDY
-    update_news(app_name)
+    update_news()
+    # app_name = const.APP_STUDY
+    # update_news(app_name)
     # test_api()

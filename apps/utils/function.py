@@ -294,8 +294,6 @@ def get_df_from_json(div: str, file_div: str = const.STR_OUTPUT):
 def get_df(data_list: list, columns: list[str]):
     # DataFrame作成
     df = pd.DataFrame(data_list, columns=columns)
-    if df.empty:
-        print_info_msg(msg_const.MSG_ERR_DATA_NOT_EXIST)
     return df
 
 

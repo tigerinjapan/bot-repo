@@ -38,8 +38,6 @@ def get_df_data(user_div: str, app_div: str):
         search_query = f'auth <= "{user_auth}"'
         df_query = df_all.query(search_query)
 
-        # column_list = df_query.columns[1:]
-        # df_info = df_query[column_list]
         df_info = df_query
         df_info[const.STR_TITLE] = func.get_a_tag(
             df_info[const.STR_URL], df_info[const.STR_TITLE]
