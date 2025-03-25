@@ -26,6 +26,7 @@ import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
+import apps.utils.function_mongo as func_mongo
 import apps.utils.message_constants as msg_const
 from apps.utils.function_beautiful_soup import get_data_from_url
 
@@ -48,8 +49,8 @@ LIST_ALL_APP_DIV = LIST_APP_DIV + [site, site]
 
 LIST_APP_NUM_OFF = [const.APP_TODAY, const.APP_STUDY, const.APP_SITE, const.APP_CAFE]
 
-# ユーザーデータ
-user_data = func.get_input_data(const.STR_AUTH, const.STR_USER)
+# 開発データ
+dev_user = func.get_input_data(const.STR_AUTH, const.STR_USER)
 
 
 # クラスの定義
@@ -155,9 +156,9 @@ async def protected_resource(token: str):
 @app.get(const.PATH_ROOT)
 async def root(request: Request):
 
-    if func.is_local_env():
-        request.session.clear()
-        request.session[const.STR_USER] = user_data.get(const.AUTH_ADMIN)
+    # if func.is_local_env():
+    #     request.session.clear()
+    #     request.session[const.STR_USER] = dev_user
 
     user = request.session.get(const.STR_USER)
     if user:
@@ -169,34 +170,29 @@ async def root(request: Request):
 
 
 @app.post(const.PATH_LOGIN)
-async def login(
-    request: Request, userId: str = Form(...), userPassword: str = Form(...)
-):
-    user_div = userId.split(const.SYM_AT)[0]
-    user = user_data.get(user_div)
-    if user and user["userId"] == userId and user["userPassword"] == userPassword:
-        request.session[const.STR_USER] = user
-        response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
-        func.print_info_msg(user["userName"], msg_const.MSG_INFO_LOGIN)
+async def login(request: Request, userId: str = Form(...), userPw: str = Form(...)):
+    user_info = func_mongo.get_user_info(userId)
 
-    else:
-        msg = msg_const.MSG_ERR_PASSWORD_INCORRECT
-        if not user or user["userId"] != userId:
-            msg = msg_const.MSG_ERR_USER_NOT_EXIST
+    chk_msg = func_mongo.check_login(userId, userPw, user_info)
+    if chk_msg:
         request.session.clear()
         context = {
             const.STR_REQUEST: request,
             const.STR_TITLE: const.SYSTEM_NAME,
-            const.STR_MESSAGE: msg,
+            const.STR_MESSAGE: chk_msg,
         }
         response = templates.TemplateResponse(const.HTML_INDEX, context)
+    else:
+        request.session[const.STR_USER] = user_info
+        response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
+        func.print_info_msg(user_info[const.ITEM_USER_NAME], msg_const.MSG_INFO_LOGIN)
 
     return response
 
 
 @app.get(const.PATH_LOGOUT)
 async def logout(request: Request):
-    user_name = request.session[const.STR_USER]["userName"]
+    user_name = request.session[const.STR_USER][const.ITEM_USER_NAME]
     func.print_info_msg(user_name, msg_const.MSG_INFO_LOGOUT)
     request.session.clear()
     context = {
@@ -223,7 +219,7 @@ async def app_json(request: Request):
 @app.get("/line/send")
 async def send_msg():
     line.main()
-    result = {"message": "Line Message sent."}
+    result = {const.STR_MESSAGE: "Line Message sent."}
     return result
 
 
@@ -246,13 +242,13 @@ def test():
     message = test.main()
     if not message:
         message = "Server is on test."
-    return {"message": message}
+    return {const.STR_MESSAGE: message}
 
 
 # 【画面】取得結果
 def exec_result(request: Request, app_name: str):
     user = request.session[const.STR_USER]
-    user_div, user_name = user["userDiv"], user["userName"]
+    user_div, user_name = user[const.ITEM_USER_DIV], user[const.ITEM_USER_NAME]
 
     app_div_idx = const.LIST_ALL_APP_NAME.index(app_name)
     app_div = LIST_ALL_APP_DIV[app_div_idx]
@@ -368,7 +364,7 @@ def test_api():
 
 if __name__ == const.MAIN_FUNCTION:
     # start_thread()
-    update_news()
-    # app_name = const.APP_STUDY
-    # update_news(app_name)
+    # update_news()
+    app_name = const.APP_DRAMA
+    update_news(app_name)
     # test_api()

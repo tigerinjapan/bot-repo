@@ -24,12 +24,13 @@ const TH_NO = "No.";
 const BUTTON_LOGIN = "ログイン";
 const BUTTON_LOGOUT = "ログアウト";
 const BUTTON_SEARCH = "検索";
+const BUTTON_SETTING = "設定";
 
 // 記号
 const SYM_BLANK = "";
 
 // ヘッダー情報読込
-headContents = (`
+const headContents = (`
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/templates/style.css">
@@ -51,13 +52,10 @@ function initDisplay() {
   }
 }
 
-// ヘッダー情報書込
-function writeHeader(userDiv, userNm, appNm) {
-  // ユーザ名
-  userNm = "【" + userNm + "】";
-
+// トップメニュー設定
+function setTopMenu(userDiv, userNm, appNm) {
   // アプリケーションリスト
-  appList = LIST_APP;
+  let appList = LIST_APP;
   if (isMobile()) {
     appList = LIST_APP_MO;
   } else if (userDiv == AUTH_GUEST) {
@@ -75,23 +73,23 @@ function writeHeader(userDiv, userNm, appNm) {
   }
 
   // 配列を文字列に変換
-  liMenu = liMenuList.join("");
+  const liMenu = liMenuList.join("");
 
   // ログアウトメニュー
-  liMenuLogout = `<li><a href="/logout"><span>` + userNm + `</span>` + BUTTON_LOGOUT + `</a></li>`;
+  const liMenuLogout = `<li><a href="/logout"><b>` + userNm + ` </b>` + BUTTON_LOGOUT + `</a></li>`;
 
   // トップメニュー
-  topMenu = liMenu + liMenuLogout;
+  let topMenu = liMenu + liMenuLogout;
   if (isMobile()) {
     topMenu = liMenuLogout + liMenu;
   }
 
-  topMenuList = `<ul>` + topMenu + `</ul>`;
+  const topMenuList = `<ul>` + topMenu + `</ul>`;
 
-  document.getElementsByClassName("topMenu")[0].innerHTML = topMenuList;
+  document.getElementById("topMenu").innerHTML = topMenuList;
 
   // メニュー押下時、背景色設定
-  var screenId = document.getElementById(appNm);
+  const screenId = document.getElementById(appNm);
   screenId.setAttribute("style", "background-color: peru;");
 }
 

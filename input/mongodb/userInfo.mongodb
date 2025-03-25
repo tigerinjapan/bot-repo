@@ -1,0 +1,99 @@
+// db
+const database = "mongoDB";
+const currentDate = new Date();
+
+// Select the database to use.
+use(database)
+
+// find documents
+db.userInfo.find({},
+    {
+        "_id": 0,
+        "nSeq": 1
+    }
+).sort({
+    "nSeq": -1
+});
+
+// insert documents
+const userData_1 = {
+    "sUserId": "admin@jh.com",
+    "sUserName": "管理",
+    "sUserDiv": "admin",
+    "sUserPw": "admin",
+    "nYear": 1980,
+    "nSex": 0,
+    "sZipCd": "1600000",
+    "sPref": "東京都",
+    "sTown": "新宿区",
+    "sLine": "山手線",
+    "sStation": "新宿",
+    "sTel": "05012345678",
+    "nSeq": 1,
+    "dModifiedDate": currentDate,
+    "dLastLoginDate": currentDate
+};
+
+const userData_2 = {
+    "sUserId": "dev@jh.com",
+    "sUserName": "開発",
+    "sUserDiv": "dev",
+    "sUserPw": "dev",
+    "nYear": 1980,
+    "nSex": 0,
+    "sZipCd": "1600000",
+    "sPref": "東京都",
+    "sTown": "新宿区",
+    "sLine": "山手線",
+    "sStation": "新宿",
+    "sTel": "05012345678",
+    "nSeq": 2,
+    "dModifiedDate": currentDate,
+    "dLastLoginDate": currentDate
+};
+
+const userData_3 = {
+    "sUserId": "yuri@jh.com",
+    "sUserName": "ゆり",
+    "sUserDiv": "dev",
+    "sUserPw": "yuri",
+    "nYear": 1972,
+    "nSex": 1,
+    "sZipCd": "2730000",
+    "sPref": "千葉県",
+    "sTown": "船橋市",
+    "sLine": "東西線",
+    "sStation": "船橋",
+    "sTel": "08012345678",
+    "nSeq": 3,
+    "dModifiedDate": currentDate,
+    "dLastLoginDate": currentDate
+};
+
+const userData_4 = {
+    "sUserId": "guest@jh.com",
+    "sUserName": "ゲスト",
+    "sUserDiv": "guest",
+    "sUserPw": "guest",
+    "nYear": 1980,
+    "nSex": 1,
+    "sZipCd": "1600000",
+    "sPref": "東京都",
+    "sTown": "新宿区",
+    "sLine": "山手線",
+    "sStation": "新宿",
+    "sTel": "05012345678",
+    "nSeq": 4,
+    "dModifiedDate": currentDate,
+    "dLastLoginDate": currentDate
+};
+
+// データを登録
+const bulkData = [];
+bulkData.push(userData_1);
+bulkData.push(userData_2);
+bulkData.push(userData_3);
+bulkData.push(userData_4);
+db.userInfo.insertMany(bulkData);
+const cnt = db.userInfo.count()
+console.log(`${cnt}件のデータが登録されました。`);

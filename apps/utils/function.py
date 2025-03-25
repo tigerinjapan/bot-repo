@@ -8,6 +8,7 @@ import re
 import socket
 import sys
 import time
+import urllib
 from datetime import datetime
 from pprint import pprint
 
@@ -64,6 +65,18 @@ def get_env_val(var_name: str) -> str:
         env_val = get_decoding_masking_data(env_val)
 
     return env_val
+
+
+# ネットワーク接続チェック
+def is_network() -> bool:
+    network_flg = const.FLG_OFF
+    try:
+        response = urllib.request.urlopen(const.URL_GOOGLE)
+        print_info_msg(const.STR_REQUEST, response)
+        network_flg = const.FLG_ON
+    except Exception as e:
+        print_error_msg(const.STR_REQUEST, e)
+    return network_flg
 
 
 # ローカルIPかチェック
@@ -375,6 +388,19 @@ def convert_half_char(target: str) -> str:
 
     result = target.translate(full_width_to_half_width)
     return result
+
+
+# 文字列変換
+def convert_upper_lower(before_str: str, div: str = const.STR_UPPER) -> str:
+    after_str = before_str
+    if div == const.STR_UPPER:
+        after_str = before_str.upper()
+    elif div == const.STR_LOWER:
+        after_str = before_str.lower()
+    elif div == const.STR_CAPITALIZE:
+        after_str = before_str.capitalize()
+
+    return after_str
 
 
 # テストデータ出力

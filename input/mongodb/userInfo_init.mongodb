@@ -1,0 +1,127 @@
+// MongoDB Playground
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+// https://www.mongodb.com/docs/manual/reference/method/
+
+// db, collection
+const database = "mongoDB";
+const coll_userInfo = "userInfo";
+
+// Select the database to use.
+use(database)
+
+// delete database
+// db.dropDatabase()
+
+delete collection
+db.getCollection(coll_userInfo).drop();
+
+// create collection
+db.createCollection(coll_userInfo,
+    {
+        validator: {
+            $jsonSchema: {
+                required: [
+                    "sUserId",
+                    "sUserDiv",
+                    "sUserName",
+                    "sUserPw",
+                    "nYear",
+                    "nSex",
+                    "sZipCd",
+                    "sPref",
+                    "sTown",
+                    "sLine",
+                    "sStation",
+                    "sTel",
+                    "nSeq",
+                    "dModifiedDate",
+                    "dLastLoginDate"
+                ],
+                properties: {
+                    "sUserId": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "sUserDiv": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "sUserName": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "sUserPw": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "nYear": {
+                        bsonType: "int",
+                        minimum: 1970,
+                        maximum: 2020,
+                        description: "must be an integer and is required"
+                    },
+                    "nSex": {
+                        bsonType: "int",
+                        enum: [
+                            0,
+                            1
+                        ],
+                        description: "can only be one of the enum values and is required"
+                    },
+                    "sZipCd": {
+                        bsonType: "string",
+                        pattern: "^([0-9][0-9][0-9])([0-9][0-9][0-9][0-9])$", // html check
+                        description: "must be a string and match the regular expression pattern"
+                    },
+                    "sPref": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "sTown": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "sLine": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "sStation": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "sTel": {
+                        bsonType: "string",
+                        pattern: "^(0[5789]0)([0-9][0-9][0-9][0-9])([0-9][0-9][0-9][0-9])$",
+                        description: "must be a string and match the regular expression pattern"
+                    },
+                    "nSeq": {
+                        bsonType: "int",
+                        description: "must be an integer and is required"
+                    },
+                    "dModifiedDate": {
+                        bsonType: "date",
+                        description: "must be a date and is required"
+                    },
+                    "dLastLoginDate": {
+                        bsonType: "date",
+                        description: "must be a date and is required"
+                    }
+                }
+            }
+        }
+    });
+
+// create index
+db.getCollection(coll_userInfo).createIndex({
+    "sUserId": 1
+},
+    {
+        "name": "indexUserId",
+        "unique": true
+    });
+
+// get indexes
+db.userInfo.getIndexes();
+
+// get collection infos
+db.getCollectionInfos({ name: coll_userInfo });

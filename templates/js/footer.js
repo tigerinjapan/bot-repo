@@ -1,10 +1,10 @@
-function writeFooter() {
+function writeFooter(userDiv) {
 
-  var addr = "東京都新宿区新宿ビル5F";
-  var tel = "042-1234-567";
-  var mailAddr = "kobe_dev@jh.com";
+  const addr = "東京都新宿区新宿ビル5F";
+  const tel = "042-1234-567";
+  const mailAddr = "kobe_dev@jh.com";
 
-  footerContents = (`
+  const footerContents = (`
     <div class="footer">
       <p>
         <address>` + addr + `</address>
@@ -13,5 +13,8 @@ function writeFooter() {
         <small>COPYRIGHT@KOBE_DEV CORP. ALL RIGHTS RESERVED.</small>
       </p>
     </div>`);
-  document.getElementsByTagName("footer")[0].innerHTML = footerContents;
+
+  if (userDiv == AUTH_ADMIN) {
+    document.getElementsByTagName("footer")[0].innerHTML = footerContents;
+  }
 }

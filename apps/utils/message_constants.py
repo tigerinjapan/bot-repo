@@ -14,6 +14,7 @@ MSG_INFO_SERVER_START = "サーバーを起動します。"
 MSG_INFO_SERVER_RESTART = "サーバーを再起動します。"
 MSG_INFO_SERVER_KEEP_ALIVE = "サーバーは正常に稼働しています。"
 MSG_INFO_SERVER_SLEEP = "サーバーがスリープ状態です。"
+MSG_INFO_SESSION_EXPIRED = "セッション期限が切れました。再ログインしてください。"
 
 # エラーメッセージ
 MSG_ERR_USER_NOT_EXIST = "【ログイン】IDを再確認してください。"

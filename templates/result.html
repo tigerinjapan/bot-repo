@@ -7,13 +7,13 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
             initDisplay();
-            writeHeader("{{ user_div }}", "{{ user_name }}", "{{ app_name }}");
+            setTopMenu("{{ user_div }}", "{{ user_name }}", "{{ app_name }}");
         });
     </script>
 </head>
 
 <body>
-    <div class="topMenu"></div>
+    <div id="topMenu" class="topMenu"></div>
     <div id="searchMain">
         <div>
             <p id="screenId" hidden>{{ app_name }}</p>
@@ -63,7 +63,7 @@
 <footer>
     <script src="/templates/footer.js"></script>
     <script>
-        writeFooter();
+        writeFooter("{{ user_div }}");
     </script>
 </footer>
 

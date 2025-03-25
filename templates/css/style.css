@@ -108,7 +108,7 @@ img {
 	display: block;
 	color: white;
 	text-align: center;
-	padding: 16px 16px;
+	padding: 12px 12px;
 	text-decoration: none;
 	transition: all .3s;
 }
@@ -140,10 +140,14 @@ footer {
 		font-size: 3vw;
 	}
 
-	img,
+	img {
+		width: 140px;
+		height: auto;
+	}
+
 	.searchForm,
 	.searchResult {
-		width: 100%;
+		width: auto;
 		height: auto;
 	}
 

@@ -236,6 +236,12 @@ STR_TEST = "test"
 STR_KPOP = "kpop"
 STR_AI = "AI"
 
+STR_DB = "db"
+STR_MONGO = "mongo"
+STR_UPPER = "upper"
+STR_LOWER = "lower"
+STR_CAPITALIZE = "capitalize"
+
 STR_LOGIN_JA = "ログイン"
 STR_LOGOUT_JA = "ログアウト"
 STR_PATH_JA = "パス"
@@ -313,6 +319,45 @@ LIST_REPLACE = [
 
 ##### 曜日リスト #####
 LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
+
+##### DB情報 #####
+COLL_USER_INFO = "userInfo"
+
+
+def convert_field(type_div, id):
+    div = "ao" if type_div == TYPE_LIST else type_div[0]
+    # func[capitalize]:Converts the first character of a string to an uppercase letter
+    id_new = id.capitalize()[0] + id[1:]
+    field = f"{div}{id_new}"
+    return field
+
+# 項目ID:user info
+ITEM_USER_ID = "userId"
+ITEM_USER_DIV = "userDiv"
+ITEM_USER_NAME = "userName"
+ITEM_USER_PW = "userPw"
+ITEM_YEAR = "year"
+ITEM_SEX = "sex"
+ITEM_ZIP_CD = "zipCd"
+ITEM_PREF = "pref"
+ITEM_TOWN = "town"
+ITEM_LINE = "line"
+ITEM_STATION = "station"
+ITEM_TEL = "tel"
+
+# フィールド:user info
+FI_USER_ID = convert_field(TYPE_STR, ITEM_USER_ID)
+FI_USER_DIV = convert_field(TYPE_STR, ITEM_USER_DIV)
+FI_USER_NAME = convert_field(TYPE_STR, ITEM_USER_NAME)
+FI_USER_PW = convert_field(TYPE_STR, ITEM_USER_PW)
+FI_YEAR = convert_field(TYPE_NUM, ITEM_YEAR)
+FI_SEX = convert_field(TYPE_NUM, ITEM_SEX)
+FI_ZIP_CD = convert_field(TYPE_STR, ITEM_ZIP_CD)
+FI_PREF = convert_field(TYPE_STR, ITEM_PREF)
+FI_TOWN = convert_field(TYPE_STR, ITEM_TOWN)
+FI_LINE = convert_field(TYPE_STR, ITEM_LINE)
+FI_STATION = convert_field(TYPE_STR, ITEM_STATION)
+FI_TEL = convert_field(TYPE_STR, ITEM_TEL)
 
 ##### URL #####
 # サイトURL

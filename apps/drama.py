@@ -52,10 +52,10 @@ def get_weekly_ranking(div: str):
                 ul_elem, tag=const.TAG_LI, list_flg=const.FLG_ON
             )
             if li_elem_list:
-                genre = li_elem_list[0].get_text(strip=const.FLG_ON)
-                elem_cast = li_elem_list[4].get_text(strip=const.FLG_ON)
-                cast_text = elem_cast.split(const.SYM_COMMA_JAP)[:2]
-                cast = const.SYM_COMMA_JAP.join(cast_text)
+                genre_text = li_elem_list[0].get_text(strip=const.FLG_ON)
+                genre = genre_text.split(const.SYM_COMMA_JAP)[0]
+                cast_text = li_elem_list[4].get_text(strip=const.FLG_ON)
+                cast = cast_text.split(const.SYM_COMMA_JAP)[0]
                 contents_tag = ["<p>", title, genre, cast, "</p>"]
                 contents = const.SYM_NEW_LINE.join(contents_tag)
                 ranking_info = [img_tag, contents]
