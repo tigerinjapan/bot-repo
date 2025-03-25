@@ -4,17 +4,25 @@ LINE Messaging API Bot
 
 ## Python ライブラリ
 
-| ライブラリ    | 説明                        |
-| ------------- | --------------------------- |
-| requests      | HTTP リクエスト処理         |
-| fastapi       | 高速 API フレームワーク     |
-| uvicorn       | 高速 ASGI(非同期処理)サーバ |
-| bs4           | HTML/XML 解析ツール         |
-| jinja2        | HTML テンプレートエンジン   |
-| schedule      | タスク定期実行              |
-| python-dotenv | 環境変数管理                |
-| Pillow        | 画像処理ライブラリ          |
-| google-genai  | Google の AI ツール         |
+| カテゴリー             | ライブラリ          | 説明                            |
+| ---------------------- | ------------------- | ------------------------------- |
+| **HTTP リクエスト**    | requests            | HTTP 通信                       |
+| **Web フレームワーク** | fastapi             | 高速な Web フレームワーク       |
+|                        | starlette           | 非同期 Web サーバー             |
+|                        | uvicorn             | 高速 ASGI（非同期処理）サーバー |
+| **データ解析**         | pandas              | データ解析と操作                |
+| **Web スクレイピング** | bs4 (BeautifulSoup) | HTML スクレイピング             |
+|                        | selenium            | ブラウザ操作自動化              |
+|                        | playwright          | 高速なブラウザ操作自動化        |
+|                        | pyvirtualdisplay    | 仮想ディスプレイ操作            |
+| **テンプレート**       | jinja2              | HTML テンプレートエンジン       |
+| **画像処理**           | Pillow              | 画像操作                        |
+| **セキュリティ**       | itsdangerous        | 安全なデータ署名                |
+| **環境変数管理**       | python-dotenv       | 環境変数の簡単な管理            |
+| **データベース操作**   | pymongo             | MongoDB 操作                    |
+| **スケジューリング**   | schedule            | タスクスケジューラ              |
+| **AI と機械学習**      | google-genai        | Google の生成 AI ツール         |
+| **ファイル管理**       | python-multipart    | マルチパートデータ処理          |
 
 ## Koyeb サーバ
 

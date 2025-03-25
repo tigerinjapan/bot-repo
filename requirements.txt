@@ -1,16 +1,17 @@
 requests
 fastapi
-uvicorn
 starlette
-itsdangerous
-bs4
+uvicorn
 pandas
+bs4
 selenium
 playwright
-pyvirtualdisplay
+# pyvirtualdisplay
 jinja2
-schedule
-python-dotenv
 Pillow
+# itsdangerous
+python-dotenv
+pymongo
+schedule
 google-genai
 python-multipart
