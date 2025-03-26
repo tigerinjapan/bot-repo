@@ -20,10 +20,11 @@ NEW_LINE = const.SYM_NEW_LINE
 # 定数（日本語）
 DIV_DATE = "日時"
 DIV_WEATHER = "天気"
+DIV_WEATHER_PLUS = "天気+"
 DIV_RATE = "為替"
 DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
-DIV_LIST = [DIV_WEATHER, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
+DIV_LIST = [DIV_WEATHER, DIV_WEATHER_PLUS, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
 
 
 # アイテムリスト取得
@@ -38,6 +39,9 @@ def get_today_info(msg_flg: bool = const.FLG_ON):
     # 天気
     today_weather, forecast, date_time = get_today_weather()
 
+    # 天気
+    today_weather_plus = get_today_weather_plus()
+
     # 為替
     today_won_rate = get_today_won()
 
@@ -50,7 +54,13 @@ def get_today_info(msg_flg: bool = const.FLG_ON):
     today_dinner = recommend_outfit_dinner[1].replace(NEW_LINE, const.SYM_BLANK)
 
     col_list = DIV_LIST
-    info_list = [today_weather, today_won_rate, today_outfit, today_dinner]
+    info_list = [
+        today_weather,
+        today_weather_plus,
+        today_won_rate,
+        today_outfit,
+        today_dinner,
+    ]
     if not msg_flg:
         info_list = [date_time] + info_list
         col_list = [DIV_DATE] + col_list
@@ -90,6 +100,28 @@ def get_today_weather() -> tuple[str, str, str]:
 
     today_weather = f"{forecast}・{max_temp}/{min_temp}・{rain_prob}"
     return today_weather, forecast, date_time
+
+
+# 今日の天気情報取得
+def get_today_weather_plus() -> str:
+    url = f"{const.URL_TENKI}/pollen/"
+    class_ = "top-map-pollen-pref-4"
+    elem_pollen = func_bs.get_elem_from_url(url, attr_val=class_)
+    pollen_alt = func_bs.find_elem_by_attr(elem_pollen, tag=const.TAG_IMG).get(
+        const.ATTR_ALT
+    )
+    pollen = pollen_alt.split(const.SYM_COLON)[1]
+
+    url = f"{const.URL_TENKI}/yellow-sand/3/16/"
+    class_ = "common-info-table yellow-sand-info-table"
+
+    elem_dust = func_bs.get_elem_from_url(url, attr_val=class_)
+    dust = func_bs.find_elem_by_attr(elem_dust, tag=const.TAG_TD).get_text(
+        strip=const.FLG_ON
+    )
+
+    today_weather_plus = f"花：{pollen}・黄：{dust}"
+    return today_weather_plus
 
 
 # 今日のウォン取得

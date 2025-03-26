@@ -131,6 +131,7 @@ TAG_H1 = "h1"
 TAG_H2 = "h2"
 TAG_H3 = "h3"
 TAG_H4 = "h4"
+TAG_IMG = "img"
 
 ##### HTML属性 #####
 ATTR_CLASS = "class"
@@ -330,6 +331,7 @@ def convert_field(type_div, id):
     id_new = id.capitalize()[0] + id[1:]
     field = f"{div}{id_new}"
     return field
+
 
 # 項目ID:user info
 ITEM_USER_ID = "userId"

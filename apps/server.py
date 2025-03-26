@@ -363,8 +363,8 @@ def test_api():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    start_thread()
+    # start_thread()
     # update_news()
-    # app_name = const.APP_DRAMA
-    # update_news(app_name)
+    app_name = const.APP_STUDY
+    update_news(app_name)
     # test_api()
