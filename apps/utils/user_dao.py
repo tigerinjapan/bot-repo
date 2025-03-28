@@ -23,7 +23,7 @@ def find_user_info(client, user_id: str):
     cond = {const.FI_USER_ID: user_id}
     count = func_mongo.db_count(client, COLL, cond)
 
-    select_data = {"_id": 0}
+    select_data = {"_id": 0, const.FI_MODIFIED_DATE: 0, const.FI_LAST_LOGIN_DATE: 0}
     result = (
         const.NONE_CONSTANT
         if count == 0
