@@ -1,3 +1,23 @@
+@font-face {
+	font-family: "meiryo";
+	src: url('/font/meiryo') format('truetype');
+}
+
+@font-face {
+	font-family: "msgothic";
+	src: url('/font/msgothic') format('truetype');
+}
+
+@font-face {
+	font-family: "uzura";
+	src: url('/font/uzura') format('truetype');
+}
+
+@font-face {
+	font-family: "yusei";
+	src: url('/font/yusei') format('truetype');
+}
+
 /*全体の設定*/
 body {
 	margin: 5x;
@@ -5,7 +25,7 @@ body {
 	/*全体の文字色*/
 	color: black;
 	/*フォント種類*/
-	font-family: "メイリオ", "Meiryo", "MS PGothic", sans-serif;
+	font-family: "msgothic", sans-serif;
 	font-size: 16px;
 	/*行間*/
 	line-height: 2;
@@ -17,8 +37,6 @@ body {
 input,
 button,
 select {
-	font-size: 16px;
-	font-family: "Meiryo";
 	text-align: center;
 	outline: none;
 }
@@ -117,18 +135,21 @@ img {
 	background-color: skyblue;
 }
 
-.loginTbl {
-	width: 320px;
-	height: 320px;
+.loginTbl,
+.userTbl {
+	width: auto;
+	height: auto;
 	margin: auto;
-	font-family: "Meiryo";
 	font-size: 16px;
-	text-align: center;
+	/* text-align: center; */
+	font-family: "yusei", sans-serif;
+	background-color: white;
+	border: 2px solid pink;
+	border-collapse: collapse;
 }
 
 footer {
 	/* padding: 0px 20px; */
-	font-size: 16px;
 	text-align: center;
 }
 

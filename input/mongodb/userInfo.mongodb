@@ -5,6 +5,9 @@ const currentDate = new Date();
 // Select the database to use.
 use(database)
 
+// 全てのドキュメントを削除
+db.userInfo.deleteMany({});
+
 // find documents
 db.userInfo.find({},
     {
@@ -26,7 +29,7 @@ const userData_1 = {
     "sZipCd": "1600000",
     "sPref": "東京都",
     "sTown": "新宿区",
-    "sLine": "山手線",
+    "sLine": "JR山手線",
     "sStation": "新宿",
     "sTel": "05012345678",
     "nSeq": 1,
@@ -44,7 +47,7 @@ const userData_2 = {
     "sZipCd": "1600000",
     "sPref": "東京都",
     "sTown": "新宿区",
-    "sLine": "山手線",
+    "sLine": "JR山手線",
     "sStation": "新宿",
     "sTel": "05012345678",
     "nSeq": 2,
@@ -62,8 +65,8 @@ const userData_3 = {
     "sZipCd": "2730000",
     "sPref": "千葉県",
     "sTown": "船橋市",
-    "sLine": "東西線",
-    "sStation": "船橋",
+    "sLine": "東京メトロ東西線",
+    "sStation": "西船橋",
     "sTel": "08012345678",
     "nSeq": 3,
     "dModifiedDate": currentDate,
@@ -80,7 +83,7 @@ const userData_4 = {
     "sZipCd": "1600000",
     "sPref": "東京都",
     "sTown": "新宿区",
-    "sLine": "山手線",
+    "sLine": "JR山手線",
     "sStation": "新宿",
     "sTel": "05012345678",
     "nSeq": 4,

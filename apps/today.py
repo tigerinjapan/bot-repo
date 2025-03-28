@@ -51,7 +51,8 @@ def get_today_info(msg_flg: bool = const.FLG_ON):
     )
 
     today_outfit = recommend_outfit_dinner[0]
-    today_dinner = recommend_outfit_dinner[1].replace(NEW_LINE, const.SYM_BLANK)
+    # today_dinner = recommend_outfit_dinner[1].replace(NEW_LINE, const.SYM_BLANK)
+    today_dinner = get_today_menu()
 
     col_list = DIV_LIST
     info_list = [
@@ -135,6 +136,18 @@ def get_today_won() -> str:
     won = elem_list[0].text if elem_list else "1000"
     today_won_rate = f"100{const.STR_YEN_JA}={won}{const.STR_WON_JA}"
     return today_won_rate
+
+
+# 今日のレシピメニュー取得
+def get_today_menu():
+    url = const.URL_RAKUTEN_RECIPE
+    _class = "weekly_menu__menu weekly_list"
+    weekly_menu_list = func_bs.get_elem_from_url(
+        url, attr_val=_class, list_flg=const.FLG_ON
+    )
+    weekly_menu = weekly_menu_list[const.DATE_WEEKDAY]
+    menu = get_elem_val_by_class(weekly_menu, "text weekly_list__text omit_2line")
+    return menu
 
 
 # 要素値取得

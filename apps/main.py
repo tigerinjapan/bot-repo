@@ -5,6 +5,7 @@ import schedule
 
 import apps.line as line
 import apps.server as server
+import apps.app_exec as sub
 import apps.utils.constants as const
 import apps.utils.function as func
 
@@ -49,13 +50,13 @@ def job_scheduler():
 
         # スリープ状態にならないよう、約10分毎に、サーバーアクセス
         if pending_cnt % 600 == 0:
-            server.no_sleep()
+            sub.no_sleep()
             pending_cnt = 0
 
 
 # 時次ジョブ：データ更新
 def hourly_job():
-    server.update_news()
+    sub.update_news()
 
 
 # 日次ジョブ：LINEメッセージ送信

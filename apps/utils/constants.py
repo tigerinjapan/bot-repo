@@ -229,6 +229,7 @@ STR_GEMINI = "gemini"
 STR_API = "api"
 STR_ADDR = "addr"
 STR_IMG = "img"
+STR_FONT = "font"
 STR_ENV_VAR = "env_var"
 STR_KEYWORD = "keyword"
 STR_NOTIFY = "notify"
@@ -236,6 +237,7 @@ STR_FIRST = "first"
 STR_TEST = "test"
 STR_KPOP = "kpop"
 STR_AI = "AI"
+STR_USER_INFO = "userInfo"
 
 STR_DB = "db"
 STR_MONGO = "mongo"
@@ -324,6 +326,9 @@ LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
 ##### DB情報 #####
 COLL_USER_INFO = "userInfo"
 
+SEX_MAN = "男"
+SEX_WOMAN = "女"
+
 
 def convert_field(type_div, id):
     div = "ao" if type_div == TYPE_LIST else type_div[0]
@@ -346,6 +351,9 @@ ITEM_TOWN = "town"
 ITEM_LINE = "line"
 ITEM_STATION = "station"
 ITEM_TEL = "tel"
+ITEM_SEQ = "seq"
+ITEM_MODIFIED_DATE = "modifiedDate"
+ITEM_LAST_LOGIN_DATE = "lastLoginDate"
 
 # フィールド:user info
 FI_USER_ID = convert_field(TYPE_STR, ITEM_USER_ID)
@@ -360,11 +368,15 @@ FI_TOWN = convert_field(TYPE_STR, ITEM_TOWN)
 FI_LINE = convert_field(TYPE_STR, ITEM_LINE)
 FI_STATION = convert_field(TYPE_STR, ITEM_STATION)
 FI_TEL = convert_field(TYPE_STR, ITEM_TEL)
+FI_SEQ = convert_field(TYPE_NUM, ITEM_SEQ)
+FI_MODIFIED_DATE = convert_field(TYPE_DATE, ITEM_MODIFIED_DATE)
+FI_LAST_LOGIN_DATE = convert_field(TYPE_DATE, ITEM_LAST_LOGIN_DATE)
 
 ##### URL #####
 # サイトURL
 URL_GOOGLE = "https://www.google.com"
 URL_TENKI = "https://tenki.jp"
+URL_RAKUTEN_RECIPE = "https://recipe.rakuten.co.jp/menu/"
 URL_NAVER_FINANCE = "https://finance.naver.com"
 URL_NAVER_SEARCH = "https://search.naver.com"
 URL_KONEST = "https://www.konest.com"
@@ -385,6 +397,7 @@ APP_TV = "tv"
 APP_STUDY = "study"
 APP_SITE = "site"
 APP_CAFE = "cafe"
+APP_USER = "user"
 LIST_APP_NAME = [
     APP_TODAY,
     APP_NEWS,
@@ -420,6 +433,7 @@ PATH_UPDATE = get_path(STR_UPDATE)
 ##### HTMLファイル名 #####
 HTML_INDEX = get_html(STR_INDEX)
 HTML_RESULT = get_html(STR_RESULT)
+HTML_USER_INFO = get_html(STR_USER_INFO)
 
 if __name__ == MAIN_FUNCTION:
     data = f"[{DATE_WEEKDAY, HTML_INDEX}]"

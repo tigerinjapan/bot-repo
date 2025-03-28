@@ -12,7 +12,7 @@ use(database)
 // delete database
 // db.dropDatabase()
 
-delete collection
+// delete collection
 db.getCollection(coll_userInfo).drop();
 
 // create collection

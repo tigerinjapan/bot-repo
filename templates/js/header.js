@@ -1,3 +1,6 @@
+// 記号
+const SYM_BLANK = "";
+
 // ユーザ
 const AUTH_ADMIN = "admin";
 const AUTH_DEV = "dev";
@@ -13,10 +16,13 @@ const APP_TV = "tv";
 const APP_STUDY = "study";
 const APP_SITE = "site";
 const APP_CAFE = "cafe";
-const LIST_APP = [APP_TODAY, APP_NEWS, APP_DRAMA, APP_RANKING, APP_LCC, APP_TV, APP_STUDY, APP_SITE, APP_CAFE];
-const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_CAFE];
-const LIST_APP_GUEST = LIST_APP.filter(item => !LIST_APP_NOT_GUEST.includes(item));
-const LIST_APP_MO = [APP_NEWS, APP_DRAMA, APP_STUDY, APP_CAFE];
+const APP_USER = "user";
+
+const LIST_APP_DEV_MO = [APP_NEWS, APP_DRAMA, APP_STUDY, APP_CAFE, APP_USER];
+const LIST_APP_GUEST_MO = [APP_DRAMA, APP_RANKING, APP_LCC, APP_TV];
+const LIST_APP_GUEST = [APP_TODAY, APP_SITE].concat(LIST_APP_GUEST_MO);
+const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_CAFE, APP_USER];
+const LIST_APP = LIST_APP_GUEST.concat(LIST_APP_NOT_GUEST);
 
 // 項目名
 const TITLE_SYSTEM = "開発デモシステム";
@@ -26,17 +32,14 @@ const BUTTON_LOGOUT = "ログアウト";
 const BUTTON_SEARCH = "検索";
 const BUTTON_SETTING = "設定";
 
-// 記号
-const SYM_BLANK = "";
-
 // ヘッダー情報読込
-const headContents = (`
+const CONTENTS_HEAD = (`
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/templates/style.css">
   <script src="/templates/jquery-3.6.1.min.js"></script>
 `);
-document.getElementsByTagName("head")[0].innerHTML = headContents;
+document.getElementsByTagName("head")[0].innerHTML = CONTENTS_HEAD;
 
 // 初期表示
 function initDisplay() {
@@ -57,14 +60,19 @@ function setTopMenu(userDiv, userNm, appNm) {
   // アプリケーションリスト
   let appList = LIST_APP;
   if (isMobile()) {
-    appList = LIST_APP_MO;
-  } else if (userDiv == AUTH_GUEST) {
-    appList = LIST_APP_GUEST;
+    if (userDiv == AUTH_DEV) {
+      appList = LIST_APP_DEV_MO;
+    } else if (userDiv == AUTH_GUEST) {
+      appList = LIST_APP_GUEST_MO;
+    }
+  } else {
+    if (userDiv == AUTH_GUEST) {
+      appList = LIST_APP_GUEST;
+    }
   }
 
   // 配列の初期化
   let liMenuList = [];
-
   for (let i = 0; i < appList.length; i++) {
     appDiv = appList[i];
     liMenuList.push(`
@@ -76,12 +84,12 @@ function setTopMenu(userDiv, userNm, appNm) {
   const liMenu = liMenuList.join("");
 
   // ログアウトメニュー
-  const liMenuLogout = `<li><a href="/logout"><b>` + userNm + ` </b>` + BUTTON_LOGOUT + `</a></li>`;
+  const liLogout = `<li><a href="/logout"><b>` + userNm + ` </b>` + BUTTON_LOGOUT + `</a></li>`;
 
   // トップメニュー
-  let topMenu = liMenu + liMenuLogout;
+  let topMenu = liMenu + liLogout;
   if (isMobile()) {
-    topMenu = liMenuLogout + liMenu;
+    topMenu = liLogout + liMenu;
   }
 
   const topMenuList = `<ul>` + topMenu + `</ul>`;

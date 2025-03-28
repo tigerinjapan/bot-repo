@@ -74,36 +74,46 @@ def db_find(
     cond=const.NONE_CONSTANT,
     select_data=const.NONE_CONSTANT,
     sort=const.NONE_CONSTANT,
+    one_flg=const.FLG_OFF,
 ):
+
     coll = get_collection(client, coll_nm)
+
+    coll_find = coll.find
+    if one_flg:
+        coll_find = coll.find_one
+
     if cond:
         if select_data and sort:
-            result = coll.find(filter=cond, projection=select_data, sort=sort)
+            result = coll_find(filter=cond, projection=select_data, sort=sort)
         elif select_data:
-            result = coll.find(filter=cond, projection=select_data)
+            result = coll_find(filter=cond, projection=select_data)
         elif sort:
-            result = coll.find(filter=cond, sort=sort)
+            result = coll_find(filter=cond, sort=sort)
         else:
-            result = coll.find(filter=cond)
+            result = coll_find(filter=cond)
     elif select_data:
         if sort:
-            result = coll.find(projection=select_data, sort=sort)
+            result = coll_find(projection=select_data, sort=sort)
         else:
-            result = coll.find(projection=select_data)
+            result = coll_find(projection=select_data)
     elif sort:
-        result = coll.find(sort=sort)
+        result = coll_find(sort=sort)
     else:
-        result = coll.find()
+        result = coll_find()
     return result
 
 
 # データ検索（1件）
-def db_find_one(client, coll_nm: str, cond=const.NONE_CONSTANT):
-    coll = get_collection(client, coll_nm)
-    if cond:
-        result = coll.find_one(filter=cond)
-    else:
-        result = coll.find_one()
+def db_find_one(
+    client,
+    coll_nm: str,
+    cond=const.NONE_CONSTANT,
+    select_data=const.NONE_CONSTANT,
+    sort=const.NONE_CONSTANT,
+):
+    result = db_find(client, coll_nm, cond, select_data, sort, one_flg=const.FLG_ON)
+
     return result
 
 
@@ -119,43 +129,6 @@ def db_update(client, coll_nm: str, cond, update_data):
     coll.update_one(filter=cond, update=update_data)
 
 
-# ユーザー情報検索
-def find_user_info(client, user_id: str):
-    coll = const.COLL_USER_INFO
-    cond = {const.FI_USER_ID: user_id}
-    count = db_count(client, coll, cond)
-    result = const.NONE_CONSTANT if count == 0 else db_find_one(client, coll, cond)
-    return result
-
-
-# ユーザー情報取得
-def get_user_info(user_id: str):
-    client = db_connect()
-    user_info = set_user_info(client, user_id)
-    db_close(client)
-
-    return user_info
-
-
-# ユーザー情報設定
-def set_user_info(client, user_id: str):
-    user_info = find_user_info(client, user_id)
-    if not user_info:
-        return
-
-    user_name = user_info.get(const.FI_USER_NAME)
-    user_div = user_info.get(const.FI_USER_DIV)
-    user_pw = user_info.get(const.FI_USER_PW)
-
-    auth_form = {
-        const.ITEM_USER_ID: user_id,
-        const.ITEM_USER_NAME: user_name,
-        const.ITEM_USER_DIV: user_div,
-        const.ITEM_USER_PW: user_pw,
-    }
-    return auth_form
-
-
 # ログインチェック
 def check_login(input_id: str, input_pw: str, user_info) -> str:
     chk_msg = const.SYM_BLANK
@@ -163,8 +136,8 @@ def check_login(input_id: str, input_pw: str, user_info) -> str:
     network_flg = func.is_network()
     if network_flg:
         if input_id and input_pw and user_info:
-            user_id = user_info[const.ITEM_USER_ID]
-            user_pw = user_info[const.ITEM_USER_PW]
+            user_id = user_info[const.FI_USER_ID]
+            user_pw = user_info[const.FI_USER_PW]
 
             if input_id != user_id:
                 chk_msg = msg_const.MSG_ERR_USER_NOT_EXIST
@@ -182,6 +155,7 @@ def check_login(input_id: str, input_pw: str, user_info) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    user_id = "dev@jh.com"
-    user_info = get_user_info(user_id)
+    client = db_connect()
+    user_info = get_collection(client, const.COLL_USER_INFO)
+    db_close(client)
     func.print_test_data(user_info)
