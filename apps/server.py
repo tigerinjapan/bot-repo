@@ -177,13 +177,15 @@ async def app_exec(request: Request, app_name: str):
 
 
 @app.post("/user/update")
-async def user_update(request: Request):
+async def user_update(request: Request, userId: str = Form(...)):
     # フォームデータをすべて取得
     form_data = await request.form()
     dict_data = dict(form_data)
     user.user_info_update(dict_data)
-    response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
-    return response
+    user_info = get_user_info(userId)
+    request.session[const.STR_USER] = user_info
+    target_html, context = sub.exec_user(request, const.APP_USER)
+    return templates.TemplateResponse(target_html, context)
 
 
 @app.get("/json/{app_name}")

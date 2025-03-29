@@ -36,21 +36,22 @@ function setYear(yearVal) {
 
 // オプション値生成
 function createOptionVal(elemId, valList, defaultVal, selectVal) {
-  const select = document.getElementById(elemId);
+  const selectElem = document.getElementById(elemId);
+  selectElem.innerHTML = SYM_BLANK;
 
   // Option for "SELECT"
   const defaultOption = document.createElement("option");
-  defaultOption.value = "";
+  defaultOption.value = SYM_BLANK;
   defaultOption.textContent = defaultVal;
-  select.appendChild(defaultOption);
+  selectElem.appendChild(defaultOption);
 
   for (let i = 0; i < valList.length; i++) {
     const option = document.createElement("option");
     option.value = valList[i];
     option.textContent = valList[i];
-    select.appendChild(option);
+    selectElem.appendChild(option);
   }
-  select.value = selectVal;
+  selectElem.value = selectVal;
 };
 
 // 性別設定
@@ -130,23 +131,23 @@ function setStation(selectedLine, selectStationVal) {
 };
 
 // 沿線変更時
-function changeLine() {
-  const elemLine = document.getElementById(ID_LINE);
-  elemLine.onchange = function (event) {
-    const selectedLine = event.target.value;
-    setStation(selectedLine, SYM_BLANK);
-  }
+function changeLine(elem) {
+  const lineVal = elem.value;
+  setStation(lineVal, SYM_BLANK);
 }
 
-// ユーザー情報チェック # TODO チェックできていない
+// ユーザー情報チェック
 function checkUserInfo() {
-  const pw = document.getElementById('userPw');
-  const pwCheck = document.getElementById('pwCheck');
-  if (pw.val() != pwCheck.val()) {
-    pw.val(SYM_BLANK);
-    pwCheck.val(SYM_BLANK);
-    pw.focus();
-    alert(MSG_ERR_PASSWORD_NOT_MATCH);
-    return false;
+  const msgElem = document.getElementById("chkMsg");
+
+  const pwVal = document.getElementById("userPw").value;
+  const pwCheckVal = document.getElementById("pwCheck").value;
+  if (pwVal != pwCheckVal) {
+    msgElem.value = MSG_ERR_PASSWORD_NOT_MATCH;
+    document.querySelector("form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      alert(MSG_ERR_PASSWORD_NOT_MATCH);
+      location.reload();
+    });
   }
 };

@@ -81,7 +81,7 @@ function setTopMenu(userDiv, userNm, appNm) {
   }
 
   // 配列を文字列に変換
-  const liMenu = liMenuList.join("");
+  const liMenu = liMenuList.join(SYM_BLANK);
 
   // ログアウトメニュー
   const liLogout = `<li><a href="/logout"><b>` + userNm + ` </b>` + BUTTON_LOGOUT + `</a></li>`;

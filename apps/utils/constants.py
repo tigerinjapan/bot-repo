@@ -428,6 +428,7 @@ PATH_LOGIN = get_path(STR_LOGIN)
 PATH_LOGOUT = get_path(STR_LOGOUT)
 PATH_TODAY = "/app" + get_path(APP_TODAY)
 PATH_NEWS = "/app" + get_path(APP_NEWS)
+PATH_USER = "/app" + get_path(APP_USER)
 PATH_UPDATE = get_path(STR_UPDATE)
 
 ##### HTMLファイル名 #####
