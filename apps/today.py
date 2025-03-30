@@ -21,10 +21,11 @@ NEW_LINE = const.SYM_NEW_LINE
 DIV_DATE = "日時"
 DIV_WEATHER = "天気"
 DIV_WEATHER_PLUS = "天気+"
+DIV_NISA = "NISA"
 DIV_RATE = "為替"
 DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
-DIV_LIST = [DIV_WEATHER, DIV_WEATHER_PLUS, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
+DIV_LIST = [DIV_WEATHER, DIV_WEATHER_PLUS, DIV_NISA, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
 
 
 # アイテムリスト取得
@@ -42,6 +43,9 @@ def get_today_info(msg_flg: bool = const.FLG_ON):
     # 天気
     today_weather_plus = get_today_weather_plus()
 
+    # NISA
+    today_nisa = get_today_nisa()
+
     # 為替
     today_won_rate = get_today_won()
 
@@ -58,6 +62,7 @@ def get_today_info(msg_flg: bool = const.FLG_ON):
     info_list = [
         today_weather,
         today_weather_plus,
+        today_nisa,
         today_won_rate,
         today_outfit,
         today_dinner,
@@ -125,12 +130,25 @@ def get_today_weather_plus() -> str:
     return today_weather_plus
 
 
+# 今日のNISA取得
+def get_today_nisa() -> str:
+    url = f"{const.URL_SMBC_FUND}/182809/"
+    class_ = "sw-FundComparisonTable sw-FundComparisonTable_center"
+    soup = func_bs.get_elem_from_url(url, attr_val=class_)
+    elem = func_bs.find_elem_by_attr(soup, tag=const.TAG_TD, list_flg=const.FLG_ON)[0:2]
+    point = elem[0].text
+    rate = elem[1].text.replace(const.SYM_NEW_LINE, const.SYM_BLANK)
+
+    today_nisa = f"S&P500：{point} ({rate})"
+    return today_nisa
+
+
 # 今日のウォン取得
 def get_today_won() -> str:
     url = f"{const.URL_NAVER_FINANCE}/marketindex/exchangeDetail.naver?marketindexCd=FX_JPYKRW"
     class_ = "tbl_calculator"
 
-    elem = func_bs.get_elem_from_url(url, attr_div=const.ATTR_CLASS, attr_val=class_)
+    elem = func_bs.get_elem_from_url(url, attr_val=class_)
     elem_list = func_bs.find_elem_by_attr(elem, tag=const.TAG_TD, list_flg=const.FLG_ON)
 
     won = elem_list[0].text if elem_list else "1000"

@@ -5,6 +5,7 @@ import apps.today as today
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
+import apps.utils.function_gemini as func_gemini
 from apps.utils.message_constants import MSG_ERR_API_RESPONSE_NONE
 
 # アプリケーション
@@ -260,7 +261,13 @@ def get_msg_data_list(
     text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 
     if msg_type == MSG_TYPE_IMG:
-        text_msg = create_msg_img(msg_div, text_msg, forecast)
+        file_path = func_gemini.get_today_news_image(forecast, text_msg)
+        if not file_path:
+            create_msg_img(msg_div, text_msg, forecast)
+
+        img_url = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_OUTPUT}/{msg_div}"
+        func.print_info_msg(MSG_TYPE_IMG, img_url)
+
     msg_data_list = [msg_type, text_msg]
     return msg_data_list
 
@@ -323,15 +330,12 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
     )
 
     img_file_name = func.get_app_name(file_path)
-    img_url = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_OUTPUT}/{img_file_name}"
-    if func.is_local_env():
-        img_url = file_path
-    func.print_info_msg(MSG_TYPE_IMG, img_url)
-    return img_url
+    return img_file_name
 
 
 if __name__ == const.MAIN_FUNCTION:
     msg_list = get_msg_list()
     # func.print_test_data(msg_list)
+    # main()
     # main(auto_flg=const.FLG_OFF)
     # main(data_flg=const.FLG_OFF)

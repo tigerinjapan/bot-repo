@@ -57,6 +57,11 @@ CHARSET_UTF_8 = "utf-8"
 CHARSET_ASCII = "ascii"
 CHARSET_SJIS = "sjis"
 
+##### 言語コード #####
+LANG_EN = "en"
+LANG_JA = "ja"
+LANG_KO = "ko"
+
 ##### 日付フォーマット #####
 DATE_FORMAT_OUTPUT_FILE = "%Y%m%d%H%M%S"
 DATE_FORMAT_YYYYMMDD = "%Y%m%d"
@@ -382,6 +387,7 @@ FI_LAST_LOGIN_DATE = convert_field(TYPE_DATE, ITEM_LAST_LOGIN_DATE)
 URL_GOOGLE = "https://www.google.com"
 URL_TENKI = "https://tenki.jp"
 URL_RAKUTEN_RECIPE = "https://recipe.rakuten.co.jp/menu/"
+URL_SMBC_FUND = "https://www.smd-am.co.jp/fund"
 URL_NAVER_FINANCE = "https://finance.naver.com"
 URL_NAVER_SEARCH = "https://search.naver.com"
 URL_KONEST = "https://www.konest.com"

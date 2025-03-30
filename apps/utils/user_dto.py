@@ -29,7 +29,7 @@ class userInfo:
     sTel: str
     nSeq: int
     dModifiedDate: datetime = const.DATETIME_NOW
-    dLastLoginDate: datetime = const.DATETIME_NOW  # TODO ログイン時に、更新する
+    dLastLoginDate: datetime = const.DATETIME_NOW
 
     def get_data(self):
         return asdict(self)

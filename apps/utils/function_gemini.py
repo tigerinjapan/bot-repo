@@ -2,8 +2,11 @@
 
 import sys
 
+from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO
+
 from google import genai
-from google.genai.types import Part
+from google.genai import types
 from google.genai.errors import ServerError
 
 import apps.utils.constants as const
@@ -65,19 +68,105 @@ def get_generate_content(contents):
     return result
 
 
+# 生成イメージ取得
+def get_generate_image(div: str, contents: str, msg_data):
+    client = genai.Client(api_key=GEMINI_API_KEY)
+
+    # サンプル
+    # contents = (
+    #     "Hi, can you create a 3d rendered image of a pig "
+    #     "with wings and a top hat flying over a happy "
+    #     "futuristic city with lots of greenery?"
+    # )
+
+    response = client.models.generate_content(
+        model="gemini-2.0-flash-exp-image-generation",
+        contents=contents,
+        config=types.GenerateContentConfig(response_modalities=["Text", "Image"]),
+    )
+
+    for part in response.candidates[0].content.parts:
+        if part.text is not None:
+            continue
+        elif part.inline_data is not None:
+            # div = const.DATE_NOW + str(idx).zfill(3)
+            file_path = func.get_file_path(div, const.FILE_TYPE_JPEG, const.STR_OUTPUT)
+            image_open = Image.open(BytesIO((part.inline_data.data)))
+            if msg_data:
+                msg = msg_data["msg"]
+                font_type = msg_data["font_type"]
+                font_size = msg_data["font_size"]
+                xy_size = msg_data["xy_size"]
+
+                draw = ImageDraw.Draw(image_open)
+
+                font_path = func.get_file_path(font_type, const.FILE_TYPE_TTC)
+                font = ImageFont.truetype(font=font_path, size=font_size)
+
+                draw.text(xy=xy_size, text=msg, fill="black", font=font, align="left")
+
+            size = (480, 320)
+            img = image_open.resize(size)
+            img.save(file_path, optimize=const.FLG_ON)
+            return file_path
+
+    return const.NONE_CONSTANT
+
+
+# ニュースイメージ取得
+def get_today_news_image(forecast: str, msg: str):
+    div = const.APP_TODAY
+
+    contents = (
+        "空白で何も表示されていない画面がある。"
+        "その画面は、テレビ放送用の大きいモニター画面である。"
+        "番組名は、「Today's Morning News」である。"
+        "番組ロゴは、モニター画面の中で、上部の中央に表示する。"
+        f"背景は、「{forecast}」が分かるようなイメージにする。"
+        "但し、黒字がよく見えるように、黒系の色は避ける。"
+        "天気キャスターの女性が、モニター画面の中で、右下にいる。"
+        "その女性は、日本人の50代で、童顔で、笑顔が素敵で、明るくて、可愛い人。"
+        "イメージのサイズは、480ピクセル X 320ピクセル。"
+        "そのサイズに合わせて、イメージを生成。"
+        "イメージには、日本語、漢字などは、表示しない。"
+    )
+
+    today_weather = "sunny"
+    if "雨" in forecast:
+        today_weather = "rainy"
+    elif "雪" in forecast:
+        today_weather = "snowy"
+    elif "曇" in forecast:
+        today_weather = "cloudy"
+    contents = (
+        "A blank screen with nothing displayed is visible."
+        "The full screen is a large monitor used for television broadcasting."
+        "The program's name is 'Today's Morning News.'"
+        "The program logo should be displayed in the top-center of the monitor screen."
+        f"The background should be an image that conveys the idea of '{today_weather}'."
+        "However, to ensure that black text is clearly visible, black-based colors should be avoided."
+        "The weather caster woman should be positioned in the bottom-right corner of the monitor screen."
+        "The woman is Japanese, in her 50s, has a youthful face, a lovely smile, a bright and cheerful personality and cute and pretty, and is charming."
+        "The image size should be 480 pixels by 360 pixels."
+        "Generate the image according to this size."
+        "The image should not display any Japanese text or kanji."
+    )
+    msg_data = {"msg": msg, "font_type": "uzura", "font_size": 28, "xy_size": (90, 160)}
+    file_path = get_generate_image(div, contents, msg_data)
+    return file_path
+
+
 # おすすめコーデ・夕食取得
 def get_recommend_outfit_dinner(today_weather: str):
     contents = (
         f"{today_weather}{NEW_LINE}上記の内容を元に、"
-        + "気温と季節を考慮し、今日のコーデ・夕食をおすすめしてください。"
+        "気温と季節を考慮し、今日のコーデ・夕食をおすすめしてください。"
     )
     condition_list = [
         "コーデは、1番目が上着、2番目が中に着るもの",
         "夕食は、1番目が主食、2番目がおかず",
         "コーデ・夕食のそれぞれおすすめしたものを、&で結合",
         f"コーデ・夕食は、コンマ区切り、{NUM_WRAP_WIDTH}バイト未満",
-        "絵文字を使用。言葉の代わりには使用しない",
-        "絵文字は、環境依存せず、全てのデバイスに適用されるものにする",
         "解説と他の文言は不要",
     ]
     conditions = get_prompt_conditions(condition_list)
@@ -236,11 +325,14 @@ def test_gemini_image():
     # イメージ生成リクエストの送信
     try:
         response = client.models.generate_images(
-            model="imagen-3.0",  # 無料版で利用可能なモデル名を確認
+            model="imagen-3.0-generate-002",  # 無料版で利用可能なモデル名を確認
             prompt="A serene landscape with mountains and a clear blue lake",  # イメージの説明
             # size="360x360",  # 対応する画像サイズを指定
         )
-        response.generated_images[0].image.show()
+
+        for generated_image in response.generated_images:
+            image = Image.open(BytesIO(generated_image.image.image_bytes))
+            image.show()
 
         # レスポンスから生成された画像URLを取得
         if response and "image_url" in response:
@@ -255,4 +347,6 @@ def test_gemini_image():
 
 if __name__ == const.MAIN_FUNCTION:
     # test_gemini()
-    test_gemini_image()
+    # test_gemini_image()
+    today_weather = "晴れのち曇り"
+    get_today_news_image(today_weather)
