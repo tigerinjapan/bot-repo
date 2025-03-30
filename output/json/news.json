@@ -1,22 +1,18 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUA287V00Y5A320C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">日本郵政の増田寛也社長が退任後任に日本郵便の根岸氏</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUB2126S0R20C25A3000000/\" target=\"_blank\" rel=\"noopener noreferrer\">金融庁\n仮想通貨にインサイダー規制金商法改正へ</a>"
     },
     {
         "区分": "AI",
         "今日のニュース": "<a href=\"https://www.itmedia.co.jp/news/articles/2503/28/news135.html\" target=\"_blank\" rel=\"noopener noreferrer\">      ChatGPTの新画像生成、利用急増で無料ユーザー向け延期「GPUが溶けてる」とCEO    </a>"
     },
     {
-        "区分": "韓国",
-        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=54818\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 女優ハンジミンを侮辱脅迫30代の女を書類送検韓国</a>"
-    },
-    {
         "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/484241.html\" target=\"_blank\" rel=\"noopener noreferrer\">ヒョンビン&ソンイェジン夫婦\n深刻な問題\n間違った選択のため</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/484327.html\" target=\"_blank\" rel=\"noopener noreferrer\">キムスヒョン主演映画「リアル」前監督\n露出オーディション騒動について釈明</a>"
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/484232.html\" target=\"_blank\" rel=\"noopener noreferrer\">「NCT」テヨン\n山火事被害支援の義援金1000万円寄付\n軍服務中も善行</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/484330.html\" target=\"_blank\" rel=\"noopener noreferrer\">「BTS(防弾少年団)」\n「血\n汗\n涙」のMVが10億ビュー突破\n通算8回目</a>"
     }
 ]

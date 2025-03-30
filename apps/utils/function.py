@@ -266,12 +266,20 @@ def get_input_data(div: str, input_div: str):
     return input_data
 
 
-# DataFrameからJSON出力
-def df_to_json(div: str, df):
-    # DataFrameをJSONファイルに出力
-    file_path = get_file_path(div, const.FILE_TYPE_JSON, const.STR_OUTPUT)
+# DataFrame初期化
+def init_df():
+    df = pd.DataFrame()
+    return df
 
-    if is_local_env():
+
+# DataFrameからJSON出力
+def df_to_json(
+    div: str, df, file_div: str = const.STR_OUTPUT, dict_flg: bool = const.FLG_OFF
+):
+    # DataFrameをJSONファイルに出力
+    file_path = get_file_path(div, const.FILE_TYPE_JSON, file_div)
+
+    if dict_flg or is_local_env():
         # DataFrameをリスト形式の辞書に変換
         data = df.to_dict(orient="records")
     else:
@@ -287,16 +295,42 @@ def get_df_read_json(file_path: str):
     return df
 
 
+# CSVからDataFrameデータ取得
+def get_df_read_csv(file_path: str):
+    df = pd.read_csv(file_path)
+    return df
+
+
 # JSONからDataFrameデータ取得
 def get_df_from_json(div: str, file_div: str = const.STR_OUTPUT):
-    # DataFrame初期化
-    df = pd.DataFrame()
+    df, file_path = get_df_from_file_path(div, file_div, file_type=const.FILE_TYPE_JSON)
+    return df, file_path
 
-    file_path = get_file_path(div, const.FILE_TYPE_JSON, file_div)
+
+# CSVからDataFrameデータ取得
+def get_df_from_csv(div: str, file_div=const.STR_INPUT):
+    df, file_path = get_df_from_file_path(div, file_div, file_type=const.FILE_TYPE_CSV)
+    return df, file_path
+
+
+# JSONからDataFrameデータ取得
+def get_df_from_file_path(div: str, file_div, file_type):
+    # DataFrame初期化
+    df = init_df()
+
+    file_path = get_file_path(div, file_type, file_div)
 
     if check_path_exists(file_path):
-        # func[read_json]:Read JSON file with Pandas
-        df = get_df_read_json(file_path)
+        if file_type == const.FILE_TYPE_JSON:
+            # func[read_json]:Read JSON file with Pandas
+            df = pd.read_json(file_path)
+
+        elif file_type == const.FILE_TYPE_CSV:
+            if div == const.STR_ZIP_CODE:
+                # func[read_csv]:Read CSV file with Pandas
+                df = pd.read_csv(file_path, dtype={div: str})
+            else:
+                df = pd.read_csv(file_path)
     else:
         print_error_msg(file_path, msg_const.MSG_ERR_FILE_NOT_EXIST)
 

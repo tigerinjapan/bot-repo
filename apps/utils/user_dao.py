@@ -33,12 +33,14 @@ def find_user_info(client, user_id: str):
 
 
 # 連番取得
-def get_user_seq(client):
+def get_user_seq():
+    client = func_mongo.db_connect()
     cond = {const.FI_USER_DIV: {"$eq": const.AUTH_GUEST}}
     select_data = {const.FI_SEQ: 1}
     sort = [(const.FI_SEQ, DESCENDING)]
     result = func_mongo.db_find(client, COLL, cond, select_data, sort)
     seq = result[0].get(const.FI_SEQ) + 1
+    func_mongo.db_close(client)
     return seq
 
 
@@ -55,16 +57,22 @@ def update_user_info(client, user_id, update_data):
 
 
 # ユーザー情報登録（フォーム）
-def insert_user_info_on_form(client, form_data):
+def insert_user_info_on_form(form_data):
+    client = func_mongo.db_connect()
     insert_data = dto.get_json_data_for_user_info(form_data)
     insert_user_info(client, insert_data)
+    func_mongo.db_close(client)
 
 
 # ユーザー情報更新（フォーム）
-def update_user_info_on_form(client, form_data):
-    update_data = dto.get_json_data_for_user_info(form_data)
+def update_user_info_on_form(form_data, form_flg: bool = const.FLG_ON):
+    client = func_mongo.db_connect()
+    update_data = form_data
+    if form_flg:
+        update_data = dto.get_json_data_for_user_info(form_data)
     user_id = update_data[const.FI_USER_ID]
     update_user_info(client, user_id, update_data)
+    func_mongo.db_close(client)
 
 
 if __name__ == const.MAIN_FUNCTION:

@@ -149,7 +149,7 @@ def get_json_for_line(msg_list: list[list[str]]):
     for msg_data in msg_list:
         msg_type = msg_data[0]
         text_msg = msg_data[1]
-        json_object = {"type": msg_type}
+        json_object = {const.STR_TYPE: msg_type}
 
         if msg_type == MSG_TYPE_IMG:
             img_url = text_msg

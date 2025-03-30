@@ -14,13 +14,12 @@ from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 
 import apps.line as line
-import apps.user as user
 import apps.app_exec as sub
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
 from apps.utils.function_mongo import check_login
-from apps.utils.user_dao import get_user_info
+from apps.utils.user_dao import get_user_info, update_user_info_on_form
 
 # fast api
 app = FastAPI()
@@ -30,10 +29,8 @@ templates = Jinja2Templates(directory="templates")
 # トークン認証
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-# トークン情報を保存する辞書 (メモリ内)
-token_store = {}
-TOKEN_EXPIRATION_MINUTES = 10  # トークン有効期限 (10分)
-VALID_TOKEN = "secret-token"
+# トークン有効期限 (10分)
+TOKEN_EXPIRATION_MINUTES = 10
 
 # 開発データ
 dev_user = func.get_input_data(const.STR_AUTH, const.STR_USER)
@@ -77,42 +74,43 @@ def token_required(func_):
 
 
 @app.post("/token")
-async def issue_token():
+async def issue_token(request: Request):
     # ランダムなトークンを生成
     token = secrets.token_hex(16)  # 32文字のランダムなトークン
+    access_token = "token_" + const.DATE_TODAY
     expiration = datetime.now() + timedelta(minutes=TOKEN_EXPIRATION_MINUTES)
 
     # トークン情報を保存
     token_data = {
-        "access_token": token,
-        "token_type": "bearer",
-        "expiration": expiration,
+        const.STR_TOKEN: token,
+        const.STR_TYPE: "bearer",
+        const.STR_EXPIRATION: expiration,
     }
+    request.session[const.STR_TOKEN] = token_data
     return token_data
 
 
 @app.get("/protected-resource")
-async def protected_resource(token: str):
-    expiration = datetime.now() + timedelta(minutes=TOKEN_EXPIRATION_MINUTES)
+async def protected_resource(request: Request, token: str):
+    chk_msg = const.SYM_BLANK
 
+    token_store = request.session[const.STR_TOKEN]
     if token_store:
         # トークンを検証
-        token_data = token_store.get(token)  # TODO 追加テスト要
+        token_data = token_store.get(token)
+        if token_data:
+            expiration = token_store[const.STR_EXPIRATION]
+
+            # トークンの有効期限を確認
+            if expiration < const.DATETIME_NOW:
+                chk_msg = msg_const.MSG_ERR_TOKEN_EXPIRED
+        else:
+            chk_msg = msg_const.MSG_ERR_TOKEN_NOT_EXIST
     else:
-        access_token = "token_" + const.DATE_TODAY
+        chk_msg = msg_const.MSG_ERR_TOKEN_NOT_EXIST
 
-    token_data = {
-        "access_token": access_token,
-        "token_type": "bearer",
-        "expiration": expiration,
-    }
-
-    if not token_data or token != token_data["access_token"]:
-        raise HTTPException(status_code=403, detail=msg_const.MSG_ERR_INVALID_TOKEN)
-
-    # トークンの有効期限を確認
-    # if expiration < datetime.now():
-    #     raise HTTPException(status_code=403, detail="Token has expired")
+    if chk_msg:
+        raise HTTPException(status_code=403, detail=chk_msg)
 
     return {"message": "Access to the protected resource granted."}
 
@@ -148,6 +146,11 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
         response = templates.TemplateResponse(const.HTML_INDEX, context)
     else:
         request.session[const.STR_USER] = user_info
+        update_data = {
+            const.FI_USER_ID: userId,
+            const.FI_LAST_LOGIN_DATE: const.DATETIME_NOW,
+        }
+        update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
         response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
         func.print_info_msg(user_info[const.FI_USER_NAME], msg_const.MSG_INFO_LOGIN)
 
@@ -181,7 +184,7 @@ async def user_update(request: Request, userId: str = Form(...)):
     # フォームデータをすべて取得
     form_data = await request.form()
     dict_data = dict(form_data)
-    user.user_info_update(dict_data)
+    update_user_info_on_form(dict_data)
     user_info = get_user_info(userId)
     request.session[const.STR_USER] = user_info
     target_html, context = sub.exec_user(request, const.APP_USER)
@@ -193,6 +196,15 @@ async def user_update(request: Request, userId: str = Form(...)):
 async def app_json(request: Request):
     app_name = request.path_params["app_name"]
     result = func.get_json_data(app_name, const.STR_OUTPUT)
+    return result
+
+
+@app.get("/api/{api_name}/{param}")
+async def app_api(request: Request):
+    api_name = request.path_params["api_name"]
+    param = request.path_params["param"]
+    json_data = func.get_json_data(api_name)
+    result = json_data.get(param)
     return result
 
 

@@ -20,7 +20,8 @@ const STR_LINE_JA = "沿線";
 const STR_STATION_JA = "駅";
 
 // URL
-const URL_ZIP_API = "http://zipcloud.ibsnet.co.jp/api";
+const URL_SERVER = "https://kobe-dev.koyeb.app";
+const URL_ZIP_API = `${URL_SERVER}/api/zipCode`;
 const URL_ADDR_INFO = "https://express.heartrails.com";
 const URL_ADDR_API = `${URL_ADDR_INFO}/api/json?method=get`;
 const URL_LINE_API = `${URL_ADDR_API}${STR_LINES}`;
@@ -71,15 +72,14 @@ function getAddress() {
 function setAddress(selectLineVal, selectStationVal) {
   // 郵便番号より、住所取得
   const zipCd = document.getElementById(ID_ZIP_CD);
-  const zipCdUrl = `${URL_ZIP_API}/search?zipcode=${zipCd.value}`;
+  const zipCdUrl = `${URL_ZIP_API}/${zipCd.value}`;
 
   fetch(zipCdUrl)
     .then(response => response.json())
     .then(data => {
       // 郵便番号より、住所設定
-      const result = data.results[0];
-      const prefVal = result.address1;
-      const townVal = result.address2;
+      const prefVal = data.pref;
+      const townVal = data.city;
       document.getElementById(ID_PREF).value = prefVal;
       document.getElementById(ID_TOWN).value = townVal;
 
@@ -149,5 +149,15 @@ function checkUserInfo() {
       alert(MSG_ERR_PASSWORD_NOT_MATCH);
       location.reload();
     });
+  }
+};
+
+
+// ローカル環境判定
+function isLocal() {
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    return true;
+  } else {
+    return false;
   }
 };

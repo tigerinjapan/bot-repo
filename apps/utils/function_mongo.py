@@ -48,9 +48,6 @@ def db_close(client):
 
 # コレクション取得
 def get_collection(client, collection_name: str):
-    if not client:
-        client = db_connect()
-
     # データベース指定
     db = client[DB_NAME]
 

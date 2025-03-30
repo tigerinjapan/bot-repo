@@ -15,7 +15,6 @@ import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
-import apps.utils.function_mongo as func_mongo
 import apps.utils.message_constants as msg_const
 from apps.utils.function_beautiful_soup import get_data_from_url
 
@@ -190,7 +189,7 @@ def get_local_url() -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    update_news()
-    # app_name = const.APP_STUDY
-    # update_news(app_name)
+    # update_news()
+    app_name = const.APP_STUDY
+    update_news(app_name)
     # test_api()
