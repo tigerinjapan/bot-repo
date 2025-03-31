@@ -155,7 +155,7 @@ def get_today_news_image(forecast: str, msg: str):
         "Generate the image according to this size."
         "The image should not display any Japanese text or kanji."
     )
-    msg_data = {"msg": msg, "font_type": "uzura", "font_size": 30, "xy_size": (90, 160)}
+    msg_data = {"msg": msg, "font_type": "uzura", "font_size": 28, "xy_size": (100, 160)}
     file_path = get_generate_image(div, contents, msg_data)
     return file_path
 

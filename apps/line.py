@@ -235,7 +235,7 @@ def get_json_object(msg_type: str = const.SYM_BLANK):
 # テンプレート・メッセージ取得
 def get_template_msg():
     base_url = URL_KOYEB_APP
-    img_url = f"/{URL_OUTPUT_IMG}/test"
+    img_url = f"/{URL_OUTPUT_IMG}/{FILE_DIV_TODAY}"
 
     json_object = {
         "type": MSG_TYPE_TMP,
@@ -257,12 +257,12 @@ def get_template_msg():
                 {
                     "type": "uri",
                     "label": "今日の生活情報",
-                    "uri": f"{base_url}/json/today",
+                    "uri": f"{base_url}/app/today",
                 },
                 {
                     "type": "uri",
-                    "label": "LCCニュース",
-                    "uri": f"{base_url}/json/lcc",
+                    "label": "ユーザー情報設定",
+                    "uri": f"{base_url}/app/user",
                 },
             ],
         },
@@ -278,7 +278,7 @@ def get_msg_data_list(
     date_today: str = const.SYM_BLANK,
     forecast: str = const.SYM_BLANK,
 ) -> list[str]:
-    text_title = get_title(msg_div, date_today, msg_type)
+    text_title = get_title(msg_div, msg_type, date_today)
     text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 
     if msg_type == MSG_TYPE_IMG:
@@ -296,13 +296,19 @@ def get_msg_data_list(
 
 
 # タイトル取得
-def get_title(div: str, date_today: str, msg_type: str = const.SYM_BLANK) -> str:
-    title_div = date_today
+def get_title(
+    div: str, msg_type: str = const.SYM_BLANK, date_today: str = const.SYM_BLANK
+) -> str:
+
+    title_div = div.upper()
 
     if div == FILE_DIV_NEWS:
         title_div = news.DIV_NEWS.format(const.SYM_BLANK)
     elif div == FILE_DIV_AI_NEWS:
         title_div = news.DIV_AI_NEWS
+    else:
+        if date_today:
+            title_div = date_today
 
     title_txt = DIV_MARK_TXT.format(title_div)
     title_img = DIV_MARK_IMG.format(title_div)
