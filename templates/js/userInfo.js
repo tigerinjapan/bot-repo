@@ -90,7 +90,7 @@ function setAddress(selectLineVal, selectStationVal) {
       document.getElementById(ID_TOWN).value = townVal;
 
       const lineUrl = `${URL_LINE_API}&prefecture=${prefVal}`;
-      fetch(lineUrl, api_header)
+      fetch(lineUrl)
         .then(response => response.json())
         .then(data => {
           // 沿線設定
@@ -117,7 +117,7 @@ function setAddress(selectLineVal, selectStationVal) {
 // 駅設定
 function setStation(selectedLine, selectStationVal) {
   const stationUrl = `${URL_STATION_API}&line=${selectedLine}`;
-  fetch(stationUrl, api_header)
+  fetch(stationUrl)
     .then(response => response.json())
     .then(data => {
       const itemList = data.response.station;
