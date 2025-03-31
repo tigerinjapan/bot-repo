@@ -1,4 +1,4 @@
-# 説明：Playwright関数
+# 説明: Playwright関数
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -77,7 +77,7 @@ def get_elem_by_locator(
     elem = page.locator(attr_name)
 
     if list_flg:
-        func.print_info_msg("要素の数：", elem.count())
+        func.print_info_msg("要素の数: ", elem.count())
     return elem
 
 

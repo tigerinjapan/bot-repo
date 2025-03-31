@@ -1,4 +1,4 @@
-# 説明：ドラマランキング
+# 説明: ドラマランキング
 
 import apps.utils.constants as const
 import apps.utils.function as func

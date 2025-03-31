@@ -1,4 +1,4 @@
-# 説明：TV番組検索
+# 説明: TV番組検索
 
 import apps.utils.constants as const
 import apps.utils.function as func

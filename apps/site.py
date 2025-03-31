@@ -1,4 +1,4 @@
-# 説明：メニュー
+# 説明: メニュー
 
 import pandas as pd
 

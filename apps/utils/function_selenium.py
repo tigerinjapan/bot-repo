@@ -1,4 +1,4 @@
-# 説明：Selenium関数
+# 説明: Selenium関数
 
 import sys
 
@@ -30,7 +30,7 @@ def get_webdriver():
     # ブラウザオプション設定
     options = webdriver.ChromeOptions()
 
-    # オプション：ブラウザの表示
+    # オプション: ブラウザの表示
     browser_display_options = [
         "--start-maximized",  # ウィンドウ最大化
         "--window-size=1920x1080",  # ウィンドウサイズ指定
@@ -43,7 +43,7 @@ def get_webdriver():
         option_add_arg = "--headless"  # ヘッドレスモードで実行
     browser_display_options.append(option_add_arg)
 
-    # オプション：セキュリティ
+    # オプション: セキュリティ
     security_options = [
         "--no-sandbox",  # サンドボックス無効化
     ]
@@ -58,7 +58,7 @@ def get_webdriver():
             "--ignore-ssl-errors",  # SSLエラー無視
         ]
 
-    # オプション：パフォーマンス
+    # オプション: パフォーマンス
     performance_options = [
         "--disable-gpu",  # GPU無効化
     ]
@@ -69,13 +69,13 @@ def get_webdriver():
             "--disable-accelerated-2d-canvas",  # ハードウェアアクセラ無効化
         ]
 
-    # オプション：自動化とログ
+    # オプション: 自動化とログ
     automation_and_log_options = [
         "--disable-blink-features=AutomationControlled",  # 自動化フラグ無効化
         "--log-level=3",  # ログ出力抑制
     ]
 
-    # オプション：その他
+    # オプション: その他
     other_options = [
         # "--disable-javascript",  # JavaScript無効化
         "--user-agent=MyCustomUserAgent",  # ユーザーエージェント設定

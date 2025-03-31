@@ -1,4 +1,4 @@
-# 説明：LINEメッセージAPI
+# 説明: LINEメッセージAPI
 
 import apps.news as news
 import apps.today as today
@@ -14,6 +14,7 @@ app_name = func.get_app_name(__file__)
 # URL
 URL_LINE_API = "https://api.line.me"
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
+URL_OUTPUT_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_OUTPUT}"
 
 # LINE API情報
 STR_LINE_API = "LINE API"
@@ -40,16 +41,27 @@ DIV_MARK_TXT = "*-- {} --*"
 DIV_MARK_IMG = "=== {} ==="
 
 # プロパティ
-LINE_IMG_DIV = func.get_env_val("LINE_IMG_DIV")
-IMG_DIV_0 = str(const.NUM_ZERO)
-IMG_DIV_1 = str(const.NUM_ONE)
-IMG_DIV_2 = str(const.NUM_TWO)
+LINE_IMG_DIV = func.get_env_val(
+    "LINE_IMG_DIV", decode_flg=const.FLG_OFF, int_flg=const.FLG_ON
+)
 NUM_IMG_MAX_SEQ = 4
 FONT_TYPE = "uzura"
 WEEKLY_DIV_FRI = "Fri"
 
 
-def main(auto_flg: bool = const.FLG_ON, data_flg: bool = const.FLG_ON):
+def main(
+    auto_flg: bool = const.FLG_ON,
+    data_flg: bool = const.FLG_ON,
+    proc_flg: bool = const.FLG_ON,
+):
+    """
+    メインの処理を実行
+
+    引数:
+        auto_flg (bool): 自動処理を有効にするフラグ
+        data_flg (bool): データ処理を有効にするフラグ。False: テンプレート送信
+        proc_flg (bool): 処理実行を有効にするフラグ
+    """
 
     func.print_start(app_name)
 
@@ -62,7 +74,10 @@ def main(auto_flg: bool = const.FLG_ON, data_flg: bool = const.FLG_ON):
 
         if use_cnt <= (MAX_MSG_API_CNT - 20):
             if data_flg:
-                msg_list = get_msg_list(auto_flg)
+                if proc_flg:
+                    msg_list = get_msg_list(auto_flg)
+                else:
+                    msg_list = [[MSG_TYPE_IMG, f"{URL_OUTPUT_IMG}/{FILE_DIV_TODAY}"]]
 
                 # メッセージ取得
                 data = get_json_for_line(msg_list)
@@ -86,14 +101,16 @@ def get_channel_access_token() -> str:
         "client_secret": LINE_CHANNEL_SECRET,
     }
 
-    response = func_api.get_response_result(
-        url, request_type=const.REQUEST_TYPE_POST, headers=headers, data=data
+    result = func_api.get_response_result(
+        url,
+        request_type=const.REQUEST_TYPE_POST,
+        headers=headers,
+        data=data,
+        header_json_flg=const.FLG_OFF,
     )
-    if not response:
-        func.print_error_msg(const.STR_TOKEN_JA, MSG_ERR_API_RESPONSE_NONE)
-        return const.SYM_BLANK
 
-    result = func.get_loads_json(response.text)
+    if not result:
+        return const.SYM_BLANK
 
     # トークン・タイプ
     token_type = result["token_type"]
@@ -107,17 +124,16 @@ def get_channel_access_token() -> str:
     token = f"{token_type} {access_token}"
 
     expires_min = int(expires_in / 60)
-    func.print_info_msg(const.STR_TOKEN_JA, f"{const.STR_EXPIRE_JA}：{expires_min}分")
+    func.print_info_msg(const.STR_TOKEN_JA, f"{const.STR_EXPIRE_JA}: {expires_min}分")
     return token
 
 
 # メッセージ件数取得
 def check_message_count(access_token: str) -> int:
     url = f"{URL_LINE_API}/v2/bot/message/quota/consumption"
-    headers = {"Content-Type": "application/json", "Authorization": access_token}
-    response = func_api.get_response_result(url, headers=headers)
-    if response:
-        result = func.get_loads_json(response.text)
+    headers = {"Authorization": access_token}
+    result = func_api.get_response_result(url, headers=headers)
+    if result:
         total_usage = result["totalUsage"]
     else:
         total_usage = MAX_MSG_API_CNT
@@ -130,17 +146,13 @@ def check_message_count(access_token: str) -> int:
 # メッセージ送信
 def send_message(access_token: str, json_data):
     url = f"{URL_LINE_API}/v2/bot/message/broadcast"
-    headers = {"Content-Type": "application/json", "Authorization": access_token}
-
-    response = func_api.get_response_result(
+    headers = {"Authorization": access_token}
+    result = func_api.get_response_result(
         url, request_type=const.REQUEST_TYPE_POST, headers=headers, data=json_data
     )
 
-    if response.text:
-        result = func.get_loads_json(response.text)
-        if result:
-            err_msg = f"[{response.status_code}, {response.reason}], {result}"
-            func.print_error_msg(STR_LINE_API, err_msg)
+    if result:
+        func.print_error_msg(STR_LINE_API, result["details"])
 
 
 # LINE送信用のJSONデータ取得
@@ -170,12 +182,7 @@ def get_json_for_line(msg_list: list[list[str]]):
 def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
 
     if auto_flg:
-        today_info, forecast, date_today = today.get_today_info()
-        msg_data = [f"[{div}] {info}" for div, info in today_info]
-
-        msg_data_list = get_msg_data_list(
-            FILE_DIV_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast
-        )
+        msg_data_list, date_today = get_msg_data_today()
     else:
         msg_div = const.STR_NOTIFY
         msg_data = func.get_input_data(const.STR_MESSAGE, msg_div)
@@ -191,6 +198,20 @@ def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
         msg_list.append(msg_data_list)
 
     return msg_list
+
+
+# メッセージデータ取得
+def get_msg_data_today() -> tuple[list[str], str]:
+    today_info = func_api.get_result_on_app(const.APP_TODAY)
+    date_today = today_info[0][today.app_title]
+    forecast = today_info[1][today.app_title].split("・")[0]
+    data_list = [list(info.values()) for info in today_info[1:]]
+    msg_data = [f"[{data[0]}] {data[1]}" for data in data_list]
+
+    msg_data_list = get_msg_data_list(
+        FILE_DIV_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast
+    )
+    return msg_data_list, date_today
 
 
 # LINEメッセージJSONデータ取得
@@ -214,11 +235,11 @@ def get_json_object(msg_type: str = const.SYM_BLANK):
 # テンプレート・メッセージ取得
 def get_template_msg():
     base_url = URL_KOYEB_APP
-    img_url = base_url + f"/{const.STR_IMG}/{const.STR_OUTPUT}/test"
+    img_url = f"/{URL_OUTPUT_IMG}/test"
 
     json_object = {
         "type": MSG_TYPE_TMP,
-        "altText": "LINEテスト：テンプレート・メッセージ",
+        "altText": "LINEテスト: テンプレート・メッセージ",
         "template": {
             "type": "buttons",
             "thumbnailImageUrl": img_url,
@@ -261,11 +282,13 @@ def get_msg_data_list(
     text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 
     if msg_type == MSG_TYPE_IMG:
-        file_path = func_gemini.get_today_news_image(forecast, text_msg)
-        if not file_path:
-            create_msg_img(msg_div, text_msg, forecast)
+        if msg_div == FILE_DIV_TODAY:
+            file_path = func_gemini.get_today_news_image(forecast, text_msg)
+            if not file_path:
+                create_msg_img(msg_div, text_msg, forecast)
 
-        img_url = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_OUTPUT}/{msg_div}"
+        img_url = f"{URL_OUTPUT_IMG}/{msg_div}"
+        text_msg = img_url
         func.print_info_msg(MSG_TYPE_IMG, img_url)
 
     msg_data_list = [msg_type, text_msg]
@@ -321,7 +344,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
     xy_size = (45, 90)
     if div == FILE_DIV_TODAY:
         xy_size = (75, 185)
-        if LINE_IMG_DIV == IMG_DIV_1:
+        if LINE_IMG_DIV == const.NUM_ONE:
             font_size = 16
             xy_size = (60, 120)
 
@@ -334,8 +357,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    msg_list = get_msg_list()
-    # func.print_test_data(msg_list)
-    # main()
+    get_msg_data_today()
+    # main(proc_flg=const.FLG_OFF)
     # main(auto_flg=const.FLG_OFF)
     # main(data_flg=const.FLG_OFF)

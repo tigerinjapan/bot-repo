@@ -1,4 +1,4 @@
-# 説明：関数一覧
+# 説明: 関数一覧
 
 import glob
 import json
@@ -51,7 +51,9 @@ def get_path_split(file_name: str, extension_flg: bool = const.FLG_OFF) -> str:
 
 
 # 環境変数取得
-def get_env_val(var_name: str) -> str:
+def get_env_val(
+    var_name: str, decode_flg: bool = const.FLG_ON, int_flg: bool = const.FLG_OFF
+) -> str | int:
     env_val = os.environ.get(var_name)
     if not env_val:
         env_val = const.SYM_BLANK
@@ -62,7 +64,10 @@ def get_env_val(var_name: str) -> str:
             print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
 
     if env_val:
-        env_val = get_decoding_masking_data(env_val)
+        if decode_flg:
+            env_val = get_decoding_masking_data(env_val)
+        if int_flg:
+            env_val = int(env_val)
 
     return env_val
 
@@ -108,6 +113,13 @@ def get_host_port() -> tuple[str, int]:
         port = const.PORT_NUM
 
     return host, port
+
+
+# ローカルURL取得
+def get_local_url() -> str:
+    host, port = get_host_port()
+    local_url = f"http://{host}:{port}"
+    return local_url
 
 
 # 処理開始メッセージ出力

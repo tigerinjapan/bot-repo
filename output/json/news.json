@@ -1,18 +1,22 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUB2126S0R20C25A3000000/\" target=\"_blank\" rel=\"noopener noreferrer\">金融庁\n仮想通貨にインサイダー規制金商法改正へ</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUB3032H0Q5A330C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">日経平均1502円安 止まる自社株買い､売り崩す海外勢</a>"
     },
     {
         "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/news/articles/2503/28/news135.html\" target=\"_blank\" rel=\"noopener noreferrer\">      ChatGPTの新画像生成、利用急増で無料ユーザー向け延期「GPUが溶けてる」とCEO    </a>"
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/news/articles/2503/29/news102.html\" target=\"_blank\" rel=\"noopener noreferrer\">      イーロンマスク氏、xAIがXを買収したと発表    </a>"
+    },
+    {
+        "区分": "韓国",
+        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=54834\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 BTSジンに無理やりキス 日本人女の捜査中止決定韓国警察</a>"
     },
     {
         "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/484327.html\" target=\"_blank\" rel=\"noopener noreferrer\">キムスヒョン主演映画「リアル」前監督\n露出オーディション騒動について釈明</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/484393.html\" target=\"_blank\" rel=\"noopener noreferrer\">「BTS」V\n山火事の被害支援で2000万円寄付\n「点呼中にニュースを見て\n」</a>"
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/484330.html\" target=\"_blank\" rel=\"noopener noreferrer\">「BTS(防弾少年団)」\n「血\n汗\n涙」のMVが10億ビュー突破\n通算8回目</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/484406.html\" target=\"_blank\" rel=\"noopener noreferrer\">「ENHYPEN」\n爆発的成長の中で5か月ぶりに新曲発売\n4月4日「Loose」公開</a>"
     }
 ]

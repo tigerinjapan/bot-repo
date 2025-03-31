@@ -3,14 +3,16 @@ from pymongo import DESCENDING
 import apps.utils.constants as const
 import apps.utils.function_mongo as func_mongo
 import apps.utils.user_dto as dto
+from apps.utils.function import get_masking_data
 
-# コレクション：ユーザー情報
+# コレクション: ユーザー情報
 COLL = const.COLL_USER_INFO
 
 
 # ユーザー情報取得
-def get_user_info(user_id: str):
+def get_user_info(userId: str):
     client = func_mongo.db_connect()
+    user_id = get_masking_data(userId)
     user_info = find_user_info(client, user_id)
     if not user_info:
         return const.NONE_CONSTANT
@@ -50,7 +52,8 @@ def insert_user_info(client, insert_data):
 
 
 # ユーザー情報更新
-def update_user_info(client, user_id, update_data):
+def update_user_info(client, update_data):
+    user_id = update_data[const.FI_USER_ID]
     cond = {const.FI_USER_ID: user_id}
     update_data = {"$set": update_data}
     func_mongo.db_update(client, COLL, cond, update_data)
@@ -70,8 +73,7 @@ def update_user_info_on_form(form_data, form_flg: bool = const.FLG_ON):
     update_data = form_data
     if form_flg:
         update_data = dto.get_json_data_for_user_info(form_data)
-    user_id = update_data[const.FI_USER_ID]
-    update_user_info(client, user_id, update_data)
+    update_user_info(client, update_data)
     func_mongo.db_close(client)
 
 

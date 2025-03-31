@@ -73,8 +73,14 @@ function setAddress(selectLineVal, selectStationVal) {
   // 郵便番号より、住所取得
   const zipCd = document.getElementById(ID_ZIP_CD);
   const zipCdUrl = `${URL_ZIP_API}/${zipCd.value}`;
+  const api_header = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    },
+  };
 
-  fetch(zipCdUrl)
+  fetch(zipCdUrl, api_header)
     .then(response => response.json())
     .then(data => {
       // 郵便番号より、住所設定
@@ -84,7 +90,7 @@ function setAddress(selectLineVal, selectStationVal) {
       document.getElementById(ID_TOWN).value = townVal;
 
       const lineUrl = `${URL_LINE_API}&prefecture=${prefVal}`;
-      fetch(lineUrl)
+      fetch(lineUrl, api_header)
         .then(response => response.json())
         .then(data => {
           // 沿線設定
@@ -111,7 +117,7 @@ function setAddress(selectLineVal, selectStationVal) {
 // 駅設定
 function setStation(selectedLine, selectStationVal) {
   const stationUrl = `${URL_STATION_API}&line=${selectedLine}`;
-  fetch(stationUrl)
+  fetch(stationUrl, api_header)
     .then(response => response.json())
     .then(data => {
       const itemList = data.response.station;
@@ -155,9 +161,9 @@ function checkUserInfo() {
 
 // ローカル環境判定
 function isLocal() {
+  let localFlg = false;
   if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-    return true;
-  } else {
-    return false;
+    localFlg = true;
   }
+  return localFlg;
 };

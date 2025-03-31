@@ -1,4 +1,4 @@
-# 説明：GEMINI関数
+# 説明: GEMINI関数
 
 import sys
 
@@ -17,8 +17,9 @@ import apps.utils.message_constants as msg_const
 app_name = func.get_app_name(__file__)
 
 # GEMINI API情報
-GEMINI_MODEL = func.get_env_val("GEMINI_MODEL")
 GEMINI_API_KEY = func.get_env_val("GEMINI_API_KEY")
+GEMINI_MODEL = func.get_env_val("GEMINI_MODEL")
+GEMINI_MODEL_IMG = func.get_env_val("GEMINI_MODEL_IMG")
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -80,7 +81,7 @@ def get_generate_image(div: str, contents: str, msg_data):
     # )
 
     response = client.models.generate_content(
-        model="gemini-2.0-flash-exp-image-generation",
+        model=GEMINI_MODEL_IMG,
         contents=contents,
         config=types.GenerateContentConfig(response_modalities=["Text", "Image"]),
     )
@@ -105,7 +106,7 @@ def get_generate_image(div: str, contents: str, msg_data):
 
                 draw.text(xy=xy_size, text=msg, fill="black", font=font, align="left")
 
-            size = (480, 320)
+            size = (480, 360)
             img = image_open.resize(size)
             img.save(file_path, optimize=const.FLG_ON)
             return file_path
@@ -116,17 +117,19 @@ def get_generate_image(div: str, contents: str, msg_data):
 # ニュースイメージ取得
 def get_today_news_image(forecast: str, msg: str):
     div = const.APP_TODAY
+    img_div = "女性"
 
     contents = (
         "空白で何も表示されていない画面がある。"
         "その画面は、テレビ放送用の大きいモニター画面である。"
         "番組名は、「Today's Morning News」である。"
-        "番組ロゴは、モニター画面の中で、上部の中央に表示する。"
+        "番組ロゴは、モニター画面の中で、左上に表示する。"
         f"背景は、「{forecast}」が分かるようなイメージにする。"
         "但し、黒字がよく見えるように、黒系の色は避ける。"
-        "天気キャスターの女性が、モニター画面の中で、右下にいる。"
-        "その女性は、日本人の50代で、童顔で、笑顔が素敵で、明るくて、可愛い人。"
-        "イメージのサイズは、480ピクセル X 320ピクセル。"
+        f"天気キャスターの{img_div}が、モニター画面の中で、右下にいる。"
+        f"{img_div}は、スーツを着ている。"
+        f"{img_div}は、日本人の50代で、童顔で、笑顔が素敵で、明るくて、可愛い人。"
+        "イメージのサイズは、480ピクセル X 360ピクセル。"
         "そのサイズに合わせて、イメージを生成。"
         "イメージには、日本語、漢字などは、表示しない。"
     )
@@ -142,7 +145,7 @@ def get_today_news_image(forecast: str, msg: str):
         "A blank screen with nothing displayed is visible."
         "The full screen is a large monitor used for television broadcasting."
         "The program's name is 'Today's Morning News.'"
-        "The program logo should be displayed in the top-center of the monitor screen."
+        "The program logo should be displayed in the top-left of the monitor screen."
         f"The background should be an image that conveys the idea of '{today_weather}'."
         "However, to ensure that black text is clearly visible, black-based colors should be avoided."
         "The weather caster woman should be positioned in the bottom-right corner of the monitor screen."
@@ -151,7 +154,7 @@ def get_today_news_image(forecast: str, msg: str):
         "Generate the image according to this size."
         "The image should not display any Japanese text or kanji."
     )
-    msg_data = {"msg": msg, "font_type": "uzura", "font_size": 28, "xy_size": (90, 160)}
+    msg_data = {"msg": msg, "font_type": "uzura", "font_size": 30, "xy_size": (90, 160)}
     file_path = get_generate_image(div, contents, msg_data)
     return file_path
 
@@ -218,9 +221,9 @@ def get_news_conditions(add_condition_list: list[str]) -> str:
     if not add_condition_list:
         add_condition_list = [
             f"各ニュースは、最大{NUM_WRAP_WIDTH * 3}バイト以内",
-            "各ニュースの1行目：[ニュースの連番] [キーワード] タイトル",
-            "各ニュースの2～3行目：記事",
-            "各ニュースの4行目：要約した内容の中で、略語とかIT用語があった場合、その意味を記載",
+            "各ニュースの1行目: [ニュースの連番] [キーワード] タイトル",
+            "各ニュースの2～3行目: 記事",
+            "各ニュースの4行目: 要約した内容の中で、略語とかIT用語があった場合、その意味を記載",
             "以下出力例のように、解説と他の文言などは不要",
         ]
 
@@ -233,7 +236,7 @@ def get_news_reference(other_reference: list[str]) -> str:
     reference = [
         "※例",
         f"[1] [Gemini] Geminiの未来{NEW_LINE}議事要約{NEW_LINE}議事要約",
-        "※Gemini：Google生成AI",
+        "※Gemini: Google生成AI",
         f"[2] [DeepSeek] deepSeekのショック{NEW_LINE}議事要約{NEW_LINE}議事要約",
         f"[3] [OpenAI] OpenAIの飛躍{NEW_LINE}議事要約{NEW_LINE}議事要約",
     ]
@@ -252,7 +255,7 @@ def get_add_condition_list(keyword: str):
         "【会話】記事の内容を元に韓国人同士が会話する内容",
         "【会話】会話の中で、記事が何の内容かを全て把握したい",
         f"【会話】会話の中で、{keyword}を一度は使用",
-        "【会話】会話の中で、説明する韓国語熟語は、太字にする：<b>と</b>に囲む",
+        "【会話】会話の中で、説明する韓国語熟語は、太字にする: <b>と</b>に囲む",
         "【会話】文章の終わりに絵文字を使用。言葉の代わりには使用しない",
         "【会話】絵文字は、環境依存せず、全てのデバイスに適用されるものにする",
         "【会話】連番を付けない",
@@ -262,7 +265,7 @@ def get_add_condition_list(keyword: str):
         "【熟語】韓国語熟語の説明は、日本語と同じ表現を使用",
         "【熟語】韓国語熟語の説明は、日本語以外の言語は、不要",
         f"1行に、{NUM_WRAP_WIDTH}バイト未満",
-        "使用しない：*、コンマ、【会話】、【熟語】、대화、숙어",
+        "使用しない: *、コンマ、【会話】、【熟語】、대화、숙어",
         "小数点、4桁以上などの数値の内容は、不要",
         "日本語、韓国語、英語以外の言語は、不要",
         "알겠습니다. 요약해 드리겠습니다. などの内容は、不要",
@@ -275,12 +278,12 @@ def get_add_condition_list(keyword: str):
 def get_other_reference():
     other_reference = [
         "※例",
-        "유리：<b>오빠들</b>, <b>음악프로</b> 1등했데.",
-        "창빈：<b>대단하다</b>. 정말 축하해.",
-        "유리：다음 노래도 1위 했음 좋겠다.",
-        "창빈：<b>그래</b>.",
-        "유리：일본에서 콘서트 <b>보고싶다</b>.",
-        "창빈：그랬으면 좋겠네.",
+        "유리: <b>오빠들</b>, <b>음악프로</b> 1등했데.",
+        "창빈: <b>대단하다</b>. 정말 축하해.",
+        "유리: 다음 노래도 1위 했음 좋겠다.",
+        "창빈: <b>그래</b>.",
+        "유리: 일본에서 콘서트 <b>보고싶다</b>.",
+        "창빈: 그랬으면 좋겠네.",
         NEW_LINE * 2,
         "[1] 오빠들",
         "お兄ちゃんたち。",
@@ -304,7 +307,7 @@ def get_prompt_conditions(
     condition_list_all = condition_list + add_condition_list
     prompt_conditions = const.SYM_NEW_LINE.join(
         condition_title
-        + [f"条件{i+1}：{condition}" for i, condition in enumerate(condition_list_all)]
+        + [f"条件{i+1}: {condition}" for i, condition in enumerate(condition_list_all)]
     )
     return prompt_conditions
 

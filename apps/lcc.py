@@ -1,4 +1,4 @@
-# 説明：LCCニュース
+# 説明: LCCニュース
 
 import apps.utils.constants as const
 import apps.utils.function as func

@@ -35,6 +35,7 @@ def get_connect_info(db_div: str = const.STR_MONGO):
         db_pw = db_div
 
         host = auth_data[const.STR_HOST]
+        host = func.get_decoding_masking_data(host)
         client_url = f"mongodb+srv://{db_user}:{db_pw}@{host}.mongodb.net/{DB_NAME}?retryWrites=true&w=majority"
 
     return client_url
@@ -134,7 +135,9 @@ def check_login(input_id: str, input_pw: str, user_info) -> str:
     if network_flg:
         if input_id and input_pw and user_info:
             user_id = user_info[const.FI_USER_ID]
+            user_id = func.get_decoding_masking_data(user_id)
             user_pw = user_info[const.FI_USER_PW]
+            user_pw = func.get_decoding_masking_data(user_pw)
 
             if input_id != user_id:
                 chk_msg = msg_const.MSG_ERR_USER_NOT_EXIST

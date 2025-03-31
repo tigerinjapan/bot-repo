@@ -1,4 +1,4 @@
-# 説明：メイン処理
+# 説明: メイン処理
 
 import dotenv
 import schedule
@@ -13,9 +13,11 @@ import apps.utils.function as func
 dotenv.load_dotenv()
 
 # ジョブ実行時間を環境変数から取得
-NUM_HOUR_DAILY_JOB = func.get_env_val("NUM_HOUR_DAILY_JOB").zfill(2)
-NUM_MIN_HOURLY_JOB = func.get_env_val("NUM_MIN_HOURLY_JOB").zfill(2)
-NUM_MIN_NO_SLEEP = func.get_env_val("NUM_MIN_NO_SLEEP").zfill(2)
+NUM_HOUR_DAILY_JOB = func.get_env_val("NUM_HOUR_DAILY_JOB", decode_flg=const.FLG_OFF)
+NUM_MIN_HOURLY_JOB = func.get_env_val("NUM_MIN_HOURLY_JOB", decode_flg=const.FLG_OFF)
+NUM_SEC_NO_SLEEP = func.get_env_val(
+    "NUM_SEC_NO_SLEEP", decode_flg=const.FLG_OFF, int_flg=const.FLG_ON
+)
 
 
 def main():
@@ -27,14 +29,12 @@ def main():
 
 
 def job_scheduler():
+    # 毎日指定された時間に実行
+    schedule.every().day.at(NUM_HOUR_DAILY_JOB).do(daily_job)
+
     # 毎日1時間毎に実行
     for hour in range(24):
         schedule.every().day.at(f"{hour:02d}:{NUM_MIN_HOURLY_JOB}").do(hourly_job)
-
-    # ローカル環境でない場合
-    if not func.is_local_env():
-        # 毎日指定された時間に実行
-        schedule.every().day.at(f"{NUM_HOUR_DAILY_JOB}:00").do(daily_job)
 
     pending_cnt = 0
 
@@ -48,20 +48,21 @@ def job_scheduler():
 
         pending_cnt += 1
 
-        # スリープ状態にならないよう、約10分毎に、サーバーアクセス
-        if pending_cnt % 600 == 0:
+        # スリープ状態にならないよう、ジョブ実行後、10分毎に、サーバーアクセス
+        if pending_cnt % NUM_SEC_NO_SLEEP == 0:
             sub.no_sleep()
             pending_cnt = 0
 
 
-# 時次ジョブ：データ更新
+# 時次ジョブ: データ更新
 def hourly_job():
     sub.update_news()
+    line.get_msg_data_today()
 
 
-# 日次ジョブ：LINEメッセージ送信
+# 日次ジョブ: LINEメッセージ送信
 def daily_job():
-    line.main()
+    line.main(proc_flg=const.FLG_OFF)
 
 
 # プログラムのエントリーポイント

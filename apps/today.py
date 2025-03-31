@@ -1,4 +1,4 @@
-# 説明：今日の生活情報
+# 説明: 今日の生活情報
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -25,20 +25,29 @@ DIV_NISA = "NISA"
 DIV_RATE = "為替"
 DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
-DIV_LIST = [DIV_WEATHER, DIV_WEATHER_PLUS, DIV_NISA, DIV_RATE, DIV_OUTFIT, DIV_DINNER]
+DIV_LIST = [
+    DIV_DATE,
+    DIV_WEATHER,
+    DIV_WEATHER_PLUS,
+    DIV_NISA,
+    DIV_RATE,
+    DIV_OUTFIT,
+    DIV_DINNER,
+]
 
 
 # アイテムリスト取得
 def get_item_list():
-    today_info = get_today_info(const.FLG_OFF)[0]
+    today_info_list = get_today_info()
+    today_info = zip(DIV_LIST, today_info_list)
     item_list = [[div, info] for div, info in today_info]
     return item_list
 
 
 # 今日の生活情報取得
-def get_today_info(msg_flg: bool = const.FLG_ON):
+def get_today_info():
     # 天気
-    today_weather, forecast, date_time = get_today_weather()
+    today_weather, date_time = get_today_weather()
 
     # 天気
     today_weather_plus = get_today_weather_plus()
@@ -56,10 +65,12 @@ def get_today_info(msg_flg: bool = const.FLG_ON):
 
     today_outfit = recommend_outfit_dinner[0]
     # today_dinner = recommend_outfit_dinner[1].replace(NEW_LINE, const.SYM_BLANK)
+
+    # 夕食
     today_dinner = get_today_menu()
 
-    col_list = DIV_LIST
-    info_list = [
+    today_info_list = [
+        date_time,
         today_weather,
         today_weather_plus,
         today_nisa,
@@ -67,16 +78,12 @@ def get_today_info(msg_flg: bool = const.FLG_ON):
         today_outfit,
         today_dinner,
     ]
-    if not msg_flg:
-        info_list = [date_time] + info_list
-        col_list = [DIV_DATE] + col_list
 
-    today_info = zip(col_list, info_list)
-    return today_info, forecast, date_time
+    return today_info_list
 
 
 # 今日の天気情報取得
-def get_today_weather() -> tuple[str, str, str]:
+def get_today_weather() -> tuple[str, str]:
     # 天気マップ取得
     elem_forecast_map = func_bs.get_elem_from_url(
         const.URL_TENKI, attr_div=const.ATTR_ID, attr_val="forecast-map-wrap"
@@ -105,7 +112,7 @@ def get_today_weather() -> tuple[str, str, str]:
     rain_prob = get_elem_val_by_class(elem_forecast, "prob-precip")
 
     today_weather = f"{forecast}・{max_temp}/{min_temp}・{rain_prob}"
-    return today_weather, forecast, date_time
+    return today_weather, date_time
 
 
 # 今日の天気情報取得
@@ -126,7 +133,7 @@ def get_today_weather_plus() -> str:
         strip=const.FLG_ON
     )
 
-    today_weather_plus = f"花：{pollen}・黄：{dust}"
+    today_weather_plus = f"花: {pollen}・黄: {dust}"
     return today_weather_plus
 
 
@@ -139,7 +146,7 @@ def get_today_nisa() -> str:
     point = elem[0].text
     rate = elem[1].text.replace(const.SYM_NEW_LINE, const.SYM_BLANK)
 
-    today_nisa = f"S&P500：{point} ({rate})"
+    today_nisa = f"S&P500 = {point} ({rate})"
     return today_nisa
 
 
@@ -152,7 +159,7 @@ def get_today_won() -> str:
     elem_list = func_bs.find_elem_by_attr(elem, tag=const.TAG_TD, list_flg=const.FLG_ON)
 
     won = elem_list[0].text if elem_list else "1000"
-    today_won_rate = f"100{const.STR_YEN_JA}={won}{const.STR_WON_JA}"
+    today_won_rate = f"100{const.STR_YEN_JA} = {won}{const.STR_WON_JA}"
     return today_won_rate
 
 

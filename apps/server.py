@@ -1,4 +1,4 @@
-# 説明：サーバー処理
+# 説明: サーバー処理
 
 from threading import Thread
 
@@ -7,8 +7,7 @@ from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
 from functools import wraps
-from datetime import datetime, timedelta
-import secrets
+from datetime import timedelta
 
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
@@ -31,9 +30,6 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # トークン有効期限 (10分)
 TOKEN_EXPIRATION_MINUTES = 10
-
-# 開発データ
-dev_user = func.get_input_data(const.STR_AUTH, const.STR_USER)
 
 
 # uvicornサーバー起動
@@ -62,66 +58,58 @@ def token_required(func_):
         try:
             token = request.query_params.get("token")
             # token = await oauth2_scheme(request)
-            access_token = "token_" + const.DATE_TODAY
-            if token != access_token:
-                raise HTTPException(status_code=403)
+
+            # トークンを検証
+            chk_msg = await protected_resource(request, token)
+            if chk_msg:
+                raise HTTPException(status_code=403, detail=chk_msg)
+
             return await func_(*args, **kwargs)
         except HTTPException as e:
-            func.print_error_msg(msg_const.MSG_ERR_INVALID_TOKEN, e.detail)
+            func.print_error_msg(e.detail)
             raise e
 
     return wrapper
-
-
-@app.post("/token")
-async def issue_token(request: Request):
-    # ランダムなトークンを生成
-    token = secrets.token_hex(16)  # 32文字のランダムなトークン
-    access_token = "token_" + const.DATE_TODAY
-    expiration = datetime.now() + timedelta(minutes=TOKEN_EXPIRATION_MINUTES)
-
-    # トークン情報を保存
-    token_data = {
-        const.STR_TOKEN: token,
-        const.STR_TYPE: "bearer",
-        const.STR_EXPIRATION: expiration,
-    }
-    request.session[const.STR_TOKEN] = token_data
-    return token_data
 
 
 @app.get("/protected-resource")
 async def protected_resource(request: Request, token: str):
     chk_msg = const.SYM_BLANK
 
-    token_store = request.session[const.STR_TOKEN]
+    # トークンを検証
+    token_store = await issue_token(request)
     if token_store:
-        # トークンを検証
-        token_data = token_store.get(token)
-        if token_data:
-            expiration = token_store[const.STR_EXPIRATION]
-
-            # トークンの有効期限を確認
-            if expiration < const.DATETIME_NOW:
-                chk_msg = msg_const.MSG_ERR_TOKEN_EXPIRED
+        access_token = token_store[const.STR_TOKEN]
+        if access_token:
+            if token != access_token:
+                chk_msg = msg_const.MSG_ERR_INVALID_TOKEN
         else:
             chk_msg = msg_const.MSG_ERR_TOKEN_NOT_EXIST
     else:
         chk_msg = msg_const.MSG_ERR_TOKEN_NOT_EXIST
 
-    if chk_msg:
-        raise HTTPException(status_code=403, detail=chk_msg)
+    return chk_msg
 
-    return {"message": "Access to the protected resource granted."}
+
+@app.post("/token")
+async def issue_token(request: Request):
+    # ランダムなトークンを生成
+    # access_token = secrets.token_hex(16)  # 32文字のランダムなトークン
+    access_token = "token_" + const.DATE_TODAY
+    expiration = const.DATETIME_NOW + timedelta(minutes=TOKEN_EXPIRATION_MINUTES)
+
+    # トークン情報を保存
+    token_data = {
+        const.STR_TOKEN: access_token,
+        const.STR_TYPE: "bearer",
+        # const.STR_EXPIRATION: expiration.strftime(const.DATE_FORMAT_OUTPUT_FILE),
+    }
+    request.session[const.STR_TOKEN] = token_data
+    return token_data
 
 
 @app.get(const.PATH_ROOT)
 async def root(request: Request):
-
-    # if func.is_local_env():
-    #     request.session.clear()
-    #     request.session[const.STR_USER] = dev_user
-
     user = request.session.get(const.STR_USER)
     if user:
         response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
@@ -146,8 +134,9 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
         response = templates.TemplateResponse(const.HTML_INDEX, context)
     else:
         request.session[const.STR_USER] = user_info
+        user_id = func.get_masking_data(userId)
         update_data = {
-            const.FI_USER_ID: userId,
+            const.FI_USER_ID: user_id,
             const.FI_LAST_LOGIN_DATE: const.DATETIME_NOW,
         }
         update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
@@ -172,10 +161,20 @@ async def logout(request: Request):
 
 @app.get("/app/{app_name}")
 async def app_exec(request: Request, app_name: str):
-    if app_name == const.APP_USER:
-        target_html, context = sub.exec_user(request, app_name)
-    else:
-        target_html, context = sub.exec_result(request, app_name)
+    try:
+        if app_name == const.APP_USER:
+            target_html, context = sub.exec_user(request, app_name)
+        else:
+            target_html, context = sub.exec_result(request, app_name)
+    except Exception as e:
+        func.print_error_msg(e)
+        target_html = const.HTML_INDEX
+        context = {
+            const.STR_REQUEST: request,
+            const.STR_TITLE: const.SYSTEM_NAME,
+            const.STR_MESSAGE: msg_const.MSG_INFO_SESSION_EXPIRED,
+        }
+
     return templates.TemplateResponse(target_html, context)
 
 

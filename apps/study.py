@@ -1,4 +1,4 @@
-# 説明：ニュース韓国語
+# 説明: ニュース韓国語
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -31,7 +31,9 @@ def get_item_list(keyword_list: list[str] = []) -> list[str]:
     if not keyword_list:
         keyword_list = LIST_KEYWORD
 
-    for attempt in range(const.MAX_RETRY_CNT):
+    # retry_cnt = const.MAX_RETRY_CNT # TODO 3回だと、時間かかるため、別方法検討要
+    retry_cnt = 1
+    for attempt in range(retry_cnt):
         for keyword in keyword_list:
             news_summary = get_naver_news_summary(keyword)
             if not news_summary:

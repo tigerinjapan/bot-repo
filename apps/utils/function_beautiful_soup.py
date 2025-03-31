@@ -1,4 +1,4 @@
-# 説明：Beautiful Soup関数
+# 説明: Beautiful Soup関数
 
 import requests
 from bs4 import BeautifulSoup as bs

@@ -1,4 +1,4 @@
-# 説明：定数一覧
+# 説明: 定数一覧
 
 import os
 from datetime import datetime
@@ -93,6 +93,9 @@ STATUS_CODE_NORMAL = [200, 201, 204]
 PATTERN_YYYYMMDD = "^[0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$"
 PATTERN_NUMBER = "^[0-9]$"
 PATTERN_NUMBERS = r"(\d+)"
+
+##### API #####
+HEADERS_JSON = {"Content-Type": "application/json"}
 
 ##### 数値 #####
 NUM_ZERO = 0
@@ -285,7 +288,7 @@ STR_YEN_JA = "円"
 STR_WON_JA = "ウォン"
 
 ##### マスキング #####
-MASKING_COMPANY = "company"
+MASKING_COMPANY = "xxxxxx"
 MASKING_STR_UPPER = "XXXX"
 MASKING_STR_LOWER = "xxxx"
 MASKING_NUM = "9999"

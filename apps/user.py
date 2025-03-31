@@ -1,4 +1,4 @@
-# 説明：ユーザー設定
+# 説明: ユーザー設定
 
 import apps.utils.constants as const
 import apps.utils.function as func

@@ -1,4 +1,4 @@
-# 説明：サーバー処理
+# 説明: サーバー処理
 
 from fastapi import Request
 
@@ -9,14 +9,15 @@ import apps.news as news
 import apps.ranking as ranking
 import apps.site as site
 import apps.study as study
-import apps.test as test
 import apps.today as today
 import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.function as func
-import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
 from apps.utils.function_beautiful_soup import get_data_from_url
+
+# URL
+URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
 
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
@@ -166,30 +167,11 @@ def update_news(app_name: str = const.SYM_BLANK):
 
 # スリープ状態にならないようサーバーアクセス
 def no_sleep():
-    url = line.URL_KOYEB_APP
-    get_data_from_url(url, headers=const.NONE_CONSTANT, sleep_flg=const.FLG_OFF)
+    get_data_from_url(URL_KOYEB_APP, headers=const.NONE_CONSTANT, sleep_flg=const.FLG_OFF)
     func.print_info_msg(msg_const.MSG_INFO_SERVER_KEEP_ALIVE)
 
 
-# テストAPI
-def test_api():
-    url = f"{get_local_url}/protected-resource?token=token_{const.DATE_TODAY}"
-    headers = {"Content-Type": "application/json"}
-    response = func_api.get_response_result(url, headers=headers)
-    response_json = func.get_loads_json(response.text)
-    func.print_test_data(response_json, type_flg=const.FLG_ON)
-    return response_json
-
-
-# ローカルURL取得
-def get_local_url() -> str:
-    host, port = func.get_host_port()
-    local_url = f"http://{host}:{port}"
-    return local_url
-
-
 if __name__ == const.MAIN_FUNCTION:
-    # update_news()
-    app_name = const.APP_STUDY
-    update_news(app_name)
-    # test_api()
+    update_news()
+    # app_name = const.APP_STUDY
+    # update_news(app_name)

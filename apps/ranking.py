@@ -1,4 +1,4 @@
-# 説明：ランキング
+# 説明: ランキング
 
 import apps.news as news
 import apps.utils.constants as const

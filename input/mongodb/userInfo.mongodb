@@ -20,10 +20,10 @@ db.userInfo.find({},
 
 // insert documents
 const userData_1 = {
-    "sUserId": "admin@jh.com",
+    "sUserId": "xxxxdmin@xxxxxx",
     "sUserName": "管理",
     "sUserDiv": "admin",
-    "sUserPw": "admin",
+    "sUserPw": "xxxxdminYYYY",
     "nYear": 1980,
     "nSex": 0,
     "sZipCd": "1600000",
@@ -38,10 +38,10 @@ const userData_1 = {
 };
 
 const userData_2 = {
-    "sUserId": "dev@jh.com",
+    "sUserId": "dev@xxxxxx",
     "sUserName": "開発",
     "sUserDiv": "dev",
-    "sUserPw": "dev",
+    "sUserPw": "devYYYY",
     "nYear": 1980,
     "nSex": 0,
     "sZipCd": "1600000",
@@ -56,10 +56,10 @@ const userData_2 = {
 };
 
 const userData_3 = {
-    "sUserId": "yuri@jh.com",
+    "sUserId": "yuri@xxxxxx",
     "sUserName": "ゆり",
     "sUserDiv": "dev",
-    "sUserPw": "yuri",
+    "sUserPw": "yuriYYYY",
     "nYear": 1972,
     "nSex": 1,
     "sZipCd": "2730000",
@@ -74,10 +74,10 @@ const userData_3 = {
 };
 
 const userData_4 = {
-    "sUserId": "guest@jh.com",
+    "sUserId": "guest@xxxxxx",
     "sUserName": "ゲスト",
     "sUserDiv": "guest",
-    "sUserPw": "guest",
+    "sUserPw": "guestYYYY",
     "nYear": 1980,
     "nSex": 1,
     "sZipCd": "1600000",

@@ -2,19 +2,32 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 
 import apps.utils.constants as const
+from apps.utils.function import get_masking_data
 
 
 class Document:
     def __init__(self, **kwargs):
+        """
+        コンストラクタ
+
+        引数:
+            **kwargs: キーワード引数を任意の数だけ受け取る。
+                      各キーが属性名、値がその属性の値として設定
+        """
         for key, value in kwargs.items():
             setattr(self, key, value)
 
+    # インスタンスの属性を辞書形式で返す
     def get_dict_data(self):
         return self.__dict__
 
 
 @dataclass
 class userInfo:
+    """
+    ユーザー情報のデータクラス
+    """
+
     sUserId: str
     sUserName: str
     sUserDiv: str
@@ -41,31 +54,31 @@ def get_json_data_for_user_info(form_data):
     user_name = form_data[const.ITEM_USER_NAME]
     user_div = form_data[const.ITEM_USER_DIV]
     user_pw = form_data[const.ITEM_USER_PW]
-    year = int(form_data[const.ITEM_YEAR])
-    sex = int(form_data[const.ITEM_SEX])
+    year = form_data[const.ITEM_YEAR]
+    sex = form_data[const.ITEM_SEX]
     zip_cd = form_data[const.ITEM_ZIP_CD]
     pref = form_data[const.ITEM_PREF]
     town = form_data[const.ITEM_TOWN]
     line = form_data[const.ITEM_LINE]
     station = form_data[const.ITEM_STATION]
     tel = form_data[const.ITEM_TEL]
-    seq = int(form_data[const.ITEM_SEQ])
+    seq = form_data[const.ITEM_SEQ]
 
     json_data = asdict(
         userInfo(
-            user_id,
+            get_masking_data(user_id),
             user_name,
             user_div,
-            user_pw,
-            year,
-            sex,
+            get_masking_data(user_pw),
+            int(year),
+            int(sex),
             zip_cd,
             pref,
             town,
             line,
             station,
             tel,
-            seq,
+            int(seq),
         )
     )
     return json_data
