@@ -122,6 +122,7 @@ def get_today_news_image(forecast: str, msg: str):
     contents = (
         "空白で何も表示されていない画面がある。"
         "その画面は、テレビ放送用の大きいモニター画面である。"
+        "モニターは、完成イメージの9割を占める。"
         "番組名は、「Today's Morning News」である。"
         "番組ロゴは、モニター画面の中で、左上に表示する。"
         f"背景は、「{forecast}」が分かるようなイメージにする。"

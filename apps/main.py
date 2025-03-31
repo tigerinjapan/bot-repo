@@ -13,8 +13,8 @@ import apps.utils.function as func
 dotenv.load_dotenv()
 
 # ジョブ実行時間を環境変数から取得
-NUM_HOUR_DAILY_JOB = func.get_env_val("NUM_HOUR_DAILY_JOB", decode_flg=const.FLG_OFF)
-NUM_MIN_HOURLY_JOB = func.get_env_val("NUM_MIN_HOURLY_JOB", decode_flg=const.FLG_OFF)
+NUM_HOUR_DAILY_JOB = func.get_env_val("NUM_HOUR_DAILY_JOB", decode_flg=const.FLG_OFF).zfill(5)
+NUM_MIN_HOURLY_JOB = func.get_env_val("NUM_MIN_HOURLY_JOB", decode_flg=const.FLG_OFF).zfill(2)
 NUM_SEC_NO_SLEEP = func.get_env_val(
     "NUM_SEC_NO_SLEEP", decode_flg=const.FLG_OFF, int_flg=const.FLG_ON
 )
