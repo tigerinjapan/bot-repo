@@ -24,11 +24,16 @@ def get_response_result(
     if header_json_flg:
         headers.update(const.HEADERS_JSON)
 
-    if request_type == const.REQUEST_TYPE_GET:
-        response = requests.get(url, headers=headers)
+    try:
+        if request_type == const.REQUEST_TYPE_GET:
+            response = requests.get(url, headers=headers)
 
-    elif request_type == const.REQUEST_TYPE_POST:
-        response = requests.post(url, headers=headers, data=data)
+        elif request_type == const.REQUEST_TYPE_POST:
+            response = requests.post(url, headers=headers, data=data)
+
+    except requests.exceptions.ConnectionError as ce:
+        func.print_error_msg(url, msg_const.MSG_ERR_API_REQUEST_CONNECT)
+        return result
 
     if response:
         res_status = response.status_code

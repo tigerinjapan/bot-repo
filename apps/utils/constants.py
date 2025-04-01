@@ -389,6 +389,7 @@ FI_LAST_LOGIN_DATE = convert_field(TYPE_DATE, ITEM_LAST_LOGIN_DATE)
 # サイトURL
 URL_GOOGLE = "https://www.google.com"
 URL_TENKI = "https://tenki.jp"
+URL_CANCAM = "https://cancam.jp"
 URL_RAKUTEN_RECIPE = "https://recipe.rakuten.co.jp/menu/"
 URL_SMBC_FUND = "https://www.smd-am.co.jp/fund"
 URL_NAVER_FINANCE = "https://finance.naver.com"

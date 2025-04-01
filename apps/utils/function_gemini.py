@@ -145,6 +145,7 @@ def get_today_news_image(forecast: str, msg: str):
     contents = (
         "A blank screen with nothing displayed is visible."
         "The full screen is a large monitor used for television broadcasting."
+        "The monitor accounts for 90percent of the final image perception."
         "The program's name is 'Today's Morning News.'"
         "The program logo should be displayed in the top-left of the monitor screen."
         f"The background should be an image that conveys the idea of '{today_weather}'."
@@ -155,7 +156,12 @@ def get_today_news_image(forecast: str, msg: str):
         "Generate the image according to this size."
         "The image should not display any Japanese text or kanji."
     )
-    msg_data = {"msg": msg, "font_type": "uzura", "font_size": 28, "xy_size": (100, 160)}
+    msg_data = {
+        "msg": msg,
+        "font_type": "uzura",
+        "font_size": 28,
+        "xy_size": (100, 160),
+    }
     file_path = get_generate_image(div, contents, msg_data)
     return file_path
 
@@ -178,6 +184,23 @@ def get_recommend_outfit_dinner(today_weather: str):
     contents += conditions + reference
     recommend_outfit_dinner = get_gemini_response(contents)
     return recommend_outfit_dinner
+
+
+# おすすめコーデ取得
+def get_recommend_outfit(outfit_text: str):
+    contents = (
+        f"{outfit_text}{NEW_LINE}"
+        "上記の内容を元に、今日のコーデをおすすめしてください。"
+        "コーデは、2アイテム。1番目が上半身、2番目が下半身に着るもの。"
+        "各アイテムは、&で繋げる。"
+        f"2アイテムは、{NUM_WRAP_WIDTH / 2}バイト未満。"
+        "解説と他の文言、記号は不要。"
+        f"※出力例{NEW_LINE}白いTシャツ&デニムジーンズ"
+    )
+    recommend_outfit = get_gemini_response(contents)[0].replace(
+        const.SYM_NEW_LINE, const.SYM_BLANK
+    )
+    return recommend_outfit
 
 
 # ニュース要約取得

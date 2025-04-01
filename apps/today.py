@@ -59,12 +59,15 @@ def get_today_info():
     today_won_rate = get_today_won()
 
     # コーデ・夕食
-    recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(
-        NEW_LINE.join(today_weather)
-    )
+    # recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(
+    #     NEW_LINE.join(today_weather)
+    # )
 
-    today_outfit = recommend_outfit_dinner[0]
+    # today_outfit = recommend_outfit_dinner[0]
     # today_dinner = recommend_outfit_dinner[1].replace(NEW_LINE, const.SYM_BLANK)
+
+    # コーデ
+    today_outfit = get_today_outfit()
 
     # 夕食
     today_dinner = get_today_menu()
@@ -163,6 +166,22 @@ def get_today_won() -> str:
     return today_won_rate
 
 
+# 今日のコーデ取得
+def get_today_outfit():
+    url = f"{const.URL_CANCAM}/archives/tag/今日のコーデ"
+    soup_main = func_bs.get_elem_from_url(url, attr_val="site-main yellow-main")
+    link_today = func_bs.get_link_from_soup(soup_main)
+    soup = func_bs.get_elem_from_url(link_today, attr_val="entry-content")
+    outfit_elem_1 = get_elem_val_by_class(soup, "wp-block-heading")
+    outfit_elem_p = func_bs.find_elem_by_attr(
+        soup, tag=const.TAG_P, list_flg=const.FLG_ON
+    )
+    outfit_elem_2 = outfit_elem_p[1].text
+    outfit_text = outfit_elem_1 + const.SYM_NEW_LINE + outfit_elem_2
+    today_outfit = func_gemini.get_recommend_outfit(outfit_text)
+    return today_outfit
+
+
 # 今日のレシピメニュー取得
 def get_today_menu():
     url = const.URL_RAKUTEN_RECIPE
@@ -171,8 +190,8 @@ def get_today_menu():
         url, attr_val=_class, list_flg=const.FLG_ON
     )
     weekly_menu = weekly_menu_list[const.DATE_WEEKDAY]
-    menu = get_elem_val_by_class(weekly_menu, "text weekly_list__text omit_2line")
-    return menu
+    today_menu = get_elem_val_by_class(weekly_menu, "text weekly_list__text omit_2line")
+    return today_menu
 
 
 # 要素値取得
@@ -189,5 +208,6 @@ def get_elem_val_by_class(soup, class_: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    item_list = get_item_list()
-    func.print_test_data(item_list)
+    # item_list = get_item_list()
+    # func.print_test_data(item_list)
+    get_today_outfit()

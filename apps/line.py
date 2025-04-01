@@ -203,15 +203,16 @@ def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
 # メッセージデータ取得
 def get_msg_data_today() -> tuple[list[str], str]:
     today_info = func_api.get_result_on_app(const.APP_TODAY)
-    date_today = today_info[0][today.app_title]
-    forecast = today_info[1][today.app_title].split("・")[0]
-    data_list = [list(info.values()) for info in today_info[1:]]
-    msg_data = [f"[{data[0]}] {data[1]}" for data in data_list]
+    if today_info:
+        date_today = today_info[0][today.app_title]
+        forecast = today_info[1][today.app_title].split("・")[0]
+        data_list = [list(info.values()) for info in today_info[1:]]
+        msg_data = [f"[{data[0]}] {data[1]}" for data in data_list]
 
-    msg_data_list = get_msg_data_list(
-        FILE_DIV_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast
-    )
-    return msg_data_list, date_today
+        msg_data_list = get_msg_data_list(
+            FILE_DIV_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast
+        )
+        return msg_data_list, date_today
 
 
 # LINEメッセージJSONデータ取得

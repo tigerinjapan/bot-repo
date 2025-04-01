@@ -20,6 +20,16 @@
 
 仮想環境を削除し、再作成
 
+# キャッシュ削除
+
+## パス
+
+C:\Users\(ユーザー名)\AppData\Roaming\Code\Cache
+
+### 対応
+
+定期的に削除（今後バッチ化）
+
 # 【Selenium, Playwright】koyeb server
 
 ## エラー内容
