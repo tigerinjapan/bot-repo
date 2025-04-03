@@ -139,6 +139,9 @@ def update_news(app_name: str = const.SYM_BLANK):
         app_name_list = [app_name]
 
     for app_div, app_name in zip(app_div_list, app_name_list):
+        if app_name == const.APP_TV:  # TODO 情報取得に、時間かかるため、スキップ
+            continue
+
         app_exec = AppExec(app_div, app_name)
         app_exec.start()
 
@@ -167,7 +170,9 @@ def update_news(app_name: str = const.SYM_BLANK):
 
 # スリープ状態にならないようサーバーアクセス
 def no_sleep():
-    get_data_from_url(URL_KOYEB_APP, headers=const.NONE_CONSTANT, sleep_flg=const.FLG_OFF)
+    get_data_from_url(
+        URL_KOYEB_APP, headers=const.NONE_CONSTANT, sleep_flg=const.FLG_OFF
+    )
     func.print_info_msg(msg_const.MSG_INFO_SERVER_KEEP_ALIVE)
 
 

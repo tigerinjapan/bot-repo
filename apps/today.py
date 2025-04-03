@@ -173,12 +173,13 @@ def get_today_outfit():
     link_today = func_bs.get_link_from_soup(soup_main)
     soup = func_bs.get_elem_from_url(link_today, attr_val="entry-content")
     outfit_elem_1 = get_elem_val_by_class(soup, "wp-block-heading")
-    outfit_elem_p = func_bs.find_elem_by_attr(
-        soup, tag=const.TAG_P, list_flg=const.FLG_ON
-    )
-    outfit_elem_2 = outfit_elem_p[1].text
-    outfit_text = outfit_elem_1 + const.SYM_NEW_LINE + outfit_elem_2
-    today_outfit = func_gemini.get_recommend_outfit(outfit_text)
+    # outfit_elem_p = func_bs.find_elem_by_attr(
+    #     soup, tag=const.TAG_P, list_flg=const.FLG_ON
+    # )
+    # outfit_elem_2 = outfit_elem_p[1].text
+    # outfit_text = outfit_elem_1 + const.SYM_NEW_LINE + outfit_elem_2
+    # today_outfit = func_gemini.get_recommend_outfit(outfit_text) # TODO 取得に時間かかるため、スキップ
+    today_outfit = outfit_elem_1
     return today_outfit
 
 
