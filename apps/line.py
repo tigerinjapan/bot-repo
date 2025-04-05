@@ -6,7 +6,6 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.function_gemini as func_gemini
-from apps.utils.message_constants import MSG_ERR_API_RESPONSE_NONE
 
 # アプリケーション
 app_name = func.get_app_name(__file__)

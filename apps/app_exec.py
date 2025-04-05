@@ -4,7 +4,6 @@ from fastapi import Request
 
 import apps.drama as drama
 import apps.lcc as lcc
-import apps.line as line
 import apps.news as news
 import apps.ranking as ranking
 import apps.site as site
@@ -139,9 +138,6 @@ def update_news(app_name: str = const.SYM_BLANK):
         app_name_list = [app_name]
 
     for app_div, app_name in zip(app_div_list, app_name_list):
-        if app_name == const.APP_TV:  # TODO 情報取得に、時間かかるため、スキップ
-            continue
-
         app_exec = AppExec(app_div, app_name)
         app_exec.start()
 
