@@ -128,9 +128,10 @@ def get_today_news_image(forecast: str, msg: str):
         f"背景は、「{forecast}」が分かるようなイメージにする。"
         "但し、黒字がよく見えるように、黒系の色は避ける。"
         f"天気キャスターの{img_div}が、モニター画面の中で、右下にいる。"
-        f"{img_div}は、スーツを着ている。"
-        f"{img_div}は、日本人の50代で、童顔で、笑顔が素敵で、明るくて、可愛い人。"
+        f"{img_div}は、白いブラウスに、清楚な格好をしている。"
+        f"{img_div}は、50代の日本人で、童顔で、笑顔が素敵で、明るくて、可愛い人。"
         "イメージのサイズは、480ピクセル X 360ピクセル。"
+        "イメージを縦で3等分した場合、右側の1/3の中に、女性が収まるようにする。"
         "そのサイズに合わせて、イメージを生成。"
         "イメージには、日本語、漢字などは、表示しない。"
     )
@@ -151,8 +152,10 @@ def get_today_news_image(forecast: str, msg: str):
         f"The background should be an image that conveys the idea of '{today_weather}'."
         "However, to ensure that black text is clearly visible, black-based colors should be avoided."
         "The weather caster woman should be positioned in the bottom-right corner of the monitor screen."
-        "The woman is Japanese, in her 50s, has a youthful face, a lovely smile, a bright and cheerful personality and cute and pretty, and is charming."
+        "The woman is dressed neatly in a white blouse, giving her a modest and elegant appearance."
+        "The woman is a Japanese woman in her fifties, a baby face, a lovely smile, and a bright, cheerful personality. She’s very cute and charming."
         "The image size should be 480 pixels by 360 pixels."
+        "If the image is divided vertically into thirds, place the woman within the rightmost one-third of the image."
         "Generate the image according to this size."
         "The image should not display any Japanese text or kanji."
     )
@@ -193,7 +196,7 @@ def get_recommend_outfit(outfit_text: str):
         "上記の内容を元に、今日のコーデをおすすめしてください。"
         "コーデは、2アイテム。1番目が上半身、2番目が下半身に着るもの。"
         "各アイテムは、&で繋げる。"
-        f"2アイテムは、{NUM_WRAP_WIDTH / 2}バイト未満。"
+        f"{NUM_WRAP_WIDTH / 2}バイト未満。"
         "解説と他の文言、記号は不要。"
         f"※出力例{NEW_LINE}白いTシャツ&デニムジーンズ"
     )

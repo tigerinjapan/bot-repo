@@ -214,6 +214,13 @@ async def send_msg():
     return result
 
 
+@app.get(const.PATH_UPDATE)
+async def update_news():
+    sub.update_news()
+    result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
+    return result
+
+
 @app.get("/templates/{file_name}")
 async def temp(file_name: str):
     file_ext = func.get_path_split(file_name, extension_flg=const.FLG_ON)
