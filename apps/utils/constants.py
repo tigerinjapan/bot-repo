@@ -284,8 +284,6 @@ STR_DRAMA_JA = "ドラマ"
 STR_RANKING_JA = "ランキング"
 STR_X_TREND_JA = "Xトレンド"
 STR_KOREAN_JA = "韓国語"
-STR_YEN_JA = "円"
-STR_WON_JA = "ウォン"
 
 STR_JPY = "JPY"
 STR_KRW = "KRW"

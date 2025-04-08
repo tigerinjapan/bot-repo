@@ -24,6 +24,7 @@ DIV_WEATHER = "天気"
 DIV_WEATHER_PLUS = "天気+"
 DIV_NISA = "NISA"
 DIV_RATE = "為替"
+DIV_RATE_PLUS = "為替+"
 DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
 DIV_LIST = [
@@ -32,6 +33,7 @@ DIV_LIST = [
     DIV_WEATHER_PLUS,
     DIV_NISA,
     DIV_RATE,
+    DIV_RATE_PLUS,
     DIV_OUTFIT,
     DIV_DINNER,
 ]
@@ -50,7 +52,7 @@ def get_today_info():
     # 天気
     today_weather, date_time = get_today_weather()
 
-    # 天気
+    # 天気+
     today_weather_plus = get_today_weather_plus()
 
     # NISA
@@ -58,6 +60,9 @@ def get_today_info():
 
     # 為替
     today_won_rate = ex.get_today_won()
+
+    # 為替+
+    today_twd_rate = ex.get_ex_info(const.STR_TWD)
 
     # コーデ・夕食
     # recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(
@@ -79,6 +84,7 @@ def get_today_info():
         today_weather_plus,
         today_nisa,
         today_won_rate,
+        today_twd_rate,
         today_outfit,
         today_dinner,
     ]
@@ -166,7 +172,9 @@ def get_today_outfit():
     )
     outfit_elem_2 = outfit_elem_p[1].text
     outfit_text = outfit_elem_1 + const.SYM_NEW_LINE + outfit_elem_2
-    today_outfit = func_gemini.get_recommend_outfit(outfit_text) # TODO 取得に時間かかるため、スキップ
+    today_outfit = func_gemini.get_recommend_outfit(
+        outfit_text
+    )  # TODO 取得に時間かかるため、スキップ
     # today_outfit = outfit_elem_1
     return today_outfit
 

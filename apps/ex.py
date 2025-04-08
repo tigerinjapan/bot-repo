@@ -30,6 +30,7 @@ EX_LIST_JA = [
     const.STR_PHP_JA,
     const.STR_VND_JA,
 ]
+DICT_EX = dict(zip(EX_LIST, EX_LIST_JA))
 
 
 # 今日のウォン取得
@@ -41,7 +42,7 @@ def get_today_won() -> str:
     elem_list = func_bs.find_elem_by_attr(elem, tag=const.TAG_TD, list_flg=const.FLG_ON)
 
     won = elem_list[0].text if elem_list else "1000"
-    today_won_rate = f"100{const.STR_YEN_JA} = {won}{const.STR_WON_JA}"
+    today_won_rate = f"100{const.STR_JPY_JA} = {won}{const.STR_KRW_JA}"
     return today_won_rate
 
 
@@ -49,25 +50,29 @@ def get_today_won() -> str:
 def get_ex_yen_list():
     col_list = [const.STR_DIV_JA]
     for jpy in JPY_LIST:
-        col_list.append(f"{jpy}{const.STR_YEN_JA}")
+        col_list.append(f"{jpy}{const.STR_JPY_JA}")
 
     ex_yen_list = []
 
-    for i, ex in enumerate(EX_LIST):
-        col_ex = EX_LIST_JA[i]
-        url = f"{const.URL_GOOGLE}/{URL_PARAM}".format(ex)
-        ex_str = func_bs.get_elem_from_url(url, attr_val="YMlKec fxKbKc")
-
-        if ex_str:
-            ex_text = ex_str.text
-            ex_num = float(ex_text)
-            ex_info_list = [col_ex]
-            for jpy in JPY_LIST:
-                ex_info_list.append(round(ex_num * jpy, 2))
-            ex_yen_list.append(ex_info_list)
+    for ex_div in EX_LIST:
+        ex_info = get_ex_info(ex_div)
+        ex_yen_list.append(ex_info)
     return ex_yen_list
 
 
+def get_ex_info(ex_div: str = const.STR_KRW):
+    url = f"{const.URL_GOOGLE}/{URL_PARAM}".format(ex_div)
+    ex_str = func_bs.get_elem_from_url(url, attr_val="YMlKec fxKbKc")
+
+    if ex_str:
+        ex_text = ex_str.text
+        ex_num = float(ex_text) * 100
+        ex_val = round(ex_num, 2)
+        col_ex = DICT_EX[ex_div]
+        ex_info = f"100{const.STR_JPY_JA} = {ex_val}{col_ex}"
+    return ex_info
+
+
 if __name__ == const.MAIN_FUNCTION:
-    ex_yen_list = get_ex_yen_list()
-    func.print_test_data(ex_yen_list)
+    ex_info = get_ex_info()
+    func.print_test_data(ex_info)

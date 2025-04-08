@@ -1,11 +1,15 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGKKZO87883190Y5A400C2MM8000/\" target=\"_blank\" rel=\"noopener noreferrer\">広がる業績不安\n株連鎖安日経平均2644円安\n下げ幅歴代3位</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOGR21BPG0R20C25A3000000/\" target=\"_blank\" rel=\"noopener noreferrer\">車の炭素繊維\nEUが原則禁止を検討東レや帝人に打撃も</a>"
     },
     {
         "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/news/articles/2504/05/news061.html\" target=\"_blank\" rel=\"noopener noreferrer\">      ダイソーから“ジェネリックAirタグ”Apple「探す」対応1100円    </a>"
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2504/07/news106.html\" target=\"_blank\" rel=\"noopener noreferrer\">      “AI界隈”が注目「MCP」って何──KDDI子会社の解説資料が「分かりやすい」と話題    </a>"
+    },
+    {
+        "区分": "韓国",
+        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=54901\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 BIGBANGのDLITE 1stソロアルバム発売</a>"
     },
     {
         "区分": "エンタメ",
@@ -13,6 +17,6 @@
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/486093.html\" target=\"_blank\" rel=\"noopener noreferrer\">「IVE」の日本オリジナル新曲「DARE ME」\n日テレ系4日曜ドラマ『ダメマネ ―ダメなタレント\nマネジメントします―』オープニング曲に決定</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/486147.html\" target=\"_blank\" rel=\"noopener noreferrer\">ロイキム\n「パクボゴムに曲を頼まれたが拒否していない。今は必要ないようだ」</a>"
     }
 ]

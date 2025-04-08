@@ -70,7 +70,9 @@ def get_generate_content(contents):
 
 
 # 生成イメージ取得
-def get_generate_image(div: str, contents: str, msg_data):
+def get_generate_image(div: str, contents: str, msg_data) -> str:
+    file_path = const.SYM_BLANK
+
     client = genai.Client(api_key=GEMINI_API_KEY)
 
     # サンプル
@@ -80,11 +82,27 @@ def get_generate_image(div: str, contents: str, msg_data):
     #     "futuristic city with lots of greenery?"
     # )
 
-    response = client.models.generate_content(
-        model=GEMINI_MODEL_IMG,
-        contents=contents,
-        config=types.GenerateContentConfig(response_modalities=["Text", "Image"]),
-    )
+    exception_error = const.SYM_BLANK
+
+    try:
+        response = client.models.generate_content(
+            model=GEMINI_MODEL_IMG,
+            contents=contents,
+            config=types.GenerateContentConfig(response_modalities=["Text", "Image"]),
+        )
+
+    except ConnectionError as ce:
+        exception_error = f"ConnectionError, {str(ce)}"
+    except ServerError as se:
+        exception_error = f"ServerError, {str(se)}"
+    except Exception as e:
+        exception_error = f"Exception, {str(e)}"
+
+    if exception_error:
+        curr_def_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(curr_def_nm, msg_const.MSG_ERR_API_RESPONSE_NONE)
+        func.print_error_msg(exception_error)
+        return file_path
 
     for part in response.candidates[0].content.parts:
         if part.text is not None:
@@ -109,9 +127,9 @@ def get_generate_image(div: str, contents: str, msg_data):
             size = (480, 360)
             img = image_open.resize(size)
             img.save(file_path, optimize=const.FLG_ON)
-            return file_path
+            break
 
-    return const.NONE_CONSTANT
+    return file_path
 
 
 # ニュースイメージ取得
