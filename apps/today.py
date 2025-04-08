@@ -1,5 +1,6 @@
 # 説明: 今日の生活情報
 
+import apps.ex as ex
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
@@ -56,7 +57,7 @@ def get_today_info():
     today_nisa = get_today_nisa()
 
     # 為替
-    today_won_rate = get_today_won()
+    today_won_rate = ex.get_today_won()
 
     # コーデ・夕食
     # recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(
@@ -151,19 +152,6 @@ def get_today_nisa() -> str:
 
     today_nisa = f"S&P500 = {point} ({rate})"
     return today_nisa
-
-
-# 今日のウォン取得
-def get_today_won() -> str:
-    url = f"{const.URL_NAVER_FINANCE}/marketindex/exchangeDetail.naver?marketindexCd=FX_JPYKRW"
-    class_ = "tbl_calculator"
-
-    elem = func_bs.get_elem_from_url(url, attr_val=class_)
-    elem_list = func_bs.find_elem_by_attr(elem, tag=const.TAG_TD, list_flg=const.FLG_ON)
-
-    won = elem_list[0].text if elem_list else "1000"
-    today_won_rate = f"100{const.STR_YEN_JA} = {won}{const.STR_WON_JA}"
-    return today_won_rate
 
 
 # 今日のコーデ取得

@@ -59,7 +59,11 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
             if not elem:
                 break
             text_data = elem.text
-            text_list = text_data.split("」")
+            if "] " in text_data:
+                text_list = text_data.split("] ")
+            else:
+                text_list = text_data.split("」")
+
             singer = text_list[1]
             song = (
                 text_list[0]

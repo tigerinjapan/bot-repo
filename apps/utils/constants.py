@@ -287,6 +287,22 @@ STR_KOREAN_JA = "韓国語"
 STR_YEN_JA = "円"
 STR_WON_JA = "ウォン"
 
+STR_JPY = "JPY"
+STR_KRW = "KRW"
+STR_USD = "USD"
+STR_TWD = "TWD"
+STR_VND = "VND"
+STR_THB = "THB"
+STR_PHP = "PHP"
+
+STR_JPY_JA = "円"
+STR_KRW_JA = "ウォン"
+STR_USD_JA = "ドル"
+STR_TWD_JA = "ユェン"
+STR_VND_JA = "ドン"
+STR_THB_JA = "バーツ"
+STR_PHP_JA = "ペソ"
+
 ##### マスキング #####
 MASKING_COMPANY = "xxxxxx"
 MASKING_STR_UPPER = "XXXX"

@@ -196,7 +196,7 @@ def get_recommend_outfit(outfit_text: str):
         "上記の内容を元に、今日のコーデをおすすめしてください。"
         "コーデは、2アイテム。1番目が上半身、2番目が下半身に着るもの。"
         "各アイテムは、&で繋げる。"
-        f"{NUM_WRAP_WIDTH / 2}バイト未満。"
+        f"全体の文字数は、16桁未満。"
         "解説と他の文言、記号は不要。"
         f"※出力例{NEW_LINE}白いTシャツ&デニムジーンズ"
     )
@@ -379,4 +379,5 @@ if __name__ == const.MAIN_FUNCTION:
     # test_gemini()
     # test_gemini_image()
     today_weather = "晴れのち曇り"
-    get_today_news_image(today_weather)
+    msg = "[test] test"
+    get_today_news_image(today_weather, msg)
