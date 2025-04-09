@@ -13,7 +13,7 @@ import apps.utils.function as func
 dotenv.load_dotenv()
 
 # ジョブ実行時間を環境変数から取得
-NUM_HOUR_DAILY_JOB = func.get_env_val("NUM_HOUR_DAILY_JOB", decode_flg=const.FLG_OFF).zfill(5)
+NUM_HOUR_DAILY_JOB = func.get_env_val("NUM_HOUR_DAILY_JOB", decode_flg=const.FLG_OFF).zfill(2)
 NUM_MIN_HOURLY_JOB = func.get_env_val("NUM_MIN_HOURLY_JOB", decode_flg=const.FLG_OFF).zfill(2)
 NUM_SEC_NO_SLEEP = func.get_env_val(
     "NUM_SEC_NO_SLEEP", decode_flg=const.FLG_OFF, int_flg=const.FLG_ON
@@ -30,7 +30,7 @@ def main():
 
 def job_scheduler():
     # 毎日指定された時間に実行
-    schedule.every().day.at(NUM_HOUR_DAILY_JOB).do(daily_job)
+    schedule.every().day.at(f"{NUM_HOUR_DAILY_JOB}:00").do(daily_job)
 
     # 毎日1時間毎に実行
     for hour in range(24):
@@ -50,7 +50,7 @@ def job_scheduler():
 
         # スリープ状態にならないよう、ジョブ実行後、10分毎に、サーバーアクセス
         if pending_cnt % NUM_SEC_NO_SLEEP == 0:
-            sub.no_sleep()
+            # sub.no_sleep()
             pending_cnt = 0
 
 

@@ -205,6 +205,5 @@ def get_elem_val_by_class(soup, class_: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # item_list = get_item_list()
-    # func.print_test_data(item_list)
-    get_today_outfit()
+    item_list = get_item_list()
+    func.print_test_data(item_list)
