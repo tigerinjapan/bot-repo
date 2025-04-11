@@ -33,11 +33,11 @@ URL_PARAM = (
 # アイテムリスト取得
 def get_item_list():
     item_list = []
-    for keyword in LIST_KEYWORD:
-        # tv_info_list = get_tv_info_list(keyword)
-        tv_info_list = get_tv_info_list2(keyword)
-        item_list += tv_info_list
+    # for keyword in LIST_KEYWORD:
+    #     tv_info_list = get_tv_info_list(keyword)
+    #     item_list += tv_info_list
 
+    item_list = get_tv_info_list2()
     return item_list
 
 
@@ -89,23 +89,29 @@ def get_tv_info_list(keyword) -> list[str]:
 
 
 # TV番組情報取得
-def get_tv_info_list2(keyword) -> list[str]:
+def get_tv_info_list2() -> list[str]:
     tv_info_list = []
 
-    url = f"https://bangumi.org/search?si_type%5B%5D=3&genre_id=バラエティ&q={keyword}&area_code=23"
-    program_list = func_bs.get_elem_from_url(
-        url, attr_val="left_text_area", list_flg=const.FLG_ON
-    )[:10]
+    url = f"https://bangumi.org/ranking/?genre_id=5"
+    program_list = func_bs.get_elem_from_url(url, attr_val="program_list_convertible")
 
-    for program_info in program_list:
-        title_text = func_bs.find_elem_by_attr(
-            program_info, attr_div=const.ATTR_CLASS, attr_val="program_title"
-        ).text
-        title = title_text.replace(keyword, f"<b>{keyword}</b>")
+    title_info_list = func_bs.find_elem_by_attr(
+        program_list,
+        attr_div=const.ATTR_CLASS,
+        attr_val="program_title",
+        list_flg=const.FLG_ON,
+    )
+    title_list = [title_info.text for title_info in title_info_list]
 
-        tv_info_text = func_bs.find_elem_by_attr(
-            program_info, attr_div=const.ATTR_CLASS, attr_val="program_supplement"
-        ).text.split("　")
+    tv_info_elem_list = func_bs.find_elem_by_attr(
+        program_list,
+        attr_div=const.ATTR_CLASS,
+        attr_val="program_supplement",
+        list_flg=const.FLG_ON,
+    )
+    tv_info_text_list = [tv_info_elem.text.split("　") for tv_info_elem in tv_info_elem_list]
+
+    for title, tv_info_text in zip(title_list, tv_info_text_list):
         date_txt = tv_info_text[0].split(" ")
         date = func.convert_date_format(
             f"{const.DATE_YEAR}年" + date_txt[0], f"%Y年%m月%d日", f"%Y/%m/%d(%a)"
@@ -119,6 +125,8 @@ def get_tv_info_list2(keyword) -> list[str]:
             date += f" {time_text}"
             tv_info = [date, channel, title]
             tv_info_list.append(tv_info)
+            if len(tv_info_list) == 10:
+                break
 
     return tv_info_list
 

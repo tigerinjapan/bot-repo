@@ -53,11 +53,12 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
         return weekly_ranking
 
     for elem in elem_list[: const.MAX_DISPLAY_CNT]:
+        if not elem:
+            break
+
         ranking_info = const.SYM_BLANK
 
         if div == const.STR_KPOP:
-            if not elem:
-                break
             text_data = elem.text
             if "] " in text_data:
                 text_list = text_data.split("] ")

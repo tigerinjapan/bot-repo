@@ -202,9 +202,12 @@ def get_elem_list(div: str, url: str = const.SYM_BLANK):
             url, attr_val=attr_val, list_flg=const.FLG_ON
         )
         if elem_list_org:
-            elem_list = [
-                func_bs.find_elem_by_attr(elem, tag=tag) for elem in elem_list_org
-            ]
+            if div == DIV_KPOP_RANKING:
+                elem_list = [elem.contents[2] for elem in elem_list_org]
+            else:
+                elem_list = [
+                    func_bs.find_elem_by_attr(elem, tag=tag) for elem in elem_list_org
+                ]
         else:
             elem_list = []
 
