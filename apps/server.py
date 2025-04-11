@@ -229,8 +229,11 @@ async def temp(file_name: str):
     return FileResponse(file_path)
 
 
-@app.get(f"/{const.STR_IMG}" + "/{file_div}/{file_name}")
-async def img(file_div: str, file_name: str):
+@app.get(f"/{const.STR_IMG}" + "/{file_name}")
+async def img(file_name: str):
+    file_div = const.STR_INPUT
+    if file_name == const.APP_TODAY:
+        file_div = const.STR_OUTPUT
     image_path = func.get_file_path(file_name, const.FILE_TYPE_JPEG, file_div)
     return FileResponse(image_path)
 

@@ -18,7 +18,7 @@ def get_data_from_url(url: str, headers, sleep_flg=const.FLG_ON):
 
 # soup取得(contents)
 def get_soup_from_contents(contents):
-    soup = bs(contents, "lxml")
+    soup = bs(contents, "html.parser")
     return soup
 
 

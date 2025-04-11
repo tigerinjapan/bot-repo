@@ -13,7 +13,7 @@ app_name = func.get_app_name(__file__)
 # URL
 URL_LINE_API = "https://api.line.me"
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
-URL_OUTPUT_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_OUTPUT}"
+URL_OUTPUT_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}"
 
 # LINE API情報
 STR_LINE_API = "LINE API"

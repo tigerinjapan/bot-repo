@@ -49,7 +49,7 @@ def get_df_data(user_div: str, app_div: str):
         df_info[const.STR_NAME] = func.get_a_tag(
             df_info[const.STR_URL], df_info[const.STR_NAME]
         )
-        img_path = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.STR_INPUT}/"
+        img_path = f"{URL_KOYEB_APP}/{const.STR_IMG}/"
         file_name = df_info[const.STR_IMG]
         df_info[const.STR_IMG] = func.get_img_tag(img_path, file_name, "_menu")
         df_info[const.STR_URL] = func.get_img_tag(img_path, file_name, "_in")

@@ -54,7 +54,7 @@ def job_scheduler():
 
         # スリープ状態にならないよう、ジョブ実行後、10分毎に、サーバーアクセス
         if pending_cnt % NUM_SEC_NO_SLEEP == 0:
-            # sub.no_sleep()
+            sub.no_sleep()
             pending_cnt = 0
 
 
