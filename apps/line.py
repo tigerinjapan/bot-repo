@@ -40,9 +40,7 @@ DIV_MARK_TXT = "*-- {} --*"
 DIV_MARK_IMG = "=== {} ==="
 
 # プロパティ
-LINE_IMG_DIV = func.get_env_val(
-    "LINE_IMG_DIV", decode_flg=const.FLG_OFF, int_flg=const.FLG_ON
-)
+IMG_NO = func.get_env_val("LINE_IMG_DIV", int_flg=const.FLG_ON)
 NUM_IMG_MAX_SEQ = 4
 FONT_TYPE = "uzura"
 WEEKLY_DIV_FRI = "Fri"
@@ -341,7 +339,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
     # 任意の数値取得
     img_seq = str(func.get_random_int(NUM_IMG_MAX_SEQ))
-    img_no = LINE_IMG_DIV + img_seq.zfill(2)
+    img_no = str(IMG_NO) + img_seq.zfill(2)
 
     img_file_base = f"{img_div}_{img_no}"
 
@@ -350,7 +348,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
     xy_size = (45, 90)
     if div == FILE_DIV_TODAY:
         xy_size = (75, 185)
-        if LINE_IMG_DIV == const.NUM_ONE:
+        if IMG_NO == const.NUM_ONE:
             font_size = 16
             xy_size = (60, 120)
 

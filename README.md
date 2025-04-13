@@ -12,9 +12,6 @@ LINE Messaging API Bot
 |                        | uvicorn             | 高速 ASGI（非同期処理）サーバー |
 | **データ解析**         | pandas              | データ解析と操作                |
 | **Web スクレイピング** | bs4 (BeautifulSoup) | HTML スクレイピング             |
-|                        | selenium            | ブラウザ操作自動化              |
-|                        | playwright          | 高速なブラウザ操作自動化        |
-|                        | pyvirtualdisplay    | 仮想ディスプレイ操作            |
 | **テンプレート**       | jinja2              | HTML テンプレートエンジン       |
 | **画像処理**           | Pillow              | 画像操作                        |
 | **セキュリティ**       | itsdangerous        | 安全なデータ署名                |

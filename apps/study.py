@@ -76,7 +76,7 @@ def get_naver_news_summary(keyword: str) -> list[str]:
         url, attr_val="news_area", list_flg=const.FLG_ON
     )[: const.MAX_DISPLAY_CNT]
 
-    naver_news = []
+    news_list = []
     if a_elem_list:
         for a_elem in a_elem_list:
             time_elem = func_bs.find_elem_by_attr(
@@ -90,10 +90,10 @@ def get_naver_news_summary(keyword: str) -> list[str]:
                     attr_val="api_txt_lines dsc_txt_wrap",
                 )
                 contents_text = contents_elem.text
-                naver_news.append(contents_text)
+                news_list.append(contents_text)
 
-    if naver_news:
-        news_summary = func_gemini.get_news_summary(naver_news, keyword, 1)
+    if news_list:
+        news_summary = func_gemini.get_news_summary(news_list, keyword)
 
     return news_summary
 

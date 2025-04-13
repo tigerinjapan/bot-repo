@@ -29,7 +29,7 @@ URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
 # データリスト取得
 def get_df_data(user_div: str, app_div: str):
     # JSONデータ取得
-    json_data = func.get_input_data(app_div, const.STR_ITEM)
+    json_data = func.get_input_data(app_div)
 
     # DataFrame変換
     df_all = pd.DataFrame(json_data)

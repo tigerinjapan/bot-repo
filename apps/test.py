@@ -1,6 +1,5 @@
 # 説明: カフェ
 import asyncio
-from playwright.async_api import async_playwright
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -20,32 +19,17 @@ col_list = [
 
 
 def main():
-    contents = asyncio.run(async_main())
+    message = "Server is on api test."
+    return message
+
+
+def async_main():
+    contents = asyncio.run(async_test())
     return contents
 
 
-async def async_main():
-    # Playwrightのインスタンスを取得
-    playwright = await async_playwright().start()
-    try:
-        # ブラウザの起動
-        browser = await playwright.chromium.launch()
-
-        # 新しいページを作成
-        page = await browser.new_page()
-
-        # ページにアクセス
-        url = const.URL_GOOGLE
-        await page.goto(url)
-
-        # ページタイトルを出力
-        title = await page.title()
-    finally:
-        # ブラウザとPlaywrightのインスタンスを閉じる
-        await browser.close()
-        await playwright.stop()
-
-        return title
+async def async_test():
+    func.print_info_msg(const.STR_TEST)
 
 
 if __name__ == const.MAIN_FUNCTION:

@@ -3,8 +3,6 @@
 import os
 from datetime import datetime
 
-from selenium.webdriver.common.by import By
-
 ##### システム名 #####
 SYSTEM_NAME = "開発デモシステム"
 
@@ -173,15 +171,6 @@ INPUT_TYPE_SELECT = "select"
 INPUT_TYPE_DATE = "date"
 INPUT_TYPE_BUTTON = "button"
 
-##### Selenium:By #####
-BY_ID = By.ID
-BY_XPATH = By.XPATH
-BY_LINK = By.LINK_TEXT
-BY_NM = By.NAME
-BY_TAG = By.TAG_NAME
-BY_CLASS = By.CLASS_NAME
-BY_CSS = By.CSS_SELECTOR
-
 ##### 記号、特殊文字 #####
 SYM_NEW_LINE = "\n"
 SYM_TAB = "\t"
@@ -242,15 +231,19 @@ STR_API = "api"
 STR_ADDR = "addr"
 STR_IMG = "img"
 STR_FONT = "font"
-STR_ENV_VAR = "env_var"
 STR_KEYWORD = "keyword"
 STR_NOTIFY = "notify"
 STR_FIRST = "first"
 STR_TEST = "test"
 STR_KPOP = "kpop"
+STR_DATE = "date"
+STR_DAY = "day"
+STR_HOLIDAY = "holiday"
+
 STR_AI = "AI"
 STR_USER_INFO = "userInfo"
 STR_ZIP_CODE = "zipCode"
+STR_ENV_VAR = "env_var"
 
 STR_DB = "db"
 STR_MONGO = "mongo"
@@ -415,6 +408,7 @@ URL_ITMEDIA = "https://www.itmedia.co.jp"
 URL_ACHIKOCHI = "https://achikochi-data.com"
 URL_LCC = "https://dsk.ne.jp"
 URL_TV = "https://www.tvkingdom.jp"
+URL_TV_RANKING = "https://bangumi.org/ranking"
 
 ##### アプリケーション名 #####
 APP_TODAY = "today"

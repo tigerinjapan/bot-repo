@@ -14,6 +14,7 @@ from uvicorn import Config, Server
 
 import apps.line as line
 import apps.app_exec as sub
+import apps.test as test
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
@@ -191,6 +192,7 @@ async def user_update(request: Request, userId: str = Form(...)):
 
 
 @app.get("/json/{app_name}")
+# /json/today?token=token
 @token_required
 async def app_json(request: Request):
     app_name = request.path_params["app_name"]
@@ -199,6 +201,7 @@ async def app_json(request: Request):
 
 
 @app.get("/api/{api_name}/{param}")
+# /api/zipCode/1000000
 async def app_api(request: Request):
     api_name = request.path_params["api_name"]
     param = request.path_params["param"]
@@ -215,6 +218,7 @@ async def send_msg():
 
 
 @app.get(const.PATH_UPDATE)
+@token_required
 async def update_news():
     sub.update_news()
     result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
@@ -224,12 +228,12 @@ async def update_news():
 @app.get("/templates/{file_name}")
 async def temp(file_name: str):
     file_ext = func.get_path_split(file_name, extension_flg=const.FLG_ON)
-
     file_path = f"templates/{file_ext}/{file_name}"
     return FileResponse(file_path)
 
 
 @app.get(f"/{const.STR_IMG}" + "/{file_name}")
+# /img/today
 async def img(file_name: str):
     file_div = const.STR_INPUT
     if file_name == const.APP_TODAY:
@@ -245,7 +249,7 @@ async def font(file_name: str):
 
 
 @app.get("/test")
-def test():
+def api_test():
     message = test.main()
     if not message:
         message = "Server is on test."

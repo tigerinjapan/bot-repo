@@ -4,9 +4,6 @@ starlette
 uvicorn
 pandas
 bs4
-selenium
-playwright
-pyvirtualdisplay
 jinja2
 Pillow
 itsdangerous

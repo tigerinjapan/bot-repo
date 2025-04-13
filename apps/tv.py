@@ -92,7 +92,7 @@ def get_tv_info_list(keyword) -> list[str]:
 def get_tv_info_list2() -> list[str]:
     tv_info_list = []
 
-    url = f"https://bangumi.org/ranking/?genre_id=5"
+    url = f"{const.URL_TV_RANKING}/?genre_id=5"
     program_list = func_bs.get_elem_from_url(url, attr_val="program_list_convertible")
 
     title_info_list = func_bs.find_elem_by_attr(
@@ -109,7 +109,9 @@ def get_tv_info_list2() -> list[str]:
         attr_val="program_supplement",
         list_flg=const.FLG_ON,
     )
-    tv_info_text_list = [tv_info_elem.text.split("　") for tv_info_elem in tv_info_elem_list]
+    tv_info_text_list = [
+        tv_info_elem.text.split("　") for tv_info_elem in tv_info_elem_list
+    ]
 
     for title, tv_info_text in zip(title_list, tv_info_text_list):
         date_txt = tv_info_text[0].split(" ")

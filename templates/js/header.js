@@ -61,7 +61,7 @@ function setTopMenu(userDiv, userNm, appNm) {
   let appList = LIST_APP;
   if (isMobile()) {
     if (userDiv == AUTH_DEV) {
-      appList = LIST_APP_DEV_MO;
+      appList = LIST_APP_DEV_MO; // TODO 画面レイアウト設定をDB保存
     } else if (userDiv == AUTH_GUEST) {
       appList = LIST_APP_GUEST_MO;
     }
