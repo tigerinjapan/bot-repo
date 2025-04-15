@@ -1,8 +1,9 @@
 from pymongo import MongoClient
 
 import apps.utils.constants as const
-import apps.utils.message_constants as msg_const
 import apps.utils.function as func
+import apps.utils.message_constants as msg_const
+import apps.utils.user_dto as dto
 
 # アプリケーション
 app_name = const.STR_MONGO
@@ -134,9 +135,9 @@ def check_login(input_id: str, input_pw: str, user_info) -> str:
     network_flg = func.is_network()
     if network_flg:
         if input_id and input_pw and user_info:
-            user_id = user_info[const.FI_USER_ID]
+            user_id = user_info[dto.FI_USER_ID]
             user_id = func.get_decoding_masking_data(user_id)
-            user_pw = user_info[const.FI_USER_PW]
+            user_pw = user_info[dto.FI_USER_PW]
             user_pw = func.get_decoding_masking_data(user_pw)
 
             if input_id != user_id:

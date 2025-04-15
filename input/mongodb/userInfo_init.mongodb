@@ -33,6 +33,7 @@ db.createCollection(coll_userInfo,
                     "sLine",
                     "sStation",
                     "sTel",
+                    "sMenu",
                     "nSeq",
                     "dModifiedDate",
                     "dLastLoginDate"
@@ -93,6 +94,10 @@ db.createCollection(coll_userInfo,
                         bsonType: "string",
                         pattern: "^(0[5789]0)([0-9][0-9][0-9][0-9])([0-9][0-9][0-9][0-9])$",
                         description: "must be a string and match the regular expression pattern"
+                    },
+                    "sMenu": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
                     },
                     "nSeq": {
                         bsonType: "int",

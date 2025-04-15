@@ -10,9 +10,11 @@ import apps.site as site
 import apps.study as study
 import apps.today as today
 import apps.tv as tv
+import apps.user as user
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
+import apps.utils.user_dto as dto
 from apps.utils.function_beautiful_soup import get_data_from_url
 
 # URL
@@ -50,9 +52,10 @@ class AppExec:
 # 【画面】取得結果
 def exec_result(request: Request, app_name: str):
     user_info = request.session[const.STR_USER]
-    user_div, user_name = (
-        user_info[const.FI_USER_DIV],
-        user_info[const.FI_USER_NAME],
+    user_div, user_name, app_menu = (
+        user_info[dto.FI_USER_DIV],
+        user_info[dto.FI_USER_NAME],
+        user_info[dto.FI_MENU],
     )
 
     app_div_idx = const.LIST_ALL_APP_NAME.index(app_name)
@@ -81,10 +84,11 @@ def exec_result(request: Request, app_name: str):
     target_html = const.HTML_RESULT
     context = {
         const.STR_REQUEST: request,
+        const.STR_TITLE: app_title,
         "user_div": user_div,
         "user_name": user_name,
         "app_name": app_name,
-        const.STR_TITLE: app_title,
+        "app_menu": app_menu,
         "data_list": data_list,
         "num_flg": num_flg,
     }
@@ -97,7 +101,7 @@ def exec_user(request: Request, app_name: str):
     target_html = const.HTML_USER_INFO
     context = {
         const.STR_REQUEST: request,
-        const.STR_TITLE: "ユーザー情報",
+        const.STR_TITLE: user.app_title,
         "app_name": app_name,
         "user_info": user_info,
         "update_flg": const.FLG_ON,
@@ -166,10 +170,7 @@ def update_news(app_name: str = const.SYM_BLANK):
 
 # スリープ状態にならないようサーバーアクセス
 def no_sleep():
-    get_data_from_url(
-        URL_KOYEB_APP, headers=const.NONE_CONSTANT, sleep_flg=const.FLG_OFF
-    )
-    func.print_info_msg(msg_const.MSG_INFO_SERVER_KEEP_ALIVE)
+    get_data_from_url(URL_KOYEB_APP)
 
 
 if __name__ == const.MAIN_FUNCTION:

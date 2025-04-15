@@ -89,6 +89,11 @@
                 </td>
             </tr>
             <tr>
+                <td>お気に入りメニュー</td>
+                <td id="checkBoxMenu">
+                </td>
+            </tr>
+            <tr>
                 <td colspan="2" align="center">
                     <button type="submit" onclick="checkUserInfo()">登録</button>
                 </td>
@@ -103,6 +108,7 @@
         setYear("{{ user_info['nYear'] }}");
         setSex("{{ user_info['nSex'] }}");
         setAddress("{{ user_info['sLine'] }}", "{{ user_info['sStation'] }}");
+        setMenu("{{ user_info['sMenu'] }}");
     </script>
 </body>
 

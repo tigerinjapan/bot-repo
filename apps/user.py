@@ -3,7 +3,11 @@
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.user_dao as dao
+import apps.utils.user_dto as dto
 import apps.utils.constants as const
+
+# タイトル
+app_title = "ユーザー情報"
 
 
 def user_test():
@@ -12,7 +16,7 @@ def user_test():
     func.print_info_msg(const.STR_USER, user_info)
 
     user_seq = dao.get_user_seq()
-    func.print_info_msg(const.ITEM_SEQ, user_seq)
+    func.print_info_msg(dto.ITEM_SEQ, user_seq)
 
 
 def get_csv_to_json():

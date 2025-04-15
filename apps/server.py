@@ -12,12 +12,13 @@ from datetime import timedelta
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 
+import apps.appl as appl
 import apps.line as line
-import apps.app_exec as sub
 import apps.test as test
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
+import apps.utils.user_dto as dto
 from apps.utils.function_mongo import check_login
 from apps.utils.user_dao import get_user_info, update_user_info_on_form
 
@@ -137,19 +138,19 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
         request.session[const.STR_USER] = user_info
         user_id = func.get_masking_data(userId)
         update_data = {
-            const.FI_USER_ID: user_id,
-            const.FI_LAST_LOGIN_DATE: const.DATETIME_NOW,
+            dto.FI_USER_ID: user_id,
+            dto.FI_LAST_LOGIN_DATE: const.DATETIME_NOW,
         }
         update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
         response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
-        func.print_info_msg(user_info[const.FI_USER_NAME], msg_const.MSG_INFO_LOGIN)
+        func.print_info_msg(user_info[dto.FI_USER_NAME], msg_const.MSG_INFO_LOGIN)
 
     return response
 
 
 @app.get(const.PATH_LOGOUT)
 async def logout(request: Request):
-    user_name = request.session[const.STR_USER][const.FI_USER_NAME]
+    user_name = request.session[const.STR_USER][dto.FI_USER_NAME]
     func.print_info_msg(user_name, msg_const.MSG_INFO_LOGOUT)
     request.session.clear()
     context = {
@@ -164,9 +165,9 @@ async def logout(request: Request):
 async def app_exec(request: Request, app_name: str):
     try:
         if app_name == const.APP_USER:
-            target_html, context = sub.exec_user(request, app_name)
+            target_html, context = appl.exec_user(request, app_name)
         else:
-            target_html, context = sub.exec_result(request, app_name)
+            target_html, context = appl.exec_result(request, app_name)
     except Exception as e:
         func.print_error_msg(e)
         target_html = const.HTML_INDEX
@@ -187,7 +188,7 @@ async def user_update(request: Request, userId: str = Form(...)):
     update_user_info_on_form(dict_data)
     user_info = get_user_info(userId)
     request.session[const.STR_USER] = user_info
-    target_html, context = sub.exec_user(request, const.APP_USER)
+    target_html, context = appl.exec_user(request, const.APP_USER)
     return templates.TemplateResponse(target_html, context)
 
 
@@ -218,9 +219,9 @@ async def send_msg():
 
 
 @app.get(const.PATH_UPDATE)
-@token_required
 async def update_news():
-    sub.update_news()
+    appl.update_news(const.APP_TODAY)
+    line.get_msg_data_today()
     result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
     return result
 
@@ -246,6 +247,16 @@ async def img(file_name: str):
 async def font(file_name: str):
     font_path = func.get_file_path(file_name, const.FILE_TYPE_TTC)
     return FileResponse(font_path)
+
+
+@app.get("/check")
+def health_check():
+    # スリープ状態にならないようサーバーアクセス
+    appl.no_sleep()
+    info_msg = msg_const.MSG_INFO_SERVER_KEEP_ALIVE
+    func.print_info_msg(info_msg)
+    result = {const.STR_MESSAGE: info_msg}
+    return result
 
 
 @app.get("/test")

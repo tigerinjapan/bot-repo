@@ -22,10 +22,10 @@ def get_user_info(userId: str):
 
 # ユーザー情報検索
 def find_user_info(client, user_id: str):
-    cond = {const.FI_USER_ID: user_id}
+    cond = {dto.FI_USER_ID: user_id}
     count = func_mongo.db_count(client, COLL, cond)
 
-    select_data = {"_id": 0, const.FI_MODIFIED_DATE: 0, const.FI_LAST_LOGIN_DATE: 0}
+    select_data = {"_id": 0, dto.FI_MODIFIED_DATE: 0, dto.FI_LAST_LOGIN_DATE: 0}
     result = (
         const.NONE_CONSTANT
         if count == 0
@@ -37,11 +37,11 @@ def find_user_info(client, user_id: str):
 # 連番取得
 def get_user_seq():
     client = func_mongo.db_connect()
-    cond = {const.FI_USER_DIV: {"$eq": const.AUTH_GUEST}}
-    select_data = {const.FI_SEQ: 1}
-    sort = [(const.FI_SEQ, DESCENDING)]
+    cond = {dto.FI_USER_DIV: {"$eq": const.AUTH_GUEST}}
+    select_data = {dto.FI_SEQ: 1}
+    sort = [(dto.FI_SEQ, DESCENDING)]
     result = func_mongo.db_find(client, COLL, cond, select_data, sort)
-    seq = result[0].get(const.FI_SEQ) + 1
+    seq = result[0].get(dto.FI_SEQ) + 1
     func_mongo.db_close(client)
     return seq
 
@@ -53,8 +53,8 @@ def insert_user_info(client, insert_data):
 
 # ユーザー情報更新
 def update_user_info(client, update_data):
-    user_id = update_data[const.FI_USER_ID]
-    cond = {const.FI_USER_ID: user_id}
+    user_id = update_data[dto.FI_USER_ID]
+    cond = {dto.FI_USER_ID: user_id}
     update_data = {"$set": update_data}
     func_mongo.db_update(client, COLL, cond, update_data)
 

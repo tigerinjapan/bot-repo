@@ -18,8 +18,20 @@ const APP_SITE = "site";
 const APP_CAFE = "cafe";
 const APP_USER = "user";
 
+const NUM_APP_TODAY = "0";
+const NUM_APP_SITE = "1";
+const NUM_APP_DRAMA = "2";
+const NUM_APP_RANKING = "3";
+const NUM_APP_LCC = "4";
+const NUM_APP_TV = "5";
+const NUM_APP_NEWS = "6";
+const NUM_APP_STUDY = "7";
+const NUM_APP_CAFE = "8";
+const NUM_APP_USER = "9";
+
 const LIST_APP_DEV_MO = [APP_NEWS, APP_DRAMA, APP_STUDY, APP_CAFE];
 const LIST_APP_GUEST_MO = [APP_DRAMA, APP_RANKING, APP_LCC, APP_TV];
+
 const LIST_APP_GUEST = [APP_TODAY, APP_SITE].concat(LIST_APP_GUEST_MO);
 const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_CAFE, APP_USER];
 const LIST_APP = LIST_APP_GUEST.concat(LIST_APP_NOT_GUEST);
@@ -56,15 +68,24 @@ function initDisplay() {
 }
 
 // トップメニュー設定
-function setTopMenu(userDiv, userNm, appNm) {
+function setTopMenu(userDiv, userNm, appNm, menuVal) {
   // アプリケーションリスト
   let appList = LIST_APP;
   if (isMobile()) {
-    if (userDiv == AUTH_DEV) {
-      appList = LIST_APP_DEV_MO; // TODO 画面レイアウト設定をDB保存
-    } else if (userDiv == AUTH_GUEST) {
+    if (userDiv == AUTH_GUEST) {
       appList = LIST_APP_GUEST_MO;
+    } else {
+      appList = [];
+      for (let j = 0; j < menuVal.length; j++) {
+        let val = parseInt(menuVal[j]);
+
+        for (let i = 0; i < LIST_APP.length; i++) {
+          appList.push(LIST_APP[val]);
+          break;
+        }
+      }
     }
+
   } else {
     if (userDiv == AUTH_GUEST) {
       appList = LIST_APP_GUEST;

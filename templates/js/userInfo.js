@@ -1,6 +1,8 @@
 // メッセージ
 const MSG_VAL_NOT_EXIST = "が存在しません";
 const MSG_ERR_PASSWORD_NOT_MATCH = "パスワードが一致しません"
+const MSG_ERR_MENU_NO_CHECKED_ELEMENTS = "メニューは、1つ以上チェックしてください"
+const MSG_ERR_MENU_CHECKED_MAX = "メニューは、最大5つまでチェックしてください"
 
 // ID
 const ID_SEX = "sex";
@@ -21,7 +23,10 @@ const STR_STATION_JA = "駅";
 
 // URL
 const URL_SERVER = "https://kobe-dev.koyeb.app";
-const URL_ZIP_API = `${URL_SERVER}/api/zipCode`;
+const URL_LOCAL = "http://127.0.0.1:5000"
+const URL_ZIP_API = "/api/zipCode";
+const URL_ZIP_SERVER = `${URL_SERVER}${URL_ZIP_API}`;
+const URL_ZIP_LOCAL = `${URL_LOCAL}${URL_ZIP_API}`;
 const URL_ADDR_INFO = "https://express.heartrails.com";
 const URL_ADDR_API = `${URL_ADDR_INFO}/api/json?method=get`;
 const URL_LINE_API = `${URL_ADDR_API}${STR_LINES}`;
@@ -71,8 +76,13 @@ function getAddress() {
 // 住所設定
 function setAddress(selectLineVal, selectStationVal) {
   // 郵便番号より、住所取得
+  let zipUrl = URL_ZIP_SERVER;
+  if (isLocal()) {
+    zipUrl = URL_ZIP_LOCAL;
+  }
+
   const zipCd = document.getElementById(ID_ZIP_CD);
-  const zipCdUrl = `${URL_ZIP_API}/${zipCd.value}`;
+  const zipCdUrl = `${zipUrl}/${zipCd.value}`;
   const api_header = {
     method: "GET",
     headers: {
@@ -142,22 +152,68 @@ function changeLine(elem) {
   setStation(lineVal, SYM_BLANK);
 }
 
+// メニュー設定
+function setMenu(menuVal) {
+  const container = document.getElementById('checkBoxMenu');
+  const labels = LIST_APP;
+
+  for (let i = 0; i < labels.length; i++) {
+    const label = document.createElement('label');
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = `menu${i}`;
+    checkbox.name = `menu${i}`;
+    checkbox.value = i;
+
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(labels[i]));
+    container.appendChild(label);
+    if ((i + 1) % 3 == 0) {
+      container.appendChild(document.createElement('br')); // 改行追加
+    }
+  }
+
+  for (let i = 0; i < menuVal.length; i++) {
+    const val = menuVal[i];
+    const menuId = `menu${val}`
+    const checkbox = document.getElementById(menuId);
+    checkbox.checked = true; // 指定された状態に設定
+  }
+}
+
 // ユーザー情報チェック
 function checkUserInfo() {
+  let checkFlg = true;
+  let errMsg = SYM_BLANK;
   const msgElem = document.getElementById("chkMsg");
 
   const pwVal = document.getElementById("userPw").value;
   const pwCheckVal = document.getElementById("pwCheck").value;
   if (pwVal != pwCheckVal) {
-    msgElem.value = MSG_ERR_PASSWORD_NOT_MATCH;
+    checkFlg = false;
+    errMsg = MSG_ERR_PASSWORD_NOT_MATCH;
+  }
+
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+  const selectedValues = Array.from(checkboxes).map(cb => cb.value);
+  if (selectedValues.length == 0) {
+    checkFlg = false;
+    errMsg = MSG_ERR_MENU_NO_CHECKED_ELEMENTS;
+  } else if (5 < selectedValues.length) {
+    checkFlg = false;
+    errMsg = MSG_ERR_MENU_CHECKED_MAX;
+  }
+
+  if (!checkFlg) {
     document.querySelector("form").addEventListener("submit", function (event) {
       event.preventDefault();
-      alert(MSG_ERR_PASSWORD_NOT_MATCH);
+      msgElem.value = errMsg;
+      alert(errMsg);
       location.reload();
     });
   }
 };
-
 
 // ローカル環境判定
 function isLocal() {

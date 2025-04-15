@@ -3,9 +3,9 @@
 import dotenv
 import schedule
 
+import apps.appl as appl
 import apps.line as line
 import apps.server as server
-import apps.app_exec as sub
 import apps.utils.constants as const
 import apps.utils.function as func
 
@@ -32,13 +32,10 @@ def job_scheduler():
     if func.is_holiday():
         hour_daily += 1
 
-    schedule.every().day.at(f"{HOUR_DAILY_JOB:2d}:00").do(daily_job)
+    schedule.every().day.at(f"{HOUR_DAILY_JOB:02d}:00").do(daily_job)
 
     # 1時間毎に実行
-    schedule.every().hour.at(f":{MIN_HOURLY_JOB:2d}").do(hourly_job)
-
-    # 1分毎に実行
-    schedule.every(1).minutes.do(every_min_job)
+    schedule.every().hour.at(f":{MIN_HOURLY_JOB:02d}").do(hourly_job)
 
     pending_cnt = 0
 
@@ -54,7 +51,7 @@ def job_scheduler():
 
         # スリープ状態にならないよう、ジョブ実行後、10分毎に、サーバーアクセス
         if pending_cnt % SEC_NO_SLEEP == 0:
-            # every_min_job()
+            every_min_job()
             pending_cnt = 0
 
 
@@ -65,13 +62,13 @@ def daily_job():
 
 # 時次ジョブ
 def hourly_job():
-    sub.update_news()
+    appl.update_news()
     line.get_msg_data_today()
 
 
 # 随時ジョブ
 def every_min_job():
-    sub.no_sleep()
+    server.health_check()
 
 
 # プログラムのエントリーポイント
