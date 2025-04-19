@@ -7,7 +7,7 @@ from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
 from functools import wraps
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
@@ -98,7 +98,7 @@ async def issue_token(request: Request):
     # ランダムなトークンを生成
     # access_token = secrets.token_hex(16)  # 32文字のランダムなトークン
     access_token = "token_" + const.DATE_TODAY
-    expiration = const.DATETIME_NOW + timedelta(minutes=TOKEN_EXPIRATION_MINUTES)
+    expiration = datetime.now() + timedelta(minutes=TOKEN_EXPIRATION_MINUTES)
 
     # トークン情報を保存
     token_data = {
@@ -139,7 +139,7 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
         user_id = func.get_masking_data(userId)
         update_data = {
             dto.FI_USER_ID: user_id,
-            dto.FI_LAST_LOGIN_DATE: const.DATETIME_NOW,
+            dto.FI_LAST_LOGIN_DATE: datetime.now(),
         }
         update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
         response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
@@ -244,6 +244,7 @@ async def img(file_name: str):
 
 
 @app.get(f"/{const.STR_FONT}" + "/{file_name}")
+# /font/meiryo
 async def font(file_name: str):
     font_path = func.get_file_path(file_name, const.FILE_TYPE_TTC)
     return FileResponse(font_path)

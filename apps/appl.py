@@ -1,4 +1,4 @@
-# 説明: サーバー処理
+# 説明: アプリケーション実行
 
 from fastapi import Request
 

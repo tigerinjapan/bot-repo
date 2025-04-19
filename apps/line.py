@@ -277,11 +277,12 @@ def get_msg_data_list(
     forecast: str = const.SYM_BLANK,
 ) -> list[str]:
     text_title = get_title(msg_div, msg_type, date_today)
+    today_outfit = msg_data[5].split("] ")[1]
     text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 
     if msg_type == MSG_TYPE_IMG:
         if msg_div == FILE_DIV_TODAY:
-            file_path = func_gemini.get_today_news_image(forecast, text_msg)
+            file_path = func_gemini.get_today_news_image(forecast, today_outfit, text_msg)
             if not file_path:
                 create_msg_img(msg_div, text_msg, forecast)
 

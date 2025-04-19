@@ -9,8 +9,10 @@ import socket
 import sys
 import time
 import urllib
+
 from datetime import datetime
 from pprint import pprint
+from translate import Translator
 
 import pandas as pd
 
@@ -221,7 +223,7 @@ def get_file_path(div: str, file_type: str, file_div: str = const.STR_INPUT) -> 
 # ファイル削除
 def remove_old_file(dir_path: str, div: str):
     # func[glob]:Get a list of files that meet the conditions
-    file_path_list = glob.glob(f"{dir_path}/{const.DATE_YEAR_MONTH}*_{div}")
+    file_path_list = glob.glob(f"{dir_path}/{const.DATE_YEAR}*_{div}")
 
     for file_path in file_path_list:
         if const.DATE_TODAY in file_path:
@@ -462,6 +464,16 @@ def convert_upper_lower(before_str: str, div: str = const.STR_UPPER) -> str:
         after_str = before_str.capitalize()
 
     return after_str
+
+
+# 翻訳文の取得
+def get_translated_text(japanese_text: str):
+    # 日本語から英語への翻訳
+    translator = Translator(from_lang="ja", to_lang="en")
+
+    # 翻訳
+    translated_text = translator.translate(japanese_text)
+    return translated_text
 
 
 # テストデータ出力

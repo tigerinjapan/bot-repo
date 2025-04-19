@@ -108,7 +108,6 @@ def get_generate_image(div: str, contents: str, msg_data) -> str:
         if part.text is not None:
             continue
         elif part.inline_data is not None:
-            # div = const.DATE_NOW + str(idx).zfill(3)
             file_path = func.get_file_path(div, const.FILE_TYPE_JPEG, const.STR_OUTPUT)
             image_open = Image.open(BytesIO((part.inline_data.data)))
             if msg_data:
@@ -133,7 +132,7 @@ def get_generate_image(div: str, contents: str, msg_data) -> str:
 
 
 # ニュースイメージ取得
-def get_today_news_image(forecast: str, msg: str):
+def get_today_news_image(forecast: str, today_outfit: str, msg: str):
     div = const.APP_TODAY
     img_div = "女性"
 
@@ -141,42 +140,21 @@ def get_today_news_image(forecast: str, msg: str):
         "空白で何も表示されていない画面がある。"
         "その画面は、テレビ放送用の大きいモニター画面である。"
         "モニターは、完成イメージの9割を占める。"
-        "番組名は、「Today's Morning News」である。"
-        "番組ロゴは、モニター画面の中で、左上に表示する。"
-        f"背景は、「{forecast}」が分かるようなイメージにする。"
-        "但し、黒字がよく見えるように、黒系の色は避ける。"
+        "番組名は、Today's Newsである。"
+        "番組名は、モニター画面の左上に表示する。"
+        f"背景は、{forecast}が分かるようなイメージにする。"
+        "但し、黒字がよく見えるように、暗い色は避ける。"
         f"天気キャスターの{img_div}が、モニター画面の中で、右下にいる。"
-        f"{img_div}は、白いブラウスに、清楚な格好をしている。"
-        f"{img_div}は、50代の日本人で、童顔で、笑顔が素敵で、明るくて、可愛い人。"
+        f"{img_div}の今日のファッションは、{today_outfit}。"
+        f"{img_div}は、40代の日本人、身長は155cm、小柄、ボリューム感、童顔、笑顔、可愛い人。"
         "イメージのサイズは、480ピクセル X 360ピクセル。"
-        "イメージを縦で3等分した場合、右側の1/3の中に、女性が収まるようにする。"
         "そのサイズに合わせて、イメージを生成。"
-        "イメージには、日本語、漢字などは、表示しない。"
+        "イメージには、日本語、中国語、記号などは、表示しない。"
     )
 
-    today_weather = "sunny"
-    if "雨" in forecast:
-        today_weather = "rainy"
-    elif "雪" in forecast:
-        today_weather = "snowy"
-    elif "曇" in forecast:
-        today_weather = "cloudy"
-    contents = (
-        "A blank screen with nothing displayed is visible."
-        "The full screen is a large monitor used for television broadcasting."
-        "The monitor accounts for 90percent of the final image perception."
-        "The program's name is 'Today's News.'"
-        "The program's name should be displayed in the top-left of the monitor screen."
-        f"The background should be an image that conveys the idea of '{today_weather}'."
-        "However, to ensure that black text is clearly visible, black-based colors should be avoided."
-        "The weather caster woman should be positioned in the bottom-right corner of the monitor screen."
-        "The woman is dressed neatly in a white blouse, giving her a modest and elegant appearance."
-        "The woman is a Japanese woman in her fifties, a baby face, a lovely smile, and a bright, cheerful personality. She’s very cute and charming."
-        "The image size should be 480 pixels by 360 pixels."
-        "If the image is divided vertically into thirds, place the woman within the rightmost one-third of the image."
-        "Generate the image according to this size."
-        "The image should not display any Japanese text or kanji."
-    )
+    # 英語に翻訳
+    contents = func.get_translated_text(contents)
+
     msg_data = {
         "msg": msg,
         "font_type": "uzura",

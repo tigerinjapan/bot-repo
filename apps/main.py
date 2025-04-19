@@ -32,7 +32,7 @@ def job_scheduler():
     if func.is_holiday():
         hour_daily += 1
 
-    schedule.every().day.at(f"{HOUR_DAILY_JOB:02d}:00").do(daily_job)
+    schedule.every().day.at(f"{hour_daily:02d}:00").do(daily_job)
 
     # 1時間毎に実行
     schedule.every().hour.at(f":{MIN_HOURLY_JOB:02d}").do(hourly_job)
