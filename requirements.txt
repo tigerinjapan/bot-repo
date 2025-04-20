@@ -12,3 +12,4 @@ pymongo
 schedule
 google-genai
 python-multipart
+translate

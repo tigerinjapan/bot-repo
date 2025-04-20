@@ -467,12 +467,14 @@ def convert_upper_lower(before_str: str, div: str = const.STR_UPPER) -> str:
 
 
 # 翻訳文の取得
-def get_translated_text(japanese_text: str):
+def get_translated_text(
+    target_text: str, from_lang: str = const.LANG_JA, to_lang: str = const.LANG_EN
+) -> str:
     # 日本語から英語への翻訳
-    translator = Translator(from_lang="ja", to_lang="en")
+    translator = Translator(from_lang=from_lang, to_lang=to_lang)
 
     # 翻訳
-    translated_text = translator.translate(japanese_text)
+    translated_text = translator.translate(target_text)
     return translated_text
 
 

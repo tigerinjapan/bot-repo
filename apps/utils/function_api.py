@@ -66,7 +66,7 @@ def insert_msg_to_img(
     font_size: int,
     xy_size: tuple[int, int],
     msg: str,
-):
+) -> str:
     img_file_path = func.get_file_path(img_file_name, const.FILE_TYPE_JPEG)
 
     img = Image.open(img_file_path).rotate(0)

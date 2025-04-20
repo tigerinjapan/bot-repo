@@ -29,7 +29,7 @@ NUM_WRAP_WIDTH = 32
 
 
 # GEMINI回答取得
-def get_gemini_response(contents):
+def get_gemini_response(contents) -> list[str]:
     result = []
     exception_error = const.SYM_BLANK
 
@@ -54,7 +54,7 @@ def get_gemini_response(contents):
 
 
 # 生成コンテンツ取得
-def get_generate_content(contents):
+def get_generate_content(contents) -> list[str]:
     result = []
 
     if GEMINI_API_KEY:
@@ -132,7 +132,7 @@ def get_generate_image(div: str, contents: str, msg_data) -> str:
 
 
 # ニュースイメージ取得
-def get_today_news_image(forecast: str, today_outfit: str, msg: str):
+def get_today_news_image(forecast: str, today_outfit: str, msg: str) -> str:
     div = const.APP_TODAY
     img_div = "女性"
 
@@ -166,7 +166,7 @@ def get_today_news_image(forecast: str, today_outfit: str, msg: str):
 
 
 # おすすめコーデ・夕食取得
-def get_recommend_outfit_dinner(today_weather: str):
+def get_recommend_outfit_dinner(today_weather: str) -> list[str]:
     contents = (
         f"{today_weather}{NEW_LINE}上記の内容を元に、"
         "気温と季節を考慮し、今日のコーデ・夕食をおすすめしてください。"
@@ -186,7 +186,7 @@ def get_recommend_outfit_dinner(today_weather: str):
 
 
 # おすすめコーデ取得
-def get_recommend_outfit(outfit_text: str):
+def get_recommend_outfit(outfit_text: str) -> str:
     contents = (
         f"{outfit_text}{NEW_LINE}"
         "上記の内容を元に、今日のコーデをおすすめしてください。"
@@ -207,7 +207,7 @@ def get_news_summary(
     news_list: list[str],
     keyword: str = const.SYM_BLANK,
     max_count: int = const.MIN_DISPLAY_CNT,
-):
+) -> list[str]:
     news_item = [str(item) for item in news_list]
     news_item_list = NEW_LINE.join(news_item[:max_count])
 
@@ -272,7 +272,7 @@ def get_news_reference(other_reference: list[str]) -> str:
 
 
 # 追加条件取得
-def get_add_condition_list(keyword: str):
+def get_add_condition_list(keyword: str) -> list[str]:
     add_condition_list = [
         "韓国語を勉強している初級レベルの人が記事を学習用で使用する目的",
         "【会話】記事の内容を元に韓国人同士が会話する内容",
@@ -298,7 +298,7 @@ def get_add_condition_list(keyword: str):
 
 
 # 追加参考取得
-def get_other_reference():
+def get_other_reference() -> list[str]:
     other_reference = [
         "※例",
         "유리: <b>오빠들</b>, <b>음악프로</b> 1등했데.",

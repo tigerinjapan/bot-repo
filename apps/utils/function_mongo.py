@@ -25,7 +25,7 @@ def db_connect():
 
 
 # 接続情報取得
-def get_connect_info(db_div: str = const.STR_MONGO):
+def get_connect_info(db_div: str = const.STR_MONGO) -> str:
     client_url = const.SYM_BLANK
 
     auth_data = func.get_input_data(const.STR_AUTH, const.STR_MONGO)
