@@ -1,0 +1,124 @@
+{
+    "item": [
+        {
+            "name": "龍山寺",
+            "description": "仏教寺院",
+            "addr": "台北市万華区",
+            "access": "龍山寺駅",
+            "img": "taipei_000",
+            "url": "https://www.lungshan.org.tw/"
+        },
+        {
+            "name": "中正紀念堂",
+            "description": "台湾の民主記念館",
+            "addr": "台北市中正区",
+            "access": "中正紀念堂駅",
+            "img": "taipei_001",
+            "url": "https://www.cksmh.gov.tw/"
+        },
+        {
+            "name": "台北101",
+            "description": "台北のランドマーク、展望台",
+            "addr": "台北市信義区",
+            "access": "台北101駅",
+            "img": "taipei_002",
+            "url": "https://www.taipei-101.com.tw/ja/"
+        },
+        {
+            "name": "淡水",
+            "description": "港町、夕日、ノスタルジア",
+            "addr": "新北市淡水区",
+            "access": "淡水駅",
+            "img": "taipei_003",
+            "url": "https://taiwan-kanko.com/archives/5246"
+        },
+        {
+            "name": "北投",
+            "description": "温泉街、足湯スポット",
+            "addr": "台北市北投区",
+            "access": "北投駅",
+            "img": "taipei_004",
+            "url": "https://taiwan77777.com/4472/"
+        },
+        {
+            "name": "華山1914",
+            "description": "芸術文化エリア",
+            "addr": "台北市中正区",
+            "access": "忠孝新生駅",
+            "img": "taipei_005",
+            "url": "https://www.huashan1914.com/w/huashan1914_en/index"
+        },
+        {
+            "name": "西門町",
+            "description": "若者文化",
+            "addr": "台北市華区",
+            "access": "西門駅",
+            "img": "taipei_006",
+            "url": "https://taiwan-kanko.com/archives/752"
+        },
+        {
+            "name": "鼎泰豊",
+            "description": "小籠包。ディンタイ フォン",
+            "addr": "台北市信義区",
+            "access": "台北101/世貿駅",
+            "img": "taipei_100",
+            "url": "https://www.dintaifung.com.tw/"
+        },
+        {
+            "name": "冰讃",
+            "description": "マンゴーかき氷。ビンザン",
+            "addr": "台北市大同区",
+            "access": "雙連駅",
+            "img": "taipei_102",
+            "url": "https://www.travel.taipei/"
+        },
+        {
+            "name": "海老餃子",
+            "description": "水餃子",
+            "addr": "",
+            "access": "",
+            "img": "taipei_101",
+            "url": ""
+        },
+        {
+            "name": "牛肉麵",
+            "description": "",
+            "addr": "",
+            "access": "",
+            "img": "taipei_103",
+            "url": ""
+        },
+        {
+            "name": "士林夜市",
+            "description": "台湾最大級。シーリン",
+            "addr": "",
+            "access": "剣潭駅",
+            "img": "taipei_201",
+            "url": ""
+        },
+        {
+            "name": "饒河街夜市",
+            "description": "食べ歩き。ラオハー ジエ",
+            "addr": "台北市松山区",
+            "access": "松山駅",
+            "img": "taipei_202",
+            "url": ""
+        },
+        {
+            "name": "寧夏夜市",
+            "description": "グルメ。ニンシャー ",
+            "addr": "台北市大同区",
+            "access": "雙連駅",
+            "img": "taipei_203",
+            "url": ""
+        },
+        {
+            "name": "臨江街夜市",
+            "description": "リーズナブル。リンジャン ジエ",
+            "addr": "台北市大安区",
+            "access": "信義安和駅",
+            "img": "taipei_204",
+            "url": ""
+        }
+    ]
+}

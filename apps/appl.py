@@ -22,9 +22,15 @@ URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
 
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
-LIST_ALL_APP_DIV = LIST_APP_DIV + [site, site]
+LIST_ALL_APP_DIV = LIST_APP_DIV + [site, site, site]
 
-LIST_APP_NUM_OFF = [const.APP_TODAY, const.APP_STUDY, const.APP_SITE, const.APP_CAFE]
+LIST_APP_NUM_OFF = [
+    const.APP_TODAY,
+    const.APP_STUDY,
+    const.APP_SITE,
+    const.APP_CAFE,
+    const.APP_TRIP,
+]
 
 
 # クラスの定義
@@ -65,6 +71,8 @@ def exec_result(request: Request, app_name: str):
 
     if app_name == const.APP_CAFE:
         app_title = site.app_title_cafe
+    elif app_name == const.APP_TRIP:
+        app_title = site.app_title_trip
 
     num_flg = const.FLG_ON
     if func.check_in_list(app_name, LIST_APP_NUM_OFF):
@@ -73,7 +81,7 @@ def exec_result(request: Request, app_name: str):
     app_exec = AppExec(app_div, app_name)
     app_exec.start()
 
-    if app_name in [const.APP_SITE, const.APP_CAFE]:
+    if app_name in [const.APP_SITE, const.APP_CAFE, const.APP_TRIP]:
         df = site.get_df_data(user_div, app_name)
         data_list = get_data_list(df)
     else:

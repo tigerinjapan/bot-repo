@@ -8,14 +8,15 @@ const AUTH_GUEST = "guest";
 
 // アプリケーションリスト
 const APP_TODAY = "today";
-const APP_NEWS = "news";
+const APP_SITE = "site";
 const APP_DRAMA = "drama";
 const APP_RANKING = "ranking";
 const APP_LCC = "lcc";
 const APP_TV = "tv";
+const APP_NEWS = "news";
 const APP_STUDY = "study";
-const APP_SITE = "site";
 const APP_CAFE = "cafe";
+const APP_TRIP = "trip";
 const APP_USER = "user";
 
 const NUM_APP_TODAY = "0";
@@ -27,13 +28,13 @@ const NUM_APP_TV = "5";
 const NUM_APP_NEWS = "6";
 const NUM_APP_STUDY = "7";
 const NUM_APP_CAFE = "8";
-const NUM_APP_USER = "9";
+const NUM_APP_TRIP = "9";
 
 const LIST_APP_DEV_MO = [APP_NEWS, APP_DRAMA, APP_STUDY, APP_CAFE];
 const LIST_APP_GUEST_MO = [APP_DRAMA, APP_RANKING, APP_LCC, APP_TV];
 
 const LIST_APP_GUEST = [APP_TODAY, APP_SITE].concat(LIST_APP_GUEST_MO);
-const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_CAFE, APP_USER];
+const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_CAFE, APP_TRIP, APP_USER];
 const LIST_APP = LIST_APP_GUEST.concat(LIST_APP_NOT_GUEST);
 
 // 項目名

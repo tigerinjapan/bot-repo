@@ -114,13 +114,6 @@
         },
         {
             "auth": "1",
-            "category": "community",
-            "title": "コネスト",
-            "description": "韓国旅行情報",
-            "url": "https://www.konest.com/"
-        },
-        {
-            "auth": "1",
             "category": "travel",
             "title": "台北ナビ",
             "description": "台北旅行情報",
@@ -139,6 +132,13 @@
             "title": "Renthub",
             "description": "タイアパートレンタル",
             "url": "https://www.renthub.in.th/en"
+        },
+        {
+            "auth": "1",
+            "category": "community",
+            "title": "コネスト",
+            "description": "韓国旅行情報",
+            "url": "https://www.konest.com/"
         },
         {
             "auth": "1",

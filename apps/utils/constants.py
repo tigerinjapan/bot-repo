@@ -220,6 +220,8 @@ STR_LINE = "line"
 STR_GEMINI = "gemini"
 STR_API = "api"
 STR_ADDR = "addr"
+STR_ACCESS = "access"
+STR_DESCRIPTION = "description"
 STR_IMG = "img"
 STR_FONT = "font"
 STR_KEYWORD = "keyword"
@@ -368,6 +370,7 @@ APP_TV = "tv"
 APP_STUDY = "study"
 APP_SITE = "site"
 APP_CAFE = "cafe"
+APP_TRIP = "trip"
 APP_USER = "user"
 LIST_APP_NAME = [
     APP_TODAY,
@@ -378,7 +381,7 @@ LIST_APP_NAME = [
     APP_TV,
     APP_STUDY,
 ]
-LIST_ALL_APP_NAME = LIST_APP_NAME + [APP_SITE, APP_CAFE]
+LIST_ALL_APP_NAME = LIST_APP_NAME + [APP_SITE, APP_CAFE, APP_TRIP]
 
 
 # パス取得
