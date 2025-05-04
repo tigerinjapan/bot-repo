@@ -62,7 +62,7 @@ def get_today_info():
     today_won_rate = ex.get_today_won()
 
     # 為替+
-    today_twd_rate = ex.get_ex_info(const.STR_TWD)
+    today_twd_rate = ex.get_ex_info(const.STR_USD)
 
     # コーデ・夕食
     # recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(

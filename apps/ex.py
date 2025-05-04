@@ -74,5 +74,6 @@ def get_ex_info(ex_div: str = const.STR_KRW):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    ex_info = get_ex_info()
+    ex_div = const.STR_USD
+    ex_info = get_ex_info(ex_div)
     func.print_test_data(ex_info)
