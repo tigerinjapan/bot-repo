@@ -282,7 +282,9 @@ def get_msg_data_list(
 
     if msg_type == MSG_TYPE_IMG:
         if msg_div == FILE_DIV_TODAY:
-            file_path = func_gemini.get_today_news_image(forecast, today_outfit, text_msg)
+            file_path = func_gemini.get_today_news_image(
+                forecast, today_outfit, text_msg
+            )
             if not file_path:
                 create_msg_img(msg_div, text_msg, forecast)
 
