@@ -353,7 +353,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
         xy_size = (75, 185)
         if IMG_NO == const.NUM_ONE:
             font_size = 16
-            xy_size = (60, 120)
+            xy_size = (20, 140)
 
     file_path = func_api.insert_msg_to_img(
         div, img_file_base, font_type, font_size, xy_size, msg
