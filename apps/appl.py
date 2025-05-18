@@ -160,6 +160,7 @@ def update_news(app_name: str = const.SYM_BLANK):
 
         if df.empty:
             func.print_info_msg(msg_const.MSG_ERR_DATA_NOT_EXIST)
+            app_exec.end()
             continue
 
         if app_name == const.APP_TV:

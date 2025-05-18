@@ -1,22 +1,22 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUC060CO0W5A500C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">夏ボーナス6.2%増\n商船三井は335万円4社に1社が100万円超え</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUD1943Y0Z10C25A3000000/\" target=\"_blank\" rel=\"noopener noreferrer\">AIにあらがう将棋棋士あえて｢不利飛車｣､藤井七冠に善戦</a>"
     },
     {
         "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2505/15/news108.html\" target=\"_blank\" rel=\"noopener noreferrer\">      Google DeepMind、AIが自らアルゴリズムを発見進化させる「AlphaEvolve」発表    </a>"
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2505/17/news080.html\" target=\"_blank\" rel=\"noopener noreferrer\">      OpenAIからコーディングエージェント「Codex」ソフトウェア開発で「o3high」上回る【更新終了】    </a>"
     },
     {
         "区分": "韓国",
-        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=55178\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 カンドンウォン映画関係者詐称被害\n600万ウォンのワイン注文後「ノーショー」</a>"
+        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=55190\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 SS501メンバー3人7月からデビュー20周年ワールドツアー</a>"
     },
     {
         "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/488394.html\" target=\"_blank\" rel=\"noopener noreferrer\">女優イミンジョン\n子供たちを置いて夫婦で済州島行き\nイビョンホン「ユーチューバーと一緒は大変」</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/489388.html\" target=\"_blank\" rel=\"noopener noreferrer\">俳優パクソジュン × パクヒョンシク × チェウシクがドバイを満喫の特別映像を公開\nドバイが「認定自閉症観光地(TM)」として東半球で初めて認定</a>"
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/489450.html\" target=\"_blank\" rel=\"noopener noreferrer\">「KISS OF LIFE」\n7月に初ワールドツアーのアンコール公演を開催</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/489594.html\" target=\"_blank\" rel=\"noopener noreferrer\">「Balming Tiger」\n単独コンサート「Pigeon and Plastic」6月開催</a>"
     }
 ]

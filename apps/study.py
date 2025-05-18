@@ -36,28 +36,14 @@ def get_item_list(keyword_list: list[str] = []) -> list[str]:
     for attempt in range(retry_cnt):
         for keyword in keyword_list:
             news_summary = get_naver_news_summary(keyword)
-            if not news_summary:
+            if not news_summary or len(news_summary) != 3:
                 continue
 
-            study_info = news_summary[0].split(NEW_LINE * 2)
+            conversation = news_summary[1]
+            korean = news_summary[2]
 
-            if len(study_info) < 2:
-                continue
-
-            kor_idx = 0
-            for idx, info in enumerate(study_info):
-                if "[1]" in info:
-                    kor_idx = idx
-                    break
-
-            if 1 <= kor_idx:
-                conver_temp = study_info[kor_idx - 1]
-                if 20 < len(conver_temp):
-                    conver = conver_temp
-                else:
-                    conver = study_info[kor_idx - 2]
-
-                study_item = [conver, study_info[kor_idx]]
+            if "[1]" in korean:
+                study_item = [conversation, korean]
                 item_list.append(study_item)
 
         if item_list:
@@ -73,24 +59,30 @@ def get_naver_news_summary(keyword: str) -> list[str]:
     url_param = url_search_param.format(keyword)
     url = f"{const.URL_NAVER_SEARCH}{url_param}"
     a_elem_list = func_bs.get_elem_from_url(
-        url, attr_val="news_area", list_flg=const.FLG_ON
-    )[: const.MAX_DISPLAY_CNT]
+        url,
+        attr_val="sds-comps-vertical-layout sds-comps-full-layout iYo99IP8GixD0iM_4cb8",
+        list_flg=const.FLG_ON,
+    )[:10]
 
     news_list = []
     if a_elem_list:
         for a_elem in a_elem_list:
             time_elem = func_bs.find_elem_by_attr(
-                a_elem, const.TAG_SPAN, attr_div=const.ATTR_CLASS, attr_val="info"
+                a_elem,
+                const.TAG_SPAN,
+                attr_div=const.ATTR_CLASS,
+                attr_val="sds-comps-text sds-comps-text-type-body2 sds-comps-text-weight-sm sds-comps-profile-info-subtext",
             )
             time_text = time_elem.text
             if func.check_in_list(time_text, ["분 전", "시간 전"]):
                 contents_elem = func_bs.find_elem_by_attr(
                     a_elem,
                     attr_div=const.ATTR_CLASS,
-                    attr_val="api_txt_lines dsc_txt_wrap",
+                    attr_val="sds-comps-text sds-comps-text-ellipsis-1 sds-comps-text-type-headline1",
                 )
                 contents_text = contents_elem.text
-                news_list.append(contents_text)
+                if keyword in contents_text:
+                    news_list.append(contents_text)
 
     if news_list:
         news_summary = func_gemini.get_news_summary(news_list, keyword)

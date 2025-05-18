@@ -62,7 +62,10 @@ def get_generate_content(contents) -> list[str]:
         response = client.models.generate_content(model=GEMINI_MODEL, contents=contents)
         if response:
             response_text = str(response.text)
-            result = response_text.split(const.SYM_COMMA)
+            split_str = const.SYM_NEW_LINE * 2
+            if split_str not in response_text:
+                split_str = const.SYM_COMMA
+            result = response_text.split(split_str)
         else:
             func.print_error_msg(msg_const.MSG_ERR_API_RESPONSE_NONE)
 
@@ -140,14 +143,14 @@ def get_today_news_image(forecast: str, today_outfit: str, msg: str) -> str:
         "480px X 360pxのサイズに合わせて、イメージを生成してください。"
         "※以下内容を参考してください。"
         "イメージには、日本語、中国語、記号など英語以外の文字は、一切表示しない。"
-        "番組名は、「Today's News」、英語の番組名をイメージの右上に表示する。"
-        "イメージの背景は、暗い色や複雑なイメージは避ける。"
-        f"イメージのの背景は、{forecast}が分かるようにする。"
-        f"天気キャスターの{img_div}が、イメージの中で、右側にいる。"
+        "番組名は、「Today's News」、左上に表示する。"
+        f"天気キャスターの{img_div}は、イメージを縦に3等分にした一番右に配置する。"
         f"{img_div}は、本物と同じ自然なイメージにする。イラストではない。"
         f"{img_div}は、正面を見ながら、笑顔でいる。"
         f"{img_div}は、40才の日本人、身長は155cm、50kg、小柄、童顔、笑顔、可愛い人。"
         f"{img_div}の今日のファッションは、{today_outfit}。"
+        f"イメージのの背景は、{forecast}が分かるようにする。"
+        "イメージの背景は、複雑なイメージは避ける。"
     )
 
     # 英語に翻訳
@@ -155,9 +158,9 @@ def get_today_news_image(forecast: str, today_outfit: str, msg: str) -> str:
 
     msg_data = {
         "msg": msg,
-        "font_type": "uzura",
+        "font_type": "yusei",
         "font_size": 28,
-        "xy_size": (100, 160),
+        "xy_size": (60, 140),
     }
     file_path = get_generate_image(div, contents, msg_data)
     return file_path

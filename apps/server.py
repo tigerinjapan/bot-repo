@@ -220,7 +220,7 @@ async def send_msg():
 
 @app.get(const.PATH_UPDATE)
 async def update_news():
-    appl.update_news(const.APP_TODAY)
+    appl.update_news()
     line.get_msg_data_today()
     result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
     return result
