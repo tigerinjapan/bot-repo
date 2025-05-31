@@ -365,6 +365,6 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
 if __name__ == const.MAIN_FUNCTION:
     get_msg_data_today()
-    # main(proc_flg=const.FLG_OFF)
     # main(auto_flg=const.FLG_OFF)
     # main(data_flg=const.FLG_OFF)
+    # main(proc_flg=const.FLG_OFF)

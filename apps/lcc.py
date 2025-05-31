@@ -24,7 +24,7 @@ def get_item_list():
 
 
 # LCC情報取得
-def get_lcc_info_list() -> list[str]:
+def get_lcc_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
     lcc_info_list = []
     url = f"{const.URL_LCC}/news/"
     lcc_list = func_bs.get_elem_from_url(url, attr_val="bgtitle", list_flg=const.FLG_ON)
@@ -52,9 +52,13 @@ def get_lcc_info_list() -> list[str]:
             )
             url_official = func_bs.get_link_from_soup(lcc_info_details)
 
-            company = func.get_a_tag(url_official, company)
-            lcc_data = [date, company, title]
-            lcc_info_list.append(lcc_data)
+            if list_flg:
+                company = func.get_a_tag(url_official, company)
+                lcc_data = [date, company, title]
+                lcc_info_list.append(lcc_data)
+            else:
+                lcc_data = f"[{company}] {title}"
+                return lcc_data
 
             if len(lcc_info_list) == const.MAX_DISPLAY_CNT:
                 break

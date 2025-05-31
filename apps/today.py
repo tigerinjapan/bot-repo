@@ -1,6 +1,7 @@
 # 説明: 今日の生活情報
 
 import apps.ex as ex
+import apps.lcc as lcc
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
@@ -25,6 +26,7 @@ DIV_WEATHER_PLUS = "天気+"
 DIV_NISA = "NISA"
 DIV_RATE = "為替"
 DIV_RATE_PLUS = "為替+"
+DIV_LCC = "LCC"
 DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
 DIV_LIST = [
@@ -33,7 +35,8 @@ DIV_LIST = [
     DIV_WEATHER_PLUS,
     DIV_NISA,
     DIV_RATE,
-    DIV_RATE_PLUS,
+    # DIV_RATE_PLUS,
+    DIV_LCC,
     DIV_OUTFIT,
     DIV_DINNER,
 ]
@@ -62,7 +65,10 @@ def get_today_info():
     today_won_rate = ex.get_today_won()
 
     # 為替+
-    today_twd_rate = ex.get_ex_info(const.STR_USD)
+    # today_rate = ex.get_ex_info(const.STR_USD)
+
+    # LCCニュース
+    today_lcc_news = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
 
     # コーデ・夕食
     # recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(
@@ -84,7 +90,7 @@ def get_today_info():
         today_weather_plus,
         today_nisa,
         today_won_rate,
-        today_twd_rate,
+        today_lcc_news,
         today_outfit,
         today_dinner,
     ]
