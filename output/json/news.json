@@ -1,22 +1,18 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOGN3106K0R30C25A5000000/\" target=\"_blank\" rel=\"noopener noreferrer\">米鉄鋼アルミ関税2倍の50%にトランプ氏表明\n6月4日から</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOGN03EJK0T00C25A6000000/\" target=\"_blank\" rel=\"noopener noreferrer\">マスク氏「恥を知れ」トランプ政権の減税法案を猛批判</a>"
     },
     {
         "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2505/29/news152.html\" target=\"_blank\" rel=\"noopener noreferrer\">      AIが24時間365日休まず大量架電、「AIテレアポくん」登場「AIピカソ」の親会社から    </a>"
-    },
-    {
-        "区分": "韓国",
-        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=55300\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 idleが初の日本アリーナツアー開催へ サマソニ出演も</a>"
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/news/articles/2505/31/news038.html\" target=\"_blank\" rel=\"noopener noreferrer\">      集めたニュースが知識に変わる――ライターが「Cursor」と「Obsidian」で実践した、AI時代の情報整理術    </a>"
     },
     {
         "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/490538.html\" target=\"_blank\" rel=\"noopener noreferrer\">元「EXO」TAO\n“生理用ナプキン事業”が大当たり\nわずか30分で4億円以上を売り上げ</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/topic/read/142956.html\" target=\"_blank\" rel=\"noopener noreferrer\">「SHINee」\nデビュー17周年にも大ヒット新人\nジョンヒョンさんと一緒に達成したキャリアハイ</a>"
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/490760.html\" target=\"_blank\" rel=\"noopener noreferrer\">「FANTASY BOYS」\n東京ファンコンサートで輝いた\nユニット「Double 0ne」のステージも初公開</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/491071.html\" target=\"_blank\" rel=\"noopener noreferrer\">防弾少年団 V\n除隊記念で世界中のファンが支援\n寄付も実施し祝福ムード</a>"
     }
 ]

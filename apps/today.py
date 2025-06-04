@@ -187,13 +187,12 @@ def get_today_outfit():
 
 # 今日のレシピメニュー取得
 def get_today_menu():
-    url = const.URL_RAKUTEN_RECIPE
-    _class = "weekly_menu__menu weekly_list"
+    url = "https://park.ajinomoto.co.jp/menu/"
     weekly_menu_list = func_bs.get_elem_from_url(
-        url, attr_val=_class, list_flg=const.FLG_ON
+        url, attr_val="recipeTitle", list_flg=const.FLG_ON
     )
-    weekly_menu = weekly_menu_list[const.DATE_WEEKDAY]
-    today_menu = get_elem_val_by_class(weekly_menu, "text weekly_list__text omit_2line")
+    weekly_menu = [menu.text for i, menu in enumerate(weekly_menu_list) if i%3 == 0]
+    today_menu = weekly_menu[const.DATE_WEEKDAY]
     return today_menu
 
 

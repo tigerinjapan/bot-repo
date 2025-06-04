@@ -60,7 +60,7 @@ def get_naver_news_summary(keyword: str) -> list[str]:
     url = f"{const.URL_NAVER_SEARCH}{url_param}"
     a_elem_list = func_bs.get_elem_from_url(
         url,
-        attr_val="sds-comps-vertical-layout sds-comps-full-layout iYo99IP8GixD0iM_4cb8",
+        attr_val="sds-comps-vertical-layout sds-comps-full-layout",
         list_flg=const.FLG_ON,
     )[:10]
 
