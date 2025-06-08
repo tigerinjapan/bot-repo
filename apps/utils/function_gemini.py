@@ -151,6 +151,7 @@ def get_today_news_image(forecast: str, today_outfit: str, msg: str) -> str:
         f"{img_div}の今日のファッションは、{today_outfit}。"
         f"イメージのの背景は、{forecast}が分かるようにする。"
         "イメージの背景は、複雑なイメージは避ける。"
+        "右記URLのイメージを参考にする：https://kobe-dev.koyeb.app/img/today"
     )
 
     # 英語に翻訳

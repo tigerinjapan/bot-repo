@@ -69,20 +69,22 @@ def get_naver_news_summary(keyword: str) -> list[str]:
         for a_elem in a_elem_list:
             time_elem = func_bs.find_elem_by_attr(
                 a_elem,
-                const.TAG_SPAN,
                 attr_div=const.ATTR_CLASS,
                 attr_val="sds-comps-text sds-comps-text-type-body2 sds-comps-text-weight-sm sds-comps-profile-info-subtext",
             )
             time_text = time_elem.text
             if func.check_in_list(time_text, ["분 전", "시간 전"]):
-                contents_elem = func_bs.find_elem_by_attr(
+                contents_elem_list = func_bs.find_elem_by_attr(
                     a_elem,
                     attr_div=const.ATTR_CLASS,
-                    attr_val="sds-comps-text sds-comps-text-ellipsis-1 sds-comps-text-type-headline1",
+                    attr_val="sds-comps-text sds-comps-text-ellipsis sds-comps-text-ellipsis-1 sds-comps-text-type-headline1",
+                    list_flg=const.FLG_ON
                 )
-                contents_text = contents_elem.text
-                if keyword in contents_text:
-                    news_list.append(contents_text)
+                for contents_elem in contents_elem_list:
+                    contents_text = contents_elem.text
+                    if keyword in contents_text:
+                        news_list.append(contents_text)
+                        break
 
     if news_list:
         news_summary = func_gemini.get_news_summary(news_list, keyword)
