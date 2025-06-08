@@ -2,6 +2,7 @@
 
 import apps.ex as ex
 import apps.lcc as lcc
+import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
@@ -23,22 +24,24 @@ NEW_LINE = const.SYM_NEW_LINE
 DIV_DATE = "日時"
 DIV_WEATHER = "天気"
 DIV_WEATHER_PLUS = "天気+"
+DIV_OUTFIT = "コーデ"
 DIV_NISA = "NISA"
 DIV_RATE = "為替"
 DIV_RATE_PLUS = "為替+"
 DIV_LCC = "LCC"
-DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
+DIV_TV = "TV"
 DIV_LIST = [
     DIV_DATE,
     DIV_WEATHER,
-    DIV_WEATHER_PLUS,
+    # DIV_WEATHER_PLUS,
+    DIV_OUTFIT,
     DIV_NISA,
     DIV_RATE,
     # DIV_RATE_PLUS,
     DIV_LCC,
-    DIV_OUTFIT,
     DIV_DINNER,
+    DIV_TV,
 ]
 
 
@@ -56,7 +59,7 @@ def get_today_info():
     today_weather, date_time = get_today_weather()
 
     # 天気+
-    today_weather_plus = get_today_weather_plus()
+    # today_weather_plus = get_today_weather_plus()
 
     # NISA
     today_nisa = get_today_nisa()
@@ -84,15 +87,20 @@ def get_today_info():
     # 夕食
     today_dinner = get_today_menu()
 
+    # TV番組
+    today_tv_info = tv.get_tv_info_today()
+
     today_info_list = [
         date_time,
         today_weather,
-        today_weather_plus,
+        # today_weather_plus,
+        today_outfit,
         today_nisa,
         today_won_rate,
+        # today_rate,
         today_lcc_news,
-        today_outfit,
         today_dinner,
+        today_tv_info,
     ]
 
     return today_info_list
@@ -191,7 +199,7 @@ def get_today_menu():
     weekly_menu_list = func_bs.get_elem_from_url(
         url, attr_val="recipeTitle", list_flg=const.FLG_ON
     )
-    weekly_menu = [menu.text for i, menu in enumerate(weekly_menu_list) if i%3 == 0]
+    weekly_menu = [menu.text for i, menu in enumerate(weekly_menu_list) if i % 3 == 0]
     today_menu = weekly_menu[const.DATE_WEEKDAY]
     return today_menu
 

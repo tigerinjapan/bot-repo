@@ -133,6 +133,28 @@ def get_tv_info_list2() -> list[str]:
     return tv_info_list
 
 
+def get_tv_info_today():
+    tv_info_today = None
+
+    tv_info_list = get_tv_info_list2()
+    for tv_info in tv_info_list:
+        title = tv_info[2]
+        if func.check_in_list(title, LIST_KEYWORD):
+            tv_info_today = tv_info
+            break
+
+    if not tv_info_today:
+        tv_info_today = tv_info_list[0]
+
+    time = tv_info_today[0].split(")")[1]
+    tv_company = tv_info_today[1]
+    tv_title = tv_info_today[2].split("\u3000")[0]
+    today_tv_info = f"[{tv_company + time}] {tv_title}"
+    if 25 < len(today_tv_info):
+        today_tv_info = today_tv_info[:25]
+    return today_tv_info
+
+
 if __name__ == const.MAIN_FUNCTION:
-    item_list = get_item_list()
-    func.print_test_data(item_list)
+    tv_info_today = get_tv_info_today()
+    func.print_test_data(tv_info_today)

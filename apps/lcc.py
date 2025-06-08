@@ -57,6 +57,7 @@ def get_lcc_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
                 lcc_data = [date, company, title]
                 lcc_info_list.append(lcc_data)
             else:
+                title = title.split("」")[0].split("「")[1]
                 lcc_data = f"[{company}] {title}"
                 return lcc_data
 
