@@ -23,6 +23,8 @@ duplicates_list = sort_list
 # キーワードリスト
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
 
+LIST_SPLIT = ["\u3000", "▽", "★", "☆", "#", "？", "！"]
+
 # URL
 URL_PARAM = (
     "schedulesBySearch.action?stationPlatformId=1"
@@ -148,11 +150,20 @@ def get_tv_info_today():
 
     time = tv_info_today[0].split(")")[1]
     tv_company = tv_info_today[1]
-    tv_title = tv_info_today[2].split("\u3000")[0]
+    tv_title = get_tv_title(tv_info_today[2])
     today_tv_info = f"[{tv_company + time}] {tv_title}"
     if 25 < len(today_tv_info):
         today_tv_info = today_tv_info[:25]
     return today_tv_info
+
+
+def get_tv_title(tv_title: str):
+    title = tv_title
+    for split_str in LIST_SPLIT:
+        if split_str in tv_title:
+            title = tv_title.split(split_str)[0]
+            break
+    return title
 
 
 if __name__ == const.MAIN_FUNCTION:

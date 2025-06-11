@@ -60,9 +60,9 @@ def get_naver_news_summary(keyword: str) -> list[str]:
     url = f"{const.URL_NAVER_SEARCH}{url_param}"
     a_elem_list = func_bs.get_elem_from_url(
         url,
-        attr_val="sds-comps-vertical-layout sds-comps-full-layout",
+        attr_val="sds-comps-vertical-layout sds-comps-full-layout _4zQ0QZWfn7bqZ_ul5OV",
         list_flg=const.FLG_ON,
-    )[:10]
+    )
 
     news_list = []
     if a_elem_list:
@@ -78,7 +78,7 @@ def get_naver_news_summary(keyword: str) -> list[str]:
                     a_elem,
                     attr_div=const.ATTR_CLASS,
                     attr_val="sds-comps-text sds-comps-text-ellipsis sds-comps-text-ellipsis-1 sds-comps-text-type-headline1",
-                    list_flg=const.FLG_ON
+                    list_flg=const.FLG_ON,
                 )
                 for contents_elem in contents_elem_list:
                     contents_text = contents_elem.text
