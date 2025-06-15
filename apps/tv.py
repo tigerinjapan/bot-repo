@@ -91,74 +91,72 @@ def get_tv_info_list(keyword) -> list[str]:
 
 
 # TV番組情報取得
-def get_tv_info_list2() -> list[str]:
+def get_tv_info_list2(list_flg:bool=const.FLG_ON) -> list[str]:
     tv_info_list = []
 
-    url = f"{const.URL_TV_RANKING}/?genre_id=5"
+    url = f"{const.URL_TV_RANKING}/ranking/?genre_id=5"
     program_list = func_bs.get_elem_from_url(url, attr_val="program_list_convertible")
 
-    title_info_list = func_bs.find_elem_by_attr(
+    link_info_list = func_bs.find_elem_by_attr(
         program_list,
         attr_div=const.ATTR_CLASS,
-        attr_val="program_title",
+        attr_val="js-logging",
         list_flg=const.FLG_ON,
     )
-    title_list = [title_info.text for title_info in title_info_list]
 
-    tv_info_elem_list = func_bs.find_elem_by_attr(
-        program_list,
-        attr_div=const.ATTR_CLASS,
-        attr_val="program_supplement",
-        list_flg=const.FLG_ON,
-    )
-    tv_info_text_list = [
-        tv_info_elem.text.split("　") for tv_info_elem in tv_info_elem_list
-    ]
+    for link_info in link_info_list:
+        tv_info_text = func_bs.find_elem_by_attr(
+            link_info,
+            attr_div=const.ATTR_CLASS,
+            attr_val="program_supplement",
+        ).text.split("　")
 
-    for title, tv_info_text in zip(title_list, tv_info_text_list):
         date_txt = tv_info_text[0].split(" ")
         date = func.convert_date_format(
-            f"{const.DATE_YEAR}年" + date_txt[0], f"%Y年%m月%d日", f"%Y/%m/%d(%a)"
+            f"{const.DATE_YEAR}年" + date_txt[0],
+            f"%Y年%m月%d日",
+            const.DATE_FORMAT_YYYYMMDD_SLASH,
         )
         time_text = date_txt[2]
         hour = time_text.split(":")[0]
 
-        if 10 <= int(hour):
+        if 20 <= int(hour):
+            date += f" {time_text}"
             channel = tv_info_text[1]
 
-            date += f" {time_text}"
-            tv_info = [date, channel, title]
-            tv_info_list.append(tv_info)
-            if len(tv_info_list) == 10:
+            title = func_bs.find_elem_by_attr(
+                link_info,
+                attr_div=const.ATTR_CLASS,
+                attr_val="program_title"
+            ).text
+            link = const.URL_TV_RANKING + link_info[const.ATTR_HREF]
+            title_link = func.get_a_tag(link, title)
+
+            if func.check_in_list(title, LIST_KEYWORD):
+                tv_info = [date, channel, title_link]
+                tv_info_list.append(tv_info)
+
+            if len(tv_info_list) == 5:
                 break
 
     return tv_info_list
 
 
 def get_tv_info_today():
-    tv_info_today = None
+    today_tv_info = None
 
     tv_info_list = get_tv_info_list2()
-    for tv_info in tv_info_list:
-        title = tv_info[2]
-        if func.check_in_list(title, LIST_KEYWORD):
-            tv_info_today = tv_info
-            break
-
-    if not tv_info_today:
+    if tv_info_list:
         tv_info_today = tv_info_list[0]
-
-    time = tv_info_today[0].split(")")[1]
-    tv_company = tv_info_today[1]
-    tv_title = get_tv_title(tv_info_today[2])
-    today_tv_info = f"[{tv_company + time}] {tv_title}"
-    if 25 < len(today_tv_info):
-        today_tv_info = today_tv_info[:25]
+        time = tv_info_today[0].split(")")[1]
+        tv_company = tv_info_today[1]
+        tv_title = get_tv_title(tv_info_today[2])
+        today_tv_info = f"[{tv_company + time}] {tv_title}"[: const.MAX_TEMP_MSG]
     return today_tv_info
 
 
 def get_tv_title(tv_title: str):
-    title = tv_title
+    title = tv_title.split(">")[1].split("<")
     for split_str in LIST_SPLIT:
         if split_str in tv_title:
             title = tv_title.split(split_str)[0]

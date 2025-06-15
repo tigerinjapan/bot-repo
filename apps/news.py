@@ -127,7 +127,8 @@ def get_news_list(
                 news_contents = func.get_a_tag(url_news, news_text)
 
                 if url_flg:
-                    return news_text, url_news
+                    news_title = f"[{div}] {news_text}"[:const.MAX_TEMP_MSG]
+                    return news_title, url_news
 
                 if list_flg:
                     news_contents = [news_contents]

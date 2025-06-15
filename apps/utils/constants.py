@@ -63,11 +63,13 @@ LANG_KO = "ko"
 ##### 日付フォーマット #####
 DATE_FORMAT_OUTPUT_FILE = "%Y%m%d%H%M%S"
 DATE_FORMAT_YYYYMMDD = "%Y%m%d"
+DATE_FORMAT_YYYYMMDD_SLASH = "%Y/%m/%d(%a)"
 DATE_FORMAT_YYYYMMDD_HHMM = "%Y/%m/%d(%a) %H:%M"
 DATE_FORMAT_ISO = "iso"
 
 ##### 日付 #####
 DATE_TODAY = datetime.now().strftime(DATE_FORMAT_YYYYMMDD)
+DATE_TODAY_2 = datetime.now().strftime(DATE_FORMAT_YYYYMMDD_SLASH)
 DATE_YEAR = datetime.now().year
 DATE_HOUR = datetime.now().hour
 DATE_WEEKDAY = datetime.now().weekday()
@@ -93,10 +95,11 @@ NUM_ONE = 1
 NUM_TWO = 2
 NUM_THREE = 3
 
-# 画面表示件数
+# 件数
 MAX_DISPLAY_CNT = 5
 MIN_DISPLAY_CNT = 3
 MAX_RETRY_CNT = 3
+MAX_TEMP_MSG = 20
 
 ##### 型 #####
 TYPE_DICT = "dict"
@@ -358,7 +361,7 @@ URL_ITMEDIA = "https://www.itmedia.co.jp"
 URL_ACHIKOCHI = "https://achikochi-data.com"
 URL_LCC = "https://dsk.ne.jp"
 URL_TV = "https://www.tvkingdom.jp"
-URL_TV_RANKING = "https://bangumi.org/ranking"
+URL_TV_RANKING = "https://bangumi.org"
 
 ##### アプリケーション名 #####
 APP_TODAY = "today"

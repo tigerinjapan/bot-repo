@@ -73,6 +73,7 @@ def main(
             if data_flg:
                 if proc_flg:
                     msg_list = get_msg_list(auto_flg)
+
                 else:
                     msg_list = [[MSG_TYPE_IMG, URL_TODAY_IMG]]
 
@@ -181,20 +182,19 @@ def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
 
     if auto_flg:
         msg_data_list, date_today = get_msg_data_today()
+        if WEEKLY_DIV_FRI in date_today:
+            ai_news_msg = news.get_news_msg_list(news.DIV_AI_NEWS_LIST)
+            msg_data_list = get_msg_data_list(
+                FILE_DIV_AI_NEWS, MSG_TYPE_TXT, ai_news_msg, date_today
+            )
+            msg_list.append(msg_data_list)
+
     else:
         msg_div = const.STR_NOTIFY
         msg_data = func.get_input_data(const.STR_MESSAGE, msg_div)
         msg_data_list = get_msg_data_list(msg_div, MSG_TYPE_TXT, msg_data)
 
     msg_list = [msg_data_list]
-
-    if auto_flg and WEEKLY_DIV_FRI in date_today:
-        ai_news_msg = news.get_news_msg_list(news.DIV_AI_NEWS_LIST)
-        msg_data_list = get_msg_data_list(
-            FILE_DIV_AI_NEWS, MSG_TYPE_TXT, ai_news_msg, date_today
-        )
-        msg_list.append(msg_data_list)
-
     return msg_list
 
 
@@ -235,45 +235,47 @@ def get_json_object(msg_type: str = const.SYM_BLANK):
 
 # テンプレート・メッセージ取得
 def get_template_msg():
+    msg_title = f"【Today's News】{const.DATE_TODAY_2}"
+
     base_url = URL_KOYEB_APP
     img_url = URL_TODAY_IMG
 
-    news_title, news_url = news.get_news_list(
+    news_label, news_url = news.get_news_list(
         news.DIV_NIKKEI_NEWS, url_flg=const.FLG_ON
     )
-    lcc_title, lcc_url = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
-    korean, korean_url = study.get_today_korean()
+    lcc_label, lcc_url = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
+    korean_label, korean_url = study.get_today_korean()
 
     json_object = {
         "type": MSG_TYPE_TMP,
-        "altText": "【今日の生活情報】",
+        "altText": msg_title,
         "template": {
             "type": "buttons",
             "thumbnailImageUrl": img_url,
             "imageAspectRatio": "rectangle",
             "imageSize": "cover",
             "imageBackgroundColor": "#FFFFFF",
-            "title": "メニュー",
-            "text": "ボタン選択してください。",
-            "defaultAction": {
-                "type": "uri",
-                "label": "View detail",
-                "uri": base_url,
-            },
+            # "title": "メニュー",
+            "text": msg_title,
+            # "defaultAction": {
+            #     "type": "uri",
+            #     "label": "View detail",
+            #     "uri": base_url,
+            # },
             "actions": [
                 {
                     "type": "uri",
-                    "label": f"[日経] {news_title}",
+                    "label": news_label,
                     "uri": news_url,
                 },
                 {
                     "type": "uri",
-                    "label": f"[LCC] {lcc_title}",
+                    "label": lcc_label,
                     "uri": lcc_url,
                 },
                 {
                     "type": "uri",
-                    "label": f"[韓国語] {korean}",
+                    "label": korean_label,
                     "uri": korean_url,
                 },
             ],

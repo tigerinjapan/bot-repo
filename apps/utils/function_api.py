@@ -35,15 +35,15 @@ def get_response_result(
         func.print_error_msg(url, msg_const.MSG_ERR_API_REQUEST_CONNECT)
         return result
 
-    if response:
-        res_status = response.status_code
-        res_text = response.text
-        if res_status not in const.STATUS_CODE_NORMAL:
-            func.print_error_msg(res_status, res_text)
-        else:
-            result = func.get_loads_json(res_text)
+    res_status = response.status_code
+    res_text = response.text
+    if res_status in const.STATUS_CODE_NORMAL:
+        result = func.get_loads_json(res_text)
+
     else:
-        func.print_error_msg(const.STR_API, msg_const.MSG_ERR_API_RESPONSE_NONE)
+        func.print_error_msg(res_status, res_text)
+        if not response:
+            func.print_error_msg(const.STR_API, msg_const.MSG_ERR_API_RESPONSE_NONE)
 
     return result
 

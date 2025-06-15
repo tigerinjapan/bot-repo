@@ -57,9 +57,8 @@ def get_lcc_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
                 lcc_data = [date, company, title]
                 lcc_info_list.append(lcc_data)
             else:
-                title = title.split("」")[0].split("「")[1]
-                lcc_data = f"{company} {title}"
-                return lcc_data, url_official
+                lcc_title = f"[LCC] {company}"[:const.MAX_TEMP_MSG]
+                return lcc_title, url_official
 
             if len(lcc_info_list) == const.MAX_DISPLAY_CNT:
                 break

@@ -107,7 +107,7 @@ def get_today_korean():
     url = f"{const.URL_KONEST}/contents/todays_korean_list.html"
     attr_val = "size12 blackg"
     a_elem = func_bs.get_elem_from_url(url, attr_val=attr_val).find(const.TAG_A)
-    today_korean = a_elem[const.ATTR_TITLE]
+    today_korean = f"[韓国語] {a_elem[const.ATTR_TITLE]}"[:const.MAX_TEMP_MSG]
     url_korean = f"{const.URL_KONEST}" + a_elem[const.ATTR_HREF]
     return today_korean, url_korean
 
