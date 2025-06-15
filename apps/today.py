@@ -25,83 +25,84 @@ DIV_DATE = "日時"
 DIV_WEATHER = "天気"
 DIV_WEATHER_PLUS = "天気+"
 DIV_OUTFIT = "コーデ"
+DIV_DINNER = "夕食"
 DIV_NISA = "NISA"
 DIV_RATE = "為替"
 DIV_RATE_PLUS = "為替+"
 DIV_LCC = "LCC"
-DIV_DINNER = "夕食"
 DIV_TV = "TV"
+
 DIV_LIST = [
     DIV_DATE,
     DIV_WEATHER,
     # DIV_WEATHER_PLUS,
     DIV_OUTFIT,
+    DIV_DINNER,
     DIV_NISA,
+]
+
+DIV_LIST_2 = [
+    DIV_DATE,
+    DIV_WEATHER,
     DIV_RATE,
     # DIV_RATE_PLUS,
     DIV_LCC,
-    DIV_DINNER,
     DIV_TV,
 ]
 
 
 # アイテムリスト取得
 def get_item_list():
-    today_info_list = get_today_info()
-    today_info = zip(DIV_LIST, today_info_list)
+    info_div = DIV_LIST
+    if 10 <= const.DATE_HOUR:
+        info_div = DIV_LIST_2
+    today_info_list = get_today_info(info_div)
+
+    today_info = zip(info_div, today_info_list)
     item_list = [[div, info] for div, info in today_info]
     return item_list
 
 
 # 今日の生活情報取得
-def get_today_info():
+def get_today_info(info_div):
     # 天気
     today_weather, date_time = get_today_weather()
 
     # 天気+
     # today_weather_plus = get_today_weather_plus()
 
-    # NISA
-    today_nisa = get_today_nisa()
+    if info_div == DIV_LIST:
+        # コーデ・夕食
+        # recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(
+        #     NEW_LINE.join(today_weather)
+        # )
 
-    # 為替
-    today_won_rate = ex.get_today_won()
+        # today_outfit = recommend_outfit_dinner[0]
+        # today_dinner = recommend_outfit_dinner[1].replace(NEW_LINE, const.SYM_BLANK)
 
-    # 為替+
-    # today_rate = ex.get_ex_info(const.STR_USD)
+        # コーデ
+        today_div_3 = get_today_outfit()
 
-    # LCCニュース
-    today_lcc_news = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
+        # 夕食
+        today_div_4 = get_today_menu()
 
-    # コーデ・夕食
-    # recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(
-    #     NEW_LINE.join(today_weather)
-    # )
+        # NISA
+        today_div_5 = get_today_nisa()
 
-    # today_outfit = recommend_outfit_dinner[0]
-    # today_dinner = recommend_outfit_dinner[1].replace(NEW_LINE, const.SYM_BLANK)
+    else:
+        # 為替
+        today_div_3 = ex.get_today_won()
 
-    # コーデ
-    today_outfit = get_today_outfit()
+        # 為替+
+        # today_rate = ex.get_ex_info(const.STR_USD)
 
-    # 夕食
-    today_dinner = get_today_menu()
+        # LCCニュース
+        today_div_4 = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
 
-    # TV番組
-    today_tv_info = tv.get_tv_info_today()
+        # TV番組
+        today_div_5 = tv.get_tv_info_today()
 
-    today_info_list = [
-        date_time,
-        today_weather,
-        # today_weather_plus,
-        today_outfit,
-        today_nisa,
-        today_won_rate,
-        # today_rate,
-        today_lcc_news,
-        today_dinner,
-        today_tv_info,
-    ]
+    today_info_list = [date_time, today_weather, today_div_3, today_div_4, today_div_5]
 
     return today_info_list
 

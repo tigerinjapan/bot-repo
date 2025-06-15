@@ -81,7 +81,7 @@ def get_tv_info_list(keyword) -> list[str]:
         time = tv_info_txt[1]
         running_min = time.split("分")[0].split("(")[-1]
         hour = time.split(")")[1].split(":")[0]
-        if 30 <= int(running_min) and 10 <= int(hour):
+        if 30 <= int(running_min) and 20 <= int(hour):
             channel = tv_info_txt[2]
             title = func.get_a_tag(link, title_text)
             tv_info = [time, channel, title]

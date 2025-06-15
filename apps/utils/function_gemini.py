@@ -21,6 +21,9 @@ GEMINI_API_KEY = func.get_env_val("GEMINI_API_KEY")
 GEMINI_MODEL = func.get_env_val("GEMINI_MODEL")
 GEMINI_MODEL_IMG = func.get_env_val("GEMINI_MODEL_IMG")
 
+URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
+URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.APP_TODAY}"
+
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
 
@@ -135,21 +138,27 @@ def get_generate_image(div: str, contents: str, msg_data) -> str:
 
 
 # ニュースイメージ取得
-def get_today_news_image(forecast: str, today_outfit: str, msg: str) -> str:
+def get_today_news_image(msg: str, forecast: str, today_outfit: str) -> str:
     div = const.APP_TODAY
-    img_div = "女性"
+
+    contents_outfit = const.SYM_BLANK
+    if today_outfit:
+        img_div = "女性"
+        contents_outfit = (
+            f"天気キャスターの{img_div}は、イメージの右寄りに配置する。"
+            f"{img_div}は、本物と同じ自然なイメージにする。イラストではない。"
+            f"{img_div}は、全身で、正面を見ながら、笑顔でいる。"
+            f"{img_div}は、45才の日本人、身長は155cm、50kg、小柄、童顔、笑顔、可愛い人。"
+            f"{img_div}の今日のファッションは、{today_outfit}。"
+            f"右記URLのイメージを参考にする：{URL_TODAY_IMG}"
+        )
 
     contents = (
         "480px X 360pxのサイズに合わせて、イメージを生成してください。"
         "※以下内容を参考してください。"
         "番組名は、「Today's News」、左上に英語のロゴを表示する。"
-        f"天気キャスターの{img_div}は、イメージの右寄りに配置する。"
-        f"{img_div}は、本物と同じ自然なイメージにする。イラストではない。"
-        f"{img_div}は、全身で、正面を見ながら、笑顔でいる。"
-        f"{img_div}は、45才の日本人、身長は155cm、50kg、小柄、童顔、笑顔、可愛い人。"
-        f"{img_div}の今日のファッションは、{today_outfit}。"
+        f"{contents_outfit}"
         f"イメージのの背景は、{forecast}が分かるようにする。"
-        "右記URLのイメージを参考にする：https://kobe-dev.koyeb.app/img/today"
         "イメージの背景は、複雑なイメージは避ける。"
         "イメージには、日本語、中国語、記号などの文字は、一切表示しない。"
     )
@@ -160,8 +169,8 @@ def get_today_news_image(forecast: str, today_outfit: str, msg: str) -> str:
     msg_data = {
         "msg": msg,
         "font_type": "yusei",
-        "font_size": 28,
-        "xy_size": (60, 140),
+        "font_size": 30,
+        "xy_size": (60, 180),
     }
     file_path = get_generate_image(div, contents, msg_data)
     return file_path
@@ -376,7 +385,7 @@ def test_gemini_image():
 if __name__ == const.MAIN_FUNCTION:
     # test_gemini()
     # test_gemini_image()
+    msg = "[test] test"
     today_weather = "晴れのち曇り"
     today_outfit = "白いブラウス&黄色いスカート"
-    msg = "[test] test"
-    get_today_news_image(today_weather, today_outfit, msg)
+    get_today_news_image(msg, today_weather, today_outfit)

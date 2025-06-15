@@ -13,7 +13,7 @@ app_name = func.get_app_name(__file__)
 # URL
 URL_LINE_API = "https://api.line.me"
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
-URL_OUTPUT_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}"
+URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.APP_TODAY}"
 
 # LINE API情報
 STR_LINE_API = "LINE API"
@@ -30,8 +30,6 @@ MSG_TYPE_IMG = "image"
 MSG_TYPE_TMP = "template"
 
 # ファイル区分
-FILE_DIV_TODAY = "today"
-FILE_DIV_NEWS = "news"
 FILE_DIV_AI_NEWS = "ai_news"
 
 # タイトル
@@ -74,7 +72,7 @@ def main(
                 if proc_flg:
                     msg_list = get_msg_list(auto_flg)
                 else:
-                    msg_list = [[MSG_TYPE_IMG, f"{URL_OUTPUT_IMG}/{FILE_DIV_TODAY}"]]
+                    msg_list = [[MSG_TYPE_IMG, URL_TODAY_IMG]]
 
                 # メッセージ取得
                 data = get_json_for_line(msg_list)
@@ -203,11 +201,16 @@ def get_msg_data_today() -> tuple[list[str], str]:
     if today_info:
         date_today = today_info[0][today.app_title]
         forecast = today_info[1][today.app_title].split("・")[0]
+
         data_list = [list(info.values()) for info in today_info[1:]]
         msg_data = [f"[{data[0]}] {data[1]}" for data in data_list]
 
+        today_outfit = const.SYM_BLANK
+        if const.DATE_HOUR < 10:
+            today_outfit = msg_data[2].split("] ")[1]
+
         msg_data_list = get_msg_data_list(
-            FILE_DIV_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast
+            const.APP_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast, today_outfit
         )
         return msg_data_list, date_today
 
@@ -233,7 +236,7 @@ def get_json_object(msg_type: str = const.SYM_BLANK):
 # テンプレート・メッセージ取得
 def get_template_msg():
     base_url = URL_KOYEB_APP
-    img_url = f"/{URL_OUTPUT_IMG}/{FILE_DIV_TODAY}"
+    img_url = URL_TODAY_IMG
 
     json_object = {
         "type": MSG_TYPE_TMP,
@@ -275,22 +278,21 @@ def get_msg_data_list(
     msg_data: list[str],
     date_today: str = const.SYM_BLANK,
     forecast: str = const.SYM_BLANK,
+    today_outfit: str = const.SYM_BLANK,
 ) -> list[str]:
     text_title = get_title(msg_div, msg_type, date_today)
-    today_outfit = msg_data[5].split("] ")[1]
     text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 
     if msg_type == MSG_TYPE_IMG:
-        if msg_div == FILE_DIV_TODAY:
+        if msg_div == const.APP_TODAY:
             file_path = func_gemini.get_today_news_image(
-                forecast, today_outfit, text_msg
+                text_msg, forecast, today_outfit
             )
             if not file_path:
                 create_msg_img(msg_div, text_msg, forecast)
 
-        img_url = f"{URL_OUTPUT_IMG}/{msg_div}"
-        text_msg = img_url
-        func.print_info_msg(MSG_TYPE_IMG, img_url)
+        text_msg = URL_TODAY_IMG
+        func.print_info_msg(MSG_TYPE_IMG, text_msg)
 
     msg_data_list = [msg_type, text_msg]
     return msg_data_list
@@ -303,7 +305,7 @@ def get_title(
 
     title_div = div.upper()
 
-    if div == FILE_DIV_NEWS:
+    if div == const.APP_NEWS:
         title_div = news.DIV_NEWS.format(const.SYM_BLANK)
     elif div == FILE_DIV_AI_NEWS:
         title_div = news.DIV_AI_NEWS
@@ -328,7 +330,7 @@ def get_title(
 # 画像に文字列挿入
 def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
-    if div == FILE_DIV_TODAY:
+    if div == const.APP_TODAY:
         if "雨" in forecast:
             img_div = "rainy"
         elif "雪" in forecast:
@@ -338,7 +340,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
         else:
             img_div = "sunny"
     else:
-        img_div = FILE_DIV_NEWS
+        img_div = const.APP_NEWS
 
     # 任意の数値取得
     img_seq = str(func.get_random_int(NUM_IMG_MAX_SEQ))
@@ -349,8 +351,8 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
     font_type = FONT_TYPE
     font_size = 11
     xy_size = (45, 90)
-    if div == FILE_DIV_TODAY:
-        xy_size = (75, 185)
+    if div == const.APP_TODAY:
+        xy_size = (60, 200)
         if IMG_NO == const.NUM_ONE:
             font_size = 16
             xy_size = (20, 140)

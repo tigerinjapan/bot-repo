@@ -69,6 +69,7 @@ DATE_FORMAT_ISO = "iso"
 ##### 日付 #####
 DATE_TODAY = datetime.now().strftime(DATE_FORMAT_YYYYMMDD)
 DATE_YEAR = datetime.now().year
+DATE_HOUR = datetime.now().hour
 DATE_WEEKDAY = datetime.now().weekday()
 
 ##### リクエストタイプ #####
