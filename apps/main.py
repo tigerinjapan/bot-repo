@@ -57,7 +57,7 @@ def job_scheduler():
 
 # 日次ジョブ
 def daily_job():
-    line.main(proc_flg=const.FLG_OFF)
+    line.main(data_flg=const.FLG_OFF)
 
 
 # 時次ジョブ

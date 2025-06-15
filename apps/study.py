@@ -60,9 +60,9 @@ def get_naver_news_summary(keyword: str) -> list[str]:
     url = f"{const.URL_NAVER_SEARCH}{url_param}"
     a_elem_list = func_bs.get_elem_from_url(
         url,
-        attr_val="sds-comps-vertical-layout sds-comps-full-layout _4zQ0QZWfn7bqZ_ul5OV",
-        list_flg=const.FLG_ON,
-    )
+        attr_div=const.ATTR_CLASS,
+        attr_val="sds-comps-vertical-layout sds-comps-full-layout fds-news-item-list-tab",
+    ).find_all(const.TAG_DIV)
 
     news_list = []
     if a_elem_list:
@@ -72,7 +72,11 @@ def get_naver_news_summary(keyword: str) -> list[str]:
                 attr_div=const.ATTR_CLASS,
                 attr_val="sds-comps-text sds-comps-text-type-body2 sds-comps-text-weight-sm sds-comps-profile-info-subtext",
             )
+
+            if not time_elem:
+                continue
             time_text = time_elem.text
+
             if func.check_in_list(time_text, ["분 전", "시간 전"]):
                 contents_elem_list = func_bs.find_elem_by_attr(
                     a_elem,
@@ -80,16 +84,32 @@ def get_naver_news_summary(keyword: str) -> list[str]:
                     attr_val="sds-comps-text sds-comps-text-ellipsis sds-comps-text-ellipsis-1 sds-comps-text-type-headline1",
                     list_flg=const.FLG_ON,
                 )
+
                 for contents_elem in contents_elem_list:
                     contents_text = contents_elem.text
                     if keyword in contents_text:
+                        contents_body_text = func_bs.find_elem_by_attr(
+                            a_elem,
+                            attr_div=const.ATTR_CLASS,
+                            attr_val="sds-comps-text sds-comps-text-ellipsis sds-comps-text-ellipsis-3 sds-comps-text-type-body1",
+                        ).text
+                        contents_text += contents_body_text
                         news_list.append(contents_text)
-                        break
 
     if news_list:
         news_summary = func_gemini.get_news_summary(news_list, keyword)
 
     return news_summary
+
+
+# 今日の韓国語
+def get_today_korean():
+    url = f"{const.URL_KONEST}/contents/todays_korean_list.html"
+    attr_val = "size12 blackg"
+    a_elem = func_bs.get_elem_from_url(url, attr_val=attr_val).find(const.TAG_A)
+    today_korean = a_elem[const.ATTR_TITLE]
+    url_korean = f"{const.URL_KONEST}" + a_elem[const.ATTR_HREF]
+    return today_korean, url_korean
 
 
 if __name__ == const.MAIN_FUNCTION:

@@ -269,4 +269,5 @@ def api_test():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    start_thread()
+    # start_thread()
+    health_check()

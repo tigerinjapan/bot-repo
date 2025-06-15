@@ -13,12 +13,14 @@ import apps.tv as tv
 import apps.user as user
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
 import apps.utils.user_dto as dto
 from apps.utils.function_beautiful_soup import get_data_from_url
 
 # URL
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
+URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.APP_TODAY}"
 
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
@@ -179,10 +181,11 @@ def update_news(app_name: str = const.SYM_BLANK):
 
 # スリープ状態にならないようサーバーアクセス
 def no_sleep():
-    get_data_from_url(URL_KOYEB_APP)
+    # get_data_from_url(URL_TODAY_IMG)
+    func_api.get_result_on_app(const.APP_TODAY)
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # update_news()
-    app_name = const.APP_TODAY
-    update_news(app_name)
+    update_news()
+    # app_name = const.APP_TODAY
+    # update_news(app_name)

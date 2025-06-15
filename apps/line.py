@@ -1,6 +1,8 @@
 # 説明: LINEメッセージAPI
 
+import apps.lcc as lcc
 import apps.news as news
+import apps.study as study
 import apps.today as today
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -76,6 +78,7 @@ def main(
 
                 # メッセージ取得
                 data = get_json_for_line(msg_list)
+
             else:
                 data = get_json_data_for_line()
 
@@ -201,13 +204,10 @@ def get_msg_data_today() -> tuple[list[str], str]:
     if today_info:
         date_today = today_info[0][today.app_title]
         forecast = today_info[1][today.app_title].split("・")[0]
+        today_outfit = today_info[2][today.app_title]
 
         data_list = [list(info.values()) for info in today_info[1:]]
         msg_data = [f"[{data[0]}] {data[1]}" for data in data_list]
-
-        today_outfit = const.SYM_BLANK
-        if const.DATE_HOUR < 10:
-            today_outfit = msg_data[2].split("] ")[1]
 
         msg_data_list = get_msg_data_list(
             const.APP_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast, today_outfit
@@ -238,9 +238,15 @@ def get_template_msg():
     base_url = URL_KOYEB_APP
     img_url = URL_TODAY_IMG
 
+    news_title, news_url = news.get_news_list(
+        news.DIV_NIKKEI_NEWS, url_flg=const.FLG_ON
+    )
+    lcc_title, lcc_url = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
+    korean, korean_url = study.get_today_korean()
+
     json_object = {
         "type": MSG_TYPE_TMP,
-        "altText": "LINEテスト: テンプレート・メッセージ",
+        "altText": "【今日の生活情報】",
         "template": {
             "type": "buttons",
             "thumbnailImageUrl": img_url,
@@ -257,13 +263,18 @@ def get_template_msg():
             "actions": [
                 {
                     "type": "uri",
-                    "label": "今日の生活情報",
-                    "uri": f"{base_url}/app/today",
+                    "label": f"[日経] {news_title}",
+                    "uri": news_url,
                 },
                 {
                     "type": "uri",
-                    "label": "ユーザー情報設定",
-                    "uri": f"{base_url}/app/user",
+                    "label": f"[LCC] {lcc_title}",
+                    "uri": lcc_url,
+                },
+                {
+                    "type": "uri",
+                    "label": f"[韓国語] {korean}",
+                    "uri": korean_url,
                 },
             ],
         },

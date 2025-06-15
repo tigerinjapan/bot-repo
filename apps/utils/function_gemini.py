@@ -170,7 +170,7 @@ def get_today_news_image(msg: str, forecast: str, today_outfit: str) -> str:
         "msg": msg,
         "font_type": "yusei",
         "font_size": 30,
-        "xy_size": (60, 180),
+        "xy_size": (60, 160),
     }
     file_path = get_generate_image(div, contents, msg_data)
     return file_path

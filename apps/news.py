@@ -74,7 +74,10 @@ def get_news_msg_list(div_list: list[str]):
 
 # ニュース情報取得
 def get_news_list(
-    div: str, list_flg: bool = const.FLG_OFF, ai_flg: bool = const.FLG_OFF
+    div: str,
+    list_flg: bool = const.FLG_OFF,
+    url_flg: bool = const.FLG_OFF,
+    ai_flg: bool = const.FLG_OFF,
 ):
 
     news_list = []
@@ -122,6 +125,9 @@ def get_news_list(
                 news_text = NEW_LINE.join(news_text_list)
 
                 news_contents = func.get_a_tag(url_news, news_text)
+
+                if url_flg:
+                    return news_text, url_news
 
                 if list_flg:
                     news_contents = [news_contents]
