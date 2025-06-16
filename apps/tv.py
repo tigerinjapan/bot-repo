@@ -91,7 +91,7 @@ def get_tv_info_list(keyword) -> list[str]:
 
 
 # TV番組情報取得
-def get_tv_info_list2(list_flg:bool=const.FLG_ON) -> list[str]:
+def get_tv_info_list2() -> list[str]:
     tv_info_list = []
 
     url = f"{const.URL_TV_RANKING}/ranking/?genre_id=5"
@@ -151,12 +151,12 @@ def get_tv_info_today():
         time = tv_info_today[0].split(")")[1]
         tv_company = tv_info_today[1]
         tv_title = get_tv_title(tv_info_today[2])
-        today_tv_info = f"[{tv_company + time}] {tv_title}"[: const.MAX_TEMP_MSG]
+        today_tv_info = f"[{tv_company}] {tv_title}"[: const.MAX_TEMP_MSG]
     return today_tv_info
 
 
 def get_tv_title(tv_title: str):
-    title = tv_title.split(">")[1].split("<")
+    title = tv_title.split(">")[1].split("<")[0]
     for split_str in LIST_SPLIT:
         if split_str in tv_title:
             title = tv_title.split(split_str)[0]
