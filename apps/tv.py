@@ -91,7 +91,7 @@ def get_tv_info_list(keyword) -> list[str]:
 
 
 # TV番組情報取得
-def get_tv_info_list2() -> list[str]:
+def get_tv_info_list2(list_flg:bool=const.FLG_ON) -> list[str]:
     tv_info_list = []
 
     url = f"{const.URL_TV_RANKING}/ranking/?genre_id=5"
@@ -134,6 +134,11 @@ def get_tv_info_list2() -> list[str]:
 
             if func.check_in_list(title, LIST_KEYWORD):
                 tv_info = [date, channel, title_link]
+
+                if not list_flg:
+                    tv_info = [time_text, channel, title, link]
+                    return tv_info
+
                 tv_info_list.append(tv_info)
 
             if len(tv_info_list) == 5:
@@ -143,20 +148,19 @@ def get_tv_info_list2() -> list[str]:
 
 
 def get_tv_info_today():
-    today_tv_info = None
+    today_tv_info = link = const.SYM_BLANK
 
-    tv_info_list = get_tv_info_list2()
-    if tv_info_list:
-        tv_info_today = tv_info_list[0]
-        time = tv_info_today[0].split(")")[1]
-        tv_company = tv_info_today[1]
-        tv_title = get_tv_title(tv_info_today[2])
-        today_tv_info = f"[{tv_company}] {tv_title}"[: const.MAX_TEMP_MSG]
-    return today_tv_info
+    tv_info_today = get_tv_info_list2(list_flg=const.FLG_OFF)
+    if tv_info_today:
+        time = tv_info_today[0]
+        channel = tv_info_today[1]
+        title = get_tv_title(tv_info_today[2])
+        today_tv_info = f"[{channel} {time}] {title}"[: const.MAX_TEMP_MSG]
+        link = tv_info_today[3]
+    return today_tv_info, link
 
 
 def get_tv_title(tv_title: str):
-    title = tv_title.split(">")[1].split("<")[0]
     for split_str in LIST_SPLIT:
         if split_str in tv_title:
             title = tv_title.split(split_str)[0]

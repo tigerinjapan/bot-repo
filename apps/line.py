@@ -4,6 +4,7 @@ import apps.lcc as lcc
 import apps.news as news
 import apps.study as study
 import apps.today as today
+import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
@@ -235,16 +236,11 @@ def get_json_object(msg_type: str = const.SYM_BLANK):
 
 # テンプレート・メッセージ取得
 def get_template_msg():
-    msg_title = f"【Today's News】{const.DATE_TODAY_2}"
-
     base_url = URL_KOYEB_APP
     img_url = URL_TODAY_IMG
 
-    news_label, news_url = news.get_news_list(
-        news.DIV_NIKKEI_NEWS, url_flg=const.FLG_ON
-    )
-    lcc_label, lcc_url = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
-    korean_label, korean_url = study.get_today_korean()
+    msg_title = f"【今日の生活情報】{const.DATE_TODAY_2}"
+    actions = get_template_actions()
 
     json_object = {
         "type": MSG_TYPE_TMP,
@@ -260,28 +256,31 @@ def get_template_msg():
             # "defaultAction": {
             #     "type": "uri",
             #     "label": "View detail",
-            #     "uri": base_url,
+            #     "uri": img_url,
             # },
-            "actions": [
-                {
-                    "type": "uri",
-                    "label": news_label,
-                    "uri": news_url,
-                },
-                {
-                    "type": "uri",
-                    "label": lcc_label,
-                    "uri": lcc_url,
-                },
-                {
-                    "type": "uri",
-                    "label": korean_label,
-                    "uri": korean_url,
-                },
-            ],
+            "actions": actions,
         },
     }
     return json_object
+
+
+def get_template_actions():
+
+    news_lbl, news_url = news.get_news_list(news.DIV_NIKKEI_NEWS, url_flg=const.FLG_ON)
+    ai_lbl, ai_url = news.get_news_list(news.DIV_AI_NEWS, url_flg=const.FLG_ON)
+    lcc_lbl, lcc_url = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
+    korean_lbl, korean_url = study.get_today_korean()
+    # tv_lbl, tv_url = tv.get_tv_info_today()
+
+    label_list = [news_lbl, ai_lbl, lcc_lbl, korean_lbl]
+    url_list = [news_url, ai_url, lcc_url, korean_url]
+
+    actions = []
+    for label, url in zip(label_list, url_list):
+        if label:
+            action = {"type": "uri", "label": label, "uri": url}
+            actions.append(action)
+    return actions
 
 
 # メッセージ取得

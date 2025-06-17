@@ -127,7 +127,9 @@ def get_news_list(
                 news_contents = func.get_a_tag(url_news, news_text)
 
                 if url_flg:
-                    news_title = f"[{div}] {news_text}"[:const.MAX_TEMP_MSG]
+                    news_title = f"[{const.STR_NIKKEI_JA}] {news_text}"[
+                        : const.MAX_TEMP_MSG
+                    ]
                     return news_title, url_news
 
                 if list_flg:
@@ -144,8 +146,14 @@ def get_news_list(
             a_text = a.text
 
             if func.check_in_list(a_text, LIST_KEYWORD_AI):
-                news_text = func.get_replace_data(a_text)
+                news_text = func.get_replace_data(a_text).replace(
+                    const.SYM_SPACE, const.SYM_BLANK
+                )
                 news_contents = func.get_a_tag(a_href, news_text)
+
+                if url_flg:
+                    news_title = f"[{const.STR_AI}] {news_text}"[: const.MAX_TEMP_MSG]
+                    return news_title, a_href
 
                 if ai_flg:
                     p_list = get_elem_list(div, a_href)
