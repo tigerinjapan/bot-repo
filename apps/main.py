@@ -33,7 +33,7 @@ def job_scheduler():
         hour_daily += 1
 
     schedule.every().day.at(f"{hour_daily:02d}:00").do(daily_job)
-    schedule.every().day.at("19:00").do(daily_job) # TODO 時間検討
+    schedule.every().day.at("19:00").do(daily_job_2) # TODO 時間検討
 
     # 1時間毎に実行
     schedule.every().hour.at(f":{MIN_HOURLY_JOB:02d}").do(hourly_job)
@@ -58,6 +58,11 @@ def job_scheduler():
 
 # 日次ジョブ
 def daily_job():
+    line.main(proc_flg=const.FLG_OFF)
+
+
+# 日次ジョブ
+def daily_job_2():
     line.main(data_flg=const.FLG_OFF)
 
 

@@ -65,11 +65,13 @@ DATE_FORMAT_OUTPUT_FILE = "%Y%m%d%H%M%S"
 DATE_FORMAT_YYYYMMDD = "%Y%m%d"
 DATE_FORMAT_YYYYMMDD_SLASH = "%Y/%m/%d(%a)"
 DATE_FORMAT_YYYYMMDD_HHMM = "%Y/%m/%d(%a) %H:%M"
+DATE_FORMAT_MMDD = "%m%d"
 DATE_FORMAT_ISO = "iso"
 
 ##### 日付 #####
 DATE_TODAY = datetime.now().strftime(DATE_FORMAT_YYYYMMDD)
 DATE_TODAY_2 = datetime.now().strftime(DATE_FORMAT_YYYYMMDD_SLASH)
+DATE_TODAY_3 = datetime.now().strftime(DATE_FORMAT_MMDD)
 DATE_YEAR = datetime.now().year
 DATE_HOUR = datetime.now().hour
 DATE_WEEKDAY = datetime.now().weekday()
@@ -236,6 +238,7 @@ STR_KPOP = "kpop"
 STR_DATE = "date"
 STR_DAY = "day"
 STR_HOLIDAY = "holiday"
+STR_PHRASE = "phrase"
 
 STR_AI = "AI"
 STR_USER_INFO = "userInfo"

@@ -1,5 +1,6 @@
 # 説明: 関数一覧
 
+import csv
 import glob
 import json
 import os
@@ -262,6 +263,22 @@ def write_file(file_path: str, data, file_encode: str = const.CHARSET_UTF_8):
 
     except Exception as e:
         print_error_msg(file_path, str(e))
+
+
+# CSVファイルを読み込み
+def get_dict_from_csv(file_path: str):
+    # データを格納する辞書
+    data_dict = {}
+
+    with open(file_path, newline="", encoding=const.CHARSET_UTF_8) as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            # 1番目の値をキーとして使用
+            key = row[0]
+            # 全体の行を値として格納
+            data_dict[key] = row
+
+        return data_dict
 
 
 # JSONデータ読み込み

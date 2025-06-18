@@ -239,7 +239,13 @@ def get_template_msg():
     base_url = URL_KOYEB_APP
     img_url = URL_TODAY_IMG
 
-    msg_title = f"【今日の生活情報】{const.DATE_TODAY_2}"
+    msg_title = f"[{const.DATE_TODAY_2}] 今日も一日お疲れ様でした。"
+
+    file_path = func.get_file_path(const.STR_PHRASE, const.FILE_TYPE_CSV)
+    dict_data = func.get_dict_from_csv(file_path)
+    phrase = dict_data.get(const.DATE_TODAY_3)[1]
+    phrase = f"【今日の一言】{const.SYM_NEW_LINE}{phrase}"
+
     actions = get_template_actions()
 
     json_object = {
@@ -247,12 +253,12 @@ def get_template_msg():
         "altText": msg_title,
         "template": {
             "type": "buttons",
-            "thumbnailImageUrl": img_url,
+            # "thumbnailImageUrl": img_url,
             "imageAspectRatio": "rectangle",
             "imageSize": "cover",
             "imageBackgroundColor": "#FFFFFF",
             # "title": "メニュー",
-            "text": msg_title,
+            "text": phrase,
             # "defaultAction": {
             #     "type": "uri",
             #     "label": "View detail",
