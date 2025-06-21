@@ -199,8 +199,11 @@ def time_sleep(secs: int = 3):
 
 
 # 乱数生成
-def get_random_int(end_num: int) -> int:
-    rand_int = random.randint(1, end_num)
+def get_random_int(end_num: int, start_num: int = const.NUM_ZERO) -> int:
+    if start_num == const.NUM_ZERO:
+        rand_int = random.randrange(end_num)
+    else:
+        rand_int = random.randint(start_num, end_num)
     return rand_int
 
 

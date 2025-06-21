@@ -10,6 +10,11 @@ import apps.utils.message_constants as msg_const
 # URL
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
 
+# プロパティ
+IMG_NO = func.get_env_val("LINE_IMG_DIV", int_flg=const.FLG_ON)
+NUM_IMG_MAX_SEQ = 4
+FONT_TYPE = "uzura"
+
 
 # リクエスト送信
 def get_response_result(
@@ -56,6 +61,44 @@ def get_result_on_app(app_name: str):
     url = f"{base_url}/{const.FILE_TYPE_JSON}/{app_name}?token=token_{const.DATE_TODAY}"
     result = get_response_result(url)
     return result
+
+
+# 画像に文字列挿入
+def create_msg_img(div: str, msg: str, forecast: str) -> str:
+
+    if div == const.APP_TODAY:
+        if "雨" in forecast:
+            img_div = "rainy"
+        elif "雪" in forecast:
+            img_div = "snowy"
+        elif "曇" in forecast:
+            img_div = "cloudy"
+        else:
+            img_div = "sunny"
+    else:
+        img_div = const.APP_NEWS
+
+    # 任意の数値取得
+    img_seq = str(func.get_random_int(NUM_IMG_MAX_SEQ, const.NUM_ONE))
+    img_no = str(IMG_NO) + img_seq.zfill(2)
+
+    img_file_base = f"{img_div}_{img_no}"
+
+    font_type = FONT_TYPE
+    font_size = 11
+    xy_size = (45, 90)
+    if div == const.APP_TODAY:
+        xy_size = (60, 200)
+        if IMG_NO == const.NUM_ONE:
+            font_size = 16
+            xy_size = (20, 140)
+
+    file_path = insert_msg_to_img(
+        div, img_file_base, font_type, font_size, xy_size, msg
+    )
+
+    img_file_name = func.get_app_name(file_path)
+    return img_file_name
 
 
 # メッセージ画像生成

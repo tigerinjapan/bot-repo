@@ -1,4 +1,4 @@
-# 説明: LINEメッセージAPI
+# 説明: LINEメッセージ
 
 import apps.lcc as lcc
 import apps.news as news
@@ -9,6 +9,7 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.function_gemini as func_gemini
+import apps.utils.function_line as func_line
 
 # アプリケーション
 app_name = func.get_app_name(__file__)
@@ -17,12 +18,6 @@ app_name = func.get_app_name(__file__)
 URL_LINE_API = "https://api.line.me"
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
 URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.APP_TODAY}"
-
-# LINE API情報
-STR_LINE_API = "LINE API"
-LINE_CHANNEL_ID = func.get_env_val("LINE_CHANNEL_ID")
-LINE_CHANNEL_SECRET = func.get_env_val("LINE_CHANNEL_SECRET")
-MAX_MSG_API_CNT = 200
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -40,10 +35,6 @@ DIV_MARK = "*----*----*----*----*----*"
 DIV_MARK_TXT = "*-- {} --*"
 DIV_MARK_IMG = "=== {} ==="
 
-# プロパティ
-IMG_NO = func.get_env_val("LINE_IMG_DIV", int_flg=const.FLG_ON)
-NUM_IMG_MAX_SEQ = 4
-FONT_TYPE = "uzura"
 WEEKLY_DIV_FRI = "Fri"
 
 
@@ -63,14 +54,11 @@ def main(
 
     func.print_start(app_name)
 
-    if LINE_CHANNEL_ID:
+    if func_line.LINE_CHANNEL_ID:
         # チャネル・アクセストークン取得
-        token = get_channel_access_token()
+        token = func_line.get_channel_access_token()
 
-        # メッセージ数チェック
-        use_cnt = check_message_count(token)
-
-        if use_cnt <= (MAX_MSG_API_CNT - 20):
+        if token:
             if data_flg:
                 if proc_flg:
                     msg_list = get_msg_list(auto_flg)
@@ -79,108 +67,20 @@ def main(
                     msg_list = [[MSG_TYPE_IMG, URL_TODAY_IMG]]
 
                 # メッセージ取得
-                data = get_json_for_line(msg_list)
+                messages = func_line.get_line_messages(msg_list)
 
             else:
-                data = get_json_data_for_line()
+                template_msg = get_template_msg()
+                messages = func_line.get_send_messages(template_msg)
 
             # メッセージ送信
-            send_message(token, data)
+            func_line.send_message(token, messages)
 
     func.print_end(app_name)
 
 
-# チャネル・アクセストークン取得
-def get_channel_access_token() -> str:
-
-    url = f"{URL_LINE_API}/oauth2/v3/token"
-    headers = {"Content-Type": "application/x-www-form-urlencoded"}
-    data = {
-        "grant_type": "client_credentials",
-        "client_id": LINE_CHANNEL_ID,
-        "client_secret": LINE_CHANNEL_SECRET,
-    }
-
-    result = func_api.get_response_result(
-        url,
-        request_type=const.REQUEST_TYPE_POST,
-        headers=headers,
-        data=data,
-        header_json_flg=const.FLG_OFF,
-    )
-
-    if not result:
-        return const.SYM_BLANK
-
-    # トークン・タイプ
-    token_type = result["token_type"]
-
-    # アクセストークン
-    access_token = result["access_token"]
-
-    # 有効期限（秒）
-    expires_in = result["expires_in"]
-
-    token = f"{token_type} {access_token}"
-
-    expires_min = int(expires_in / 60)
-    func.print_info_msg(const.STR_TOKEN_JA, f"{const.STR_EXPIRE_JA}: {expires_min}分")
-    return token
-
-
-# メッセージ件数取得
-def check_message_count(access_token: str) -> int:
-    url = f"{URL_LINE_API}/v2/bot/message/quota/consumption"
-    headers = {"Authorization": access_token}
-    result = func_api.get_response_result(url, headers=headers)
-    if result:
-        total_usage = result["totalUsage"]
-    else:
-        total_usage = MAX_MSG_API_CNT
-
-    message_count = f"{total_usage} / {MAX_MSG_API_CNT}"
-    func.print_info_msg(const.STR_MESSAGE_JA, message_count)
-    return total_usage
-
-
-# メッセージ送信
-def send_message(access_token: str, json_data):
-    url = f"{URL_LINE_API}/v2/bot/message/broadcast"
-    headers = {"Authorization": access_token}
-    result = func_api.get_response_result(
-        url, request_type=const.REQUEST_TYPE_POST, headers=headers, data=json_data
-    )
-
-    if result:
-        func.print_error_msg(STR_LINE_API, result["details"])
-
-
-# LINE送信用のJSONデータ取得
-def get_json_for_line(msg_list: list[list[str]]):
-    messages = []
-
-    for msg_data in msg_list:
-        msg_type = msg_data[0]
-        text_msg = msg_data[1]
-        json_object = {const.STR_TYPE: msg_type}
-
-        if msg_type == MSG_TYPE_IMG:
-            img_url = text_msg
-            update_data = {"originalContentUrl": img_url, "previewImageUrl": img_url}
-        else:
-            update_data = {"text": text_msg}
-
-        json_object.update(update_data)
-        messages.append(json_object)
-
-    data = {"messages": messages}
-    json_data = func.get_dumps_json(data)
-    return json_data
-
-
 # メッセージリスト取得
 def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
-
     if auto_flg:
         msg_data_list, date_today = get_msg_data_today()
         if WEEKLY_DIV_FRI in date_today:
@@ -216,62 +116,25 @@ def get_msg_data_today() -> tuple[list[str], str]:
         return msg_data_list, date_today
 
 
-# LINEメッセージJSONデータ取得
-def get_json_data_for_line():
-    messages = []
-    json_object = get_json_object()
-    messages.append(json_object)
-    data = {"messages": messages}
-    json_data = func.get_dumps_json(data)
-    return json_data
-
-
-# JSONオブジェクト取得
-def get_json_object(msg_type: str = const.SYM_BLANK):
-    json_object = get_template_msg()
-    # if msg_type == MSG_TYPE_TMP:
-    #     json_object = get_template_msg()
-    return json_object
-
-
-# テンプレート・メッセージ取得
+# テンプレートメッセージ取得
 def get_template_msg():
-    base_url = URL_KOYEB_APP
-    img_url = URL_TODAY_IMG
-
-    msg_title = f"[{const.DATE_TODAY_2}] 今日も一日お疲れ様でした。"
+    alt_text = "今日も一日お疲れ様でした。"
 
     file_path = func.get_file_path(const.STR_PHRASE, const.FILE_TYPE_CSV)
     dict_data = func.get_dict_from_csv(file_path)
-    phrase = dict_data.get(const.DATE_TODAY_3)[1]
-    phrase = f"【今日の一言】{const.SYM_NEW_LINE}{phrase}"
+
+    random_int = str(func.get_random_int(const.MAX_PHRASE_CSV))
+    key = random_int.zfill(3)
+    phrase = dict_data.get(key)[1]
+    template_text = f"【今日の一言】{const.SYM_NEW_LINE}{phrase}"
 
     actions = get_template_actions()
-
-    json_object = {
-        "type": MSG_TYPE_TMP,
-        "altText": msg_title,
-        "template": {
-            "type": "buttons",
-            # "thumbnailImageUrl": img_url,
-            "imageAspectRatio": "rectangle",
-            "imageSize": "cover",
-            "imageBackgroundColor": "#FFFFFF",
-            # "title": "メニュー",
-            "text": phrase,
-            # "defaultAction": {
-            #     "type": "uri",
-            #     "label": "View detail",
-            #     "uri": img_url,
-            # },
-            "actions": actions,
-        },
-    }
-    return json_object
+    template_msg = func_line.get_template_msg_json(alt_text, template_text, actions)
+    return template_msg
 
 
+# テンプレートアクション取得
 def get_template_actions():
-
     news_lbl, news_url = news.get_news_list(news.DIV_NIKKEI_NEWS, url_flg=const.FLG_ON)
     ai_lbl, ai_url = news.get_news_list(news.DIV_AI_NEWS, url_flg=const.FLG_ON)
     lcc_lbl, lcc_url = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
@@ -307,7 +170,7 @@ def get_msg_data_list(
                 text_msg, forecast, today_outfit
             )
             if not file_path:
-                create_msg_img(msg_div, text_msg, forecast)
+                func_api.create_msg_img(msg_div, text_msg, forecast)
 
         text_msg = URL_TODAY_IMG
         func.print_info_msg(MSG_TYPE_IMG, text_msg)
@@ -320,7 +183,6 @@ def get_msg_data_list(
 def get_title(
     div: str, msg_type: str = const.SYM_BLANK, date_today: str = const.SYM_BLANK
 ) -> str:
-
     title_div = div.upper()
 
     if div == const.APP_NEWS:
@@ -345,46 +207,9 @@ def get_title(
     return title
 
 
-# 画像に文字列挿入
-def create_msg_img(div: str, msg: str, forecast: str) -> str:
-
-    if div == const.APP_TODAY:
-        if "雨" in forecast:
-            img_div = "rainy"
-        elif "雪" in forecast:
-            img_div = "snowy"
-        elif "曇" in forecast:
-            img_div = "cloudy"
-        else:
-            img_div = "sunny"
-    else:
-        img_div = const.APP_NEWS
-
-    # 任意の数値取得
-    img_seq = str(func.get_random_int(NUM_IMG_MAX_SEQ))
-    img_no = str(IMG_NO) + img_seq.zfill(2)
-
-    img_file_base = f"{img_div}_{img_no}"
-
-    font_type = FONT_TYPE
-    font_size = 11
-    xy_size = (45, 90)
-    if div == const.APP_TODAY:
-        xy_size = (60, 200)
-        if IMG_NO == const.NUM_ONE:
-            font_size = 16
-            xy_size = (20, 140)
-
-    file_path = func_api.insert_msg_to_img(
-        div, img_file_base, font_type, font_size, xy_size, msg
-    )
-
-    img_file_name = func.get_app_name(file_path)
-    return img_file_name
-
-
 if __name__ == const.MAIN_FUNCTION:
     get_msg_data_today()
+    # get_template_msg()
     # main(auto_flg=const.FLG_OFF)
     # main(data_flg=const.FLG_OFF)
     # main(proc_flg=const.FLG_OFF)
