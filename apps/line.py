@@ -126,10 +126,13 @@ def get_template_msg():
     random_int = str(func.get_random_int(const.MAX_PHRASE_CSV))
     key = random_int.zfill(3)
     phrase = dict_data.get(key)[1]
-    template_text = f"【今日の一言】{const.SYM_NEW_LINE}{phrase}"
+    template_title = "【今日の一言】"
+    template_text = phrase
 
     actions = get_template_actions()
-    template_msg = func_line.get_template_msg_json(alt_text, template_text, actions)
+    template_msg = func_line.get_template_msg_json(
+        alt_text, template_title, template_text, actions
+    )
     return template_msg
 
 

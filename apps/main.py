@@ -29,8 +29,8 @@ def main():
 def job_scheduler():
     # 毎日指定された時間に実行
     hour_daily = HOUR_DAILY_JOB
-    if func.is_holiday():
-        hour_daily += 1
+    # if func.is_holiday():
+    #     hour_daily += 1
 
     schedule.every().day.at(f"{hour_daily:02d}:00").do(daily_job)
     schedule.every().day.at("19:00").do(daily_job_2) # TODO 時間検討
