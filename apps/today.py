@@ -85,9 +85,14 @@ def get_today_info():
 
 # 今日の天気情報取得
 def get_today_weather() -> tuple[str, str]:
+
+    url = f"{const.URL_TENKI}/forecast/3/"
+    # location_id = 13101 # 東京
+    location_id = 12100  # 千葉
+
     # 天気マップ取得
     elem_forecast_map = func_bs.get_elem_from_url(
-        const.URL_TENKI, attr_div=const.ATTR_ID, attr_val="forecast-map-wrap"
+        url, attr_div=const.ATTR_ID, attr_val="forecast-map-wrap"
     )
 
     # 現在日付
@@ -102,9 +107,10 @@ def get_today_weather() -> tuple[str, str]:
         date_time_text, const.DATE_FORMAT_ISO, const.DATE_FORMAT_YYYYMMDD_HHMM
     )
 
-    # 東京の情報取得
     elem_forecast = func_bs.find_elem_by_attr(
-        elem_forecast_map, attr_div=const.ATTR_ID, attr_val="forecast-map-entry-13101"
+        elem_forecast_map,
+        attr_div=const.ATTR_ID,
+        attr_val=f"forecast-map-entry-{location_id}",
     )
 
     forecast = get_elem_val_by_class(elem_forecast, "forecast-image")

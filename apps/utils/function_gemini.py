@@ -22,7 +22,7 @@ GEMINI_MODEL = func.get_env_val("GEMINI_MODEL")
 GEMINI_MODEL_IMG = func.get_env_val("GEMINI_MODEL_IMG")
 
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
-URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.APP_TODAY}"
+URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/today_line"
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -126,8 +126,9 @@ def get_generate_image(div: str, contents: str, msg_data) -> str:
 
                 font_path = func.get_file_path(font_type, const.FILE_TYPE_TTC)
                 font = ImageFont.truetype(font=font_path, size=font_size)
+                text_color = "black"
 
-                draw.text(xy=xy_size, text=msg, fill="black", font=font, align="left")
+                draw.text(xy=xy_size, text=msg, fill=text_color, font=font, align="left")
 
             size = (480, 360)
             img = image_open.resize(size)
@@ -145,22 +146,25 @@ def get_today_news_image(msg: str, forecast: str, today_outfit: str) -> str:
     if today_outfit:
         img_div = "女性"
         contents_outfit = (
-            f"天気キャスターの{img_div}は、イメージの右寄りに配置する。"
+            f"天気キャスターの{img_div}がいる。"
+            f"{img_div}は、イメージの、右側の寄りに配置する"
             f"{img_div}は、本物と同じ自然なイメージにする。イラストではない。"
             f"{img_div}は、全身で、正面を見ながら、笑顔でいる。"
-            f"{img_div}は、45才の日本人、身長は155cm、50kg、小柄、童顔、笑顔、可愛い人。"
+            f"{img_div}は、45才の日本人、身長は155cm、50kg。小柄、童顔、笑顔、可愛い人。"
             f"{img_div}の今日のファッションは、{today_outfit}。"
+            f"{img_div}の身体のボリューム感を強調する大胆なファッションにする。"
+            f"{img_div}のメークアップは、自然なナチュラルタイプ。"
             f"右記URLのイメージを参考にする：{URL_TODAY_IMG}"
         )
 
     contents = (
         "480px X 360pxのサイズに合わせて、イメージを生成してください。"
         "※以下内容を参考してください。"
-        "番組名は、「Today's News」、左上に英語のロゴを表示する。"
+        "番組名は、「Today's News」。イメージの左上に英語のロゴを、改行せず1行に表示する。"
         f"{contents_outfit}"
         f"イメージのの背景は、{forecast}が分かるようにする。"
-        "イメージの背景は、複雑なイメージは避ける。"
-        "イメージには、日本語、中国語、記号などの文字は、一切表示しない。"
+        "イメージの背景は、複雑なイメージや黒系の暗い色は避ける。"
+        "イメージには、英語以外の日本語、中国語、記号などの文字は、一切表示しない。"
     )
 
     # 英語に翻訳
