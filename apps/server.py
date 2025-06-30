@@ -237,7 +237,7 @@ async def temp(file_name: str):
 # /img/today
 async def img(file_name: str):
     file_div = const.STR_INPUT
-    if file_name == const.APP_TODAY:
+    if const.APP_TODAY in file_name:
         file_div = const.STR_OUTPUT
     image_path = func.get_file_path(file_name, const.FILE_TYPE_JPEG, file_div)
     return FileResponse(image_path)
