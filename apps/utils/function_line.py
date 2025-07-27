@@ -9,8 +9,8 @@ app_name = func.get_app_name(__file__)
 
 # URL
 URL_LINE_API = "https://api.line.me"
-# URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
-# URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.APP_TODAY}"
+URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
+URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.APP_TODAY}"
 
 # LINE API情報
 STR_LINE_API = "LINE API"
@@ -132,14 +132,14 @@ def get_template_msg_json(
     alt_text: str, template_title: str, template_text: str, actions
 ):
     # base_url = URL_KOYEB_APP
-    # img_url = URL_TODAY_IMG
+    img_url = URL_TODAY_IMG
 
     json_object = {
         "type": MSG_TYPE_TMP,
         "altText": alt_text,
         "template": {
             "type": "buttons",
-            # "thumbnailImageUrl": img_url,
+            "thumbnailImageUrl": img_url,
             "imageAspectRatio": "rectangle",
             "imageSize": "cover",
             "imageBackgroundColor": "#FFFFFF",
@@ -148,7 +148,7 @@ def get_template_msg_json(
             # "defaultAction": {
             #     "type": "uri",
             #     "label": "View detail",
-            #     "uri": base_url,
+            #     "uri": img_url,
             # },
             "actions": actions,
         },

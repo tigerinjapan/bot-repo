@@ -96,6 +96,7 @@ NUM_ZERO = 0
 NUM_ONE = 1
 NUM_TWO = 2
 NUM_THREE = 3
+NUM_FOUR = 4
 
 # 件数
 MAX_DISPLAY_CNT = 5
@@ -366,6 +367,7 @@ URL_ACHIKOCHI = "https://achikochi-data.com"
 URL_LCC = "https://dsk.ne.jp"
 URL_TV = "https://www.tvkingdom.jp"
 URL_TV_RANKING = "https://bangumi.org"
+URL_MLB = "https://www.mlb.com"
 
 ##### アプリケーション名 #####
 APP_TODAY = "today"
@@ -379,6 +381,7 @@ APP_SITE = "site"
 APP_CAFE = "cafe"
 APP_TRIP = "trip"
 APP_USER = "user"
+APP_MLB = "mlb"
 LIST_APP_NAME = [
     APP_TODAY,
     APP_NEWS,

@@ -11,8 +11,13 @@ from apps.utils.message_constants import MSG_ERR_NO_SUCH_ELEMENT
 def get_data_from_url(
     url: str, headers=const.NONE_CONSTANT, sleep_flg: bool = const.FLG_ON
 ):
-    # func[requests.get]:Get data from web page
-    response = requests.get(url, headers=headers)
+    try:
+        # func[requests.get]:Get data from web page
+        response = requests.get(url, headers=headers)
+    except Exception as e:
+        func.print_error_msg(str(e))
+        response = const.NONE_CONSTANT
+
     if sleep_flg:
         func.time_sleep()
     return response
@@ -20,14 +25,19 @@ def get_data_from_url(
 
 # soup取得(contents)
 def get_soup_from_contents(contents):
-    soup = bs(contents, "html.parser")
+    soup = const.NONE_CONSTANT
+    if contents:
+        soup = bs(contents, "html.parser")
     return soup
 
 
 # soup取得
 def get_soup(url: str, headers=const.NONE_CONSTANT):
+    soup = const.NONE_CONSTANT
+
     response = get_data_from_url(url, headers)
-    soup = get_soup_from_contents(response.content)
+    if response:
+        soup = get_soup_from_contents(response.content)
     return soup
 
 
@@ -39,9 +49,11 @@ def get_elem_from_url(
     attr_val: str = const.SYM_BLANK,
     list_flg: bool = const.FLG_OFF,
 ):
+    elem = const.NONE_CONSTANT
 
     soup = get_soup(url)
-    elem = find_elem_by_attr(soup, tag, attr_div, attr_val, list_flg)
+    if soup:
+        elem = find_elem_by_attr(soup, tag, attr_div, attr_val, list_flg)
     return elem
 
 
@@ -85,3 +97,9 @@ def get_link_from_soup(soup) -> str:
     elem = find_elem_by_attr(soup, tag=const.TAG_A, attr_div=const.ATTR_HREF)
     link = elem if elem else const.SYM_BLANK
     return link
+
+
+# テキスト取得
+def get_text_from_soup(soup) -> str:
+    text = soup.get_text(strip=const.FLG_ON)
+    return text

@@ -1,6 +1,7 @@
 # 説明: LINEメッセージ
 
 import apps.lcc as lcc
+import apps.mlb as mlb
 import apps.news as news
 import apps.study as study
 import apps.today as today
@@ -35,6 +36,7 @@ DIV_MARK = "*----*----*----*----*----*"
 DIV_MARK_TXT = "*-- {} --*"
 DIV_MARK_IMG = "=== {} ==="
 
+# 曜日
 WEEKLY_DIV_FRI = "Fri"
 
 
@@ -120,16 +122,17 @@ def get_msg_data_today() -> tuple[list[str], str]:
 def get_template_msg():
     alt_text = "今日も一日お疲れ様でした。"
 
+    template_title = "【今日の一言】"
+
     file_path = func.get_file_path(const.STR_PHRASE, const.FILE_TYPE_CSV)
     dict_data = func.get_dict_from_csv(file_path)
-
     random_int = str(func.get_random_int(const.MAX_PHRASE_CSV))
     key = random_int.zfill(3)
     phrase = dict_data.get(key)[1]
-    template_title = "【今日の一言】"
     template_text = phrase
 
     actions = get_template_actions()
+
     template_msg = func_line.get_template_msg_json(
         alt_text, template_title, template_text, actions
     )
@@ -138,14 +141,15 @@ def get_template_msg():
 
 # テンプレートアクション取得
 def get_template_actions():
-    news_lbl, news_url = news.get_news_list(news.DIV_NIKKEI_NEWS, url_flg=const.FLG_ON)
+    # news_lbl, news_url = news.get_news_list(news.DIV_NIKKEI_NEWS, url_flg=const.FLG_ON)
     ai_lbl, ai_url = news.get_news_list(news.DIV_AI_NEWS, url_flg=const.FLG_ON)
+    mlb_lbl, mlb_url = mlb.get_last_game_info()
     lcc_lbl, lcc_url = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
     korean_lbl, korean_url = study.get_today_korean()
     # tv_lbl, tv_url = tv.get_tv_info_today()
 
-    label_list = [news_lbl, ai_lbl, lcc_lbl, korean_lbl]
-    url_list = [news_url, ai_url, lcc_url, korean_url]
+    label_list = [ai_lbl, mlb_lbl, lcc_lbl, korean_lbl]
+    url_list = [ai_url, mlb_url, lcc_url, korean_url]
 
     actions = []
     for label, url in zip(label_list, url_list):
@@ -211,8 +215,8 @@ def get_title(
 
 
 if __name__ == const.MAIN_FUNCTION:
-    get_msg_data_today()
-    # get_template_msg()
+    # get_msg_data_today()
+    get_template_actions()
     # main(auto_flg=const.FLG_OFF)
-    # main(data_flg=const.FLG_OFF)
+    main(data_flg=const.FLG_OFF)
     # main(proc_flg=const.FLG_OFF)
