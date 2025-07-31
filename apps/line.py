@@ -215,8 +215,8 @@ def get_title(
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # get_msg_data_today()
-    get_template_actions()
+    get_msg_data_today()
+    # get_template_actions()
     # main(auto_flg=const.FLG_OFF)
-    main(data_flg=const.FLG_OFF)
+    # main(data_flg=const.FLG_OFF)
     # main(proc_flg=const.FLG_OFF)

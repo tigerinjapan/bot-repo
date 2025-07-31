@@ -155,7 +155,12 @@ def update_news(app_name: str = const.SYM_BLANK):
         app_exec = AppExec(app_div, app_name)
         app_exec.start()
 
-        item_list = app_div.get_item_list()
+        try:
+            item_list = app_div.get_item_list()
+        except Exception as e:
+            func.print_error_msg(e)
+            continue
+
         col_list = app_div.col_list
 
         df = func.get_df(item_list, col_list)
