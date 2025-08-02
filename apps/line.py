@@ -1,7 +1,6 @@
 # 説明: LINEメッセージ
 
 import apps.lcc as lcc
-import apps.mlb as mlb
 import apps.news as news
 import apps.study as study
 import apps.today as today
@@ -143,13 +142,12 @@ def get_template_msg():
 def get_template_actions():
     # news_lbl, news_url = news.get_news_list(news.DIV_NIKKEI_NEWS, url_flg=const.FLG_ON)
     ai_lbl, ai_url = news.get_news_list(news.DIV_AI_NEWS, url_flg=const.FLG_ON)
-    mlb_lbl, mlb_url = mlb.get_last_game_info()
+    tv_lbl, tv_url = tv.get_tv_info_today()
     lcc_lbl, lcc_url = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
     korean_lbl, korean_url = study.get_today_korean()
-    # tv_lbl, tv_url = tv.get_tv_info_today()
 
-    label_list = [ai_lbl, mlb_lbl, lcc_lbl, korean_lbl]
-    url_list = [ai_url, mlb_url, lcc_url, korean_url]
+    label_list = [ai_lbl, tv_lbl, lcc_lbl, korean_lbl]
+    url_list = [ai_url, tv_url, lcc_url, korean_url]
 
     actions = []
     for label, url in zip(label_list, url_list):
