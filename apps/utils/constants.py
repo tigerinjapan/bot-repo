@@ -279,6 +279,8 @@ STR_DRAMA_JA = "ドラマ"
 STR_RANKING_JA = "ランキング"
 STR_X_TREND_JA = "Xトレンド"
 STR_KOREAN_JA = "韓国語"
+STR_MAN_JA = "男性"
+STR_WOMAN_JA = "女性"
 
 STR_JPY = "JPY"
 STR_KRW = "KRW"
@@ -347,9 +349,6 @@ LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
 
 ##### DB情報 #####
 COLL_USER_INFO = "userInfo"
-
-SEX_MAN = "男"
-SEX_WOMAN = "女"
 
 ##### URL #####
 # サイトURL
