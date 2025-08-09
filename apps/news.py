@@ -127,9 +127,7 @@ def get_news_list(
                 news_contents = func.get_a_tag(url_news, news_text)
 
                 if url_flg:
-                    news_title = f"[{const.STR_NIKKEI_JA}] {news_text}"[
-                        : const.MAX_TEMP_MSG
-                    ]
+                    news_title = f"[{const.STR_NIKKEI_JA}] {news_text}"
                     return news_title, url_news
 
                 if list_flg:
@@ -152,7 +150,7 @@ def get_news_list(
                 news_contents = func.get_a_tag(a_href, news_text)
 
                 if url_flg:
-                    news_title = f"[{const.STR_AI}] {news_text}"[: const.MAX_TEMP_MSG]
+                    news_title = f"[{const.STR_AI}] {news_text}"
                     return news_title, a_href
 
                 if ai_flg:
@@ -174,6 +172,12 @@ def get_news_list(
         news_list = NEW_LINE.join(news_list)
 
     return news_list
+
+
+# テンプレートメッセージ取得
+def get_temp_msg():
+    lbl, url = get_news_list(DIV_AI_NEWS, url_flg=const.FLG_ON)
+    return lbl, url
 
 
 # 要素リスト取得

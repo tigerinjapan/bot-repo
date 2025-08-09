@@ -44,7 +44,8 @@ def get_lcc_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
         title = title_text[1].replace("」", f"」{const.SYM_NEW_LINE}")
         title_info = func_bs.find_elem_by_attr(lcc_info, tag=const.TAG_A)
 
-        if func.check_in_list(title, LIST_KEYWORD):
+        check_keyword = const.SYM_SPACE.join(title_text)
+        if func.check_in_list(check_keyword, LIST_KEYWORD):
             url_news = const.URL_LCC + title_info.get(const.ATTR_HREF)
 
             lcc_info_details = func_bs.get_elem_from_url(
@@ -57,12 +58,18 @@ def get_lcc_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
                 lcc_data = [date, company, title]
                 lcc_info_list.append(lcc_data)
             else:
-                lcc_title = f"[LCC] {company}"[:const.MAX_TEMP_MSG]
+                lcc_title = f"[LCC] {company}"
                 return lcc_title, url_official
 
             if len(lcc_info_list) == const.MAX_DISPLAY_CNT:
                 break
     return lcc_info_list
+
+
+# テンプレートメッセージ取得
+def get_temp_msg():
+    lbl, url = get_lcc_info_list(list_flg=const.FLG_OFF)
+    return lbl, url
 
 
 # テキスト値取得

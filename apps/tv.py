@@ -23,7 +23,7 @@ duplicates_list = sort_list
 # キーワードリスト
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
 
-LIST_SPLIT = ["\u3000", "▽", "★", "☆", "#", "？", "！"]
+LIST_SPLIT = ["\u3000", "▽", "★", "☆", "◆", "◇", "■", "□", "#", "？", "！"]
 
 # URL
 URL_PARAM = (
@@ -35,66 +35,15 @@ URL_PARAM = (
 # アイテムリスト取得
 def get_item_list():
     item_list = []
-    # for keyword in LIST_KEYWORD:
-    #     tv_info_list = get_tv_info_list(keyword)
-    #     item_list += tv_info_list
-
-    item_list = get_tv_info_list2()
+    item_list = get_tv_info_list()
     return item_list
 
 
 # TV番組情報取得
-def get_tv_info_list(keyword) -> list[str]:
+def get_tv_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
     tv_info_list = []
 
-    url = f"{const.URL_TV}/{URL_PARAM}".format(keyword)
-    soup = func_bs.get_elem_from_url(
-        url, const.TAG_FORM, const.STR_NAME, "form_multi_iepg"
-    )
-    title_list = func_bs.find_elem_by_attr(
-        soup, tag=const.TAG_H2, list_flg=const.FLG_ON
-    )
-    program_list = func_bs.find_elem_by_attr(
-        soup,
-        attr_div=const.ATTR_CLASS,
-        attr_val="utileListProperty",
-        list_flg=const.FLG_ON,
-    )
-
-    if not title_list or not program_list:
-        return tv_info_list
-
-    for title_elem, program_elem in zip(title_list, program_list):
-        title_text = func.get_replace_data(title_elem.text)
-        if not title_text or keyword not in title_text:
-            continue
-
-        title_text = title_text.replace(keyword, f"<b>{keyword}</b>")
-
-        link = const.URL_TV + func_bs.get_link_from_soup(title_elem)
-
-        tv_info_txt = (
-            func.get_replace_data(program_elem.text)
-            .replace(const.SYM_SPACE, const.SYM_BLANK)
-            .split("\r")
-        )
-        time = tv_info_txt[1]
-        running_min = time.split("分")[0].split("(")[-1]
-        hour = time.split(")")[1].split(":")[0]
-        if 30 <= int(running_min) and 20 <= int(hour):
-            channel = tv_info_txt[2]
-            title = func.get_a_tag(link, title_text)
-            tv_info = [time, channel, title]
-            tv_info_list.append(tv_info)
-
-    return tv_info_list
-
-
-# TV番組情報取得
-def get_tv_info_list2(list_flg:bool=const.FLG_ON) -> list[str]:
-    tv_info_list = []
-
-    url = f"{const.URL_TV_RANKING}/ranking/?genre_id=5"
+    url = f"{const.URL_TV}/ranking/?genre_id=5"
     program_list = func_bs.get_elem_from_url(url, attr_val="program_list_convertible")
 
     link_info_list = func_bs.find_elem_by_attr(
@@ -125,11 +74,9 @@ def get_tv_info_list2(list_flg:bool=const.FLG_ON) -> list[str]:
             channel = tv_info_text[1]
 
             title = func_bs.find_elem_by_attr(
-                link_info,
-                attr_div=const.ATTR_CLASS,
-                attr_val="program_title"
+                link_info, attr_div=const.ATTR_CLASS, attr_val="program_title"
             ).text
-            link = const.URL_TV_RANKING + link_info[const.ATTR_HREF]
+            link = const.URL_TV + link_info[const.ATTR_HREF]
             title_link = func.get_a_tag(link, title)
 
             if func.check_in_list(title, LIST_KEYWORD):
@@ -147,25 +94,33 @@ def get_tv_info_list2(list_flg:bool=const.FLG_ON) -> list[str]:
     return tv_info_list
 
 
+# テンプレートメッセージ取得
+def get_temp_msg():
+    lbl, url = get_tv_info_today()
+    return lbl, url
+
+
+# TV番組情報取得
 def get_tv_info_today():
     today_tv_info = link = const.SYM_BLANK
 
-    tv_info_today = get_tv_info_list2(list_flg=const.FLG_OFF)
+    tv_info_today = get_tv_info_list(list_flg=const.FLG_OFF)
     if tv_info_today:
         time = tv_info_today[0]
         channel = tv_info_today[1]
         title = get_tv_title(tv_info_today[2])
-        today_tv_info = f"[{channel} {time}] {title}"[: const.MAX_TEMP_MSG]
+        today_tv_info = f"[{channel} {time}] {title}"
         link = tv_info_today[3]
     return today_tv_info, link
 
 
+# TVタイトル取得
 def get_tv_title(tv_title: str):
     for split_str in LIST_SPLIT:
         if split_str in tv_title:
-            title = tv_title.split(split_str)[0]
+            tv_title = tv_title.split(split_str)[0]
             break
-    return title
+    return tv_title
 
 
 if __name__ == const.MAIN_FUNCTION:

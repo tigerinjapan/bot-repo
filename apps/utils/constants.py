@@ -365,8 +365,7 @@ URL_NIKKEI = "https://www.nikkei.com"
 URL_ITMEDIA = "https://www.itmedia.co.jp"
 URL_ACHIKOCHI = "https://achikochi-data.com"
 URL_LCC = "https://dsk.ne.jp"
-URL_TV = "https://www.tvkingdom.jp"
-URL_TV_RANKING = "https://bangumi.org"
+URL_TV = "https://bangumi.org"
 URL_MLB = "https://www.mlb.com"
 
 ##### アプリケーション名 #####

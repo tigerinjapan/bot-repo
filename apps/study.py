@@ -107,9 +107,15 @@ def get_today_korean():
     url = f"{const.URL_KONEST}/contents/todays_korean_list.html"
     attr_val = "size12 blackg"
     a_elem = func_bs.get_elem_from_url(url, attr_val=attr_val).find(const.TAG_A)
-    today_korean = f"[韓国語] {a_elem[const.ATTR_TITLE]}"[:const.MAX_TEMP_MSG]
+    today_korean = f"[韓国語] {a_elem[const.ATTR_TITLE]}"
     url_korean = f"{const.URL_KONEST}" + a_elem[const.ATTR_HREF]
     return today_korean, url_korean
+
+
+# テンプレートメッセージ取得
+def get_temp_msg():
+    lbl, url = get_today_korean()
+    return lbl, url
 
 
 if __name__ == const.MAIN_FUNCTION:

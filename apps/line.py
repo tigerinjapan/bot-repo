@@ -140,18 +140,18 @@ def get_template_msg():
 
 # テンプレートアクション取得
 def get_template_actions():
-    # news_lbl, news_url = news.get_news_list(news.DIV_NIKKEI_NEWS, url_flg=const.FLG_ON)
-    ai_lbl, ai_url = news.get_news_list(news.DIV_AI_NEWS, url_flg=const.FLG_ON)
-    tv_lbl, tv_url = tv.get_tv_info_today()
-    lcc_lbl, lcc_url = lcc.get_lcc_info_list(list_flg=const.FLG_OFF)
-    korean_lbl, korean_url = study.get_today_korean()
-
-    label_list = [ai_lbl, tv_lbl, lcc_lbl, korean_lbl]
-    url_list = [ai_url, tv_url, lcc_url, korean_url]
-
     actions = []
-    for label, url in zip(label_list, url_list):
+    temp_item_list = [news, tv, lcc, study]
+
+    for item in temp_item_list:
+        try:
+            # テンプレートメッセージ取得
+            label, url = item.get_temp_msg()
+        except:
+            continue
+
         if label:
+            label = label[:const.MAX_TEMP_MSG]
             action = {"type": "uri", "label": label, "uri": url}
             actions.append(action)
     return actions

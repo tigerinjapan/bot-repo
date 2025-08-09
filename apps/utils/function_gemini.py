@@ -22,7 +22,7 @@ GEMINI_MODEL = func.get_env_val("GEMINI_MODEL")
 GEMINI_MODEL_IMG = func.get_env_val("GEMINI_MODEL_IMG")
 
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
-URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/today_line"
+URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/today_face"
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -128,7 +128,9 @@ def get_generate_image(div: str, contents: str, msg_data) -> str:
                 font = ImageFont.truetype(font=font_path, size=font_size)
                 text_color = "black"
 
-                draw.text(xy=xy_size, text=msg, fill=text_color, font=font, align="left")
+                draw.text(
+                    xy=xy_size, text=msg, fill=text_color, font=font, align="left"
+                )
 
             size = (480, 360)
             img = image_open.resize(size)
@@ -146,15 +148,14 @@ def get_today_news_image(msg: str, forecast: str, today_outfit: str) -> str:
     if today_outfit:
         img_div = "女性"
         contents_outfit = (
-            f"天気キャスターの{img_div}がいる。"
+            f"{URL_TODAY_IMG}。左記URLのイメージの天気キャスターの{img_div}と同一の被写体にする。"
             f"{img_div}は、イメージの、右側の寄りに配置する"
-            f"{img_div}は、本物と同じ自然なイメージにする。イラストではない。"
-            f"{img_div}は、全身で、正面を見ながら、笑顔でいる。"
-            f"{img_div}は、45才の日本人、身長は155cm、50kg。小柄、童顔、笑顔、可愛い人。"
+            f"{img_div}は、本物と同じく自然なイメージにする。イラストではない。"
+            f"{img_div}は、正面を見ながら、笑顔でいる。"
+            f"{img_div}は、45才の日本人。身長は155cm、体重は45kg。小柄、童顔、笑顔、可愛い、愛嬌溢れる人。"
             f"{img_div}の今日のファッションは、{today_outfit}。"
             f"{img_div}の身体のボリューム感を強調する大胆なファッションにする。"
             f"{img_div}のメークアップは、自然なナチュラルタイプ。"
-            f"右記URLのイメージを参考にする：{URL_TODAY_IMG}"
         )
 
     contents = (
