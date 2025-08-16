@@ -2,8 +2,8 @@
     "item": [
         {
             "name": "フラットヴィレッジ",
-            "description": "アメリカ西海岸風",
-            "addr": "船橋市\n本町\n2-5-3",
+            "description": "アメリカ西海岸風の\nホッと安らげる空間",
+            "addr": "白井市\n根460-1",
             "time": "9:00～11:00",
             "menu": "ツインブレッドプレート",
             "img": "cafe_001",
@@ -12,7 +12,7 @@
         {
             "name": "R Baker the Green",
             "description": "緑の中でほっと一息、\nおしゃれで心地いい空間",
-            "addr": "印西市\n鹿黒南\n5-2",
+            "addr": "印西市\n鹿黒南5-2",
             "time": "8:00～11:00",
             "menu": "食パンのモーニング",
             "img": "cafe_002",
@@ -21,11 +21,29 @@
         {
             "name": "イデカフェ",
             "description": "木の温もり溢れる、\n落ち着いた癒しの空間",
-            "addr": "鎌ケ谷市\n初富\n862-24",
+            "addr": "鎌ケ谷市\n初富862-24",
             "time": "9:00～11:00",
             "menu": "ホットドック",
             "img": "cafe_003",
             "url": "https://idecafe.com/"
+        },
+        {
+            "name": "Cafe Nagi",
+            "description": "静かで可愛らしい\n自宅カフェ♪",
+            "addr": "松戸市\n常盤平\n双葉町19-2",
+            "time": "9:00～11:00",
+            "menu": "トースト",
+            "img": "cafe_004",
+            "url": "https://tabelog.com/chiba/A1203/A120302/12051930/"
+        },
+        {
+            "name": "パン工房カフェ 房の駅",
+            "description": "手作りパンが楽しめる\nパン屋さん",
+            "addr": "千葉市\n若葉区\n加曽利町312-1",
+            "time": "08:30~11:00",
+            "menu": "スープ＆パンモーニング",
+            "img": "cafe_005",
+            "url": "https://fusanoeki.fusa.co.jp/cafe/"
         }
     ]
 }

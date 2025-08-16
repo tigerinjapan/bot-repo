@@ -25,7 +25,6 @@ NEW_LINE = const.SYM_NEW_LINE
 # メッセージタイプ
 MSG_TYPE_TXT = "text"
 MSG_TYPE_IMG = "image"
-MSG_TYPE_TMP = "template"
 
 # ファイル区分
 FILE_DIV_AI_NEWS = "ai_news"
@@ -117,8 +116,14 @@ def get_msg_data_today() -> tuple[list[str], str]:
         return msg_data_list, date_today
 
 
-# テンプレートメッセージ取得
+# フレックスメッセージ取得
 def get_template_msg():
+    flex_msg = get_flex_msg()
+    return flex_msg
+
+
+# テンプレートメッセージ取得
+def get_template_msg_bk():
     alt_text = "今日も一日お疲れ様でした。"
 
     template_title = "【今日の一言】"
@@ -151,10 +156,16 @@ def get_template_actions():
             continue
 
         if label:
-            label = label[:const.MAX_TEMP_MSG]
+            label = label[: const.MAX_TEMP_MSG]
             action = {"type": "uri", "label": label, "uri": url}
             actions.append(action)
     return actions
+
+
+# フレックスメッセージ取得
+def get_flex_msg():
+    flex_msg = func_line.get_flex_msg_json()
+    return flex_msg
 
 
 # メッセージ取得

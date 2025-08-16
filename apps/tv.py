@@ -12,7 +12,7 @@ app_title = "TV番組"
 
 # ソートリスト
 sort_list = ["放送時間", "チャンネル"]
-ascending_div = [True, True]
+ascending_div = [const.FLG_ON, const.FLG_ON]
 
 # カラムリスト
 col_list = sort_list + ["番組名"]
@@ -34,7 +34,6 @@ URL_PARAM = (
 
 # アイテムリスト取得
 def get_item_list():
-    item_list = []
     item_list = get_tv_info_list()
     return item_list
 

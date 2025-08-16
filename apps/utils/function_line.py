@@ -25,6 +25,10 @@ NEW_LINE = const.SYM_NEW_LINE
 MSG_TYPE_TXT = "text"
 MSG_TYPE_IMG = "image"
 MSG_TYPE_TMP = "template"
+MSG_TYPE_BTN = "button"
+MSG_TYPE_FLEX = "flex"
+MSG_TYPE_CAROUSEL = "carousel"
+MSG_TYPE_BUBBLE = "bubble"
 
 
 # チャネル・アクセストークン取得
@@ -156,5 +160,110 @@ def get_template_msg_json(
     return json_object
 
 
+# フレックスメッセージ取得
+def get_flex_msg_json(
+    alt_text: str = const.STR_TEST, flex_type: str = MSG_TYPE_CAROUSEL
+):
+    contents = get_bubble_contents()
+
+    json_object = {
+        "type": MSG_TYPE_FLEX,
+        "altText": alt_text,
+        "contents": {"type": flex_type, "contents": contents},
+    }
+    return json_object
+
+
+def get_bubble_contents():
+    list_header_text = ["未対応", "対応中", "対応完了"]
+    list_percent = ["50%", "25%", "25%"]
+    list_bg_color = [
+        ["#0D8186", "#9FD8E36E", "#27ACB2"],
+        ["#DE5658", "#FAD2A76E", "#FF6B6E"],
+        ["#7D51E4", "#9FD8E36E", "#A17DF5"],
+    ]
+    list_body_text = ["TODO#3,TODO#4", "TODO#2", "TODO#1"]
+
+    bubble_contents = []
+
+    for header_text, percent, bg_color, body_text in zip(
+        list_header_text, list_percent, list_bg_color, list_body_text
+    ):
+        contents = {
+            "type": "bubble",
+            "size": "nano",
+            "header": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                    {
+                        "type": "text",
+                        "text": header_text,
+                        "color": "#ffffff",
+                        "align": "start",
+                        "size": "md",
+                        "gravity": "center",
+                    },
+                    {
+                        "type": "text",
+                        "text": percent,
+                        "color": "#ffffff",
+                        "align": "start",
+                        "size": "xs",
+                        "gravity": "center",
+                        "margin": "lg",
+                    },
+                    {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [{"type": "filler"}],
+                                "width": percent,
+                                "backgroundColor": bg_color[0],
+                                "height": "6px",
+                            }
+                        ],
+                        "backgroundColor": bg_color[1],
+                        "height": "6px",
+                        "margin": "sm",
+                    },
+                ],
+                "backgroundColor": bg_color[2],
+                "paddingTop": "19px",
+                "paddingAll": "12px",
+                "paddingBottom": "16px",
+            },
+            "body": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                    {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": body_text,
+                                "color": "#8C8C8C",
+                                "size": "sm",
+                                "wrap": const.FLG_ON,
+                            }
+                        ],
+                        "flex": 1,
+                    }
+                ],
+                "spacing": "md",
+                "paddingAll": "12px",
+            },
+            "styles": {"footer": {"separator": const.FLG_OFF}},
+        }
+        bubble_contents.append(contents)
+    return bubble_contents
+
+
 if __name__ == const.MAIN_FUNCTION:
-    get_channel_access_token()
+    # get_channel_access_token()
+    get_flex_msg_json()

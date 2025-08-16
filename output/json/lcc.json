@@ -1,5 +1,15 @@
 [
     {
+        "日付": "2025年8月13日",
+        "会社": "<a href=\"https://www.jejuair.net/ja/event/eventDetail.do?eventNo=0000003250\" target=\"_blank\" rel=\"noopener noreferrer\">チェジュ航空</a>",
+        "LCCニュース": "「今安セール」\n開催中！ソウル/釜山線 片道1,700円から"
+    },
+    {
+        "日付": "2025年8月12日",
+        "会社": "<a href=\"https://www.flyscoot.com/jp/promotions/new-destis-launch\" target=\"_blank\" rel=\"noopener noreferrer\">スクート</a>",
+        "LCCニュース": "新路線 東京(羽田)－シンガポール線 26年3月就航！記念セールは片道15,000円から"
+    },
+    {
         "日付": "2025年8月8日",
         "会社": "<a href=\"https://flyairseoul.com/CW/ja/eventView.do?seq=2041&type=I\" target=\"_blank\" rel=\"noopener noreferrer\">エアソウル</a>",
         "LCCニュース": "「今こそ"
@@ -13,15 +23,5 @@
         "日付": "2025年8月7日",
         "会社": "<a href=\"https://www.jinair.com/promotion/eventView?evntSeq=14408\" target=\"_blank\" rel=\"noopener noreferrer\">ジンエアー</a>",
         "LCCニュース": "「FRIDAY HAPPY FLY DAY」\n毎週金曜からセール開催！第1回は8月8日から"
-    },
-    {
-        "日付": "2025年8月6日",
-        "会社": "<a href=\"https://www.vietjetair.com/ja\" target=\"_blank\" rel=\"noopener noreferrer\">ベトジェット</a>",
-        "LCCニュース": "「スーパータイムセール」\n8月8日深夜2時から開催！ベトナム国際線 最大80％割引"
-    },
-    {
-        "日付": "2025年8月6日",
-        "会社": "<a href=\"https://www.jetstar.com/jp/ja/deals\" target=\"_blank\" rel=\"noopener noreferrer\">ジェットスター・ジャパン</a>",
-        "LCCニュース": "「スーパースターセール」\n8月8日12時から開催！国内線 片道3,790円から"
     }
 ]

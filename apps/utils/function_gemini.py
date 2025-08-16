@@ -154,15 +154,14 @@ def get_today_news_image(
                 f"{img_div}は、45才の日本人。身長は155cm、体重は45kg。小柄、童顔、笑顔、可愛い、愛嬌溢れる人。"
                 f"{img_div}の身体のボリューム感を強調する大胆なファッションにする。"
                 f"{img_div}のメークアップは、自然なナチュラルタイプ。"
-                f"{URL_IMG_TODAY}。左記URLのイメージを参考にし、イメージを生成する。"
             )
 
         contents_outfit = (
-            f"天気キャスターの{img_div}がいる。"
+            f"天気キャスターの{img_div}が一人いる。"
             f"{img_div}は、本物と同じ自然なイメージにする。イラストではない。"
             f"{img_div}は、正面を見ながら、笑顔でいる。"
             f"{img_div}の今日のファッションは、{today_outfit}。"
-            f"{img_div}は、全体イメージの、右側の寄りに配置する"
+            f"{img_div}は、全体イメージの、右寄りに配置する"
             f"{img_woman}"
         )
 
@@ -395,10 +394,61 @@ def test_gemini_image():
         func.print_error_msg(e)
 
 
+import time
+from google import genai
+from google.genai import types
+
+
+# 生成ビデオ取得
+def get_generate_video(div: str, prompt: str) -> str:
+    # クライアントの初期化
+    client = genai.Client(api_key=GEMINI_API_KEY)
+
+    operation = client.models.generate_videos(
+        model="veo-3.0-generate-preview",
+        prompt=prompt,
+    )
+
+    # Poll the operation status until the video is ready.
+    while not operation.done:
+        print("Waiting for video generation to complete...")
+        time.sleep(10)
+        operation = client.operations.get(operation)
+
+    # Download the generated video.
+    generated_video = operation.response.generated_videos[0]
+    client.files.download(file=generated_video.video)
+    file_name = f"{div}.mp4"
+    generated_video.video.save(file_name)
+    print("Generated video saved to dialogue_example.mp4")
+
+
+def get_generate_video2(prompt:str):
+    # クライアントの初期化
+    client = genai.Client(api_key=GEMINI_API_KEY)
+
+    response = client.models.generate_videos(
+        model="veo-3.0-generate-preview",
+        prompt=prompt,
+    )
+    return response
+
+
+def test_generate_video():
+    div = "example"
+    prompt = """A close up of two people staring at a cryptic drawing on a wall, torchlight flickering.
+    A man murmurs, 'This must be it. That's the secret code.' The woman looks at him and whispering excitedly, 'What did you find?'"""
+
+    # get_generate_video(div, prompt)
+    get_generate_video2(prompt)
+
+
 if __name__ == const.MAIN_FUNCTION:
     # test_gemini()
     # test_gemini_image()
-    msg = "[test] test"
-    today_weather = "晴れのち曇り"
-    today_outfit = "白いブラウス&黄色いスカート"
-    get_today_news_image(msg, today_weather, today_outfit)
+    # msg = "[test] test"
+    # today_weather = "晴れのち曇り"
+    # today_outfit = "白いブラウス&黄色いスカート"
+    # get_today_news_image(msg, today_weather, today_outfit)
+    test_generate_video()
+
