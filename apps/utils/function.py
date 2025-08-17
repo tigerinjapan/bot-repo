@@ -168,6 +168,16 @@ def print_msg_exit(div: str, msg: str = const.SYM_BLANK):
     sys.exit()
 
 
+# 関数の正常終了メッセージ出力
+def print_proc_ok(currentframe, div: str = const.SYM_BLANK):
+    # 処理関数
+    curr_frame = currentframe.f_code.co_name
+    msg_div = curr_frame
+    if div:
+        msg_div += f":{div}"
+    print_info_msg(msg_div, msg_const.MSG_INFO_PROC_COMPLETED)
+
+
 # 文字列を日付型に変換
 def convert_str_to_date(str: str, format: str) -> datetime:
     if format == const.DATE_FORMAT_ISO:
@@ -204,6 +214,12 @@ def get_random_int(end_num: int, start_num: int = const.NUM_ZERO) -> int:
         rand_int = random.randrange(end_num)
     else:
         rand_int = random.randint(start_num, end_num)
+    return rand_int
+
+
+# 乱数生成
+def get_random_choice(number_list: list[int]) -> int:
+    rand_int = random.choice(number_list)
     return rand_int
 
 

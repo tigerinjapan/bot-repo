@@ -210,6 +210,7 @@ STR_REQUEST = "request"
 STR_RESPONSE = "response"
 STR_STATUS = "status"
 STR_MESSAGE = "message"
+STR_APP = "app"
 STR_URL = "url"
 STR_IP = "IP"
 STR_HOST = "host"
@@ -241,17 +242,25 @@ STR_DATE = "date"
 STR_DAY = "day"
 STR_HOLIDAY = "holiday"
 STR_PHRASE = "phrase"
+STR_NUMBER = "number"
+STR_ANSWER = "answer"
+STR_LEVEL = "level"
 
 STR_AI = "AI"
 STR_USER_INFO = "userInfo"
 STR_ZIP_CODE = "zipCode"
 STR_ENV_VAR = "env_var"
+STR_NUMBER_PLATE = "numberPlate"
 
 STR_DB = "db"
 STR_MONGO = "mongo"
 STR_UPPER = "upper"
 STR_LOWER = "lower"
 STR_CAPITALIZE = "capitalize"
+
+STR_EASY = "easy"
+STR_MEDIUM = "medium"
+STR_HARD = "hard"
 
 STR_LOGIN_JA = "ログイン"
 STR_LOGOUT_JA = "ログアウト"
@@ -379,7 +388,10 @@ APP_SITE = "site"
 APP_CAFE = "cafe"
 APP_TRIP = "trip"
 APP_USER = "user"
+
+APP_NUMBER = "number"
 APP_MLB = "mlb"
+
 LIST_APP_NAME = [
     APP_TODAY,
     APP_NEWS,
@@ -408,15 +420,15 @@ def get_html(app_name):
 PATH_ROOT = "/"
 PATH_LOGIN = get_path(STR_LOGIN)
 PATH_LOGOUT = get_path(STR_LOGOUT)
-PATH_TODAY = "/app" + get_path(APP_TODAY)
-PATH_NEWS = "/app" + get_path(APP_NEWS)
-PATH_USER = "/app" + get_path(APP_USER)
+PATH_APP = get_path(STR_APP)
+PATH_NEWS = f"{PATH_APP}{get_path(APP_NEWS)}"
 PATH_UPDATE = get_path(STR_UPDATE)
 
 ##### HTMLファイル名 #####
 HTML_INDEX = get_html(STR_INDEX)
 HTML_RESULT = get_html(STR_RESULT)
 HTML_USER_INFO = get_html(STR_USER_INFO)
+HTML_NUMBER_PLATE = get_html(STR_NUMBER_PLATE)
 
 if __name__ == MAIN_FUNCTION:
     data = f"[{DATE_WEEKDAY, HTML_INDEX}]"

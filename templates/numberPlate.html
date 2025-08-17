@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <script src="/templates/header.js"></script>
+    <script src="/templates/numberPlate.js"></script>
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: white;
+            margin: auto;
+        }
+
+        .main {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px black;
+            padding: 2em;
+            max-width: 480px;
+            margin: 2em auto;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        #number-display {
+            font-size: 2em;
+            font-weight: bold;
+            color: blue;
+            background: ivory;
+            padding: 0.5em 1em;
+        }
+
+        input,
+        button {
+            font-size: 1em;
+            padding: 0.5em;
+            border-radius: 6px;
+            border: 1px solid silver;
+            margin: 0.5em 0;
+        }
+
+        button {
+            background: skyblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: blue;
+        }
+
+        #message,
+        #number-answer {
+            margin-top: 1em;
+            min-height: 2em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <h1>{{ title }}</h1>
+        <div id="number-display">{{ num }}</div>
+        <div id="rule-detail">
+            <h3>ルール</h3>
+            <ul>
+                <li>4つの数字、四則演算、イコールを使い正しい数式を作る</li>
+                <li>四則演算：最小1つ、最大3つ使用</li>
+                <li>イコール：必ず1つのみ使用</li>
+                <!-- <li>問題：10問。1問の最大点：10点。制限時間：300秒</li>
+                    <li>正解時3秒毎に1点減点（0～3秒:10点, .., 28秒以上:1点）</li> -->
+            </ul>
+        </div>
+        <input id="expression" type="text" placeholder="例: (2*5)-9=1">
+        <button id="btnChk" onclick="checkAnswer()">チェック</button>
+        <div id="message"></div>
+        <div id="number-answer" hidden>{{ ans }}</div>
+    </div>
+</body>
+
+<footer>
+    <a href="/">ホーム画面へ</a>
+</footer>
+
+</html>

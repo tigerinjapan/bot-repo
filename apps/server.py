@@ -14,6 +14,7 @@ from uvicorn import Config, Server
 
 import apps.appl as appl
 import apps.line as line
+import apps.number as number
 import apps.test as test
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -166,6 +167,8 @@ async def app_exec(request: Request, app_name: str):
     try:
         if app_name == const.APP_USER:
             target_html, context = appl.exec_user(request, app_name)
+        elif app_name == const.APP_NUMBER:
+            target_html, context = appl.exec_number(request, app_name)
         else:
             target_html, context = appl.exec_result(request, app_name)
     except Exception as e:
@@ -269,5 +272,5 @@ def api_test():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # start_thread()
-    health_check()
+    start_thread()
+    # health_check()

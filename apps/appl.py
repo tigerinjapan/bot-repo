@@ -4,6 +4,7 @@ from fastapi import Request
 
 import apps.drama as drama
 import apps.lcc as lcc
+import apps.number as number
 import apps.news as news
 import apps.ranking as ranking
 import apps.site as site
@@ -16,7 +17,6 @@ import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
 import apps.utils.user_dto as dto
-from apps.utils.function_beautiful_soup import get_data_from_url
 
 # URL
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
@@ -119,6 +119,22 @@ def exec_user(request: Request, app_name: str):
     return target_html, context
 
 
+# 【画面】取得結果
+def exec_number(request: Request, app_name: str):
+    num = number.get_random_number()
+    ans = number.get_answer_by_number(num)
+
+    target_html = const.HTML_NUMBER_PLATE
+    context = {
+        const.STR_REQUEST: request,
+        const.STR_TITLE: number.app_title,
+        "app_name": app_name,
+        "num": num,
+        "ans": ans,
+    }
+    return target_html, context
+
+
 # 【画面】データリスト取得
 def get_data_list(df) -> list[tuple[list[str], list[str]]]:
     data_list = []
@@ -186,7 +202,6 @@ def update_news(app_name: str = const.SYM_BLANK):
 
 # スリープ状態にならないようサーバーアクセス
 def no_sleep():
-    # get_data_from_url(URL_TODAY_IMG)
     func_api.get_result_on_app(const.APP_TODAY)
 
 
