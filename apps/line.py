@@ -40,16 +40,16 @@ WEEKLY_DIV_FRI = "Fri"
 
 def main(
     auto_flg: bool = const.FLG_ON,
-    data_flg: bool = const.FLG_ON,
     proc_flg: bool = const.FLG_ON,
+    data_div: int = const.NUM_ONE,
 ):
     """
     メインの処理を実行
 
     引数:
         auto_flg (bool): 自動処理を有効にするフラグ
-        data_flg (bool): データ処理を有効にするフラグ。False: テンプレート送信
         proc_flg (bool): 処理実行を有効にするフラグ
+        data_div  (int): 1:通常、2:テンプレート、3:フレックス
     """
 
     func.print_start(app_name)
@@ -59,7 +59,7 @@ def main(
         token = func_line.get_channel_access_token()
 
         if token:
-            if data_flg:
+            if data_div == const.NUM_ONE:
                 if proc_flg:
                     msg_list = get_msg_list(auto_flg)
 
@@ -70,8 +70,11 @@ def main(
                 messages = func_line.get_line_messages(msg_list)
 
             else:
-                template_msg = get_template_msg()
-                messages = func_line.get_send_messages(template_msg)
+                if data_div == const.NUM_TWO:
+                    msg_list = get_template_msg()
+                else:
+                    msg_list = get_flex_msg()
+                messages = func_line.get_send_messages(msg_list)
 
             # メッセージ送信
             func_line.send_message(token, messages)
@@ -116,14 +119,8 @@ def get_msg_data_today() -> tuple[list[str], str]:
         return msg_data_list, date_today
 
 
-# フレックスメッセージ取得
-def get_template_msg():
-    flex_msg = get_flex_msg()
-    return flex_msg
-
-
 # テンプレートメッセージ取得
-def get_template_msg_bk():
+def get_template_msg():
     alt_text = "今日も一日お疲れ様でした。"
 
     template_title = "【今日の一言】"
@@ -227,5 +224,6 @@ if __name__ == const.MAIN_FUNCTION:
     get_msg_data_today()
     # get_template_actions()
     # main(auto_flg=const.FLG_OFF)
-    # main(data_flg=const.FLG_OFF)
+    # main(data_div=const.NUM_TWO)
+    # main(data_div=const.NUM_THREE)
     # main(proc_flg=const.FLG_OFF)
