@@ -122,16 +122,8 @@ def get_msg_data_today() -> tuple[list[str], str]:
 # テンプレートメッセージ取得
 def get_template_msg():
     alt_text = "今日も一日お疲れ様でした。"
-
     template_title = "【今日の一言】"
-
-    file_path = func.get_file_path(const.STR_PHRASE, const.FILE_TYPE_CSV)
-    dict_data = func.get_dict_from_csv(file_path)
-    random_int = str(func.get_random_int(const.MAX_PHRASE_CSV))
-    key = random_int.zfill(3)
-    phrase = dict_data.get(key)[1]
-    template_text = phrase
-
+    template_text = today.get_today_phrase()
     actions = get_template_actions()
 
     template_msg = func_line.get_template_msg_json(
@@ -161,8 +153,34 @@ def get_template_actions():
 
 # フレックスメッセージ取得
 def get_flex_msg():
-    flex_msg = func_line.get_flex_msg_json()
+    alt_text = today.get_today_phrase()
+    data_list = get_flex_data_list()
+    flex_msg = func_line.get_flex_msg_json(alt_text, data_list)
     return flex_msg
+
+
+# フレックスメッセージ・データ取得
+def get_flex_data_list(div: str = const.STR_NISA):
+    header_list = ["Sell", "Buy#1", "Buy#2"]
+    fund_goal_list = [30000, 30000, 30000]
+
+    rate_list = []
+    body_list = []
+    for fund_no, fund_goal in zip(const.LIST_FUND_NO, fund_goal_list):
+        fund_name, point = today.get_today_nisa(fund_no, rate_flg=const.FLG_OFF)
+        int_point = int(
+            point.replace(const.SYM_COMMA, const.SYM_BLANK).replace(
+                const.STR_JPY_JA, const.SYM_BLANK
+            )
+        )
+        rate = (int_point / fund_goal) * 100
+        str_rate = f"{int(rate)}%"
+        body_text = f"{fund_name}{const.SYM_NEW_LINE}{point}"
+        rate_list.append(str_rate)
+        body_list.append(body_text)
+
+    data_list = [header_list, rate_list, body_list]
+    return data_list
 
 
 # メッセージ取得
@@ -221,9 +239,10 @@ def get_title(
 
 
 if __name__ == const.MAIN_FUNCTION:
-    get_msg_data_today()
+    # get_msg_data_today()
     # get_template_actions()
+    # get_flex_data_list()
     # main(auto_flg=const.FLG_OFF)
     # main(data_div=const.NUM_TWO)
-    # main(data_div=const.NUM_THREE)
+    main(data_div=const.NUM_THREE)
     # main(proc_flg=const.FLG_OFF)

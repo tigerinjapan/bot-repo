@@ -250,6 +250,7 @@ STR_AI = "AI"
 STR_USER_INFO = "userInfo"
 STR_ZIP_CODE = "zipCode"
 STR_ENV_VAR = "env_var"
+STR_NISA = "nisa"
 STR_NUMBER_PLATE = "numberPlate"
 
 STR_DB = "db"
@@ -355,6 +356,17 @@ LIST_REPLACE = [
 
 ##### 曜日リスト #####
 LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
+
+##### ファンド #####
+FUND_NO_SP_500 = "182809"
+FUND_NO_AI = "179702"
+FUND_NO_US_TECH = "173905"
+FUND_NAME_SP_500 = "S&P500"
+FUND_NAME_AI = "イノベAI"
+FUND_NAME_US_TECH = "USテクノロ"
+
+LIST_FUND_NO = [FUND_NO_SP_500, FUND_NO_AI, FUND_NO_US_TECH]
+LIST_FUND_NAME = [FUND_NAME_SP_500, FUND_NAME_AI, FUND_NAME_US_TECH]
 
 ##### DB情報 #####
 COLL_USER_INFO = "userInfo"

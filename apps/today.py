@@ -145,16 +145,29 @@ def get_today_weather_plus() -> str:
 
 
 # 今日のNISA取得
-def get_today_nisa() -> str:
-    url = f"{const.URL_SMBC_FUND}/182809/"
+def get_today_nisa(
+    fund_no: str = const.FUND_NO_SP_500, rate_flg: bool = const.FLG_ON
+) -> str:
+    url = f"{const.URL_SMBC_FUND}/{fund_no}/"
     class_ = "sw-FundComparisonTable sw-FundComparisonTable_center"
     soup = func_bs.get_elem_from_url(url, attr_val=class_)
     elem = func_bs.find_elem_by_attr(soup, tag=const.TAG_TD, list_flg=const.FLG_ON)[0:2]
     point = elem[0].text
     rate = elem[1].text.replace(const.SYM_NEW_LINE, const.SYM_BLANK)
 
-    today_nisa = f"S&P500 = {point} ({rate})"
-    return today_nisa
+    fund_name = const.FUND_NAME_SP_500
+    if fund_no == const.FUND_NO_AI:
+        fund_name = const.FUND_NAME_AI
+    elif fund_no == const.FUND_NO_US_TECH:
+        fund_name = const.FUND_NAME_US_TECH
+
+    today_nisa = f"{fund_name} = {point}"
+
+    if rate_flg:
+        today_nisa += f" ({rate})"
+        return today_nisa
+    else:
+        return fund_name, point
 
 
 # 今日のコーデ取得
@@ -185,6 +198,16 @@ def get_today_menu():
     weekly_menu = [menu.text for i, menu in enumerate(weekly_menu_list) if i % 3 == 0]
     today_menu = weekly_menu[const.DATE_WEEKDAY]
     return today_menu
+
+
+# 今日のフレーズ取得
+def get_today_phrase():
+    file_path = func.get_file_path(const.STR_PHRASE, const.FILE_TYPE_CSV)
+    dict_data = func.get_dict_from_csv(file_path)
+    random_int = str(func.get_random_int(const.MAX_PHRASE_CSV))
+    key = random_int.zfill(3)
+    phrase = dict_data.get(key)[1]
+    return phrase
 
 
 # 要素値取得

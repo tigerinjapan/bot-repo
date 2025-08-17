@@ -161,11 +161,8 @@ def get_template_msg_json(
 
 
 # フレックスメッセージ取得
-def get_flex_msg_json(
-    alt_text: str = const.STR_TEST, flex_type: str = MSG_TYPE_CAROUSEL
-):
-    contents = get_bubble_contents()
-
+def get_flex_msg_json(alt_text: str, data_list, flex_type: str = MSG_TYPE_CAROUSEL):
+    contents = get_bubble_contents(data_list)
     json_object = {
         "type": MSG_TYPE_FLEX,
         "altText": alt_text,
@@ -174,15 +171,16 @@ def get_flex_msg_json(
     return json_object
 
 
-def get_bubble_contents():
-    list_header_text = ["未対応", "対応中", "対応完了"]
-    list_percent = ["50%", "25%", "25%"]
+# バーブルコンテンツ取得
+def get_bubble_contents(data_list):
+    list_header_text = data_list[0]
+    list_percent = data_list[1]
     list_bg_color = [
         ["#0D8186", "#9FD8E36E", "#27ACB2"],
         ["#DE5658", "#FAD2A76E", "#FF6B6E"],
         ["#7D51E4", "#9FD8E36E", "#A17DF5"],
     ]
-    list_body_text = ["TODO#3,TODO#4", "TODO#2", "TODO#1"]
+    list_body_text = data_list[2]
 
     bubble_contents = []
 
@@ -265,5 +263,4 @@ def get_bubble_contents():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # get_channel_access_token()
-    get_flex_msg_json()
+    get_channel_access_token()
