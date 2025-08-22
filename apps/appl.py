@@ -123,6 +123,7 @@ def exec_user(request: Request, app_name: str):
 def exec_number(request: Request, app_name: str):
     num = number.get_random_number()
     ans = number.get_answer_by_number(num)
+    ranking_info = number.get_ranking_info(num)
 
     target_html = const.HTML_NUMBER_PLATE
     context = {
@@ -131,6 +132,8 @@ def exec_number(request: Request, app_name: str):
         "app_name": app_name,
         "num": num,
         "ans": ans,
+        "rank_user": ranking_info[0],
+        "rank_time": ranking_info[1],
     }
     return target_html, context
 

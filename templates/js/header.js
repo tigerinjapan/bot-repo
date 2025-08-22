@@ -68,7 +68,7 @@ function initDisplay() {
   }
 }
 
-// トップメニュー設定 #TODO:menuValの動き確認要
+// トップメニュー設定 #TODO menuValの動き確認要
 function setTopMenu(userDiv, userNm, appNm, menuVal) {
   // アプリケーションリスト
   let appList = LIST_APP;

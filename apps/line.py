@@ -239,10 +239,10 @@ def get_title(
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # get_msg_data_today()
+    get_msg_data_today()
     # get_template_actions()
     # get_flex_data_list()
     # main(auto_flg=const.FLG_OFF)
     # main(data_div=const.NUM_TWO)
-    main(data_div=const.NUM_THREE)
+    # main(data_div=const.NUM_THREE)
     # main(proc_flg=const.FLG_OFF)

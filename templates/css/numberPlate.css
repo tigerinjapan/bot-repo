@@ -1,0 +1,202 @@
+/* 共通 */
+body,
+.main,
+h1,
+#number-display,
+#realtime,
+#timer,
+#rank-time,
+input,
+button,
+#message,
+#number-answer {
+	box-sizing: border-box;
+}
+
+/* 本体・見出し */
+body {
+	font-family: sans-serif;
+	background: white;
+	margin: auto;
+}
+
+.main {
+	background: white;
+	border-radius: 16px;
+	box-shadow: 0 2px 8px black;
+	padding: 2em;
+	max-width: 480px;
+	margin: 2em auto;
+}
+
+h1 {
+	font-size: 2em;
+	margin-bottom: 0.5em;
+}
+
+img {
+    width: 2.5em;
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+/* 数字・タイマー・レコード 共通 */
+#number-display,
+#realtime,
+#timer,
+#rank {
+	display: inline-block;
+	border-radius: 16px;
+	padding: 0.3em 1em;
+	font-size: 1.1em;
+	font-weight: bold;
+	margin-bottom: 0.5em;
+	box-shadow: 1px 1px 4px silver;
+	letter-spacing: 0.05em;
+	transition: background 0.3s, color 0.3s;
+	text-align: center;
+}
+
+/* 個別色 */
+#number-display {
+	font-size: 2em;
+	color: blue;
+	background: ivory;
+}
+
+
+#realtime,
+#timer,
+#rank {
+	color: white;
+	box-shadow: 1px 1px 4px pink;
+}
+
+#realtime {
+	background: pink;
+}
+
+#timer {
+	background: lightgreen;
+	margin-left: 0.5em;
+}
+
+#rank {
+	background: lightgrey;
+	margin-left: 0.5em;
+}
+
+/* タイマー赤字 */
+#timer.red {
+	color: red !important;
+	background: mistyrose;
+	border: 1.5px solid mistyrose;
+}
+
+/* 入力・ボタン 共通 */
+input,
+button {
+	font-size: 1em;
+	padding: 0.5em;
+	border-radius: 6px;
+	border: 1px solid silver;
+	margin: 0.5em 0;
+}
+
+/* ボタン個別 */
+button {
+	background: skyblue;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+button:hover {
+	background: blue;
+}
+
+/* メッセージ共通 */
+#message,
+#number-answer {
+	margin-top: 1em;
+	min-height: 2em;
+}
+
+/* モバイル対応 */
+@media (max-width: 640px) {
+
+	body,
+	footer {
+		font-size: 3vw;
+		padding: 4vw;
+	}
+
+	.main {
+		max-width: 98vw !important;
+		padding: 2vw !important;
+		margin: 2vw auto !important;
+		border-radius: 4vw !important;
+		box-shadow: 0 2vw 8vw rgba(0, 0, 0, 0.08) !important;
+	}
+
+	h1 {
+		font-size: 2em !important;
+	}
+
+	img {
+        width: 2em;
+    }
+
+	#number-display,
+	#realtime,
+	#timer,
+	#rank-time {
+		font-size: 1.3em !important;
+		padding: 0.7em 0.2em !important;
+		margin-bottom: 0.5em !important;
+	}
+
+	input[type="text"] {
+		width: 98vw !important;
+		font-size: 1em !important;
+		padding: 0.7em 0.5em !important;
+	}
+
+	button {
+		font-size: 1em !important;
+		padding: 0.7em 1.2em !important;
+		margin: 0.5em 0.5em 0.5em 0 !important;
+	}
+
+	#rule-detail {
+		padding: 0.7em 0.5em 0.5em 0.5em !important;
+		font-size: 0.95em !important;
+	}
+
+	#message,
+	#number-answer {
+		font-size: 1em !important;
+	}
+
+	.searchForm,
+	.searchResult {
+		width: 98vw !important;
+		height: auto !important;
+	}
+
+	.topMenu ul {
+		flex-direction: column;
+	}
+
+	.topMenu li {
+		border-right: none;
+		border-bottom: 1px solid white;
+	}
+
+	.topMenu li:last-child {
+		border-bottom: none;
+		margin-left: 0;
+	}
+}

@@ -214,6 +214,22 @@ async def app_api(request: Request):
     return result
 
 
+@app.post("/number/ranking")
+async def ranking_update(request: Request):
+    # データ取得
+    data = await request.json()
+    number = data.get("number")
+    user = data.get("user")
+    time = data.get("time")
+    date = data.get("date")
+
+    # TODO mongoDBにrankingコレクションを作成し、ランキング情報を管理
+    # dict_data = dict(form_data)
+    # update_ranking_on_form(dict_data)
+    result = {const.STR_MESSAGE: "完了しました。"}
+    return result
+
+
 @app.get("/line/send")
 async def send_msg():
     line.main()

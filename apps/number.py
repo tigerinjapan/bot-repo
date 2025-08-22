@@ -34,6 +34,16 @@ def get_answer_by_number(number):
                 return answer
 
 
+# ランキング情報取得
+def get_ranking_info(number):
+    ranking_info = []
+
+    # TODO mongoDBにrankingコレクションを作成し、ランキング情報取得
+
+    ranking_info = ["user", 15.00]
+    return ranking_info
+
+
 # CSV出力
 def output_df_to_csv():
     item_list = get_item_list()

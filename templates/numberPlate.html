@@ -2,69 +2,27 @@
 <html lang="ja">
 
 <head>
-    <script src="/templates/header.js"></script>
+    <link rel="stylesheet" href="/templates/numberPlate.css">
     <script src="/templates/numberPlate.js"></script>
     <title>{{ title }}</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            background: white;
-            margin: auto;
-        }
-
-        .main {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px black;
-            padding: 2em;
-            max-width: 480px;
-            margin: 2em auto;
-        }
-
-        h1 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        #number-display {
-            font-size: 2em;
-            font-weight: bold;
-            color: blue;
-            background: ivory;
-            padding: 0.5em 1em;
-        }
-
-        input,
-        button {
-            font-size: 1em;
-            padding: 0.5em;
-            border-radius: 6px;
-            border: 1px solid silver;
-            margin: 0.5em 0;
-        }
-
-        button {
-            background: skyblue;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: blue;
-        }
-
-        #message,
-        #number-answer {
-            margin-top: 1em;
-            min-height: 2em;
-        }
-    </style>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            initDisp();
+        });
+    </script>
 </head>
 
 <body>
     <div class="main">
         <h1>{{ title }}</h1>
+        <!-- <p id="realtime"></p> -->
+        <div>
+            <p id="timer"></p>
+            <p id="rank"><img src="/templates/rank1.png">
+                <span id="rank-user">{{ rank_user }}</span>
+                <span id="rank-time">{{ rank_time }}</span>
+            </p>
+        </div>
         <div id="number-display">{{ num }}</div>
         <div id="rule-detail">
             <h3>ルール</h3>
@@ -77,7 +35,8 @@
             </ul>
         </div>
         <input id="expression" type="text" placeholder="例: (2*5)-9=1">
-        <button id="btnChk" onclick="checkAnswer()">チェック</button>
+        <button id="btnChk" onclick="checkAnswer()">回答</button>
+        <button id="btnNext" onclick="location.reload()">次へ</button>
         <div id="message"></div>
         <div id="number-answer" hidden>{{ ans }}</div>
     </div>
