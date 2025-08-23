@@ -105,7 +105,7 @@ def exec_result(request: Request, app_name: str):
     return target_html, context
 
 
-# 【画面】取得結果
+# 【画面】表示データ取得
 def exec_user(request: Request, app_name: str):
     user_info = request.session[const.STR_USER]
     target_html = const.HTML_USER_INFO
@@ -119,7 +119,7 @@ def exec_user(request: Request, app_name: str):
     return target_html, context
 
 
-# 【画面】取得結果
+# 【画面】表示データ取得
 def exec_number(request: Request, app_name: str):
     num = number.get_random_number()
     ans = number.get_answer_by_number(num)

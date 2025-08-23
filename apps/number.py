@@ -12,6 +12,10 @@ app_title = "ナンバープレートゲーム"
 # CSVファイル
 number_file_path = func.get_file_path(const.STR_NUMBER, const.FILE_TYPE_CSV)
 
+# ランク情報（デフォルト値）
+DEFAULT_RANK_USER = "user"
+DEFAULT_RANK_TIME = 15.00
+
 
 # 乱数取得
 def get_random_number(level: str = const.STR_MEDIUM) -> str:
@@ -38,15 +42,16 @@ def get_answer_by_number(number):
 
 # ランキング情報取得
 def get_ranking_info(number: int):
-    ranking_info = dao.get_rank_info(number)
+    rank_user = DEFAULT_RANK_USER
+    rank_time = DEFAULT_RANK_TIME
 
-    if ranking_info:
-        rank_user = ranking_info[dto.FI_USER_NAME]
-        rank_time = ranking_info[dto.FI_RANK_TIME]
-        rank_time = float(rank_time)
-    else:
-        rank_user = "user"
-        rank_time = 15.00
+    if func.is_network():
+        ranking_info = dao.get_rank_info(number)
+        if ranking_info:
+            rank_user = ranking_info[dto.FI_USER_NAME]
+            rank_time = ranking_info[dto.FI_RANK_TIME]
+            rank_time = float(rank_time)
+
     return rank_user, rank_time
 
 

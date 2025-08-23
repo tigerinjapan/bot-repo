@@ -7,9 +7,9 @@ COLOR_GREEN = "green";
 
 // メッセージ定義
 const MSG_INFO_ANSWER_EXAMPLE = "解の例:";
+const MSG_INFO_INPUT_USER = "ユーザ名(英数字)を入力してください。";
 const MSG_INFO_OK_ANSWER = "正解です!";
-const MSG_INFO_OK_RANK = "ランキング送信完了！";
-const MSG_INFO_INPUT_USER = "ユーザ名(英数字)を入力し、ランクインしてください。";
+const MSG_INFO_OK_RANK = "新記録！ランクインしました！";
 
 const MSG_ERR_NO_ANSWER = "この問題には解が見つかりませんでした";
 const MSG_ERR_NO_INPUT = "入力値がありません";
@@ -26,39 +26,20 @@ const URL_RANKING_API = "/number/ranking";
 const URL_RANKING_SERVER = `${URL_SERVER}${URL_RANKING_API}`;
 const URL_RANKING_LOCAL = `${URL_LOCAL}${URL_RANKING_API}`;
 
-// 変数
+// ページ読み込み時にsessionStorageからデータを取得
+let userName = sessionStorage.getItem('userName');
+
+// タイマーID
 let timerId = null;
 
-// 要素設定
-function setElem(elemId, text, textFlg, answerFlg) {
-  const elem = document.getElementById(elemId);
-  if (textFlg) {
-    elem.textContent = text;
-  } else {
-    elem.innerHTML = text;
-  }
-
-  let color = COLOR_RED;
-  if (answerFlg) {
-    color = COLOR_GREEN;
-  }
-
-  const style = 'color:' + color + ';';
-  elem.style = style;
+// 初期表示
+function initDisplay() {
+  setTimer();
+  setUserName();
 }
 
 // タイマー設定
-function setTimer(text, answerFlg) {
-  clearInterval(timerId);
-}
-
-// メッセージ表示
-function showMessage(msg, answerFlg) {
-  setElem('message', msg, false, answerFlg);
-}
-
-// 初期表示
-function initDisp() {
+function setTimer() {
   let sec = 30.00;
   const timerElem = document.getElementById('timer');
   timerElem.textContent = sec.toFixed(2);
@@ -78,60 +59,28 @@ function initDisp() {
   }, 10);
 }
 
-// チェック
-function validate(num, ans, expr) {
-  const chkMsg = SYM_BLANK;
-
-  // 回答入力チェック
-  if (!expr) {
-    return MSG_ERR_NO_INPUT_ANSWER;
+// ユーザ名設定
+function setUserName() {
+  if (!userName || userName == SYM_BLANK) {
+    userName = prompt(MSG_INFO_INPUT_USER);
+    sessionStorage.setItem('userName', userName);
   }
-
-  // 数字チェック
-  const numDigits = num.split('').join('');
-  const exprDigits = expr.split('').filter(c => /\d/.test(c)).join('');
-  if (exprDigits !== numDigits) {
-    return MSG_ERR_DIGIT;
-  }
-
-  // イコール1つのみ
-  if ((expr.match(/=/g) || []).length !== 1) {
-    return MSG_ERR_EQUAL;
-  }
-
-  const [left, right] = expr.split('=');
-
-  try {
-    // evalの前に安全性を高める（数字・演算子・カッコのみ許可）
-    if (!/^[\d+\-*/().\s]+$/.test(left) || !/^[\d+\-*/().\s]+$/.test(right)) {
-      return MSG_ERR_FORMAT;
-    }
-    // 計算結果比較
-    if (!ans.includes(expr)) {
-      return MSG_ERR_MATCH;
-    }
-  } catch (e) {
-    return MSG_ERR_FORMAT;
-  }
-
-  return chkMsg;
 }
-
 
 // 正解判定
 function checkAnswer() {
   // DOM取得
   const numberDisplay = document.getElementById('number-display');
-  const expression = document.getElementById('expression');
   const numberAnswer = document.getElementById('number-answer');
   const rankTime = document.getElementById('rank-time');
   const timer = document.getElementById('timer');
+  const expression = document.getElementById('expression');
 
   const num = numberDisplay.textContent;
   const ans = numberAnswer.textContent;
   const rank = rankTime.textContent;
-  const expr = expression.value.trim();
   const timeVal = timer.textContent;
+  const expr = expression.value.trim();
 
   let chkMsg = validate(num, ans, expr);
 
@@ -153,17 +102,54 @@ function checkAnswer() {
         const numVal = parseInt(num);
         sendRanking(numVal, clearTimeVal);
       }
-      setTimer("クリア！", true);
+      clearInterval(timerId);
     } else {
       showMessage(MSG_ERR_NO_ANSWER, false);
     }
   }
 };
 
+// 入力チェック
+function validate(num, ans, expr) {
+  let chkMsg = SYM_BLANK;
+
+  // 回答入力チェック
+  if (!expr) {
+    return MSG_ERR_NO_INPUT_ANSWER;
+  }
+
+  // 数字チェック
+  const numDigits = num.split('').join('');
+  const exprDigits = expr.split('').filter(c => /\d/.test(c)).join('');
+  if (exprDigits !== numDigits) {
+    return MSG_ERR_DIGIT;
+  }
+
+  // イコール1つのみ
+  if ((expr.match(/=/g) || []).length !== 1) {
+    return MSG_ERR_EQUAL;
+  }
+
+  const [left, right] = expr.split('=');
+
+  try {
+    // 入力フォーマットチェック（数字・演算子のみ）
+    if (!/^[\d+\-*/.\s]+$/.test(left) || !/^[\d+\-*/.\s]+$/.test(right)) {
+      return MSG_ERR_FORMAT;
+    }
+    // 計算結果比較
+    if (!ans.includes(expr)) {
+      return MSG_ERR_MATCH;
+    }
+  } catch (e) {
+    return MSG_ERR_FORMAT;
+  }
+
+  return chkMsg;
+}
+
 // ランキング送信
 function sendRanking(number, time) {
-  const user = prompt(MSG_INFO_INPUT_USER);
-
   let rankingUrl = URL_RANKING_SERVER;
   if (isLocal()) {
     rankingUrl = URL_RANKING_LOCAL;
@@ -174,18 +160,42 @@ function sendRanking(number, time) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       number: number,
-      user: user,
+      user: userName,
       time: time,
       date: new Date()
     })
   })
     .then(res => res.json())
     .then(data => {
-      alert(data.message || MSG_INFO_OK_RANK);
+      console.log(data.message);
+      showMessage(MSG_INFO_OK_RANK, true);
     })
     .catch(() => {
       alert(MSG_ERR_RANK);
     });
+}
+
+// メッセージ表示
+function showMessage(msg, answerFlg) {
+  setElem('message', msg, false, answerFlg);
+}
+
+// 要素設定
+function setElem(elemId, text, textFlg, answerFlg) {
+  const elem = document.getElementById(elemId);
+  if (textFlg) {
+    elem.textContent = text;
+  } else {
+    elem.innerHTML = text;
+  }
+
+  let color = COLOR_RED;
+  if (answerFlg) {
+    color = COLOR_GREEN;
+  }
+
+  const style = 'color:' + color + ';';
+  elem.style = style;
 }
 
 // ローカル環境判定
