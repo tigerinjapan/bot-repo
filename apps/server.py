@@ -14,14 +14,15 @@ from uvicorn import Config, Server
 
 import apps.appl as appl
 import apps.line as line
-import apps.number as number
 import apps.test as test
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
 import apps.utils.user_dto as dto
 from apps.utils.function_mongo import check_login
+from apps.utils.rank_dao import update_rank_info_of_api
 from apps.utils.user_dao import get_user_info, update_user_info_on_form
+
 
 # fast api
 app = FastAPI()
@@ -172,7 +173,7 @@ async def app_exec(request: Request, app_name: str):
         else:
             target_html, context = appl.exec_result(request, app_name)
     except Exception as e:
-        func.print_error_msg(e)
+        func.print_error_msg(app_name, e)
         target_html = const.HTML_INDEX
         context = {
             const.STR_REQUEST: request,
@@ -217,15 +218,8 @@ async def app_api(request: Request):
 @app.post("/number/ranking")
 async def ranking_update(request: Request):
     # データ取得
-    data = await request.json()
-    number = data.get("number")
-    user = data.get("user")
-    time = data.get("time")
-    date = data.get("date")
-
-    # TODO mongoDBにrankingコレクションを作成し、ランキング情報を管理
-    # dict_data = dict(form_data)
-    # update_ranking_on_form(dict_data)
+    json_data = await request.json()
+    update_rank_info_of_api(json_data)
     result = {const.STR_MESSAGE: "完了しました。"}
     return result
 

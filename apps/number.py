@@ -3,6 +3,8 @@ import itertools
 
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.rank_dao as dao
+import apps.utils.rank_dto as dto
 
 # タイトル
 app_title = "ナンバープレートゲーム"
@@ -35,13 +37,17 @@ def get_answer_by_number(number):
 
 
 # ランキング情報取得
-def get_ranking_info(number):
-    ranking_info = []
+def get_ranking_info(number: int):
+    ranking_info = dao.get_rank_info(number)
 
-    # TODO mongoDBにrankingコレクションを作成し、ランキング情報取得
-
-    ranking_info = ["user", 15.00]
-    return ranking_info
+    if ranking_info:
+        rank_user = ranking_info[dto.FI_USER_NAME]
+        rank_time = ranking_info[dto.FI_RANK_TIME]
+        rank_time = float(rank_time)
+    else:
+        rank_user = "user"
+        rank_time = 15.00
+    return rank_user, rank_time
 
 
 # CSV出力
@@ -171,5 +177,7 @@ def test_number():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    test_number()
+    # test_number()
     # get_random_number()
+    num = 1000
+    get_ranking_info(num)

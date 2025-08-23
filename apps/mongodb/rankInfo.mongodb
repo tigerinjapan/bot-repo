@@ -1,0 +1,19 @@
+// db
+const database = "mongoDB";
+
+// Select the database to use.
+use(database)
+
+// get indexes
+db.rankInfo.getIndexes();
+
+// insert documents
+db.rankInfo.insertOne({
+    "nNumber": 1000,
+    "sRankTime": "12.34",
+    "sUserName": "hong",
+    "dUpdateDate": new Date()
+});
+
+// find documents
+db.rankInfo.find({ sUserName: "hong" }).sort({ sRankTime: -1 }).limit(10).pretty();

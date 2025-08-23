@@ -9,7 +9,7 @@ COLOR_GREEN = "green";
 const MSG_INFO_ANSWER_EXAMPLE = "解の例:";
 const MSG_INFO_OK_ANSWER = "正解です!";
 const MSG_INFO_OK_RANK = "ランキング送信完了！";
-const MSG_INFO_INPUT_USER = "ユーザ名(英数字)を入力してください。";
+const MSG_INFO_INPUT_USER = "ユーザ名(英数字)を入力し、ランクインしてください。";
 
 const MSG_ERR_NO_ANSWER = "この問題には解が見つかりませんでした";
 const MSG_ERR_NO_INPUT = "入力値がありません";
@@ -172,9 +172,11 @@ function checkAnswer() {
       showMessage(MSG_INFO_OK_ANSWER + ansHtml, true);
 
       const clearTime = 30 - parseFloat(timeVal);
+      const clearTimeVal = clearTime.toFixed(2);
       const rankTimeVal = parseFloat(rank);
-      if (clearTime != null && clearTime < rankTimeVal) {
-        sendRanking(num, clearTime);
+      if (clearTime != null && clearTimeVal < rankTimeVal) {
+        const numVal = parseInt(num);
+        sendRanking(numVal, clearTimeVal);
       }
       setTimer("クリア！", true);
     } else {

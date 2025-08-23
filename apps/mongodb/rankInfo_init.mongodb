@@ -1,0 +1,56 @@
+// db, collection
+const database = "mongoDB";
+const coll_rankInfo = "rankInfo";
+
+// Select the database to use.
+use(database)
+
+// delete collection
+db.getCollection(coll_rankInfo).drop();
+
+// create collection
+db.createCollection(coll_rankInfo,
+    {
+        validator: {
+            $jsonSchema: {
+                required: [
+                    "nNumber",
+                    "sRankTime",
+                    "sUserName",
+                    "dUpdateDate"
+                ],
+                properties: {
+                    "nNumber": {
+                        bsonType: "int",
+                        minimum: 1000,
+                        maximum: 9999,
+                        description: "must be a int and is required"
+                    },
+                    "sRankTime": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "sUserName": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "dUpdateDate": {
+                        bsonType: "date",
+                        description: "must be a date and is required"
+                    }
+                }
+            }
+        }
+    });
+
+// create index
+db.getCollection(coll_rankInfo).createIndex({
+    "nNumber": 1
+},
+    {
+        "name": "indexNumber",
+        "unique": true
+    });
+
+// get collection infos
+db.getCollectionInfos({ name: coll_rankInfo });
