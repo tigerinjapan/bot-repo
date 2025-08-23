@@ -219,7 +219,8 @@ async def app_api(request: Request):
 async def ranking_update(request: Request):
     # データ取得
     json_data = await request.json()
-    update_rank_info_of_api(json_data)
+    if not func.is_local_env():
+        update_rank_info_of_api(json_data)
     result = {const.STR_MESSAGE: "完了しました。"}
     return result
 

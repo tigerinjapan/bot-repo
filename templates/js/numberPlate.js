@@ -50,7 +50,6 @@ function setElem(elemId, text, textFlg, answerFlg) {
 // タイマー設定
 function setTimer(text, answerFlg) {
   clearInterval(timerId);
-  // setElem('timer', text, true, answerFlg);
 }
 
 // メッセージ表示
@@ -70,7 +69,6 @@ function initDisp() {
     if (sec <= 0) {
       clearInterval(timerId);
       timerElem.textContent = "時間切れ";
-      // timerElem.style.color = "red";
     }
     if (sec <= 10) {
       timerElem.classList.add(COLOR_RED);
@@ -78,29 +76,6 @@ function initDisp() {
       timerElem.classList.remove(COLOR_RED);
     }
   }, 10);
-
-  // 現在時刻表示
-  // setInterval(showClock, 1000)
-}
-
-// 2桁表示
-function twoDigit(num) {
-  let ret;
-  if (num < 10)
-    ret = "0" + num;
-  else
-    ret = num;
-  return ret;
-}
-
-// 現在時刻表示
-function showClock() {
-  let nowTime = new Date();
-  let nowHour = twoDigit(nowTime.getHours());
-  let nowMin = twoDigit(nowTime.getMinutes());
-  let nowSec = twoDigit(nowTime.getSeconds());
-  let msg = "時刻 " + nowHour + ":" + nowMin + ":" + nowSec;
-  document.getElementById("realtime").innerHTML = msg;
 }
 
 // チェック

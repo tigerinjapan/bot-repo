@@ -3,9 +3,8 @@ body,
 .main,
 h1,
 #number-display,
-#realtime,
 #timer,
-#rank-time,
+#rank,
 input,
 button,
 #message,
@@ -25,7 +24,7 @@ body {
 	border-radius: 16px;
 	box-shadow: 0 2px 8px black;
 	padding: 2em;
-	max-width: 640px;
+	max-width: 480px;
 	margin: 2em auto;
 }
 
@@ -35,22 +34,20 @@ h1 {
 }
 
 img {
-    width: 2.5em;
-    height: auto;
-    max-width: 100%;
-    vertical-align: middle;
-    display: inline-block;
+	width: 1.5em;
+	height: auto;
+	vertical-align: middle;
+	display: inline-block;
 }
 
 /* 数字・タイマー・レコード 共通 */
 #number-display,
-#realtime,
 #timer,
 #rank {
 	display: inline-block;
 	border-radius: 16px;
 	padding: 0.3em 1em;
-	font-size: 1.1em;
+	font-size: 1em;
 	font-weight: bold;
 	margin-bottom: 0.5em;
 	box-shadow: 1px 1px 4px silver;
@@ -59,23 +56,16 @@ img {
 	text-align: center;
 }
 
-/* 個別色 */
 #number-display {
-	font-size: 2em;
+	font-size: 1.5em;
 	color: blue;
 	background: ivory;
 }
 
-
-#realtime,
 #timer,
 #rank {
 	color: white;
 	box-shadow: 1px 1px 4px pink;
-}
-
-#realtime {
-	background: pink;
 }
 
 #timer {
@@ -103,6 +93,7 @@ button {
 	border-radius: 6px;
 	border: 1px solid silver;
 	margin: 0.5em 0;
+	box-sizing: border-box;
 }
 
 /* ボタン個別 */
@@ -124,20 +115,24 @@ button:hover {
 	min-height: 2em;
 }
 
+footer {
+	text-align: center;
+}
+
 /* モバイル対応 */
-@media (max-width: 480px) {
+@media (max-width: 640px) {
 
 	body,
 	footer {
-		font-size: 3vw;
-		padding: 4vw;
+		font-size: 4vw;
+		padding: 2vw;
 	}
 
 	.main {
-		max-width: 98vw !important;
-		padding: 2vw !important;
+		max-width: 99vw !important;
+		padding: 4vw !important;
 		margin: 2vw auto !important;
-		border-radius: 4vw !important;
+		border-radius: 5vw !important;
 		box-shadow: 0 2vw 8vw rgba(0, 0, 0, 0.08) !important;
 	}
 
@@ -146,20 +141,19 @@ button:hover {
 	}
 
 	img {
-        width: 2em;
-    }
+		width: 2em;
+	}
 
-	#number-display,
-	#realtime,
 	#timer,
-	#rank-time {
-		font-size: 1.3em !important;
+	#number-display,
+	#rank {
+		font-size: 1em !important;
 		padding: 0.7em 0.2em !important;
 		margin-bottom: 0.5em !important;
 	}
 
 	input[type="text"] {
-		width: 98vw !important;
+		width: 95vw !important;
 		font-size: 1em !important;
 		padding: 0.7em 0.5em !important;
 	}
