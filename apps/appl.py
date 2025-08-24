@@ -121,7 +121,8 @@ def exec_user(request: Request, app_name: str):
 
 # 【画面】表示データ取得
 def exec_number(request: Request, app_name: str):
-    num = number.get_random_number()
+    level = const.STR_HARD
+    num = number.get_random_number(level)
     ans = number.get_answer_by_number(num)
     rank_user, rank_time = number.get_ranking_info(num)
 
@@ -130,6 +131,7 @@ def exec_number(request: Request, app_name: str):
         const.STR_REQUEST: request,
         const.STR_TITLE: number.app_title,
         "app_name": app_name,
+        "level": level,
         "num": num,
         "ans": ans,
         "rank_user": rank_user,

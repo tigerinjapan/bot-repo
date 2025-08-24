@@ -7,7 +7,7 @@
     <title>{{ title }}</title>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
-            initDisplay();
+            initDisplay("{{ level }}");
         });
     </script>
 </head>
@@ -17,11 +17,14 @@
         <h1>{{ title }}</h1>
         <div>
             <p id="number-display">{{ num }}</p>
+            <p id="level"></p>
+        </div>
+        <div>
+            <p id="timer"></p>
             <p id="rank"><img src="/templates/rank1.png">
                 <span id="rank-user">{{ rank_user }}</span>
                 <span id="rank-time">{{ rank_time }}</span>
             </p>
-            <p id="timer"></p>
         </div>
         <div id="rule-detail">
             <h3>ルール</h3>

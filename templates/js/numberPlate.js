@@ -1,9 +1,14 @@
 // 記号
 const SYM_BLANK = "";
+const SYM_LEVEL = "🌟";
 
 // 文字列
 COLOR_RED = "red";
 COLOR_GREEN = "green";
+
+LEVEL_EASY = "easy";
+LEVEL_MEDIUM = "medium";
+LEVEL_HARD = "hard";
 
 // メッセージ定義
 const MSG_INFO_ANSWER_EXAMPLE = "解の例:";
@@ -16,6 +21,7 @@ const MSG_ERR_NO_INPUT = "入力値がありません";
 const MSG_ERR_DIGIT = "4つの数字を1回ずつ使ってください!";
 const MSG_ERR_EQUAL = "イコールは1つだけ使ってください!";
 const MSG_ERR_FORMAT = "数式の形式が正しくありません!";
+const MSG_ERR_DIVIDE_BY_ZERO = "ゼロ除算はできません!";
 const MSG_ERR_MATCH = "計算結果が一致しません!";
 const MSG_ERR_RANK = "ランク送信に失敗しました";
 
@@ -33,9 +39,22 @@ let userName = sessionStorage.getItem('userName');
 let timerId = null;
 
 // 初期表示
-function initDisplay() {
+function initDisplay(level) {
+  setLevel(level);
   setTimer();
   setUserName();
+}
+
+// レベル設定
+function setLevel(level) {
+  let levelVal = SYM_LEVEL;
+  if (level == LEVEL_MEDIUM) {
+    levelVal = SYM_LEVEL.repeat(2);
+  } else if (level == LEVEL_HARD) {
+    levelVal = SYM_LEVEL.repeat(3);
+  }
+  const levelElem = document.getElementById('level');
+  levelElem.textContent = "レベル：" + levelVal;
 }
 
 // タイマー設定
@@ -114,8 +133,8 @@ function validate(num, ans, expr) {
   let chkMsg = SYM_BLANK;
 
   // 回答入力チェック
-  if (!expr) {
-    return MSG_ERR_NO_INPUT_ANSWER;
+  if (expr == SYM_BLANK) {
+    return MSG_ERR_NO_INPUT;
   }
 
   // 数字チェック
@@ -131,18 +150,23 @@ function validate(num, ans, expr) {
   }
 
   const [left, right] = expr.split('=');
-
   try {
     // 入力フォーマットチェック（数字・演算子のみ）
     if (!/^[\d+\-*/.\s]+$/.test(left) || !/^[\d+\-*/.\s]+$/.test(right)) {
       return MSG_ERR_FORMAT;
     }
-    // 計算結果比較
-    if (!ans.includes(expr)) {
-      return MSG_ERR_MATCH;
-    }
   } catch (e) {
     return MSG_ERR_FORMAT;
+  }
+
+  // ゼロ除算チェック
+  if (expr.includes("/0")) {
+    return MSG_ERR_DIVIDE_BY_ZERO;
+  }
+
+  // 計算結果比較
+  if (!ans.includes(expr)) {
+    return MSG_ERR_MATCH;
   }
 
   return chkMsg;

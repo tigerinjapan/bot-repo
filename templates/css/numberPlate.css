@@ -2,11 +2,12 @@
 body,
 .main,
 h1,
-#number-display,
-#timer,
-#rank,
 input,
 button,
+#number-display,
+#level,
+#timer,
+#rank,
 #message,
 #number-answer {
 	box-sizing: border-box;
@@ -42,12 +43,13 @@ img {
 
 /* 数字・タイマー・レコード 共通 */
 #number-display,
+#level,
 #timer,
 #rank {
 	display: inline-block;
 	border-radius: 16px;
 	padding: 0.3em 1em;
-	font-size: 1em;
+	font-size: 1.2em;
 	font-weight: bold;
 	margin-bottom: 0.5em;
 	box-shadow: 1px 1px 4px silver;
@@ -56,26 +58,33 @@ img {
 	text-align: center;
 }
 
+#number-display,
+#level {
+	font-size: 1.4em;
+}
+
 #number-display {
-	font-size: 1.5em;
 	color: blue;
-	background: ivory;
+	background: ivory;	
+}
+
+#level {
+	color: orange;
 }
 
 #timer,
 #rank {
 	color: white;
 	box-shadow: 1px 1px 4px pink;
+	margin-left: 0.5em;
 }
 
 #timer {
 	background: lightgreen;
-	margin-left: 0.5em;
 }
 
 #rank {
 	background: lightgrey;
-	margin-left: 0.5em;
 }
 
 /* タイマー赤字 */
@@ -120,7 +129,7 @@ footer {
 }
 
 /* モバイル対応 */
-@media (max-width: 640px) {
+@media (max-width: 480px) {
 
 	body,
 	footer {
@@ -144,8 +153,9 @@ footer {
 		width: 2em;
 	}
 
-	#timer,
 	#number-display,
+	#level,
+	#timer,
 	#rank {
 		font-size: 1em !important;
 		padding: 0.7em 0.2em !important;

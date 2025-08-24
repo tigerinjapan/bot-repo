@@ -1,19 +1,30 @@
 // db
 const database = "mongoDB";
+const userName = "hong";
+const strDate = "2025-08-24";
 
 // Select the database to use.
 use(database)
 
-// get indexes
-db.rankInfo.getIndexes();
+// // get indexes
+// db.rankInfo.getIndexes();
 
-// insert documents
-db.rankInfo.insertOne({
-    "nNumber": 1000,
-    "sRankTime": "12.34",
-    "sUserName": "hong",
-    "dUpdateDate": new Date()
-});
+// // insert documents
+// db.rankInfo.insertOne({
+//     "nNumber": 1001,
+//     "sRankTime": "12.34",
+//     "sUserName": userName,
+//     "dUpdateDate": new Date()
+// });
 
 // find documents
-db.rankInfo.find({ sUserName: "hong" }).sort({ sRankTime: -1 }).limit(10).pretty();
+db.rankInfo.find(
+    { sUserName: { $eq: userName }, dUpdateDate: { $gte: new Date(strDate) } },
+    {
+        "_id": 0,
+        "nNumber": 1,
+        "sRankTime": 1
+    }
+).sort(
+    { sRankTime: -1 }
+).pretty();

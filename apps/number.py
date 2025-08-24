@@ -123,17 +123,8 @@ def find_answer(number):
                     left = expr[:eq_pos]
                     right = expr[eq_pos:]
 
-                    # 0との掛け算・割り算を除外
-                    if (
-                        "*0" in left
-                        or "0*" in left
-                        or "/0" in left
-                        or "0/" in left
-                        or "*0" in right
-                        or "0*" in right
-                        or "/0" in right
-                        or "0/" in right
-                    ):
+                    # 0での割り算を除外
+                    if "/0" in left or "/0" in right:
                         continue
 
                     try:
@@ -182,7 +173,7 @@ def test_number():
 
 
 if __name__ == const.MAIN_FUNCTION:
+    # output_df_to_csv()
     # test_number()
     # get_random_number()
-    num = 1000
-    get_ranking_info(num)
+    get_ranking_info(1001)
