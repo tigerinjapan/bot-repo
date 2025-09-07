@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅行サイト設計書</title>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.8;
+            color: black;
+            background-color: lemonchiffon;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(255, 223, 0, 0.10); /* yellow系の薄い影 */
+            border-radius: 10px;
+        }
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px solid white;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: orange;
+            margin: 0;
+        }
+        h2 {
+            font-size: 1.8em;
+            color: mediumslateblue;
+            border-left: 5px solid skyblue;
+            padding-left: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            background-color: aliceblue;
+            border-radius: 5px;
+        }
+        .section-content {
+            padding-left: 15px;
+        }
+        .section-content p {
+            margin-bottom: 1.5em;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        ul li {
+            background-color: honeydew;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid lightblue;
+        }
+        .sub-list {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        .sub-list li {
+            background-color: white;
+            border-left: 4px solid skyblue;
+            font-size: 0.9em;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid gold;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(255, 215, 0, 0.15); /* gold系の薄い影 */
+        }
+        .image-caption {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: deepskyblue;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>ツアーサイト設計書</h1>
+        <p>プロジェクト名：Trip & Life</p>
+        <p>作成日：2025年9月7日</p>
+    </header>
+
+    <!-- プロジェクト概要セクション -->
+    <section>
+        <h2>1. プロジェクト概要</h2>
+        <div class="section-content">
+            <p><strong>目的</strong> 
+                <ul>
+                    <li>海外旅行の情報を直感的に把握できるようにする</li>
+                    <li>1ページで簡単に操作できるウェブサイトにする</li>
+                </ul>
+            </p>
+            <p><strong>ターゲットユーザー</strong>
+                <ul>
+                    <li>海外旅行が好きな40～50代の人</li>
+                    <li>個人旅行を計画し、情報を効率的に収集したい人</li>
+                </ul>
+            </p>
+            <p><strong>プロジェクト期間</strong>
+                <ul>
+                    <li>期間：2025/09/06～15（10日間）</li>
+                    <li>作業工数：20時間</li>
+                </ul>
+            </p>
+        </div>
+    </section>
+
+    <!-- サイトコンセプトセクション -->
+    <section>
+        <h2>2. サイトコンセプト</h2>
+        <div class="section-content">
+            <p><strong>テーマ</strong>
+                <ul>
+                    <li>シンプルで一目瞭然<br>
+                        → 単一のページで完結するアプリケーションとして構築<br>
+                        （SPA:Single-page application）
+                    </li>
+                    <li>アクティブで楽しい旅の雰囲気</li>
+                </ul>
+            </p>
+            <p><strong>デザイン</strong>
+                <ul>
+                    <li>カード形式で情報を整理し、視認性を高める</li>
+                    <li>PC、スマートフォンに対応したレスポンシブデザイン</li>
+                </ul>
+            </p>
+        </div>
+    </section>
+
+    <!-- サイト構成セクション -->
+    <section>
+        <h2>3. サイト構成（レイアウト）</h2>
+        <div class="section-content">
+            <ul>
+                <li><strong>トップセクション</strong> サイト名、言語・地域の選択プルダウン</li>
+                <li><strong>カードセクション（動的表示）</strong>
+                    <ul class="sub-list">
+                        <li>その国の情報（首都、面積、人口など）</li>
+                        <li>観光情報（スポット、食べ物）</li>
+                        <li>有用な情報（両替、交通）</li>
+                        <li>サイト情報（公式、YouTube）</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 機能要件セクション -->
+    <section>
+        <h2>4. 機能要件</h2>
+        <div class="section-content">
+            <p><strong>必須</strong>
+                <ul>
+                    <li>言語・地域の選択プルダウンによるコンテンツの動的切り替え</li>
+                    <li>数値の3桁ごとのコンマ区切り表示</li>
+                </ul>
+            </p>
+            <p><strong>任意</strong>
+                <ul>
+                    <li>選択した言語に基づいた面積・人口・為替レートの比較表示</li>
+                    <li>観光スポット名クリック時のダイアログ表示</li>
+                    <li>YouTubeサムネイルクリック時の動画ページへの遷移</li>
+                </ul>
+            </p>
+        </div>
+    </section>
+    
+    <!-- 技術スタックセクション -->
+    <section>
+        <h2>5. 技術スタック</h2>
+        <div class="section-content">
+            <p><strong>使用技術</strong>
+                <ul>
+                    <li>HTML5</li>
+                    <li>CSS3 (内部スタイルシート)</li>
+                    <li>JavaScript (DOM操作、イベントハンドリング)</li>
+                </ul>
+            </p>
+        </div>
+    </section>
+</div>
+</body>
+</html>

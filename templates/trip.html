@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌏 Trip & Life</title>
+    <link rel="stylesheet" href="../templates/trip.css" />
+    <script src="/templates/tripData.js"></script>
+    <script src="/templates/trip.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <h1 id="page-title"></h1>
+        <p class="subtitle" id="page-subtitle"></p>
+      </header>
+
+      <div class="controls">
+        <p>Language</p>
+        <select id="lang-select"></select>
+        <p>City</p>
+        <select id="region-select"></select>
+      </div>
+
+      <div class="card-grid">
+        <div class="card" id="info-card">
+          <h2>
+            <span role="img" aria-label="info">ℹ️ </span
+            ><span id="info-title"></span>
+          </h2>
+          <table class="info-table">
+            <tbody id="info-content"></tbody>
+          </table>
+        </div>
+
+        <div class="card" id="lang-card">
+          <h2>
+            <span role="img" aria-label="lang">🌐 </span
+            ><span id="lang-title"></span>
+          </h2>
+          <table class="info-table">
+            <tbody id="lang-content"></tbody>
+          </table>
+        </div>
+
+        <div class="card" id="tour-card">
+          <h2>
+            <span role="img" aria-label="tour">📸 </span
+            ><span id="tour-title"></span>
+          </h2>
+          <table class="info-table">
+            <tbody id="tour-content"></tbody>
+          </table>
+        </div>
+
+        <div class="card" id="food-card">
+          <h2>
+            <span role="img" aria-label="food">🍽️ </span
+            ><span id="food-title"></span>
+          </h2>
+          <table class="info-table">
+            <tbody id="food-content"></tbody>
+          </table>
+        </div>
+
+        <div class="card" id="useful-card">
+          <h2>
+            <span role="img" aria-label="useful">💡 </span>
+            <span id="useful-title"></span>
+          </h2>
+          <table class="info-table">
+            <tbody id="useful-content"></tbody>
+          </table>
+        </div>
+
+        <div class="card" id="site-card">
+          <h2>
+            <span role="img" aria-label="site">🌐 </span
+            ><span id="site-title"></span>
+          </h2>
+          <table class="info-table">
+            <tbody id="site-content"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="dialog" class="dialog">
+      <div class="dialog-content">
+        <span class="close-btn">&times;</span>
+        <h3 id="dialog-title"></h3>
+        <p id="dialog-text"></p>
+      </div>
+    </div>
+  </body>
+</html>

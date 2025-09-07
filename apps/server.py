@@ -1,14 +1,13 @@
 # 説明: サーバー処理
+# FastAPIによるWebサーバー。認証・セッション管理・各種APIエンドポイントを提供
 
 from threading import Thread
-
 from fastapi import FastAPI, Request, HTTPException, Form
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
 from functools import wraps
 from datetime import datetime, timedelta
-
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 
@@ -23,30 +22,28 @@ from apps.utils.function_mongo import check_login
 from apps.utils.rank_dao import update_rank_info_of_api
 from apps.utils.user_dao import get_user_info, update_user_info_on_form
 
-
-# fast api
+# FastAPIインスタンス生成とセッションミドルウェア追加
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="secret_key")
 templates = Jinja2Templates(directory="templates")
 
-# トークン認証
+# OAuth2トークン認証設定
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-# トークン有効期限 (10分)
+# トークン有効期限（分）
 TOKEN_EXPIRATION_MINUTES = 10
 
 
-# uvicornサーバー起動
+# サーバー起動
 def run_server():
     func.print_info_msg(msg_const.MSG_INFO_SERVER_START)
-
     host, port = func.get_host_port()
     config = Config(app, host=host, port=port)
     server = Server(config)
     server.run()
 
 
-# スレッド開始
+# サーバーを別スレッドで起動
 def start_thread():
     t = Thread(target=run_server)
     t.start()
@@ -56,18 +53,12 @@ def start_thread():
 def token_required(func_):
     @wraps(func_)
     async def wrapper(*args, **kwargs):
-        # トークンを検証
         request: Request = kwargs.get(const.STR_REQUEST)
-
         try:
             token = request.query_params.get("token")
-            # token = await oauth2_scheme(request)
-
-            # トークンを検証
             chk_msg = await protected_resource(request, token)
             if chk_msg:
                 raise HTTPException(status_code=403, detail=chk_msg)
-
             return await func_(*args, **kwargs)
         except HTTPException as e:
             func.print_error_msg(e.detail)
@@ -76,11 +67,10 @@ def token_required(func_):
     return wrapper
 
 
+# トークン検証API
 @app.get("/protected-resource")
 async def protected_resource(request: Request, token: str):
     chk_msg = const.SYM_BLANK
-
-    # トークンを検証
     token_store = await issue_token(request)
     if token_store:
         access_token = token_store[const.STR_TOKEN]
@@ -91,27 +81,23 @@ async def protected_resource(request: Request, token: str):
             chk_msg = msg_const.MSG_ERR_TOKEN_NOT_EXIST
     else:
         chk_msg = msg_const.MSG_ERR_TOKEN_NOT_EXIST
-
     return chk_msg
 
 
+# トークン発行API
 @app.post("/token")
 async def issue_token(request: Request):
-    # ランダムなトークンを生成
-    # access_token = secrets.token_hex(16)  # 32文字のランダムなトークン
     access_token = "token_" + const.DATE_TODAY
     expiration = datetime.now() + timedelta(minutes=TOKEN_EXPIRATION_MINUTES)
-
-    # トークン情報を保存
     token_data = {
         const.STR_TOKEN: access_token,
         const.STR_TYPE: "bearer",
-        # const.STR_EXPIRATION: expiration.strftime(const.DATE_FORMAT_OUTPUT_FILE),
     }
     request.session[const.STR_TOKEN] = token_data
     return token_data
 
 
+# ルートページ（ログイン状態でリダイレクト）
 @app.get(const.PATH_ROOT)
 async def root(request: Request):
     user = request.session.get(const.STR_USER)
@@ -123,10 +109,10 @@ async def root(request: Request):
     return response
 
 
+# ログイン処理
 @app.post(const.PATH_LOGIN)
 async def login(request: Request, userId: str = Form(...), userPw: str = Form(...)):
     user_info = get_user_info(userId)
-
     chk_msg = check_login(userId, userPw, user_info)
     if chk_msg:
         request.session.clear()
@@ -146,10 +132,10 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
         update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
         response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
         func.print_info_msg(user_info[dto.FI_USER_NAME], msg_const.MSG_INFO_LOGIN)
-
     return response
 
 
+# ログアウト処理
 @app.get(const.PATH_LOGOUT)
 async def logout(request: Request):
     user_name = request.session[const.STR_USER][dto.FI_USER_NAME]
@@ -163,6 +149,7 @@ async def logout(request: Request):
     return templates.TemplateResponse(const.HTML_INDEX, context)
 
 
+# アプリケーション実行（ユーザー・数値・結果）
 @app.get("/app/{app_name}")
 async def app_exec(request: Request, app_name: str):
     try:
@@ -180,13 +167,19 @@ async def app_exec(request: Request, app_name: str):
             const.STR_TITLE: const.SYSTEM_NAME,
             const.STR_MESSAGE: msg_const.MSG_INFO_SESSION_EXPIRED,
         }
-
     return templates.TemplateResponse(target_html, context)
 
 
+# HTMLテンプレートファイルの返却
+@app.get("/apps/{app_name}")
+async def apps(app_name: str):
+    file_path = f"templates/{app_name}.{const.FILE_TYPE_HTML}"
+    return FileResponse(file_path)
+
+
+# ユーザー情報更新（フォーム）
 @app.post("/user/update")
 async def user_update(request: Request, userId: str = Form(...)):
-    # フォームデータをすべて取得
     form_data = await request.form()
     dict_data = dict(form_data)
     update_user_info_on_form(dict_data)
@@ -196,8 +189,8 @@ async def user_update(request: Request, userId: str = Form(...)):
     return templates.TemplateResponse(target_html, context)
 
 
+# JSONデータ取得（認証付き）（例：/json/today?token=token）
 @app.get("/json/{app_name}")
-# /json/today?token=token
 @token_required
 async def app_json(request: Request):
     app_name = request.path_params["app_name"]
@@ -205,8 +198,8 @@ async def app_json(request: Request):
     return result
 
 
+# APIデータ取得（例：/api/zipCode/1000000）
 @app.get("/api/{api_name}/{param}")
-# /api/zipCode/1000000
 async def app_api(request: Request):
     api_name = request.path_params["api_name"]
     param = request.path_params["param"]
@@ -215,9 +208,9 @@ async def app_api(request: Request):
     return result
 
 
+# ランキング情報更新
 @app.post("/number/ranking")
 async def ranking_update(request: Request):
-    # データ取得
     json_data = await request.json()
     if func.is_network():
         update_rank_info_of_api(json_data)
@@ -225,6 +218,7 @@ async def ranking_update(request: Request):
     return result
 
 
+# LINEメッセージ送信
 @app.get("/line/send")
 async def send_msg():
     line.main()
@@ -232,6 +226,7 @@ async def send_msg():
     return result
 
 
+# ニュース情報更新
 @app.get(const.PATH_UPDATE)
 async def update_news():
     appl.update_news()
@@ -240,6 +235,7 @@ async def update_news():
     return result
 
 
+# テンプレートファイル取得
 @app.get("/templates/{file_name}")
 async def temp(file_name: str):
     file_ext = func.get_path_split(file_name, extension_flg=const.FLG_ON)
@@ -247,8 +243,8 @@ async def temp(file_name: str):
     return FileResponse(file_path)
 
 
+# 画像ファイル取得（例：/img/today）
 @app.get(f"/{const.STR_IMG}" + "/{file_name}")
-# /img/today
 async def img(file_name: str):
     file_div = const.STR_INPUT
     if const.APP_TODAY in file_name:
@@ -257,16 +253,16 @@ async def img(file_name: str):
     return FileResponse(image_path)
 
 
+# フォントファイル取得（例：/font/meiryo）
 @app.get(f"/{const.STR_FONT}" + "/{file_name}")
-# /font/meiryo
 async def font(file_name: str):
     font_path = func.get_file_path(file_name, const.FILE_TYPE_TTC)
     return FileResponse(font_path)
 
 
+# サーバーのヘルスチェック
 @app.get("/check")
 def health_check():
-    # スリープ状態にならないようサーバーアクセス
     appl.no_sleep()
     info_msg = msg_const.MSG_INFO_SERVER_KEEP_ALIVE
     func.print_info_msg(info_msg)
@@ -274,6 +270,7 @@ def health_check():
     return result
 
 
+# テストAPI
 @app.get("/test")
 def api_test():
     message = test.main()
@@ -282,6 +279,7 @@ def api_test():
     return {const.STR_MESSAGE: message}
 
 
+# メイン関数（サーバースレッド起動）
 if __name__ == const.MAIN_FUNCTION:
     start_thread()
     # health_check()
