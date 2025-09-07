@@ -1,22 +1,15 @@
 // Core country data for area and population comparisons
 const coreData = {
-      ja: { currency: "円" },
-      ko: { currency: "ウォン" },
-      en: { currency: "ドル" },
+      ja: { currency: "JPY" },
+      ko: { currency: "KRW" },
+      en: { currency: "USD" },
 };
 
 // Exchange rates for a base currency
 const exchangeRates = {
-      ja: { krw: 10, twd: 2.3, vnd: 15000, thb: 0.25, php: 0.4 },
-      ko: { jpy: 1000, twd: 13, vnd: 100, thb: 1, php: 1.5 },
-      en: {
-            jpy: 0.007,
-            krw: 0.0007,
-            twd: 0.033,
-            vnd: 0.00004,
-            thb: 0.027,
-            php: 0.018,
-      },
+      ja: { krw: 9.5, twd: 0.2, vnd: 180, thb: 0.22, php: 0.38 },
+      ko: { jpy: 0.105, twd: 0.022, vnd: 19, thb: 0.024, php: 0.04 },
+      en: { jpy: 150, krw: 1400, twd: 30, vnd: 26000, thb: 32, php: 56 },
 };
 
 const travelData = {
@@ -40,6 +33,8 @@ const travelData = {
                   market: "市場",
                   mall: "モール",
                   tour: "観光",
+                  tourInfo: "観光情報",
+                  usefulInfo: "有用な情報",
                   food: "グルメ",
                   exchange: "両替",
                   airportAccess: "空港→市内",
@@ -65,28 +60,10 @@ const travelData = {
                         area: 377975,
                         population: 125360000,
                         currency: "円",
-                        exchangeRate: null,
                         weather: "晴れ、気温25℃",
                   },
-                  lang: {
-                        name: "基本会話",
-                        basicConversation: [
-                              { local: "こんにちは。", en: "Hello." },
-                              { local: "ありがとうございます。", en: "Thank you." },
-                              { local: "おいしい。", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "観光情報",
                         spots: [
-                              {
-                                    category: "ビュー",
-                                    name: "東京都庁",
-                                    access: "新宿駅",
-                                    time: "09:00～21:00",
-                                    note: "展望室無料",
-                                    map: "東京都庁の略図",
-                              },
                               {
                                     category: "スポット",
                                     name: "スカイツリー",
@@ -94,6 +71,15 @@ const travelData = {
                                     time: "10:00～21:00",
                                     note: "展望回廊有料",
                                     map: "スカイツリーの略図",
+                                    url: "https://www.tokyo-skytree.jp/"
+                              },
+                              {
+                                    category: "ビュー",
+                                    name: "東京都庁",
+                                    access: "新宿駅",
+                                    time: "09:00～21:00",
+                                    note: "展望室無料",
+                                    map: "東京都庁の略図",
                               },
                               {
                                     category: "市場",
@@ -106,45 +92,46 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "グルメ",
                         foods: [
-                              { name: "🍜 ラーメン", price: "1,000円", note: "日本式ラーメン" },
-                              { name: "🍣 回転寿司", price: "2,000円", note: "新鮮な回転寿司" },
-                              { name: "🍤 天ぷら", price: "1,500円", note: "サクサクの天ぷら" },
-                              { name: "🍳 お好み焼き", price: "1,500円", note: "広島風" },
+                              { name: "🍜 ラーメン", price: 1000, note: "日本式ラーメン" },
+                              { name: "🍣 回転寿司", price: 2000, note: "新鮮な回転寿司" },
+                              { name: "🍤 天ぷら", price: 1500, note: "サクサクの天ぷら" },
+                              { name: "🍳 お好み焼き", price: 1500, note: "広島風の鉄板焼き" },
                         ],
                   },
                   useful: {
-                        name: "旅のヒント",
                         exchange: {
-                              name: "外貨両替専門店",
-                              url: "https://www.travelex.co.jp/",
+                              name: "ワールドカレンシーショップ",
+                              url: "https://www.tokyo-card.co.jp/wcs/wcs-shop-j.php",
                               note: "-",
                         },
                         airportAccess: {
-                              name: "電車・リムジンバス",
-                              url: "https://www.travelex.co.jp/",
-                              fare: "電車140円",
+                              name: "リムジンバス",
+                              url: "https://tyo-nrt.com/",
+                              fare: 1500,
                         },
                         transportCard: {
                               name: "Suica",
-                              url: "https://www.travelex.co.jp/",
-                              fare: "電車140円",
+                              url: "https://www.jreast.co.jp/suica/",
+                              fare: 140,
                         },
-                        pass: "Tokyo Subway Ticket (24/48/72時間)",
+                        pass: {
+                              name: "Tokyo Subway Ticket (24/48/72時間)",
+                              url: "https://www.tokyometro.jp/tst/jp/index.html",
+                              fare: 800,
+                        },
                   },
                   site: {
-                        name: "サイト",
                         tourism: {
                               name: "日本観光庁",
-                              url: "https://www.japan.travel/ja/",
+                              url: "https://www.japan.travel/jp/",
                         },
                         travel: {
                               name: "東京公式観光サイトGO TOKYO",
-                              url: "https://www.gotokyo.org/jp/index.html",
+                              url: "https://www.gotokyo.org/jp/",
                         },
                         youtube: {
-                              name: "絶景！東京観光スポット3選",
+                              name: "東京観光スポット3選",
                               url: "https://www.youtube.com/watch?v=xxxxxxxx",
                         },
                   },
@@ -158,19 +145,9 @@ const travelData = {
                         area: 100363,
                         population: 51740000,
                         currency: "ウォン",
-                        exchangeRate: 10,
                         weather: "曇り、気温18℃",
                   },
-                  lang: {
-                        name: "基本会話",
-                        basicConversation: [
-                              { local: "안녕하세요.", en: "Hello." },
-                              { local: "감사합니다.", en: "Thank you." },
-                              { local: "맛있어요.", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "観光情報",
                         spots: [
                               {
                                     category: "スポット",
@@ -199,16 +176,14 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "グルメ",
                         foods: [
-                              { name: "🍙 キンパ", price: "4,000ウォン", note: "韓国式海苔巻き" },
-                              { name: "🍲 キムチチゲ", price: "10,000ウォン", note: "キムチ鍋" },
-                              { name: "🍚 ビビンバ", price: "8,000ウォン", note: "ビビンバ" },
-                              { name: "🍳 チヂミ", price: "6,000ウォン", note: "チヂミ" },
+                              { name: "🍙 キンパ", price: 4000, note: "韓国式海苔巻き" },
+                              { name: "🍲 キムチチゲ", price: 10000, note: "ピリ辛キムチ鍋" },
+                              { name: "🍚 ビビンバ", price: 8000, note: "混ぜご飯" },
+                              { name: "🍳 チヂミ", price: 6000, note: "韓国式お好み焼き" },
                         ],
                   },
                   useful: {
-                        name: "有用な情報",
                         exchange: {
                               name: "明洞両替所",
                               time: "09:00～19:00",
@@ -217,19 +192,18 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "空港鉄道",
-                              fare: "10,000ウォン",
+                              fare: 10000,
                         },
                         transportCard: {
                               name: "T-money",
-                              fare: "地下鉄1,250ウォン",
+                              fare: 1250,
                         },
                         pass: "",
                   },
                   site: {
-                        name: "サイト",
                         tourism: {
                               name: "韓国観光公社",
-                              url: "https://www.visitkorea.or.kr/",
+                              url: "https://japanese.visitkorea.or.kr/",
                         },
                         travel: {
                               name: "コネスト",
@@ -250,19 +224,9 @@ const travelData = {
                         area: 36197,
                         population: 23800000,
                         currency: "台湾ドル",
-                        exchangeRate: 2.3,
                         weather: "曇り、気温28℃",
                   },
-                  lang: {
-                        name: "基本会話",
-                        basicConversation: [
-                              { local: "你好 (Nǐ hǎo).", en: "Hello." },
-                              { local: "谢谢 (Xièxiè).", en: "Thank you." },
-                              { local: "好吃 (Hǎo chī).", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "観光情報",
                         spots: [
                               {
                                     category: "スポット",
@@ -291,15 +255,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "グルメ",
                         foods: [
-                              { name: "🥟 小籠包", price: "80台湾ドル", note: "パリパリ" },
-                              { name: "🍜 牛肉麺", price: "100台湾ドル", note: "牛肉麺" },
-                              { name: "🍚 魯肉飯", price: "60台湾ドル", note: "魯肉飯" },
+                              { name: "🥟 小籠包", price: 80, note: "肉汁たっぷり" },
+                              { name: "🍜 牛肉麺", price: 100, note: "牛肉入り台湾ラーメン" },
+                              { name: "🍚 魯肉飯", price: 60, note: "豚肉煮込みご飯" },
                         ],
                   },
                   useful: {
-                        name: "有用な情報",
                         exchange: {
                               name: "台湾銀行",
                               url: "https://www.bot.com.tw/",
@@ -308,16 +270,15 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "空港MRT",
-                              fare: "200 台湾ドル",
+                              fare: 200,
                         },
                         transportCard: {
                               name: "EasyCard",
-                              fare: "MRT 20台湾ドル",
+                              fare: 20,
                         },
                         pass: "Taipei Fun Pass",
                   },
                   site: {
-                        name: "サイト",
                         tourism: {
                               name: "台北観光サイト",
                               url: "https://www.travel.taipei/ja/",
@@ -342,19 +303,9 @@ const travelData = {
                         area: 331212,
                         population: 97300000,
                         currency: "ドン",
-                        exchangeRate: 15000,
                         weather: "雨季、気温30℃",
                   },
-                  lang: {
-                        name: "基本会話",
-                        basicConversation: [
-                              { local: "你好 (Nǐ hǎo).", en: "Hello." },
-                              { local: "谢谢 (Xièxiè).", en: "Thank you." },
-                              { local: "好吃 (Hǎo chī).", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "観光情報",
                         spots: [
                               {
                                     category: "スポット",
@@ -383,15 +334,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "음식",
                         foods: [
-                              { name: "🍜 フォー", price: "35,000ドン", note: "ベトナムの米麺" },
-                              { name: "🥖 バインミー", price: "25,000ドン", note: "ベトナム風サンドイッチ" },
-                              { name: " 生春巻き", price: "30,000ドン", note: "新鮮な野菜の春巻き" },
+                              { name: "🍜 フォー", price: 35000, note: "米麺のベトナムヌードル" },
+                              { name: "🥖 バインミー", price: 25000, note: "ベトナム風サンドイッチ" },
+                              { name: " 生春巻き", price: 30000, note: "野菜たっぷり春巻き" },
                         ],
                   },
                   useful: {
-                        name: "有用な情報",
                         exchange: {
                               name: "貴金属店(Hang Bac通り)",
                               url: "https://www.vietcombank.com.vn/",
@@ -400,28 +349,27 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "ミニバス",
-                              fare: "10,000ドン",
+                              fare: 10000,
                         },
                         transportCard: {
                               name: "-(バス)",
-                              fare: "7,000ドン",
+                              fare: 7000,
 
                         },
                         pass: "",
                   },
                   site: {
-                        name: "サイト",
                         tourism: {
                               name: "ベトナム観光総局",
                               url: "https://vietnam.travel/ja",
                         },
                         travel: {
-                              name: "ハノイ観光局",
-                              url: "https://hanoitourism.vn/",
+                              name: "ハノイナビ",
+                              url: "https://www.vietnamnavi.com/",
                         },
                         youtube: {
                               name: "ハノイのローカルフード",
-                              url: "https://www.youtube.com/watch?v=xxxxxxxx",
+                              url: "https://www.youtube.com/watch?v=ElEdbN5HNOU",
                         },
                   },
             },
@@ -434,19 +382,9 @@ const travelData = {
                         area: 513120,
                         population: 69600000,
                         currency: "バーツ",
-                        exchangeRate: 0.25,
                         weather: "スコール、気温32℃",
                   },
-                  lang: {
-                        name: "基本会話",
-                        basicConversation: [
-                              { local: "Kopkun Khap", en: "Hello." },
-                              { local: "Kopkun Mak", en: "Thank you." },
-                              { local: "Aroi", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "観光情報",
                         spots: [
                               {
                                     category: "スポット",
@@ -497,15 +435,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "グルメ",
                         foods: [
-                              { name: "🍝 パッタイ", price: "50バーツ", note: "タイ風ヌードル" },
-                              { name: "🍛 グリーンカレー", price: "100バーツ", note: "グリーンカレー" },
-                              { name: "トムヤムクン", price: "100バーツ", note: "スパイシーなエビスープ" },
+                              { name: "🍝 パッタイ", price: 50, note: "タイ風焼きそば" },
+                              { name: "🍛 グリーンカレー", price: 100, note: "ココナッツ風味のカレー" },
+                              { name: "トムヤムクン", price: 100, note: "スパイシーな海老スープ" },
                         ],
                   },
                   useful: {
-                        name: "有用な情報",
                         exchange: {
                               name: "Super Rich (緑/オレンジ)",
                               url: "https://www.superrichthailand.com/",
@@ -514,16 +450,15 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "エアポート・レール・リンク",
-                              fare: "40バーツ",
+                              fare: 40,
                         },
                         transportCard: {
                               name: "Rabbit Card",
-                              fare: "BTS 16バーツ",
+                              fare: 16,
                         },
                         pass: "BTS 1-Day Pass",
                   },
                   site: {
-                        name: "サイト",
                         tourism: {
                               name: "タイ旅行サイト",
                               url: "https://www.thailandtravel.or.jp/",
@@ -535,7 +470,7 @@ const travelData = {
                         youtube: {
                               name: "バンコクのグルメ旅",
                               thumb: "https://placehold.co/200x150/FFC999/fff?text=YouTube+1",
-                              url: "https://www.youtube.com/watch?v=xxxxxxxx",
+                              url: "https://www.youtube.com/watch?v=jkBG2pbQtHU",
                         },
                   },
             },
@@ -548,19 +483,9 @@ const travelData = {
                         area: 300000,
                         population: 115500000,
                         currency: "ペソ",
-                        exchangeRate: 0.4,
                         weather: "晴れ、気温30℃",
                   },
-                  lang: {
-                        name: "基本会話",
-                        basicConversation: [
-                              { local: "Kumusta", en: "Hello." },
-                              { local: "Salamat", en: "Thank you." },
-                              { local: "Masarap", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "観光情報",
                         spots: [
                               {
                                     category: "スポット",
@@ -604,15 +529,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "グルメ",
                         foods: [
-                              { name: "🍗 アドボ", price: "100ペソ", note: "チキン" },
-                              { name: "🍛 シシグ", price: "100ペソ", note: "チャーハン" },
-                              { name: "🍔 ジョリビー", price: "100ペソ", note: "フィリピンファストフード" },
+                              { name: "🍗 アドボ", price: 100, note: "鶏肉の煮込み" },
+                              { name: "🍛 シシグ", price: 100, note: "豚肉の鉄板焼き" },
+                              { name: "🍔 ジョリビー", price: 100, note: "人気のファストフード" },
                         ],
                   },
                   useful: {
-                        name: "有用な情報",
                         exchange: {
                               name: "大型モール内の両替所",
                               time: "10:00～21:00",
@@ -621,16 +544,15 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "Grabタクシー",
-                              fare: "1000ペソ",
+                              fare: 1000,
                         },
                         transportCard: {
                               name: "-(ジープニー・バス)",
-                              fare: "10ペソ",
+                              fare: 10,
                         },
                         pass: "",
                   },
                   site: {
-                        name: "サイト",
                         tourism: {
                               name: "フィリピン観光省",
                               url: "https://itsmorefuninthephilippines.jp/",
@@ -667,6 +589,8 @@ const travelData = {
                   market: "시장",
                   mall: "쇼핑몰",
                   tour: "관광",
+                  tourInfo: "관광정보",
+                  usefulInfo: "유용한 정보",
                   food: "음식",
                   exchange: "환전",
                   airportAccess: "공항→도심",
@@ -700,19 +624,9 @@ const travelData = {
                         area: 377975,
                         population: 125360000,
                         currency: "엔",
-                        exchangeRate: null,
                         weather: "맑음, 기온 25℃",
                   },
-                  lang: {
-                        name: "기본회화",
-                        basicConversation: [
-                              { local: "こんにちは。", en: "Hello." },
-                              { local: "ありがとうございます。", en: "Thank you." },
-                              { local: "おいしい。", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "관광정보",
                         spots: [
                               {
                                     category: "전망",
@@ -741,16 +655,14 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "음식",
                         foods: [
-                              { name: "🍜 라멘", price: "1,000엔", note: "일본식 라면" },
-                              { name: "🍣 회전초밥", price: "2,000엔", note: "신선한 회전초밥" },
-                              { name: "🍤 튀김", price: "1,500엔", note: "바삭한 튀김" },
-                              { name: "🍳 오코노미야키", price: "1,500엔", note: "일본식 팬케이크" },
+                              { name: "🍜 라멘", price: 1000, note: "진한 국물 일본라면" },
+                              { name: "🍣 회전초밥", price: 2000, note: "신선한 회전초밥" },
+                              { name: "🍤 튀김", price: 1500, note: "바삭한 튀김" },
+                              { name: "🍳 오코노미야키", price: 1500, note: "히로시마식 철판요리" },
                         ],
                   },
                   useful: {
-                        name: "여행팁",
                         exchange: {
                               name: "외화 환전 전문점",
                               url: "https://www.travelex.co.jp/",
@@ -759,27 +671,30 @@ const travelData = {
                         airportAccess: {
                               name: "전철・리무진버스",
                               url: "https://www.travelex.co.jp/",
-                              fare: "LCC버스 1,000엔",
+                              fare: 1000,
                         },
                         transportCard: {
                               name: "Suica",
                               url: "https://www.travelex.co.jp/",
-                              fare: "전철 140엔",
+                              fare: 140,
                         },
-                        pass: "Tokyo Subway Ticket (24/48/72시간)",
+                        pass: {
+                              name: "Tokyo Subway Ticket (24/48/72시간)",
+                              url: "https://www.tokyometro.jp/tst/kr/",
+                              fare: 800,
+                        },
                   },
                   site: {
-                        name: "사이트",
                         tourism: {
                               name: "일본 관광청",
                               url: "https://www.japan.travel/ko/",
                         },
                         travel: {
                               name: "도쿄 공식 관광 사이트 GO TOKYO",
-                              url: "https://www.gotokyo.org/kr/index.html",
+                              url: "https://www.gotokyo.org/kr/",
                         },
                         youtube: {
-                              name: "절경! 도쿄 관광 명소 3선",
+                              name: "도쿄2박3일 여행코스",
                               url: "https://www.youtube.com/watch?v=xxxxxxxx",
                         },
                   },
@@ -793,19 +708,9 @@ const travelData = {
                         area: 100363,
                         population: 51740000,
                         currency: "원",
-                        exchangeRate: 10,
                         weather: "흐림, 기온 18℃",
                   },
-                  lang: {
-                        name: "기본회화",
-                        basicConversation: [
-                              { local: "안녕하세요", en: "Hello." },
-                              { local: "감사합니다", en: "Thank you." },
-                              { local: "맛있어요", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "관광정보",
                         spots: [
                               {
                                     category: "명소",
@@ -834,16 +739,14 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "음식",
                         foods: [
-                              { name: "🍙 김밥", price: "4,000원", note: "국민 소울푸드" },
-                              { name: "🍲 김치찌개", price: "8,000원", note: "얼큰한 김치찌개" },
-                              { name: "🍚 비빔밥", price: "8,000원", note: "비비고" },
-                              { name: "🍳 부침개", price: "6,000원", note: "한국식 팬케이크" },
+                              { name: "🍙 김밥", price: 4000, note: "국민 소울푸드" },
+                              { name: "🍲 김치찌개", price: 8000, note: "얼큰한 김치찌개" },
+                              { name: "🍚 비빔밥", price: 8000, note: "재료 듬뿍 비빔밥" },
+                              { name: "🍳 부침개", price: 6000, note: "쫄깃한 부침개" },
                         ],
                   },
                   useful: {
-                        name: "여행팁",
                         exchange: {
                               name: "명동 환전소",
                               time: "09:00~19:00",
@@ -852,16 +755,15 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "공항철도",
-                              fare: "10,000원",
+                              fare: 10000,
                         },
                         transportCard: {
                               name: "T-money",
-                              fare: "지하철 1,250원",
+                              fare: 1250,
                         },
                         pass: "",
                   },
                   site: {
-                        name: "사이트",
                         tourism: {
                               name: "한국관광공사",
                               url: "https://www.visitkorea.or.kr/",
@@ -885,19 +787,9 @@ const travelData = {
                         area: 36197,
                         population: 23800000,
                         currency: "대만달러",
-                        exchangeRate: 2.3,
                         weather: "흐림, 기온 28℃",
                   },
-                  lang: {
-                        name: "기본회화",
-                        basicConversation: [
-                              { local: "你好 (Nǐ hǎo)", en: "Hello." },
-                              { local: "謝謝 (Xièxiè)", en: "Thank you." },
-                              { local: "好吃 (Hǎo chī)", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "관광정보",
                         spots: [
                               {
                                     category: "명소",
@@ -926,15 +818,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "음식",
                         foods: [
-                              { name: "🥟 샤오롱바오", price: "60대만달러", note: "바삭바삭" },
-                              { name: "🍜 우육면", price: "100대만달러", note: "소고기면" },
-                              { name: "🍚 루로우판", price: "80대만달러", note: "돼지고기덮밥" },
+                              { name: "🥟 샤오롱바오", price: 60, note: "육즙 가득한 만두" },
+                              { name: "🍜 우육면", price: 100, note: "소고기국수" },
+                              { name: "🍚 루로우판", price: 80, note: "돼지고기덮밥" },
                         ],
                   },
                   useful: {
-                        name: "여행팁",
                         exchange: {
                               name: "대만은행",
                               url: "https://www.bot.com.tw/",
@@ -943,16 +833,15 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "공항 MRT",
-                              fare: "200대만달러",
+                              fare: 200,
                         },
                         transportCard: {
                               name: "EasyCard",
-                              fare: "MRT 20대만달러",
+                              fare: 20,
                         },
                         pass: "Taipei Fun Pass",
                   },
                   site: {
-                        name: "사이트",
                         tourism: {
                               name: "타이베이 관광 사이트",
                               url: "https://www.travel.taipei/ko/",
@@ -976,19 +865,9 @@ const travelData = {
                         area: 331212,
                         population: 97300000,
                         currency: "동",
-                        exchangeRate: 15000,
                         weather: "우기, 기온 30℃",
                   },
-                  lang: {
-                        name: "기본회화",
-                        basicConversation: [
-                              { local: "Xin chào", en: "Hello." },
-                              { local: "Cảm ơn", en: "Thank you." },
-                              { local: "Ngon quá", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "관광정보",
                         spots: [
                               {
                                     category: "명소",
@@ -1017,15 +896,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "음식",
                         foods: [
-                              { name: "🍜 포", price: "35,000동", note: "베트남 쌀국수" },
-                              { name: "🥖 반미", price: "25,000동", note: "베트남식 샌드위치" },
-                              { name: " 월남쌈", price: "30,000동", note: "신선한 야채쌈" },
+                              { name: "🍜 포", price: 35000, note: "베트남 쌀국수" },
+                              { name: "🥖 반미", price: 25000, note: "베트남식 샌드위치" },
+                              { name: " 월남쌈", price: 30000, note: "신선한 야채쌈" },
                         ],
                   },
                   useful: {
-                        name: "여행팁",
                         exchange: {
                               name: "귀금속점(Hang Bac 거리)",
                               url: "https://www.vietcombank.com.vn/",
@@ -1034,23 +911,22 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "미니버스",
-                              fare: "10,000동",
+                              fare: 10000,
                         },
                         transportCard: {
                               name: "-(버스)",
-                              fare: "7,000동",
+                              fare: 7000,
                         },
                         pass: "",
                   },
                   site: {
-                        name: "사이트",
                         tourism: {
                               name: "베트남 관광청",
                               url: "https://vietnam.travel/ko",
                         },
                         travel: {
-                              name: "하노이 관광국",
-                              url: "https://hanoitourism.vn/",
+                              name: "하노이 나비",
+                              url: "https://www.vietnamnavi.com/",
                         },
                         youtube: {
                               name: "하노이 현지 음식",
@@ -1067,19 +943,9 @@ const travelData = {
                         area: 513120,
                         population: 69600000,
                         currency: "바트",
-                        exchangeRate: 0.25,
                         weather: "스콜, 기온 32℃",
                   },
-                  lang: {
-                        name: "기본회화",
-                        basicConversation: [
-                              { local: "Kopkun Khap", en: "Hello." },
-                              { local: "Kopkun Mak", en: "Thank you." },
-                              { local: "Aroi", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "관광정보",
                         spots: [
                               {
                                     category: "명소",
@@ -1130,15 +996,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "음식",
                         foods: [
-                              { name: "🍝 팟타이", price: "50바트", note: "타이식 면요리" },
-                              { name: "🍛 그린커리", price: "100바트", note: "그린 카레" },
-                              { name: "똠얌꿍", price: "100바트", note: "매운 새우 수프" },
+                              { name: "🍝 팟타이", price: 50, note: "타이식 야키소바" },
+                              { name: "🍛 그린커리", price: 100, note: "코코넛 카레" },
+                              { name: "똠얌꿍", price: 100, note: "매운 새우 수프" },
                         ],
                   },
                   useful: {
-                        name: "여행팁",
                         exchange: {
                               name: "Super Rich (녹색/주황)",
                               url: "https://www.superrichthailand.com/",
@@ -1147,16 +1011,15 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "에어포트 레일 링크",
-                              fare: "40바트",
+                              fare: 40,
                         },
                         transportCard: {
                               name: "Rabbit Card",
-                              fare: "BTS 16바트",
+                              fare: 16,
                         },
                         pass: "BTS 1-Day Pass",
                   },
                   site: {
-                        name: "사이트",
                         tourism: {
                               name: "태국 여행 사이트",
                               url: "https://www.thailandtravel.or.kr/",
@@ -1180,19 +1043,9 @@ const travelData = {
                         area: 300000,
                         population: 115500000,
                         currency: "페소",
-                        exchangeRate: 0.4,
                         weather: "맑음, 기온 30℃",
                   },
-                  lang: {
-                        name: "기본회화",
-                        basicConversation: [
-                              { local: "Kumusta", en: "Hello." },
-                              { local: "Salamat", en: "Thank you." },
-                              { local: "Masarap", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "관광정보",
                         spots: [
                               {
                                     category: "명소",
@@ -1236,15 +1089,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "음식",
                         foods: [
-                              { name: "🍗 아도보", price: "100페소", note: "닭고기" },
-                              { name: "🍛 시시그", price: "100페소", note: "볶음밥" },
-                              { name: "🍔 졸리비", price: "100페소", note: "필리핀패스트푸드" },
+                              { name: "🍗 아도보", price: 100, note: "닭고기조림" },
+                              { name: "🍛 시시그", price: 100, note: "돼지고기 철판요리" },
+                              { name: "🍔 졸리비", price: 100, note: "필리핀 패스트푸드" },
                         ],
                   },
                   useful: {
-                        name: "여행팁",
                         exchange: {
                               name: "대형 쇼핑몰 내 환전소",
                               time: "10:00~21:00",
@@ -1253,16 +1104,15 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "Grab 택시",
-                              fare: "1000페소",
+                              fare: 500,
                         },
                         transportCard: {
                               name: "-(지프니・버스)",
-                              fare: "10페소",
+                              fare: 10,
                         },
                         pass: "",
                   },
                   site: {
-                        name: "사이트",
                         tourism: {
                               name: "필리핀 관광청",
                               url: "https://itsmorefuninthephilippines.kr/",
@@ -1298,6 +1148,8 @@ const travelData = {
                   market: "Market",
                   mall: "Mall",
                   tour: "Tour",
+                  tourInfo: "Tourist Info",
+                  usefulInfo: "Useful Info",
                   food: "Food",
                   exchange: "Money Exchange",
                   airportAccess: "Airport→City",
@@ -1323,19 +1175,9 @@ const travelData = {
                         area: 377975,
                         population: 125360000,
                         currency: "Yen",
-                        exchangeRate: null,
                         weather: "Sunny, 25℃",
                   },
-                  lang: {
-                        name: "Basic Conversation",
-                        basicConversation: [
-                              { local: "こんにちは。", en: "Hello." },
-                              { local: "ありがとうございます。", en: "Thank you." },
-                              { local: "おいしい。", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "Tourist Info",
                         spots: [
                               {
                                     category: "View",
@@ -1364,16 +1206,14 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "Food",
                         foods: [
-                              { name: "🍜 Ramen", price: "¥1,000", note: "Japanese-style ramen" },
-                              { name: "🍣 Conveyor Belt Sushi", price: "¥2,000", note: "Fresh sushi" },
-                              { name: "🍤 Tempura", price: "¥1,500", note: "Crispy tempura" },
-                              { name: "🍳 Okonomiyaki", price: "¥1,500", note: "Hiroshima style" },
+                              { name: "🍜 Ramen", price: 1000, note: "Japanese-style ramen" },
+                              { name: "🍣 Conveyor Belt Sushi", price: 2000, note: "Fresh sushi" },
+                              { name: "🍤 Tempura", price: 1500, note: "Crispy tempura" },
+                              { name: "🍳 Okonomiyaki", price: 1500, note: "Hiroshima-style grill" },
                         ],
                   },
                   useful: {
-                        name: "Travel Tips",
                         exchange: {
                               name: "Foreign Currency Exchange Shop",
                               url: "https://www.travelex.co.jp/",
@@ -1382,24 +1222,27 @@ const travelData = {
                         airportAccess: {
                               name: "Train & Limousine Bus",
                               url: "https://www.travelex.co.jp/",
-                              fare: "Train ¥140",
+                              fare: 1200,
                         },
                         transportCard: {
                               name: "Suica",
                               url: "https://www.travelex.co.jp/",
-                              fare: "Train ¥140",
+                              fare: 140,
                         },
-                        pass: "Tokyo Subway Ticket (24/48/72hr)",
+                        pass: {
+                              name: "Tokyo Subway Ticket (24/48/72hr)",
+                              url: "https://www.tokyometro.jp/tst/en/",
+                              fare: 800,
+                        },
                   },
                   site: {
-                        name: "Site",
                         tourism: {
                               name: "Japan National Tourism Organization",
                               url: "https://www.japan.travel/en/",
                         },
                         travel: {
                               name: "Tokyo Official Travel Guide GO TOKYO",
-                              url: "https://www.gotokyo.org/en/index.html",
+                              url: "https://www.gotokyo.org/en/",
                         },
                         youtube: {
                               name: "Top 3 Scenic Tokyo Spots",
@@ -1416,19 +1259,9 @@ const travelData = {
                         area: 100363,
                         population: 51740000,
                         currency: "Won",
-                        exchangeRate: 10,
                         weather: "Cloudy, 18℃",
                   },
-                  lang: {
-                        name: "Basic Conversation",
-                        basicConversation: [
-                              { local: "안녕하세요.", en: "Hello." },
-                              { local: "감사합니다.", en: "Thank you." },
-                              { local: "맛있어요.", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "Tourist Info",
                         spots: [
                               {
                                     category: "Spot",
@@ -1457,16 +1290,14 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "Food",
                         foods: [
-                              { name: "🍙 Kimbap", price: "₩4,000", note: "Korean-style seaweed roll" },
-                              { name: "🍲 Kimchi Jjigae", price: "₩10,000", note: "Kimchi stew" },
-                              { name: "🍚 Bibimbap", price: "₩8,000", note: "Mixed rice bowl" },
-                              { name: "🍳 Jeon", price: "₩6,000", note: "Korean pancake" },
+                              { name: "🍙 Kimbap", price: 4000, note: "Korean-style seaweed roll" },
+                              { name: "🍲 Kimchi Jjigae", price: 10000, note: "spicy kimchi stew" },
+                              { name: "🍚 Bibimbap", price: 8000, note: "Mixed rice bowl" },
+                              { name: "🍳 Jeon", price: 6000, note: "Korean pancake" },
                         ],
                   },
                   useful: {
-                        name: "Useful Info",
                         exchange: {
                               name: "Myeongdong Exchange Shop",
                               time: "09:00–19:00",
@@ -1475,19 +1306,18 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "Airport Railroad",
-                              fare: "₩10,000",
+                              fare: 10000,
                         },
                         transportCard: {
                               name: "T-money",
-                              fare: "Subway ₩1,250",
+                              fare: 1250,
                         },
                         pass: "",
                   },
                   site: {
-                        name: "Site",
                         tourism: {
                               name: "Korea Tourism Organization",
-                              url: "https://www.visitkorea.or.kr/eng/",
+                              url: "https://english.visitkorea.or.kr/",
                         },
                         travel: {
                               name: "Konest",
@@ -1508,19 +1338,9 @@ const travelData = {
                         area: 36197,
                         population: 23800000,
                         currency: "TWD",
-                        exchangeRate: 2.3,
                         weather: "Cloudy, 28℃",
                   },
-                  lang: {
-                        name: "Basic Conversation",
-                        basicConversation: [
-                              { local: "你好 (Nǐ hǎo).", en: "Hello." },
-                              { local: "谢谢 (Xièxiè).", en: "Thank you." },
-                              { local: "好吃 (Hǎo chī).", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "Tourist Info",
                         spots: [
                               {
                                     category: "Spot",
@@ -1549,15 +1369,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "Food",
                         foods: [
-                              { name: "🥟 Xiaolongbao", price: "NT$80", note: "Juicy dumplings" },
-                              { name: "🍜 Beef Noodles", price: "NT$100", note: "Taiwan's soul food" },
-                              { name: "🍚 Lu Rou Fan", price: "NT$60", note: "Braised pork rice" },
+                              { name: "🥟 Xiaolongbao", price: 80, note: "Juicy soup dumpling" },
+                              { name: "🍜 Beef Noodles", price: 100, note: "Beef noodle soup" },
+                              { name: "🍚 Lu Rou Fan", price: 60, note: "Braised pork rice" },
                         ],
                   },
                   useful: {
-                        name: "Useful Info",
                         exchange: {
                               name: "Bank of Taiwan",
                               url: "https://www.bot.com.tw/",
@@ -1566,16 +1384,15 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "Airport MRT",
-                              fare: "NT$200",
+                              fare: 200,
                         },
                         transportCard: {
                               name: "EasyCard",
-                              fare: "MRT NT$20",
+                              fare: 20,
                         },
                         pass: "Taipei Fun Pass",
                   },
                   site: {
-                        name: "Site",
                         tourism: {
                               name: "Taipei Tourism Site",
                               url: "https://www.travel.taipei/en/",
@@ -1599,19 +1416,9 @@ const travelData = {
                         area: 331212,
                         population: 97300000,
                         currency: "Dong",
-                        exchangeRate: 15000,
                         weather: "Rainy season, 30℃",
                   },
-                  lang: {
-                        name: "Basic Conversation",
-                        basicConversation: [
-                              { local: "Xin chào", en: "Hello." },
-                              { local: "Cảm ơn", en: "Thank you." },
-                              { local: "Ngon quá", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "Tourist Info",
                         spots: [
                               {
                                     category: "Spot",
@@ -1640,15 +1447,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "Food",
                         foods: [
-                              { name: "🍜 Pho", price: "₫35,000", note: "Vietnamese rice noodles" },
-                              { name: "🥖 Banh Mi", price: "₫25,000", note: "Vietnamese sandwich" },
-                              { name: "Spring Roll", price: "₫30,000", note: "Fresh vegetable rolls" },
+                              { name: "🍜 Pho", price: 35000, note: "Vietnamese rice noodles" },
+                              { name: "🥖 Banh Mi", price: 25000, note: "Vietnamese sandwich" },
+                              { name: "Spring Roll", price: 30000, note: "Fresh vegetable rolls" },
                         ],
                   },
                   useful: {
-                        name: "Useful Info",
                         exchange: {
                               name: "Jewelry Shop (Hang Bac St.)",
                               url: "https://www.vietcombank.com.vn/",
@@ -1657,23 +1462,22 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "Minibus",
-                              fare: "₫10,000",
+                              fare: 10000,
                         },
                         transportCard: {
                               name: "-(Bus)",
-                              fare: "₫7,000",
+                              fare: 7000,
                         },
                         pass: "",
                   },
                   site: {
-                        name: "Site",
                         tourism: {
                               name: "Vietnam National Administration of Tourism",
                               url: "https://vietnam.travel/en",
                         },
                         travel: {
                               name: "Hanoi Tourism",
-                              url: "https://hanoitourism.vn/",
+                              url: "https://www.vietnamnavi.com/",
                         },
                         youtube: {
                               name: "Hanoi Local Food",
@@ -1690,19 +1494,9 @@ const travelData = {
                         area: 513120,
                         population: 69600000,
                         currency: "Baht",
-                        exchangeRate: 0.25,
                         weather: "Squall, 32℃",
                   },
-                  lang: {
-                        name: "Basic Conversation",
-                        basicConversation: [
-                              { local: "Kopkun Khap", en: "Hello." },
-                              { local: "Kopkun Mak", en: "Thank you." },
-                              { local: "Aroi", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "Tourist Info",
                         spots: [
                               {
                                     category: "Spot",
@@ -1755,15 +1549,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "Food",
                         foods: [
-                              { name: "🍝 Pad Thai", price: "฿50", note: "Thai-style noodles" },
-                              { name: "🍛 Green Curry", price: "฿100", note: "Green curry" },
-                              { name: "Tom Yum Goong", price: "฿100", note: "Spicy shrimp soup" },
+                              { name: "🍝 Pad Thai", price: 50, note: "Thai-style noodles" },
+                              { name: "🍛 Green Curry", price: 100, note: "Coconut-flavored curry" },
+                              { name: "Tom Yum Goong", price: 100, note: "Spicy shrimp soup" },
                         ],
                   },
                   useful: {
-                        name: "Useful Info",
                         exchange: {
                               name: "Super Rich (Green/Orange)",
                               url: "https://www.superrichthailand.com/",
@@ -1772,16 +1564,15 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "Airport Rail Link",
-                              fare: "About ฿45",
+                              fare: 45,
                         },
                         transportCard: {
                               name: "Rabbit Card",
-                              fare: "BTS ฿16",
+                              fare: 16,
                         },
                         pass: "BTS 1-Day Pass",
                   },
                   site: {
-                        name: "Site",
                         tourism: {
                               name: "Thailand Travel Site",
                               url: "https://www.thailandtravel.or.jp/en/",
@@ -1805,19 +1596,9 @@ const travelData = {
                         area: 300000,
                         population: 115500000,
                         currency: "Peso",
-                        exchangeRate: 0.4,
                         weather: "Sunny, 30℃",
                   },
-                  lang: {
-                        name: "Basic Conversation",
-                        basicConversation: [
-                              { local: "Kumusta", en: "Hello." },
-                              { local: "Salamat", en: "Thank you." },
-                              { local: "Masarap", en: "Delicious." },
-                        ],
-                  },
                   tour: {
-                        name: "Tourist Info",
                         spots: [
                               {
                                     category: "Spot",
@@ -1861,15 +1642,13 @@ const travelData = {
                         ],
                   },
                   food: {
-                        name: "Food",
                         foods: [
-                              { name: "🍗 Adobo", price: "₱100", note: "Chicken" },
-                              { name: "🍛 Sisig", price: "₱100", note: "Pork dish" },
-                              { name: "🍔 Jollibee", price: "₱100", note: "Philippine fast food" },
+                              { name: "🍗 Adobo", price: 100, note: "Braised chicken dish" },
+                              { name: "🍛 Sisig", price: 100, note: "Pork on hot plate" },
+                              { name: "🍔 Jollibee", price: 100, note: "Popular fast food" },
                         ],
                   },
                   useful: {
-                        name: "Useful Info",
                         exchange: {
                               name: "Exchange shop in large mall",
                               time: "10:00–21:00",
@@ -1878,16 +1657,15 @@ const travelData = {
                         },
                         airportAccess: {
                               name: "Grab Taxi",
-                              fare: "₱1,000",
+                              fare: 1000,
                         },
                         transportCard: {
                               name: "-(Jeepney/Bus)",
-                              fare: "About ₱8",
+                              fare: 8,
                         },
                         pass: "",
                   },
                   site: {
-                        name: "Site",
                         tourism: {
                               name: "Philippines Department of Tourism",
                               url: "https://itsmorefuninthephilippines.com/",

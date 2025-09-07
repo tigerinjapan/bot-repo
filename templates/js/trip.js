@@ -1,21 +1,27 @@
+// 空文字定数
 const SYM_BLANK = "";
 
-const LANG_VAL_JA = "ja";
-const LANG_VAL_KO = "ko";
-const LANG_VAL_EN = "en";
-const LIST_LANG_VAL = [LANG_VAL_JA, LANG_VAL_KO, LANG_VAL_EN];
-
+// 言語名（表示用）
 const LANG_JA = "日本語";
 const LANG_KO = "한국어";
 const LANG_EN = "English";
 const LIST_LANG = [LANG_JA, LANG_KO, LANG_EN];
 
+// 言語コード（データ参照用）
+const LANG_VAL_JA = "ja";
+const LANG_VAL_KO = "ko";
+const LANG_VAL_EN = "en";
+const LIST_LANG_VAL = [LANG_VAL_JA, LANG_VAL_KO, LANG_VAL_EN];
+
+// 都市コード・都市名リスト
 const LIST_CITY_VAL = ["tokyo", "seoul", "taipei", "hanoi", "bangkok", "manila"];
 const LIST_CITY_JA = ["東京", "ソウル", "台北", "ハノイ", "バンコク", "マニラ"];
 const LIST_CITY_KO = ["도쿄", "서울", "타이베이", "하노이", "방콕", "마닐라"];
 const LIST_CITY_EN = ["Tokyo", "Seoul", "Taipei", "Hanoi", "Bangkok", "Manila"];
 
+// DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", () => {
+  // セレクトボックス・各表示領域の取得
   const langSelect = document.getElementById("lang-select");
   const regionSelect = document.getElementById("region-select");
 
@@ -36,56 +42,58 @@ document.addEventListener("DOMContentLoaded", () => {
   const usefulContent = document.getElementById("useful-content");
   const siteContent = document.getElementById("site-content");
 
+  // ダイアログ関連要素
   const dialog = document.getElementById("dialog");
   const closeBtn = document.querySelector(".close-btn");
   const dialogTitle = document.getElementById("dialog-title");
   const dialogText = document.getElementById("dialog-text");
 
+  // セレクトボックスの初期化
   createOptionVal(langSelect, LIST_LANG_VAL);
   createOptionVal(regionSelect, LIST_CITY_VAL);
 
+  // 画面内容の更新処理
   function updateContent() {
     const lang = langSelect.value;
     const region = regionSelect.value;
-    const data = travelData[lang][region];
-    const label = travelData[lang]["label"];
-    const baseCountryCode = lang;
 
+    const label = travelData[lang]["label"];
+    const data = travelData[lang][region];
+    const basicConversation = langData[region];
+    const baseCountryCode = lang;
+    const currencyCd = data.info.currency;
+
+    // タイトル・サブタイトル表示
     pageTitle.textContent = data.title;
     pageSubtitle.textContent = data.subtitle;
 
-    // Info Card
+    // 基本情報カード
     infoTitle.textContent = data.info.name;
-    let infoHtml = `
-      <tr><th>${label.capital}</th><td>${data.info.capital}</td></tr>
-    `;
 
-    infoHtml += `<tr><th>${label.area}</th>
-      <td>${data.info.area.toLocaleString()}km²</td></tr>
-    `;
+    let infoHtml = SYM_BLANK;
+    const infoDataList = [
+      [label.capital, data.info.capital],
+      [label.area, data.info.area.toLocaleString() + "km²"],
+      [label.population, data.info.population.toLocaleString()],
+      [label.currency, data.info.currency],
+      [label.exchangeRate, getExchangeRate(baseCountryCode, region)],
+      [label.weather, data.info.weather]
+    ];
 
-    infoHtml += `<tr><th>${label.population}</th><td>
-      ${data.info.population.toLocaleString()}</td></tr>
-    `;
-
-    infoHtml += `
-      <tr><th>${label.currency}</th><td>${data.info.currency}</td></tr>
-    `;
-
-    const rate = `${getExchangeRate(baseCountryCode, region)}`;
-    if (rate != "") {
-      infoHtml += `<tr><th>${label.exchangeRate}</th><td>${rate}</td></tr>`;
+    // 基本情報テーブル生成
+    for (const [labelText, value] of infoDataList) {
+      if (value !== SYM_BLANK) {
+        infoHtml += `
+            <tr><th>${labelText}</th><td>${value}</td></tr>
+          `;
+      }
     }
-
-    infoHtml += `
-      <tr><th>${label.weather}</th><td>${data.info.weather}</td></tr>
-    `;
     infoContent.innerHTML = infoHtml;
 
-    // Lang Card
-    langTitle.textContent = data.lang.name;
+    // 言語カード（基本会話）
+    langTitle.textContent = label.basicConversation;
     langContent.innerHTML = `
-      ${data.lang.basicConversation
+      ${basicConversation
         .map(
           (s) => `
           <tr>
@@ -97,8 +105,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("")}
     `;
 
-    // Tour Card
-    tourTitle.textContent = data.tour.name;
+    // 観光スポットカード
+    tourTitle.textContent = label.tourInfo;
     tourContent.innerHTML = `
       <tr>
           <th>${label.category}</th>
@@ -120,15 +128,15 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("")}
     `;
 
-    // Food Card
-    foodTitle.textContent = data.food.name;
+    // グルメカード
+    foodTitle.textContent = label.food;
     foodContent.innerHTML = `
       ${data.food.foods
         .map(
           (f) => `
           <tr>
               <th>${f.name}</th>
-              <td>${f.price}</td>
+              <td>${f.price.toLocaleString()}${currencyCd}</td>
               <td>${f.note}</td>
           </tr>
       `
@@ -136,8 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("")}
     `;
 
-    // Useful Info Card
-    usefulTitle.textContent = data.useful.name;
+    // 有用情報カード
+    usefulTitle.textContent = label.usefulInfo;
     usefulContent.innerHTML = `
       <tr>
           <th>${label.exchange}</th>
@@ -147,17 +155,17 @@ document.addEventListener("DOMContentLoaded", () => {
       <tr>
           <th>${label.airportAccess}</th>
           <td>${data.useful.airportAccess.name}</td>
-          <td>${data.useful.airportAccess.fare}</td>
+          <td>${data.useful.airportAccess.fare.toLocaleString()}${currencyCd}</td>
       </tr>
       <tr>
           <th>${label.transportCard}</th>
           <td>${data.useful.transportCard.name}</td>
-          <td>${data.useful.transportCard.fare} (${label.baseFare})</td>
+          <td>${data.useful.transportCard.fare.toLocaleString()}${currencyCd} (${label.baseFare})</td>
       </tr>
   `;
 
-    // Site Card
-    siteTitle.textContent = data.site.name;
+    // サイト情報カード
+    siteTitle.textContent = label.site;
     let siteHtml = `
       <tr><th>${label.tourism}</th><td><a href="${data.site.tourism.url}" target="_blank">${data.site.tourism.name}</a></td></tr>
       <tr><th>${label.travel}</th><td><a href="${data.site.travel.url}" target="_blank">${data.site.travel.name}</a></td></tr>
@@ -165,9 +173,11 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
     siteContent.innerHTML = siteHtml;
 
+    // イベントリスナー追加
     addEventListeners();
   }
 
+  // 為替レート表示用の計算関数
   function getExchangeRate(baseCountryCode, region) {
     const targetCurrencyCode =
       region === "seoul"
@@ -180,24 +190,26 @@ document.addEventListener("DOMContentLoaded", () => {
               ? "thb"
               : region === "manila"
                 ? "php"
-                : SYM_BLANK;
-    if (targetCurrencyCode && exchangeRates[baseCountryCode]) {
+                : "jpy";
+
+    const rate = exchangeRates[baseCountryCode][targetCurrencyCode];
+    if (rate) {
       const baseAmount =
         baseCountryCode === "ja"
           ? 100
           : baseCountryCode === "ko"
             ? 1000
             : 1;
-      const rate = exchangeRates[baseCountryCode][targetCurrencyCode];
+
       const resultAmount = (baseAmount * rate).toLocaleString();
       const baseCurrencySymbol = coreData[baseCountryCode].currency;
-      const targetCurrencySymbol = travelData[baseCountryCode][region].info.currency;
+      const targetCurrencySymbol = targetCurrencyCode.toUpperCase();
       return `${baseAmount.toLocaleString()}${baseCurrencySymbol} = ${resultAmount}${targetCurrencySymbol}`;
     }
     return SYM_BLANK;
-    // return `${label.error}`;
   }
 
+  // 観光スポットリンクのクリックイベントなどを設定
   function addEventListeners() {
     document.querySelectorAll(".spot-link").forEach((link) => {
       link.addEventListener("click", (e) => {
@@ -209,6 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ダイアログの閉じる処理
   closeBtn.addEventListener("click", () => {
     dialog.style.display = "none";
   });
@@ -218,14 +231,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // 言語・都市選択時の内容更新
   langSelect.addEventListener("change", updateContent);
   regionSelect.addEventListener("change", updateContent);
 
-  // Initial load for Tokyo in Japanese
+  // 初期表示（東京・日本語）
   updateContent();
 });
 
-// オプション値生成
+// セレクトボックスのオプション生成
 function createOptionVal(selectElem, optValList) {
   selectElem.innerHTML = SYM_BLANK;
 
