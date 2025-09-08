@@ -1,0 +1,35 @@
+// db
+const database = "mongoDB";
+const project = "trip";
+const userName = "hong";
+const strDate = "2025-09-01";
+
+// Select the database to use.
+use(database)
+
+// // get indexes
+// db.review.getIndexes();
+
+// // insert documents
+// db.review.insertOne({
+//     "sProject": "trip",
+//     "sDesign": "detail",
+//     "sCategory": "add",
+//     "sReviewText": "review_text",
+//     "dUpdateDate": new Date()
+// });
+
+// find documents
+db.review.find(
+    { sProject: { $eq: project }, dUpdateDate: { $gte: new Date(strDate) } },
+    {
+        "_id": 0,
+        "sProject": 1,
+        "sDesign": 1,
+        "sCategory": 1,
+        "sReviewText": 1,
+        "dUpdateDate": 1
+    }
+).sort(
+    { dUpdateDate: -1 }
+).pretty();

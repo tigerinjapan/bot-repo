@@ -20,6 +20,7 @@ import apps.utils.message_constants as msg_const
 import apps.utils.user_dto as dto
 from apps.utils.function_mongo import check_login
 from apps.utils.rank_dao import update_rank_info_of_api
+from apps.utils.review_dao import update_review_info_of_api
 from apps.utils.user_dao import get_user_info, update_user_info_on_form
 
 # FastAPIインスタンス生成とセッションミドルウェア追加
@@ -215,6 +216,22 @@ async def ranking_update(request: Request):
     if func.is_network():
         update_rank_info_of_api(json_data)
     result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
+    return result
+
+
+# レビュー保存
+@app.post("/review/add")
+async def review_add(request: Request):
+    try:
+        json_data = await request.json()
+        update_review_info_of_api(json_data)
+        message = msg_const.MSG_INFO_PROC_COMPLETED
+
+    except Exception as e:
+        func.print_error_msg(const.COLL_REVIEW, e)
+        message = msg_const.MSG_ERR_PROC_FAILED
+
+    result = {const.STR_MESSAGE: message}
     return result
 
 

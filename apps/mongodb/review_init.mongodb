@@ -1,0 +1,78 @@
+// db, collection
+const database = "mongoDB";
+const coll = "review";
+
+// Select the database to use.
+use(database)
+
+// delete collection
+db.getCollection(coll).drop();
+
+// create collection
+db.createCollection(coll,
+    {
+        validator: {
+            $jsonSchema: {
+                required: [
+                    "sProject",
+                    "sDesign",
+                    "sCategory",
+                    "sReviewText",
+                    "dUpdateDate"
+                ],
+                properties: {
+                    "sProject": {
+                        bsonType: "string",
+                        enum: [
+                            "line",
+                            "trip",
+                            "number"
+                        ],
+                        description: "must be a string and can only be one of the enum values and is required"
+                    },
+                    "sDesign": {
+                        bsonType: "string",
+                        enum: [
+                            "detail",
+                            "api",
+                            "db"
+                        ],
+                        description: "must be a string and can only be one of the enum values and is required"
+                    },
+                    "sCategory": {
+                        bsonType: "string",
+                        enum: [
+                            "add",
+                            "modify",
+                            "layout",
+                            "etc"
+                        ],
+                        description: "must be a string and can only be one of the enum values and is required"
+                    },
+                    "sReviewText": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "dUpdateDate": {
+                        bsonType: "date",
+                        description: "must be a date and is required"
+                    }
+                }
+            }
+        }
+    });
+
+// // create index
+// db.getCollection(coll).createIndex({
+//     "sProject": 1,
+//     "sDesign": 1,
+//     "sCategory": 1,
+//     "sReviewText": 1
+// },
+//     {
+//         "name": "indexReview",
+//         "unique": true
+//     });
+
+// get collection infos
+db.getCollectionInfos({ name: coll });
