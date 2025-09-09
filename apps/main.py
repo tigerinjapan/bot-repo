@@ -14,6 +14,7 @@ dotenv.load_dotenv()
 
 # ジョブ実行時間を環境変数から取得
 HOUR_DAILY_JOB = func.get_env_val("NUM_HOUR_DAILY_JOB", int_flg=const.FLG_ON)
+HOUR_DAILY_JOB_2 = func.get_env_val("NUM_HOUR_DAILY_JOB_2", int_flg=const.FLG_ON)
 MIN_HOURLY_JOB = func.get_env_val("NUM_MIN_HOURLY_JOB", int_flg=const.FLG_ON)
 SEC_NO_SLEEP = func.get_env_val("NUM_SEC_NO_SLEEP", int_flg=const.FLG_ON)
 
@@ -28,12 +29,11 @@ def main():
 
 def job_scheduler():
     # 毎日指定された時間に実行
-    hour_daily = HOUR_DAILY_JOB
-    # if func.is_holiday():
-    #     hour_daily += 1
+    time_daily_job = f"{HOUR_DAILY_JOB:02d}:00"
+    time_daily_job_2 = f"{HOUR_DAILY_JOB_2:02d}:00"
 
-    schedule.every().day.at(f"{hour_daily:02d}:00").do(daily_job)
-    schedule.every().day.at("19:00").do(daily_job_2)  # TODO 時間検討
+    schedule.every().day.at(time_daily_job).do(daily_job)
+    schedule.every().day.at(time_daily_job_2).do(daily_job_2)
 
     # 1時間毎に実行
     schedule.every().hour.at(f":{MIN_HOURLY_JOB:02d}").do(hourly_job)

@@ -23,8 +23,7 @@ const TAG_TEXTAREA = "textarea";
 const TAG_BUTTON = "button";
 
 // メッセージ
-const MSG_OK_SAVE = "保存に成功しました";
-const MSG_ERR_SAVE = "保存に失敗しました";
+const MSG_OK_SEND = "送信成功！";
 const MSG_ERR_SEND = "送信エラー";
 const MSG_ERR_NO_INPUT = "入力内容がありません";
 

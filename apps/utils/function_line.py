@@ -143,7 +143,7 @@ def get_template_msg_json(
         "altText": alt_text,
         "template": {
             "type": "buttons",
-            "thumbnailImageUrl": img_url,
+            # "thumbnailImageUrl": img_url,
             "imageAspectRatio": "rectangle",
             "imageSize": "cover",
             "imageBackgroundColor": "#FFFFFF",

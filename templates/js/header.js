@@ -18,11 +18,10 @@ const APP_STUDY = "study";
 const APP_CAFE = "cafe";
 const APP_TRIP = "trip";
 const APP_USER = "user";
-const APP_NUMBER = "number";
 
 const LIST_APP_GUEST_MO = [APP_DRAMA, APP_RANKING, APP_LCC, APP_TV];
 const LIST_APP_GUEST = [APP_TODAY, APP_SITE].concat(LIST_APP_GUEST_MO);
-const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_CAFE, APP_TRIP, APP_USER, APP_NUMBER];
+const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_CAFE, APP_TRIP, APP_USER];
 const LIST_APP = LIST_APP_GUEST.concat(LIST_APP_NOT_GUEST);
 
 // アプリケーション連番：お気に入り表示用
