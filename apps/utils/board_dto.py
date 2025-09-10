@@ -41,7 +41,7 @@ class board:
         return asdict(self)
 
 
-# JSONデータ取得（掲示板情報の登録）
+# JSONデータ取得（掲示板情報の登録用）
 def get_update_data_for_board_info(data):
     app = data[0]
     category = data[1]
@@ -52,3 +52,17 @@ def get_update_data_for_board_info(data):
 
     json_data = asdict(board(app, category, contents, remark, status, userName))
     return json_data
+
+
+# 掲示板データ取得
+def get_board_data(data):
+    app = data[FI_APP]
+    category = data[FI_CATEGORY]
+    contents = data[FI_CONTENTS]
+    remark = data[FI_REMARK]
+    status = data[FI_STATUS]
+    userName = data[FI_USER_NAME]
+    updateDate = data[FI_UPDATE_DATE]
+
+    board_data = [app, category, contents, remark, status, userName, updateDate]
+    return board_data

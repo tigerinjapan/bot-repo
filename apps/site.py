@@ -2,6 +2,7 @@
 
 import pandas as pd
 
+import apps.utils.board_dao as board_dao
 import apps.utils.constants as const
 import apps.utils.function as func
 
@@ -12,6 +13,7 @@ app_name = func.get_app_name(__file__)
 app_title = "お気に入りサイト"
 app_title_cafe = "おしゃれカフェ"
 app_title_trip = "旅行"
+app_title_board = "掲示板"
 
 # カラムリスト
 col_list = [
@@ -22,6 +24,7 @@ col_list = [
 
 col_list_cafe = ["店名", "住所", "メニュー", "内観"]
 col_list_trip = ["区分", "内容", "アクセス", "画像"]
+col_list_board = ["アプリ", "区分", "内容", "備考", "状態", "作成者", "更新日時"]
 
 menu_trip_div = ["両替所", "観光地", "レストラン", "その他"]
 
@@ -32,11 +35,19 @@ URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
 # データリスト取得
 def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
     # JSONデータ取得
-    json_data = func.get_input_data(app_div)
+    if app_div == const.APP_BOARD:
+        json_data = board_dao.get_board_info()
+    else:
+        json_data = func.get_input_data(app_div)
 
     # DataFrame変換
     df_all = pd.DataFrame(json_data)
-    if app_div == const.APP_SITE:
+
+    if app_div == const.APP_BOARD:
+        df = df_all
+        df.columns = col_list_board
+
+    elif app_div == const.APP_SITE:
         user_auth = get_user_auth_num(user_div)
         search_query = f'auth <= "{user_auth}"'
         df_query = df_all.query(search_query)

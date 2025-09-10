@@ -31,6 +31,6 @@ def update_rank_info_of_api(json_data):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    number = 1000
+    number = 8889
     rank_info = get_rank_info(number)
     print(rank_info)

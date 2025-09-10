@@ -24,7 +24,7 @@ URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.APP_TODAY}"
 
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
-LIST_ALL_APP_DIV = LIST_APP_DIV + [site, site, site]
+LIST_ALL_APP_DIV = LIST_APP_DIV + ([site] * 4)
 
 LIST_APP_NUM_OFF = [
     const.APP_TODAY,
@@ -38,6 +38,7 @@ LIST_APP_AUTH_OFF = [
     const.APP_CAFE,
     const.APP_TRIP,
 ]
+
 
 # クラスの定義
 class AppExec:
@@ -89,6 +90,7 @@ def exec_result(request: Request, app_name: str):
     return target_html, context
 
 
+# 【画面】パラメータ取得
 def get_context_data(app_name: str, user_div: str = const.AUTH_DEV):
     app_div_idx = const.LIST_ALL_APP_NAME.index(app_name)
     app_div = LIST_ALL_APP_DIV[app_div_idx]
@@ -99,6 +101,8 @@ def get_context_data(app_name: str, user_div: str = const.AUTH_DEV):
         app_title = site.app_title_cafe
     elif app_name == const.APP_TRIP:
         app_title = site.app_title_trip
+    elif app_name == const.APP_BOARD:
+        app_title = site.app_title_board
 
     num_flg = const.FLG_ON
     if func.check_in_list(app_name, LIST_APP_NUM_OFF):
@@ -107,7 +111,7 @@ def get_context_data(app_name: str, user_div: str = const.AUTH_DEV):
     app_exec = AppExec(app_div, app_name)
     app_exec.start()
 
-    if app_name in [const.APP_SITE, const.APP_CAFE, const.APP_TRIP]:
+    if app_name in const.LIST_APP_SITE:
         df = site.get_df_data(app_name, user_div)
         data_list = get_data_list(df)
     else:
