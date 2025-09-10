@@ -31,7 +31,7 @@ URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
 
 
 # データリスト取得
-def get_df_data(user_div: str, app_div: str):
+def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
     # JSONデータ取得
     json_data = func.get_input_data(app_div)
 
@@ -85,7 +85,6 @@ def get_user_auth_num(user_div):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    user_div = const.AUTH_DEV
     app_div = const.APP_CAFE
-    data_list = get_df_data(user_div, app_div)
+    data_list = get_df_data(app_div)
     func.print_test_data(data_list.values.tolist())

@@ -34,6 +34,10 @@ LIST_APP_NUM_OFF = [
     const.APP_TRIP,
 ]
 
+LIST_APP_AUTH_OFF = [
+    const.APP_CAFE,
+    const.APP_TRIP,
+]
 
 # クラスの定義
 class AppExec:
@@ -59,13 +63,33 @@ class AppExec:
 
 # 【画面】取得結果
 def exec_result(request: Request, app_name: str):
-    user_info = request.session[const.STR_USER]
-    user_div, user_name, app_menu = (
-        user_info[dto.FI_USER_DIV],
-        user_info[dto.FI_USER_NAME],
-        user_info[dto.FI_MENU],
-    )
+    if not func.check_in_list(app_name, LIST_APP_AUTH_OFF):
+        user_info = request.session[const.STR_USER]
+        user_div, user_name, app_menu = (
+            user_info[dto.FI_USER_DIV],
+            user_info[dto.FI_USER_NAME],
+            user_info[dto.FI_MENU],
+        )
+    else:
+        user_div = user_name = app_menu = const.SYM_BLANK
 
+    app_title, data_list, num_flg = get_context_data(app_name, user_div)
+
+    target_html = const.HTML_RESULT
+    context = {
+        const.STR_REQUEST: request,
+        const.STR_TITLE: app_title,
+        "user_div": user_div,
+        "user_name": user_name,
+        "app_name": app_name,
+        "app_menu": app_menu,
+        "data_list": data_list,
+        "num_flg": num_flg,
+    }
+    return target_html, context
+
+
+def get_context_data(app_name: str, user_div: str = const.AUTH_DEV):
     app_div_idx = const.LIST_ALL_APP_NAME.index(app_name)
     app_div = LIST_ALL_APP_DIV[app_div_idx]
 
@@ -84,25 +108,14 @@ def exec_result(request: Request, app_name: str):
     app_exec.start()
 
     if app_name in [const.APP_SITE, const.APP_CAFE, const.APP_TRIP]:
-        df = site.get_df_data(user_div, app_name)
+        df = site.get_df_data(app_name, user_div)
         data_list = get_data_list(df)
     else:
         data_list = app_exec.data()
 
     app_exec.end()
 
-    target_html = const.HTML_RESULT
-    context = {
-        const.STR_REQUEST: request,
-        const.STR_TITLE: app_title,
-        "user_div": user_div,
-        "user_name": user_name,
-        "app_name": app_name,
-        "app_menu": app_menu,
-        "data_list": data_list,
-        "num_flg": num_flg,
-    }
-    return target_html, context
+    return app_title, data_list, num_flg
 
 
 # 【画面】表示データ取得

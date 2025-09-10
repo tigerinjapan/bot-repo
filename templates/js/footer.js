@@ -1,5 +1,9 @@
 function writeFooter(userDiv) {
 
+  if (userDiv == SYM_BLANK) {
+    return;
+  }
+
   const addr = "東京都新宿区新宿ビル5F";
   const tel = "042-1234-567";
   const mailAddr = "kobe_dev@jh.com";
