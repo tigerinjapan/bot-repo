@@ -14,36 +14,30 @@ db.createCollection(coll,
         validator: {
             $jsonSchema: {
                 required: [
-                    "sApp",
-                    "sCategory",
+                    "nApp",
+                    "nCategory",
+                    "nType",
                     "sContents",
                     "sRemark",
-                    "sStatus",
+                    "nStatus",
                     "sUserName",
                     "dUpdateDate"
                 ],
                 properties: {
-                    "sApp": {
-                        bsonType: "string",
-                        enum: [
-                            "line",
-                            "today",
-                            "news",
-                            "study",
-                            "trip",
-                            "number",
-                            "etc"
-                        ],
-                        description: "must be a string and can only be one of the enum values and is required"
+                    "nApp": {
+                        bsonType: "int",
+                        enum: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                        description: "can only be one of the enum values and is required"
                     },
-                    "sCategory": {
-                        bsonType: "string",
-                        enum: [
-                            "review",
-                            "memo",
-                            "etc"
-                        ],
-                        description: "must be a string and can only be one of the enum values and is required"
+                    "nCategory": {
+                        bsonType: "int",
+                        enum: [0, 1, 2, 3],
+                        description: "can only be one of the enum values and is required"
+                    },
+                    "nType": {
+                        bsonType: "int",
+                        enum: [0, 1, 2, 3],
+                        description: "can only be one of the enum values and is required"
                     },
                     "sContents": {
                         bsonType: "string",
@@ -53,15 +47,10 @@ db.createCollection(coll,
                         bsonType: "string",
                         description: "must be a string and is required"
                     },
-                    "sStatus": {
-                        bsonType: "string",
-                        enum: [
-                            "new",
-                            "progress",
-                            "pend",
-                            "done"
-                        ],
-                        description: "must be a string and can only be one of the enum values and is required"
+                    "nStatus": {
+                        bsonType: "int",
+                        enum: [0, 1, 2, 3],
+                        description: "can only be one of the enum values and is required"
                     },
                     "sUserName": {
                         bsonType: "string",
@@ -74,6 +63,16 @@ db.createCollection(coll,
                 }
             }
         }
+    });
+
+// create index
+db.getCollection(coll).createIndex({
+    "sContents": 1,
+    "dUpdateDate": 1
+},
+    {
+        "name": "indexContentsUpdateDate",
+        "unique": true
     });
 
 // get collection infos

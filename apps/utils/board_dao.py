@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import apps.utils.constants as const
 import apps.utils.function_mongo as func_mongo
 import apps.utils.board_dto as dto
@@ -5,29 +7,29 @@ import apps.utils.board_dto as dto
 # 掲示板情報
 COLL = const.COLL_BOARD
 
-# ステータス
-STS_NEW = "new"
-
 
 # 掲示板データ取得
-def get_board_info(status: str = STS_NEW):
-    client = func_mongo.db_connect()
-    cond = {dto.FI_STATUS: status}  # TODO: 条件検討要（完了以外、または直近1ヶ月）
-    select_data = {
-        "_id": 0,
-        "sApp": 1,
-        "sCategory": 1,
-        "sContents": 1,
-        "sRemark": 1,
-        "sStatus": 1,
-        "sUserName": 1,
-        "dUpdateDate": 1,
-    }
-    result = func_mongo.db_find(client, COLL, cond, select_data)
+def get_board_info():
     board_data = []
+
+    client = func_mongo.db_connect()
+
+    # 30日前のデータ
+    target_date = datetime.now() + timedelta(days=-30)
+
+    cond = {
+        "$or": [
+            {dto.FI_STATUS: dto.STATUS_NEW},
+            {dto.FI_UPDATE_DATE: {"$gte": target_date}},
+        ]
+    }
+    sort = {dto.FI_USER_NAME: 1, dto.FI_STATUS: 1, dto.FI_UPDATE_DATE: -1}
+
+    result = func_mongo.db_find(client, COLL, cond, sort=sort)
     if result:
         for board_info in result:
-            board_data.append(board_info)
+            json_data = dto.get_board_data(board_info)
+            board_data.append(json_data)
 
     func_mongo.db_close(client)
     return board_data
@@ -44,6 +46,5 @@ def insert_board_data_of_api(json_data):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    status = "new"
-    board_info = get_board_info(status)
+    board_info = get_board_info()
     print(board_info)

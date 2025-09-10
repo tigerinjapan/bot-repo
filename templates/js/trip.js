@@ -1,24 +1,3 @@
-// 空文字定数
-const SYM_BLANK = "";
-
-// 言語名（表示用）
-const LANG_JA = "日本語";
-const LANG_KO = "한국어";
-const LANG_EN = "English";
-const LIST_LANG = [LANG_JA, LANG_KO, LANG_EN];
-
-// 言語コード（データ参照用）
-const LANG_VAL_JA = "ja";
-const LANG_VAL_KO = "ko";
-const LANG_VAL_EN = "en";
-const LIST_LANG_VAL = [LANG_VAL_JA, LANG_VAL_KO, LANG_VAL_EN];
-
-// 都市コード・都市名リスト
-const LIST_CITY_VAL = ["tokyo", "seoul", "taipei", "hanoi", "bangkok", "manila"];
-const LIST_CITY_JA = ["東京", "ソウル", "台北", "ハノイ", "バンコク", "マニラ"];
-const LIST_CITY_KO = ["도쿄", "서울", "타이베이", "하노이", "방콕", "마닐라"];
-const LIST_CITY_EN = ["Tokyo", "Seoul", "Taipei", "Hanoi", "Bangkok", "Manila"];
-
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", () => {
   // セレクトボックス・各表示領域の取得

@@ -395,7 +395,7 @@ def test_gemini_image():
         func.print_error_msg(e)
 
 
-# 生成ビデオ取得
+# 生成ビデオ取得 # TODO: エラー
 def get_generate_video(div: str, prompt: str) -> str:
     # クライアントの初期化
     client = genai.Client(api_key=GEMINI_API_KEY)
@@ -419,6 +419,7 @@ def get_generate_video(div: str, prompt: str) -> str:
     print("Generated video saved to dialogue_example.mp4")
 
 
+# 生成ビデオ取得 # TODO: エラー
 def get_generate_video2(prompt: str):
     # クライアントの初期化
     client = genai.Client(api_key=GEMINI_API_KEY)
@@ -430,20 +431,21 @@ def get_generate_video2(prompt: str):
     return response
 
 
+# 生成ビデオ取得 # TODO: エラー
 def test_generate_video():
     div = "example"
     prompt = """A close up of two people staring at a cryptic drawing on a wall, torchlight flickering.
     A man murmurs, 'This must be it. That's the secret code.' The woman looks at him and whispering excitedly, 'What did you find?'"""
 
-    # get_generate_video(div, prompt)
-    get_generate_video2(prompt)
+    get_generate_video(div, prompt)
+    # get_generate_video2(prompt)
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # test_gemini()
+    test_gemini()
     # test_gemini_image()
     # msg = "[test] test"
     # today_weather = "晴れのち曇り"
     # today_outfit = "白いブラウス&黄色いスカート"
     # get_today_news_image(msg, today_weather, today_outfit)
-    test_generate_video()
+    # test_generate_video()

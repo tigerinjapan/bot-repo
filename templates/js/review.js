@@ -8,6 +8,9 @@ const ELEM_ID_TABLE = TAG_TABLE + STR_REVIEW;
 const ELEM_ID_TEXTAREA = TAG_TEXTAREA + STR_REVIEW;
 const ELEM_NAME_ITEMS = "items[]";
 
+// ページ読み込み時にsessionStorageからデータを取得
+let userName = sessionStorage.getItem(STR_USER_NAME);
+
 document.getElementsByTagName(TAG_HEAD)[0].innerHTML = CONTENTS_HEAD;
 document.title = STR_REVIEW;
 
@@ -15,34 +18,31 @@ document.title = STR_REVIEW;
 document.addEventListener("DOMContentLoaded", () => {
   function init() {
 
-    document.getElementsByTagName(TAG_H1)[0].textContent = "設計書レビュー";
+    document.getElementsByTagName(TAG_H1)[0].textContent = "アプリ・レビュー";
 
     let selectList = [
       [
-        "対象プロジェクト",
-        STR_PROJECT,
-        ["line", "trip", "number"],
-        ["Line Message", "Trip & Life", "Number Plate"],
-        1
+        "アプリ",
+        STR_APP,
+        ["Line Message", "Trip & Life", "Number Plate", "その他"],
+        0
       ],
       [
-        "対象設計書",
-        STR_DESIGN,
-        ["detail", "api", "db"],
-        ["詳細", "API", "DB"],
+        "カテゴリー",
+        STR_CATEGORY,
+        ["レビュー", "メモ", "その他"],
         0
       ],
     ];
 
     let parentElemId = ELEM_ID_DIV;
-    for (const [lblTxt, elemId, valList, txtList, selectValIdx] of selectList) {
+    for (const [lblTxt, elemId, txtList, selectValIdx] of selectList) {
       createElem(TAG_LABEL, lblTxt, parentElemId);
-      createOption(elemId, elemId, valList, txtList, parentElemId, selectValIdx);
+      createOption(elemId, elemId, txtList, parentElemId, selectValIdx);
     }
 
-    const thList = ["No.", "区分", "レビュー内容"]
-    const categoryValList = ["add", "modify", "layout", "etc"];
-    const categoryTxtList = ["機能追加", "機能修正", "レイアウト", "その他"];
+    const thList = ["No.", "区分", "内容"]
+    const typeTxtList = ["機能追加", "機能修正", "レイアウト", "その他"];
 
     parentElemId = ELEM_ID_TABLE;
     for (let i = 0; i <= 5; i++) {
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (j == 0) {
             getElem(tdId2).textContent = i;
           } else if (j == 1) {
-            createOption(STR_CATEGORY + strIdx, STR_CATEGORY, categoryValList, categoryTxtList, tdId2, 0);
+            createOption(STR_TYPE + strIdx, STR_TYPE, typeTxtList, tdId2, 0);
           } else {
             createElem(TAG_TEXTAREA, ELEM_ID_TEXTAREA + strIdx, tdId2);
           }
@@ -77,7 +77,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 初期表示
   init();
+  setUserName();
 });
+
+// ユーザ名設定
+function setUserName() {
+  if (!userName || userName == SYM_BLANK) {
+    userName = prompt(MSG_INFO_INPUT_USER);
+    sessionStorage.setItem(STR_USER_NAME, userName);
+  }
+}
 
 // レビュー送信
 function sendReview() {
@@ -86,17 +95,17 @@ function sendReview() {
 
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
-    const project = getElem(STR_PROJECT).value;
-    const design = getElem(STR_DESIGN).value;
+    const app = getElem(STR_APP).value;
+    const category = getElem(STR_CATEGORY).value;
 
     let reviewList = [];
     let addCnt = 0;
     for (let i = 1; i <= 5; i++) {
       const idx = i.toString();
-      const category = getElem(STR_CATEGORY + idx).value;
-      const textareaReview = getElem(ELEM_ID_TEXTAREA + idx).value;
-      if (textareaReview) {
-        const reviewData = [project, design, category, textareaReview];
+      const type = getElem(STR_TYPE + idx).value;
+      const contents = getElem(ELEM_ID_TEXTAREA + idx).value;
+      if (contents) {
+        const reviewData = [app, category, type, contents, userName];
         reviewList.push(reviewData);
         addCnt++;
       }
@@ -111,9 +120,9 @@ function sendReview() {
     // MongoDB保存API呼び出し
     try {
 
-      let url = URL_REVIEW_ADD;
+      let url = URL_BOARD_ADD;
       if (isLocal()) {
-        url = URL_REVIEW_LOCAL;
+        url = URL_BOARD_LOCAL;
       }
 
       const res = await fetch(url, {
@@ -125,8 +134,14 @@ function sendReview() {
       });
       const result = await res.json();
       const message = result["message"];
+
+      // getElem(STR_MSG).textContent = message;
+      // getElem(ELEM_ID_FORM).reset();
       console.log(message);
-      getElem(STR_MSG).textContent = message;
+      alert(message);
+
+      // ページ全体をリセット（再読み込み）
+      location.reload();
     } catch {
       getElem(STR_MSG).textContent = MSG_ERR_SEND;
     }
@@ -160,20 +175,20 @@ function createElem(tagName, elemVal, parentElemId) {
 }
 
 // オプション生成
-function createOption(elemId, elemName, valList, txtList, parentElemId, selectValIdx) {
+function createOption(elemId, elemName, txtList, parentElemId, selectValIdx) {
   const selectElem = document.createElement(TAG_SELECT);
   selectElem.id = elemId;
   selectElem.name = elemName;
 
-  for (let i = 0; i < valList.length; i++) {
+  for (let i = 0; i < txtList.length; i++) {
     const option = document.createElement(TAG_OPTION);
-    option.value = valList[i];
+    option.value = i;
     option.textContent = txtList[i];
     selectElem.appendChild(option);
   }
 
-  if (0 <= selectValIdx && selectValIdx < valList.length) {
-    selectElem.value = valList[selectValIdx];
+  if (0 <= selectValIdx && selectValIdx < txtList.length) {
+    selectElem.value = selectValIdx;
   }
 
   const parentElem = getElem(parentElemId);

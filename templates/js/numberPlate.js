@@ -1,37 +1,3 @@
-// 記号
-const SYM_BLANK = "";
-const SYM_LEVEL = "🌟";
-
-// 文字列
-COLOR_RED = "red";
-COLOR_GREEN = "green";
-
-LEVEL_EASY = "easy";
-LEVEL_MEDIUM = "medium";
-LEVEL_HARD = "hard";
-
-// メッセージ定義
-const MSG_INFO_ANSWER_EXAMPLE = "解の例:";
-const MSG_INFO_INPUT_USER = "ユーザ名(英数字)を入力してください。";
-const MSG_INFO_OK_ANSWER = "正解です!";
-const MSG_INFO_OK_RANK = "新記録！ランクインしました！";
-
-const MSG_ERR_NO_ANSWER = "この問題には解が見つかりませんでした";
-const MSG_ERR_NO_INPUT = "入力値がありません";
-const MSG_ERR_DIGIT = "4つの数字を1回ずつ使ってください!";
-const MSG_ERR_EQUAL = "イコールは1つだけ使ってください!";
-const MSG_ERR_FORMAT = "数式の形式が正しくありません!";
-const MSG_ERR_DIVIDE_BY_ZERO = "ゼロ除算はできません!";
-const MSG_ERR_MATCH = "計算結果が一致しません!";
-const MSG_ERR_RANK = "ランク送信に失敗しました";
-
-// URL
-const URL_SERVER = "https://kobe-dev.koyeb.app";
-const URL_LOCAL = "http://127.0.0.1:5000"
-const URL_RANKING_API = "/number/ranking";
-const URL_RANKING_SERVER = `${URL_SERVER}${URL_RANKING_API}`;
-const URL_RANKING_LOCAL = `${URL_LOCAL}${URL_RANKING_API}`;
-
 // ページ読み込み時にsessionStorageからデータを取得
 let userName = sessionStorage.getItem('userName');
 
@@ -221,12 +187,3 @@ function setElem(elemId, text, textFlg, answerFlg) {
   const style = 'color:' + color + ';';
   elem.style = style;
 }
-
-// ローカル環境判定
-function isLocal() {
-  let localFlg = false;
-  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-    localFlg = true;
-  }
-  return localFlg;
-};

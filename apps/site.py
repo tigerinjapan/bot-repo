@@ -24,7 +24,7 @@ col_list = [
 
 col_list_cafe = ["店名", "住所", "メニュー", "内観"]
 col_list_trip = ["区分", "内容", "アクセス", "画像"]
-col_list_board = ["アプリ", "区分", "内容", "備考", "状態", "作成者", "更新日時"]
+col_list_board = ["アプリ", "カテゴリー", "区分", "内容", "備考", "状態", "作成者", "更新日時"]
 
 menu_trip_div = ["両替所", "観光地", "レストラン", "その他"]
 
@@ -95,6 +95,6 @@ def get_user_auth_num(user_div):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    app_div = const.APP_CAFE
+    app_div = const.APP_BOARD
     data_list = get_df_data(app_div)
     func.print_test_data(data_list.values.tolist())

@@ -18,13 +18,14 @@ use(database)
 // });
 
 // find documents
-db.rankInfo.find(
-    { sUserName: { $eq: userName }, dUpdateDate: { $gte: new Date(strDate) } },
-    {
-        "_id": 0,
-        "nNumber": 1,
-        "sRankTime": 1
-    }
-).sort(
-    { sRankTime: -1 }
-).pretty();
+cond = { sUserName: { $ne: userName }, dUpdateDate: { $gte: new Date(strDate) } };
+selectData = {
+    _id: 0,
+    sUserName: 1,
+    nNumber: 1,
+    sRankTime: 1,
+    dUpdateDate: 1
+}
+sortData = { sRankTime: 1 }
+
+db.rankInfo.find(cond, selectData).sort(sortData).pretty();

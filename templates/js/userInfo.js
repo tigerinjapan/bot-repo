@@ -1,17 +1,3 @@
-// メッセージ
-const MSG_VAL_NOT_EXIST = "が存在しません";
-const MSG_ERR_PASSWORD_NOT_MATCH = "パスワードが一致しません"
-const MSG_ERR_MENU_NO_CHECKED_ELEMENTS = "メニューは、1つ以上チェックしてください"
-const MSG_ERR_MENU_CHECKED_MAX = "メニューは、最大5つまでチェックしてください"
-
-// ID
-const ID_SEX = "sex";
-const ID_ZIP_CD = "zipCd";
-const ID_PREF = "pref";
-const ID_TOWN = "town";
-const ID_LINE = "line";
-const ID_STATION = "station";
-
 // 文字列
 const STR_LINES = "Lines";
 const STR_STATIONS = "Stations";
@@ -21,9 +7,24 @@ const STR_ZIP_CD_JA = "郵便番号";
 const STR_LINE_JA = "沿線";
 const STR_STATION_JA = "駅";
 
+// ID
+const ID_SEX = "sex";
+const ID_ZIP_CD = "zipCd";
+const ID_PREF = "pref";
+const ID_TOWN = "town";
+const ID_LINE = "line";
+const ID_STATION = "station";
+
+// メッセージ
+const MSG_VAL_NOT_EXIST = "が存在しません";
+const MSG_ERR_PASSWORD_NOT_MATCH = "パスワードが一致しません"
+const MSG_ERR_MENU_NO_CHECKED_ELEMENTS = "メニューは、1つ以上チェックしてください"
+const MSG_ERR_MENU_CHECKED_MAX = "メニューは、最大5つまでチェックしてください"
+
 // URL
 const URL_SERVER = "https://kobe-dev.koyeb.app";
 const URL_LOCAL = "http://127.0.0.1:5000"
+
 const URL_ZIP_API = "/api/zipCode";
 const URL_ZIP_SERVER = `${URL_SERVER}${URL_ZIP_API}`;
 const URL_ZIP_LOCAL = `${URL_LOCAL}${URL_ZIP_API}`;

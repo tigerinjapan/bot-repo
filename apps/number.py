@@ -176,4 +176,5 @@ if __name__ == const.MAIN_FUNCTION:
     # output_df_to_csv()
     # test_number()
     # get_random_number()
-    get_ranking_info(1001)
+    rank_user, rank_time = get_ranking_info(4567)
+    print(rank_user, rank_time)

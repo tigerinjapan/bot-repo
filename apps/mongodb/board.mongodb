@@ -1,35 +1,82 @@
 // db
 const database = "mongoDB";
-const app = "trip";
-const userName = "hong";
+const app = 1; // line, trip, number, etc
+const category = 0 // review, memo, etc
+const type = 0; // add, modify, layout, etc
+const remark = "-";
+const sts = 0 // new, progress, pend, done
+let userName = "hong";
 const strDate = "2025-09-01";
 
 // Select the database to use.
 use(database)
 
-// insert documents
-db.board.insertOne({
-    "sApp": app,
-    "sCategory": "review",
-    "sContents": "board_contents",
-    "sRemark": "board_remark",
-    "sStatus": "new",
-    "sUserName": userName,
-    "dUpdateDate": new Date()
-});
+// // insert documents
+// boardData_1 = {
+//     "nApp": app,
+//     "nCategory": category,
+//     "nType": 2,
+//     "sContents": "落ち着いた雰囲気にする",
+//     "sRemark": "検討中",
+//     "nStatus": sts,
+//     "sUserName": userName,
+//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
+// };
+
+// boardData_2 = {
+//     "nApp": 3,
+//     "nCategory": category,
+//     "nType": type,
+//     "sContents": "レビュー：項目（ユーザ名）",
+//     "sRemark": "プルダウン追加",
+//     "nStatus": 3,
+//     "sUserName": userName,
+//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
+// };
+
+// boardData_3 = {
+//     "nApp": 3,
+//     "nCategory": category,
+//     "nType": type,
+//     "sContents": "掲示板の追加",
+//     "sRemark": "新規ページ",
+//     "nStatus": 3,
+//     "sUserName": userName,
+//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
+// };
+
+// boardData_4 = {
+//     "nApp": 3,
+//     "nCategory": 1,
+//     "nType": 1,
+//     "sContents": "html、jsの共通化",
+//     "sRemark": "const.js",
+//     "nStatus": 3,
+//     "sUserName": userName,
+//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
+// };
+
+// // データを登録
+// const bulkData = [];
+// bulkData.push(boardData_1);
+// bulkData.push(boardData_2);
+// bulkData.push(boardData_3);
+// bulkData.push(boardData_4);
+// db.board.insertMany(bulkData);
 
 // find documents
 db.board.find(
-    { sApp: { $eq: app }, dUpdateDate: { $gte: new Date(strDate) } },
+    { dUpdateDate: { $gte: new Date(strDate) } },
     {
-        "_id": 0,
-        "sApp": 1,
-        "sCategory": 1,
-        "sContents": 1,
-        "sRemark": 1,
-        "sStatus": 1,
-        "sUserName": 1,
-        "dUpdateDate": 1
+        _id: 0,
+        nApp: 1,
+        nCategory: 1,
+        nType: 1,
+        sContents: 1,
+        sRemark: 1,
+        nStatus: 1,
+        sUserName: 1,
+        dUpdateDate: 1
     }
 ).sort(
     { dUpdateDate: -1 }
