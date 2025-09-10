@@ -20,7 +20,6 @@ col_list = [
     const.STR_CONTENTS_JA,
 ]
 
-# col_list_cafe = ["店名", "特徴", "住所", "営業時間", "モーニング", "メニュー", "内観"]
 col_list_cafe = ["店名", "住所", "メニュー", "内観"]
 col_list_trip = ["区分", "内容", "アクセス", "画像"]
 

@@ -1,9 +1,11 @@
 from pymongo import DESCENDING
 
 import apps.utils.constants as const
+import apps.utils.function as func
 import apps.utils.function_mongo as func_mongo
+import apps.utils.message_constants as msg_const
 import apps.utils.user_dto as dto
-from apps.utils.function import get_masking_data
+
 
 # コレクション: ユーザー情報
 COLL = const.COLL_USER_INFO
@@ -12,7 +14,7 @@ COLL = const.COLL_USER_INFO
 # ユーザー情報取得
 def get_user_info(userId: str):
     client = func_mongo.db_connect()
-    user_id = get_masking_data(userId)
+    user_id = func.get_masking_data(userId)
     user_info = find_user_info(client, user_id)
     if not user_info:
         return const.NONE_CONSTANT
@@ -55,7 +57,6 @@ def insert_user_info(client, insert_data):
 def update_user_info(client, update_data):
     user_id = update_data[dto.FI_USER_ID]
     cond = {dto.FI_USER_ID: user_id}
-    update_data = {"$set": update_data}
     func_mongo.db_update(client, COLL, cond, update_data)
 
 
@@ -75,6 +76,33 @@ def update_user_info_on_form(form_data, form_flg: bool = const.FLG_ON):
         update_data = dto.get_json_data_for_user_info(form_data)
     update_user_info(client, update_data)
     func_mongo.db_close(client)
+
+
+# ログインチェック
+def check_login(input_id: str, input_pw: str, user_info) -> str:
+    chk_msg = const.SYM_BLANK
+
+    network_flg = func.is_network()
+    if network_flg:
+        if input_id and input_pw and user_info:
+            user_id = user_info[dto.FI_USER_ID]
+            user_id = func.get_decoding_masking_data(user_id)
+            user_pw = user_info[dto.FI_USER_PW]
+            user_pw = func.get_decoding_masking_data(user_pw)
+
+            if input_id != user_id:
+                chk_msg = msg_const.MSG_ERR_USER_NOT_EXIST
+            elif input_pw != user_pw:
+                chk_msg = msg_const.MSG_ERR_PASSWORD_INCORRECT
+        else:
+            chk_msg = msg_const.MSG_ERR_USER_NOT_EXIST
+    else:
+        chk_msg = msg_const.MSG_ERR_CONNECTION_FAILED
+
+    if chk_msg:
+        func.print_info_msg(const.STR_LOGIN, chk_msg)
+
+    return chk_msg
 
 
 if __name__ == const.MAIN_FUNCTION:

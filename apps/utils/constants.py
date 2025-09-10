@@ -373,7 +373,7 @@ LIST_FUND_NAME = [FUND_NAME_SP_500, FUND_NAME_AI, FUND_NAME_US_TECH]
 ##### DB情報 #####
 COLL_USER_INFO = "userInfo"
 COLL_RANK_INFO = "rankInfo"
-COLL_REVIEW = "review"
+COLL_BOARD = "board"
 
 ##### URL #####
 # サイトURL

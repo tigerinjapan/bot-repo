@@ -125,34 +125,8 @@ def db_insert(client, coll_nm: str, insert_data):
 # データ更新
 def db_update(client, coll_nm: str, cond, update_data):
     coll = get_collection(client, coll_nm)
+    update_data = {"$set": update_data}
     coll.update_one(filter=cond, update=update_data)
-
-
-# ログインチェック
-def check_login(input_id: str, input_pw: str, user_info) -> str:
-    chk_msg = const.SYM_BLANK
-
-    network_flg = func.is_network()
-    if network_flg:
-        if input_id and input_pw and user_info:
-            user_id = user_info[dto.FI_USER_ID]
-            user_id = func.get_decoding_masking_data(user_id)
-            user_pw = user_info[dto.FI_USER_PW]
-            user_pw = func.get_decoding_masking_data(user_pw)
-
-            if input_id != user_id:
-                chk_msg = msg_const.MSG_ERR_USER_NOT_EXIST
-            elif input_pw != user_pw:
-                chk_msg = msg_const.MSG_ERR_PASSWORD_INCORRECT
-        else:
-            chk_msg = msg_const.MSG_ERR_USER_NOT_EXIST
-    else:
-        chk_msg = msg_const.MSG_ERR_CONNECTION_FAILED
-
-    if chk_msg:
-        func.print_info_msg(const.STR_LOGIN, chk_msg)
-
-    return chk_msg
 
 
 if __name__ == const.MAIN_FUNCTION:

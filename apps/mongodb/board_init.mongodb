@@ -1,6 +1,6 @@
 // db, collection
 const database = "mongoDB";
-const coll = "review";
+const coll = "board";
 
 // Select the database to use.
 use(database)
@@ -14,42 +14,56 @@ db.createCollection(coll,
         validator: {
             $jsonSchema: {
                 required: [
-                    "sProject",
-                    "sDesign",
+                    "sApp",
                     "sCategory",
-                    "sReviewText",
+                    "sContents",
+                    "sRemark",
+                    "sStatus",
+                    "sUserName",
                     "dUpdateDate"
                 ],
                 properties: {
-                    "sProject": {
+                    "sApp": {
                         bsonType: "string",
                         enum: [
                             "line",
+                            "today",
+                            "news",
+                            "study",
                             "trip",
-                            "number"
-                        ],
-                        description: "must be a string and can only be one of the enum values and is required"
-                    },
-                    "sDesign": {
-                        bsonType: "string",
-                        enum: [
-                            "detail",
-                            "api",
-                            "db"
+                            "number",
+                            "etc"
                         ],
                         description: "must be a string and can only be one of the enum values and is required"
                     },
                     "sCategory": {
                         bsonType: "string",
                         enum: [
-                            "add",
-                            "modify",
-                            "layout",
+                            "review",
+                            "memo",
                             "etc"
                         ],
                         description: "must be a string and can only be one of the enum values and is required"
                     },
-                    "sReviewText": {
+                    "sContents": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "sRemark": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "sStatus": {
+                        bsonType: "string",
+                        enum: [
+                            "new",
+                            "progress",
+                            "pend",
+                            "done"
+                        ],
+                        description: "must be a string and can only be one of the enum values and is required"
+                    },
+                    "sUserName": {
                         bsonType: "string",
                         description: "must be a string and is required"
                     },
@@ -61,18 +75,6 @@ db.createCollection(coll,
             }
         }
     });
-
-// // create index
-// db.getCollection(coll).createIndex({
-//     "sProject": 1,
-//     "sDesign": 1,
-//     "sCategory": 1,
-//     "sReviewText": 1
-// },
-//     {
-//         "name": "indexReview",
-//         "unique": true
-//     });
 
 // get collection infos
 db.getCollectionInfos({ name: coll });

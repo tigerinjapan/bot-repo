@@ -14,14 +14,13 @@ from uvicorn import Config, Server
 import apps.appl as appl
 import apps.line as line
 import apps.test as test
+import apps.utils.board_dao as board_dao
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
-import apps.utils.user_dto as dto
-from apps.utils.function_mongo import check_login
-from apps.utils.rank_dao import update_rank_info_of_api
-from apps.utils.review_dao import update_review_info_of_api
-from apps.utils.user_dao import get_user_info, update_user_info_on_form
+import apps.utils.user_dao as user_dao
+import apps.utils.user_dto as user_dto
+import apps.utils.rank_dao as rank_dao
 
 # FastAPIインスタンス生成とセッションミドルウェア追加
 app = FastAPI()
@@ -113,8 +112,8 @@ async def root(request: Request):
 # ログイン処理
 @app.post(const.PATH_LOGIN)
 async def login(request: Request, userId: str = Form(...), userPw: str = Form(...)):
-    user_info = get_user_info(userId)
-    chk_msg = check_login(userId, userPw, user_info)
+    user_info = user_dao.get_user_info(userId)
+    chk_msg = user_dao.check_login(userId, userPw, user_info)
     if chk_msg:
         request.session.clear()
         context = {
@@ -127,19 +126,19 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
         request.session[const.STR_USER] = user_info
         user_id = func.get_masking_data(userId)
         update_data = {
-            dto.FI_USER_ID: user_id,
-            dto.FI_LAST_LOGIN_DATE: datetime.now(),
+            user_dto.FI_USER_ID: user_id,
+            user_dto.FI_LAST_LOGIN_DATE: datetime.now(),
         }
-        update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
+        user_dao.update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
         response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
-        func.print_info_msg(user_info[dto.FI_USER_NAME], msg_const.MSG_INFO_LOGIN)
+        func.print_info_msg(user_info[user_dto.FI_USER_NAME], msg_const.MSG_INFO_LOGIN)
     return response
 
 
 # ログアウト処理
 @app.get(const.PATH_LOGOUT)
 async def logout(request: Request):
-    user_name = request.session[const.STR_USER][dto.FI_USER_NAME]
+    user_name = request.session[const.STR_USER][user_dto.FI_USER_NAME]
     func.print_info_msg(user_name, msg_const.MSG_INFO_LOGOUT)
     request.session.clear()
     context = {
@@ -183,8 +182,8 @@ async def apps(app_name: str):
 async def user_update(request: Request, userId: str = Form(...)):
     form_data = await request.form()
     dict_data = dict(form_data)
-    update_user_info_on_form(dict_data)
-    user_info = get_user_info(userId)
+    user_dao.update_user_info_on_form(dict_data)
+    user_info = user_dao.get_user_info(userId)
     request.session[const.STR_USER] = user_info
     target_html, context = appl.exec_user(request, const.APP_USER)
     return templates.TemplateResponse(target_html, context)
@@ -214,21 +213,21 @@ async def app_api(request: Request):
 async def ranking_update(request: Request):
     json_data = await request.json()
     if func.is_network():
-        update_rank_info_of_api(json_data)
+        rank_dao.update_rank_info_of_api(json_data)
     result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
     return result
 
 
-# レビュー保存
-@app.post("/review/add")
-async def review_add(request: Request):
+# 掲示板データ保存
+@app.post("/board/add")
+async def board_add(request: Request):
     try:
         json_data = await request.json()
-        update_review_info_of_api(json_data)
+        board_dao.insert_board_data_of_api(json_data)
         message = msg_const.MSG_INFO_PROC_COMPLETED
 
     except Exception as e:
-        func.print_error_msg(const.COLL_REVIEW, e)
+        func.print_error_msg(const.COLL_BOARD, e)
         message = msg_const.MSG_ERR_PROC_FAILED
 
     result = {const.STR_MESSAGE: message}

@@ -1,6 +1,7 @@
 # 説明: GEMINI関数
 
 import sys
+import time
 
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
@@ -394,11 +395,6 @@ def test_gemini_image():
         func.print_error_msg(e)
 
 
-import time
-from google import genai
-from google.genai import types
-
-
 # 生成ビデオ取得
 def get_generate_video(div: str, prompt: str) -> str:
     # クライアントの初期化
@@ -423,7 +419,7 @@ def get_generate_video(div: str, prompt: str) -> str:
     print("Generated video saved to dialogue_example.mp4")
 
 
-def get_generate_video2(prompt:str):
+def get_generate_video2(prompt: str):
     # クライアントの初期化
     client = genai.Client(api_key=GEMINI_API_KEY)
 
@@ -451,4 +447,3 @@ if __name__ == const.MAIN_FUNCTION:
     # today_outfit = "白いブラウス&黄色いスカート"
     # get_today_news_image(msg, today_weather, today_outfit)
     test_generate_video()
-

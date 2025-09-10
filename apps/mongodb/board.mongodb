@@ -1,0 +1,36 @@
+// db
+const database = "mongoDB";
+const app = "trip";
+const userName = "hong";
+const strDate = "2025-09-01";
+
+// Select the database to use.
+use(database)
+
+// insert documents
+db.board.insertOne({
+    "sApp": app,
+    "sCategory": "review",
+    "sContents": "board_contents",
+    "sRemark": "board_remark",
+    "sStatus": "new",
+    "sUserName": userName,
+    "dUpdateDate": new Date()
+});
+
+// find documents
+db.board.find(
+    { sApp: { $eq: app }, dUpdateDate: { $gte: new Date(strDate) } },
+    {
+        "_id": 0,
+        "sApp": 1,
+        "sCategory": 1,
+        "sContents": 1,
+        "sRemark": 1,
+        "sStatus": 1,
+        "sUserName": 1,
+        "dUpdateDate": 1
+    }
+).sort(
+    { dUpdateDate: -1 }
+).pretty();
