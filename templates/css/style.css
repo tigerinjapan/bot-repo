@@ -1,3 +1,4 @@
+/* --- フォント定義 --- */
 @font-face {
 	font-family: "meiryo";
 	src: url('/font/meiryo') format('truetype');
@@ -18,27 +19,80 @@
 	src: url('/font/yusei') format('truetype');
 }
 
-/*全体の設定*/
+/* --- ベースカラー定義 --- */
+:root {
+	--main-bg: aliceblue;
+	/* 背景色 */
+	--main-color: black;
+	/* 文字色 */
+	--accent: royalblue;
+	/* アクセント色 */
+	--accent-light: lightblue;
+	/* アクセント色 */
+	--border-color: lightblue;
+	/* 枠線 */
+	--table-header: lightblue;
+	/* テーブルヘッダー背景 */
+	--table-row: white;
+	/* テーブル行背景 */
+	--menu-bg: steelblue;
+	/* メニュー背景 */
+	--menu-hover: skyblue;
+	/* メニューhover */
+	--menu-text: white;
+	/* メニュー文字色 */
+	--button-bg: royalblue;
+	--button-hover: skyblue;
+	--button-text: white;
+	--input-bg: aliceblue;
+	--input-border: lightblue;
+}
+
+/* --- 全体設定 --- */
 body {
-	margin: 5x;
-	padding: 10px;
-	/*全体の文字色*/
-	color: black;
-	/*フォント種類*/
-	font-family: "msgothic", sans-serif;
+	margin: 0;
+	padding: 0;
+	color: var(--main-color);
+	font-family: "Meiryo UI", sans-serif;
 	font-size: 16px;
-	/*行間*/
-	line-height: 2;
-	/*背景色*/
-	background: lightgray;
+	background: var(--main-bg);
+	line-height: 1.8;
 	-webkit-text-size-adjust: none;
 }
 
 input,
 button,
-select {
-	text-align: center;
+select,
+textarea {
+	font-family: inherit;
+	font-size: 1em;
+	border-radius: 6px;
+	border: 1px solid var(--input-border);
+	background: var(--input-bg);
+	color: var(--main-color);
+	padding: 8px;
+	box-sizing: border-box;
 	outline: none;
+	transition: border-color .2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+	border-color: var(--accent);
+}
+
+button {
+	background: var(--button-bg);
+	color: var(--button-text);
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+	transition: background .2s;
+}
+
+button:hover {
+	background: var(--button-hover);
 }
 
 img {
@@ -46,75 +100,68 @@ img {
 	margin: auto;
 	width: auto;
 	height: 160px;
+	display: block;
 }
 
-.searchTitle {
-	color: black;
-	background: lightgoldenrodyellow;
+/* --- タイトル・見出し --- */
+h1,
+h2,
+h3 {
+	color: var(--accent);
+	margin-top: 0;
 }
 
-.searchMain {
-	display: flex;
-	padding: 5px;
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+	letter-spacing: 2px;
 }
 
-.searchForm {
+h2 {
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+/* --- テーブル --- */
+table {
+	width: 100%;
 	border-collapse: collapse;
-	border: 1px gray solid;
-	padding: 0px 0px;
-	width: 50%;
-	height: 75%;
+	margin: 16px 0;
+	background: var(--table-row);
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0, 120, 212, 0.06);
 }
 
-.searchResult {
-	border-collapse: collapse;
-	border: 0px gray solid;
-	padding: 2px 0px;
-	width: auto;
-	height: auto;
-	display: flex;
-	/* overflow: scroll; */
-	margin-inline: auto;
+th,
+td {
+	border: 1px solid var(--border-color);
+	padding: 10px;
+	text-align: left;
 }
 
-.searchResult th {
-	color: black;
-	background-color: lightsteelblue;
+th {
+	background: var(--table-header);
+	color: var(--accent);
+	font-weight: bold;
 }
 
-.thNo {
-	text-align: center;
+tr:nth-child(even) td {
+	background: var(--accent-light);
 }
 
-.searchResult th,
-.searchResult td {
-	border-collapse: collapse;
-	border: 1px gray solid;
-	margin-inline: auto;
-}
-
-.searchButton {
-	align-items: center;
-}
-
-.linkButton {
-	padding: 0px 0px 2px 2px;
-	text-decoration: none;
-	color: blue;
-}
-
+/* --- メニュー --- */
 .topMenu ul {
 	display: flex;
 	flex-flow: row;
 	list-style-type: none;
-	margin: 0px;
-	padding: 0px;
-	overflow: hidden;
-	background-color: gray;
+	margin: 0;
+	padding: 0;
+	background-color: var(--menu-bg);
 }
 
 .topMenu li {
-	border-right: 1px solid white;
+	border-right: 1px solid var(--menu-text);
 }
 
 .topMenu li:last-child {
@@ -124,36 +171,104 @@ img {
 
 .topMenu li a {
 	display: block;
-	color: white;
+	color: var(--menu-text);
 	text-align: center;
-	padding: 12px 12px;
+	padding: 12px 16px;
 	text-decoration: none;
-	transition: all .3s;
+	transition: background .2s;
 }
 
 .topMenu li a:hover:not(.active) {
-	background-color: skyblue;
+	background-color: var(--menu-hover);
 }
 
-.loginTbl,
-.userTbl {
+/* --- 検索・フォーム --- */
+.searchTitle {
+	color: var(--accent);
+	background: var(--accent-light);
+	font-weight: bold;
+	padding: 8px;
+	border-radius: 6px 6px 0 0;
+}
+
+.searchMain {
+	display: flex;
+	padding: 5px;
+}
+
+.searchForm {
+	border: 1px solid var(--border-color);
+	padding: 10px;
+	width: 50%;
+	background: var(--table-row);
+	border-radius: 8px;
+}
+
+.searchResult {
+	border: 1px solid var(--border-color);
+	padding: 10px;
 	width: auto;
-	height: auto;
-	margin: auto;
-	font-size: 16px;
-	/* text-align: center; */
-	font-family: "yusei", sans-serif;
-	background-color: white;
-	border: 2px solid pink;
-	border-collapse: collapse;
+	background: var(--table-row);
+	border-radius: 8px;
+	margin-inline: auto;
+	display: flex;
 }
 
-footer {
-	/* padding: 0px 20px; */
+.searchResult th {
+	background-color: var(--table-header);
+	color: var(--accent);
+}
+
+.thNo {
 	text-align: center;
 }
 
-/*共通のメディアクエリ設定*/
+.searchResult th,
+.searchResult td {
+	border: 1px solid var(--border-color);
+	margin-inline: auto;
+}
+
+.searchButton {
+	align-items: center;
+}
+
+.linkButton {
+	padding: 2px 4px;
+	text-decoration: none;
+	color: var(--accent);
+	border-radius: 4px;
+	transition: background .2s;
+}
+
+.linkButton:hover {
+	background: var(--accent-light);
+}
+
+/* --- ログイン・ユーザー --- */
+.loginTbl,
+.userTbl {
+	width: auto;
+	margin: auto;
+	font-size: 16px;
+	font-family: "Meiryo UI", sans-serif;
+	background-color: var(--table-row);
+	border: 2px solid var(--accent);
+	border-collapse: collapse;
+	border-radius: 8px;
+}
+
+/* --- フッター --- */
+footer {
+	text-align: center;
+	color: var(--main-color);
+	background: var(--accent-light);
+	padding: 10px 0;
+	font-size: 0.95em;
+	border-top: 1px solid var(--border-color);
+}
+
+/* --- メディアクエリ --- */
 @media (max-width:640px) {
 
 	body,
@@ -178,7 +293,7 @@ footer {
 
 	.topMenu li {
 		border-right: none;
-		border-bottom: 1px solid white;
+		border-bottom: 1px solid var(--menu-text);
 	}
 
 	.topMenu li:last-child {

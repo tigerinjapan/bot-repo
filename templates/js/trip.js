@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const dialogTitle = document.getElementById("dialog-title");
   const dialogText = document.getElementById("dialog-text");
 
+  document.title = "🌏 Trip & Life";
+
   // セレクトボックスの初期化
   createOptionVal(langSelect, LIST_LANG_VAL);
   createOptionVal(regionSelect, LIST_CITY_VAL);
@@ -46,8 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
     pageTitle.textContent = data.title;
     pageSubtitle.textContent = data.subtitle;
 
-    // 基本情報カード
-    infoTitle.textContent = data.info.name;
+    // 基本情報
+    infoTitle.textContent = "ℹ️ " + data.info.name;
 
     let infoHtml = SYM_BLANK;
     const infoDataList = [
@@ -69,8 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     infoContent.innerHTML = infoHtml;
 
-    // 言語カード（基本会話）
-    langTitle.textContent = label.basicConversation;
+    // 言語（基本会話）
+    langTitle.textContent = "🌐 " + label.basicConversation;
     langContent.innerHTML = `
       ${basicConversation
         .map(
@@ -84,8 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("")}
     `;
 
-    // 観光スポットカード
-    tourTitle.textContent = label.tourInfo;
+    // 観光スポット
+    tourTitle.textContent = "📸 " + label.tourInfo;
     tourContent.innerHTML = `
       <tr>
           <th>${label.category}</th>
@@ -107,8 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("")}
     `;
 
-    // グルメカード
-    foodTitle.textContent = label.food;
+    // グルメ
+    foodTitle.textContent = "🍽️ " + label.food;
     foodContent.innerHTML = `
       ${data.food.foods
         .map(
@@ -123,8 +125,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("")}
     `;
 
-    // 有用情報カード
-    usefulTitle.textContent = label.usefulInfo;
+    // 有用な情報
+    usefulTitle.textContent = "💡 " + label.usefulInfo;
     usefulContent.innerHTML = `
       <tr>
           <th>${label.exchange}</th>
@@ -143,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </tr>
   `;
 
-    // サイト情報カード
+    // サイト情報
     siteTitle.textContent = label.site;
     let siteHtml = `
       <tr><th>${label.tourism}</th><td><a href="${data.site.tourism.url}" target="_blank">${data.site.tourism.name}</a></td></tr>

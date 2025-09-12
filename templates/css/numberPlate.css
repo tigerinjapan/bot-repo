@@ -13,32 +13,39 @@ button,
 	box-sizing: border-box;
 }
 
-/* 本体・見出し */
+/* --- 90年代アーケード風 --- */
 body {
-	font-family: sans-serif;
-	background: white;
+	font-family: 'Arial Black', 'Impact', 'Meiryo', sans-serif;
+	background: linear-gradient(135deg, navy 0%, black 100%);
+	color: lime;
 	margin: auto;
+	letter-spacing: 0.08em;
 }
 
 .main {
-	background: white;
-	border-radius: 16px;
-	box-shadow: 0 2px 8px black;
+	background: rgba(0, 0, 0, 0.85);
+	border-radius: 24px;
+	box-shadow: 0 0 32px cyan, 0 0 8px magenta inset;
 	padding: 2em;
-	max-width: 480px;
+	max-width: 520px;
 	margin: 2em auto;
+	border: 3px solid magenta;
 }
 
 h1 {
-	font-size: 2em;
+	font-size: 2.2em;
 	margin-bottom: 0.5em;
+	color: yellow;
+	text-shadow: 2px 2px 0 magenta, 0 0 12px cyan;
+	letter-spacing: 0.15em;
 }
 
 img {
-	width: 1.5em;
+	width: 2em;
 	height: auto;
 	vertical-align: middle;
 	display: inline-block;
+	filter: drop-shadow(0 0 4px cyan);
 }
 
 /* 数字・タイマー・レコード 共通 */
@@ -49,72 +56,82 @@ img {
 	display: inline-block;
 	border-radius: 16px;
 	padding: 0.3em 1em;
-	font-size: 1.2em;
+	font-size: 1.3em;
 	font-weight: bold;
 	margin-bottom: 0.5em;
-	box-shadow: 1px 1px 4px silver;
-	letter-spacing: 0.05em;
+	box-shadow: 0 0 8px magenta, 0 0 4px cyan inset;
+	letter-spacing: 0.08em;
 	transition: background 0.3s, color 0.3s;
 	text-align: center;
-}
-
-#number-display,
-#level {
-	font-size: 1.4em;
+	border: 2px solid cyan;
 }
 
 #number-display {
-	color: blue;
-	background: ivory;	
+	color: cyan;
+	background: black;
+	text-shadow: 1px 1px 0 magenta;
 }
 
 #level {
-	color: orange;
+	color: magenta;
+	background: black;
+	text-shadow: 1px 1px 0 yellow;
 }
 
 #timer,
 #rank {
-	color: white;
-	box-shadow: 1px 1px 4px pink;
+	color: yellow;
+	background: navy;
+	box-shadow: 0 0 8px cyan;
 	margin-left: 0.5em;
+	border: 2px solid magenta;
 }
 
-#timer {
-	background: lightgreen;
-}
-
-#rank {
-	background: lightgrey;
-}
-
-/* タイマー赤字 */
 #timer.red {
-	color: red !important;
-	background: mistyrose;
-	border: 1.5px solid mistyrose;
+	color: red;
+	background: black;
+	border: 2px solid red;
+	text-shadow: 1px 1px 0 yellow;
 }
 
 /* 入力・ボタン 共通 */
 input,
 button {
-	font-size: 1em;
+	font-size: 1.1em;
 	padding: 0.5em;
-	border-radius: 6px;
-	border: 1px solid silver;
+	border-radius: 8px;
+	border: 2px solid cyan;
 	margin: 0.5em 0;
 	box-sizing: border-box;
+	background: black;
+	color: lime;
+	font-family: 'Arial Black', 'Impact', 'Meiryo', sans-serif;
+	text-shadow: 1px 1px 0 magenta;
 }
 
-/* ボタン個別 */
+input[type="text"] {
+	background: navy;
+	color: yellow;
+	border: 2px solid magenta;
+}
+
 button {
-	background: skyblue;
-	color: white;
-	border: none;
+	background: linear-gradient(90deg, magenta 0%, cyan 100%);
+	color: yellow;
+	border: 2px solid yellow;
 	cursor: pointer;
+	font-weight: bold;
+	letter-spacing: 0.1em;
+	text-shadow: 1px 1px 0 black;
+	box-shadow: 0 0 8px cyan;
+	transition: background 0.2s, color 0.2s;
 }
 
 button:hover {
-	background: blue;
+	background: linear-gradient(90deg, yellow 0%, magenta 100%);
+	color: cyan;
+	border: 2px solid cyan;
+	box-shadow: 0 0 16px magenta;
 }
 
 /* メッセージ共通 */
@@ -122,10 +139,20 @@ button:hover {
 #number-answer {
 	margin-top: 1em;
 	min-height: 2em;
+	color: lime;
+	font-size: 1.1em;
+	text-shadow: 1px 1px 0 magenta;
 }
 
+/* フッター */
 footer {
 	text-align: center;
+	color: cyan;
+	background: black;
+	border-top: 2px solid magenta;
+	padding: 1em 0;
+	font-size: 1em;
+	letter-spacing: 0.08em;
 }
 
 /* モバイル対応 */
@@ -138,15 +165,15 @@ footer {
 	}
 
 	.main {
-		max-width: 99vw !important;
-		padding: 4vw !important;
-		margin: 2vw auto !important;
-		border-radius: 5vw !important;
-		box-shadow: 0 2vw 8vw rgba(0, 0, 0, 0.08) !important;
+		max-width: 99vw;
+		padding: 4vw;
+		margin: 2vw auto;
+		border-radius: 5vw;
+		box-shadow: 0 2vw 8vw cyan;
 	}
 
 	h1 {
-		font-size: 2em !important;
+		font-size: 2em;
 	}
 
 	img {
@@ -157,50 +184,25 @@ footer {
 	#level,
 	#timer,
 	#rank {
-		font-size: 1em !important;
-		padding: 0.7em 0.2em !important;
-		margin-bottom: 0.5em !important;
+		font-size: 1em;
+		padding: 0.7em 0.2em;
+		margin-bottom: 0.5em;
 	}
 
 	input[type="text"] {
-		width: 95vw !important;
-		font-size: 1em !important;
-		padding: 0.7em 0.5em !important;
+		width: 95vw;
+		font-size: 1em;
+		padding: 0.7em 0.5em;
 	}
 
 	button {
-		font-size: 1em !important;
-		padding: 0.7em 1.2em !important;
-		margin: 0.5em 0.5em 0.5em 0 !important;
-	}
-
-	#rule-detail {
-		padding: 0.7em 0.5em 0.5em 0.5em !important;
-		font-size: 0.95em !important;
+		font-size: 1em;
+		padding: 0.7em 1.2em;
+		margin: 0.5em 0.5em 0.5em 0;
 	}
 
 	#message,
 	#number-answer {
-		font-size: 1em !important;
-	}
-
-	.searchForm,
-	.searchResult {
-		width: 98vw !important;
-		height: auto !important;
-	}
-
-	.topMenu ul {
-		flex-direction: column;
-	}
-
-	.topMenu li {
-		border-right: none;
-		border-bottom: 1px solid white;
-	}
-
-	.topMenu li:last-child {
-		border-bottom: none;
-		margin-left: 0;
+		font-size: 1em;
 	}
 }

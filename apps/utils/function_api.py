@@ -13,7 +13,7 @@ URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
 # プロパティ
 IMG_NO = func.get_env_val("LINE_IMG_DIV", int_flg=const.FLG_ON)
 NUM_IMG_MAX_SEQ = 4
-FONT_TYPE = "uzura"
+FONT_TYPE_UZURA = "uzura"
 
 
 # リクエスト送信
@@ -84,7 +84,7 @@ def create_msg_img(div: str, msg: str, forecast: str) -> str:
 
     img_file_base = f"{img_div}_{img_no}"
 
-    font_type = FONT_TYPE
+    font_type = FONT_TYPE_UZURA
     font_size = 11
     xy_size = (45, 90)
     if div == const.APP_TODAY:
