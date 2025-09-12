@@ -4,11 +4,63 @@ let userName = sessionStorage.getItem('userName');
 // タイマーID
 let timerId = null;
 
+// タイマー状態管理
+let isTimerRunning = false;
+
+// START/STOPボタン処理
+document.addEventListener("DOMContentLoaded", () => {
+  const startBtn = document.getElementById("btnStart");
+  if (startBtn) {
+    startBtn.textContent = "START";
+    startBtn.addEventListener("click", () => {
+      if (!isTimerRunning) {
+        setTimer();
+        startBtn.textContent = "STOP";
+        isTimerRunning = true;
+      } else {
+        clearInterval(timerId);
+        setElem("timer", "STOPPED", true);
+        startBtn.textContent = "START";
+        isTimerRunning = false;
+      }
+    });
+  }
+});
+
 // 初期表示
-function initDisplay(level) {
+function initDisplay(lang, level) {
+  let title = TITLE_NUMBER_PLATE;
+  document.title = title;
+
+  let btnChkNm = "回答確認";
+  let btnNextNm = "次の問題へ";
+  let ruleList = LIST_GAME_RULE;
+  let inputMsg = MSG_INFO_INPUT_USER;
+
+  if (lang == LANG_CD_KO) {
+    title = TITLE_NUMBER_PLATE_KO;
+    setElem("title", title, true);
+
+    btnChkNm = "정답확인";
+    btnNextNm = "다음문제";
+    ruleList = LIST_GAME_RULE_KO;
+    inputMsg = MSG_INFO_INPUT_USER_KO;
+  }
+
+  setElem("timer", 30.00.toFixed(2), true);
+  setElem("btnChk", btnChkNm, true);
+  setElem("btnNext", btnNextNm, true);
+  setGameRule(ruleList);
+
   setLevel(level);
-  setTimer();
-  setUserName();
+  setUserName(inputMsg);
+}
+
+// ゲームルール生成
+function setGameRule(ruleList) {
+  for (let i = 0; i < ruleList.length; i++) {
+    createElem(TAG_LI, ruleList[i], "gameRule");
+  }
 }
 
 // レベル設定
@@ -19,14 +71,13 @@ function setLevel(level) {
   } else if (level == LEVEL_HARD) {
     levelVal = SYM_LEVEL.repeat(3);
   }
-  const levelElem = document.getElementById('level');
-  levelElem.textContent = "レベル：" + levelVal;
+  setElem('level', "Level：" + levelVal, true);
 }
 
 // タイマー設定
 function setTimer() {
   let sec = 30.00;
-  const timerElem = document.getElementById('timer');
+  const timerElem = getElem('timer');
   timerElem.textContent = sec.toFixed(2);
 
   timerId = setInterval(() => {
@@ -34,7 +85,7 @@ function setTimer() {
     timerElem.textContent = sec.toFixed(2);
     if (sec <= 0) {
       clearInterval(timerId);
-      timerElem.textContent = "時間切れ";
+      timerElem.textContent = "TIME OUT !!";
     }
     if (sec <= 10) {
       timerElem.classList.add(COLOR_RED);
@@ -45,21 +96,27 @@ function setTimer() {
 }
 
 // ユーザ名設定
-function setUserName() {
+function setUserName(inputMsg) {
   if (!userName || userName == SYM_BLANK) {
-    userName = prompt(MSG_INFO_INPUT_USER);
+    userName = prompt(inputMsg);
     sessionStorage.setItem('userName', userName);
   }
 }
 
 // 正解判定
-function checkAnswer() {
+function checkAnswer(lang) {
+  let noAnswerMsg = MSG_ERR_NO_ANSWER;
+
+  if (lang == LANG_CD_KO) {
+    noAnswerMsg = MSG_ERR_NO_ANSWER_KO;
+  }
+
   // DOM取得
-  const numberDisplay = document.getElementById('number-display');
-  const numberAnswer = document.getElementById('number-answer');
-  const rankTime = document.getElementById('rank-time');
-  const timer = document.getElementById('timer');
-  const expression = document.getElementById('expression');
+  const numberDisplay = getElem('number-display');
+  const numberAnswer = getElem('number-answer');
+  const rankTime = getElem('rank-time');
+  const timer = getElem('timer');
+  const expression = getElem('expression');
 
   const num = numberDisplay.textContent;
   const ans = numberAnswer.textContent;
@@ -67,7 +124,7 @@ function checkAnswer() {
   const timeVal = timer.textContent;
   const expr = expression.value.trim();
 
-  let chkMsg = validate(num, ans, expr);
+  let chkMsg = validate(num, ans, expr, lang);
 
   if (chkMsg) {
     showMessage(chkMsg, false);
@@ -85,61 +142,85 @@ function checkAnswer() {
       const rankTimeVal = parseFloat(rank);
       if (clearTime != null && clearTimeVal < rankTimeVal) {
         const numVal = parseInt(num);
-        sendRanking(numVal, clearTimeVal);
+        sendRanking(numVal, clearTimeVal, lang);
       }
       clearInterval(timerId);
     } else {
-      showMessage(MSG_ERR_NO_ANSWER, false);
+      showMessage(noAnswerMsg, false);
     }
   }
 };
 
 // 入力チェック
-function validate(num, ans, expr) {
+function validate(num, ans, expr, lang) {
   let chkMsg = SYM_BLANK;
+
+  let noInputMsg = MSG_ERR_NO_INPUT;
+  let errDegitMsg = MSG_ERR_DIGIT;
+  let errEqualMsg = MSG_ERR_EQUAL;
+  let errFormatMsg = MSG_ERR_FORMAT;
+  let noDivideZeroMsg = MSG_ERR_DIVIDE_BY_ZERO;
+  let errMatchMsg = MSG_ERR_MATCH;
+
+  if (lang == LANG_CD_KO) {
+    noInputMsg = MSG_ERR_NO_INPUT_KO;
+    errDegitMsg = MSG_ERR_DIGIT_KO;
+    errEqualMsg = MSG_ERR_EQUAL_KO;
+    errFormatMsg = MSG_ERR_FORMAT_KO;
+    noDivideZeroMsg = MSG_ERR_DIVIDE_BY_ZERO_KO;
+    errMatchMsg = MSG_ERR_MATCH_KO;
+  }
 
   // 回答入力チェック
   if (expr == SYM_BLANK) {
-    return MSG_ERR_NO_INPUT;
+    return noInputMsg;
   }
 
   // 数字チェック
   const numDigits = num.split('').join('');
   const exprDigits = expr.split('').filter(c => /\d/.test(c)).join('');
   if (exprDigits !== numDigits) {
-    return MSG_ERR_DIGIT;
+    return errDegitMsg;
   }
 
   // イコール1つのみ
   if ((expr.match(/=/g) || []).length !== 1) {
-    return MSG_ERR_EQUAL;
+    return errEqualMsg;
   }
 
   const [left, right] = expr.split('=');
   try {
     // 入力フォーマットチェック（数字・演算子のみ）
     if (!/^[\d+\-*/.\s]+$/.test(left) || !/^[\d+\-*/.\s]+$/.test(right)) {
-      return MSG_ERR_FORMAT;
+      return errFormatMsg;
     }
   } catch (e) {
-    return MSG_ERR_FORMAT;
+    return errFormatMsg;
   }
 
   // ゼロ除算チェック
   if (expr.includes("/0")) {
-    return MSG_ERR_DIVIDE_BY_ZERO;
+    return noDivideZeroMsg;
   }
 
   // 計算結果比較
   if (!ans.includes(expr)) {
-    return MSG_ERR_MATCH;
+    return errMatchMsg;
   }
 
   return chkMsg;
 }
 
 // ランキング送信
-function sendRanking(number, time) {
+function sendRanking(number, time, lang) {
+  let rankOkMsg = MSG_INFO_OK_RANK;
+  let rankNgMsg = MSG_ERR_RANK;
+
+  if (lang == LANG_CD_KO) {
+    rankOkMsg = MSG_INFO_OK_RANK_KO;
+    rankNgMsg = MSG_ERR_RANK_KO;
+  }
+
   let rankingUrl = URL_RANKING_SERVER;
   if (isLocal()) {
     rankingUrl = URL_RANKING_LOCAL;
@@ -158,32 +239,9 @@ function sendRanking(number, time) {
     .then(res => res.json())
     .then(data => {
       console.log(data.message);
-      showMessage(MSG_INFO_OK_RANK, true);
+      showMessage(rankOkMsg, true);
     })
     .catch(() => {
-      alert(MSG_ERR_RANK);
+      alert(rankNgMsg);
     });
-}
-
-// メッセージ表示
-function showMessage(msg, answerFlg) {
-  setElem('message', msg, false, answerFlg);
-}
-
-// 要素設定
-function setElem(elemId, text, textFlg, answerFlg) {
-  const elem = document.getElementById(elemId);
-  if (textFlg) {
-    elem.textContent = text;
-  } else {
-    elem.innerHTML = text;
-  }
-
-  let color = COLOR_RED;
-  if (answerFlg) {
-    color = COLOR_GREEN;
-  }
-
-  const style = 'color:' + color + ';';
-  elem.style = style;
 }

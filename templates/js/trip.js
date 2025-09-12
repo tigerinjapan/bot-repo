@@ -1,31 +1,31 @@
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", () => {
   // セレクトボックス・各表示領域の取得
-  const langSelect = document.getElementById("lang-select");
-  const regionSelect = document.getElementById("region-select");
+  const langSelect = getElem("lang-select");
+  const regionSelect = getElem("region-select");
 
-  const pageTitle = document.getElementById("page-title");
-  const pageSubtitle = document.getElementById("page-subtitle");
+  const pageTitle = getElem("page-title");
+  const pageSubtitle = getElem("page-subtitle");
 
-  const infoTitle = document.getElementById("info-title");
-  const langTitle = document.getElementById("lang-title");
-  const tourTitle = document.getElementById("tour-title");
-  const foodTitle = document.getElementById("food-title");
-  const usefulTitle = document.getElementById("useful-title");
-  const siteTitle = document.getElementById("site-title");
+  const infoTitle = getElem("info-title");
+  const langTitle = getElem("lang-title");
+  const tourTitle = getElem("tour-title");
+  const foodTitle = getElem("food-title");
+  const usefulTitle = getElem("useful-title");
+  const siteTitle = getElem("site-title");
 
-  const infoContent = document.getElementById("info-content");
-  const langContent = document.getElementById("lang-content");
-  const tourContent = document.getElementById("tour-content");
-  const foodContent = document.getElementById("food-content");
-  const usefulContent = document.getElementById("useful-content");
-  const siteContent = document.getElementById("site-content");
+  const infoContent = getElem("info-content");
+  const langContent = getElem("lang-content");
+  const tourContent = getElem("tour-content");
+  const foodContent = getElem("food-content");
+  const usefulContent = getElem("useful-content");
+  const siteContent = getElem("site-content");
 
   // ダイアログ関連要素
-  const dialog = document.getElementById("dialog");
+  const dialog = getElem("dialog");
   const closeBtn = document.querySelector(".close-btn");
-  const dialogTitle = document.getElementById("dialog-title");
-  const dialogText = document.getElementById("dialog-text");
+  const dialogTitle = getElem("dialog-title");
+  const dialogText = getElem("dialog-text");
 
   document.title = "🌏 Trip & Life";
 

@@ -138,16 +138,22 @@ def exec_user(request: Request, app_name: str):
 
 # 【画面】表示データ取得
 def exec_number(request: Request, app_name: str):
+    lang = const.LANG_JA
     level = const.STR_HARD
     num = number.get_random_number(level)
     ans = number.get_answer_by_number(num)
     rank_user, rank_time = number.get_ranking_info(num)
+
+    if const.SYM_UNDER in app_name:
+        lang = app_name.split(const.SYM_UNDER)[1]
+        app_name = app_name.split(const.SYM_UNDER)[0]
 
     target_html = const.HTML_NUMBER_PLATE
     context = {
         const.STR_REQUEST: request,
         const.STR_TITLE: number.app_title,
         "app_name": app_name,
+        "lang": lang,
         "level": level,
         "num": num,
         "ans": ans,

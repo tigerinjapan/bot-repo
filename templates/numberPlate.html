@@ -2,52 +2,48 @@
 <html lang="ja">
 
 <head>
-    <link rel="stylesheet" href="/templates/numberPlate.css">
+    <link rel="stylesheet" href="/templates/numberPlate.css" />
     <script src="/templates/const.js"></script>
     <script src="/templates/func.js"></script>
     <script src="/templates/numberPlate.js"></script>
-    <title>{{ title }}</title>
+    <title></title>
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-            initDisplay("{{ level }}");
+        document.addEventListener("DOMContentLoaded", () => {
+            initDisplay("{{ lang }}", "{{ level }}");
         });
     </script>
 </head>
 
 <body>
     <div class="main">
-        <h1>{{ title }}</h1>
+        <h1 id="title">{{ title }}</h1>
         <div>
             <p id="number-display">{{ num }}</p>
             <p id="level"></p>
         </div>
         <div>
             <p id="timer"></p>
-            <p id="rank"><img src="/templates/rank1.png">
+            <p id="rank">
+                <img src="/templates/rank1.png" />
                 <span id="rank-user">{{ rank_user }}</span>
                 <span id="rank-time">{{ rank_time }}</span>
             </p>
         </div>
         <div id="rule-detail">
-            <h3>ルール</h3>
-            <ul>
-                <li>4つの数字を使い正しい数式を作る</li>
-                <li>四則演算(+ - * /)：最大3つ使用</li>
-                <li>イコール(=)：必ず1つのみ使用</li>
-                <!-- <li>問題：10問。1問の最大点：10点。制限時間：300秒</li>
-                    <li>正解時3秒毎に1点減点（0～3秒:10点, .., 28秒以上:1点）</li> -->
-            </ul>
+            <h3>Game Rule</h3>
+            <ul id="gameRule"></ul>
         </div>
-        <input id="expression" type="text" placeholder="例: 1+2-3=0">
-        <button id="btnChk" onclick="checkAnswer()">回答</button>
-        <button id="btnNext" onclick="location.reload()">次へ</button>
+        <input id="expression" type="text" placeholder="(e.g.) 1+2=3-0" />
+        <button id="btnStart"></button>
+        <button id="btnChk" onclick="checkAnswer('{{ lang }}')"></button>
+        <button id="btnNext" onclick="location.reload()"></button>
         <div id="message"></div>
         <div id="number-answer" hidden>{{ ans }}</div>
     </div>
 </body>
 
 <footer>
-    <a href="/">ホーム画面へ</a>
+    <a href="/">Go To Home</a>
 </footer>
 
 </html>

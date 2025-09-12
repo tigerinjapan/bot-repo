@@ -18,7 +18,14 @@ use(database)
 // });
 
 // find documents
-cond = { sUserName: { $ne: userName }, dUpdateDate: { $gte: new Date(strDate) } };
+cond = {
+    sUserName: { $eq: userName }, $expr: {
+        $lt: [
+            { $strLenBytes: "$sRankTime" },
+            5
+        ]
+    }
+};
 selectData = {
     _id: 0,
     sUserName: 1,

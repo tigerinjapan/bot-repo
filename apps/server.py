@@ -155,7 +155,7 @@ async def app_exec(request: Request, app_name: str):
     try:
         if app_name == const.APP_USER:
             target_html, context = appl.exec_user(request, app_name)
-        elif app_name == const.APP_NUMBER:
+        elif const.APP_NUMBER in app_name:
             target_html, context = appl.exec_number(request, app_name)
         else:
             target_html, context = appl.exec_result(request, app_name)
@@ -173,9 +173,12 @@ async def app_exec(request: Request, app_name: str):
 # HTMLテンプレートファイルの返却
 @app.get("/apps/{app_name}")
 async def apps(app_name: str):
+    # TODO: trip, design, review: result2.html：jsファイルより定義
+    # if app_name == const.APP_TRIP:
+    #   target_html, context = appl.exec_result(request, app_name)
+    # else:
     file_path = f"templates/{app_name}.{const.FILE_TYPE_HTML}"
     return FileResponse(file_path)
-
 
 # ユーザー情報更新（フォーム）
 @app.post("/user/update")
@@ -225,6 +228,8 @@ async def board_add(request: Request):
         json_data = await request.json()
         board_dao.insert_board_data_of_api(json_data)
         message = msg_const.MSG_INFO_PROC_COMPLETED
+
+# TODO: 新しいレビュー依頼がある場合、メール送信
 
     except Exception as e:
         func.print_error_msg(const.COLL_BOARD, e)
