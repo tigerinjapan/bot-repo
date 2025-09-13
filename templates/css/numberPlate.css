@@ -27,6 +27,7 @@ body {
 	border-radius: 12px;
 	box-shadow: 0 0 12px cyan, 0 0 8px magenta inset;
 	padding: 2em;
+	min-width: 320px;
 	max-width: 640px;
 	margin: 1em auto;
 	border: 2px solid magenta;

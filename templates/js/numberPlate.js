@@ -162,9 +162,11 @@ function showDialog(langCd) {
 
 // 正解判定
 function checkAnswer(langCd) {
+  let okAnswerMsg = MSG_INFO_OK_ANSWER;
   let noAnswerMsg = MSG_ERR_NO_ANSWER;
 
   if (langCd == LANG_CD_KO) {
+    okAnswerMsg = MSG_INFO_OK_ANSWER_KO;
     noAnswerMsg = MSG_ERR_NO_ANSWER_KO;
   }
 
@@ -188,7 +190,7 @@ function checkAnswer(langCd) {
         ansList = ans.split(";").filter(s => s.trim());
       }
       const ansHtml = "<ul>" + ansList.map(a => `<li>${a}</li>`).join(SYM_BLANK) + "</ul>";
-      showMessage(MSG_INFO_OK_ANSWER + ansHtml, true);
+      showMessage(okAnswerMsg + ansHtml, true);
 
       const clearTime = 30 - parseFloat(timeVal);
       const clearTimeVal = clearTime.toFixed(2);

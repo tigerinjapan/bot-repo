@@ -85,8 +85,10 @@ const MSG_ERR_DIVIDE_BY_ZERO = "ゼロ除算はできません!";
 const MSG_ERR_MATCH = "計算結果が一致しません!";
 const MSG_ERR_RANK = "ランク送信に失敗しました";
 
-const MSG_INFO_INPUT_USER_KO = "게임 아이디(최대10문자)를 입력하세요.";
+const MSG_INFO_OK_ANSWER_KO = "정답입니다!";
 const MSG_INFO_OK_RANK_KO = "신기록！랭킹 등록！";
+const MSG_INFO_INPUT_USER_KO = "게임 아이디(최대10문자)를 입력하세요.";
+
 
 const MSG_ERR_NO_ANSWER_KO = "이 문제에는 해답이 존재하지 않습니다.";
 const MSG_ERR_NO_INPUT_KO = "입력한 정보가 없습니다.";
