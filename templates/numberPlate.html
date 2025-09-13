@@ -6,10 +6,10 @@
     <script src="/templates/const.js"></script>
     <script src="/templates/func.js"></script>
     <script src="/templates/numberPlate.js"></script>
-    <title></title>
+    <title>🚙Number Plate Game</title>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", () => {
-            initDisplay("{{ lang }}", "{{ level }}");
+            initDisplay("{{ level }}");
         });
     </script>
 </head>
@@ -17,25 +17,26 @@
 <body>
     <div class="main">
         <h1 id="title">{{ title }}</h1>
+        <p id="langCd" hidden>{{ lang }}</p>
         <div>
-            <p id="number-display">{{ num }}</p>
             <p id="level"></p>
-        </div>
-        <div>
-            <p id="timer"></p>
             <p id="rank">
-                <img src="/templates/rank1.png" />
-                <span id="rank-user">{{ rank_user }}</span>
+                <span id="rank-user"><img src="/templates/rank1.png" /> {{ rank_user }}</span>
                 <span id="rank-time">{{ rank_time }}</span>
             </p>
         </div>
-        <div id="rule-detail">
-            <h3>Game Rule</h3>
-            <ul id="gameRule"></ul>
+        <div>
+            <p id="number-display">{{ num }}</p>
+            <p id="timer"></p>
         </div>
-        <input id="expression" type="text" placeholder="(e.g.) 1+2=3-0" />
+        <div id="rule-detail">
+            <button id="btnRule">
+                <img src="/templates/click.png" />
+            </button>
+        </div>
+        <input id="expression" type="text" /><br />
         <button id="btnStart"></button>
-        <button id="btnChk" onclick="checkAnswer('{{ lang }}')"></button>
+        <button id="btnChk"></button>
         <button id="btnNext" onclick="location.reload()"></button>
         <div id="message"></div>
         <div id="number-answer" hidden>{{ ans }}</div>

@@ -107,7 +107,7 @@ function setTopMenu(userDiv, userNm, appNm, menuVal) {
   const liMenu = liMenuList.join(SYM_BLANK);
 
   // ログアウトメニュー
-  const liLogout = `<li><a href="/logout"><b>` + userNm + ` </b>` + BUTTON_LOGOUT + `</a></li>`;
+  const liLogout = `<li><a href="/logout"><b>${userNm} </b>${BUTTON_LOGOUT}</a></li>`;
 
   // トップメニュー
   let topMenu = liMenu + liLogout;
@@ -115,7 +115,7 @@ function setTopMenu(userDiv, userNm, appNm, menuVal) {
     topMenu = liLogout + liMenu;
   }
 
-  const topMenuList = `<ul>` + topMenu + `</ul>`;
+  const topMenuList = `<ul>${topMenu}</ul>`;
 
   document.getElementById("topMenu").innerHTML = topMenuList;
 

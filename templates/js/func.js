@@ -1,12 +1,12 @@
 // メッセージ表示
 function showMessage(msg, answerFlg) {
-  const elem = setElem('message', msg, false);
+  const elem = setElem(STR_MESSAGE, msg, false);
   let color = COLOR_RED;
   if (answerFlg) {
     color = COLOR_GREEN;
   }
 
-  const style = 'color:' + color + ';';
+  const style = `color:${color};`;
   elem.style = style;
 }
 
@@ -14,6 +14,18 @@ function showMessage(msg, answerFlg) {
 function getElem(elemId) {
   const elem = document.getElementById(elemId);
   return elem;
+}
+
+// 要素取得
+function getElemByTag(tagName) {
+  const elem = document.getElementsByTagName(tagName)[0];
+  return elem;
+}
+
+// 要素のテキスト取得
+function getElemText(elemId) {
+  const elem = getElem(elemId);
+  return elem.textContent;
 }
 
 // 要素設定
@@ -24,6 +36,7 @@ function setElem(elemId, text, textFlg) {
   } else {
     elem.innerHTML = text;
   }
+  return elem;
 }
 
 // 要素生成

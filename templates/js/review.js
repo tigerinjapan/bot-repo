@@ -11,14 +11,14 @@ const ELEM_NAME_ITEMS = "items[]";
 // ページ読み込み時にsessionStorageからデータを取得
 let userName = sessionStorage.getItem(STR_USER_NAME);
 
-document.getElementsByTagName(TAG_HEAD)[0].innerHTML = CONTENTS_HEAD;
+getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD;
 document.title = STR_REVIEW;
 
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", () => {
   function init() {
 
-    document.getElementsByTagName(TAG_H1)[0].textContent = "アプリ・レビュー";
+    getElemByTag(TAG_H1).textContent = "アプリ・レビュー";
 
     let selectList = [
       [
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    document.getElementsByTagName(TAG_BUTTON)[0].textContent = "送信";
+    getElemByTag(TAG_BUTTON).textContent = "送信";
   }
 
   // 初期表示
@@ -113,7 +113,7 @@ function sendReview() {
 
     // 入力チェック
     if (addCnt == 0) {
-      getElem(STR_MSG).textContent = MSG_ERR_NO_INPUT;
+      getElem(STR_MESSAGE).textContent = MSG_ERR_NO_INPUT;
       return;
     }
 
@@ -133,17 +133,17 @@ function sendReview() {
         }),
       });
       const result = await res.json();
-      const message = result["message"];
+      const msg = result[STR_MESSAGE];
 
-      // getElem(STR_MSG).textContent = message;
+      // getElem(STR_MESSAGE).textContent = msg;
       // getElem(ELEM_ID_FORM).reset();
-      console.log(message);
-      alert(message);
+      console.log(msg);
+      alert(msg);
 
       // ページ全体をリセット（再読み込み）
       location.reload();
     } catch {
-      getElem(STR_MSG).textContent = MSG_ERR_SEND;
+      setElem(STR_MESSAGE, MSG_ERR_SEND, true);
     }
   });
 }

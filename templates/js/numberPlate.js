@@ -1,5 +1,5 @@
 // ページ読み込み時にsessionStorageからデータを取得
-let userName = sessionStorage.getItem('userName');
+let userName = sessionStorage.getItem(STR_USER_NAME);
 
 // タイマーID
 let timerId = null;
@@ -7,12 +7,19 @@ let timerId = null;
 // タイマー状態管理
 let isTimerRunning = false;
 
-// START/STOPボタン処理
+// ボタン押下処理
 document.addEventListener("DOMContentLoaded", () => {
-  const startBtn = document.getElementById("btnStart");
+  // 言語コード
+  const langCd = getElemText("langCd");
+
+  // START/STOP処理
+  const startBtn = getElem("btnStart");
   if (startBtn) {
     startBtn.textContent = "START";
     startBtn.addEventListener("click", () => {
+      const number = getElem("number-display");
+      number.style.backgroundColor = "black";
+
       if (!isTimerRunning) {
         setTimer();
         startBtn.textContent = "STOP";
@@ -25,42 +32,62 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // ゲームルール表示
+  const ruleBtn = getElem("btnRule");
+  if (ruleBtn) {
+    ruleBtn.addEventListener("click", () => {
+      showDialog(langCd);
+    });
+  }
+
+  // 回答確認
+  const chkBtn = getElem("btnChk");
+  if (chkBtn) {
+    chkBtn.addEventListener("click", () => {
+      checkAnswer(langCd);
+    });
+  }
 });
 
 // 初期表示
-function initDisplay(lang, level) {
-  let title = TITLE_NUMBER_PLATE;
-  document.title = title;
+function initDisplay(level) {
+  // 言語コード
+  const langCd = getElemText("langCd");
 
+  let title = TITLE_NUMBER_PLATE;
+
+  const number = getElem("number-display");
+  number.style.backgroundColor = "cyan";
+
+  const expression = getElem("expression");
+  expression.placeholder = "(e.g.) 1+2=3-0";
+
+  let btnRuleNm = "ゲームルール";
   let btnChkNm = "回答確認";
   let btnNextNm = "次の問題へ";
-  let ruleList = LIST_GAME_RULE;
   let inputMsg = MSG_INFO_INPUT_USER;
 
-  if (lang == LANG_CD_KO) {
+  if (langCd == LANG_CD_KO) {
     title = TITLE_NUMBER_PLATE_KO;
     setElem("title", title, true);
 
+    btnRuleNm = "게임규칙";
     btnChkNm = "정답확인";
     btnNextNm = "다음문제";
-    ruleList = LIST_GAME_RULE_KO;
     inputMsg = MSG_INFO_INPUT_USER_KO;
+
+    const footerElem = getElemByTag("footer");
+    footerElem.style.visibility = 'hidden';
   }
 
   setElem("timer", 30.00.toFixed(2), true);
+  setElem("btnRule", btnRuleNm, true);
   setElem("btnChk", btnChkNm, true);
   setElem("btnNext", btnNextNm, true);
-  setGameRule(ruleList);
 
   setLevel(level);
   setUserName(inputMsg);
-}
-
-// ゲームルール生成
-function setGameRule(ruleList) {
-  for (let i = 0; i < ruleList.length; i++) {
-    createElem(TAG_LI, ruleList[i], "gameRule");
-  }
 }
 
 // レベル設定
@@ -71,13 +98,13 @@ function setLevel(level) {
   } else if (level == LEVEL_HARD) {
     levelVal = SYM_LEVEL.repeat(3);
   }
-  setElem('level', "Level：" + levelVal, true);
+  setElem("level", `Level ${levelVal}`, true);
 }
 
 // タイマー設定
 function setTimer() {
   let sec = 30.00;
-  const timerElem = getElem('timer');
+  const timerElem = getElem("timer");
   timerElem.textContent = sec.toFixed(2);
 
   timerId = setInterval(() => {
@@ -99,32 +126,58 @@ function setTimer() {
 function setUserName(inputMsg) {
   if (!userName || userName == SYM_BLANK) {
     userName = prompt(inputMsg);
-    sessionStorage.setItem('userName', userName);
+    sessionStorage.setItem(STR_USER_NAME, userName);
   }
 }
 
+// ゲームルール生成
+function setGameRule(langCd) {
+  let ruleList = LIST_GAME_RULE;
+  if (langCd == LANG_CD_KO) {
+    ruleList = LIST_GAME_RULE_KO;
+  }
+
+  for (let i = 0; i < ruleList.length; i++) {
+    createElem(TAG_LI, ruleList[i], "gameRule");
+  }
+}
+
+// ダイアログ表示用関数
+function showDialog(langCd) {
+  dialog = document.createElement("div");
+  dialog.id = "gameRuleDialog";
+  dialog.innerHTML = `
+    <h3>Game Rule</h3>
+    <ul id="gameRule"></ul><br><br>
+    <button id="closeGameRuleDialog">Close</button>
+  `;
+  document.body.appendChild(dialog);
+
+  setGameRule(langCd);
+
+  document.getElementById("closeGameRuleDialog").onclick = () => {
+    dialog.remove();
+  };
+}
+
 // 正解判定
-function checkAnswer(lang) {
+function checkAnswer(langCd) {
   let noAnswerMsg = MSG_ERR_NO_ANSWER;
 
-  if (lang == LANG_CD_KO) {
+  if (langCd == LANG_CD_KO) {
     noAnswerMsg = MSG_ERR_NO_ANSWER_KO;
   }
 
   // DOM取得
-  const numberDisplay = getElem('number-display');
-  const numberAnswer = getElem('number-answer');
-  const rankTime = getElem('rank-time');
-  const timer = getElem('timer');
-  const expression = getElem('expression');
-
-  const num = numberDisplay.textContent;
-  const ans = numberAnswer.textContent;
-  const rank = rankTime.textContent;
-  const timeVal = timer.textContent;
+  const num = getElemText("number-display");
+  const ans = getElemText("number-answer");
+  const rank = getElemText("rank-time");
+  const timeVal = getElemText("timer");
+  const expression = getElem("expression");
   const expr = expression.value.trim();
 
-  let chkMsg = validate(num, ans, expr, lang);
+  // 入力チェック
+  let chkMsg = validate(num, ans, expr, langCd);
 
   if (chkMsg) {
     showMessage(chkMsg, false);
@@ -134,7 +187,7 @@ function checkAnswer(lang) {
       if (typeof ans === "string") {
         ansList = ans.split(";").filter(s => s.trim());
       }
-      const ansHtml = '<ul>' + ansList.map(a => `<li>${a}</li>`).join('') + '</ul>';
+      const ansHtml = "<ul>" + ansList.map(a => `<li>${a}</li>`).join(SYM_BLANK) + "</ul>";
       showMessage(MSG_INFO_OK_ANSWER + ansHtml, true);
 
       const clearTime = 30 - parseFloat(timeVal);
@@ -142,7 +195,8 @@ function checkAnswer(lang) {
       const rankTimeVal = parseFloat(rank);
       if (clearTime != null && clearTimeVal < rankTimeVal) {
         const numVal = parseInt(num);
-        sendRanking(numVal, clearTimeVal, lang);
+        // ランキング送信
+        sendRanking(numVal, clearTimeVal, langCd);
       }
       clearInterval(timerId);
     } else {
@@ -152,7 +206,7 @@ function checkAnswer(lang) {
 };
 
 // 入力チェック
-function validate(num, ans, expr, lang) {
+function validate(num, ans, expr, langCd) {
   let chkMsg = SYM_BLANK;
 
   let noInputMsg = MSG_ERR_NO_INPUT;
@@ -162,7 +216,7 @@ function validate(num, ans, expr, lang) {
   let noDivideZeroMsg = MSG_ERR_DIVIDE_BY_ZERO;
   let errMatchMsg = MSG_ERR_MATCH;
 
-  if (lang == LANG_CD_KO) {
+  if (langCd == LANG_CD_KO) {
     noInputMsg = MSG_ERR_NO_INPUT_KO;
     errDegitMsg = MSG_ERR_DIGIT_KO;
     errEqualMsg = MSG_ERR_EQUAL_KO;
@@ -177,8 +231,8 @@ function validate(num, ans, expr, lang) {
   }
 
   // 数字チェック
-  const numDigits = num.split('').join('');
-  const exprDigits = expr.split('').filter(c => /\d/.test(c)).join('');
+  const numDigits = num.split(SYM_BLANK).join(SYM_BLANK);
+  const exprDigits = expr.split(SYM_BLANK).filter(c => /\d/.test(c)).join(SYM_BLANK);
   if (exprDigits !== numDigits) {
     return errDegitMsg;
   }
@@ -188,7 +242,7 @@ function validate(num, ans, expr, lang) {
     return errEqualMsg;
   }
 
-  const [left, right] = expr.split('=');
+  const [left, right] = expr.split("=");
   try {
     // 入力フォーマットチェック（数字・演算子のみ）
     if (!/^[\d+\-*/.\s]+$/.test(left) || !/^[\d+\-*/.\s]+$/.test(right)) {
@@ -212,11 +266,11 @@ function validate(num, ans, expr, lang) {
 }
 
 // ランキング送信
-function sendRanking(number, time, lang) {
+function sendRanking(number, time, langCd) {
   let rankOkMsg = MSG_INFO_OK_RANK;
   let rankNgMsg = MSG_ERR_RANK;
 
-  if (lang == LANG_CD_KO) {
+  if (langCd == LANG_CD_KO) {
     rankOkMsg = MSG_INFO_OK_RANK_KO;
     rankNgMsg = MSG_ERR_RANK_KO;
   }

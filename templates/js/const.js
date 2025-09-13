@@ -25,7 +25,7 @@ const STR_CATEGORY = "category";
 const STR_TYPE = "type";
 const STR_CONTENTS = "contents";
 const STR_USER_NAME = "userName";
-const STR_MSG = "msg";
+const STR_MESSAGE = "message";
 
 const COLOR_RED = "red";
 const COLOR_GREEN = "green";
@@ -62,9 +62,9 @@ const LIST_GAME_RULE = [
   "イコール(=)：必ず1つのみ使用"
 ];
 const LIST_GAME_RULE_KO = [
-  "4개의 숫자로 올바른 수식을 만드세요.",
-  "사칙연사(+ - * /)은, 최대 3개가 사용가능합니다.",
-  "등호(=)는 반드시 한번 사용하세요."
+  "4개의 숫자를 순서대로 한번씩 이용해 수식 만들기",
+  "사칙연산(+ - * /)은 최대 3개가 사용가능.",
+  "등호(=)는 반드시 한번 사용!"
 ];
 
 // メッセージ

@@ -19,8 +19,8 @@ use(database)
 
 // find documents
 cond = {
-    sUserName: { $eq: userName }, $expr: {
-        $lt: [
+    sUserName: { $ne: userName }, $expr: {
+        $lte: [
             { $strLenBytes: "$sRankTime" },
             5
         ]

@@ -249,6 +249,7 @@ tr:nth-child(even) td {
 .loginTbl,
 .userTbl {
 	width: auto;
+	min-width: 360px;
 	margin: auto;
 	font-size: 16px;
 	font-family: "Meiryo UI", sans-serif;
@@ -256,6 +257,16 @@ tr:nth-child(even) td {
 	border: 2px solid var(--accent);
 	border-collapse: collapse;
 	border-radius: 8px;
+}
+
+.loginTbl th,
+.loginTbl td {
+	text-align: center;
+}
+
+.loginTbl td {
+	/* 【障害対応】passwordの背景色のみ、whiteになる */
+	background-color: var(--input-border);
 }
 
 /* --- フッター --- */

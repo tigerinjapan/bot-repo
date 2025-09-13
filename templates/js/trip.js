@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     pageSubtitle.textContent = data.subtitle;
 
     // 基本情報
-    infoTitle.textContent = "ℹ️ " + data.info.name;
+    infoTitle.textContent = `ℹ️ ${data.info.name}`;
 
     let infoHtml = SYM_BLANK;
     const infoDataList = [
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     infoContent.innerHTML = infoHtml;
 
     // 言語（基本会話）
-    langTitle.textContent = "🌐 " + label.basicConversation;
+    langTitle.textContent = `🌐 ${label.basicConversation}`;
     langContent.innerHTML = `
       ${basicConversation
         .map(
@@ -83,11 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
           </tr>
       `
         )
-        .join("")}
+        .join(SYM_BLANK)}
     `;
 
     // 観光スポット
-    tourTitle.textContent = "📸 " + label.tourInfo;
+    tourTitle.textContent = `📸 ${label.tourInfo}`;
     tourContent.innerHTML = `
       <tr>
           <th>${label.category}</th>
@@ -106,11 +106,11 @@ document.addEventListener("DOMContentLoaded", () => {
           </tr>
       `
         )
-        .join("")}
+        .join(SYM_BLANK)}
     `;
 
     // グルメ
-    foodTitle.textContent = "🍽️ " + label.food;
+    foodTitle.textContent = `🍽️ ${label.food}`;
     foodContent.innerHTML = `
       ${data.food.foods
         .map(
@@ -122,11 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
           </tr>
       `
         )
-        .join("")}
+        .join(SYM_BLANK)}
     `;
 
     // 有用な情報
-    usefulTitle.textContent = "💡 " + label.usefulInfo;
+    usefulTitle.textContent = `💡 ${label.usefulInfo}`;
     usefulContent.innerHTML = `
       <tr>
           <th>${label.exchange}</th>
