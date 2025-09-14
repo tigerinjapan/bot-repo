@@ -102,7 +102,7 @@ async def issue_token(request: Request):
 async def root(request: Request):
     user = request.session.get(const.STR_USER)
     if user:
-        response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
+        response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
     else:
         context = {const.STR_REQUEST: request, const.STR_TITLE: const.SYSTEM_NAME}
         response = templates.TemplateResponse(const.HTML_INDEX, context)
@@ -130,7 +130,7 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
             user_dto.FI_LAST_LOGIN_DATE: datetime.now(),
         }
         user_dao.update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
-        response = RedirectResponse(url=const.PATH_NEWS, status_code=303)
+        response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
         func.print_info_msg(user_info[user_dto.FI_USER_NAME], msg_const.MSG_INFO_LOGIN)
     return response
 
@@ -179,6 +179,7 @@ async def apps(app_name: str):
     # else:
     file_path = f"templates/{app_name}.{const.FILE_TYPE_HTML}"
     return FileResponse(file_path)
+
 
 # ユーザー情報更新（フォーム）
 @app.post("/user/update")
@@ -229,7 +230,7 @@ async def board_add(request: Request):
         board_dao.insert_board_data_of_api(json_data)
         message = msg_const.MSG_INFO_PROC_COMPLETED
 
-# TODO: 新しいレビュー依頼がある場合、メール送信
+    # TODO: 新しいレビュー依頼がある場合、メール送信
 
     except Exception as e:
         func.print_error_msg(const.COLL_BOARD, e)
@@ -237,6 +238,17 @@ async def board_add(request: Request):
 
     result = {const.STR_MESSAGE: message}
     return result
+
+
+# 掲示板データ・ステータス更新
+@app.get("/board/update/{seq}")
+async def board_update(seq):
+    try:
+        board_dao.update_board_status(seq)
+    except Exception as e:
+        func.print_error_msg(const.COLL_BOARD, e)
+
+    return RedirectResponse(url=const.PATH_APP_BOARD)
 
 
 # LINEメッセージ送信

@@ -18,10 +18,6 @@ import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
 import apps.utils.user_dto as dto
 
-# URL
-URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
-URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.APP_TODAY}"
-
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
 LIST_ALL_APP_DIV = LIST_APP_DIV + ([site] * 4)
@@ -32,6 +28,7 @@ LIST_APP_NUM_OFF = [
     const.APP_SITE,
     const.APP_CAFE,
     const.APP_TRIP,
+    const.APP_BOARD,
 ]
 
 LIST_APP_AUTH_OFF = [

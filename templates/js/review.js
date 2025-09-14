@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       createOption(elemId, elemId, txtList, parentElemId, selectValIdx);
     }
 
-    const thList = ["No.", "区分", "内容"]
+    const thList = ["No.", "区分", "内容"];
     const typeTxtList = ["機能追加", "機能修正", "レイアウト", "その他"];
 
     parentElemId = ELEM_ID_TABLE;

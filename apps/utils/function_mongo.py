@@ -129,6 +129,13 @@ def db_update(client, coll_nm: str, cond, update_data):
     coll.update_one(filter=cond, update=update_data)
 
 
+# データ検索＆更新
+def db_find_update(client, coll_nm: str, cond, update_data):
+    coll = get_collection(client, coll_nm)
+    result = coll.findOneAndUpdate(filter=cond, update=update_data)
+    return result
+
+
 if __name__ == const.MAIN_FUNCTION:
     client = db_connect()
     user_info = get_collection(client, const.COLL_USER_INFO)

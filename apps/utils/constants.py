@@ -374,6 +374,7 @@ LIST_FUND_NAME = [FUND_NAME_SP_500, FUND_NAME_AI, FUND_NAME_US_TECH]
 COLL_USER_INFO = "userInfo"
 COLL_RANK_INFO = "rankInfo"
 COLL_BOARD = "board"
+COLL_SEQUENCE = "sequence"
 
 ##### URL #####
 # サイトURL
@@ -441,7 +442,8 @@ PATH_ROOT = "/"
 PATH_LOGIN = get_path(STR_LOGIN)
 PATH_LOGOUT = get_path(STR_LOGOUT)
 PATH_APP = get_path(STR_APP)
-PATH_NEWS = f"{PATH_APP}{get_path(APP_NEWS)}"
+PATH_APP_NEWS = f"{PATH_APP}{get_path(APP_NEWS)}"
+PATH_APP_BOARD = f"{PATH_APP}{get_path(APP_BOARD)}"
 PATH_UPDATE = get_path(STR_UPDATE)
 
 ##### HTMLファイル名 #####

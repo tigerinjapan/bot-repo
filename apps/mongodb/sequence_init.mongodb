@@ -1,6 +1,6 @@
 // db, collection
 const database = "mongoDB";
-const coll = "rankInfo";
+const coll = "sequence";
 
 // Select the database to use.
 use(database)
@@ -14,25 +14,20 @@ db.createCollection(coll,
         validator: {
             $jsonSchema: {
                 required: [
-                    "nNumber",
-                    "sRankTime",
-                    "sUserName",
+                    "sDiv",
+                    "nSeq",
                     "dUpdateDate"
                 ],
                 properties: {
-                    "nNumber": {
+                    "sDiv": {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    "nSeq": {
                         bsonType: "int",
-                        minimum: 1000,
+                        minimum: 1,
                         maximum: 9999,
                         description: "must be a int and is required"
-                    },
-                    "sRankTime": {
-                        bsonType: "string",
-                        description: "must be a string and is required"
-                    },
-                    "sUserName": {
-                        bsonType: "string",
-                        description: "must be a string and is required"
                     },
                     "dUpdateDate": {
                         bsonType: "date",
@@ -45,10 +40,10 @@ db.createCollection(coll,
 
 // create index
 db.getCollection(coll).createIndex({
-    "nNumber": 1
+    "sDiv": 1
 },
     {
-        "name": "indexNumber",
+        "name": "indexDiv",
         "unique": true
     });
 

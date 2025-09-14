@@ -14,6 +14,7 @@ db.createCollection(coll,
         validator: {
             $jsonSchema: {
                 required: [
+                    "nSeq",
                     "nApp",
                     "nCategory",
                     "nType",
@@ -24,6 +25,10 @@ db.createCollection(coll,
                     "dUpdateDate"
                 ],
                 properties: {
+                    "nSeq": {
+                        bsonType: "int",
+                        description: "must be an integer and is required"
+                    },
                     "nApp": {
                         bsonType: "int",
                         enum: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -67,11 +72,10 @@ db.createCollection(coll,
 
 // create index
 db.getCollection(coll).createIndex({
-    "sContents": 1,
-    "dUpdateDate": 1
+    "nSeq": 1
 },
     {
-        "name": "indexContentsUpdateDate",
+        "name": "indexSeq",
         "unique": true
     });
 

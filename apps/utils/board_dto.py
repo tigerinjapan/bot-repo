@@ -6,6 +6,7 @@ import apps.utils.constants as const
 import apps.utils.function as func
 
 # 項目ID
+ITEM_SEQ = "seq"
 ITEM_APP = "app"
 ITEM_CATEGORY = "category"
 ITEM_TYPE = "type"
@@ -16,6 +17,7 @@ ITEM_USER_NAME = "userName"
 ITEM_UPDATE_DATE = "updateDate"
 
 # フィールド
+FI_SEQ = convert_field(const.TYPE_NUM, ITEM_SEQ)
 FI_APP = convert_field(const.TYPE_NUM, ITEM_APP)
 FI_CATEGORY = convert_field(const.TYPE_NUM, ITEM_CATEGORY)
 FI_TYPE = convert_field(const.TYPE_NUM, ITEM_TYPE)
@@ -38,6 +40,7 @@ LIST_STATUS = ["新規", "対応中", "保留", "対応完了"]
 
 # ステータス
 STATUS_NEW = 0
+STATUS_DONE = 3
 
 
 @dataclass
@@ -46,6 +49,7 @@ class board:
     掲示板情報のデータクラス
     """
 
+    nSeq: int
     nApp: int
     nCategory: int
     nType: int
@@ -60,7 +64,7 @@ class board:
 
 
 # JSONデータ取得（掲示板情報の登録用）
-def get_update_data_for_board_info(data):
+def get_update_data_for_board_info(data, seq: int):
     app = int(data[0])
     category = int(data[1])
     type = int(data[2])
@@ -69,12 +73,15 @@ def get_update_data_for_board_info(data):
     status = STATUS_NEW
     userName = data[4]
 
-    json_data = asdict(board(app, category, type, contents, remark, status, userName))
+    json_data = asdict(
+        board(seq, app, category, type, contents, remark, status, userName)
+    )
     return json_data
 
 
 # 掲示板データ取得
 def get_board_data(data):
+    seq = data[FI_SEQ]
     app = LIST_APP[data[FI_APP]]
     category = LIST_CATEGORY[data[FI_CATEGORY]]
     type = LIST_TYPE[data[FI_TYPE]]
@@ -85,7 +92,7 @@ def get_board_data(data):
     updateDate = convert_time(data[FI_UPDATE_DATE])
 
     json_data = asdict(
-        board(app, category, type, contents, remark, status, userName, updateDate)
+        board(seq, app, category, type, contents, remark, status, userName, updateDate)
     )
     return json_data
 

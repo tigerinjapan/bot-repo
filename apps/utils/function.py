@@ -85,6 +85,14 @@ def is_network() -> bool:
     return network_flg
 
 
+# サーバーURL取得
+def get_server_url() -> str:
+    server_url = "https://" + get_env_val("URL_KOYEB")
+    if is_local_env():
+        server_url = get_local_url()
+    return server_url
+
+
 # ローカルIPかチェック
 def is_local_env() -> bool:
     local_flg = const.FLG_OFF
@@ -410,14 +418,12 @@ def get_df(data_list: list, columns: list[str]):
 
 
 # リンク文字列取得
-def get_a_tag(url: str, text: str):
-    result = (
-        '<a href="'
-        + url
-        + '" target="_blank" rel="noopener noreferrer">'
-        + text
-        + "</a>"
-    )
+def get_a_tag(url: str, text: str, alert_flg: bool = const.FLG_OFF):
+    a_attr = '" target="_blank" rel="noopener noreferrer">'
+    if alert_flg:
+        a_attr = '" onclick="' + f"alert('{msg_const.MSG_INFO_PROC_COMPLETED}');" + '">'
+
+    result = '<a href="' + url + a_attr + text + "</a>"
     return result
 
 

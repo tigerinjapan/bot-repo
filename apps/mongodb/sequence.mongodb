@@ -1,0 +1,34 @@
+// db
+const database = "mongoDB";
+const userName = "hong";
+const currentDate = new Date();
+
+// Select the database to use.
+use(database)
+
+// // get indexes
+// db.sequence.getIndexes();
+
+// // insert documents
+// db.sequence.insertMany([{
+//     "sDiv": "user",
+//     "nSeq": 1,
+//     "dUpdateDate": currentDate
+// }, {
+//     "sDiv": "board",
+//     "nSeq": 1,
+//     "dUpdateDate": currentDate
+// }]);
+
+// get sequence and increment sequence
+// const sequence_data = db.sequence.findOneAndUpdate(
+//     { sDiv: "board" },
+//     { $inc: { nSeq: 12 } });
+// console.log(sequence_data);
+
+// find documents
+cond = {};
+selectData = { _id: 0 }
+sortData = { sDiv: 1 }
+
+db.sequence.find(cond, selectData).sort(sortData).pretty();

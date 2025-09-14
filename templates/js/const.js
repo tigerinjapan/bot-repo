@@ -101,7 +101,7 @@ const MSG_ERR_RANK_KO = "랭킹 등록에 실패했습니다.";
 
 // URL
 const URL_SERVER = "https://kobe-dev.koyeb.app";
-const URL_LOCAL = "http://127.0.0.1:5000"
+const URL_LOCAL = "http://127.0.0.1:5000";
 
 const URL_RANKING_API = "/number/ranking";
 const URL_RANKING_SERVER = `${URL_SERVER}${URL_RANKING_API}`;

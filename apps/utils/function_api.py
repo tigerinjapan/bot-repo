@@ -8,7 +8,7 @@ import apps.utils.function as func
 import apps.utils.message_constants as msg_const
 
 # URL
-URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
+URL_SERVER = func.get_server_url()
 
 # プロパティ
 IMG_NO = func.get_env_val("LINE_IMG_DIV", int_flg=const.FLG_ON)
@@ -55,10 +55,9 @@ def get_response_result(
 
 # API結果取得
 def get_result_on_app(app_name: str):
-    base_url = URL_KOYEB_APP
-    if func.is_local_env():
-        base_url = func.get_local_url()
-    url = f"{base_url}/{const.FILE_TYPE_JSON}/{app_name}?token=token_{const.DATE_TODAY}"
+    url = (
+        f"{URL_SERVER}/{const.FILE_TYPE_JSON}/{app_name}?token=token_{const.DATE_TODAY}"
+    )
     result = get_response_result(url)
     return result
 

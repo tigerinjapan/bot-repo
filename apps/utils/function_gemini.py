@@ -22,10 +22,6 @@ GEMINI_API_KEY = func.get_env_val("GEMINI_API_KEY")
 GEMINI_MODEL = func.get_env_val("GEMINI_MODEL")
 GEMINI_MODEL_IMG = func.get_env_val("GEMINI_MODEL_IMG")
 
-URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
-URL_IMG_TODAY = f"{URL_KOYEB_APP}/{const.STR_IMG}/today_line"
-URL_IMG_FACE = f"{URL_KOYEB_APP}/{const.STR_IMG}/today_face"
-
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
 
@@ -128,7 +124,20 @@ def get_generate_image(div: str, contents: str, msg_data) -> str:
 
                 font_path = func.get_file_path(font_type, const.FILE_TYPE_TTC)
                 font = ImageFont.truetype(font=font_path, size=font_size)
+
+                # 外枠の色と文字の色
+                outline_color = "white"
                 text_color = "black"
+
+                # 外枠を描画
+                x = 60
+                y = 160
+                for dx in [-2, 0, 2]:
+                    for dy in [-2, 0, 2]:
+                        if dx != 0 or dy != 0:  # 中心はスキップ
+                            draw.text(
+                                (x + dx, y + dy), msg, font=font, fill=outline_color
+                            )
 
                 draw.text(
                     xy=xy_size, text=msg, fill=text_color, font=font, align="left"

@@ -17,13 +17,13 @@ const ID_STATION = "station";
 
 // メッセージ
 const MSG_VAL_NOT_EXIST = "が存在しません";
-const MSG_ERR_PASSWORD_NOT_MATCH = "パスワードが一致しません"
-const MSG_ERR_MENU_NO_CHECKED_ELEMENTS = "メニューは、1つ以上チェックしてください"
-const MSG_ERR_MENU_CHECKED_MAX = "メニューは、最大5つまでチェックしてください"
+const MSG_ERR_PASSWORD_NOT_MATCH = "パスワードが一致しません";
+const MSG_ERR_MENU_NO_CHECKED_ELEMENTS = "メニューは、1つ以上チェックしてください";
+const MSG_ERR_MENU_CHECKED_MAX = "メニューは、最大5つまでチェックしてください";
 
 // URL
 const URL_SERVER = "https://kobe-dev.koyeb.app";
-const URL_LOCAL = "http://127.0.0.1:5000"
+const URL_LOCAL = "http://127.0.0.1:5000";
 
 const URL_ZIP_API = "/api/zipCode";
 const URL_ZIP_SERVER = `${URL_SERVER}${URL_ZIP_API}`;

@@ -26,13 +26,7 @@ cond = {
         ]
     }
 };
-selectData = {
-    _id: 0,
-    sUserName: 1,
-    nNumber: 1,
-    sRankTime: 1,
-    dUpdateDate: 1
-}
+selectData = { _id: 0 }
 sortData = { sRankTime: 1 }
 
 db.rankInfo.find(cond, selectData).sort(sortData).pretty();

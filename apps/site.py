@@ -1,5 +1,6 @@
 # 説明: メニュー
 
+import numpy as np
 import pandas as pd
 
 import apps.utils.board_dao as board_dao
@@ -24,12 +25,23 @@ col_list = [
 
 col_list_cafe = ["店名", "住所", "メニュー", "内観"]
 col_list_trip = ["区分", "内容", "アクセス", "画像"]
-col_list_board = ["アプリ", "カテゴリー", "区分", "内容", "備考", "状態", "作成者", "更新日時"]
+col_list_board = [
+    "掲示番号",
+    "アプリ",
+    "カテゴリー",
+    "区分",
+    "内容",
+    "備考",
+    "状態",
+    "作成者",
+    "作成日時",
+    "完了",
+]
 
 menu_trip_div = ["両替所", "観光地", "レストラン", "その他"]
 
 # URL
-URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
+URL_SERVER = func.get_server_url()
 
 
 # データリスト取得
@@ -45,6 +57,19 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
 
     if app_div == const.APP_BOARD:
         df = df_all
+
+        # データ型を int から str に変換
+        df["nSeq"] = df["nSeq"].astype(str)
+
+        # numpy.where()を使って新しい列を作成
+        df[const.STR_URL] = np.where(
+            df["nStatus"] == "対応完了",
+            "-",
+            func.get_a_tag(
+                f"{URL_SERVER}/board/update/" + df["nSeq"], "☑", const.FLG_ON
+            ),
+        )
+
         df.columns = col_list_board
 
     elif app_div == const.APP_SITE:
@@ -65,7 +90,8 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
         df_info[const.STR_NAME] = func.get_a_tag(
             df_info[const.STR_URL], df_info[const.STR_NAME]
         )
-        img_path = f"{URL_KOYEB_APP}/{const.STR_IMG}/"
+
+        img_path = f"{URL_SERVER}/{const.STR_IMG}/"
         file_name = df_info[const.STR_IMG]
 
         if app_div == const.APP_CAFE:
