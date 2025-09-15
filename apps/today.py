@@ -1,6 +1,7 @@
 # 説明: 今日の生活情報
 
 import apps.ex as ex
+import apps.mlb as mlb
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
@@ -22,21 +23,23 @@ NEW_LINE = const.SYM_NEW_LINE
 DIV_DATE = "日時"
 DIV_WEATHER = "天気"
 DIV_WEATHER_PLUS = "天気+"
-DIV_OUTFIT = "コーデ"
-DIV_DINNER = "夕食"
 DIV_NISA = "NISA"
 DIV_RATE = "為替"
 DIV_RATE_PLUS = "為替+"
+DIV_MLB = "MLB"
+DIV_OUTFIT = "コーデ"
+DIV_DINNER = "夕食"
 
 DIV_LIST = [
     DIV_DATE,
     DIV_WEATHER,
     # DIV_WEATHER_PLUS,
-    DIV_OUTFIT,
-    DIV_DINNER,
     DIV_NISA,
     DIV_RATE,
-    # DIV_RATE_PLUS,
+    DIV_RATE_PLUS,
+    DIV_MLB,
+    DIV_OUTFIT,
+    DIV_DINNER,
 ]
 
 
@@ -56,6 +59,18 @@ def get_today_info():
     # 天気+
     # weather_plus = get_today_weather_plus()
 
+    # NISA
+    nisa = get_today_nisa()
+
+    # 為替
+    won = ex.get_today_won()
+
+    # 為替+
+    today_rate = ex.get_ex_info(const.STR_VND)
+
+    # MLB
+    mlb_game = mlb.get_last_game_info()[0]
+
     # コーデ・夕食
     # recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(
     #     NEW_LINE.join(today_weather)
@@ -70,16 +85,16 @@ def get_today_info():
     # 夕食
     menu = get_today_menu()
 
-    # NISA
-    nisa = get_today_nisa()
-
-    # 為替
-    won = ex.get_today_won()
-
-    # 為替+
-    # today_rate = ex.get_ex_info(const.STR_USD)
-
-    today_info_list = [date_time, weather, outfit, menu, nisa, won]
+    today_info_list = [
+        date_time,
+        weather,
+        nisa,
+        won,
+        today_rate,
+        mlb_game,
+        outfit,
+        menu,
+    ]
     return today_info_list
 
 

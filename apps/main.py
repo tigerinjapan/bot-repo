@@ -18,6 +18,9 @@ HOUR_DAILY_JOB_2 = func.get_env_val("NUM_HOUR_DAILY_JOB_2", int_flg=const.FLG_ON
 MIN_HOURLY_JOB = func.get_env_val("NUM_MIN_HOURLY_JOB", int_flg=const.FLG_ON)
 SEC_NO_SLEEP = func.get_env_val("NUM_SEC_NO_SLEEP", int_flg=const.FLG_ON)
 
+# ローカル環境の判定
+is_local = func.is_local_env()
+
 
 def main():
     # スレッド開始
@@ -58,17 +61,23 @@ def job_scheduler():
 
 # 日次ジョブ
 def daily_job():
-    line.main(proc_flg=const.FLG_OFF)
+    if not is_local:
+        line.main(proc_flg=const.FLG_OFF)
 
 
 # 日次ジョブ
 def daily_job_2():
-    line.main(data_div=const.NUM_TWO)
+    if not is_local:
+        line.main(data_div=const.NUM_TWO)
 
 
 # 時次ジョブ
 def hourly_job():
-    appl.update_news()
+    app_name = const.SYM_BLANK
+    if is_local:
+        app_name = const.APP_TODAY
+    appl.update_news(app_name)
+
     line.get_msg_data_today()
 
 

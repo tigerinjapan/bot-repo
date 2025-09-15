@@ -125,13 +125,14 @@ def get_generate_image(div: str, contents: str, msg_data) -> str:
                 font_path = func.get_file_path(font_type, const.FILE_TYPE_TTC)
                 font = ImageFont.truetype(font=font_path, size=font_size)
 
+                # 【レビュー対応#11】文字の外枠を、whiteになる #
                 # 外枠の色と文字の色
                 outline_color = "white"
                 text_color = "black"
 
                 # 外枠を描画
-                x = 60
-                y = 160
+                x = xy_size[0]
+                y = xy_size[1]
                 for dx in [-2, 0, 2]:
                     for dy in [-2, 0, 2]:
                         if dx != 0 or dy != 0:  # 中心はスキップ
@@ -192,7 +193,7 @@ def get_today_news_image(
         "msg": msg,
         "font_type": "yusei",
         "font_size": 30,
-        "xy_size": (60, 160),
+        "xy_size": (const.LINE_X_AXIS, const.LINE_Y_AXIS),
     }
     file_path = get_generate_image(div, contents, msg_data)
     return file_path

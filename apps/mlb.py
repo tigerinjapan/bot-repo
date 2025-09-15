@@ -41,14 +41,14 @@ def get_ranking_info():
 
 
 # 直近の試合情報取得
-def get_last_game_info(player_div: int = const.NUM_ONE) -> str:
+def get_last_game_info(player_div: int = const.NUM_ONE) -> tuple[str, str]:
     player_name = "大谷"
     url_param = "shohei-ohtani-660271#"
 
     if player_div == const.NUM_TWO:
         player_name = "Kim"
         url_param = "hyeseong-kim-808975"
-    elif player_div == const.NUM_TWO:
+    elif player_div == const.NUM_THREE:
         player_name = "Lee"
         url_param = "jung-hoo-lee-808982"
 
@@ -59,10 +59,19 @@ def get_last_game_info(player_div: int = const.NUM_ONE) -> str:
     soup = func_bs.get_elem_from_url(url, attr_val=attr_val, list_flg=const.FLG_ON)[
         list_no
     ]
-    game = get_text_from_info(soup)
+    game = get_text_from_info(soup).replace(const.SYM_SPACE, const.SYM_BLANK)
+
+    game_info = []
     hit = get_text_from_info(soup, const.NUM_THREE)
-    homerun = get_text_from_info(soup, const.NUM_FOUR)
-    last_game_info = f"[{player_name}] {game} HR:{homerun}"
+    if hit == str(const.NUM_ZERO):
+        game_info = "no hit"
+    else:
+        game_info = f"{hit}H"
+        home_run = get_text_from_info(soup, const.NUM_FOUR)
+        if home_run != str(const.NUM_ZERO):
+            game_info = f"{home_run}HR"
+
+    last_game_info = f"<{player_name}> {game} {game_info}"
     return last_game_info, url
 
 

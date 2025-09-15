@@ -10,98 +10,107 @@
 <body>
     <form id="userInfo" method="post" action="/user/update">
         <table class="userTbl">
-            <tr>
-                <th colspan="2">{{ title }}</th>
-            </tr>
-            <tr>
-                <td>ID</td>
-                <td>
-                    <input type="text" value="{{ user_info['sUserId'] }}" disabled>
-                    <input type="text" name="userId" value="{{ user_info['sUserId'] }}" hidden>
-                </td>
-            </tr>
-            <tr>
-                <td>名前</td>
-                <td><input type="text" name="userName" value="{{ user_info['sUserName'] }}" maxlength="8"
-                        pattern="^([a-zA-Z0-9\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF\uFF01-\uFF5E]{2,})$" required>
-                    （2文字以上）
-                </td>
-            </tr>
-            <tr>
-                <td><input type="text" name="userDiv" value="{{ user_info['sUserDiv'] }}" hidden></td>
-            </tr>
-            <tr>
-                <td>パスワード</td>
-                <td><input type="password" id="userPw" name="userPw" value="{{ user_info['sUserPw'] }}" maxlength="8"
-                        pattern="^([a-zA-Z0-9]{4,})$" required>
-                    （英数字4文字以上）
-                </td>
-            </tr>
-            <tr>
-                <td>パスワード（再）</td>
-                <td><input type="password" id="pwCheck" value="{{ user_info['sUserPw'] }}" required>
-                    （もう一度入力）
-                </td>
-            </tr>
-            <tr>
-                <td>生年</td>
-                <td>
-                    <select id="year" name="year" required></select>
-                </td>
-            </tr>
-            <tr>
-                <td>性別</td>
-                <td>
-                    <input type="radio" name="sex" value="0" required>男
-                    <input type="radio" name="sex" value="1">女
-                </td>
-            </tr>
-            <tr>
-                <td>住所</td>
-                <td>
-                    <input type="text" id="zipCd" name="zipCd" value="{{ user_info['sZipCd'] }}" minlength="7"
-                        maxlength="7" pattern="\d{7}" placeholder="1000001" required>
-                    <input type="button" id="searchAddressBtn" value="郵便番号検索" onclick="getAddress()">
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <input type="text" id="pref" name="pref" value="{{ user_info['sPref'] }}" style="width:100px"
-                        readonly>
-                    <input type="text" id="town" name="town" value="{{ user_info['sTown'] }}" style="width:100px"
-                        readonly>
-                </td>
-            </tr>
-            <tr>
-                <td>最寄駅</td>
-                <td>
-                    <select id="line" name="line" onchange="changeLine(this)" required></select>
-                    <select id="station" name="station" required></select>
-                </td>
-            </tr>
-            <tr>
-                <td>電話番号</td>
-                <td>
-                    <input type="tel" name="tel" value="{{ user_info['sTel'] }}" minlength="9" maxlength="11"
-                        pattern="\d{9,11}" placeholder="0312345678">
-                    （「-」無し）
-                </td>
-            </tr>
-            <tr>
-                <td>お気に入りメニュー</td>
-                <td id="checkBoxMenu">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <button type="submit" onclick="checkUserInfo()">登録</button>
-                </td>
-            </tr>
-            <tr>
-                <input type="text" name="seq" value="{{ user_info['nSeq'] }}" hidden>
-                <input type="text" id="chkMsg" name="chkMsg" hidden>
-            </tr>
+            <thead>
+                <tr>
+                    <th colspan="2" style="text-align: center">{{ title }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ID</td>
+                    <td>
+                        <input type="text" value="{{ user_info['sUserId'] }}" disabled />
+                        <input type="text" name="userId" value="{{ user_info['sUserId'] }}" hidden />
+                    </td>
+                </tr>
+                <tr>
+                    <td>名前</td>
+                    <td>
+                        <input type="text" name="userName" value="{{ user_info['sUserName'] }}" maxlength="8"
+                            pattern="^([a-zA-Z0-9\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF\uFF01-\uFF5E]{2,})$"
+                            required />
+                        （2文字以上）
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="userDiv" value="{{ user_info['sUserDiv'] }}" hidden />
+                    </td>
+                </tr>
+                <tr>
+                    <td>パスワード</td>
+                    <td>
+                        <input type="password" id="userPw" name="userPw" value="{{ user_info['sUserPw'] }}"
+                            maxlength="8" pattern="^([a-zA-Z0-9]{4,})$" required />
+                        （英数字4文字以上）
+                    </td>
+                </tr>
+                <tr>
+                    <td>パスワード（再）</td>
+                    <td>
+                        <input type="password" id="pwCheck" value="{{ user_info['sUserPw'] }}" required />
+                        （もう一度入力）
+                    </td>
+                </tr>
+                <tr>
+                    <td>生年</td>
+                    <td>
+                        <select id="year" name="year" required></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>性別</td>
+                    <td>
+                        <input type="radio" name="sex" value="0" required />男
+                        <input type="radio" name="sex" value="1" />女
+                    </td>
+                </tr>
+                <tr>
+                    <td>住所</td>
+                    <td>
+                        <input type="text" id="zipCd" name="zipCd" value="{{ user_info['sZipCd'] }}" minlength="7"
+                            maxlength="7" pattern="\d{7}" placeholder="1000001" required />
+                        <input type="button" id="searchAddressBtn" value="郵便番号検索" onclick="getAddress()" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="text" id="pref" name="pref" value="{{ user_info['sPref'] }}" readonly />
+                        <input type="text" id="town" name="town" value="{{ user_info['sTown'] }}" readonly />
+                    </td>
+                </tr>
+                <tr>
+                    <td>最寄駅</td>
+                    <td>
+                        <select id="line" name="line" onchange="changeLine(this)" required></select>
+                        <select id="station" name="station" required></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>電話番号</td>
+                    <td>
+                        <input type="tel" name="tel" value="{{ user_info['sTel'] }}" minlength="9" maxlength="11"
+                            pattern="\d{9,11}" placeholder="0312345678" />
+                        （「-」無し）
+                    </td>
+                </tr>
+                <tr>
+                    <td>お気に入りメニュー</td>
+                    <td id="checkBoxMenu"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <button type="submit" onclick="checkUserInfo()">登録</button>
+                    </td>
+                </tr>
+                <tr>
+                    <input type="text" name="seq" value="{{ user_info['nSeq'] }}" hidden />
+                    <input type="text" id="chkMsg" name="chkMsg" hidden />
+                </tr>
+            </tfoot>
         </table>
     </form>
     <script>

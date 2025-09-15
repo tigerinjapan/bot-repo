@@ -1,6 +1,9 @@
 // ページ読み込み時にsessionStorageからデータを取得
 let userName = sessionStorage.getItem(STR_USER_NAME);
 
+// 制限時間
+let limitTime = 30.00;
+
 // タイマーID
 let timerId = null;
 
@@ -66,7 +69,6 @@ function initDisplay(level) {
   let btnRuleNm = "ゲームルール";
   let btnChkNm = "回答確認";
   let btnNextNm = "次の問題へ";
-  let inputMsg = MSG_INFO_INPUT_USER;
 
   if (langCd == LANG_CD_KO) {
     title = TITLE_NUMBER_PLATE_KO;
@@ -75,19 +77,17 @@ function initDisplay(level) {
     btnRuleNm = "게임규칙";
     btnChkNm = "정답확인";
     btnNextNm = "다음문제";
-    inputMsg = MSG_INFO_INPUT_USER_KO;
 
     const footerElem = getElemByTag("footer");
     footerElem.style.visibility = 'hidden';
   }
 
-  setElem("timer", 30.00.toFixed(2), true);
+  setElem("timer", limitTime.toFixed(2), true);
   setElem("btnRule", btnRuleNm, true);
   setElem("btnChk", btnChkNm, true);
   setElem("btnNext", btnNextNm, true);
 
   setLevel(level);
-  setUserName(inputMsg);
 }
 
 // レベル設定
@@ -269,13 +269,17 @@ function validate(num, ans, expr, langCd) {
 
 // ランキング送信
 function sendRanking(number, time, langCd) {
+  let inputMsg = MSG_INFO_INPUT_USER;
   let rankOkMsg = MSG_INFO_OK_RANK;
   let rankNgMsg = MSG_ERR_RANK;
 
   if (langCd == LANG_CD_KO) {
+    inputMsg = MSG_INFO_INPUT_USER_KO;
     rankOkMsg = MSG_INFO_OK_RANK_KO;
     rankNgMsg = MSG_ERR_RANK_KO;
   }
+
+  setUserName(inputMsg);
 
   let rankingUrl = URL_RANKING_SERVER;
   if (isLocal()) {
