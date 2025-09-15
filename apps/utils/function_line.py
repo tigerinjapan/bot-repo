@@ -16,6 +16,8 @@ URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.APP_TODAY}"
 STR_LINE_API = "LINE API"
 LINE_CHANNEL_ID = func.get_env_val("LINE_CHANNEL_ID")
 LINE_CHANNEL_SECRET = func.get_env_val("LINE_CHANNEL_SECRET")
+LINE_CHANNEL_ID_2 = func.get_env_val("LINE_CHANNEL_ID_2")
+LINE_CHANNEL_SECRET_2 = func.get_env_val("LINE_CHANNEL_SECRET_2")
 MAX_MSG_API_CNT = 200
 
 # 改行
@@ -35,10 +37,17 @@ MSG_TYPE_BUBBLE = "bubble"
 def get_channel_access_token() -> str:
     url = f"{URL_LINE_API}/oauth2/v3/token"
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
+
+    client_id = LINE_CHANNEL_ID
+    client_secret = LINE_CHANNEL_SECRET
+    if func.is_local_env():
+        client_id = LINE_CHANNEL_ID_2
+        client_secret = LINE_CHANNEL_SECRET_2
+
     data = {
         "grant_type": "client_credentials",
-        "client_id": LINE_CHANNEL_ID,
-        "client_secret": LINE_CHANNEL_SECRET,
+        "client_id": client_id,
+        "client_secret": client_secret,
     }
 
     result = func_api.get_response_result(

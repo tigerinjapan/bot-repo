@@ -1,7 +1,6 @@
 # 説明: 今日の生活情報
 
 import apps.ex as ex
-import apps.mlb as mlb
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
@@ -26,7 +25,6 @@ DIV_WEATHER_PLUS = "天気+"
 DIV_NISA = "NISA"
 DIV_RATE = "為替"
 DIV_RATE_PLUS = "為替+"
-DIV_MLB = "MLB"
 DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
 
@@ -37,7 +35,6 @@ DIV_LIST = [
     DIV_NISA,
     DIV_RATE,
     DIV_RATE_PLUS,
-    DIV_MLB,
     DIV_OUTFIT,
     DIV_DINNER,
 ]
@@ -68,9 +65,6 @@ def get_today_info():
     # 為替+
     today_rate = ex.get_ex_info(const.STR_VND)
 
-    # MLB
-    mlb_game = mlb.get_last_game_info()[0]
-
     # コーデ・夕食
     # recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(
     #     NEW_LINE.join(today_weather)
@@ -91,7 +85,6 @@ def get_today_info():
         nisa,
         won,
         today_rate,
-        mlb_game,
         outfit,
         menu,
     ]
@@ -197,10 +190,7 @@ def get_today_outfit():
     )
     outfit_elem_2 = outfit_elem_p[1].text
     outfit_text = outfit_elem_1 + const.SYM_NEW_LINE + outfit_elem_2
-    today_outfit = func_gemini.get_recommend_outfit(
-        outfit_text
-    )  # TODO 取得に時間かかるため、スキップ
-    # today_outfit = outfit_elem_1
+    today_outfit = func_gemini.get_recommend_outfit(outfit_text)
     return today_outfit
 
 

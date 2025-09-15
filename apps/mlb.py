@@ -58,7 +58,7 @@ def get_last_game_info(player_div: int = const.NUM_ONE) -> tuple[str, str]:
     attr_val = "player-splits--last player-splits--last-3 has-xgames"
     soup = func_bs.get_elem_from_url(url, attr_val=attr_val, list_flg=const.FLG_ON)[
         list_no
-    ]
+    ] # TODO: [ERROR] KOYEB 'NoneType' Object
     game = get_text_from_info(soup).replace(const.SYM_SPACE, const.SYM_BLANK)
 
     game_info = []

@@ -58,7 +58,9 @@ document.addEventListener("DOMContentLoaded", () => {
       [label.population, data.info.population.toLocaleString()],
       [label.currency, data.info.currency],
       [label.exchangeRate, getExchangeRate(baseCountryCode, region)],
-      [label.weather, data.info.weather]
+      [label.weather, data.info.weather],
+      [label.timezone, data.info.timezone],
+      [label.flightTime, data.info.flightTime]
     ];
 
     // 基本情報テーブル生成

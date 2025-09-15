@@ -39,17 +39,17 @@ WEEKLY_DIV_FRI = "Fri"
 
 
 def main(
-    auto_flg: bool = const.FLG_ON,
-    proc_flg: bool = const.FLG_ON,
     data_div: int = const.NUM_ONE,
+    proc_flg: bool = const.FLG_ON,
+    auto_flg: bool = const.FLG_ON,
 ):
     """
     メインの処理を実行
 
     引数:
-        auto_flg (bool): 自動処理を有効にするフラグ
-        proc_flg (bool): 処理実行を有効にするフラグ
         data_div  (int): 1:通常、2:テンプレート、3:フレックス
+        proc_flg (bool): 処理実行を有効にするフラグ
+        auto_flg (bool): 自動処理を有効にするフラグ
     """
 
     func.print_start(app_name)
@@ -160,9 +160,9 @@ def get_flex_msg():
 
 
 # フレックスメッセージ・データ取得
-def get_flex_data_list(div: str = const.STR_NISA):
+def get_flex_data_list():
     header_list = ["Sell", "Buy#1", "Buy#2"]
-    fund_goal_list = [30000, 30000, 30000]
+    fund_goal_list = [30000, 50000, 50000]
 
     rate_list = []
     body_list = []
@@ -243,6 +243,6 @@ if __name__ == const.MAIN_FUNCTION:
     # get_template_actions()
     # get_flex_data_list()
     # main(auto_flg=const.FLG_OFF)
+    # main(proc_flg=const.FLG_OFF)
     # main(data_div=const.NUM_TWO)
     # main(data_div=const.NUM_THREE)
-    # main(proc_flg=const.FLG_OFF)

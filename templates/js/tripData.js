@@ -19,9 +19,11 @@ const travelData = {
                   area: "面積",
                   population: "人口",
                   currency: "通貨",
-                  exchangeRate: "為替レート",
+                  exchangeRate: "レート",
                   prices: "物価",
                   weather: "天気",
+                  timezone: "時差",
+                  flightTime: "フライト",
                   basicConversation: "基本会話",
                   currentMonthAvg: "今月の平均",
                   category: "区分",
@@ -61,6 +63,8 @@ const travelData = {
                         population: 125360000,
                         currency: "円",
                         weather: "晴れ、気温25℃",
+                        timezone: 0,
+                        flightTime: "-",
                   },
                   tour: {
                         spots: [
@@ -146,6 +150,8 @@ const travelData = {
                         population: 51740000,
                         currency: "ウォン",
                         weather: "曇り、気温18℃",
+                        timezone: 0,
+                        flightTime: "2時間30分",
                   },
                   tour: {
                         spots: [
@@ -225,6 +231,8 @@ const travelData = {
                         population: 23800000,
                         currency: "台湾ドル",
                         weather: "曇り、気温28℃",
+                        timezone: -1,
+                        flightTime: "4時間",
                   },
                   tour: {
                         spots: [
@@ -304,6 +312,8 @@ const travelData = {
                         population: 97300000,
                         currency: "ドン",
                         weather: "雨季、気温30℃",
+                        timezone: -2,
+                        flightTime: "5時間30分",
                   },
                   tour: {
                         spots: [
@@ -383,6 +393,8 @@ const travelData = {
                         population: 69600000,
                         currency: "バーツ",
                         weather: "スコール、気温32℃",
+                        timezone: -2,
+                        flightTime: "6時間",
                   },
                   tour: {
                         spots: [
@@ -484,6 +496,8 @@ const travelData = {
                         population: 115500000,
                         currency: "ペソ",
                         weather: "晴れ、気温30℃",
+                        timezone: -1,
+                        flightTime: "4時間30分",
                   },
                   tour: {
                         spots: [
@@ -578,6 +592,8 @@ const travelData = {
                   exchangeRate: "환율",
                   prices: "물가",
                   weather: "날씨",
+                  timezone: "시차",
+                  flightTime: "비행시간",
                   basicConversation: "기본회화",
                   currentMonthAvg: "이번 달 평균",
                   category: "구분",
@@ -625,6 +641,8 @@ const travelData = {
                         population: 125360000,
                         currency: "엔",
                         weather: "맑음, 기온 25℃",
+                        timezone: 0,
+                        flightTime: "2시간30분",
                   },
                   tour: {
                         spots: [
@@ -709,6 +727,8 @@ const travelData = {
                         population: 51740000,
                         currency: "원",
                         weather: "흐림, 기온 18℃",
+                        timezone: 0,
+                        flightTime: "-",
                   },
                   tour: {
                         spots: [
@@ -788,6 +808,8 @@ const travelData = {
                         population: 23800000,
                         currency: "대만달러",
                         weather: "흐림, 기온 28℃",
+                        timezone: -1,
+                        flightTime: "2시간30분",
                   },
                   tour: {
                         spots: [
@@ -866,6 +888,8 @@ const travelData = {
                         population: 97300000,
                         currency: "동",
                         weather: "우기, 기온 30℃",
+                        timezone: -2,
+                        flightTime: "4시간",
                   },
                   tour: {
                         spots: [
@@ -944,6 +968,8 @@ const travelData = {
                         population: 69600000,
                         currency: "바트",
                         weather: "스콜, 기온 32℃",
+                        timezone: -2,
+                        flightTime: "5시간30분",
                   },
                   tour: {
                         spots: [
@@ -1044,6 +1070,8 @@ const travelData = {
                         population: 115500000,
                         currency: "페소",
                         weather: "맑음, 기온 30℃",
+                        timezone: -1,
+                        flightTime: "4시간",
                   },
                   tour: {
                         spots: [
@@ -1137,6 +1165,8 @@ const travelData = {
                   exchangeRate: "Exchange Rate",
                   prices: "Prices",
                   weather: "Weather",
+                  timezone: "Timezone",
+                  flightTime: "Flight Time",
                   basicConversation: "Basic Conversation",
                   currentMonthAvg: "This Month Avg.",
                   category: "Category",
@@ -1176,6 +1206,8 @@ const travelData = {
                         population: 125360000,
                         currency: "Yen",
                         weather: "Sunny, 25℃",
+                        timezone: 0,
+                        flightTime: "-",
                   },
                   tour: {
                         spots: [
@@ -1260,6 +1292,8 @@ const travelData = {
                         population: 51740000,
                         currency: "Won",
                         weather: "Cloudy, 18℃",
+                        timezone: 0,
+                        flightTime: "2.5H",
                   },
                   tour: {
                         spots: [
@@ -1339,6 +1373,8 @@ const travelData = {
                         population: 23800000,
                         currency: "TWD",
                         weather: "Cloudy, 28℃",
+                        timezone: -1,
+                        flightTime: "4.0H",
                   },
                   tour: {
                         spots: [
@@ -1417,6 +1453,8 @@ const travelData = {
                         population: 97300000,
                         currency: "Dong",
                         weather: "Rainy season, 30℃",
+                        timezone: -2,
+                        flightTime: "5.5H",
                   },
                   tour: {
                         spots: [
@@ -1495,6 +1533,8 @@ const travelData = {
                         population: 69600000,
                         currency: "Baht",
                         weather: "Squall, 32℃",
+                        timezone: -2,
+                        flightTime: "6.0H",
                   },
                   tour: {
                         spots: [
@@ -1597,6 +1637,8 @@ const travelData = {
                         population: 115500000,
                         currency: "Peso",
                         weather: "Sunny, 30℃",
+                        timezone: -1,
+                        flightTime: "4.0H",
                   },
                   tour: {
                         spots: [
