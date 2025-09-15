@@ -32,7 +32,8 @@ FILE_DIV_AI_NEWS = "ai_news"
 # タイトル
 DIV_MARK = "*----*----*----*----*----*"
 DIV_MARK_TXT = "*-- {} --*"
-DIV_MARK_IMG = "=== {} ==="
+# DIV_MARK_IMG = "=== {} ==="
+DIV_MARK_IMG = "■ {} ■"
 
 # 曜日
 WEEKLY_DIV_FRI = "Fri"
@@ -167,7 +168,7 @@ def get_flex_data_list():
     rate_list = []
     body_list = []
     for fund_no, fund_goal in zip(const.LIST_FUND_NO, fund_goal_list):
-        fund_name, point = today.get_today_nisa(fund_no, rate_flg=const.FLG_OFF)
+        fund_name, point = today.get_today_nisa(fund_no, msg_flg=const.FLG_OFF)
         int_point = int(
             point.replace(const.SYM_COMMA, const.SYM_BLANK).replace(
                 const.STR_JPY_JA, const.SYM_BLANK
@@ -224,13 +225,12 @@ def get_title(
         if date_today:
             title_div = date_today
 
-    title_txt = DIV_MARK_TXT.format(title_div)
-    title_img = DIV_MARK_IMG.format(title_div)
-
     if msg_type == MSG_TYPE_TXT:
+        title_txt = DIV_MARK_TXT.format(title_div)
         title_list = [DIV_MARK, title_txt, DIV_MARK]
         title = NEW_LINE.join(title_list)
     elif msg_type == MSG_TYPE_IMG:
+        title_img = DIV_MARK_IMG.format(title_div)
         title = title_img
     else:
         title = title_div
@@ -242,7 +242,7 @@ if __name__ == const.MAIN_FUNCTION:
     get_msg_data_today()
     # get_template_actions()
     # get_flex_data_list()
-    # main(auto_flg=const.FLG_OFF)
     # main(proc_flg=const.FLG_OFF)
     # main(data_div=const.NUM_TWO)
     # main(data_div=const.NUM_THREE)
+    # main(auto_flg=const.FLG_OFF)

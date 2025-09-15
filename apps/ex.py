@@ -41,7 +41,9 @@ def get_today_won() -> str:
     elem = func_bs.get_elem_from_url(url, attr_val=class_)
     elem_list = func_bs.find_elem_by_attr(elem, tag=const.TAG_TD, list_flg=const.FLG_ON)
 
-    won = elem_list[0].text if elem_list else "1000"
+    won = "950"
+    if elem_list:
+        won = get_ex_val(elem_list[0].text)
     today_won_rate = f"100{const.STR_JPY_JA} = {won}{const.STR_KRW_JA}"
     return today_won_rate
 
@@ -60,17 +62,37 @@ def get_ex_yen_list():
     return ex_yen_list
 
 
+# 為替情報取得
 def get_ex_info(ex_div: str = const.STR_KRW):
     url = f"{const.URL_GOOGLE}/{URL_PARAM}".format(ex_div)
     ex_str = func_bs.get_elem_from_url(url, attr_val="YMlKec fxKbKc")
 
     if ex_str:
-        ex_text = ex_str.text
-        ex_num = float(ex_text) * 100
-        ex_val = round(ex_num, 2)
+        ex_val = get_ex_val(ex_str.text, unit_flg=const.FLG_ON)
         col_ex = DICT_EX[ex_div]
         ex_info = f"100{const.STR_JPY_JA} = {ex_val}{col_ex}"
     return ex_info
+
+
+# 数値取得
+def get_ex_val(
+    ex_text: str,
+    unit_flg: bool = const.FLG_OFF,
+    round_flg: bool = const.FLG_OFF,
+    str_flg: bool = const.FLG_ON,
+):
+    ex_num = float(ex_text)
+    if unit_flg:
+        ex_num *= 100
+
+    if round_flg:
+        ex_num = round(ex_num, 2)
+
+    # 3桁区切りの表示
+    ex_val = int(ex_num)
+    if str_flg:
+        ex_val = "{:,}".format(ex_val)
+    return ex_val
 
 
 if __name__ == const.MAIN_FUNCTION:

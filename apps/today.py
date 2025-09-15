@@ -21,10 +21,10 @@ NEW_LINE = const.SYM_NEW_LINE
 # 定数（日本語）
 DIV_DATE = "日時"
 DIV_WEATHER = "天気"
-DIV_WEATHER_PLUS = "天気+"
-DIV_NISA = "NISA"
-DIV_RATE = "為替"
-DIV_RATE_PLUS = "為替+"
+DIV_WEATHER_PLUS = "天気"
+DIV_NISA = "＃NISA＃"
+DIV_RATE = "＄為替＄"
+DIV_RATE_PLUS = "＄為替+＄"
 DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
 
@@ -154,7 +154,7 @@ def get_today_weather_plus() -> str:
 
 # 今日のNISA取得
 def get_today_nisa(
-    fund_no: str = const.FUND_NO_SP_500, rate_flg: bool = const.FLG_ON
+    fund_no: str = const.FUND_NO_SP_500, msg_flg: bool = const.FLG_ON
 ) -> str:
     url = f"{const.URL_SMBC_FUND}/{fund_no}/"
     class_ = "sw-FundComparisonTable sw-FundComparisonTable_center"
@@ -171,8 +171,8 @@ def get_today_nisa(
 
     today_nisa = f"{fund_name} = {point}"
 
-    if rate_flg:
-        today_nisa += f" ({rate})"
+    if msg_flg:
+        # today_nisa += f" ({rate})"
         return today_nisa
     else:
         return fund_name, point
