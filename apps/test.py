@@ -1,4 +1,5 @@
 # 説明: カフェ
+
 import asyncio
 
 import apps.utils.constants as const

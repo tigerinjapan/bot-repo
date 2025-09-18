@@ -1,3 +1,5 @@
+# 説明: ランク情報DAO
+
 import apps.utils.constants as const
 import apps.utils.function_mongo as func_mongo
 import apps.utils.rank_dto as rank_dto

@@ -1,10 +1,13 @@
+# 説明: ユーザー情報DTO
+
 from dataclasses import asdict, dataclass
 from datetime import datetime
 
 import apps.utils.constants as const
-from apps.utils.function import get_masking_data
+from apps.utils.function import get_masking_data, get_now
 
 
+# フィールド変換
 def convert_field(type_div, id):
     div = "ao" if type_div == const.TYPE_LIST else type_div[0]
     # func[capitalize]:Converts the first character of a string to an uppercase letter
@@ -87,8 +90,8 @@ class userInfo:
     sTel: str
     sMenu: str
     nSeq: int
-    dModifiedDate: datetime = datetime.now()
-    dLastLoginDate: datetime = datetime.now()
+    dModifiedDate: datetime = get_now
+    dLastLoginDate: datetime = get_now
 
     def get_data(self):
         return asdict(self)

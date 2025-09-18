@@ -1,6 +1,7 @@
 # 説明: Beautiful Soup関数
 
 import requests
+
 from bs4 import BeautifulSoup as bs
 
 import apps.utils.constants as const
@@ -8,6 +9,7 @@ import apps.utils.function as func
 from apps.utils.message_constants import MSG_ERR_NO_SUCH_ELEMENT
 
 
+# URLからデータ取得
 def get_data_from_url(
     url: str, headers=const.NONE_CONSTANT, sleep_flg: bool = const.FLG_ON
 ):

@@ -1,14 +1,14 @@
 # 説明: サーバー処理
 # FastAPIによるWebサーバー。認証・セッション管理・各種APIエンドポイントを提供
 
-from threading import Thread
 from fastapi import FastAPI, Request, HTTPException, Form
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
+
 from functools import wraps
-from datetime import datetime, timedelta
 from starlette.middleware.sessions import SessionMiddleware
+from threading import Thread
 from uvicorn import Config, Server
 
 import apps.appl as appl
@@ -19,9 +19,9 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_line as func_line
 import apps.utils.message_constants as msg_const
+import apps.utils.rank_dao as rank_dao
 import apps.utils.user_dao as user_dao
 import apps.utils.user_dto as user_dto
-import apps.utils.rank_dao as rank_dao
 
 # FastAPIインスタンス生成とセッションミドルウェア追加
 app = FastAPI()
@@ -91,8 +91,8 @@ async def protected_resource(request: Request, token: str):
 # トークン発行API
 @app.post("/token")
 async def issue_token(request: Request):
-    access_token = "token_" + const.DATE_TODAY
-    expiration = datetime.now() + timedelta(minutes=TOKEN_EXPIRATION_MINUTES)
+    access_token = "token_" + func.get_now(const.DATE_TODAY)
+    expiration = func.get_calc_date(TOKEN_EXPIRATION_MINUTES, const.DATE_MIN)
     token_data = {
         const.STR_TOKEN: access_token,
         const.STR_TYPE: "bearer",
@@ -131,7 +131,7 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
         user_id = func.get_masking_data(userId)
         update_data = {
             user_dto.FI_USER_ID: user_id,
-            user_dto.FI_LAST_LOGIN_DATE: datetime.now(),
+            user_dto.FI_LAST_LOGIN_DATE: func.get_now(),
         }
         user_dao.update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
         response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)

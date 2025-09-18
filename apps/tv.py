@@ -61,7 +61,7 @@ def get_tv_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
 
         date_txt = tv_info_text[0].split(" ")
         date = func.convert_date_format(
-            f"{const.DATE_YEAR}年" + date_txt[0],
+            f"{func.get_now(const.DATE_YEAR)}年" + date_txt[0],
             f"%Y年%m月%d日",
             const.DATE_FORMAT_YYYYMMDD_SLASH,
         )

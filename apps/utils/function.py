@@ -11,7 +11,7 @@ import sys
 import time
 import urllib
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from pprint import pprint
 from translate import Translator
 
@@ -19,6 +19,33 @@ import pandas as pd
 
 import apps.utils.constants as const
 import apps.utils.message_constants as msg_const
+
+
+# 現在時刻の取得
+def get_now(div: int = const.DATE_NOW):
+    now = datetime.now()
+    if div == const.DATE_TODAY:
+        now = now.strftime(const.DATE_FORMAT_YYYYMMDD)
+    elif div == const.DATE_YEAR:
+        now = now.year
+    elif div == const.DATE_HOUR:
+        now = now.hour
+    elif div == const.DATE_WEEKDAY:
+        now = now.weekday()
+    return now
+
+
+# 現在時刻より、計算された時刻の取得
+def get_calc_date(val: int, div: int = const.DATE_DAY):
+    calc_date = get_now()
+    if div == const.DATE_DAY:
+        calc_date += timedelta(days=val)
+    elif div == const.DATE_HOUR:
+        calc_date += timedelta(hours=val)
+    elif div == const.DATE_MIN:
+        calc_date += timedelta(minutes=val)
+
+    return calc_date
 
 
 # アプリケーション名取得
@@ -30,7 +57,7 @@ def get_app_name(app_path: str, extension_flg: bool = const.FLG_OFF) -> str:
 
 # アプリケーションパス取得
 def get_app_path(dir_path: str, file_path: str = const.SYM_BLANK) -> str:
-    app_path = os.path.join(const.DIR_CURR_WORK, dir_path, file_path)
+    app_path = os.path.join(os.getcwd(), dir_path, file_path)
     return app_path
 
 
@@ -160,13 +187,13 @@ def print_end(div: str):
 
 # 情報メッセージ出力
 def print_info_msg(div: str, msg: str = const.SYM_BLANK):
-    msg_now = f"[{datetime.now()}]"
+    msg_now = f"[{get_now()}]"
     print(msg_now, msg_const.MSG_DIV_INFO, div, msg)
 
 
 # エラーメッセージ出力
 def print_error_msg(div: str, msg: str = const.SYM_BLANK):
-    msg_now = f"[{datetime.now()}]"
+    msg_now = f"[{get_now()}]"
     print(msg_now, msg_const.MSG_DIV_ERR, div, msg)
 
 
@@ -244,7 +271,7 @@ def check_in_list(target_str: str, target_list: list[str]) -> bool:
 
 # ファイルパス取得
 def get_file_path(div: str, file_type: str, file_div: str = const.STR_INPUT) -> str:
-    file_path = f"{const.DIR_CURR_WORK}/{file_div}/{file_type}/{div}.{file_type}"
+    file_path = f"{os.getcwd()}/{file_div}/{file_type}/{div}.{file_type}"
     return file_path
 
 

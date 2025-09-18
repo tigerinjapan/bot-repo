@@ -57,9 +57,7 @@ def get_response_result(
 
 # API結果取得
 def get_result_on_app(app_name: str):
-    url = (
-        f"{URL_SERVER}/{const.FILE_TYPE_JSON}/{app_name}?token=token_{const.DATE_TODAY}"
-    )
+    url = f"{URL_SERVER}/{const.FILE_TYPE_JSON}/{app_name}?token=token_{func.get_now(const.DATE_TODAY)}"
     result = get_response_result(url)
     return result
 

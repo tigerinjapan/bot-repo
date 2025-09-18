@@ -4,7 +4,6 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.user_dao as dao
 import apps.utils.user_dto as dto
-import apps.utils.constants as const
 
 # タイトル
 app_title = "ユーザー情報"

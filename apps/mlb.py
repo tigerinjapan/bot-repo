@@ -1,7 +1,5 @@
 # 説明: MLB STAT
 
-from datetime import date, timedelta
-
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
@@ -157,19 +155,15 @@ def get_mlb_stat_of_api(team_id: str = TEAM_ID_LAD, player_id: str = PLAYER_ID_O
 
 # ゲーム日付取得
 def get_target_date():
-    # 今日の日付を取得
-    today = date.today()
+    japan_date = func.get_now()
+    days_num = -1
 
-    # 日本時間
-    japan_date = today
-    days_num = 1
-
-    if const.DATE_HOUR < 13:
-        japan_date -= timedelta(days=1)
-        days_num = 2
+    if func.get_now(const.DATE_HOUR) < 13:
+        japan_date = func.get_calc_date(-1)
+        days_num = -2
 
     # 現地時間
-    target_date = today - timedelta(days=days_num)
+    target_date = func.get_calc_date(days_num)
 
     # mm/dd/yyyyに変換して出力
     formatted_date = func.convert_date_to_str(target_date, "%m/%d/%Y")

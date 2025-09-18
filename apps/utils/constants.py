@@ -1,8 +1,5 @@
 # 説明: 定数一覧
 
-import os
-from datetime import datetime
-
 ##### システム名 #####
 SYSTEM_NAME = "開発デモシステム"
 
@@ -47,9 +44,6 @@ UA_OPT_MO = "--user-agent=Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 
 UA_DIV_MO = "Mobile"
 UA_DIV_PC = "PC"
 
-##### パス #####
-DIR_CURR_WORK = os.getcwd()
-
 ##### 文字コード #####
 CHARSET_UTF_8 = "utf-8"
 CHARSET_ASCII = "ascii"
@@ -65,16 +59,7 @@ DATE_FORMAT_OUTPUT_FILE = "%Y%m%d%H%M%S"
 DATE_FORMAT_YYYYMMDD = "%Y%m%d"
 DATE_FORMAT_YYYYMMDD_SLASH = "%Y/%m/%d(%a)"
 DATE_FORMAT_YYYYMMDD_HHMM = "%Y/%m/%d(%a) %H:%M"
-DATE_FORMAT_MMDD = "%m%d"
 DATE_FORMAT_ISO = "iso"
-
-##### 日付 #####
-DATE_TODAY = datetime.now().strftime(DATE_FORMAT_YYYYMMDD)
-DATE_TODAY_2 = datetime.now().strftime(DATE_FORMAT_YYYYMMDD_SLASH)
-DATE_TODAY_3 = datetime.now().strftime(DATE_FORMAT_MMDD)
-DATE_YEAR = datetime.now().year
-DATE_HOUR = datetime.now().hour
-DATE_WEEKDAY = datetime.now().weekday()
 
 ##### リクエストタイプ #####
 REQUEST_TYPE_GET = "get"
@@ -97,6 +82,16 @@ NUM_ONE = 1
 NUM_TWO = 2
 NUM_THREE = 3
 NUM_FOUR = 4
+
+##### 日付 #####
+DATE_NOW = 1
+DATE_TODAY = 2
+DATE_YEAR = 3
+DATE_MONTH = 4
+DATE_DAY = 5
+DATE_HOUR = 6
+DATE_MIN = 7
+DATE_WEEKDAY = 7
 
 # 座標
 LINE_X_AXIS = 50

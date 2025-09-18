@@ -1,9 +1,10 @@
+# 説明: mongoDB操作
+
 from pymongo import MongoClient
 
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
-import apps.utils.user_dto as dto
 
 # アプリケーション
 app_name = const.STR_MONGO

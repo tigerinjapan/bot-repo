@@ -1,8 +1,9 @@
-from datetime import datetime, timedelta
+# 説明: 掲示板情報DAO
 
-import apps.utils.constants as const
-import apps.utils.function_mongo as func_mongo
 import apps.utils.board_dto as dto
+import apps.utils.constants as const
+import apps.utils.function as func
+import apps.utils.function_mongo as func_mongo
 import apps.utils.sequence_dao as seq_dao
 
 # 掲示板情報
@@ -16,7 +17,7 @@ def get_board_info():
     client = func_mongo.db_connect()
 
     # 30日前のデータ
-    target_date = datetime.now() + timedelta(days=-30)
+    target_date = func.get_calc_date(-30)
 
     cond = {
         "$or": [

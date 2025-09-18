@@ -1,3 +1,5 @@
+# 説明: ユーザー情報DAO
+
 from pymongo import DESCENDING
 
 import apps.utils.constants as const
@@ -5,7 +7,6 @@ import apps.utils.function as func
 import apps.utils.function_mongo as func_mongo
 import apps.utils.message_constants as msg_const
 import apps.utils.user_dto as dto
-
 
 # コレクション: ユーザー情報
 COLL = const.COLL_USER_INFO

@@ -1,8 +1,12 @@
+# 説明: ランク情報DTO
+
 from dataclasses import asdict, dataclass
 from datetime import datetime
 
-from apps.utils.user_dto import convert_field
 import apps.utils.constants as const
+from apps.utils.function import get_now
+from apps.utils.user_dto import convert_field
+
 
 # 項目ID:rank info
 ITEM_NUMBER = "number"
@@ -26,7 +30,7 @@ class rankInfo:
     nNumber: int
     sRankTime: str
     sUserName: str
-    dUpdateDate: datetime = datetime.now()
+    dUpdateDate: datetime = get_now
 
     def get_data(self):
         return asdict(self)

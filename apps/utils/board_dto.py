@@ -1,9 +1,11 @@
-from dataclasses import asdict, dataclass
-from datetime import datetime, timedelta
+# 説明: 掲示板情報DTO
 
-from apps.utils.user_dto import convert_field
+from dataclasses import asdict, dataclass
+from datetime import datetime
+
 import apps.utils.constants as const
-import apps.utils.function as func
+from apps.utils.function import convert_date_to_str, get_now
+from apps.utils.user_dto import convert_field
 
 # 項目ID
 ITEM_SEQ = "seq"
@@ -57,7 +59,7 @@ class board:
     sRemark: str
     nStatus: int
     sUserName: str
-    dUpdateDate: datetime = datetime.now()
+    dUpdateDate: datetime = get_now
 
     def get_data(self):
         return asdict(self)
@@ -89,22 +91,11 @@ def get_board_data(data):
     remark = data[FI_REMARK]
     status = LIST_STATUS[data[FI_STATUS]]
     userName = data[FI_USER_NAME]
-    updateDate = convert_time(data[FI_UPDATE_DATE])
+    updateDate = convert_date_to_str(
+        data[FI_UPDATE_DATE], const.DATE_FORMAT_YYYYMMDD_SLASH
+    )
 
     json_data = asdict(
         board(seq, app, category, type, contents, remark, status, userName, updateDate)
     )
     return json_data
-
-
-# yyyy/mm/dd形式にフォーマットして出力
-def convert_time(updateDate: datetime) -> str:
-    # # 9時間を加算
-    # target_date = updateDate + timedelta(hours=9)
-
-    target_date = updateDate
-
-    formatted_date = func.convert_date_to_str(
-        target_date, const.DATE_FORMAT_YYYYMMDD_SLASH
-    )
-    return formatted_date

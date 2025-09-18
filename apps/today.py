@@ -208,7 +208,7 @@ def get_today_menu():
         url, attr_val="recipeTitle", list_flg=const.FLG_ON
     )
     weekly_menu = [menu.text for i, menu in enumerate(weekly_menu_list) if i % 3 == 0]
-    today_menu = weekly_menu[const.DATE_WEEKDAY]
+    today_menu = weekly_menu[func.get_now(const.DATE_WEEKDAY)]
     return today_menu
 
 
