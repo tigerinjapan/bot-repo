@@ -297,7 +297,7 @@ async def font(file_name: str):
 @app.get("/check")
 def health_check():
     appl.no_sleep()
-    info_msg = msg_const.MSG_INFO_SERVER_KEEP_ALIVE
+    info_msg = msg_const.MSG_INFO_SERVER_KEEP_WORKING
     func.print_info_msg(info_msg)
     result = {const.STR_MESSAGE: info_msg}
     return result

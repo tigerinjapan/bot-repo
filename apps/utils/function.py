@@ -187,7 +187,7 @@ def print_proc_ok(currentframe, div: str = const.SYM_BLANK):
 
 
 # 文字列を日付型に変換
-def convert_str_to_date(str: str, format: str) -> datetime:
+def convert_str_to_date(str: str, format: str = const.DATE_FORMAT_ISO) -> datetime:
     if format == const.DATE_FORMAT_ISO:
         date = datetime.fromisoformat(str)
     else:

@@ -6,6 +6,7 @@ import apps.study as study
 import apps.today as today
 import apps.tv as tv
 import apps.utils.constants as const
+import apps.utils.message_constants as msg_const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.function_gemini as func_gemini
@@ -13,11 +14,6 @@ import apps.utils.function_line as func_line
 
 # アプリケーション
 app_name = func.get_app_name(__file__)
-
-# URL
-URL_LINE_API = "https://api.line.me"
-URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
-URL_TODAY_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}/{const.APP_TODAY}"
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -60,22 +56,33 @@ def main(
         token = func_line.get_channel_access_token()
 
         if token:
-            if data_div == const.NUM_ONE:
-                if proc_flg:
-                    msg_list = get_msg_list(auto_flg)
+            try:
+                if data_div == const.NUM_ONE:
+                    if proc_flg:
+                        msg_list = get_msg_list(auto_flg)
+
+                    else:
+                        msg_list = [[MSG_TYPE_IMG, func_line.URL_TODAY_IMG]]
+
+                    # メッセージ取得
+                    messages = func_line.get_line_messages(msg_list)
 
                 else:
-                    msg_list = [[MSG_TYPE_IMG, URL_TODAY_IMG]]
+                    if data_div == const.NUM_TWO:
+                        msg_list = get_template_msg()
+                    else:
+                        msg_list = get_flex_msg()
+                    messages = func_line.get_send_messages(msg_list)
 
-                # メッセージ取得
-                messages = func_line.get_line_messages(msg_list)
+            except Exception as e:
+                err_msg = msg_const.MSG_INFO_SERVER_KEEP_WORKING
+                func.print_error_msg(err_msg, e)
 
-            else:
-                if data_div == const.NUM_TWO:
-                    msg_list = get_template_msg()
-                else:
-                    msg_list = get_flex_msg()
-                messages = func_line.get_send_messages(msg_list)
+                if not func.is_local_env():
+                    token = func_line.get_channel_access_token(err_msg=const.FLG_ON)
+
+                msg = f"[{err_msg}]\n{e[:100]}"
+                messages = func_line.get_send_messages(msg)
 
             # メッセージ送信
             func_line.send_message(token, messages)
@@ -204,7 +211,7 @@ def get_msg_data_list(
             if not file_path:
                 func_api.create_msg_img(msg_div, text_msg, forecast)
 
-        text_msg = URL_TODAY_IMG
+        text_msg = func_line.URL_TODAY_IMG
         func.print_info_msg(MSG_TYPE_IMG, text_msg)
 
     msg_data_list = [msg_type, text_msg]

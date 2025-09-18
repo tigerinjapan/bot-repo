@@ -26,6 +26,8 @@ def get_response_result(
 ):
     result = const.NONE_CONSTANT
 
+    func.print_info_msg(url)
+
     if header_json_flg:
         headers.update(const.HEADERS_JSON)
 

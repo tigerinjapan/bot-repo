@@ -1,6 +1,7 @@
 # 説明: 今日の生活情報
 
 import apps.ex as ex
+import apps.mlb as mlb
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
@@ -22,9 +23,10 @@ NEW_LINE = const.SYM_NEW_LINE
 DIV_DATE = "日時"
 DIV_WEATHER = "天気"
 DIV_WEATHER_PLUS = "天気"
-DIV_NISA = "＃NISA＃"
-DIV_RATE = "＄為替＄"
-DIV_RATE_PLUS = "＄為替+＄"
+DIV_NISA = "＄NISA＄"
+DIV_RATE = "￥為替￥"
+DIV_RATE_PLUS = "￥為替￥"
+DIV_MLB = "MLB"
 DIV_OUTFIT = "コーデ"
 DIV_DINNER = "夕食"
 
@@ -35,6 +37,7 @@ DIV_LIST = [
     DIV_NISA,
     DIV_RATE,
     DIV_RATE_PLUS,
+    DIV_MLB,
     DIV_OUTFIT,
     DIV_DINNER,
 ]
@@ -79,12 +82,16 @@ def get_today_info():
     # 夕食
     menu = get_today_menu()
 
+    # MLB
+    mlb_game = mlb.get_mlb_stat_of_api()
+
     today_info_list = [
         date_time,
         weather,
         nisa,
         won,
         today_rate,
+        mlb_game,
         outfit,
         menu,
     ]

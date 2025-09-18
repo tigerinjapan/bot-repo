@@ -100,7 +100,7 @@ NUM_FOUR = 4
 
 # 座標
 LINE_X_AXIS = 50
-LINE_Y_AXIS = 140
+LINE_Y_AXIS = 130
 
 # 件数
 MIN_DISPLAY_CNT = 3
@@ -396,6 +396,7 @@ URL_ACHIKOCHI = "https://achikochi-data.com"
 URL_LCC = "https://dsk.ne.jp"
 URL_TV = "https://bangumi.org"
 URL_MLB = "https://www.mlb.com"
+URL_MLB_STAT_API = "https://statsapi.mlb.com"
 
 ##### アプリケーション名 #####
 APP_TODAY = "today"
