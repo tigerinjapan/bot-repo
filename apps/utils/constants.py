@@ -456,6 +456,7 @@ HTML_INDEX = get_html(STR_INDEX)
 HTML_RESULT = get_html(STR_RESULT)
 HTML_USER_INFO = get_html(STR_USER_INFO)
 HTML_NUMBER_PLATE = get_html(STR_NUMBER_PLATE)
+HTML_RESULT_2 = get_html(f"{STR_RESULT}2")
 
 if __name__ == MAIN_FUNCTION:
     data = f"[{DATE_WEEKDAY, HTML_INDEX}]"

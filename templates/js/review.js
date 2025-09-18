@@ -1,6 +1,9 @@
 // 文字列
 const STR_REVIEW = "Review";
 
+// 掲示板数
+const NUM_BOARD_CNT = 5;
+
 // 要素ID
 const ELEM_ID_DIV = TAG_DIV + STR_REVIEW;
 const ELEM_ID_FORM = TAG_FORM + STR_REVIEW;
@@ -11,11 +14,14 @@ const ELEM_NAME_ITEMS = "items[]";
 // ページ読み込み時にsessionStorageからデータを取得
 let userName = sessionStorage.getItem(STR_USER_NAME);
 
-getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD;
-document.title = STR_REVIEW;
+// ヘッダー設定
+getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_2;
 
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", () => {
+  // タイトル設定
+  document.title = STR_REVIEW;
+
   function init() {
 
     getElemByTag(TAG_H1).textContent = "アプリ・レビュー";
@@ -45,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const typeTxtList = ["機能追加", "機能修正", "レイアウト", "その他"];
 
     parentElemId = ELEM_ID_TABLE;
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i <= NUM_BOARD_CNT; i++) {
       const strIdx = i.toString();
 
       const trId = TAG_TR + strIdx;

@@ -31,23 +31,17 @@ def get_item_list(keyword_list: list[str] = []) -> list[str]:
     if not keyword_list:
         keyword_list = LIST_KEYWORD
 
-    # retry_cnt = const.MAX_RETRY_CNT # TODO 3回だと、時間かかるため、別方法検討要
-    retry_cnt = 1
-    for attempt in range(retry_cnt):
-        for keyword in keyword_list:
-            news_summary = get_naver_news_summary(keyword)
-            if not news_summary or len(news_summary) != 3:
-                continue
+    for keyword in keyword_list:
+        news_summary = get_naver_news_summary(keyword)
+        if not news_summary or len(news_summary) != 3:
+            continue
 
-            conversation = news_summary[1]
-            korean = news_summary[2]
+        conversation = news_summary[1]
+        korean = news_summary[2]
 
-            if "[1]" in korean:
-                study_item = [conversation, korean]
-                item_list.append(study_item)
-
-        if item_list:
-            break
+        if "[1]" in korean:
+            study_item = [conversation, korean]
+            item_list.append(study_item)
 
     return item_list
 

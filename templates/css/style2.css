@@ -39,7 +39,7 @@ body {
 .board-container {
 	max-width: 600px;
 	margin: 40px auto;
-	background-color: white;
+	background-color: var(--container-bg);
 	border-radius: 10px;
 	box-shadow: 0 4px 8px;
 	padding: 30px 20px 20px 20px;
@@ -92,7 +92,7 @@ label {
 	margin-top: 18px;
 	margin-bottom: 6px;
 	font-weight: bold;
-	color:var(--section-title-color);
+	color: var(--section-title-color);
 }
 
 select,
@@ -135,7 +135,6 @@ th {
 	color: white;
 	font-weight: bold;
 }
-
 
 .subtitle {
 	font-size: 1.1em;

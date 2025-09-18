@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <title></title>
+  <script src="/templates/const.js"></script>
+  <script src="/templates/func.js"></script>
+  {% if app_name == 'trip' %}
+  <script src="/templates/langData.js"></script>
+  <script src="/templates/tripData.js"></script>
+  <script src="/templates/trip.js"></script>
+  {% endif %}
+
+  {% if app_name == 'review' %}
+  <script src="/templates/review.js"></script>
+  {% endif %}
+</head>
+
+<body>
+  <p id="appName" hidden>{{ app_name }}</p>
+
+  {% if app_name == 'trip' %}
+  <div class="container">
+    <header>
+      <h1 id="page-title"></h1>
+      <p class="subtitle" id="page-subtitle"></p>
+    </header>
+
+    <div class="controls">
+      <p>Language</p>
+      <select id="lang-select"></select><br />
+      <p>City</p>
+      <select id="region-select"></select>
+    </div>
+
+    <div class="card-grid" id="card-grid"></div>
+  </div>
+
+  <div id="dialog" class="dialog">
+    <div class="dialog-content">
+      <span class="close-btn">&times;</span>
+      <h3 id="dialog-title"></h3>
+      <p id="dialog-text"></p>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if app_name == 'review' %}
+  <div id="divBoard" class="board-container">
+    <h1></h1>
+    <form id="formReview">
+      <div id="divReview"></div>
+      <table id="tableReview"></table>
+      <button type="submit" id="save-btn" class="save-btn" onclick="sendReview()"></button>
+    </form>
+    <p id="message" class="msg"></p>
+  </div>
+  {% endif %}
+</body>
+
+</html>

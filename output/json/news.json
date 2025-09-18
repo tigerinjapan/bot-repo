@@ -1,15 +1,15 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOGN16BMA0W5A910C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">FRBが9カ月ぶり利下げ再開0.25%\n新理事が「大幅」求め反対</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUB1658B0W5A910C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">日経平均株価\n初の4万5000円台消える「日本株ディスカウント」</a>"
     },
     {
         "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/business/articles/2509/16/news008.html\" target=\"_blank\" rel=\"noopener noreferrer\">何時間もかかっていた業務が数分で……AI活用コンサルタントが教える「ChatGPT」や「Gemini」の活用術</a>"
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/pcuser/articles/2509/17/news118.html\" target=\"_blank\" rel=\"noopener noreferrer\">「iPhoneAir」が放つ圧倒的オーラの正体に迫る実機で確かめて分かった驚き</a>"
     },
     {
         "区分": "韓国",
-        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56156\" target=\"_blank\" rel=\"noopener noreferrer\">【旅行】 韓国空港公社19日スト予告に備え非常対応体制を稼動</a>"
+        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56163\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 韓国ドラマ『幻惑』制作会社、不法投棄で過料100万ウォン処分</a>"
     },
     {
         "区分": "エンタメ",
@@ -17,6 +17,6 @@
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/502348.html\" target=\"_blank\" rel=\"noopener noreferrer\">「LE SSERAFIM」\n米7都市公演が完売\n口コミの波に乗った</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/502400.html\" target=\"_blank\" rel=\"noopener noreferrer\">ガールバンド「QWER」\n「THE BOYZ」のペンライト類似問題→悪質なネットユーザーを告訴\n「合意や善処はない」</a>"
     }
 ]

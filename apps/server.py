@@ -17,6 +17,7 @@ import apps.test as test
 import apps.utils.board_dao as board_dao
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_line as func_line
 import apps.utils.message_constants as msg_const
 import apps.utils.user_dao as user_dao
 import apps.utils.user_dto as user_dto
@@ -172,13 +173,14 @@ async def app_exec(request: Request, app_name: str):
 
 # HTMLテンプレートファイルの返却
 @app.get("/apps/{app_name}")
-async def apps(app_name: str):
-    # TODO: trip, design, review: result2.html：jsファイルより定義
-    # if app_name == const.APP_TRIP:
-    #   target_html, context = appl.exec_result(request, app_name)
-    # else:
-    file_path = f"templates/{app_name}.{const.FILE_TYPE_HTML}"
-    return FileResponse(file_path)
+async def apps(request: Request, app_name: str):
+    if "_design" in app_name:
+        file_path = f"templates/{app_name}.{const.FILE_TYPE_HTML}"
+        return FileResponse(file_path)
+    else:
+        target_html = const.HTML_RESULT_2
+        context = {const.STR_REQUEST: request, "app_name": app_name}
+        return templates.TemplateResponse(target_html, context)
 
 
 # ユーザー情報更新（フォーム）
@@ -230,7 +232,9 @@ async def board_add(request: Request):
         board_dao.insert_board_data_of_api(json_data)
         message = msg_const.MSG_INFO_PROC_COMPLETED
 
-    # TODO: 新しいレビュー依頼がある場合、メール送信
+        if not func.is_local_env():
+            msg = json_data
+            func_line.send_text_msg(msg)
 
     except Exception as e:
         func.print_error_msg(const.COLL_BOARD, e)

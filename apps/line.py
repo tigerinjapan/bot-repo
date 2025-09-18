@@ -15,6 +15,9 @@ import apps.utils.function_line as func_line
 # アプリケーション
 app_name = func.get_app_name(__file__)
 
+# ローカル環境の判定
+is_local = func.is_local_env()
+
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
 
@@ -53,7 +56,8 @@ def main(
 
     if func_line.LINE_CHANNEL_ID:
         # チャネル・アクセストークン取得
-        token = func_line.get_channel_access_token()
+        admin_flg = const.FLG_ON if is_local else const.FLG_OFF
+        token = func_line.get_channel_access_token(admin_flg)
 
         if token:
             try:
@@ -74,18 +78,16 @@ def main(
                         msg_list = get_flex_msg()
                     messages = func_line.get_send_messages(msg_list)
 
+                # メッセージ送信
+                func_line.send_message(token, messages)
+
             except Exception as e:
                 err_msg = msg_const.MSG_INFO_SERVER_KEEP_WORKING
                 func.print_error_msg(err_msg, e)
 
-                if not func.is_local_env():
-                    token = func_line.get_channel_access_token(err_msg=const.FLG_ON)
-
-                msg = f"[{err_msg}]\n{e[:100]}"
-                messages = func_line.get_send_messages(msg)
-
-            # メッセージ送信
-            func_line.send_message(token, messages)
+                if not is_local:
+                    msg = f"[{err_msg}]\n{e[:100]}"
+                    func_line.send_text_msg(msg)
 
     func.print_end(app_name)
 

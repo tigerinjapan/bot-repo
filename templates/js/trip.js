@@ -1,11 +1,20 @@
+// ヘッダー設定
+getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_2;
+
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", () => {
+  // タイトル設定
+  document.title = "🌏 Trip & Life";
+
   // セレクトボックス・各表示領域の取得
   const langSelect = getElem("lang-select");
   const regionSelect = getElem("region-select");
 
   const pageTitle = getElem("page-title");
   const pageSubtitle = getElem("page-subtitle");
+
+  const cardGrid = getElem("card-grid");
+  createCardGrid();
 
   const infoTitle = getElem("info-title");
   const langTitle = getElem("lang-title");
@@ -27,11 +36,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const dialogTitle = getElem("dialog-title");
   const dialogText = getElem("dialog-text");
 
-  document.title = "🌏 Trip & Life";
-
   // セレクトボックスの初期化
   createOptionVal(langSelect, LIST_LANG_VAL);
   createOptionVal(regionSelect, LIST_CITY_VAL);
+
+  // カードグリッド作成
+  function createCardGrid() {
+    let infoHtml = SYM_BLANK;
+
+    const grid_div_list = ['info', 'lang', 'tour', 'food', 'useful', 'site'];
+    for (const grid_div of grid_div_list) {
+      infoHtml += `
+        <div class="card" id="${grid_div}-card">
+          <h2>
+            <span id="${grid_div}-title"></span>
+          </h2>
+          <table class="info-table">
+            <tbody id="${grid_div}-content"></tbody>
+          </table>
+        </div>
+    `};
+    cardGrid.innerHTML = infoHtml;
+  }
 
   // 画面内容の更新処理
   function updateContent() {
@@ -148,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
 
     // サイト情報
-    siteTitle.textContent = label.site;
+    siteTitle.textContent = `🌐 ${label.site}`;
     let siteHtml = `
       <tr><th>${label.tourism}</th><td><a href="${data.site.tourism.url}" target="_blank">${data.site.tourism.name}</a></td></tr>
       <tr><th>${label.travel}</th><td><a href="${data.site.travel.url}" target="_blank">${data.site.travel.name}</a></td></tr>

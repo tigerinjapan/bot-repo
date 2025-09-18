@@ -66,7 +66,7 @@ def get_last_game_info(player_div: int = const.NUM_ONE) -> tuple[str, str]:
     attr_val = "player-splits--last player-splits--last-3 has-xgames"
     soup = func_bs.get_elem_from_url(url, attr_val=attr_val, list_flg=const.FLG_ON)[
         list_no
-    ]  # TODO: [ERROR] KOYEB 'NoneType' Object
+    ]  # [ERROR] KOYEB 'NoneType' Object
     game = get_text_from_info(soup).replace(const.SYM_SPACE, const.SYM_BLANK)
 
     game_info = []
@@ -142,17 +142,22 @@ def get_target_date():
     # 今日の日付を取得
     today = date.today()
 
-    # 2日前の日付を計算
-    two_days_ago = today - timedelta(days=2)
+    # 日本時間
+    japan_date = today
+    days_num = 1
+
+    if const.DATE_HOUR < 13:
+        japan_date -= timedelta(days=1)
+        days_num = 2
+
+    # 現地時間
+    target_date = today - timedelta(days=days_num)
 
     # mm/dd/yyyyに変換して出力
-    formatted_date = func.convert_date_to_str(two_days_ago, "%m/%d/%Y")
+    formatted_date = func.convert_date_to_str(target_date, "%m/%d/%Y")
 
-    # 1日前の日付を計算
-    yesterday = today - timedelta(days=1)
-
-    # mm/dd/yyyyに変換して出力
-    formatted_date_2 = func.convert_date_to_str(yesterday, "%#m/%#d(%a)")
+    # mm/ddに変換して出力
+    formatted_date_2 = func.convert_date_to_str(japan_date, "%#m/%#d(%a)")
     return formatted_date, formatted_date_2
 
 

@@ -112,7 +112,9 @@ const URL_BOARD_ADD = `${URL_SERVER}${API_BOARD_ADD}`;
 const URL_BOARD_LOCAL = `${URL_LOCAL}${API_BOARD_ADD}`;
 
 // ヘッダー情報読込
-const CONTENTS_HEAD = `
+const CONTENTS_HEAD_2 = `
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/templates/style2.css" />
+  <script src="/templates/jquery-3.6.1.min.js"></script>
 `;
