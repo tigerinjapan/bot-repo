@@ -15,6 +15,7 @@ app_title = const.APP_MLB
 
 # ID
 TEAM_ID_LAD = "119"
+TEAM_LAD = "LAD"
 PLAYER_ID_OHTANI = "660271"
 PLAYER_NAME_OHTANI = "大谷"
 
@@ -93,9 +94,13 @@ def get_text_from_info(soup, div=const.NUM_ZERO):
 
 # MLB Stat取得
 def get_mlb_stat_of_api(team_id: str = TEAM_ID_LAD, player_id: str = PLAYER_ID_OHTANI):
+    stat_data_list = []
+
     game_data = game_link = const.NONE_CONSTANT
 
-    target_date, yesterday = get_target_date()
+    target_date, japan_date = get_target_date()
+    stat_data_list.append(japan_date)
+
     url = f"{const.URL_MLB_STAT_API}/api/v1/schedule?date={target_date}&sportId=1"
     response_data = func_api.get_response_result(url)
     if response_data:
@@ -110,12 +115,24 @@ def get_mlb_stat_of_api(team_id: str = TEAM_ID_LAD, player_id: str = PLAYER_ID_O
         response_data = func_api.get_response_result(url)
         if response_data:
             teams_data = response_data["liveData"]["boxscore"]["teams"]
-            player_data = teams_data["home"]["players"][f"ID{player_id}"]
-            if not player_data:
-                player_data = teams_data["away"]["players"][f"ID{player_id}"]
+            home_team = response_data["gameData"]["teams"]["home"]["abbreviation"]
+            away_team = response_data["gameData"]["teams"]["away"]["abbreviation"]
 
+            away_flg = const.FLG_ON if away_team == TEAM_LAD else const.FLG_OFF
+            team_data_div = "home"
+            opposing_team = away_team
+            if away_flg:
+                team_data_div = "away"
+                opposing_team = home_team
+
+            stat_data_list.append(f"@{opposing_team}")
+
+            player_data = teams_data[team_data_div]["players"][f"ID{player_id}"]
             if player_data:
                 game_data = player_data["stats"]["batting"]["summary"]
+
+    player_name = PLAYER_NAME_OHTANI
+    stat_data_list.append(player_name)
 
     if game_data:
         game_data_2 = game_data.split(" | ")[1].split(const.SYM_COMMA)[0]
@@ -125,15 +142,16 @@ def get_mlb_stat_of_api(team_id: str = TEAM_ID_LAD, player_id: str = PLAYER_ID_O
             else:
                 home_run = game_data_2.replace("HR", const.SYM_BLANK)
 
-            stat_data = f"{home_run}本塁打"
+            game_stat = f"{home_run}本塁打"
         else:
             hit = game_data.split(" | ")[0].split(const.SYM_DASH)[0]
-            stat_data = f"{hit}安打"
+            game_stat = f"{hit}安打"
     else:
-        stat_data = "No game"
+        game_stat = "No game"
 
-    player_name = PLAYER_NAME_OHTANI
-    stat_data = f"{yesterday} {player_name} {stat_data}"
+    stat_data_list.append(game_stat)
+
+    stat_data = const.SYM_SPACE.join(stat_data_list)
     return stat_data
 
 
@@ -157,7 +175,7 @@ def get_target_date():
     formatted_date = func.convert_date_to_str(target_date, "%m/%d/%Y")
 
     # mm/ddに変換して出力
-    formatted_date_2 = func.convert_date_to_str(japan_date, "%#m/%#d(%a)")
+    formatted_date_2 = func.convert_date_to_str(japan_date, "%#m/%#d")
     return formatted_date, formatted_date_2
 
 

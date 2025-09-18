@@ -99,10 +99,12 @@ def get_board_data(data):
 
 # yyyy/mm/dd形式にフォーマットして出力
 def convert_time(updateDate: datetime) -> str:
-    # 9時間を加算
-    plus_9_hours = updateDate + timedelta(hours=9)
+    # # 9時間を加算
+    # target_date = updateDate + timedelta(hours=9)
+
+    target_date = updateDate
 
     formatted_date = func.convert_date_to_str(
-        plus_9_hours, const.DATE_FORMAT_YYYYMMDD_SLASH
+        target_date, const.DATE_FORMAT_YYYYMMDD_SLASH
     )
     return formatted_date

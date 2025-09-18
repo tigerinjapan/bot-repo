@@ -133,18 +133,10 @@ def get_line_messages(msg_list: list[list[str]]):
     return messages
 
 
-# LINEメッセージデータ取得
-def get_send_messages(msg):
-    messages = []
-    messages.append(msg)
-    return messages
-
-
 # メッセージ送信
-def send_text_msg(msg: str, admin_flg: bool = const.FLG_ON):
+def send_text_msg(msg_json, admin_flg: bool = const.FLG_ON):
     token = get_channel_access_token(admin_flg)
-    messages = get_send_messages(msg)
-    send_message(token, messages)
+    send_message(token, msg_json)
 
 
 # テンプレート・メッセージ取得

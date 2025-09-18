@@ -40,12 +40,12 @@ def get_board_info():
 def insert_board_data_of_api(json_data):
     client = func_mongo.db_connect()
     data_list = json_data[const.STR_DATA]
-    seq_val = len(data_list)
-    seq = seq_dao.get_sequence_and_update(client, const.APP_BOARD, seq_val)
+    inc_val = len(data_list)
+    seq = seq_dao.get_sequence_and_update(client, const.APP_BOARD, inc_val)
 
     for idx, data in enumerate(data_list):
-        seq += idx
-        update_data = dto.get_update_data_for_board_info(data, seq)
+        seq_val = seq + idx
+        update_data = dto.get_update_data_for_board_info(data, seq_val)
         func_mongo.db_insert(client, COLL, update_data)
     func_mongo.db_close(client)
 

@@ -378,7 +378,7 @@ def test_gemini():
     func.print_test_data(result)
 
 
-# テストイメージ #TODO 現在、無料版では実装不可
+# テストイメージ # [ERROR] 現在、無料版では実装不可
 def test_gemini_image():
     # クライアントの初期化
     client = genai.Client(api_key=GEMINI_API_KEY)
@@ -406,7 +406,7 @@ def test_gemini_image():
         func.print_error_msg(e)
 
 
-# 生成ビデオ取得 # TODO: エラー
+# 生成ビデオ取得 # [ERROR] 現在、無料版では実装不可
 def get_generate_video(div: str, prompt: str) -> str:
     # クライアントの初期化
     client = genai.Client(api_key=GEMINI_API_KEY)
@@ -430,7 +430,7 @@ def get_generate_video(div: str, prompt: str) -> str:
     print("Generated video saved to dialogue_example.mp4")
 
 
-# 生成ビデオ取得 # TODO: エラー
+# 生成ビデオ取得 # [ERROR] 現在、無料版では実装不可
 def get_generate_video2(prompt: str):
     # クライアントの初期化
     client = genai.Client(api_key=GEMINI_API_KEY)
@@ -442,7 +442,7 @@ def get_generate_video2(prompt: str):
     return response
 
 
-# 生成ビデオ取得 # TODO: エラー
+# 生成ビデオ取得 # [ERROR] 現在、無料版では実装不可
 def test_generate_video():
     div = "example"
     prompt = """A close up of two people staring at a cryptic drawing on a wall, torchlight flickering.

@@ -73,10 +73,11 @@ def main(
 
                 else:
                     if data_div == const.NUM_TWO:
-                        msg_list = get_template_msg()
+                        # テンプレートメッセージ取得
+                        messages = get_template_msg()
                     else:
-                        msg_list = get_flex_msg()
-                    messages = func_line.get_send_messages(msg_list)
+                        # フレックスメッセージ取得
+                        messages = get_flex_msg()
 
                 # メッセージ送信
                 func_line.send_message(token, messages)
@@ -131,6 +132,8 @@ def get_msg_data_today() -> tuple[list[str], str]:
 
 # テンプレートメッセージ取得
 def get_template_msg():
+    messages = []
+
     alt_text = "今日も一日お疲れ様でした。"
     template_title = "【今日の一言】"
     template_text = today.get_today_phrase()
@@ -139,7 +142,9 @@ def get_template_msg():
     template_msg = func_line.get_template_msg_json(
         alt_text, template_title, template_text, actions
     )
-    return template_msg
+
+    messages.append(template_msg)
+    return messages
 
 
 # テンプレートアクション取得
@@ -163,10 +168,12 @@ def get_template_actions():
 
 # フレックスメッセージ取得
 def get_flex_msg():
+    messages = []
     alt_text = today.get_today_phrase()
     data_list = get_flex_data_list()
     flex_msg = func_line.get_flex_msg_json(alt_text, data_list)
-    return flex_msg
+    messages.append(flex_msg)
+    return messages
 
 
 # フレックスメッセージ・データ取得

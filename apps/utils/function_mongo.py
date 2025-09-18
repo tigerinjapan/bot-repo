@@ -132,7 +132,8 @@ def db_update(client, coll_nm: str, cond, update_data):
 # データ検索＆更新
 def db_find_update(client, coll_nm: str, cond, update_data):
     coll = get_collection(client, coll_nm)
-    result = coll.findOneAndUpdate(filter=cond, update=update_data)
+    result = coll.find_one(filter=cond)
+    coll.update_one(filter=cond, update=update_data)
     return result
 
 

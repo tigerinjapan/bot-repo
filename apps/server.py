@@ -34,6 +34,9 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 # トークン有効期限（分）
 TOKEN_EXPIRATION_MINUTES = 10
 
+# ローカル環境の判定
+is_local = func.is_local_env()
+
 
 # サーバー起動
 def run_server():
@@ -174,7 +177,7 @@ async def app_exec(request: Request, app_name: str):
 # HTMLテンプレートファイルの返却
 @app.get("/apps/{app_name}")
 async def apps(request: Request, app_name: str):
-    if "_design" in app_name:
+    if "_design" in app_name:  # TODO 設計書は、同じフォーマットにする
         file_path = f"templates/{app_name}.{const.FILE_TYPE_HTML}"
         return FileResponse(file_path)
     else:
@@ -232,7 +235,7 @@ async def board_add(request: Request):
         board_dao.insert_board_data_of_api(json_data)
         message = msg_const.MSG_INFO_PROC_COMPLETED
 
-        if not func.is_local_env():
+        if not is_local:
             msg = json_data
             func_line.send_text_msg(msg)
 
