@@ -5,12 +5,12 @@ FROM python:3.13
 WORKDIR /bot
 
 # 環境変数設定
-ENV LANG ja_JP.UTF-8
-ENV LANGUAGE ja_JP:ja
-ENV LC_ALL ja_JP.UTF-8
-ENV TZ Asia/Tokyo
-ENV TERM xterm
-ENV PYTHONPATH /bot
+ENV LANG=ja_JP.UTF-8
+ENV LANGUAGE=ja_JP:ja
+ENV LC_ALL=ja_JP.UTF-8
+ENV TZ=Asia/Tokyo
+ENV TERM=xterm
+ENV PYTHONPATH=/bot
 
 # ソースコードをコンテナ内にコピー
 COPY . /bot

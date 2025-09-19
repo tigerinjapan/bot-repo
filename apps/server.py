@@ -177,13 +177,9 @@ async def app_exec(request: Request, app_name: str):
 # HTMLテンプレートファイルの返却
 @app.get("/apps/{app_name}")
 async def apps(request: Request, app_name: str):
-    if "_design" in app_name:  # TODO 設計書は、同じフォーマットにする
-        file_path = f"templates/{app_name}.{const.FILE_TYPE_HTML}"
-        return FileResponse(file_path)
-    else:
-        target_html = const.HTML_RESULT_2
-        context = {const.STR_REQUEST: request, "app_name": app_name}
-        return templates.TemplateResponse(target_html, context)
+    target_html = const.HTML_RESULT_2
+    context = {const.STR_REQUEST: request, "app_name": app_name}
+    return templates.TemplateResponse(target_html, context)
 
 
 # ユーザー情報更新（フォーム）

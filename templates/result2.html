@@ -9,10 +9,11 @@
   <script src="/templates/langData.js"></script>
   <script src="/templates/tripData.js"></script>
   <script src="/templates/trip.js"></script>
-  {% endif %}
-
-  {% if app_name == 'review' %}
+  {% elif app_name == 'review' %}
   <script src="/templates/review.js"></script>
+  {% else %}
+  <script src="/templates/marked.min.js"></script>
+  <script src="/templates/design.js"></script>
   {% endif %}
 </head>
 
@@ -43,9 +44,8 @@
       <p id="dialog-text"></p>
     </div>
   </div>
-  {% endif %}
 
-  {% if app_name == 'review' %}
+  {% elif app_name == 'review' %}
   <div id="divBoard" class="board-container">
     <h1></h1>
     <form id="formReview">
@@ -55,6 +55,9 @@
     </form>
     <p id="message" class="msg"></p>
   </div>
+
+  {% else %}
+  <div id="markdown-container" class="container"></div>
   {% endif %}
 </body>
 

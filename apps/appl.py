@@ -231,6 +231,6 @@ def no_sleep():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    update_news()
-    # app_name = const.APP_TODAY
-    # update_news(app_name)
+    # update_news()
+    app_name = const.APP_TODAY
+    update_news(app_name)
