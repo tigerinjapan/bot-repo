@@ -158,7 +158,7 @@ def get_target_date():
     japan_date = func.get_now()
     days_num = -1
 
-    if func.get_now(const.DATE_HOUR) < 13:
+    if func.get_now(const.DATE_HOUR) < 12:
         japan_date = func.get_calc_date(-1)
         days_num = -2
 

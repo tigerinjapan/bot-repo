@@ -165,11 +165,11 @@ def is_holiday(weekend_flg: bool = const.FLG_ON) -> bool:
     holiday_data = get_input_data(const.STR_HOLIDAY)
     holiday_list = [holiday[const.STR_DATE] for holiday in holiday_data]
 
-    if const.DATE_TODAY in holiday_list:
+    if get_now(const.DATE_TODAY) in holiday_list:
         holiday_flg = const.FLG_ON
 
     if weekend_flg:
-        if const.DATE_WEEKDAY >= 5:
+        if get_now(const.DATE_WEEKDAY) >= 5:
             holiday_flg = const.FLG_ON
 
     return holiday_flg
@@ -278,10 +278,10 @@ def get_file_path(div: str, file_type: str, file_div: str = const.STR_INPUT) -> 
 # ファイル削除
 def remove_old_file(dir_path: str, div: str):
     # func[glob]:Get a list of files that meet the conditions
-    file_path_list = glob.glob(f"{dir_path}/{const.DATE_YEAR}*_{div}")
+    file_path_list = glob.glob(f"{dir_path}/{get_now(const.DATE_YEAR)}*_{div}")
 
     for file_path in file_path_list:
-        if const.DATE_TODAY in file_path:
+        if get_now(const.DATE_TODAY) in file_path:
             continue
         else:
             # func[remove]:Delete a file or directory
@@ -494,7 +494,7 @@ def get_masking_data(target: str):
 def get_decoding_masking_data(target: str, encode_flg: bool = const.FLG_OFF):
     decoding_info = get_input_data(const.STR_AUTH, const.STR_DECODE)
     masking_list = const.LIST_MASKING
-    decoding_list = list(decoding_info.values()) + [str(const.DATE_YEAR)]
+    decoding_list = list(decoding_info.values()) + [str(get_now(const.DATE_YEAR))]
 
     if encode_flg:
         masking_list = decoding_list

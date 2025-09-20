@@ -144,7 +144,7 @@ def get_generate_image(div: str, contents: str, msg_data) -> str:
                     xy=xy_size, text=msg, fill=text_color, font=font, align="left"
                 )
 
-            size = (480, 360)
+            size = (const.LINE_IMG_SIZE_W, const.LINE_IMG_SIZE_H)
             img = image_open.resize(size)
             img.save(file_path, optimize=const.FLG_ON)
             break
@@ -170,21 +170,22 @@ def get_today_news_image(
         contents_outfit = (
             f"天気キャスターの{img_div}が一人いる。"
             f"{img_div}は、本物と同じ自然なイメージにする。イラストではない。"
-            f"{img_div}は、正面を見ながら、笑顔でいる。"
+            f"{img_div}は、正面を見ながら、素敵な笑顔にしている。"
             f"{img_div}の今日のファッションは、{today_outfit}。"
-            f"{img_div}は、全体イメージの、右寄りに配置する"
+            f"{img_div}は、全体イメージの、右寄りに配置する。"
+            f"{img_div}は、{const.LINE_IMG_X_AXIS}px * {const.LINE_IMG_Y_AXIS}pxに配置する。"
             f"{img_woman}"
         )
 
     contents = (
-        "480px X 360pxのサイズに合わせて、イメージを生成してください。"
+        f"{const.LINE_IMG_SIZE_W}px * {const.LINE_IMG_SIZE_H}pxのサイズに合わせて、イメージを生成してください。"
         "※以下内容を参考してください。"
         "番組名は、「Today's News」。イメージの左上に英語のロゴを、改行せず1行に表示する。"
+        "イメージには、ロゴ以外の文字は、何も表示しない。"
         f"{contents_outfit}"
         f"イメージのの背景は、{forecast}が分かるようにする。"
-        "イメージには、天気以外のテキストの内容を、一切反映しない。"
-        "イメージの背景は、複雑なイメージや黒系の暗い色は避ける。"
-        "イメージには、ロゴ以外の文字は、一切反映しない。"
+        f"イメージには、{forecast}以外の内容を、一切反映しない。"
+        "イメージの背景は、黒系の暗い色や複雑なイメージは避ける。"
     )
 
     # 英語に翻訳
@@ -227,7 +228,7 @@ def get_recommend_outfit(outfit_text: str) -> str:
         "上記の内容を元に、今日のコーデをおすすめしてください。"
         "コーデは、2アイテム。1番目が上半身、2番目が下半身に着るもの。"
         "各アイテムは、&で繋げる。"
-        f"全体の文字数は、16桁未満。"
+        "各アイテムの最大の文字数は、7。"
         "解説と他の文言、記号は不要。"
         f"※出力例{NEW_LINE}白いTシャツ&デニムジーンズ"
     )
