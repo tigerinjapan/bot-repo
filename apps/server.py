@@ -289,6 +289,13 @@ async def img(file_name: str):
     return FileResponse(image_path)
 
 
+# ログファイル取得（例：/log/error）
+@app.get(f"/{const.STR_LOG}" + "/{log_level}")
+async def log(log_level: str):
+    log_path = func.get_file_path(log_level, const.FILE_TYPE_LOG, const.STR_OUTPUT)
+    return FileResponse(log_path)
+
+
 # フォントファイル取得（例：/font/meiryo）
 @app.get(f"/{const.STR_FONT}" + "/{file_name}")
 async def font(file_name: str):

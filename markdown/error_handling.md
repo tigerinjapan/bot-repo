@@ -30,7 +30,7 @@ C:\Users\(ユーザー名)\AppData\Roaming\Code\Cache
 
 定期的に削除（今後バッチ化）
 
-# 【Selenium, Playwright】koyeb server
+# 【Selenium, Playwright】Koyeb server
 
 ## エラー内容
 
@@ -38,7 +38,7 @@ C:\Users\(ユーザー名)\AppData\Roaming\Code\Cache
 
 ### 対応
 
-無料プランに可能になるまで、待ち
+無料プランで実行できるまで、待ち
 
 # 【Selenium】Chrome ドライバー・バージョン・エラー
 

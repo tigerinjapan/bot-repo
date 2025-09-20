@@ -12,6 +12,7 @@ import time
 import urllib
 
 from datetime import datetime, timedelta
+from logging import DEBUG, ERROR, INFO, basicConfig, getLogger
 from pprint import pprint
 from translate import Translator
 
@@ -193,8 +194,12 @@ def print_info_msg(div: str, msg: str = const.SYM_BLANK):
 
 # エラーメッセージ出力
 def print_error_msg(div: str, msg: str = const.SYM_BLANK):
-    msg_now = f"[{get_now()}]"
-    print(msg_now, msg_const.MSG_DIV_ERR, div, msg)
+    err_msg = f"[{get_now()} {msg_const.MSG_DIV_ERR} {div}]"
+    if msg:
+        err_msg += f" {msg}"
+    print(err_msg)
+
+    write_log(err_msg)
 
 
 # エラーメッセージ出力し、システム終了
@@ -211,6 +216,32 @@ def print_proc_ok(currentframe, div: str = const.SYM_BLANK):
     if div:
         msg_div += f":{div}"
     print_info_msg(msg_div, msg_const.MSG_INFO_PROC_COMPLETED)
+
+
+# ログ出力
+def write_log(msg: str, app_div: str = const.STR_ERROR, log_level: int = ERROR):
+    log_path = get_file_path(
+        app_div, file_type=const.FILE_TYPE_LOG, file_div=const.STR_OUTPUT
+    )
+    # log_format = "%(asctime)s %(name)s:%(lineno)s %(funcName)s [%(levelname)s]: %(message)s"
+    log_format = "%(asctime)s [%(levelname)s] %(name)s %(message)s"
+
+    basicConfig(
+        level=log_level,
+        filename=log_path,
+        format=log_format,
+    )
+
+    if not app_div:
+        app_div = __name__
+    logger = getLogger(app_div)
+
+    if log_level == DEBUG:
+        logger.debug(msg)
+    elif log_level == ERROR:
+        logger.error(msg)
+    else:
+        logger.info(msg)
 
 
 # 文字列を日付型に変換
@@ -556,4 +587,5 @@ def print_test_data(data, type_flg: bool = const.FLG_OFF):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    print(is_holiday())
+    # print(is_holiday())
+    write_log("error_test")
