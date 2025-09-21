@@ -2,7 +2,7 @@
 const database = "mongoDB";
 
 const app_line = 0;
-const app_trip = 1;
+const app_travel = 1;
 const app_number = 2;
 const app_etc = 1;
 const category_review = 0;
@@ -28,7 +28,7 @@ use(database)
 // // insert documents
 // boardData_001 = {
 //     "nSeq": 1,
-//     "nApp": app_trip,
+//     "nApp": app_travel,
 //     "nCategory": category_review,
 //     "nType": type_layout,
 //     "sContents": "落ち着いた雰囲気にする",
@@ -76,7 +76,7 @@ use(database)
 
 // boardData_005 = {
 //     "nSeq": 5,
-//     "nApp": app_trip,
+//     "nApp": app_travel,
 //     "nCategory": category_review,
 //     "nType": type_add,
 //     "sContents": "現在地から、対象国までの飛行時間が欲しい",
@@ -88,7 +88,7 @@ use(database)
 
 // boardData_006 = {
 //     "nSeq": 6,
-//     "nApp": app_trip,
+//     "nApp": app_travel,
 //     "nCategory": category_review,
 //     "nType": type_add,
 //     "sContents": "時差があると嬉しい",
@@ -100,7 +100,7 @@ use(database)
 
 // boardData_007 = {
 //     "nSeq": 7,
-//     "nApp": app_trip,
+//     "nApp": app_travel,
 //     "nCategory": category_review,
 //     "nType": type_add,
 //     "sContents": "言語名があると嬉しい",
@@ -112,7 +112,7 @@ use(database)
 
 // boardData_008 = {
 //     "nSeq": 8,
-//     "nApp": app_trip,
+//     "nApp": app_travel,
 //     "nCategory": category_review,
 //     "nType": type_add,
 //     "sContents": "挨拶の対象言語での音声（読み方）",
@@ -124,7 +124,7 @@ use(database)
 
 // boardData_009 = {
 //     "nSeq": 9,
-//     "nApp": app_trip,
+//     "nApp": app_travel,
 //     "nCategory": category_review,
 //     "nType": type_add,
 //     "sContents": "オススメデザートや、屋台フードもあると良い",

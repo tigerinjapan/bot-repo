@@ -13,7 +13,7 @@ app_name = func.get_app_name(__file__)
 # タイトル
 app_title = "お気に入りサイト"
 app_title_cafe = "おしゃれカフェ"
-app_title_trip = "旅行"
+app_title_travel = "旅行"
 app_title_board = "掲示板"
 
 # カラムリスト
@@ -24,7 +24,7 @@ col_list = [
 ]
 
 col_list_cafe = ["店名", "住所", "メニュー", "内観"]
-col_list_trip = ["区分", "内容", "アクセス", "画像"]
+col_list_travel = ["区分", "内容", "アクセス", "画像"]
 col_list_board = [
     "番号",
     "アプリ",
@@ -38,7 +38,7 @@ col_list_board = [
     "完了",
 ]
 
-menu_trip_div = ["両替所", "観光地", "レストラン", "その他"]
+menu_travel_div = ["両替所", "観光地", "レストラン", "その他"]
 
 # URL
 URL_SERVER = func.get_server_url()
@@ -100,12 +100,12 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
             df = df_info[[const.STR_NAME, const.STR_ADDR, const.STR_IMG, const.STR_URL]]
             df.columns = col_list_cafe
 
-        elif app_div == const.APP_TRIP:
+        elif app_div == const.APP_TRAVEL:
             df_info[const.STR_IMG] = func.get_img_tag(img_path, file_name)
             df = df_info[
                 [const.STR_NAME, const.STR_DESCRIPTION, const.STR_ACCESS, const.STR_IMG]
             ]
-            df.columns = col_list_trip
+            df.columns = col_list_travel
 
     return df
 

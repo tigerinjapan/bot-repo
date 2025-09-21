@@ -27,13 +27,13 @@ LIST_APP_NUM_OFF = [
     const.APP_STUDY,
     const.APP_SITE,
     const.APP_CAFE,
-    const.APP_TRIP,
+    const.APP_TRAVEL,
     const.APP_BOARD,
 ]
 
 LIST_APP_AUTH_OFF = [
     const.APP_CAFE,
-    const.APP_TRIP,
+    const.APP_TRAVEL,
 ]
 
 
@@ -96,8 +96,8 @@ def get_context_data(app_name: str, user_div: str = const.AUTH_DEV):
 
     if app_name == const.APP_CAFE:
         app_title = site.app_title_cafe
-    elif app_name == const.APP_TRIP:
-        app_title = site.app_title_trip
+    elif app_name == const.APP_TRAVEL:
+        app_title = site.app_title_travel
     elif app_name == const.APP_BOARD:
         app_title = site.app_title_board
 

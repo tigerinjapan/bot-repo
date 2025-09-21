@@ -194,12 +194,14 @@ def print_info_msg(div: str, msg: str = const.SYM_BLANK):
 
 # エラーメッセージ出力
 def print_error_msg(div: str, msg: str = const.SYM_BLANK):
-    err_msg = f"[{get_now()} {msg_const.MSG_DIV_ERR} {div}]"
+    err_msg = f"[{get_now()}] {msg_const.MSG_DIV_ERR} {div}"
+    log_msg = div
     if msg:
         err_msg += f" {msg}"
+        log_msg += f" {msg}"
     print(err_msg)
 
-    write_log(err_msg)
+    write_log(log_msg)
 
 
 # エラーメッセージ出力し、システム終了
@@ -224,12 +226,13 @@ def write_log(msg: str, app_div: str = const.STR_ERROR, log_level: int = ERROR):
         app_div, file_type=const.FILE_TYPE_LOG, file_div=const.STR_OUTPUT
     )
     # log_format = "%(asctime)s %(name)s:%(lineno)s %(funcName)s [%(levelname)s]: %(message)s"
-    log_format = "%(asctime)s [%(levelname)s] %(name)s %(message)s"
+    log_format = "%(asctime)s [%(levelname)s] %(message)s"
 
     basicConfig(
         level=log_level,
         filename=log_path,
         format=log_format,
+        encoding=const.CHARSET_UTF_8,
     )
 
     if not app_div:
@@ -306,6 +309,30 @@ def get_file_path(div: str, file_type: str, file_div: str = const.STR_INPUT) -> 
     return file_path
 
 
+# ファイル名リスト取得
+def get_file_name_list(
+    file_type: str, file_div: str = const.STR_INPUT, extension_flg: bool = const.FLG_OFF
+):
+    folder_path = f"{os.getcwd()}/{file_div}/{file_type}"
+
+    # os.listdir()でフォルダ内のすべての項目名を取得
+    items = os.listdir(folder_path)
+
+    # 項目がファイルであるか確認し、ファイル名のみをリストに追加
+    file_name_list = []
+    for item in items:
+        item_path = os.path.join(folder_path, item)
+        if os.path.isfile(item_path):
+            file_name_list.append(item)
+
+    if not extension_flg:
+        file_name_list = [
+            file_name.split(const.SYM_DOT)[0] for file_name in file_name_list
+        ]
+
+    return file_name_list
+
+
 # ファイル削除
 def remove_old_file(dir_path: str, div: str):
     # func[glob]:Get a list of files that meet the conditions
@@ -322,13 +349,16 @@ def remove_old_file(dir_path: str, div: str):
 # ファイル読込
 def read_file(file_path: str, file_encode: str = const.CHARSET_UTF_8) -> str:
 
-    with open(file_path, mode=const.FILE_MODE_READ, encoding=file_encode) as f:
-        if not check_path_exists(file_path):
-            print_error_msg(file_path, msg_const.MSG_ERR_FILE_NOT_EXIST)
+    try:
+        with open(file_path, mode=const.FILE_MODE_READ, encoding=file_encode) as f:
+            # func[read]:Reading file
+            data = f.read()
 
-        # func[read]:Reading file
-        data = f.read()
-        return data
+    except Exception as e:
+        print_error_msg(msg_const.MSG_ERR_FILE_NOT_EXIST, str(e))
+        data = const.NONE_CONSTANT
+
+    return data
 
 
 # ファイル書込
@@ -383,8 +413,9 @@ def get_dumps_json(data):
 # JSONデータ取得
 def get_json_data(div: str, file_div: str = const.STR_INPUT):
     file_path = get_file_path(div, const.FILE_TYPE_JSON, file_div)
-    data = read_file(file_path)
-    json_data = get_loads_json(data)
+    json_data = read_file(file_path)
+    if json_data:
+        json_data = get_loads_json(json_data)
     return json_data
 
 

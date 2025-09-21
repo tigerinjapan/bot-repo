@@ -32,7 +32,7 @@ FI_UPDATE_DATE = convert_field(const.TYPE_DATE, ITEM_UPDATE_DATE)
 # リスト
 LIST_APP = [
     "LINE Message",
-    "Trip & Life",
+    "Travel & Life",
     "Number Plate",
     "その他",
 ]

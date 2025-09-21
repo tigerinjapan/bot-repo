@@ -1,6 +1,6 @@
 function writeFooter(userDiv) {
 
-  if (userDiv == SYM_BLANK) {
+  if (userDiv === SYM_BLANK) {
     return;
   }
 
@@ -18,7 +18,7 @@ function writeFooter(userDiv) {
       </p>
     </div>`);
 
-  if (userDiv == AUTH_ADMIN) {
+  if (userDiv === AUTH_ADMIN) {
     document.getElementsByTagName("footer")[0].innerHTML = footerContents;
   }
 }

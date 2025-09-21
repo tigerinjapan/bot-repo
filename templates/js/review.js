@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       [
         "アプリ",
         STR_APP,
-        ["Line Message", "Trip & Life", "Number Plate", "その他"],
+        ["Line Message", "Travel & Life", "Number Plate", "その他"],
         0
       ],
       [
@@ -60,16 +60,16 @@ document.addEventListener("DOMContentLoaded", () => {
       for (let j = 0; j < thList.length; j++) {
         const strIdx2 = j.toString();
 
-        if (i == 0) {
+        if (i === 0) {
           createElem(TAG_TH, thList[j], trId);
         } else {
           const idx = strIdx + strIdx2;
           const tdId2 = TAG_TD + idx;
           createElem(TAG_TD, tdId2, trId);
 
-          if (j == 0) {
+          if (j === 0) {
             getElem(tdId2).textContent = i;
-          } else if (j == 1) {
+          } else if (j === 1) {
             createOption(STR_TYPE + strIdx, STR_TYPE, typeTxtList, tdId2, 0);
           } else {
             createElem(TAG_TEXTAREA, ELEM_ID_TEXTAREA + strIdx, tdId2);
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ユーザ名設定
 function setUserName() {
-  if (!userName || userName == SYM_BLANK) {
+  if (!userName || userName === SYM_BLANK) {
     userName = prompt(MSG_INFO_INPUT_USER);
     sessionStorage.setItem(STR_USER_NAME, userName);
   }
@@ -118,7 +118,7 @@ function sendReview() {
     }
 
     // 入力チェック
-    if (addCnt == 0) {
+    if (addCnt === 0) {
       getElem(STR_MESSAGE).textContent = MSG_ERR_NO_INPUT;
       return;
     }

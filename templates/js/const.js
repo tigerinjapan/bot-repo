@@ -83,12 +83,12 @@ const MSG_ERR_EQUAL = "イコールは1つだけ使ってください!";
 const MSG_ERR_FORMAT = "数式の形式が正しくありません!";
 const MSG_ERR_DIVIDE_BY_ZERO = "ゼロ除算はできません!";
 const MSG_ERR_MATCH = "計算結果が一致しません!";
-const MSG_ERR_RANK = "ランク送信に失敗しました";
+const MSG_ERR_RANK = "ランク送信に失敗しました!";
+const MSG_ERR_LOAD_JSON = "JSONファイルの読み込みに失敗しました!";
 
 const MSG_INFO_OK_ANSWER_KO = "정답입니다!";
 const MSG_INFO_OK_RANK_KO = "신기록！랭킹 등록！";
 const MSG_INFO_INPUT_USER_KO = "게임 아이디(최대10문자)를 입력하세요.";
-
 
 const MSG_ERR_NO_ANSWER_KO = "이 문제에는 해답이 존재하지 않습니다.";
 const MSG_ERR_NO_INPUT_KO = "입력한 정보가 없습니다.";
@@ -110,6 +110,14 @@ const URL_RANKING_LOCAL = `${URL_LOCAL}${URL_RANKING_API}`;
 const API_BOARD_ADD = "/board/add";
 const URL_BOARD_ADD = `${URL_SERVER}${API_BOARD_ADD}`;
 const URL_BOARD_LOCAL = `${URL_LOCAL}${API_BOARD_ADD}`;
+
+const URL_TRAVEL_API = "/api/travelData/items";
+const URL_TRAVEL_SERVER = `${URL_SERVER}${URL_TRAVEL_API}`;
+const URL_TRAVEL_LOCAL = `${URL_LOCAL}${URL_TRAVEL_API}`;
+
+const URL_LANG_API = "/api/langData/items";
+const URL_LANG_SERVER = `${URL_SERVER}${URL_LANG_API}`;
+const URL_LANG_LOCAL = `${URL_LOCAL}${URL_LANG_API}`;
 
 // ヘッダー情報読込
 const CONTENTS_HEAD_2 = `

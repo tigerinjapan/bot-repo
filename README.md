@@ -25,18 +25,21 @@ LINE Messaging API Bot
 
 ### 環境変数：Koyeb にて、secret 登録
 
-| 変数                | 値                |
-| ------------------- | ----------------- |
-| PYTHONPATH          | bot               |
-| GEMINI_API_KEY      | api_key           |
-| GEMINI_MODEL        | model_name        |
-| LINE_CHANNEL_ID     | channel_id        |
-| LINE_CHANNEL_SECRET | channel_secret    |
-| LINE_IMG_DIV        | 1                 |
-| NUM_HOUR_DAILY_JOB  | 7                 |
-| NUM_MIN_HOURLY_JOB  | 30                |
-| NUM_SEC_NO_SLEEP    | 600               |
-| URL_KOYEB           | https://koyeb.app |
+| 変数                  | 値                |
+| --------------------- | ----------------- |
+| PYTHONPATH            | bot               |
+| GEMINI_API_KEY        | api_key           |
+| GEMINI_MODEL          | model_name        |
+| LINE_CHANNEL_ID       | channel_id        |
+| LINE_CHANNEL_SECRET   | channel_secret    |
+| LINE_CHANNEL_ID_2     | channel_id_2      |
+| LINE_CHANNEL_SECRET_2 | channel_secret_2  |
+| LINE_IMG_DIV          | 1                 |
+| NUM_HOUR_DAILY_JOB    | 7                 |
+| NUM_HOUR_DAILY_JOB_2  | 19                |
+| NUM_MIN_HOURLY_JOB    | 30                |
+| NUM_SEC_NO_SLEEP      | 600               |
+| URL_KOYEB             | https://koyeb.app |
 
 ### 公開サーバ
 

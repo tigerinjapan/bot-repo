@@ -70,7 +70,7 @@ function initDisplay(level) {
   let btnChkNm = "回答確認";
   let btnNextNm = "次の問題へ";
 
-  if (langCd == LANG_CD_KO) {
+  if (langCd === LANG_CD_KO) {
     title = TITLE_NUMBER_PLATE_KO;
     setElem("title", title, true);
 
@@ -93,9 +93,9 @@ function initDisplay(level) {
 // レベル設定
 function setLevel(level) {
   let levelVal = SYM_LEVEL;
-  if (level == LEVEL_MEDIUM) {
+  if (level === LEVEL_MEDIUM) {
     levelVal = SYM_LEVEL.repeat(2);
-  } else if (level == LEVEL_HARD) {
+  } else if (level === LEVEL_HARD) {
     levelVal = SYM_LEVEL.repeat(3);
   }
   setElem("level", `Level ${levelVal}`, true);
@@ -124,7 +124,7 @@ function setTimer() {
 
 // ユーザ名設定
 function setUserName(inputMsg) {
-  if (!userName || userName == SYM_BLANK) {
+  if (!userName || userName === SYM_BLANK) {
     userName = prompt(inputMsg);
     sessionStorage.setItem(STR_USER_NAME, userName);
   }
@@ -133,7 +133,7 @@ function setUserName(inputMsg) {
 // ゲームルール生成
 function setGameRule(langCd) {
   let ruleList = LIST_GAME_RULE;
-  if (langCd == LANG_CD_KO) {
+  if (langCd === LANG_CD_KO) {
     ruleList = LIST_GAME_RULE_KO;
   }
 
@@ -165,7 +165,7 @@ function checkAnswer(langCd) {
   let okAnswerMsg = MSG_INFO_OK_ANSWER;
   let noAnswerMsg = MSG_ERR_NO_ANSWER;
 
-  if (langCd == LANG_CD_KO) {
+  if (langCd === LANG_CD_KO) {
     okAnswerMsg = MSG_INFO_OK_ANSWER_KO;
     noAnswerMsg = MSG_ERR_NO_ANSWER_KO;
   }
@@ -218,7 +218,7 @@ function validate(num, ans, expr, langCd) {
   let noDivideZeroMsg = MSG_ERR_DIVIDE_BY_ZERO;
   let errMatchMsg = MSG_ERR_MATCH;
 
-  if (langCd == LANG_CD_KO) {
+  if (langCd === LANG_CD_KO) {
     noInputMsg = MSG_ERR_NO_INPUT_KO;
     errDegitMsg = MSG_ERR_DIGIT_KO;
     errEqualMsg = MSG_ERR_EQUAL_KO;
@@ -228,7 +228,7 @@ function validate(num, ans, expr, langCd) {
   }
 
   // 回答入力チェック
-  if (expr == SYM_BLANK) {
+  if (expr === SYM_BLANK) {
     return noInputMsg;
   }
 
@@ -273,7 +273,7 @@ function sendRanking(number, time, langCd) {
   let rankOkMsg = MSG_INFO_OK_RANK;
   let rankNgMsg = MSG_ERR_RANK;
 
-  if (langCd == LANG_CD_KO) {
+  if (langCd === LANG_CD_KO) {
     inputMsg = MSG_INFO_INPUT_USER_KO;
     rankOkMsg = MSG_INFO_OK_RANK_KO;
     rankNgMsg = MSG_ERR_RANK_KO;

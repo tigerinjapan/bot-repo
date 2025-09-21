@@ -62,7 +62,10 @@ def token_required(func_):
             token = request.query_params.get("token")
             chk_msg = await protected_resource(request, token)
             if chk_msg:
-                raise HTTPException(status_code=403, detail=chk_msg)
+                err_msg = f"{chk_msg} {request.url._url}"
+                raise HTTPException(
+                    status_code=const.STATUS_CODE_UNAUTHORIZED, detail=err_msg
+                )
             return await func_(*args, **kwargs)
         except HTTPException as e:
             func.print_error_msg(e.detail)
@@ -177,6 +180,10 @@ async def app_exec(request: Request, app_name: str):
 # HTMLテンプレートファイルの返却
 @app.get("/apps/{app_name}")
 async def apps(request: Request, app_name: str):
+
+    if not app_name in const.LIST_APPS_NAME:
+        except_http_error(request.url._url)
+
     target_html = const.HTML_RESULT_2
     context = {const.STR_REQUEST: request, "app_name": app_name}
     return templates.TemplateResponse(target_html, context)
@@ -208,9 +215,14 @@ async def app_json(request: Request):
 async def app_api(request: Request):
     api_name = request.path_params["api_name"]
     param = request.path_params["param"]
+
     json_data = func.get_json_data(api_name)
-    result = json_data.get(param)
-    return result
+
+    if json_data:
+        result = json_data.get(param)
+        return result
+    else:
+        except_http_error(request.url._url)
 
 
 # ランキング情報更新
@@ -279,28 +291,33 @@ async def temp(file_name: str):
     return FileResponse(file_path)
 
 
-# 画像ファイル取得（例：/img/today）
-@app.get(f"/{const.STR_IMG}" + "/{file_name}")
-async def img(file_name: str):
+# ファイル取得（例：/img/today、/font/meiryo、/log/error）
+@app.get("/{div}/{file_name}")
+async def file_response(request: Request, div: str, file_name: str):
+    except_flg = const.FLG_OFF
+
     file_div = const.STR_INPUT
-    if const.APP_TODAY in file_name:
+    if const.APP_TODAY in file_name or div == const.STR_LOG:
         file_div = const.STR_OUTPUT
-    image_path = func.get_file_path(file_name, const.FILE_TYPE_JPEG, file_div)
-    return FileResponse(image_path)
 
+    file_type = const.FILE_TYPE_JPEG
+    if div not in [const.STR_IMG, const.STR_FONT, const.STR_LOG]:
+        except_flg = const.FLG_ON
+    else:
+        if div == const.STR_FONT:
+            file_type = const.FILE_TYPE_TTC
+        elif div == const.STR_LOG:
+            file_type = const.FILE_TYPE_LOG
 
-# ログファイル取得（例：/log/error）
-@app.get(f"/{const.STR_LOG}" + "/{log_level}")
-async def log(log_level: str):
-    log_path = func.get_file_path(log_level, const.FILE_TYPE_LOG, const.STR_OUTPUT)
-    return FileResponse(log_path)
+        file_name_list = func.get_file_name_list(file_type, file_div)
+        if file_name not in file_name_list:
+            except_flg = const.FLG_ON
 
-
-# フォントファイル取得（例：/font/meiryo）
-@app.get(f"/{const.STR_FONT}" + "/{file_name}")
-async def font(file_name: str):
-    font_path = func.get_file_path(file_name, const.FILE_TYPE_TTC)
-    return FileResponse(font_path)
+    if not except_flg:
+        file_path = func.get_file_path(file_name, file_type, file_div)
+        return FileResponse(file_path)
+    else:
+        except_http_error(request.url._url)
 
 
 # サーバーのヘルスチェック
@@ -320,6 +337,15 @@ def api_test():
     if not message:
         message = "Server is on test."
     return {const.STR_MESSAGE: message}
+
+
+# HTTPエラー
+def except_http_error(url: str):
+    http_status_code = const.STATUS_CODE_NOT_FOUND
+    status_msg = msg_const.HTTP_STATUS_MESSAGES.get(http_status_code)
+    err_msg = f"{status_msg} {url}"
+    func.print_error_msg(err_msg)
+    raise HTTPException(status_code=http_status_code, detail=err_msg)
 
 
 # メイン関数（サーバースレッド起動）

@@ -106,7 +106,7 @@ function setAddress(selectLineVal, selectStationVal) {
         .then(data => {
           // 沿線設定
           const valList = data.response.line;
-          if (selectLineVal == SYM_BLANK) {
+          if (selectLineVal === SYM_BLANK) {
             selectLineVal = valList[0];
           }
           createOptionVal(ID_LINE, valList, STR_LINE_JA, selectLineVal);
@@ -136,7 +136,7 @@ function setStation(selectedLine, selectStationVal) {
       // nameの値を抽出してリスト化
       const valList = itemList.map(item => item.name);
 
-      if (selectStationVal == SYM_BLANK) {
+      if (selectStationVal === SYM_BLANK) {
         selectStationVal = valList[0];
       }
       createOptionVal(ID_STATION, valList, STR_STATION_JA, selectStationVal);
@@ -170,7 +170,7 @@ function setMenu(menuVal) {
     label.appendChild(checkbox);
     label.appendChild(document.createTextNode(labels[i]));
     container.appendChild(label);
-    if ((i + 1) % 3 == 0) {
+    if ((i + 1) % 3 === 0) {
       container.appendChild(document.createElement('br')); // 改行追加
     }
   }
@@ -191,14 +191,14 @@ function checkUserInfo() {
 
   const pwVal = document.getElementById("userPw").value;
   const pwCheckVal = document.getElementById("pwCheck").value;
-  if (pwVal != pwCheckVal) {
+  if (pwVal !== pwCheckVal) {
     checkFlg = false;
     errMsg = MSG_ERR_PASSWORD_NOT_MATCH;
   }
 
   const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
   const selectedValues = Array.from(checkboxes).map(cb => cb.value);
-  if (selectedValues.length == 0) {
+  if (selectedValues.length === 0) {
     checkFlg = false;
     errMsg = MSG_ERR_MENU_NO_CHECKED_ELEMENTS;
   } else if (5 < selectedValues.length) {

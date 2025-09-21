@@ -1,10 +1,22 @@
 // ヘッダー設定
 getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_2;
 
+let travelDataUrl = URL_TRAVEL_SERVER;
+let langDataUrl = URL_LANG_SERVER;
+
+if (isLocal()) {
+  travelDataUrl = URL_TRAVEL_LOCAL;
+  langDataUrl = URL_LANG_LOCAL;
+}
+
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", () => {
+
+  let travelData = null;
+  let langData = null;
+
   // タイトル設定
-  document.title = "🌏 Trip & Life";
+  document.title = "🌏 Travel & Life";
 
   // セレクトボックス・各表示領域の取得
   const langSelect = getElem("lang-select");
@@ -13,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const pageTitle = getElem("page-title");
   const pageSubtitle = getElem("page-subtitle");
 
-  const cardGrid = getElem("card-grid");
   createCardGrid();
 
   const infoTitle = getElem("info-title");
@@ -40,33 +51,23 @@ document.addEventListener("DOMContentLoaded", () => {
   createOptionVal(langSelect, LIST_LANG_VAL);
   createOptionVal(regionSelect, LIST_CITY_VAL);
 
-  // カードグリッド作成
-  function createCardGrid() {
-    let infoHtml = SYM_BLANK;
-
-    const grid_div_list = ['info', 'lang', 'tour', 'food', 'useful', 'site'];
-    for (const grid_div of grid_div_list) {
-      infoHtml += `
-        <div class="card" id="${grid_div}-card">
-          <h2>
-            <span id="${grid_div}-title"></span>
-          </h2>
-          <table class="info-table">
-            <tbody id="${grid_div}-content"></tbody>
-          </table>
-        </div>
-    `};
-    cardGrid.innerHTML = infoHtml;
-  }
-
   // 画面内容の更新処理
-  function updateContent() {
+  async function updateContent() {
+
     const lang = langSelect.value;
     const region = regionSelect.value;
 
-    const label = travelData[lang]["label"];
-    const data = travelData[lang][region];
+    travelData = await getFetchApiData(travelDataUrl);
+    langData = await getFetchApiData(langDataUrl);
+
+    travelData = travelData[lang];
+
+    const label = travelData.label;
+    const data = travelData[region];
+    const exchangeRateData = travelData.exchangeRates;
+    const currencyData = travelData.currency;
     const basicConversation = langData[region];
+
     const baseCountryCode = lang;
     const currencyCd = data.info.currency;
 
@@ -83,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
       [label.area, data.info.area.toLocaleString() + "km²"],
       [label.population, data.info.population.toLocaleString()],
       [label.currency, data.info.currency],
-      [label.exchangeRate, getExchangeRate(baseCountryCode, region)],
+      [label.exchangeRate, getExchangeRate(exchangeRateData, currencyData, baseCountryCode, region)],
       [label.weather, data.info.weather],
       [label.timezone, data.info.timezone],
       [label.flightTime, data.info.flightTime]
@@ -187,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 為替レート表示用の計算関数
-  function getExchangeRate(baseCountryCode, region) {
+  function getExchangeRate(exchangeRateData, currencyData, baseCountryCode, region) {
     const targetCurrencyCode =
       region === "seoul"
         ? "krw"
@@ -201,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? "php"
                 : "jpy";
 
-    const rate = exchangeRates[baseCountryCode][targetCurrencyCode];
+    const rate = exchangeRateData[targetCurrencyCode];
     if (rate) {
       const baseAmount =
         baseCountryCode === "ja"
@@ -211,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
             : 1;
 
       const resultAmount = (baseAmount * rate).toLocaleString();
-      const baseCurrencySymbol = coreData[baseCountryCode].currency;
+      const baseCurrencySymbol = currencyData["base"];
       const targetCurrencySymbol = targetCurrencyCode.toUpperCase();
       return `${baseAmount.toLocaleString()}${baseCurrencySymbol} = ${resultAmount}${targetCurrencySymbol}`;
     }
@@ -235,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dialog.style.display = "none";
   });
   window.addEventListener("click", (event) => {
-    if (event.target == dialog) {
+    if (event.target === dialog) {
       dialog.style.display = "none";
     }
   });
@@ -247,6 +248,27 @@ document.addEventListener("DOMContentLoaded", () => {
   // 初期表示（東京・日本語）
   updateContent();
 });
+
+// カードグリッド作成
+function createCardGrid() {
+  let infoHtml = SYM_BLANK;
+
+  const grid_div_list = ['info', 'lang', 'tour', 'food', 'useful', 'site'];
+  for (const grid_div of grid_div_list) {
+    infoHtml += `
+      <div class="card" id="${grid_div}-card">
+        <h2>
+          <span id="${grid_div}-title"></span>
+        </h2>
+        <table class="info-table">
+          <tbody id="${grid_div}-content"></tbody>
+        </table>
+      </div>
+  `};
+
+  const cardGrid = getElem("card-grid");
+  cardGrid.innerHTML = infoHtml;
+}
 
 // セレクトボックスのオプション生成
 function createOptionVal(selectElem, optValList) {

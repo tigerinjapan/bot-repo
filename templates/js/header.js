@@ -67,14 +67,14 @@ function initDisplay() {
 
 // トップメニュー設定
 function setTopMenu(userDiv, userNm, appNm, menuVal) {
-  if (userDiv == SYM_BLANK) {
+  if (userDiv === SYM_BLANK) {
     return;
   }
 
   // アプリケーションリスト
   let appList = LIST_APP;
   if (isMobile()) {
-    if (userDiv == AUTH_GUEST) {
+    if (userDiv === AUTH_GUEST) {
       appList = LIST_APP_GUEST_MO;
     } else {
       appList = [];
@@ -89,7 +89,7 @@ function setTopMenu(userDiv, userNm, appNm, menuVal) {
     }
 
   } else {
-    if (userDiv == AUTH_GUEST) {
+    if (userDiv === AUTH_GUEST) {
       appList = LIST_APP_GUEST;
     }
   }

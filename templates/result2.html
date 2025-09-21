@@ -5,13 +5,11 @@
   <title></title>
   <script src="/templates/const.js"></script>
   <script src="/templates/func.js"></script>
-  {% if app_name == 'trip' %}
-  <script src="/templates/langData.js"></script>
-  <script src="/templates/tripData.js"></script>
-  <script src="/templates/trip.js"></script>
+  {% if app_name == 'travel' %}
+  <script src="/templates/travel.js"></script>
   {% elif app_name == 'review' %}
   <script src="/templates/review.js"></script>
-  {% else %}
+  {% elif 'design' in app_name %}
   <script src="/templates/marked.min.js"></script>
   <script src="/templates/design.js"></script>
   {% endif %}
@@ -20,7 +18,7 @@
 <body>
   <p id="appName" hidden>{{ app_name }}</p>
 
-  {% if app_name == 'trip' %}
+  {% if app_name == 'travel' %}
   <div class="container">
     <header>
       <h1 id="page-title"></h1>
@@ -56,7 +54,7 @@
     <p id="message" class="msg"></p>
   </div>
 
-  {% else %}
+  {% elif 'design' in app_name %}
   <div id="markdown-container" class="container"></div>
   {% endif %}
 </body>

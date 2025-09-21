@@ -43,13 +43,13 @@ function setElem(elemId, text, textFlg) {
 function createElem(tagName, elemVal, parentElemId) {
   const elem = document.createElement(tagName);
 
-  if (tagName == TAG_LABEL || tagName == TAG_H1 || tagName == TAG_TH) {
+  if (tagName === TAG_LABEL || tagName === TAG_H1 || tagName === TAG_TH) {
     elem.textContent = elemVal;
-  } else if (parentElemId == "gameRule") {
+  } else if (parentElemId === "gameRule") {
     elem.textContent = elemVal;
   } else {
     elem.id = elemVal;
-    if (tagName == TAG_TEXTAREA) {
+    if (tagName === TAG_TEXTAREA) {
       elem.maxLength = 40;
       elem.placeholder = "レビュー内容を記載してください";
     }
@@ -82,10 +82,39 @@ function createOption(elemId, elemName, txtList, parentElemId, selectValIdx) {
   parentElem.appendChild(selectElem);
 }
 
+// fetch APIを使ってファイルを読み込む関数
+async function getFetchApiData(url) {
+  const api_header = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    },
+  };
+
+  try {
+    return await fetch(url, api_header)
+      .then(response => {
+        // ネットワークエラーなどをチェック
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        };
+        return response.json();
+      }).then(data => {
+        return data;
+      });
+
+  } catch (error) {
+    // エラー処理
+    console.error('Failed to load json file:', error);
+    alert(MSG_ERR_LOAD_JSON);
+  }
+}
+
 // ローカル環境判定
 function isLocal() {
   let localFlg = false;
-  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+  const hostname = window.location.hostname;
+  if (hostname === "localhost" || hostname === "127.0.0.1") {
     localFlg = true;
   }
   return localFlg;
