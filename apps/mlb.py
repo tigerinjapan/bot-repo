@@ -12,10 +12,11 @@ app_name = func.get_app_name(__file__)
 app_title = const.APP_MLB
 
 # ID
-TEAM_ID_LAD = "119"
-TEAM_LAD = "LAD"
-PLAYER_ID_OHTANI = "660271"
-PLAYER_NAME_OHTANI = "大谷"
+TEAM_ID_LAD = 119
+PLAYER_ID_OHTANI = 660271
+PLAYER_ID_YAMAMOTO = 808967
+PLAYER_ID_KIM = 808975
+LIST_PLAYER_ID = [PLAYER_ID_OHTANI, PLAYER_ID_YAMAMOTO, PLAYER_ID_KIM]
 
 
 # アイテムリスト取得
@@ -23,6 +24,196 @@ def get_item_list():
     item_list = get_last_game_info()
     # item_list = get_ranking_info()
     return item_list
+
+
+# MLB Stat取得
+def get_mlb_game_data(
+    team_id: int = TEAM_ID_LAD,
+    player_id_list: list[int] = LIST_PLAYER_ID,
+    pog_flg: bool = const.FLG_OFF,
+) -> list[str]:
+    stat_data_list = []
+
+    game_data, game_date, game_score, home_away_div = get_mlb_stat_of_api(team_id)
+    if game_data:
+        stat_data_list.append(game_date)
+
+        box_score_data = game_data["liveData"]["boxscore"]
+        teams_data = box_score_data["teams"]
+
+        home_away = get_home_away(game_data)
+        stat_data_list.append(home_away)
+
+        stat_data_list.append(game_score)
+
+        my_team_data = teams_data[home_away_div]
+        batters = my_team_data["batters"]
+        pitchers = my_team_data["pitchers"]
+
+        for player_id in player_id_list:
+            if player_id in batters or player_id in pitchers:
+                players_data = game_data["gameData"]["players"]
+                for key, value in players_data.items():
+                    if value.get("id") == player_id:
+                        player_name = value.get("boxscoreName")
+                        stat_data_list.append(player_name)
+                        break
+
+                player_data = my_team_data["players"][f"ID{player_id}"]["stats"]
+                if player_data:
+                    game_stat = get_game_stats(player_data)
+                    stat_data_list.extend(game_stat)
+
+        if pog_flg:
+            player_of_game_data = get_player_of_game_data(team_id, game_data)
+            stat_data_list.append(player_of_game_data)
+
+    stat_data = const.SYM_SPACE.join(stat_data_list)
+    return stat_data
+
+
+# 今日のヒーロー
+def get_player_of_game_data(
+    team_id: int = TEAM_ID_LAD, game_data=const.NONE_CONSTANT
+) -> str:
+    stat_data_list = ["[POG]"]
+
+    if game_data:
+        stat_data_list.insert(0, const.SYM_NEW_LINE)
+    else:
+        game_data, game_date, game_score, home_away_div = get_mlb_stat_of_api(team_id)
+
+        if not game_date:
+            return const.SYM_BLANK
+
+        stat_data_list.append(game_date)
+
+        home_away = get_home_away(game_data)
+        stat_data_list.append(home_away)
+
+        stat_data_list.append(game_score)
+
+    if game_data:
+        box_score_data = game_data["liveData"]["boxscore"]
+        top_performer_data = box_score_data["topPerformers"][0]["player"]
+        person_data = top_performer_data["person"]
+
+        player_id = person_data["id"]
+        if player_id in LIST_PLAYER_ID:
+            return const.SYM_BLANK
+
+        player_name = person_data["boxscoreName"]
+        stat_data_list.append(player_name)
+
+        player_of_game_data = get_game_stats(top_performer_data["stats"])
+        stat_data_list.extend(player_of_game_data)
+
+    stat_data = const.SYM_SPACE.join(stat_data_list)
+    return stat_data
+
+
+# MLB Stat取得
+def get_mlb_stat_of_api(team_id: int):
+    game_data = const.NONE_CONSTANT
+    game_date = game_score = home_away_div = const.SYM_BLANK
+
+    team_schedule_url = (
+        f"{const.URL_MLB_STAT_API}/api/v1/schedule?sportId=1&teamId={team_id}"
+    )
+    team_schedule_data = func_api.get_response_result(team_schedule_url)
+    if team_schedule_data:
+        games = team_schedule_data["dates"][0]["games"][0]
+        game_date = get_game_date(games["gameDate"])
+
+        if game_date:
+            game_link = games["link"]
+
+            home_team_data = games["teams"]["home"]
+            away_team_data = games["teams"]["away"]
+
+            if home_team_data["team"]["id"] == team_id:
+                home_away_div = "home"
+            else:
+                home_away_div = "away"
+
+            home_score = home_team_data["score"]
+            away_score = away_team_data["score"]
+            game_score = f"{away_score}:{home_score}"
+
+            game_url = f"{const.URL_MLB_STAT_API}{game_link}"
+            response_data = func_api.get_response_result(game_url)
+            if response_data:
+                game_data = response_data
+
+    return game_data, game_date, game_score, home_away_div
+
+
+# ホーム&アウエー
+def get_home_away(game_data) -> str:
+    team_data = game_data["gameData"]["teams"]
+    home_team = team_data["home"]["abbreviation"]
+    away_team = team_data["away"]["abbreviation"]
+    home_away = f"{away_team}@{home_team}"
+    return home_away
+
+
+# ゲームスタッツ取得
+def get_game_stats(player_data) -> list[str]:
+    game_stats = []
+    batting_data = pitching_data = {}
+
+    stats_batting = player_data["batting"]
+    stats_pitching = player_data["pitching"]
+    if stats_batting:
+        batting_data = stats_batting["summary"]
+    if stats_pitching:
+        pitching_data = stats_pitching["summary"]
+
+    if batting_data:
+        batting_data = batting_data.split(" | ")
+        hit = batting_data[0].split(const.SYM_DASH)[0]
+        batting_stat = f"{hit}H"
+
+        home_run = batting_data[1].split(const.SYM_COMMA)[0]
+        if home_run and "HR" in home_run:
+            home_run_stat = home_run
+            if home_run == "HR":
+                home_run_stat = f"1{home_run}"
+            batting_stat += f" ({home_run_stat})"
+
+        game_stats.append(batting_stat)
+
+    if pitching_data:
+        pitching_stat = pitching_data.split(const.SYM_COMMA)[:2]
+        pitching_stat = const.SYM_BLANK.join(pitching_stat)
+        game_stats.append(pitching_stat)
+
+    return game_stats
+
+
+# ゲーム日付取得
+def get_game_date(game_date: str) -> str:
+    jst_date = const.SYM_BLANK
+
+    # 3日前の日付取得
+    three_days_ago = func.get_calc_date(-3)
+
+    # 日付型へ変換
+    game_date = func.convert_str_to_date(game_date)
+
+    # タイムゾーンを削除して比較
+    game_date_naive = game_date.replace(tzinfo=None)
+
+    # 日本時間に計算
+    calc_date = func.get_calc_date(9, const.DATE_HOUR, game_date_naive)
+
+    # 日本時間と3日以内の場合
+    if three_days_ago < calc_date:
+        jst_date = func.convert_date_to_str(
+            calc_date, const.DATE_FORMAT_MMDD_SLASH_NO_ZERO
+        )
+
+    return jst_date
 
 
 # ランキング情報取得
@@ -90,91 +281,8 @@ def get_text_from_info(soup, div=const.NUM_ZERO):
     return text
 
 
-# MLB Stat取得
-def get_mlb_stat_of_api(team_id: str = TEAM_ID_LAD, player_id: str = PLAYER_ID_OHTANI):
-    stat_data_list = []
-
-    game_data = game_link = const.NONE_CONSTANT
-
-    target_date, japan_date = get_target_date()
-    stat_data_list.append(japan_date)
-
-    url = f"{const.URL_MLB_STAT_API}/api/v1/schedule?date={target_date}&sportId=1"
-    response_data = func_api.get_response_result(url)
-    if response_data:
-        game_list = response_data["dates"][0]["games"]
-        for game in game_list:
-            if game["teams"]["home"]["team"]["link"] == f"/api/v1/teams/{team_id}":
-                game_link = game["link"]
-                break
-
-    if game_link:
-        url = f"{const.URL_MLB_STAT_API}{game_link}"
-        response_data = func_api.get_response_result(url)
-        if response_data:
-            teams_data = response_data["liveData"]["boxscore"]["teams"]
-            home_team = response_data["gameData"]["teams"]["home"]["abbreviation"]
-            away_team = response_data["gameData"]["teams"]["away"]["abbreviation"]
-
-            away_flg = const.FLG_ON if away_team == TEAM_LAD else const.FLG_OFF
-            team_data_div = "home"
-            opposing_team = away_team
-            if away_flg:
-                team_data_div = "away"
-                opposing_team = home_team
-
-            stat_data_list.append(f"@{opposing_team}")
-
-            player_data = teams_data[team_data_div]["players"][f"ID{player_id}"]
-            if player_data:
-                game_data = player_data["stats"]["batting"]["summary"]
-
-    player_name = PLAYER_NAME_OHTANI
-    stat_data_list.append(player_name)
-
-    if game_data:
-        game_data_2 = game_data.split(" | ")[1].split(const.SYM_COMMA)[0]
-        if game_data_2 and "HR" in game_data_2:
-            if game_data_2 == "HR":
-                home_run = "1"
-            else:
-                home_run = game_data_2.replace("HR", const.SYM_BLANK)
-
-            game_stat = f"{home_run}本塁打"
-        else:
-            hit = game_data.split(" | ")[0].split(const.SYM_DASH)[0]
-            game_stat = f"{hit}安打"
-    else:
-        game_stat = "No game"
-
-    stat_data_list.append(game_stat)
-
-    stat_data = const.SYM_SPACE.join(stat_data_list)
-    return stat_data
-
-
-# ゲーム日付取得
-def get_target_date():
-    japan_date = func.get_now()
-    days_num = -1
-
-    if func.get_now(const.DATE_HOUR) < 12:
-        japan_date = func.get_calc_date(-1)
-        days_num = -2
-
-    # 現地時間
-    target_date = func.get_calc_date(days_num)
-
-    # mm/dd/yyyyに変換して出力
-    formatted_date = func.convert_date_to_str(target_date, "%m/%d/%Y")
-
-    # mm/ddに変換して出力
-    formatted_date_2 = func.convert_date_to_str(japan_date, "%#m/%#d")
-    return formatted_date, formatted_date_2
-
-
 if __name__ == const.MAIN_FUNCTION:
     # item_list = get_item_list()
     # func.print_test_data(item_list)
-    stat_data = get_mlb_stat_of_api()
+    stat_data = get_mlb_game_data()
     func.print_test_data(stat_data)

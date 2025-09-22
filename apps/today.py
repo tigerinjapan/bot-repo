@@ -68,22 +68,17 @@ def get_today_info():
     # 為替+
     today_rate = ex.get_ex_info(const.STR_VND)
 
-    # コーデ・夕食
-    # recommend_outfit_dinner = func_gemini.get_recommend_outfit_dinner(
-    #     NEW_LINE.join(today_weather)
-    # )
-
-    # outfit = recommend_outfit_dinner[0]
-    # dinner = recommend_outfit_dinner[1].replace(NEW_LINE, const.SYM_BLANK)
-
     # コーデ
-    outfit = get_today_outfit()
+    outfit_text = get_today_outfit()
 
     # 夕食
-    menu = get_today_menu()
+    menu_text = get_today_menu()
+
+    # コーデ・夕食
+    outfit, menu = func_gemini.get_recommend_menu(outfit_text, menu_text)
 
     # MLB
-    mlb_game = mlb.get_mlb_stat_of_api()
+    mlb_game = mlb.get_mlb_game_data()
 
     today_info_list = [
         date_time,
@@ -119,7 +114,7 @@ def get_today_weather() -> tuple[str, str]:
     date_time_text = elem_date_time.get("datetime")
 
     date_time = func.convert_date_format(
-        date_time_text, const.DATE_FORMAT_ISO, const.DATE_FORMAT_YYYYMMDD_HHMM
+        date_time_text, const.DATE_FORMAT_YYYYMMDD_HHMM
     )
 
     elem_forecast = func_bs.find_elem_by_attr(
@@ -197,8 +192,7 @@ def get_today_outfit():
     )
     outfit_elem_2 = outfit_elem_p[1].text
     outfit_text = outfit_elem_1 + const.SYM_NEW_LINE + outfit_elem_2
-    today_outfit = func_gemini.get_recommend_outfit(outfit_text)
-    return today_outfit
+    return outfit_text
 
 
 # 今日のレシピメニュー取得

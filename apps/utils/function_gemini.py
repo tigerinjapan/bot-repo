@@ -221,21 +221,25 @@ def get_recommend_outfit_dinner(today_weather: str) -> list[str]:
     return recommend_outfit_dinner
 
 
-# おすすめコーデ取得
-def get_recommend_outfit(outfit_text: str) -> str:
+# おすすめメニュー取得
+def get_recommend_menu(outfit_text: str, menu_text: str) -> tuple[str, str]:
     contents = (
-        f"{outfit_text}{NEW_LINE}"
-        "上記の内容を元に、今日のコーデをおすすめしてください。"
+        f"{outfit_text}{NEW_LINE}{menu_text}{NEW_LINE}"
+        "上記の内容を元に、気温と季節を考慮し、今日のコーデ・夕食をおすすめしてください。"
         "コーデは、2アイテム。1番目が上半身、2番目が下半身に着るもの。"
+        "夕食は、1番目が主食、2番目がおかずまたはスープ。"
         "各アイテムは、&で繋げる。"
-        "各アイテムの最大の文字数は、7。"
+        "各アイテムの最大の文字数は、8。"
+        "各アイテムは、ちゃんとした単語として成立する。"
         "解説と他の文言、記号は不要。"
-        f"※出力例{NEW_LINE}白いTシャツ&デニムジーンズ"
+        f"※出力例{NEW_LINE}"
+        "白いTシャツ&デニムジーンズ,チーズキムパ&味噌汁"
     )
-    recommend_outfit = get_gemini_response(contents)[0].replace(
-        const.SYM_NEW_LINE, const.SYM_BLANK
-    )
-    return recommend_outfit
+
+    response = get_gemini_response(contents)
+    outfit = response[0]
+    dinner = response[1]
+    return outfit, dinner
 
 
 # ニュース要約取得

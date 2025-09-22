@@ -1,5 +1,10 @@
 [
     {
+        "日付": "2025年9月22日",
+        "会社": "<a href=\"https://www.jinair.com/promotion/eventView?evntSeq=14565\" target=\"_blank\" rel=\"noopener noreferrer\">ジンエアー</a>",
+        "LCCニュース": "「北九州線限定 スペシャルセール」\n開催中！北九州－ソウル線 最大5,000円割引"
+    },
+    {
         "日付": "2025年9月17日",
         "会社": "<a href=\"https://www.jejuair.net/ja/event/eventDetail.do?eventNo=0000003362\" target=\"_blank\" rel=\"noopener noreferrer\">チェジュ航空</a>",
         "LCCニュース": "「今安セール」\n開催中！ソウル/釜山線 片道2,600円から"
@@ -18,10 +23,5 @@
         "日付": "2025年9月9日",
         "会社": "<a href=\"https://www.flyscoot.com/jp/promotions/network-sale\" target=\"_blank\" rel=\"noopener noreferrer\">スクート</a>",
         "LCCニュース": "「EVERYWHEREセール」\n開催中！台北/シンガポール方面 片道13,000円から"
-    },
-    {
-        "日付": "2025年9月8日",
-        "会社": "<a href=\"https://www.vietjetair.com/ja\" target=\"_blank\" rel=\"noopener noreferrer\">ベトジェット</a>",
-        "LCCニュース": "「9.9 チケットプロモーション」\n9月9日深夜2時から開催！ベトナム国際線 最大99％オフ"
     }
 ]

@@ -95,7 +95,7 @@ async def protected_resource(request: Request, token: str):
 @app.post("/token")
 async def issue_token(request: Request):
     access_token = "token_" + func.get_now(const.DATE_TODAY)
-    expiration = func.get_calc_date(TOKEN_EXPIRATION_MINUTES, const.DATE_MIN)
+    # expiration = func.get_calc_date(TOKEN_EXPIRATION_MINUTES, const.DATE_MIN)
     token_data = {
         const.STR_TOKEN: access_token,
         const.STR_TYPE: "bearer",
@@ -257,7 +257,7 @@ async def board_add(request: Request):
 
 # 掲示板データ・ステータス更新
 @app.get("/board/update/{seq}")
-async def board_update(seq):
+async def board_update(seq: str):
     try:
         board_dao.update_board_status(seq)
     except Exception as e:

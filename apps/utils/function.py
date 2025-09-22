@@ -36,9 +36,8 @@ def get_now(div: int = const.DATE_NOW):
     return now
 
 
-# 現在時刻より、計算された時刻の取得
-def get_calc_date(val: int, div: int = const.DATE_DAY):
-    calc_date = get_now()
+# 対象時刻より、計算された時刻の取得
+def get_calc_date(val: int, div: int = const.DATE_DAY, calc_date: datetime = get_now()):
     if div == const.DATE_DAY:
         calc_date += timedelta(days=val)
     elif div == const.DATE_HOUR:
@@ -195,13 +194,14 @@ def print_info_msg(div: str, msg: str = const.SYM_BLANK):
 # エラーメッセージ出力
 def print_error_msg(div: str, msg: str = const.SYM_BLANK):
     err_msg = f"[{get_now()}] {msg_const.MSG_DIV_ERR} {div}"
-    log_msg = div
+    log_msg = f"{div}"
     if msg:
         err_msg += f" {msg}"
         log_msg += f" {msg}"
     print(err_msg)
 
-    write_log(log_msg)
+    if not is_local_env():
+        write_log(log_msg)
 
 
 # エラーメッセージ出力し、システム終了
@@ -265,7 +265,9 @@ def convert_date_to_str(date: datetime, format: str) -> str:
 
 
 # 日付フォーマット変換
-def convert_date_format(str: str, old_format: str, new_format: str) -> str:
+def convert_date_format(
+    str: str, new_format: str, old_format: str = const.DATE_FORMAT_ISO
+) -> str:
     date = convert_str_to_date(str, old_format)
     date_format = convert_date_to_str(date, new_format)
     return date_format
@@ -618,5 +620,4 @@ def print_test_data(data, type_flg: bool = const.FLG_OFF):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # print(is_holiday())
-    write_log("error_test")
+    print(is_holiday())
