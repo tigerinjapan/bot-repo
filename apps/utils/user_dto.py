@@ -90,8 +90,8 @@ class userInfo:
     sTel: str
     sMenu: str
     nSeq: int
-    dModifiedDate: datetime = get_now
-    dLastLoginDate: datetime = get_now
+    dModifiedDate: datetime = get_now()
+    dLastLoginDate: datetime = get_now()
 
     def get_data(self):
         return asdict(self)

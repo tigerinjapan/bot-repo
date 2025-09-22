@@ -26,28 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     getElemByTag(TAG_H1).textContent = "アプリ・レビュー";
 
-    let selectList = [
-      [
-        "アプリ",
-        STR_APP,
-        ["Line Message", "Travel & Life", "Number Plate", "その他"],
-        0
-      ],
-      [
-        "カテゴリー",
-        STR_CATEGORY,
-        ["レビュー", "メモ", "その他"],
-        0
-      ],
-    ];
-
-    let parentElemId = ELEM_ID_DIV;
-    for (const [lblTxt, elemId, txtList, selectValIdx] of selectList) {
-      createElem(TAG_LABEL, lblTxt, parentElemId);
-      createOption(elemId, elemId, txtList, parentElemId, selectValIdx);
-    }
-
-    const thList = ["No.", "区分", "内容"];
+    const thList = ["No.", "アプリ", "カテゴリー", "区分", "内容"];
+    const appTxtList = ["Line Message", "Travel & Life", "Number Plate", "その他"];
+    const ctgTxtList = ["レビュー", "メモ", "エラー", "その他"];
     const typeTxtList = ["機能追加", "機能修正", "レイアウト", "その他"];
 
     parentElemId = ELEM_ID_TABLE;
@@ -70,6 +51,10 @@ document.addEventListener("DOMContentLoaded", () => {
           if (j === 0) {
             getElem(tdId2).textContent = i;
           } else if (j === 1) {
+            createOption(STR_APP + strIdx, STR_APP, appTxtList, tdId2, 0);
+          } else if (j === 2) {
+            createOption(STR_CATEGORY + strIdx, STR_CATEGORY, ctgTxtList, tdId2, 0);
+          } else if (j === 3) {
             createOption(STR_TYPE + strIdx, STR_TYPE, typeTxtList, tdId2, 0);
           } else {
             createElem(TAG_TEXTAREA, ELEM_ID_TEXTAREA + strIdx, tdId2);
@@ -83,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 初期表示
   init();
-  setUserName();
 });
 
 // ユーザ名設定
@@ -101,13 +85,13 @@ function sendReview() {
 
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
-    const app = getElem(STR_APP).value;
-    const category = getElem(STR_CATEGORY).value;
 
     let reviewList = [];
     let addCnt = 0;
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= NUM_BOARD_CNT; i++) {
       const idx = i.toString();
+      const app = getElem(STR_APP + idx).value;
+      const category = getElem(STR_CATEGORY + idx).value;
       const type = getElem(STR_TYPE + idx).value;
       const contents = getElem(ELEM_ID_TEXTAREA + idx).value;
       if (contents) {
@@ -130,6 +114,8 @@ function sendReview() {
       if (isLocal()) {
         url = URL_BOARD_LOCAL;
       }
+
+      setUserName();
 
       const res = await fetch(url, {
         method: "POST",

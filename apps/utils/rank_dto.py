@@ -30,7 +30,7 @@ class rankInfo:
     nNumber: int
     sRankTime: str
     sUserName: str
-    dUpdateDate: datetime = get_now
+    dUpdateDate: datetime = get_now()
 
     def get_data(self):
         return asdict(self)

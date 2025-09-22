@@ -186,15 +186,25 @@ use(database)
 // bulkData.push(boardData_012);
 // db.board.insertMany(bulkData);
 
+// delete documents
+// let currentSeq = 0;
+// const result = db.sequence.find({ sDiv: "board" }, { _id: 0, nSeq: 1 });
+// result.forEach(function (doc) {
+//     currentSeq = doc.nSeq;
+// });
+// console.log(currentSeq);
+
+// db.board.deleteMany({ nSeq: { $gte: currentSeq } });
+
 // find documents
 db.board.find(
     {
         $or: [
             { nStatus: { $ne: status_done } },
-            { dUpdateDate: { $gte: new Date(strDate) } },
+            // { dUpdateDate: { $gte: new Date(strDate) } },
         ]
     },
-    { _id: 0 }
+    { _id: 0, nApp: 1, sContents: 1, sUserName: 1, dUpdateDate: 1 }
 ).sort(
     { nStatus: 1, nApp: 1, dUpdateDate: -1 }
 ).pretty();

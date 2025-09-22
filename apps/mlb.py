@@ -50,8 +50,12 @@ def get_mlb_game_data(
         batters = my_team_data["batters"]
         pitchers = my_team_data["pitchers"]
 
+        add_cnt = 0
         for player_id in player_id_list:
             if player_id in batters or player_id in pitchers:
+                if 0 < add_cnt and add_cnt < len(player_id_list):
+                    stat_data_list.append(const.SYM_NEW_LINE)
+
                 players_data = game_data["gameData"]["players"]
                 for key, value in players_data.items():
                     if value.get("id") == player_id:
@@ -63,6 +67,7 @@ def get_mlb_game_data(
                 if player_data:
                     game_stat = get_game_stats(player_data)
                     stat_data_list.extend(game_stat)
+                    add_cnt += 1
 
         if pog_flg:
             player_of_game_data = get_player_of_game_data(team_id, game_data)
