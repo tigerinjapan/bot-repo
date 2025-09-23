@@ -129,25 +129,30 @@ def get_mlb_stat_of_api(team_id: int):
         team_schedule_dates = team_schedule_data["dates"]
         if team_schedule_dates:
             games = team_schedule_dates[0]["games"][0]
-            game_date = get_game_date(games["gameDate"])
-            game_link = games["link"]
 
-            home_team_data = games["teams"]["home"]
-            away_team_data = games["teams"]["away"]
-
-            if home_team_data["team"]["id"] == team_id:
-                home_away_div = "home"
+            status = games["status"]["detailedState"]
+            if status == "Pre-Game":
+                func.print_info_msg(const.APP_MLB, "試合開始前。")
             else:
-                home_away_div = "away"
+                game_date = get_game_date(games["gameDate"])
+                game_link = games["link"]
 
-            home_score = home_team_data["score"]
-            away_score = away_team_data["score"]
-            game_score = f"{away_score}:{home_score}"
+                home_team_data = games["teams"]["home"]
+                away_team_data = games["teams"]["away"]
 
-            game_url = f"{const.URL_MLB_STAT_API}{game_link}"
-            response_data = func_api.get_response_result(game_url)
-            if response_data:
-                game_data = response_data
+                if home_team_data["team"]["id"] == team_id:
+                    home_away_div = "home"
+                else:
+                    home_away_div = "away"
+
+                home_score = home_team_data["score"]
+                away_score = away_team_data["score"]
+                game_score = f"{away_score}:{home_score}"
+
+                game_url = f"{const.URL_MLB_STAT_API}{game_link}"
+                response_data = func_api.get_response_result(game_url)
+                if response_data:
+                    game_data = response_data
 
     if not game_data:
         func.print_info_msg(const.APP_MLB, MSG_ERR_DATA_NOT_EXIST)
