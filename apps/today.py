@@ -182,6 +182,9 @@ def get_today_outfit():
     url = f"{const.URL_CANCAM}/archives/tag/今日のコーデ"
     soup_main = func_bs.get_elem_from_url(url, attr_val="site-main yellow-main")
     link_today = func_bs.get_link_from_soup(soup_main)
+    if not link_today:
+        return const.SYM_BLANK
+
     soup = func_bs.get_elem_from_url(link_today, attr_val="entry-content")
     outfit_elem_1 = get_elem_val_by_class(soup, "wp-block-heading")
     outfit_elem_p = func_bs.find_elem_by_attr(

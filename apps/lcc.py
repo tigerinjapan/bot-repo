@@ -48,6 +48,10 @@ def get_lcc_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
             lcc_info_details = func_bs.get_elem_from_url(
                 url_news, tag=const.TAG_DIV, attr_val="body"
             )
+
+            if not lcc_info_details:
+                continue
+
             url_official = func_bs.get_link_from_soup(lcc_info_details)
 
             if list_flg:

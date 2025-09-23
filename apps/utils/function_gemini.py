@@ -174,7 +174,7 @@ def get_today_news_image(
     if today_outfit:
         if img_div == const.STR_WOMAN_JA:
             img_woman = (
-                f"{img_div}は、45才の日本人。身長は155cm、体重は45kg。小柄、童顔、笑顔、可愛い、愛嬌溢れる人。"
+                f"{img_div}は、45才の日本人。身長は155cm、体重は45kg。小柄、童顔、笑顔、可愛い、愛嬌溢れる、優しい人。"
                 f"{img_div}の身体のボリューム感を強調する大胆なファッションにする。"
                 f"{img_div}のメークアップは、自然なナチュラルタイプ。"
             )
