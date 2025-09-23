@@ -5,9 +5,6 @@ import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
 
-# アプリケーション名
-app_name = func.get_app_name(__file__)
-
 # タイトル
 app_title = "今日の" + const.STR_NEWS_JA
 

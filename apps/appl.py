@@ -1,5 +1,7 @@
 # 説明: アプリケーション実行
 
+import sys
+
 from fastapi import Request
 
 import apps.drama as drama
@@ -17,6 +19,9 @@ import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
 import apps.utils.user_dto as dto
+
+# スクリプト名
+SCRIPT_NAME = func.get_app_name(__file__)
 
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
@@ -182,7 +187,8 @@ def get_df_info(app_name: str):
 
 # データ更新
 def update_news(app_name: str = const.SYM_BLANK):
-    func.print_info_msg(const.FILE_TYPE_JSON, msg_const.MSG_INFO_PROC_START)
+    curr_func_nm = sys._getframe().f_code.co_name
+    func.print_start(curr_func_nm, msg_const.MSG_INFO_PROC_START)
 
     app_div_list = LIST_APP_DIV
     app_name_list = const.LIST_APP_NAME
@@ -199,7 +205,7 @@ def update_news(app_name: str = const.SYM_BLANK):
         try:
             item_list = app_div.get_item_list()
         except Exception as e:
-            func.print_error_msg(e)
+            func.print_error_msg(SCRIPT_NAME, curr_func_nm, app_name, e)
             continue
 
         col_list = app_div.col_list
@@ -207,7 +213,7 @@ def update_news(app_name: str = const.SYM_BLANK):
         df = func.get_df(item_list, col_list)
 
         if df.empty:
-            func.print_info_msg(msg_const.MSG_ERR_DATA_NOT_EXIST)
+            func.print_info_msg(app_name, msg_const.MSG_ERR_DATA_NOT_EXIST)
             app_exec.end()
             continue
 
@@ -222,7 +228,7 @@ def update_news(app_name: str = const.SYM_BLANK):
 
         app_exec.end()
 
-    func.print_info_msg(const.FILE_TYPE_JSON, msg_const.MSG_INFO_PROC_COMPLETED)
+    func.print_end(curr_func_nm, msg_const.MSG_INFO_PROC_COMPLETED)
 
 
 # スリープ状態にならないようサーバーアクセス

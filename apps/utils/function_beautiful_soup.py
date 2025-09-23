@@ -1,12 +1,16 @@
 # 説明: Beautiful Soup関数
 
 import requests
+import sys
 
 from bs4 import BeautifulSoup as bs
 
 import apps.utils.constants as const
 import apps.utils.function as func
 from apps.utils.message_constants import MSG_ERR_NO_SUCH_ELEMENT
+
+# スクリプト名
+SCRIPT_NAME = func.get_app_name(__file__)
 
 
 # URLからデータ取得
@@ -17,7 +21,8 @@ def get_data_from_url(
         # func[requests.get]:Get data from web page
         response = requests.get(url, headers=headers)
     except Exception as e:
-        func.print_error_msg(str(e))
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, url, e)
         response = const.NONE_CONSTANT
 
     if sleep_flg:
@@ -87,9 +92,9 @@ def find_elem_by_attr(
                 elem = find_func(id=attr_val)
 
     except Exception as e:
-        div = f"{attr_div} : {attr_val}"
-        func.print_error_msg(div, MSG_ERR_NO_SUCH_ELEMENT)
-        func.print_error_msg(str(e))
+        div = f"{attr_div} : {attr_val}, {MSG_ERR_NO_SUCH_ELEMENT}"
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, div, e)
 
     return elem
 

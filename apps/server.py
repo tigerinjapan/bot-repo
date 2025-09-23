@@ -1,6 +1,8 @@
 # 説明: サーバー処理
 # FastAPIによるWebサーバー。認証・セッション管理・各種APIエンドポイントを提供
 
+import sys
+
 from fastapi import FastAPI, Request, HTTPException, Form
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
@@ -31,6 +33,9 @@ templates = Jinja2Templates(directory="templates")
 # OAuth2トークン認証設定
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+# スクリプト名
+SCRIPT_NAME = func.get_app_name(__file__)
+
 # トークン有効期限（分）
 TOKEN_EXPIRATION_MINUTES = 10
 
@@ -40,7 +45,7 @@ is_local = func.is_local_env()
 
 # サーバー起動
 def run_server():
-    func.print_info_msg(msg_const.MSG_INFO_SERVER_START)
+    func.print_start(SCRIPT_NAME, msg_const.MSG_INFO_SERVER_START)
     host, port = func.get_host_port()
     config = Config(app, host=host, port=port)
     server = Server(config)
@@ -68,7 +73,8 @@ def token_required(func_):
                 )
             return await func_(*args, **kwargs)
         except HTTPException as e:
-            func.print_error_msg(e.detail)
+            curr_func_nm = sys._getframe().f_code.co_name
+            func.print_error_msg(SCRIPT_NAME, curr_func_nm, e.detail)
             raise e
 
     return wrapper
@@ -138,7 +144,10 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
         }
         user_dao.update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
         response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
-        func.print_info_msg(user_info[user_dto.FI_USER_NAME], msg_const.MSG_INFO_LOGIN)
+        func.print_info_msg(
+            user_info[user_dto.FI_USER_NAME],
+            msg_const.MSG_INFO_LOGIN,
+        )
     return response
 
 
@@ -167,7 +176,8 @@ async def app_exec(request: Request, app_name: str):
         else:
             target_html, context = appl.exec_result(request, app_name)
     except Exception as e:
-        func.print_error_msg(app_name, e)
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, app_name, e)
         target_html = const.HTML_INDEX
         context = {
             const.STR_REQUEST: request,
@@ -182,7 +192,8 @@ async def app_exec(request: Request, app_name: str):
 async def apps(request: Request, app_name: str):
 
     if not app_name in const.LIST_APPS_NAME:
-        except_http_error(request.url._url)
+        curr_func_nm = sys._getframe().f_code.co_name
+        except_http_error(curr_func_nm, request.url._url)
 
     target_html = const.HTML_RESULT_2
     context = {const.STR_REQUEST: request, "app_name": app_name}
@@ -222,15 +233,15 @@ async def app_api(request: Request):
         result = json_data.get(param)
         return result
     else:
-        except_http_error(request.url._url)
+        curr_func_nm = sys._getframe().f_code.co_name
+        except_http_error(curr_func_nm, request.url._url)
 
 
 # ランキング情報更新
 @app.post("/number/ranking")
 async def ranking_update(request: Request):
     json_data = await request.json()
-    if func.is_network():
-        rank_dao.update_rank_info_of_api(json_data)
+    rank_dao.update_rank_info_of_api(json_data)
     result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
     return result
 
@@ -248,8 +259,9 @@ async def board_add(request: Request):
             func_line.send_text_msg(msg)
 
     except Exception as e:
-        func.print_error_msg(const.COLL_BOARD, e)
+        curr_func_nm = sys._getframe().f_code.co_name
         message = msg_const.MSG_ERR_PROC_FAILED
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
 
     result = {const.STR_MESSAGE: message}
     return result
@@ -261,7 +273,8 @@ async def board_update(seq: str):
     try:
         board_dao.update_board_status(seq)
     except Exception as e:
-        func.print_error_msg(const.COLL_BOARD, e)
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, seq, e)
 
     return RedirectResponse(url=const.PATH_APP_BOARD)
 
@@ -317,15 +330,17 @@ async def file_response(request: Request, div: str, file_name: str):
         file_path = func.get_file_path(file_name, file_type, file_div)
         return FileResponse(file_path)
     else:
-        except_http_error(request.url._url)
+        curr_func_nm = sys._getframe().f_code.co_name
+        except_http_error(curr_func_nm, request.url._url)
 
 
 # サーバーのヘルスチェック
 @app.get("/check")
 def health_check():
     appl.no_sleep()
+
     info_msg = msg_const.MSG_INFO_SERVER_KEEP_WORKING
-    func.print_info_msg(info_msg)
+    func.print_info_msg(SCRIPT_NAME, info_msg)
     result = {const.STR_MESSAGE: info_msg}
     return result
 
@@ -340,11 +355,11 @@ def api_test():
 
 
 # HTTPエラー
-def except_http_error(url: str):
+def except_http_error(func_name: str, url: str):
     http_status_code = const.STATUS_CODE_NOT_FOUND
     status_msg = msg_const.HTTP_STATUS_MESSAGES.get(http_status_code)
     err_msg = f"{status_msg} {url}"
-    func.print_error_msg(err_msg)
+    func.print_error_msg(SCRIPT_NAME, func_name, err_msg)
     raise HTTPException(status_code=http_status_code, detail=err_msg)
 
 

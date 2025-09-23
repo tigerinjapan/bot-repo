@@ -48,11 +48,24 @@ def get_calc_date(val: int, div: int = const.DATE_DAY, calc_date: datetime = get
     return calc_date
 
 
+# ファイルパス名取得
+def get_path_split(file_name: str, extension_flg: bool = const.FLG_OFF) -> str:
+    idx = const.NUM_ONE if extension_flg else const.NUM_ZERO
+    file_path_name = os.path.splitext(file_name)[idx]
+    if extension_flg:
+        file_path_name = file_path_name.replace(const.SYM_DOT, const.SYM_BLANK)
+    return file_path_name
+
+
 # アプリケーション名取得
 def get_app_name(app_path: str, extension_flg: bool = const.FLG_OFF) -> str:
     file_name = os.path.basename(app_path)
     app_name = get_path_split(file_name, extension_flg)
     return app_name
+
+
+# スクリプト名
+SCRIPT_NAME = get_app_name(__file__)
 
 
 # アプリケーションパス取得
@@ -71,15 +84,6 @@ def check_path_exists(file_path: str) -> bool:
     return check_flg
 
 
-# ファイルパス名取得
-def get_path_split(file_name: str, extension_flg: bool = const.FLG_OFF) -> str:
-    idx = const.NUM_ONE if extension_flg else const.NUM_ZERO
-    file_path_name = os.path.splitext(file_name)[idx]
-    if extension_flg:
-        file_path_name = file_path_name.replace(const.SYM_DOT, const.SYM_BLANK)
-    return file_path_name
-
-
 # 環境変数取得
 def get_env_val(var_name: str, int_flg: bool = const.FLG_OFF) -> str:
     env_val = os.environ.get(var_name)
@@ -89,7 +93,10 @@ def get_env_val(var_name: str, int_flg: bool = const.FLG_OFF) -> str:
             json_data = get_json_data(const.STR_ENV_VAR)
             env_val = json_data[var_name]
         else:
-            print_error_msg(var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST)
+            curr_func_nm = sys._getframe().f_code.co_name
+            print_error_msg(
+                SCRIPT_NAME, curr_func_nm, var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST
+            )
 
     if env_val:
         if int_flg:
@@ -103,12 +110,14 @@ def get_env_val(var_name: str, int_flg: bool = const.FLG_OFF) -> str:
 # ネットワーク接続チェック
 def is_network() -> bool:
     network_flg = const.FLG_OFF
+    curr_func_nm = sys._getframe().f_code.co_name
+
     try:
         response = urllib.request.urlopen(const.URL_GOOGLE)
-        print_info_msg(const.STR_REQUEST, response)
         network_flg = const.FLG_ON
+        # print_info_msg(curr_func_nm, response)
     except Exception as e:
-        print_error_msg(const.STR_REQUEST, e)
+        print_error_msg(SCRIPT_NAME, curr_func_nm, const.STR_REQUEST, str(e))
     return network_flg
 
 
@@ -134,7 +143,8 @@ def is_local_env() -> bool:
             local_flg = const.FLG_ON
 
     except socket.gaierror as sge:
-        print_error_msg(const.STR_IP, str(sge))
+        curr_func_nm = sys._getframe().f_code.co_name
+        print_error_msg(SCRIPT_NAME, curr_func_nm, const.STR_IP, str(sge))
 
     return local_flg
 
@@ -175,49 +185,46 @@ def is_holiday(weekend_flg: bool = const.FLG_ON) -> bool:
     return holiday_flg
 
 
-# 処理開始メッセージ出力
-def print_start(div: str):
-    print_info_msg(div, msg_const.MSG_INFO_PROC_START)
+# 開始メッセージ出力
+def print_start(div: str, msg: str = msg_const.MSG_INFO_PROC_START):
+    print_info_msg(div, msg)
 
 
-# 処理終了メッセージ出力
-def print_end(div: str):
-    print_info_msg(div, msg_const.MSG_INFO_PROC_END)
+# 終了メッセージ出力
+def print_end(div: str, msg: str = msg_const.MSG_INFO_PROC_END):
+    print_info_msg(div, msg)
 
 
 # 情報メッセージ出力
 def print_info_msg(div: str, msg: str = const.SYM_BLANK):
-    msg_now = f"[{get_now()}]"
-    print(msg_now, msg_const.MSG_DIV_INFO, div, msg)
+    info_msg = f"[{get_now()}] {msg_const.MSG_DIV_INFO}"
+    print(info_msg, div, msg)
 
 
 # エラーメッセージ出力
-def print_error_msg(div: str, msg: str = const.SYM_BLANK):
-    err_msg = f"[{get_now()}] {msg_const.MSG_DIV_ERR} {div}"
-    log_msg = f"{div}"
-    if msg:
-        err_msg += f" {msg}"
-        log_msg += f" {msg}"
-    print(err_msg)
+def print_error_msg(
+    script_name: str,
+    func_name: str,
+    div: str,
+    exception=const.NONE_CONSTANT,
+    sys_exit: bool = const.FLG_OFF,
+):
+    err_msg = f"[{get_now()}] {msg_const.MSG_DIV_ERR}"
+    log_msg = f"[{script_name}.{func_name}] {div}"
 
+    if exception:
+        except_msg = f" {str(exception)}"
+        log_msg += except_msg
+
+        if 200 < len(log_msg):
+            log_msg = f"{log_msg[:200]}..."
+
+    print(err_msg, log_msg)
     if not is_local_env():
         write_log(log_msg)
 
-
-# エラーメッセージ出力し、システム終了
-def print_msg_exit(div: str, msg: str = const.SYM_BLANK):
-    print_error_msg(div, msg)
-    sys.exit()
-
-
-# 関数の正常終了メッセージ出力
-def print_proc_ok(currentframe, div: str = const.SYM_BLANK):
-    # 処理関数
-    curr_frame = currentframe.f_code.co_name
-    msg_div = curr_frame
-    if div:
-        msg_div += f":{div}"
-    print_info_msg(msg_div, msg_const.MSG_INFO_PROC_COMPLETED)
+    if sys_exit:
+        sys.exit()
 
 
 # ログ出力
@@ -357,7 +364,10 @@ def read_file(file_path: str, file_encode: str = const.CHARSET_UTF_8) -> str:
             data = f.read()
 
     except Exception as e:
-        print_error_msg(msg_const.MSG_ERR_FILE_NOT_EXIST, str(e))
+        curr_func_nm = sys._getframe().f_code.co_name
+        print_error_msg(
+            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_FILE_NOT_EXIST, str(e)
+        )
         data = const.NONE_CONSTANT
 
     return data
@@ -379,7 +389,8 @@ def write_file(file_path: str, data, file_encode: str = const.CHARSET_UTF_8):
             f.close()
 
     except Exception as e:
-        print_error_msg(file_path, str(e))
+        curr_func_nm = sys._getframe().f_code.co_name
+        print_error_msg(SCRIPT_NAME, curr_func_nm, file_path, str(e))
 
 
 # CSVファイルを読み込み
@@ -496,7 +507,10 @@ def get_df_from_file_path(div: str, file_div, file_type):
             else:
                 df = pd.read_csv(file_path)
     else:
-        print_error_msg(file_path, msg_const.MSG_ERR_FILE_NOT_EXIST)
+        curr_func_nm = sys._getframe().f_code.co_name
+        print_error_msg(
+            SCRIPT_NAME, curr_func_nm, file_path, msg_const.MSG_ERR_FILE_NOT_EXIST
+        )
 
     return df, file_path
 

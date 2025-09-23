@@ -9,6 +9,7 @@ import apps.utils.user_dto as dto
 app_title = "ユーザー情報"
 
 
+# [テスト] ユーザー情報取得
 def user_test():
     user_id = "dev@jh.com"
     user_info = dao.get_user_info(user_id)
@@ -18,6 +19,7 @@ def user_test():
     func.print_info_msg(dto.ITEM_SEQ, user_seq)
 
 
+# CSVデータ取得
 def get_csv_to_json():
     div = const.STR_ZIP_CODE
     # zip code csv

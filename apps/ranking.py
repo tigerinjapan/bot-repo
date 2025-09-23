@@ -5,9 +5,6 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 
-# アプリケーション名
-app_name = func.get_app_name(__file__)
-
 # タイトル
 app_title = news.DIV_WEEKLY_RANKING.format(const.SYM_BLANK)
 

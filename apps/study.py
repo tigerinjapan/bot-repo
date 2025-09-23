@@ -5,9 +5,6 @@ import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
 
-# アプリケーション名
-app_name = func.get_app_name(__file__)
-
 # タイトル
 app_title = const.STR_NEWS_JA + const.STR_KOREAN_JA
 
@@ -15,7 +12,7 @@ app_title = const.STR_NEWS_JA + const.STR_KOREAN_JA
 col_list = ["会話", const.STR_KOREAN_JA]
 
 # キーワードリスト
-LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
+LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, const.APP_STUDY)
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE

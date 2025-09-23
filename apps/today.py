@@ -7,9 +7,6 @@ import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
 
-# アプリケーション名
-app_name = func.get_app_name(__file__)
-
 # タイトル
 app_title = "今日の生活情報"
 
@@ -47,7 +44,7 @@ DIV_LIST = [
 def get_item_list():
     today_info_list = get_today_info()
     today_info = zip(DIV_LIST, today_info_list)
-    item_list = [[div, info] for div, info in today_info]
+    item_list = [[div, info] for div, info in today_info if info]
     return item_list
 
 
@@ -68,6 +65,9 @@ def get_today_info():
     # 為替+
     today_rate = ex.get_ex_info(const.STR_VND)
 
+    # MLB
+    mlb_game = mlb.get_mlb_game_data()
+
     # コーデ
     outfit_text = get_today_outfit()
 
@@ -76,9 +76,6 @@ def get_today_info():
 
     # コーデ・夕食
     outfit, menu = func_gemini.get_recommend_menu(outfit_text, menu_text)
-
-    # MLB
-    mlb_game = mlb.get_mlb_game_data()
 
     today_info_list = [
         date_time,

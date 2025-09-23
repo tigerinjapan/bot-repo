@@ -5,8 +5,7 @@ import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.function_beautiful_soup as func_bs
 
-# アプリケーション名
-app_name = func.get_app_name(__file__)
+from apps.utils.message_constants import MSG_ERR_DATA_NOT_EXIST
 
 # タイトル
 app_title = const.APP_MLB
@@ -88,7 +87,7 @@ def get_player_of_game_data(
     else:
         game_data, game_date, game_score, home_away_div = get_mlb_stat_of_api(team_id)
 
-        if not game_date:
+        if not game_data:
             return const.SYM_BLANK
 
         stat_data_list.append(game_date)
@@ -127,10 +126,10 @@ def get_mlb_stat_of_api(team_id: int):
     )
     team_schedule_data = func_api.get_response_result(team_schedule_url)
     if team_schedule_data:
-        games = team_schedule_data["dates"][0]["games"][0]
-        game_date = get_game_date(games["gameDate"])
-
-        if game_date:
+        team_schedule_dates = team_schedule_data["dates"]
+        if team_schedule_dates:
+            games = team_schedule_dates[0]["games"][0]
+            game_date = get_game_date(games["gameDate"])
             game_link = games["link"]
 
             home_team_data = games["teams"]["home"]
@@ -149,6 +148,9 @@ def get_mlb_stat_of_api(team_id: int):
             response_data = func_api.get_response_result(game_url)
             if response_data:
                 game_data = response_data
+
+    if not game_data:
+        func.print_info_msg(const.APP_MLB, MSG_ERR_DATA_NOT_EXIST)
 
     return game_data, game_date, game_score, home_away_div
 
@@ -200,24 +202,16 @@ def get_game_stats(player_data) -> list[str]:
 def get_game_date(game_date: str) -> str:
     jst_date = const.SYM_BLANK
 
-    # 3日前の日付取得
-    three_days_ago = func.get_calc_date(-3)
-
     # 日付型へ変換
     game_date = func.convert_str_to_date(game_date)
 
-    # タイムゾーンを削除して比較
+    # タイムゾーンを削除
     game_date_naive = game_date.replace(tzinfo=None)
 
     # 日本時間に計算
     calc_date = func.get_calc_date(9, const.DATE_HOUR, game_date_naive)
 
-    # 日本時間と3日以内の場合
-    if three_days_ago < calc_date:
-        jst_date = func.convert_date_to_str(
-            calc_date, const.DATE_FORMAT_MMDD_SLASH_NO_ZERO
-        )
-
+    jst_date = func.convert_date_to_str(calc_date, const.DATE_FORMAT_MMDD_SLASH_NO_ZERO)
     return jst_date
 
 

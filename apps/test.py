@@ -5,9 +5,6 @@ import asyncio
 import apps.utils.constants as const
 import apps.utils.function as func
 
-# アプリケーション名
-app_name = func.get_app_name(__file__)
-
 # タイトル
 app_title = "テスト"
 
@@ -30,7 +27,7 @@ def async_main():
 
 
 async def async_test():
-    func.print_info_msg(const.STR_TEST)
+    func.print_info_msg(const.STR_TEST, "非同期処理テスト")
 
 
 if __name__ == const.MAIN_FUNCTION:

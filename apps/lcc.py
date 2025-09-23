@@ -4,9 +4,6 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 
-# アプリケーション名
-app_name = func.get_app_name(__file__)
-
 # タイトル
 app_title = const.APP_LCC.upper() + const.STR_NEWS_JA
 
@@ -14,7 +11,7 @@ app_title = const.APP_LCC.upper() + const.STR_NEWS_JA
 col_list = [const.STR_DATE_JA, const.STR_COMPANY_JA, app_title]
 
 # キーワードリスト
-LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
+LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, const.APP_LCC)
 
 
 # アイテムリスト取得

@@ -14,8 +14,11 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
 
-# アプリケーション
-app_name = func.get_app_name(__file__)
+# スクリプト名
+SCRIPT_NAME = func.get_app_name(__file__)
+
+# アプリケーション名
+app_name = const.STR_GEMINI
 
 # GEMINI API情報
 GEMINI_API_KEY = func.get_env_val("GEMINI_API_KEY")
@@ -29,55 +32,78 @@ NEW_LINE = const.SYM_NEW_LINE
 NUM_WRAP_WIDTH = 32
 
 
+# クライアント取得
+def get_client():
+    try:
+        if not GEMINI_API_KEY:
+            raise Exception
+
+        client = genai.Client(api_key=GEMINI_API_KEY)
+        return client
+    except Exception as e:
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(
+            SCRIPT_NAME,
+            curr_func_nm,
+            msg_const.MSG_ERR_CONNECTION_FAILED,
+            str(e),
+            sys_exit=const.FLG_ON,
+        )
+
+
 # GEMINI回答取得
-def get_gemini_response(contents) -> list[str]:
+def get_gemini_response(
+    func_name: str, contents, model: str = GEMINI_MODEL, config=const.NONE_CONSTANT
+) -> list[str]:
+    curr_func_nm = sys._getframe().f_code.co_name
+
+    div_msg = f"[{app_name}] {func_name}"
+    func.print_start(div_msg)
+
     result = []
     exception_error = const.SYM_BLANK
 
     try:
-        result = get_generate_content(contents)
-    except:
-        try:
-            result = get_generate_content(contents)
-        except ConnectionError as ce:
-            exception_error = f"ConnectionError, {str(ce)}"
-        except ServerError as se:
-            exception_error = f"ServerError, {str(se)}"
-        except Exception as e:
-            exception_error = f"Exception, {str(e)}"
+        client = get_client()
+        response = client.models.generate_content(
+            model=model, contents=contents, config=config
+        )
 
-    if exception_error:
-        curr_def_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(curr_def_nm, msg_const.MSG_ERR_API_RESPONSE_NONE)
-        func.print_error_msg(exception_error)
-        result = [f"Geminiレスポンスエラー#{i+1}" for i in range(3)]
-    return result
-
-
-# 生成コンテンツ取得
-def get_generate_content(contents) -> list[str]:
-    result = []
-
-    if GEMINI_API_KEY:
-        client = genai.Client(api_key=GEMINI_API_KEY)
-        response = client.models.generate_content(model=GEMINI_MODEL, contents=contents)
         if response:
+            if model == GEMINI_MODEL_IMG:
+                func.print_end(div_msg)
+                return response
+
             response_text = str(response.text)
             split_str = const.SYM_NEW_LINE * 2
             if split_str not in response_text:
                 split_str = const.SYM_COMMA
             result = response_text.split(split_str)
-        else:
-            func.print_error_msg(msg_const.MSG_ERR_API_RESPONSE_NONE)
 
+    except ConnectionError as ce:
+        exception_error = ["ConnectionError", ce]
+    except ServerError as se:
+        exception_error = ["ServerError", se]
+    except Exception as e:
+        exception_error = ["Exception", e]
+
+    if exception_error:
+        func.print_error_msg(
+            SCRIPT_NAME, curr_func_nm, exception_error[0], exception_error[1]
+        )
+
+    if not result:
+        func.print_error_msg(
+            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_API_RESPONSE_NONE
+        )
+
+    func.print_end(div_msg)
     return result
 
 
 # 生成イメージ取得
-def get_generate_image(div: str, contents: str, msg_data) -> str:
+def get_generate_text_image(div: str, contents: str, msg_data) -> str:
     file_path = const.SYM_BLANK
-
-    client = genai.Client(api_key=GEMINI_API_KEY)
 
     # サンプル
     # contents = (
@@ -86,32 +112,18 @@ def get_generate_image(div: str, contents: str, msg_data) -> str:
     #     "futuristic city with lots of greenery?"
     # )
 
-    exception_error = const.SYM_BLANK
+    config = types.GenerateContentConfig(response_modalities=["Text", "Image"])
+    response = get_gemini_response(
+        "today_news_image", contents, GEMINI_MODEL_IMG, config
+    )
 
-    try:
-        response = client.models.generate_content(
-            model=GEMINI_MODEL_IMG,
-            contents=contents,
-            config=types.GenerateContentConfig(response_modalities=["Text", "Image"]),
-        )
-
-    except ConnectionError as ce:
-        exception_error = f"ConnectionError, {str(ce)}"
-    except ServerError as se:
-        exception_error = f"ServerError, {str(se)}"
-    except Exception as e:
-        exception_error = f"Exception, {str(e)}"
-
-    if exception_error:
-        curr_def_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(curr_def_nm, msg_const.MSG_ERR_API_RESPONSE_NONE)
-        func.print_error_msg(exception_error)
+    if not response:
         return file_path
 
     for part in response.candidates[0].content.parts:
-        if part.text is not None:
+        if part.text:
             continue
-        elif part.inline_data is not None:
+        elif part.inline_data:
             file_path = func.get_file_path(div, const.FILE_TYPE_JPEG, const.STR_OUTPUT)
             image_open = Image.open(BytesIO((part.inline_data.data)))
             if msg_data:
@@ -197,7 +209,7 @@ def get_today_news_image(
         "font_size": 30,
         "xy_size": (const.LINE_X_AXIS, const.LINE_Y_AXIS),
     }
-    file_path = get_generate_image(div, contents, msg_data)
+    file_path = get_generate_text_image(div, contents, msg_data)
     return file_path
 
 
@@ -217,7 +229,7 @@ def get_recommend_outfit_dinner(today_weather: str) -> list[str]:
     conditions = get_prompt_conditions(condition_list)
     reference = f"※出力例{NEW_LINE}" + "長袖&ダウン,キムパ&キャベツの味噌汁"
     contents += conditions + reference
-    recommend_outfit_dinner = get_gemini_response(contents)
+    recommend_outfit_dinner = get_gemini_response("outfit_dinner", contents)
     return recommend_outfit_dinner
 
 
@@ -236,7 +248,7 @@ def get_recommend_menu(outfit_text: str, menu_text: str) -> tuple[str, str]:
         "白いTシャツ&デニムジーンズ,チーズキムパ&味噌汁"
     )
 
-    response = get_gemini_response(contents)
+    response = get_gemini_response("recommend_menu", contents)
     outfit = response[0]
     dinner = response[1]
     return outfit, dinner
@@ -266,7 +278,7 @@ def get_news_summary(
     reference = get_news_reference(other_reference)
     contents += conditions + NEW_LINE + reference
 
-    news_summary = get_gemini_response(contents)
+    news_summary = get_gemini_response("news_summary", contents)
     return news_summary
 
 
@@ -375,26 +387,13 @@ def get_prompt_conditions(
     return prompt_conditions
 
 
-# テスト
-def test_gemini():
-    contents = "これからの未来について、100文字以内で説明お願いします。"
-    response = get_gemini_response(contents)
-    result = const.SYM_NEW_LINE.join(response)
-    func.print_test_data(result)
-
-
-# テストイメージ # [ERROR] 現在、無料版では実装不可
-def test_gemini_image():
-    # クライアントの初期化
-    client = genai.Client(api_key=GEMINI_API_KEY)
+# 生成イメージ取得  # [ERROR] 無料版で利用可能なモデルない
+def get_generate_image(model: str, prompt: str, config=const.NONE_CONSTANT):
+    client = get_client()
 
     # イメージ生成リクエストの送信
     try:
-        response = client.models.generate_images(
-            model="imagen-3.0-generate-002",  # 無料版で利用可能なモデル名を確認
-            prompt="A serene landscape with mountains and a clear blue lake",  # イメージの説明
-            # size="360x360",  # 対応する画像サイズを指定
-        )
+        response = client.models.generate_images(model, prompt)
 
         for generated_image in response.generated_images:
             image = Image.open(BytesIO(generated_image.image.image_bytes))
@@ -408,17 +407,17 @@ def test_gemini_image():
                 "Image generation failed or not available in the free version."
             )
     except Exception as e:
-        func.print_error_msg(e)
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, e)
 
 
-# 生成ビデオ取得 # [ERROR] 現在、無料版では実装不可
-def get_generate_video(div: str, prompt: str) -> str:
-    # クライアントの初期化
-    client = genai.Client(api_key=GEMINI_API_KEY)
+# 生成ビデオ取得  # [ERROR] 無料版で利用可能なモデルない
+def get_generate_video(div: str, model: str, prompt: str) -> str:
+    client = get_client()
 
     operation = client.models.generate_videos(
-        model="veo-3.0-generate-preview",
-        prompt=prompt,
+        model,
+        prompt,
     )
 
     # Poll the operation status until the video is ready.
@@ -435,33 +434,41 @@ def get_generate_video(div: str, prompt: str) -> str:
     print("Generated video saved to dialogue_example.mp4")
 
 
-# 生成ビデオ取得 # [ERROR] 現在、無料版では実装不可
-def get_generate_video2(prompt: str):
-    # クライアントの初期化
-    client = genai.Client(api_key=GEMINI_API_KEY)
-
-    response = client.models.generate_videos(
-        model="veo-3.0-generate-preview",
-        prompt=prompt,
-    )
-    return response
+# [テスト] 生成コンテンツ取得
+def test_gemini():
+    contents = "これからの未来について、100文字以内で説明お願いします。"
+    response = get_gemini_response(contents)
+    result = const.SYM_NEW_LINE.join(response)
+    func.print_test_data(const.STR_TEST, result)
 
 
-# 生成ビデオ取得 # [ERROR] 現在、無料版では実装不可
+# [テスト] 今日のニュースイメージ取得
+def test_today_img():
+    msg = "[test] test"
+    today_weather = "晴れのち曇り"
+    today_outfit = "白いブラウス&黄色いスカート"
+    get_today_news_image(msg, today_weather, today_outfit)
+
+
+#  [テスト] 生成イメージ取得 # [ERROR] 無料版で利用可能なモデルない
+def test_generate_image():
+    model = "imagen-3.0-generate-002"
+    prompt = "A serene landscape with mountains and a clear blue lake"
+    get_generate_image(model, prompt)
+
+
+# [テスト] 生成ビデオ取得 # [ERROR] 無料版で利用可能なモデルない
 def test_generate_video():
     div = "example"
+    model = "veo-3.0-generate-preview"
     prompt = """A close up of two people staring at a cryptic drawing on a wall, torchlight flickering.
     A man murmurs, 'This must be it. That's the secret code.' The woman looks at him and whispering excitedly, 'What did you find?'"""
 
-    get_generate_video(div, prompt)
-    # get_generate_video2(prompt)
+    get_generate_video(div, model, prompt)
 
 
 if __name__ == const.MAIN_FUNCTION:
-    test_gemini()
-    # test_gemini_image()
-    # msg = "[test] test"
-    # today_weather = "晴れのち曇り"
-    # today_outfit = "白いブラウス&黄色いスカート"
-    # get_today_news_image(msg, today_weather, today_outfit)
+    # test_gemini()
+    test_today_img()
+    # test_generate_image()
     # test_generate_video()

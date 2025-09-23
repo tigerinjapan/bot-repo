@@ -7,9 +7,6 @@ import apps.utils.board_dao as board_dao
 import apps.utils.constants as const
 import apps.utils.function as func
 
-# アプリケーション名
-app_name = func.get_app_name(__file__)
-
 # タイトル
 app_title = "お気に入りサイト"
 app_title_cafe = "おしゃれカフェ"

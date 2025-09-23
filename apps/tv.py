@@ -4,9 +4,6 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 
-# アプリケーション名
-app_name = func.get_app_name(__file__)
-
 # タイトル
 app_title = "TV番組"
 
@@ -21,8 +18,9 @@ col_list = sort_list + ["番組名"]
 duplicates_list = sort_list
 
 # キーワードリスト
-LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, app_name)
+LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, const.APP_TV)
 
+# 分割リスト
 LIST_SPLIT = ["\u3000", "▽", "★", "☆", "◆", "◇", "■", "□", "#", "？", "！"]
 
 # URL

@@ -1,11 +1,15 @@
 # 説明: API関数
 
 import requests
+import sys
 from PIL import Image, ImageDraw, ImageFont
 
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
+
+# スクリプト名
+SCRIPT_NAME = func.get_app_name(__file__)
 
 # URL
 URL_SERVER = func.get_server_url()
@@ -25,8 +29,9 @@ def get_response_result(
     header_json_flg: bool = const.FLG_ON,
 ):
     result = const.NONE_CONSTANT
+    curr_func_nm = sys._getframe().f_code.co_name
 
-    func.print_info_msg(url)
+    func.print_info_msg(const.STR_API, url)
 
     if header_json_flg:
         headers.update(const.HEADERS_JSON)
@@ -39,7 +44,8 @@ def get_response_result(
             response = requests.post(url, headers=headers, data=data)
 
     except requests.exceptions.ConnectionError as ce:
-        func.print_error_msg(url, msg_const.MSG_ERR_API_REQUEST_CONNECT)
+
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, url, ce)
         return result
 
     res_status = response.status_code
@@ -48,9 +54,11 @@ def get_response_result(
         result = func.get_loads_json(res_text)
 
     else:
-        func.print_error_msg(res_status, res_text)
+        err_msg = f"{res_status} {res_text}"
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg)
         if not response:
-            func.print_error_msg(const.STR_API, msg_const.MSG_ERR_API_RESPONSE_NONE)
+            err_msg = f"{url} {msg_const.MSG_ERR_API_RESPONSE_NONE}"
+            func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg)
 
     return result
 

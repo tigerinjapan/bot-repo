@@ -1,5 +1,7 @@
 # 説明: LINEメッセージ
 
+import sys
+
 import apps.lcc as lcc
 import apps.news as news
 import apps.study as study
@@ -12,8 +14,8 @@ import apps.utils.function_api as func_api
 import apps.utils.function_gemini as func_gemini
 import apps.utils.function_line as func_line
 
-# アプリケーション
-app_name = func.get_app_name(__file__)
+# スクリプト名
+SCRIPT_NAME = func.get_app_name(__file__)
 
 # ローカル環境の判定
 is_local = func.is_local_env()
@@ -52,7 +54,7 @@ def main(
         auto_flg (bool): 自動処理を有効にするフラグ
     """
 
-    func.print_start(app_name)
+    func.print_start(SCRIPT_NAME)
 
     if func_line.LINE_CHANNEL_ID:
         # チャネル・アクセストークン取得
@@ -83,14 +85,15 @@ def main(
                 func_line.send_message(token, messages)
 
             except Exception as e:
+                curr_func_nm = sys._getframe().f_code.co_name
                 err_msg = msg_const.MSG_INFO_SERVER_KEEP_WORKING
-                func.print_error_msg(err_msg, e)
+                func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg, e)
 
                 if not is_local:
                     msg = f"[{err_msg}]\n{e[:100]}"
                     func_line.send_text_msg(msg)
 
-    func.print_end(app_name)
+    func.print_end(SCRIPT_NAME)
 
 
 # メッセージリスト取得
@@ -209,6 +212,7 @@ def get_msg_data_list(
     forecast: str = const.SYM_BLANK,
     today_outfit: str = const.SYM_BLANK,
 ) -> list[str]:
+
     text_title = get_title(msg_div, msg_type, date_today)
     text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 

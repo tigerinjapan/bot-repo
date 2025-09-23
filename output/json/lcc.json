@@ -1,6 +1,11 @@
 [
     {
         "日付": "2025年9月22日",
+        "会社": "<a href=\"https://www.flypeach.com/um/specials/campaign/earlybird\" target=\"_blank\" rel=\"noopener noreferrer\">ピーチ</a>",
+        "LCCニュース": "「おトクを先取り！なかよし割キャンペーン」\n国内線・国際線対象"
+    },
+    {
+        "日付": "2025年9月22日",
         "会社": "<a href=\"https://www.jinair.com/promotion/eventView?evntSeq=14565\" target=\"_blank\" rel=\"noopener noreferrer\">ジンエアー</a>",
         "LCCニュース": "「北九州線限定 スペシャルセール」\n開催中！北九州－ソウル線 最大5,000円割引"
     },
@@ -18,10 +23,5 @@
         "日付": "2025年9月9日",
         "会社": "<a href=\"https://www.jetstar.com/jp/ja/deals\" target=\"_blank\" rel=\"noopener noreferrer\">ジェットスター・ジャパン</a>",
         "LCCニュース": "「スーパースターセール」\n9月11日12時から開催！国内線 片道3,790円から"
-    },
-    {
-        "日付": "2025年9月9日",
-        "会社": "<a href=\"https://www.flyscoot.com/jp/promotions/network-sale\" target=\"_blank\" rel=\"noopener noreferrer\">スクート</a>",
-        "LCCニュース": "「EVERYWHEREセール」\n開催中！台北/シンガポール方面 片道13,000円から"
     }
 ]

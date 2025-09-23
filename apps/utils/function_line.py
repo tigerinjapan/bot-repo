@@ -1,11 +1,13 @@
 # 説明: LINEメッセージAPI
 
+import sys
+
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
 
-# アプリケーション
-app_name = func.get_app_name(__file__)
+# スクリプト名
+SCRIPT_NAME = func.get_app_name(__file__)
 
 # URL
 URL_LINE_API = "https://api.line.me"
@@ -109,7 +111,8 @@ def send_message(access_token: str, messages):
     )
 
     if result:
-        func.print_error_msg(STR_LINE_API, result["details"])
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, STR_LINE_API, result["details"])
 
 
 # LINE送信用のJSONデータ取得

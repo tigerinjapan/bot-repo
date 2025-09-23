@@ -1,10 +1,15 @@
 # 説明: mongoDB操作
 
+import sys
+
 from pymongo import MongoClient
 
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
+
+# スクリプト名
+SCRIPT_NAME = func.get_app_name(__file__)
 
 # アプリケーション
 app_name = const.STR_MONGO
@@ -21,8 +26,14 @@ def db_connect():
         client = MongoClient(client_url)
         return client
     except Exception as e:
-        func.print_error_msg(app_name, msg_const.MSG_ERR_CONNECTION_FAILED)
-        func.print_msg_exit(app_name, str(e))
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(
+            SCRIPT_NAME,
+            curr_func_nm,
+            msg_const.MSG_ERR_CONNECTION_FAILED,
+            str(e),
+            sys_exit=const.FLG_ON,
+        )
 
 
 # 接続情報取得

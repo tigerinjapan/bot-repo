@@ -45,12 +45,11 @@ def get_ranking_info(number: int):
     rank_user = DEFAULT_RANK_USER
     rank_time = DEFAULT_RANK_TIME
 
-    if func.is_network():
-        ranking_info = dao.get_rank_info(number)
-        if ranking_info:
-            rank_user = ranking_info[dto.FI_USER_NAME]
-            rank_time = ranking_info[dto.FI_RANK_TIME]
-            rank_time = float(rank_time)
+    ranking_info = dao.get_rank_info(number)
+    if ranking_info:
+        rank_user = ranking_info[dto.FI_USER_NAME]
+        rank_time = ranking_info[dto.FI_RANK_TIME]
+        rank_time = float(rank_time)
 
     return rank_user, rank_time
 
