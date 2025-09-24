@@ -159,10 +159,13 @@ def get_template_msg():
     template_text = today.get_today_phrase()
     actions = get_template_actions()
 
+    file_path = func_gemini.get_gemini_image()
+    if file_path:
+        func.print_info_msg(MSG_TYPE_IMG, func_line.URL_GEMINI_IMG)
+
     template_msg = func_line.get_template_msg_json(
         alt_text, template_title, template_text, actions
     )
-
     messages.append(template_msg)
     return messages
 

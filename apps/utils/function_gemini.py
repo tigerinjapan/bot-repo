@@ -102,20 +102,23 @@ def get_gemini_response(
 
 
 # 生成イメージ取得
-def get_generate_text_image(div: str, contents: str, msg_data) -> str:
+def get_gemini_image(
+    div: str = const.STR_GEMINI, contents: str = const.SYM_BLANK
+) -> str:
+    if not contents:
+        contents = get_sample_contents()
+    file_path = get_generate_text_image(div, contents)
+    return file_path
+
+
+# 生成イメージ取得
+def get_generate_text_image(
+    div: str, contents: str, model: str = GEMINI_MODEL_IMG, msg_data=const.NONE_CONSTANT
+) -> str:
     file_path = const.SYM_BLANK
 
-    # サンプル
-    # contents = (
-    #     "Hi, can you create a 3d rendered image of a pig "
-    #     "with wings and a top hat flying over a happy "
-    #     "futuristic city with lots of greenery?"
-    # )
-
-    config = types.GenerateContentConfig(response_modalities=["Text", "Image"])
-    response = get_gemini_response(
-        "today_news_image", contents, GEMINI_MODEL_IMG, config
-    )
+    config = types.GenerateContentConfig(response_modalities=["TEXT", "IMAGE"])
+    response = get_gemini_response("today_news_image", contents, model, config)
 
     if not response:
         return file_path
@@ -159,7 +162,11 @@ def get_generate_text_image(div: str, contents: str, msg_data) -> str:
             size = (const.LINE_IMG_SIZE_W, const.LINE_IMG_SIZE_H)
             img = image_open.resize(size)
             img.save(file_path, optimize=const.FLG_ON)
+            image_open.close()
             break
+
+    if not file_path:
+        func.print_info_msg(model, msg_const.MSG_ERR_API_RESPONSE_NONE)
 
     return file_path
 
@@ -209,7 +216,7 @@ def get_today_news_image(
         "font_size": 30,
         "xy_size": (const.LINE_X_AXIS, const.LINE_Y_AXIS),
     }
-    file_path = get_generate_text_image(div, contents, msg_data)
+    file_path = get_generate_text_image(div, contents, msg_data=msg_data)
     return file_path
 
 
@@ -387,13 +394,34 @@ def get_prompt_conditions(
     return prompt_conditions
 
 
+# サンプルコンテンツ取得
+def get_sample_contents(div: str = const.STR_GEMINI) -> str:
+    if div == const.INPUT_TYPE_TEXT:
+        contents = "これからの未来について、100文字以内で説明お願いします。"
+        # contents = (
+        #     "Hi, can you create a 3d rendered image of a pig "
+        #     "with wings and a top hat flying over a happy "
+        #     "futuristic city with lots of greenery?"
+        # )
+
+    else:
+        contents = (
+            "心が癒されるイメージを生成お願いします。"
+            "以下の中でどちらと関連があるようにお願いします。"
+            "[豊かな自然 or 可愛い赤ちゃん or 可愛い動物]"
+            "文字列は、一切表示しないでください。"
+        )
+
+    return contents
+
+
 # 生成イメージ取得  # [ERROR] 無料版で利用可能なモデルない
 def get_generate_image(model: str, prompt: str, config=const.NONE_CONSTANT):
     client = get_client()
 
     # イメージ生成リクエストの送信
     try:
-        response = client.models.generate_images(model, prompt)
+        response = client.models.generate_images(model=model, prompt=prompt)
 
         for generated_image in response.generated_images:
             image = Image.open(BytesIO(generated_image.image.image_bytes))
@@ -436,10 +464,17 @@ def get_generate_video(div: str, model: str, prompt: str) -> str:
 
 # [テスト] 生成コンテンツ取得
 def test_gemini():
-    contents = "これからの未来について、100文字以内で説明お願いします。"
-    response = get_gemini_response(contents)
+    div = const.STR_TEST
+    contents = get_sample_contents(div)
+    response = get_gemini_response(div, contents)
     result = const.SYM_NEW_LINE.join(response)
-    func.print_test_data(const.STR_TEST, result)
+    func.print_test_data(div, result)
+
+
+# [テスト] 生成イメージ取得
+def test_gemini_img():
+    contents = get_sample_contents()
+    get_gemini_image(contents=contents)
 
 
 # [テスト] 今日のニュースイメージ取得
@@ -469,6 +504,7 @@ def test_generate_video():
 
 if __name__ == const.MAIN_FUNCTION:
     # test_gemini()
-    test_today_img()
+    test_gemini_img()
+    # test_today_img()
     # test_generate_image()
     # test_generate_video()
