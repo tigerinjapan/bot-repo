@@ -203,14 +203,15 @@ def get_game_stats(player_data, all_flg: bool = const.FLG_OFF) -> list[str]:
         else:
             batting_data = batting_data.split(" | ")
             hit = batting_data[0].split(const.SYM_DASH)[0]
-            batting_stat = f"{hit}H"
+            batting_stat = f"{hit} H"
 
-            home_run = batting_data[1].split(const.SYM_COMMA)[0]
-            if home_run and "HR" in home_run:
-                home_run_stat = home_run
-                if home_run == "HR":
-                    home_run_stat = f"1{home_run}"
-                batting_stat += f" ({home_run_stat})"
+            if const.NUM_ZERO < int(hit):
+                home_run = batting_data[1].split(const.SYM_COMMA)[0]
+                if home_run and "HR" in home_run:
+                    home_run_stat = home_run[0]
+                    if home_run == "HR":
+                        home_run_stat = str(const.NUM_ONE)
+                    batting_stat += f" ({home_run_stat} HR)"
 
         game_stats.append(batting_stat)
 
