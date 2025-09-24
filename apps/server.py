@@ -253,7 +253,7 @@ async def board_add(request: Request):
 
         if not func.is_local_env():
             msg = json_data
-            func_line.send_text_msg(msg)
+            func_line.send_msg_for_admin(msg)
 
     except Exception as e:
         curr_func_nm = sys._getframe().f_code.co_name

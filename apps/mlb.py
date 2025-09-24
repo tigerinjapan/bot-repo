@@ -15,7 +15,10 @@ TEAM_ID_LAD = 119
 PLAYER_ID_OHTANI = 660271
 PLAYER_ID_YAMAMOTO = 808967
 PLAYER_ID_KIM = 808975
-LIST_PLAYER_ID = [PLAYER_ID_OHTANI, PLAYER_ID_YAMAMOTO, PLAYER_ID_KIM]
+
+LIST_TEAM_ID = [TEAM_ID_LAD]
+LIST_PLAYER_ID_LAD = [PLAYER_ID_OHTANI, PLAYER_ID_YAMAMOTO, PLAYER_ID_KIM]
+LIST_PLAYER_ID = [LIST_PLAYER_ID_LAD]
 
 
 # アイテムリスト取得
@@ -28,14 +31,14 @@ def get_item_list():
 # MLB Stat取得
 def get_mlb_game_data(
     team_id: int = TEAM_ID_LAD,
-    player_id_list: list[int] = LIST_PLAYER_ID,
-    pog_flg: bool = const.FLG_OFF,
+    all_flg: bool = const.FLG_OFF,
 ) -> list[str]:
     stat_data_list = []
 
     game_data, game_date, game_score, home_away_div = get_mlb_stat_of_api(team_id)
     if game_data:
-        stat_data_list.append(game_date)
+        if not all_flg:
+            stat_data_list.append(game_date)
 
         box_score_data = game_data["liveData"]["boxscore"]
         teams_data = box_score_data["teams"]
@@ -44,10 +47,17 @@ def get_mlb_game_data(
         stat_data_list.append(home_away)
 
         stat_data_list.append(game_score)
+        stat_data_list.append(const.SYM_NEW_LINE)
 
         my_team_data = teams_data[home_away_div]
         batters = my_team_data["batters"]
         pitchers = my_team_data["pitchers"]
+
+        idx = LIST_TEAM_ID.index(team_id)
+        player_id_list = LIST_PLAYER_ID[idx]
+
+        if not all_flg:
+            player_id_list = player_id_list[:1]
 
         add_cnt = 0
         for player_id in player_id_list:
@@ -64,11 +74,11 @@ def get_mlb_game_data(
 
                 player_data = my_team_data["players"][f"ID{player_id}"]["stats"]
                 if player_data:
-                    game_stat = get_game_stats(player_data)
+                    game_stat = get_game_stats(player_data, all_flg)
                     stat_data_list.extend(game_stat)
                     add_cnt += 1
 
-        if pog_flg:
+        if all_flg:
             player_of_game_data = get_player_of_game_data(team_id, game_data)
             stat_data_list.append(player_of_game_data)
 
@@ -103,13 +113,16 @@ def get_player_of_game_data(
         person_data = top_performer_data["person"]
 
         player_id = person_data["id"]
-        if player_id in LIST_PLAYER_ID:
+
+        idx = LIST_TEAM_ID.index(team_id)
+        player_id_list = LIST_PLAYER_ID[idx]
+        if player_id in player_id_list:
             return const.SYM_BLANK
 
         player_name = person_data["boxscoreName"]
         stat_data_list.append(player_name)
 
-        player_of_game_data = get_game_stats(top_performer_data["stats"])
+        player_of_game_data = get_game_stats(top_performer_data["stats"], const.FLG_ON)
         stat_data_list.extend(player_of_game_data)
 
     stat_data = const.SYM_SPACE.join(stat_data_list)
@@ -131,9 +144,7 @@ def get_mlb_stat_of_api(team_id: int):
             games = team_schedule_dates[0]["games"][0]
 
             status = games["status"]["detailedState"]
-            if status == "Pre-Game":
-                func.print_info_msg(const.APP_MLB, "試合開始前。")
-            else:
+            if status == "Final":
                 game_date = get_game_date(games["gameDate"])
                 game_link = games["link"]
 
@@ -154,6 +165,10 @@ def get_mlb_stat_of_api(team_id: int):
                 if response_data:
                     game_data = response_data
 
+            else:
+                info_msg = f"{team_id} {status}"
+                func.print_info_msg(const.APP_MLB, info_msg)
+
     if not game_data:
         func.print_info_msg(const.APP_MLB, MSG_ERR_DATA_NOT_EXIST)
 
@@ -170,7 +185,7 @@ def get_home_away(game_data) -> str:
 
 
 # ゲームスタッツ取得
-def get_game_stats(player_data) -> list[str]:
+def get_game_stats(player_data, all_flg: bool = const.FLG_OFF) -> list[str]:
     game_stats = []
     batting_data = pitching_data = {}
 
@@ -182,22 +197,33 @@ def get_game_stats(player_data) -> list[str]:
         pitching_data = stats_pitching["summary"]
 
     if batting_data:
-        batting_data = batting_data.split(" | ")
-        hit = batting_data[0].split(const.SYM_DASH)[0]
-        batting_stat = f"{hit}H"
+        if all_flg:
+            batting_stat = batting_data
 
-        home_run = batting_data[1].split(const.SYM_COMMA)[0]
-        if home_run and "HR" in home_run:
-            home_run_stat = home_run
-            if home_run == "HR":
-                home_run_stat = f"1{home_run}"
-            batting_stat += f" ({home_run_stat})"
+        else:
+            batting_data = batting_data.split(" | ")
+            hit = batting_data[0].split(const.SYM_DASH)[0]
+            batting_stat = f"{hit}H"
+
+            home_run = batting_data[1].split(const.SYM_COMMA)[0]
+            if home_run and "HR" in home_run:
+                home_run_stat = home_run
+                if home_run == "HR":
+                    home_run_stat = f"1{home_run}"
+                batting_stat += f" ({home_run_stat})"
 
         game_stats.append(batting_stat)
 
     if pitching_data:
-        pitching_stat = pitching_data.split(const.SYM_COMMA)[:2]
-        pitching_stat = const.SYM_BLANK.join(pitching_stat)
+        if all_flg:
+            if batting_data:
+                game_stats.append(const.SYM_NEW_LINE + const.SYM_TAB)
+            pitching_stat = pitching_data
+
+        else:
+            pitching_stat = pitching_data.split(const.SYM_COMMA)[:2]
+            pitching_stat = const.SYM_BLANK.join(pitching_stat)
+
         game_stats.append(pitching_stat)
 
     return game_stats

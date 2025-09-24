@@ -61,7 +61,7 @@ def job_scheduler():
 # 週次ジョブ
 def weekly_job():
     if func.get_now(const.DATE_WEEKDAY) == 0:
-        line.main(data_div=const.NUM_THREE)
+        line.sub(div=const.STR_NISA)
 
 
 # 日次ジョブ
@@ -72,6 +72,7 @@ def daily_job():
 # 日次ジョブ
 def daily_job_2():
     line.main(data_div=const.NUM_TWO)
+    line.sub(div=const.APP_MLB)
 
 
 # 時次ジョブ

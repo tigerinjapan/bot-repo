@@ -3,6 +3,7 @@
 import sys
 
 import apps.lcc as lcc
+import apps.mlb as mlb
 import apps.news as news
 import apps.study as study
 import apps.today as today
@@ -29,7 +30,7 @@ FILE_DIV_AI_NEWS = "ai_news"
 
 # タイトル
 DIV_MARK = "*----*----*----*----*----*"
-DIV_MARK_TXT = "*-- {} --*"
+DIV_MARK_TXT = "*--- {}  ---*"
 # DIV_MARK_IMG = "=== {} ==="
 DIV_MARK_IMG = "■ {} ■"
 
@@ -87,9 +88,29 @@ def main(
 
                 if not func.is_local_env():
                     msg = f"[{err_msg}]\n{e[:100]}"
-                    func_line.send_text_msg(msg)
+                    func_line.send_msg_for_admin(msg)
 
     func.print_end(SCRIPT_NAME)
+
+
+# メッセージ送信
+def sub(div: str):
+    msg_data = const.NONE_CONSTANT
+    if div == const.APP_MLB:
+        date_today = func.convert_date_to_str(
+            func.get_now(), const.DATE_FORMAT_YYYYMMDD_SLASH
+        )
+        msg_data = mlb.get_mlb_game_data(all_flg=const.FLG_ON)
+        msg_data_list = get_msg_data_list(div, MSG_TYPE_TXT, [msg_data], date_today)
+        msg_list = func_line.get_line_messages([msg_data_list])
+
+    elif div == const.STR_NISA:
+        # フレックスメッセージ取得
+        msg_data = get_flex_msg()
+        msg_list = msg_data
+
+    if msg_data:
+        func_line.send_msg_for_admin(msg_list)
 
 
 # メッセージリスト取得
@@ -98,10 +119,10 @@ def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
         msg_data_list, date_today = get_msg_data_today()
         if WEEKLY_DIV_FRI in date_today:
             ai_news_msg = news.get_news_msg_list(news.DIV_AI_NEWS_LIST)
-            msg_data_list = get_msg_data_list(
+            msg_data = get_msg_data_list(
                 FILE_DIV_AI_NEWS, MSG_TYPE_TXT, ai_news_msg, date_today
             )
-            msg_list.append(msg_data_list)
+            msg_data_list.append(msg_data)
 
     else:
         msg_div = const.STR_NOTIFY
@@ -262,3 +283,4 @@ if __name__ == const.MAIN_FUNCTION:
     # main(data_div=const.NUM_TWO)
     # main(data_div=const.NUM_THREE)
     # main(auto_flg=const.FLG_OFF)
+    # sub(const.APP_MLB)
