@@ -17,9 +17,6 @@ import apps.utils.function_line as func_line
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
 
-# ローカル環境の判定
-is_local = func.is_local_env()
-
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
 
@@ -58,8 +55,7 @@ def main(
 
     if func_line.LINE_CHANNEL_ID:
         # チャネル・アクセストークン取得
-        admin_flg = const.FLG_ON if is_local else const.FLG_OFF
-        token = func_line.get_channel_access_token(admin_flg)
+        token = func_line.get_channel_access_token()
 
         if token:
             try:
@@ -89,7 +85,7 @@ def main(
                 err_msg = msg_const.MSG_INFO_SERVER_KEEP_WORKING
                 func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg, e)
 
-                if not is_local:
+                if not func.is_local_env():
                     msg = f"[{err_msg}]\n{e[:100]}"
                     func_line.send_text_msg(msg)
 
@@ -181,7 +177,7 @@ def get_flex_msg():
 
 # フレックスメッセージ・データ取得
 def get_flex_data_list():
-    header_list = ["Sell", "Buy#1", "Buy#2"]
+    header_list = ["Check#1", "Check#2", "Check#3"]
     fund_goal_list = [30000, 50000, 50000]
 
     rate_list = []

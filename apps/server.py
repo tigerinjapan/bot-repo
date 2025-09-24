@@ -39,9 +39,6 @@ SCRIPT_NAME = func.get_app_name(__file__)
 # トークン有効期限（分）
 TOKEN_EXPIRATION_MINUTES = 10
 
-# ローカル環境の判定
-is_local = func.is_local_env()
-
 
 # サーバー起動
 def run_server():
@@ -254,7 +251,7 @@ async def board_add(request: Request):
         board_dao.insert_board_data_of_api(json_data)
         message = msg_const.MSG_INFO_PROC_COMPLETED
 
-        if not is_local:
+        if not func.is_local_env():
             msg = json_data
             func_line.send_text_msg(msg)
 

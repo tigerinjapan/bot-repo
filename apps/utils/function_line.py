@@ -36,13 +36,13 @@ MSG_TYPE_BUBBLE = "bubble"
 
 
 # チャネル・アクセストークン取得
-def get_channel_access_token(admin_flg: bool = const.FLG_OFF) -> str:
+def get_channel_access_token() -> str:
     url = f"{URL_LINE_API}/oauth2/v3/token"
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
     client_id = LINE_CHANNEL_ID
     client_secret = LINE_CHANNEL_SECRET
-    if admin_flg:
+    if func.is_local_env():
         client_id = LINE_CHANNEL_ID_2
         client_secret = LINE_CHANNEL_SECRET_2
 
@@ -137,8 +137,8 @@ def get_line_messages(msg_list: list[list[str]]):
 
 
 # メッセージ送信
-def send_text_msg(msg_json, admin_flg: bool = const.FLG_ON):
-    token = get_channel_access_token(admin_flg)
+def send_text_msg(msg_json):
+    token = get_channel_access_token()
     send_message(token, msg_json)
 
 
@@ -154,7 +154,7 @@ def get_template_msg_json(
         "altText": alt_text,
         "template": {
             "type": "buttons",
-            # "thumbnailImageUrl": img_url,
+            "thumbnailImageUrl": img_url,
             "imageAspectRatio": "rectangle",
             "imageSize": "cover",
             "imageBackgroundColor": "#FFFFFF",

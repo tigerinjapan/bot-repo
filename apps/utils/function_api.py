@@ -15,7 +15,7 @@ SCRIPT_NAME = func.get_app_name(__file__)
 URL_SERVER = func.get_server_url()
 
 # プロパティ
-IMG_NO = func.get_env_val("LINE_IMG_DIV", int_flg=const.FLG_ON)
+IMG_NO = func.get_env_val("LINE_IMG_DIV", masking_flg=const.FLG_OFF)
 NUM_IMG_MAX_SEQ = 4
 FONT_TYPE_UZURA = "uzura"
 

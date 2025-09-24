@@ -13,13 +13,11 @@ import apps.utils.function as func
 dotenv.load_dotenv()
 
 # ジョブ実行時間を環境変数から取得
-HOUR_DAILY_JOB = func.get_env_val("NUM_HOUR_DAILY_JOB", int_flg=const.FLG_ON)
-HOUR_DAILY_JOB_2 = func.get_env_val("NUM_HOUR_DAILY_JOB_2", int_flg=const.FLG_ON)
-MIN_HOURLY_JOB = func.get_env_val("NUM_MIN_HOURLY_JOB", int_flg=const.FLG_ON)
-SEC_NO_SLEEP = func.get_env_val("NUM_SEC_NO_SLEEP", int_flg=const.FLG_ON)
-
-# ローカル環境の判定
-is_local = func.is_local_env()
+TIME_WEEKLY_JOB = func.get_env_val("TIME_WEEKLY_JOB", masking_flg=const.FLG_OFF)
+TIME_DAILY_JOB = func.get_env_val("TIME_DAILY_JOB", masking_flg=const.FLG_OFF)
+TIME_DAILY_JOB_2 = func.get_env_val("TIME_DAILY_JOB_2", masking_flg=const.FLG_OFF)
+MIN_HOURLY_JOB = func.get_env_val("MIN_HOURLY_JOB", masking_flg=const.FLG_OFF)
+SEC_NO_SLEEP = func.get_env_val("SEC_NO_SLEEP", masking_flg=const.FLG_OFF)
 
 
 def main():
@@ -27,19 +25,20 @@ def main():
     server.start_thread()
 
     # ジョブ実行
-    job_scheduler()
+    if not func.is_local_env():
+        job_scheduler()
 
 
 def job_scheduler():
-    # 毎日指定された時間に実行
-    time_daily_job = f"{HOUR_DAILY_JOB:02d}:00"
-    time_daily_job_2 = f"{HOUR_DAILY_JOB_2:02d}:00"
+    # 毎週指定された時間に実行（例：09:00）
+    schedule.every().monday.at(TIME_WEEKLY_JOB).do(weekly_job)
 
-    schedule.every().day.at(time_daily_job).do(daily_job)
-    schedule.every().day.at(time_daily_job_2).do(daily_job_2)
+    # 毎日指定された時間に実行（例：07:00）
+    schedule.every().day.at(TIME_DAILY_JOB).do(daily_job)
+    schedule.every().day.at(TIME_DAILY_JOB_2).do(daily_job_2)
 
-    # 1時間毎に実行
-    schedule.every().hour.at(f":{MIN_HOURLY_JOB:02d}").do(hourly_job)
+    # 1時間毎に実行（例：:30）
+    schedule.every().hour.at(MIN_HOURLY_JOB).do(hourly_job)
 
     pending_cnt = 0
 
@@ -54,30 +53,30 @@ def job_scheduler():
         pending_cnt += 1
 
         # スリープ状態にならないよう、ジョブ実行後、10分毎に、サーバーアクセス
-        if pending_cnt % SEC_NO_SLEEP == 0:
+        if pending_cnt % int(SEC_NO_SLEEP) == 0:
             every_min_job()
             pending_cnt = 0
 
 
+# 週次ジョブ
+def weekly_job():
+    if func.get_now(const.DATE_WEEKDAY) == 0:
+        line.main(data_div=const.NUM_THREE)
+
+
 # 日次ジョブ
 def daily_job():
-    if not is_local:
-        line.main(proc_flg=const.FLG_OFF)
+    line.main(proc_flg=const.FLG_OFF)
 
 
 # 日次ジョブ
 def daily_job_2():
-    if not is_local:
-        line.main(data_div=const.NUM_TWO)
+    line.main(data_div=const.NUM_TWO)
 
 
 # 時次ジョブ
 def hourly_job():
-    app_name = const.SYM_BLANK
-    if is_local:
-        app_name = const.APP_TODAY
-    appl.update_news(app_name)
-
+    appl.update_news()
     line.get_msg_data_today()
 
 

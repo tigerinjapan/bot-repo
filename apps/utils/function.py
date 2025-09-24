@@ -85,7 +85,7 @@ def check_path_exists(file_path: str) -> bool:
 
 
 # 環境変数取得
-def get_env_val(var_name: str, int_flg: bool = const.FLG_OFF) -> str:
+def get_env_val(var_name: str, masking_flg: bool = const.FLG_ON) -> str:
     env_val = os.environ.get(var_name)
     if not env_val:
         env_val = const.SYM_BLANK
@@ -95,13 +95,15 @@ def get_env_val(var_name: str, int_flg: bool = const.FLG_OFF) -> str:
         else:
             curr_func_nm = sys._getframe().f_code.co_name
             print_error_msg(
-                SCRIPT_NAME, curr_func_nm, var_name, msg_const.MSG_ERR_ENV_VAR_NOT_EXIST
+                SCRIPT_NAME,
+                curr_func_nm,
+                var_name,
+                msg_const.MSG_ERR_ENV_VAR_NOT_EXIST,
+                sys_exit=const.FLG_ON,
             )
 
     if env_val:
-        if int_flg:
-            env_val = int(env_val)
-        else:
+        if masking_flg:
             env_val = get_decoding_masking_data(env_val)
 
     return env_val
