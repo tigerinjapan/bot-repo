@@ -306,14 +306,14 @@ async def temp(file_name: str):
 async def file_response(request: Request, div: str, file_name: str):
     except_flg = const.FLG_OFF
 
-    file_div = const.STR_INPUT
-    if const.APP_TODAY in file_name or div == const.STR_LOG:
-        file_div = const.STR_OUTPUT
+    file_div = const.STR_OUTPUT
+    if (
+        div == const.STR_IMG and ("0" in file_name or "1" in file_name)
+    ) or div == const.STR_FONT:
+        file_div = const.STR_INPUT
 
     file_type = const.FILE_TYPE_JPEG
-    if div not in [const.STR_IMG, const.STR_FONT, const.STR_LOG]:
-        except_flg = const.FLG_ON
-    else:
+    if div in [const.STR_IMG, const.STR_FONT, const.STR_LOG]:
         if div == const.STR_FONT:
             file_type = const.FILE_TYPE_TTC
         elif div == const.STR_LOG:
@@ -322,6 +322,8 @@ async def file_response(request: Request, div: str, file_name: str):
         file_name_list = func.get_file_name_list(file_type, file_div)
         if file_name not in file_name_list:
             except_flg = const.FLG_ON
+    else:
+        except_flg = const.FLG_ON
 
     if not except_flg:
         file_path = func.get_file_path(file_name, file_type, file_div)

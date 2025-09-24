@@ -117,8 +117,12 @@ def get_generate_text_image(
 ) -> str:
     file_path = const.SYM_BLANK
 
-    config = types.GenerateContentConfig(response_modalities=["TEXT", "IMAGE"])
-    response = get_gemini_response("today_news_image", contents, model, config)
+    try:
+        config = types.GenerateContentConfig(response_modalities=["TEXT", "IMAGE"])
+        response = get_gemini_response("today_news_image", contents, model, config)
+    except Exception as e:
+        func.print_error_msg(SCRIPT_NAME, model, div, e)
+        response = const.NONE_CONSTANT
 
     if not response:
         return file_path
@@ -135,10 +139,10 @@ def get_generate_text_image(
                 font_size = msg_data["font_size"]
                 xy_size = msg_data["xy_size"]
 
-                draw = ImageDraw.Draw(image_open)
-
                 font_path = func.get_file_path(font_type, const.FILE_TYPE_TTC)
                 font = ImageFont.truetype(font=font_path, size=font_size)
+
+                draw = ImageDraw.Draw(image_open)
 
                 # 【レビュー対応#11】文字の外枠を、whiteになる #
                 # 外枠の色と文字の色
@@ -181,30 +185,31 @@ def get_today_news_image(
     if today_outfit:
         if img_div == const.STR_WOMAN_JA:
             img_woman = (
-                f"{img_div}は、45才の日本人。身長は155cm、体重は45kg。小柄、童顔、笑顔、可愛い、愛嬌溢れる、優しい人。"
-                f"{img_div}の身体のボリューム感を強調する大胆なファッションにする。"
+                f"{img_div}は、45才の日本人。身長は155cm、体重は50kg。"
+                "小柄、童顔、笑顔、可愛い、愛嬌溢れる、優しい人。"
                 f"{img_div}のメークアップは、自然なナチュラルタイプ。"
+                f"{img_div}の身体のボリューム感を強調する大胆なファッションにする。"
             )
 
         contents_outfit = (
             f"天気キャスターの{img_div}が一人いる。"
+            f"{img_woman}"
+            f"{img_div}は、全体イメージの、右寄りに配置する。"
+            f"{img_div}は、{const.LINE_IMG_X_AXIS}px * {const.LINE_IMG_Y_AXIS}pxに配置する。"
             f"{img_div}は、本物と同じ自然なイメージにする。イラストではない。"
             f"{img_div}は、正面を見ながら、素敵な笑顔にしている。"
             f"{img_div}の今日のファッションは、{today_outfit}。"
-            f"{img_div}は、全体イメージの、右寄りに配置する。"
-            f"{img_div}は、{const.LINE_IMG_X_AXIS}px * {const.LINE_IMG_Y_AXIS}pxに配置する。"
-            f"{img_woman}"
         )
 
     contents = (
-        f"{const.LINE_IMG_SIZE_W}px * {const.LINE_IMG_SIZE_H}pxのサイズに合わせて、イメージを生成してください。"
-        "※以下内容を参考してください。"
-        "番組名は、「Today's News」。イメージの左上に英語のロゴを、改行せず1行に表示する。"
-        "イメージには、ロゴ以外の文字は、何も表示しない。"
-        f"イメージのの背景は、天気情報の「{forecast}」が分かるようにする。"
-        f"イメージには、天気情報の「{forecast}」以外の内容を、一切反映しない。"
-        "イメージの背景は、黒系の暗い色や複雑なイメージは避ける。"
+        "※以下内容を参考し、イメージを生成してください。"
+        f"{const.LINE_IMG_SIZE_W}px * {const.LINE_IMG_SIZE_H}pxのサイズに合わせる"
         f"{contents_outfit}"
+        "英語「Today's News」のシンプルなロゴを、生成イメージの左上に、改行せず1行に表示する。"
+        "生成イメージには、ロゴの「Today's News」以外の文字は、何も表示しない。"
+        f"生成イメージの背景は、天気情報の「{forecast}」が把握できるようにする。"
+        "生成イメージの背景は、黒系の暗い色は避けて、シンプルなイメージにする。"
+        "上記の内容以外には、何もイメージに反映しない。"
     )
 
     # 英語に翻訳
