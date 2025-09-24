@@ -233,21 +233,20 @@ def get_msg_data_list(
     today_outfit: str = const.SYM_BLANK,
 ) -> list[str]:
 
-    text_title = get_title(msg_div, msg_type, date_today)
-    text_msg = text_title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
+    title = get_title(msg_div, msg_type, date_today)
+    msg = title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 
     if msg_type == MSG_TYPE_IMG:
         if msg_div == const.APP_TODAY:
-            file_path = func_gemini.get_today_news_image(
-                text_msg, forecast, today_outfit
-            )
-            if not file_path:
-                func_api.create_msg_img(msg_div, text_msg, forecast)
+            file_path = func_gemini.get_today_news_image(msg, forecast, today_outfit)
+            msg = func_line.URL_TODAY_IMG
 
-        text_msg = func_line.URL_TODAY_IMG
-        func.print_info_msg(MSG_TYPE_IMG, text_msg)
+        if file_path:
+            func.print_info_msg(MSG_TYPE_IMG, msg)
+        else:
+            func_api.create_msg_img(msg_div, msg, forecast)
 
-    msg_data_list = [msg_type, text_msg]
+    msg_data_list = [msg_type, msg]
     return msg_data_list
 
 

@@ -71,9 +71,9 @@ def get_result_on_app(app_name: str):
 
 
 # 画像に文字列挿入
-def create_msg_img(div: str, msg: str, forecast: str) -> str:
+def create_msg_img(div: str, msg: str, forecast: str = const.SYM_BLANK) -> str:
 
-    if div == const.APP_TODAY:
+    if forecast:
         if "雨" in forecast:
             img_div = "rainy"
         elif "雪" in forecast:

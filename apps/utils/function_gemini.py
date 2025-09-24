@@ -106,7 +106,7 @@ def get_gemini_image(
     div: str = const.STR_GEMINI, contents: str = const.SYM_BLANK
 ) -> str:
     if not contents:
-        contents = get_sample_contents()
+        contents = get_sample_contents(div)
     file_path = get_generate_text_image(div, contents)
     return file_path
 
@@ -401,7 +401,7 @@ def get_prompt_conditions(
 
 # サンプルコンテンツ取得
 def get_sample_contents(div: str = const.STR_GEMINI) -> str:
-    if div == const.INPUT_TYPE_TEXT:
+    if div == const.STR_TEST:
         contents = "これからの未来について、100文字以内で説明お願いします。"
         # contents = (
         #     "Hi, can you create a 3d rendered image of a pig "
@@ -409,12 +409,18 @@ def get_sample_contents(div: str = const.STR_GEMINI) -> str:
         #     "futuristic city with lots of greenery?"
         # )
 
-    else:
+    elif div == const.STR_GEMINI:
         contents = (
             "心が癒されるイメージを生成お願いします。"
             "以下の中でどちらと関連があるようにお願いします。"
             "[豊かな自然 or 可愛い赤ちゃん or 可愛い動物]"
             "文字列は、一切表示しないでください。"
+        )
+
+    else:
+        contents = (
+            f"{div}のことが分かるようにイメージを生成お願いします。"
+            "シンプルで、自然なイメージでお願いします。"
         )
 
     return contents
@@ -477,9 +483,9 @@ def test_gemini():
 
 
 # [テスト] 生成イメージ取得
-def test_gemini_img():
-    contents = get_sample_contents()
-    get_gemini_image(contents=contents)
+def test_gemini_img(div: str):
+    contents = get_sample_contents(div)
+    get_gemini_image(div, contents)
 
 
 # [テスト] 今日のニュースイメージ取得
@@ -509,7 +515,7 @@ def test_generate_video():
 
 if __name__ == const.MAIN_FUNCTION:
     # test_gemini()
-    test_gemini_img()
+    test_gemini_img(const.APP_MLB)
     # test_today_img()
     # test_generate_image()
     # test_generate_video()
