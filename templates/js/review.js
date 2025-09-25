@@ -17,58 +17,56 @@ let userName = sessionStorage.getItem(STR_USER_NAME);
 // ヘッダー設定
 getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_2;
 
+// タイトル設定
+document.title = STR_REVIEW;
+
 // DOM読み込み後の初期化処理
-document.addEventListener("DOMContentLoaded", () => {
-  // タイトル設定
-  document.title = STR_REVIEW;
+document.addEventListener("DOMContentLoaded", init);
 
-  function init() {
+// 初期表示
+function init() {
 
-    getElemByTag(TAG_H1).textContent = "アプリ・レビュー";
+  getElemByTag(TAG_H1).textContent = "アプリ・レビュー";
 
-    const thList = ["No.", "アプリ", "カテゴリー", "区分", "内容"];
-    const appTxtList = ["Line Message", "Travel & Life", "Number Plate", "その他"];
-    const ctgTxtList = ["レビュー", "メモ", "エラー", "その他"];
-    const typeTxtList = ["機能追加", "機能修正", "レイアウト", "その他"];
+  const thList = ["No.", "アプリ", "カテゴリー", "区分", "内容"];
+  const appTxtList = ["Line Message", "Travel & Life", "Number Plate", "その他"];
+  const ctgTxtList = ["レビュー", "メモ", "エラー", "その他"];
+  const typeTxtList = ["機能追加", "機能修正", "レイアウト", "その他"];
 
-    parentElemId = ELEM_ID_TABLE;
-    for (let i = 0; i <= NUM_BOARD_CNT; i++) {
-      const strIdx = i.toString();
+  parentElemId = ELEM_ID_TABLE;
+  for (let i = 0; i <= NUM_BOARD_CNT; i++) {
+    const strIdx = i.toString();
 
-      const trId = TAG_TR + strIdx;
-      createElem(TAG_TR, trId, parentElemId);
+    const trId = TAG_TR + strIdx;
+    createElem(TAG_TR, trId, parentElemId);
 
-      for (let j = 0; j < thList.length; j++) {
-        const strIdx2 = j.toString();
+    for (let j = 0; j < thList.length; j++) {
+      const strIdx2 = j.toString();
 
-        if (i === 0) {
-          createElem(TAG_TH, thList[j], trId);
+      if (i === 0) {
+        createElem(TAG_TH, thList[j], trId);
+      } else {
+        const idx = strIdx + strIdx2;
+        const tdId2 = TAG_TD + idx;
+        createElem(TAG_TD, tdId2, trId);
+
+        if (j === 0) {
+          getElem(tdId2).textContent = i;
+        } else if (j === 1) {
+          createOption(STR_APP + strIdx, STR_APP, appTxtList, tdId2, 0);
+        } else if (j === 2) {
+          createOption(STR_CATEGORY + strIdx, STR_CATEGORY, ctgTxtList, tdId2, 0);
+        } else if (j === 3) {
+          createOption(STR_TYPE + strIdx, STR_TYPE, typeTxtList, tdId2, 0);
         } else {
-          const idx = strIdx + strIdx2;
-          const tdId2 = TAG_TD + idx;
-          createElem(TAG_TD, tdId2, trId);
-
-          if (j === 0) {
-            getElem(tdId2).textContent = i;
-          } else if (j === 1) {
-            createOption(STR_APP + strIdx, STR_APP, appTxtList, tdId2, 0);
-          } else if (j === 2) {
-            createOption(STR_CATEGORY + strIdx, STR_CATEGORY, ctgTxtList, tdId2, 0);
-          } else if (j === 3) {
-            createOption(STR_TYPE + strIdx, STR_TYPE, typeTxtList, tdId2, 0);
-          } else {
-            createElem(TAG_TEXTAREA, ELEM_ID_TEXTAREA + strIdx, tdId2);
-          }
+          createElem(TAG_TEXTAREA, ELEM_ID_TEXTAREA + strIdx, tdId2);
         }
       }
     }
-
-    getElemByTag(TAG_BUTTON).textContent = "送信";
   }
 
-  // 初期表示
-  init();
-});
+  getElemByTag(TAG_BUTTON).textContent = "送信";
+}
 
 // ユーザ名設定
 function setUserName() {
@@ -135,7 +133,7 @@ function sendReview() {
       // ページ全体をリセット（再読み込み）
       location.reload();
     } catch {
-      setElem(STR_MESSAGE, MSG_ERR_SEND, true);
+      setElemText(STR_MESSAGE, MSG_ERR_SEND);
     }
   });
 }

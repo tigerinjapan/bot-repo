@@ -1,0 +1,504 @@
+// プロンプトに追加する共通の条件
+const commonConditions_image = "高品質、詳細、フォトリアル、明るい色調、楽しい雰囲気";
+const commonConditions_text = "明確、簡潔、丁寧、ポジティブ、想像力をかきたてる";
+
+// ヘッダー設定
+const headContents = `
+    ${CONTENTS_HEAD_1}
+    <link rel="stylesheet" href="/templates/gemini.css" />
+`;
+getElemByTag(TAG_HEAD).innerHTML = headContents;
+
+// DOM読み込み後の処理
+document.addEventListener('DOMContentLoaded', init);
+
+// 初期表示
+function init() {
+    changeLanguage('ja');
+
+    const mode = getElem('generationMode').value;
+    const outputImage = getElem('outputImageContainer');
+    const outputText = getElem('outputTextContainer');
+
+    if (mode === 'image') {
+        outputImage.style.display = 'block';
+        outputText.style.display = 'none';
+    } else {
+        outputImage.style.display = 'none';
+        outputText.style.display = 'block';
+    }
+
+    getElem('generatedImage').style.display = 'none';
+    getElem('generatedImage').src = '';
+    setElemText('generatedText', '');
+
+    const copyButtons = document.querySelectorAll('.copy-button');
+    copyButtons.forEach(button => button.style.display = 'none');
+}
+
+// 言語設定
+function changeLanguage(lang) {
+    const texts = UI_TEXT[lang];
+
+    document.documentElement.lang = lang;
+
+    // data-keyを持つすべての要素のテキストを更新
+    document.querySelectorAll('[data-key]').forEach(element => {
+        const key = element.getAttribute('data-key');
+        if (element.tagName === 'TITLE') {
+            element.textContent = texts[key];
+        } else if (element.tagName === 'TEXTAREA') {
+            element.placeholder = texts[key];
+        } else {
+            element.textContent = texts[key];
+        }
+    });
+
+    // SELECT要素を動的に生成
+    const modeSelect = getElem('generationMode');
+    createSelect(modeSelect, texts.modeOptions);
+
+    const imageFormSection = getElem('imageFormSection');
+    imageFormSection.innerHTML = '';
+
+    SELECT_DATA.forEach(item => {
+        const formGroup = document.createElement('div');
+        formGroup.className = 'form-group';
+
+        const label = document.createElement('label');
+        label.setAttribute('for', item.selectId);
+        label.textContent = texts[item.labelId];
+
+        const select = document.createElement('select');
+        select.id = item.selectId;
+
+        createSelect(select, texts[item.options]);
+
+        formGroup.appendChild(label);
+        formGroup.appendChild(select);
+        imageFormSection.appendChild(formGroup);
+    });
+}
+
+// Selectデータ
+const SELECT_DATA = [
+    { labelId: 'subjectLabel', selectId: 'subject', options: 'subjectOptions' },
+    { labelId: 'styleLabel', selectId: 'style', options: 'styleOptions' },
+    { labelId: 'lightingLabel', selectId: 'lighting', options: 'lightingOptions' },
+    { labelId: 'colorLabel', selectId: 'color', options: 'colorOptions' },
+    { labelId: 'atmosphereLabel', selectId: 'atmosphere', options: 'atmosphereOptions' },
+    { labelId: 'artistLabel', selectId: 'artist', options: 'artistOptions' },
+    { labelId: 'qualityLabel', selectId: 'quality', options: 'qualityOptions' },
+    { labelId: 'perspectiveLabel', selectId: 'perspective', options: 'perspectiveOptions' },
+    { labelId: 'textureLabel', selectId: 'texture', options: 'textureOptions' },
+    { labelId: 'seasonLabel', selectId: 'season', options: 'seasonOptions' }
+];
+
+// Selectタグ生成
+function createSelect(selectElement, options) {
+    selectElement.innerHTML = '';
+    options.forEach(optionData => {
+        const option = document.createElement('option');
+        option.value = optionData.value;
+        option.textContent = optionData.text;
+        selectElement.appendChild(option);
+    });
+}
+
+// コンテンツ生成
+function generateContent() {
+    const mode = getElem('generationMode').value;
+    const subject = getElem('subject').value;
+    const style = getElem('style').value;
+    const lighting = getElem('lighting').value;
+    const color = getElem('color').value;
+    const atmosphere = getElem('atmosphere').value;
+    const artist = getElem('artist').value;
+    const quality = getElem('quality').value;
+    const perspective = getElem('perspective').value;
+    const texture = getElem('texture').value;
+    const season = getElem('season').value;
+    const additionalPrompt = getElem('additionalPrompt').value;
+
+    let mode_ja = "テキスト";
+    if (mode === 'img') {
+        mode_ja = "イメージ";
+    }
+
+    let basePrompt = `${subject}、${style}、${lighting}、${color}、${atmosphere}、${artist}風、${quality}、${perspective}、${texture}、${season}`;
+    if (additionalPrompt) {
+        basePrompt += `、${additionalPrompt}`;
+    }
+    const prompt = `
+        以下の内容に基づいて、「${mode_ja}」を生成してください。
+        ${basePrompt}、${commonConditions_text}
+    `;
+
+    requestApi(mode, prompt);
+}
+
+// APIリクエスト
+async function requestApi(mode, prompt) {
+    let apiUrl = URL_GEMINI_SERVER;
+    if (isLocal()) {
+        apiUrl = URL_GEMINI_LOCAL;
+    }
+    const requestBody = { mode: mode, prompt: { text: prompt } };
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody),
+        });
+
+        const data = await response.json();
+        const res = data.response;
+        const msg = data.message;
+        alert(msg);
+        if (!response.ok) {
+            console.error('APIエラー:', msg);
+            return;
+        }
+
+        if (mode === 'img') {
+            const imgElement = getElem('generatedImage');
+            imgElement.src = res;
+            imgElement.style.display = 'block';
+        } else {
+            setElemText('generatedText', res);
+        }
+
+        document.querySelector('#outputImageContainer .copy-button').style.display = 'block';
+
+    } catch (error) {
+        console.error('エラー:', error);
+        alert('コンテンツ生成中にエラーが発生しました。');
+    }
+}
+
+// イメージコピー
+async function copyImage() {
+    const imgElement = getElem('generatedImage');
+    if (!imgElement.src) {
+        alert('画像がありません。');
+        return;
+    }
+
+    try {
+        const response = await fetch(imgElement.src);
+        const blob = await response.blob();
+        await navigator.clipboard.write([
+            new ClipboardItem({ 'image/png': blob })
+        ]);
+        alert('画像をコピーしました！');
+    } catch (err) {
+        console.error('画像のコピーに失敗しました:', err);
+        alert('画像のコピーに失敗しました。');
+    }
+}
+
+// テキストコピー
+async function copyText() {
+    const textElement = getElem('generatedText');
+    if (!textElement.textContent) {
+        alert('テキストがありません。');
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(textElement.textContent);
+        alert('テキストをコピーしました！');
+    } catch (err) {
+        console.error('テキストのコピーに失敗しました:', err);
+        alert('テキストのコピーに失敗しました。');
+    }
+}
+
+const UI_TEXT = {
+    ja: {
+        title: '✨🚀未来クリエイターラボ🚀✨',
+        subtitle: '（明るく楽しい未来を創ろう！）',
+        modeLabel: 'どの未来を創る？',
+        modeOptions: [
+            { value: 'img', text: '🎨 画像生成' },
+            { value: 'txt', text: '📝 テキスト生成' }
+        ],
+        subjectLabel: '🌟 主役は誰？',
+        subjectOptions: [
+            { value: '笑顔のAIロボット', text: '笑顔のAIロボット' },
+            { value: '空飛ぶスケートボードに乗る子供', text: '空飛ぶスケートボードに乗る子供' },
+            { value: 'キラキラ光る未来都市', text: 'キラキラ光る未来都市' },
+            { value: '宇宙遊泳を楽しむ動物たち', text: '宇宙遊泳を楽しむ動物たち' },
+            { value: 'カラフルな宇宙船', text: 'カラフルな宇宙船' }
+        ],
+        styleLabel: '🌈 どんなスタイル？',
+        styleOptions: [
+            { value: 'ポップなサイバーパンク', text: 'ポップなサイバーパンク' },
+            { value: 'カートゥーン調の未来', text: 'カートゥーン調の未来' },
+            { value: '夢のようなSF', text: '夢のようなSF' },
+            { value: '明るいアニメーション', text: '明るいアニメーション' },
+            { value: 'レトロな未来SF', text: 'レトロな未来SF' }
+        ],
+        lightingLabel: '💡 光の魔法は？',
+        lightingOptions: [
+            { value: 'パステルネオン', text: 'パステルネオン' },
+            { value: '虹色の輝き', text: '虹色の輝き' },
+            { value: '晴れた未来の昼間', text: '晴れた未来の昼間' },
+            { value: '柔らかいホログラム光', text: '柔らかいホログラム光' },
+            { value: '賑やかな電飾', text: '賑やかな電飾' }
+        ],
+        colorLabel: '🎨 色はどんな感じ？',
+        colorOptions: [
+            { value: '鮮やかなポップカラー', text: '鮮やかなポップカラー' },
+            { value: 'パステルカラーのグラデーション', text: 'パステルカラーのグラデーション' },
+            { value: 'メタリックでキラキラ', text: 'メタリックでキラキラ' },
+            { value: 'ネオンと蛍光色', text: 'ネオンと蛍光色' },
+            { value: '夢見るような虹色', text: '夢見るような虹色' }
+        ],
+        atmosphereLabel: '💖 どんな気持ち？',
+        atmosphereOptions: [
+            { value: 'ワクワクする冒険', text: 'ワクワクする冒険' },
+            { value: '穏やかで楽しい日常', text: '穏やかで楽しい日常' },
+            { value: '驚きと発見', text: '驚きと発見' },
+            { value: '最高のパーティー', text: '最高のパーティー' },
+            { value: 'ハッピーで平和な時間', text: 'ハッピーで平和な時間' }
+        ],
+        artistLabel: '🧙‍♀️ 誰が描く？',
+        artistOptions: [
+            { value: 'ピクサー風', text: 'ピクサー風' },
+            { value: 'スタジオジブリ風', text: 'スタジオジブリ風' },
+            { value: 'ディズニーアニメ風', text: 'ディズニーアニメ風' },
+            { value: 'ポップアート風', text: 'ポップアート風' },
+            { value: '日本の可愛いアニメ風', text: '日本の可愛いアニメ風' }
+        ],
+        qualityLabel: '✨ クオリティは？',
+        qualityOptions: [
+            { value: '最高の品質', text: '最高の品質' },
+            { value: '可愛い手描き風', text: '可愛い手描き風' },
+            { value: 'ピクセルアートでレトロ可愛い', text: 'ピクセルアートでレトロ可愛い' },
+            { value: '滑らかなCGIアニメ', text: '滑らかなCGIアニメ' },
+            { value: 'キラキラ高解像度', text: 'キラキラ高解像度' }
+        ],
+        perspectiveLabel: '🔭 どこから見る？',
+        perspectiveOptions: [
+            { value: 'ワクワクするアングル', text: 'ワクワクするアングル' },
+            { value: 'キャラクター目線', text: 'キャラクター目線' },
+            { value: '広大な世界を見下ろす', text: '広大な世界を見下ろす' },
+            { value: 'ドキドキのクローズアップ', text: 'ドキドキのクローズアップ' },
+            { value: '楽しいパノラマ', text: '楽しいパノラマ' }
+        ],
+        textureLabel: '🌟 どんな手触り？',
+        textureOptions: [
+            { value: 'ふわふわと柔らかい', text: 'ふわふわと柔らかい' },
+            { value: 'キラキラと輝く', text: 'キラキラと輝く' },
+            { value: 'ツルツルでピカピカ', text: 'ツルツルでピカピカ' },
+            { value: '透明感のあるクリスタル', text: '透明感のあるクリスタル' },
+            { value: 'キュートなマット加工', text: 'キュートなマット加工' }
+        ],
+        seasonLabel: '📅 どんな時？',
+        seasonOptions: [
+            { value: '未来の夏休み', text: '未来の夏休み' },
+            { value: '一年中お祭り', text: '一年中お祭り' },
+            { value: '銀河フェスティバル', text: '銀河フェスティバル' },
+            { value: '楽しい未来の休日', text: '楽しい未来の休日' },
+            { value: '希望に満ちた新時代', text: '希望に満ちた新時代' }
+        ],
+        additionalPromptLabel: '📝 追加で何か描きたい？ (40文字以内)',
+        additionalPromptPlaceholder: '例: 虹色の雲、宇宙犬と一緒に',
+        generateButton: '✨ 生成スタート！ ✨',
+        copyImageButton: '🖼️ 画像をコピー',
+        storyTitle: '📝 生成された未来ストーリー',
+        copyTextButton: '📝 テキストをコピー'
+    },
+    ko: {
+        title: '✨🚀미래 크리에이터 랩🚀✨',
+        subtitle: '（밝고 즐거운 미래를 만들자!）',
+        modeLabel: '어떤 미래를 만들까?',
+        modeOptions: [
+            { value: 'img', text: '🎨 이미지 생성' },
+            { value: 'txt', text: '📝 텍스트 생성' }
+        ],
+        subjectLabel: '🌟 주인공은 누구?',
+        subjectOptions: [
+            { value: '웃는 AI 로봇', text: '웃는 AI 로봇' },
+            { value: '하늘을 나는 스케이트보드를 타는 아이', text: '하늘을 나는 스케이트보드를 타는 아이' },
+            { value: '반짝이는 미래 도시', text: '반짝이는 미래 도시' },
+            { value: '우주 유영을 즐기는 동물들', text: '우주 유영을 즐기는 동물들' },
+            { value: '컬러풀한 우주선', text: '컬러풀한 우주선' }
+        ],
+        styleLabel: '🌈 어떤 스타일?',
+        styleOptions: [
+            { value: '팝한 사이버펑크', text: '팝한 사이버펑크' },
+            { value: '만화 스타일의 미래', text: '만화 스타일의 미래' },
+            { value: '꿈같은 SF', text: '꿈같은 SF' },
+            { value: '밝은 애니메이션', text: '밝은 애니메이션' },
+            { value: '레트로 미래 SF', text: '레트로 미래 SF' }
+        ],
+        lightingLabel: '💡 빛의 마법은?',
+        lightingOptions: [
+            { value: '파스텔 네온', text: '파스텔 네온' },
+            { value: '무지개빛 반짝임', text: '무지개빛 반짝임' },
+            { value: '화창한 미래의 낮', text: '화창한 미래의 낮' },
+            { value: '부드러운 홀로그램 빛', text: '부드러운 홀로그램 빛' },
+            { value: '활기찬 조명', text: '활기찬 조명' }
+        ],
+        colorLabel: '🎨 색깔은 어떤 느낌?',
+        colorOptions: [
+            { value: '선명한 팝 컬러', text: '선명한 팝 컬러' },
+            { value: '파스텔 그라데이션', text: '파스텔 그라데이션' },
+            { value: '메탈릭하고 반짝이는', text: '메탈릭하고 반짝이는' },
+            { value: '네온과 형광색', text: '네온과 형광색' },
+            { value: '꿈꾸는 듯한 무지개색', text: '꿈꾸는 듯한 무지개색' }
+        ],
+        atmosphereLabel: '💖 어떤 기분?',
+        atmosphereOptions: [
+            { value: '신나는 모험', text: '신나는 모험' },
+            { value: '온화하고 즐거운 일상', text: '온화하고 즐거운 일상' },
+            { value: '놀라움과 발견', text: '놀라움과 발견' },
+            { value: '최고의 파티', text: '최고의 파티' },
+            { value: '행복하고 평화로운 시간', text: '행복하고 평화로운 시간' }
+        ],
+        artistLabel: '🧙‍♀️ 누가 그릴까?',
+        artistOptions: [
+            { value: '픽사 스타일', text: '픽사 스타일' },
+            { value: '스튜디오 지브리 스타일', text: '스튜디오 지브리 스타일' },
+            { value: '디즈니 애니메이션 스타일', text: '디즈니 애니메이션 스타일' },
+            { value: '팝아트 스타일', text: '팝아트 스타일' },
+            { value: '일본의 귀여운 애니메이션 스타일', text: '일본의 귀여운 애니메이션 스타일' }
+        ],
+        qualityLabel: '✨ 퀄리티는?',
+        qualityOptions: [
+            { value: '최고의 품질', text: '최고의 품질' },
+            { value: '귀여운 손그림 스타일', text: '귀여운 손그림 스타일' },
+            { value: '픽셀 아트로 레트로하게 귀여운', text: '픽셀 아트로 레트로하게 귀여운' },
+            { value: '부드러운 CGI 애니메이션', text: '부드러운 CGI 애니메이션' },
+            { value: '반짝이는 고해상도', text: '반짝이는 고해상도' }
+        ],
+        perspectiveLabel: '🔭 어디서 볼까?',
+        perspectiveOptions: [
+            { value: '신나는 앵글', text: '신나는 앵글' },
+            { value: '캐릭터 시선', text: '캐릭터 시선' },
+            { value: '광활한 세계를 내려다보는', text: '광활한 세계를 내려다보는' },
+            { value: '두근거리는 클로즈업', text: '두근거리는 클로즈업' },
+            { value: '즐거운 파노라마', text: '즐거운 파노라마' }
+        ],
+        textureLabel: '🌟 어떤 질감?',
+        textureOptions: [
+            { value: '푹신하고 부드러운', text: '푹신하고 부드러운' },
+            { value: '반짝이고 빛나는', text: '반짝이고 빛나는' },
+            { value: '매끈하고 반짝이는', text: '매끈하고 반짝이는' },
+            { value: '투명한 크리스탈', text: '투명한 크리스탈' },
+            { value: '귀여운 매트 가공', text: '귀여운 매트 가공' }
+        ],
+        seasonLabel: '📅 어떤 때?',
+        seasonOptions: [
+            { value: '미래의 여름 방학', text: '미래의 여름 방학' },
+            { value: '일년 내내 축제', text: '일년 내내 축제' },
+            { value: '은하 페스티벌', text: '은하 페스티벌' },
+            { value: '즐거운 미래의 휴일', text: '즐거운 미래의 휴일' },
+            { value: '희망찬 새로운 시대', text: '희망찬 새로운 시대' }
+        ],
+        additionalPromptLabel: '📝 추가로 그리고 싶은 것은? (40자 이내)',
+        additionalPromptPlaceholder: '예: 무지개빛 구름, 우주 강아지와 함께',
+        generateButton: '✨ 생성 시작! ✨',
+        copyImageButton: '🖼️ 이미지 복사',
+        storyTitle: '📝 생성된 미래 이야기',
+        copyTextButton: '📝 텍스트 복사'
+    },
+    en: {
+        title: '✨🚀Future Creator Lab🚀✨',
+        subtitle: '(Create a bright and fun future!)',
+        modeLabel: 'What future will you create?',
+        modeOptions: [
+            { value: 'img', text: '🎨 Image Generation' },
+            { value: 'txt', text: '📝 Text Generation' }
+        ],
+        subjectLabel: '🌟 Who is the star?',
+        subjectOptions: [
+            { value: 'Smiling AI robot', text: 'Smiling AI robot' },
+            { value: 'A child on a flying skateboard', text: 'A child on a flying skateboard' },
+            { value: 'A sparkling futuristic city', text: 'A sparkling futuristic city' },
+            { value: 'Animals enjoying a space walk', text: 'Animals enjoying a space walk' },
+            { value: 'A colorful spaceship', text: 'A colorful spaceship' }
+        ],
+        styleLabel: '🌈 What style?',
+        styleOptions: [
+            { value: 'Pop cyberpunk', text: 'Pop cyberpunk' },
+            { value: 'Cartoon-style future', text: 'Cartoon-style future' },
+            { value: 'Dreamy sci-fi', text: 'Dreamy sci-fi' },
+            { value: 'Bright animation', text: 'Bright animation' },
+            { value: 'Retro futuristic sci-fi', text: 'Retro futuristic sci-fi' }
+        ],
+        lightingLabel: '💡 What is the light magic?',
+        lightingOptions: [
+            { value: 'Pastel neon', text: 'Pastel neon' },
+            { value: 'Rainbow glow', text: 'Rainbow glow' },
+            { value: 'A bright future daytime', text: 'A bright future daytime' },
+            { value: 'Soft hologram light', text: 'Soft hologram light' },
+            { value: 'Lively light decorations', text: 'Lively light decorations' }
+        ],
+        colorLabel: '🎨 What about the colors?',
+        colorOptions: [
+            { value: 'Vibrant pop colors', text: 'Vibrant pop colors' },
+            { value: 'Pastel color gradient', text: 'Pastel color gradient' },
+            { value: 'Metallic and sparkling', text: 'Metallic and sparkling' },
+            { value: 'Neon and fluorescent colors', text: 'Neon and fluorescent colors' },
+            { value: 'Dreamy rainbow colors', text: 'Dreamy rainbow colors' }
+        ],
+        atmosphereLabel: '💖 What\'s the feeling?',
+        atmosphereOptions: [
+            { value: 'Exciting adventure', text: 'Exciting adventure' },
+            { value: 'Calm and fun daily life', text: 'Calm and fun daily life' },
+            { value: 'Surprise and discovery', text: 'Surprise and discovery' },
+            { value: 'The best party', text: 'The best party' },
+            { value: 'Happy and peaceful time', text: 'Happy and peaceful time' }
+        ],
+        artistLabel: '🧙‍♀️ Who will draw it?',
+        artistOptions: [
+            { value: 'Pixar style', text: 'Pixar style' },
+            { value: 'Studio Ghibli style', text: 'Studio Ghibli style' },
+            { value: 'Disney animation style', text: 'Disney animation style' },
+            { value: 'Pop art style', text: 'Pop art style' },
+            { value: 'Cute Japanese anime style', text: 'Cute Japanese anime style' }
+        ],
+        qualityLabel: '✨ What is the quality?',
+        qualityOptions: [
+            { value: 'Best quality', text: 'Best quality' },
+            { value: 'Cute hand-drawn style', text: 'Cute hand-drawn style' },
+            { value: 'Cute retro pixel art', text: 'Cute retro pixel art' },
+            { value: 'Smooth CGI animation', text: 'Smooth CGI animation' },
+            { value: 'Sparkling high resolution', text: 'Sparkling high resolution' }
+        ],
+        perspectiveLabel: '🔭 From where to view?',
+        perspectiveOptions: [
+            { value: 'Exciting angle', text: 'Exciting angle' },
+            { value: 'Character\'s viewpoint', text: 'Character\'s viewpoint' },
+            { value: 'Overlooking a vast world', text: 'Overlooking a vast world' },
+            { value: 'Heart-pounding close-up', text: 'Heart-pounding close-up' },
+            { value: 'Fun panorama', text: 'Fun panorama' }
+        ],
+        textureLabel: '🌟 What is the texture?',
+        textureOptions: [
+            { value: 'Fluffy and soft', text: 'Fluffy and soft' },
+            { value: 'Sparkling and shining', text: 'Sparkling and shining' },
+            { value: 'Smooth and glossy', text: 'Smooth and glossy' },
+            { value: 'Translucent crystal', text: 'Translucent crystal' },
+            { value: 'Cute matte finish', text: 'Cute matte finish' }
+        ],
+        seasonLabel: '📅 When?',
+        seasonOptions: [
+            { value: 'Future summer vacation', text: 'Future summer vacation' },
+            { value: 'A year-round festival', text: 'A year-round festival' },
+            { value: 'Galaxy festival', text: 'Galaxy festival' },
+            { value: 'Fun future holiday', text: 'Fun future holiday' },
+            { value: 'A new era full of hope', text: 'A new era full of hope' }
+        ],
+        additionalPromptLabel: '📝 Anything else to draw? (max 40 chars)',
+        additionalPromptPlaceholder: 'e.g., Rainbow clouds, with a space dog',
+        generateButton: '✨ Start Generation! ✨',
+        copyImageButton: '🖼️ Copy Image',
+        storyTitle: '📝 Generated Future Story',
+        copyTextButton: '📝 Copy Text'
+    }
+};

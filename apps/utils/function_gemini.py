@@ -60,6 +60,10 @@ def get_gemini_response(
     div_msg = f"[{app_name}] {func_name}"
     func.print_start(div_msg)
 
+    if model == GEMINI_MODEL:
+        add_condition = get_sample_contents(const.FILE_TYPE_TXT)
+        contents += add_condition
+
     result = []
     exception_error = const.SYM_BLANK
 
@@ -75,10 +79,21 @@ def get_gemini_response(
                 return response
 
             response_text = str(response.text)
-            split_str = const.SYM_NEW_LINE * 2
-            if split_str not in response_text:
-                split_str = const.SYM_COMMA
-            result = response_text.split(split_str)
+
+            split_str = const.SYM_BLANK
+            check_str_list = [const.SYM_NEW_LINE * 2]
+            for check_str in check_str_list:
+                if check_str in response_text:
+                    split_str = check_str
+                    break
+
+            if split_str:
+                result_list = []
+                res_txt_list = response_text.split(split_str)
+                for res_txt in res_txt_list:
+                    if res_txt:
+                        result_list.append(res_txt)
+                result = result_list
 
     except ConnectionError as ce:
         exception_error = ["ConnectionError", ce]
@@ -119,7 +134,7 @@ def get_generate_text_image(
 
     try:
         config = types.GenerateContentConfig(response_modalities=["TEXT", "IMAGE"])
-        response = get_gemini_response("today_news_image", contents, model, config)
+        response = get_gemini_response(div, contents, model, config)
     except Exception as e:
         func.print_error_msg(SCRIPT_NAME, model, div, e)
         response = const.NONE_CONSTANT
@@ -227,6 +242,8 @@ def get_today_news_image(
 
 # おすすめコーデ・夕食取得
 def get_recommend_outfit_dinner(today_weather: str) -> list[str]:
+    curr_func_nm = sys._getframe().f_code.co_name
+
     contents = (
         f"{today_weather}{NEW_LINE}上記の内容を元に、"
         "気温と季節を考慮し、今日のコーデ・夕食をおすすめしてください。"
@@ -241,7 +258,13 @@ def get_recommend_outfit_dinner(today_weather: str) -> list[str]:
     conditions = get_prompt_conditions(condition_list)
     reference = f"※出力例{NEW_LINE}" + "長袖&ダウン,キムパ&キャベツの味噌汁"
     contents += conditions + reference
-    recommend_outfit_dinner = get_gemini_response("outfit_dinner", contents)
+    recommend_outfit_dinner = get_gemini_response(curr_func_nm, contents)
+    if len(recommend_outfit_dinner) != 2:
+        recommend_outfit_dinner = [
+            "Geminiレスポンスエラー#1",
+            "Geminiレスポンスエラー#2",
+        ]
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, recommend_outfit_dinner)
     return recommend_outfit_dinner
 
 
@@ -257,7 +280,8 @@ def get_recommend_menu(outfit_text: str, menu_text: str) -> tuple[str, str]:
         "各アイテムは、ちゃんとした単語として成立する。"
         "解説と他の文言、記号は不要。"
         f"※出力例{NEW_LINE}"
-        "白いTシャツ&デニムジーンズ,チーズキムパ&味噌汁"
+        f"白いTシャツ&デニムジーンズ{const.SYM_NEW_LINE}"
+        "チーズキムパ&味噌汁"
     )
 
     response = get_gemini_response("recommend_menu", contents)
@@ -295,18 +319,18 @@ def get_news_summary(
 
 
 # ニュース要約条件取得
-def get_news_conditions(add_condition_list: list[str]) -> str:
+def get_news_conditions(add_condition_list: list[str] = []) -> str:
     condition_list = [
         "記号と絵文字、「。」は、使用しない",
         "英数字は、全て半角に変換",
-        f"ニュースは、{const.MIN_DISPLAY_CNT}トピックまで",
-        f"ニュース内容と関係ない内容は不要",
         f"1行で、最大{NUM_WRAP_WIDTH}バイト以内",
         "1行ずつ、文章として、完結",
     ]
 
     if not add_condition_list:
         add_condition_list = [
+            f"ニュースは、{const.MIN_DISPLAY_CNT}トピックまで",
+            f"ニュース内容と関係ない内容は不要",
             f"各ニュースは、最大{NUM_WRAP_WIDTH * 3}バイト以内",
             "各ニュースの1行目: [ニュースの連番] [キーワード] タイトル",
             "各ニュースの2～3行目: 記事",
@@ -409,12 +433,25 @@ def get_sample_contents(div: str = const.STR_GEMINI) -> str:
         #     "futuristic city with lots of greenery?"
         # )
 
-    elif div == const.STR_GEMINI:
+    elif div == const.STR_REST:
         contents = (
             "心が癒されるイメージを生成お願いします。"
             "以下の中でどちらと関連があるようにお願いします。"
             "[豊かな自然 or 可愛い赤ちゃん or 可愛い動物]"
             "文字列は、一切表示しないでください。"
+        )
+
+    elif div == const.FILE_TYPE_TXT:
+        contents = (
+            f"{const.SYM_NEW_LINE}上記の内容と、関係ない内容は、不要。"
+            "レスポンス内容のための説明も不要。"
+            "分かりやすく見やすく内容をまとめる。"
+            f"最大文字数は、{const.MAX_TEXT_LENGTH}文字。"
+            "記号と絵文字は、使用しない。"
+            "英数字は、全て半角に変換する。"
+            "適切なところで、改行する。"
+            f"1行で、最大{NUM_WRAP_WIDTH * 2}バイト以内。"
+            "1行ずつ、文章として、完結する。"
         )
 
     else:
@@ -474,8 +511,7 @@ def get_generate_video(div: str, model: str, prompt: str) -> str:
 
 
 # [テスト] 生成コンテンツ取得
-def test_gemini():
-    div = const.STR_TEST
+def test_gemini(div: str = const.STR_TEST):
     contents = get_sample_contents(div)
     response = get_gemini_response(div, contents)
     result = const.SYM_NEW_LINE.join(response)
@@ -514,8 +550,8 @@ def test_generate_video():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # test_gemini()
-    test_gemini_img(const.APP_MLB)
+    test_gemini()
+    # test_gemini_img(const.APP_MLB)
     # test_today_img()
     # test_generate_image()
     # test_generate_video()

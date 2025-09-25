@@ -39,6 +39,11 @@ function setElem(elemId, text, textFlg) {
   return elem;
 }
 
+// 要素のテキスト設定
+function setElemText(elemId, text) {
+  setElem(elemId, text, true);
+}
+
 // 要素生成
 function createElem(tagName, elemVal, parentElemId) {
   const elem = document.createElement(tagName);

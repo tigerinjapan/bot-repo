@@ -103,6 +103,10 @@ const MSG_ERR_RANK_KO = "랭킹 등록에 실패했습니다.";
 const URL_SERVER = "https://kobe-dev.koyeb.app";
 const URL_LOCAL = "http://127.0.0.1:5000";
 
+const API_GEMINI = "/gemini/api";
+const URL_GEMINI_SERVER = `${URL_SERVER}${API_GEMINI}`;
+const URL_GEMINI_LOCAL = `${URL_LOCAL}${API_GEMINI}`;
+
 const URL_RANKING_API = "/number/ranking";
 const URL_RANKING_SERVER = `${URL_SERVER}${URL_RANKING_API}`;
 const URL_RANKING_LOCAL = `${URL_LOCAL}${URL_RANKING_API}`;
@@ -120,9 +124,15 @@ const URL_LANG_SERVER = `${URL_SERVER}${URL_LANG_API}`;
 const URL_LANG_LOCAL = `${URL_LOCAL}${URL_LANG_API}`;
 
 // ヘッダー情報読込
-const CONTENTS_HEAD_2 = `
+const CONTENTS_HEAD_1 = `
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/templates/style2.css" />
+  <link rel="icon" href="/templates/favicon.ico" type="image/x-icon">
   <script src="/templates/jquery-3.6.1.min.js"></script>
+`;
+
+// ヘッダー情報読込
+const CONTENTS_HEAD_2 = `
+  ${CONTENTS_HEAD_1}
+  <link rel="stylesheet" href="/templates/style2.css" />
 `;

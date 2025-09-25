@@ -19,6 +19,7 @@ import apps.test as test
 import apps.utils.board_dao as board_dao
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_gemini as func_gemini
 import apps.utils.function_line as func_line
 import apps.utils.message_constants as msg_const
 import apps.utils.rank_dao as rank_dao
@@ -69,6 +70,7 @@ def token_required(func_):
                     status_code=const.STATUS_CODE_UNAUTHORIZED, detail=err_msg
                 )
             return await func_(*args, **kwargs)
+
         except HTTPException as e:
             curr_func_nm = sys._getframe().f_code.co_name
             func.print_error_msg(SCRIPT_NAME, curr_func_nm, e.detail)
@@ -132,6 +134,7 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
             const.STR_MESSAGE: chk_msg,
         }
         response = templates.TemplateResponse(const.HTML_INDEX, context)
+
     else:
         request.session[const.STR_USER] = user_info
         user_id = func.get_masking_data(userId)
@@ -171,7 +174,12 @@ async def app_exec(request: Request, app_name: str):
         elif const.APP_NUMBER in app_name:
             target_html, context = appl.exec_number(request, app_name)
         else:
+            if not app_name in const.LIST_ALL_APP_NAME:
+                curr_func_nm = sys._getframe().f_code.co_name
+                except_http_error(curr_func_nm, request.url._url)
+
             target_html, context = appl.exec_result(request, app_name)
+
     except Exception as e:
         curr_func_nm = sys._getframe().f_code.co_name
         func.print_error_msg(SCRIPT_NAME, curr_func_nm, app_name, e)
@@ -181,13 +189,13 @@ async def app_exec(request: Request, app_name: str):
             const.STR_TITLE: const.SYSTEM_NAME,
             const.STR_MESSAGE: msg_const.MSG_INFO_SESSION_EXPIRED,
         }
+
     return templates.TemplateResponse(target_html, context)
 
 
 # HTMLテンプレートファイルの返却
 @app.get("/apps/{app_name}")
 async def apps(request: Request, app_name: str):
-
     if not app_name in const.LIST_APPS_NAME:
         curr_func_nm = sys._getframe().f_code.co_name
         except_http_error(curr_func_nm, request.url._url)
@@ -195,6 +203,18 @@ async def apps(request: Request, app_name: str):
     target_html = const.HTML_RESULT_2
     context = {const.STR_REQUEST: request, "app_name": app_name}
     return templates.TemplateResponse(target_html, context)
+
+
+# HTMLテンプレートファイルの返却
+@app.get("/apps/v1/{app_name}")
+async def apps2(app_name: str):
+    if not app_name in const.LIST_APPS_NAME_2:
+        curr_func_nm = sys._getframe().f_code.co_name
+        except_http_error(curr_func_nm, app_name)
+
+    target_html = const.get_html(app_name)
+    file_path = f"templates/{target_html}"
+    return FileResponse(file_path)
 
 
 # ユーザー情報更新（フォーム）
@@ -232,6 +252,32 @@ async def app_api(request: Request):
     else:
         curr_func_nm = sys._getframe().f_code.co_name
         except_http_error(curr_func_nm, request.url._url)
+
+
+# GEMINI
+@app.post("/gemini/api")
+async def gemini_api(request: Request):
+    curr_func_nm = sys._getframe().f_code.co_name
+
+    json_data = await request.json()
+    mode = json_data["mode"]
+    contents = json_data["prompt"]
+    message = const.SYM_BLANK
+
+    try:
+        if mode == const.STR_IMG:
+            response = func_gemini.get_gemini_image(contents=contents)
+            func.print_info_msg(line.MSG_TYPE_IMG, func_line.URL_GEMINI_IMG)
+        else:
+            response = func_gemini.get_gemini_response(curr_func_nm, contents)
+            result = const.SYM_NEW_LINE.join(response)
+
+    except Exception as e:
+        message = msg_const.MSG_ERR_PROC_FAILED
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
+
+    result = {const.STR_MESSAGE: response}
+    return result
 
 
 # ランキング情報更新
@@ -337,7 +383,6 @@ async def file_response(request: Request, div: str, file_name: str):
 @app.get("/check")
 def health_check():
     appl.no_sleep()
-
     info_msg = msg_const.MSG_INFO_SERVER_KEEP_WORKING
     func.print_info_msg(SCRIPT_NAME, info_msg)
     result = {const.STR_MESSAGE: info_msg}

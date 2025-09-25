@@ -2,22 +2,17 @@
 <html lang="ja">
 
 <head>
-    <link rel="stylesheet" href="/templates/numberPlate.css" />
     <script src="/templates/const.js"></script>
     <script src="/templates/func.js"></script>
     <script src="/templates/numberPlate.js"></script>
     <title>🚙Number Plate Game</title>
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", () => {
-            initDisplay("{{ level }}");
-        });
-    </script>
 </head>
 
 <body>
     <div class="main">
         <h1 id="title">{{ title }}</h1>
         <p id="langCd" hidden>{{ lang }}</p>
+        <p id="levelVal" hidden>{{ level }}</p>
         <div>
             <p id="level"></p>
             <p id="rank">

@@ -122,6 +122,7 @@ MIN_DISPLAY_CNT = 3
 MAX_DISPLAY_CNT = 5
 MAX_RETRY_CNT = 3
 MAX_TEMP_MSG = 20
+MAX_TEXT_LENGTH = 200
 MAX_PHRASE_CSV = 999
 
 ##### 型 #####
@@ -233,20 +234,24 @@ STR_APP = "app"
 STR_URL = "url"
 STR_IP = "IP"
 STR_HOST = "host"
+STR_SERVER = "server"
 STR_INDEX = "index"
 STR_RESULT = "result"
 STR_CONTENTS = "contents"
 STR_ITEM = "item"
-STR_SERVER = "server"
+STR_API = "api"
+STR_DATA = "data"
 STR_UPDATE = "update"
-STR_TIME = "time"
-STR_KEY = "key"
 STR_DIV = "div"
+STR_TIME = "time"
+STR_DATE = "date"
+STR_DAY = "day"
+STR_HOLIDAY = "holiday"
+STR_KEY = "key"
 STR_TITLE = "title"
 STR_DECODE = "decode"
 STR_LINE = "line"
 STR_GEMINI = "gemini"
-STR_API = "api"
 STR_IMG = "img"
 STR_FONT = "font"
 STR_ADDR = "addr"
@@ -256,14 +261,11 @@ STR_KEYWORD = "keyword"
 STR_NOTIFY = "notify"
 STR_FIRST = "first"
 STR_TEST = "test"
-STR_DATE = "date"
-STR_DAY = "day"
-STR_HOLIDAY = "holiday"
 STR_PHRASE = "phrase"
 STR_NUMBER = "number"
 STR_ANSWER = "answer"
 STR_LEVEL = "level"
-STR_DATA = "data"
+STR_REST = "rest"
 
 STR_KPOP = "kpop"
 STR_NISA = "nisa"
@@ -330,7 +332,7 @@ STR_THB_JA = "バーツ"
 STR_PHP_JA = "ペソ"
 
 ##### マスキング #####
-MASKING_COMPANY = "company"
+MASKING_COMPANY = "zzzzzz"
 MASKING_STR_UPPER = "XXXX"
 MASKING_STR_LOWER = "xxxx"
 MASKING_NUM = "9999"
@@ -447,6 +449,7 @@ LIST_APP_SITE = [APP_SITE, APP_CAFE, APP_TRAVEL, APP_BOARD]
 LIST_ALL_APP_NAME = LIST_APP_NAME + LIST_APP_SITE
 
 LIST_APPS_NAME = [APP_TRAVEL, APP_REVIEW, APP_TRAVEL_DESIGN]
+LIST_APPS_NAME_2 = [STR_GEMINI]
 
 
 # パス取得
@@ -474,6 +477,7 @@ PATH_UPDATE = get_path(STR_UPDATE)
 HTML_INDEX = get_html(STR_INDEX)
 HTML_RESULT = get_html(STR_RESULT)
 HTML_USER_INFO = get_html(STR_USER_INFO)
+HTML_GEMINI = get_html(STR_GEMINI)
 HTML_NUMBER_PLATE = get_html(STR_NUMBER_PLATE)
 HTML_RESULT_2 = get_html(f"{STR_RESULT}2")
 

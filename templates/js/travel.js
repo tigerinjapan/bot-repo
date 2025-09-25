@@ -10,8 +10,10 @@ if (isLocal()) {
 }
 
 // DOM読み込み後の初期化処理
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", init);
 
+// 初期表示
+function init() {
   let travelData = null;
   let langData = null;
 
@@ -247,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 初期表示（東京・日本語）
   updateContent();
-});
+}
 
 // カードグリッド作成
 function createCardGrid() {

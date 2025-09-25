@@ -46,6 +46,7 @@ const BUTTON_SETTING = "設定";
 const CONTENTS_HEAD = (`
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/templates/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/templates/style.css">
   <script src="/templates/jquery-3.6.1.min.js"></script>
 `);

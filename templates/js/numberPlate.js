@@ -10,8 +10,18 @@ let timerId = null;
 // タイマー状態管理
 let isTimerRunning = false;
 
-// ボタン押下処理
+// ヘッダー設定
+const headContents = `
+  ${CONTENTS_HEAD_1}
+  <link rel="stylesheet" href="/templates/numberPlate.css" />
+`;
+getElemByTag(TAG_HEAD).innerHTML = headContents;
+
+// DOM読み込み後の処理
 document.addEventListener("DOMContentLoaded", () => {
+  // 初期表示
+  init();
+
   // 言語コード
   const langCd = getElemText("langCd");
 
@@ -29,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         isTimerRunning = true;
       } else {
         clearInterval(timerId);
-        setElem("timer", "STOPPED", true);
+        setElemText("timer", "STOPPED");
         startBtn.textContent = "START";
         isTimerRunning = false;
       }
@@ -54,7 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // 初期表示
-function initDisplay(level) {
+function init() {
+  // レベル
+  const level = getElemText("levelVal");
+
   // 言語コード
   const langCd = getElemText("langCd");
 
@@ -72,7 +85,7 @@ function initDisplay(level) {
 
   if (langCd === LANG_CD_KO) {
     title = TITLE_NUMBER_PLATE_KO;
-    setElem("title", title, true);
+    setElemText("title", title);
 
     btnRuleNm = "게임규칙";
     btnChkNm = "정답확인";
@@ -82,10 +95,10 @@ function initDisplay(level) {
     footerElem.style.visibility = 'hidden';
   }
 
-  setElem("timer", limitTime.toFixed(2), true);
-  setElem("btnRule", btnRuleNm, true);
-  setElem("btnChk", btnChkNm, true);
-  setElem("btnNext", btnNextNm, true);
+  setElemText("timer", limitTime.toFixed(2));
+  setElemText("btnRule", btnRuleNm);
+  setElemText("btnChk", btnChkNm);
+  setElemText("btnNext", btnNextNm);
 
   setLevel(level);
 }
@@ -98,7 +111,7 @@ function setLevel(level) {
   } else if (level === LEVEL_HARD) {
     levelVal = SYM_LEVEL.repeat(3);
   }
-  setElem("level", `Level ${levelVal}`, true);
+  setElemText("level", `Level ${levelVal}`);
 }
 
 // タイマー設定

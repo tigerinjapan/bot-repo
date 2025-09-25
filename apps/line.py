@@ -159,9 +159,9 @@ def get_template_msg():
     template_text = today.get_today_phrase()
     actions = get_template_actions()
 
-    file_path = func_gemini.get_gemini_image()
+    file_path = func_gemini.get_gemini_image(const.STR_REST)
     if file_path:
-        func.print_info_msg(MSG_TYPE_IMG, func_line.URL_GEMINI_IMG)
+        func.print_info_msg(MSG_TYPE_IMG, func_line.URL_REST_IMG)
 
     template_msg = func_line.get_template_msg_json(
         alt_text, template_title, template_text, actions

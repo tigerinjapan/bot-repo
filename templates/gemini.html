@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <script src="/templates/const.js"></script>
+    <script src="/templates/func.js"></script>
+    <script src="/templates/gemini.js"></script>
+    <title data-key="title"></title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="language-switcher">
+            <button onclick="changeLanguage('ja')">日本語</button>
+            <button onclick="changeLanguage('ko')">한국어</button>
+            <button onclick="changeLanguage('en')">English</button>
+        </div>
+
+        <h1>
+            <span data-key="title"></span><br>
+            <span id="subtitle" class="subtitle" data-key="subtitle"></span>
+        </h1>
+
+        <div class="mode-selection">
+            <label id="modeLabel" for="generationMode" data-key="modeLabel"></label>
+            <select id="generationMode" onchange="toggleFormVisibility()"></select>
+        </div>
+
+        <div id="imageGenerationForm">
+            <div class="form-section" id="imageFormSection"></div>
+            <div class="form-group">
+                <label id="additionalPromptLabel" for="additionalPrompt" data-key="additionalPromptLabel"></label>
+                <textarea id="additionalPrompt" maxlength="40" data-key="additionalPromptPlaceholder"></textarea>
+            </div>
+        </div>
+
+        <button id="generateButton" data-key="generateButton" onclick="generateContent()"></button>
+
+        <div class="image-container" id="outputImageContainer">
+            <img id="generatedImage" src=""/>
+            <button id="copyImageButton" class="copy-button" onclick="copyImage()" data-key="copyImageButton"></button>
+        </div>
+
+        <div class="text-output" id="outputTextContainer">
+            <h2 id="storyTitle" data-key="storyTitle"></h2>
+            <pre id="generatedText"></pre>
+            <button id="copyTextButton" class="copy-button" onclick="copyText()" data-key="copyTextButton"></button>
+        </div>
+    </div>
+</body>
+
+</html>

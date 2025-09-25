@@ -15,6 +15,7 @@ URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
 URL_KOYEB_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}"
 URL_TODAY_IMG = f"{URL_KOYEB_IMG}/{const.APP_TODAY}"
 URL_GEMINI_IMG = f"{URL_KOYEB_IMG}/{const.STR_GEMINI}"
+URL_REST_IMG = f"{URL_KOYEB_IMG}/{const.STR_REST}"
 
 # LINE API情報
 STR_LINE_API = "LINE API"
@@ -150,7 +151,7 @@ def get_template_msg_json(
     alt_text: str, template_title: str, template_text: str, actions
 ):
     # base_url = URL_KOYEB_APP
-    img_url = URL_GEMINI_IMG
+    img_url = URL_REST_IMG
 
     json_object = {
         "type": MSG_TYPE_TMP,

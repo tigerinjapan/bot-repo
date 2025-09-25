@@ -1,11 +1,14 @@
 // ヘッダー設定
 getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_2;
 
-// DOM読み込み後の初期化処理
-document.addEventListener("DOMContentLoaded", () => {
-  // タイトル設定
-  document.title = "📄設計書";
+// タイトル設定
+document.title = "📄設計書";
 
+// DOM読み込み後の初期化処理
+document.addEventListener("DOMContentLoaded", init);
+
+// 初期表示
+function init() {
   // アプリ名
   const appName = getElemText("appName");
 
@@ -44,4 +47,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 関数を実行
   loadMarkdown();
-});
+}
