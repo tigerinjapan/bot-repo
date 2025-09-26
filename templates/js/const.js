@@ -128,6 +128,10 @@ const API_BOARD_ADD = "/board/add";
 const URL_BOARD_ADD = `${URL_SERVER}${API_BOARD_ADD}`;
 const URL_BOARD_LOCAL = `${URL_LOCAL}${API_BOARD_ADD}`;
 
+const URL_GEMINI_ITEMS = "/api/geminiData/items";
+const URL_GEMINI_ITEMS_SERVER = `${URL_SERVER}${URL_GEMINI_ITEMS}`;
+const URL_GEMINI_ITEMS_LOCAL = `${URL_LOCAL}${URL_GEMINI_ITEMS}`;
+
 const URL_TRAVEL_API = "/api/travelData/items";
 const URL_TRAVEL_SERVER = `${URL_SERVER}${URL_TRAVEL_API}`;
 const URL_TRAVEL_LOCAL = `${URL_LOCAL}${URL_TRAVEL_API}`;
