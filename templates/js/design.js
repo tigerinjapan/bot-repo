@@ -35,8 +35,25 @@ function init() {
       // marked.jsを使ってマークダウンをHTMLに変換
       const htmlContent = marked.parse(markdownText);
 
+      // 1. 文字列をDOM要素に変換するための「コンテナ」を作成
+      const tempContainer = document.createElement(TAG_DIV);
+      tempContainer.innerHTML = htmlContent;
+
+      // 2. コンテナの中から 全ての a タグを取得
+      const anchorTags = tempContainer.querySelectorAll(TAG_A);
+
+      // 3. a タグのリストを一つずつ取り出し、target="_blank"（別タブへ遷移）を追加
+      if (anchorTags.length > 0) {
+        anchorTags.forEach(anchorTag => {
+          anchorTag.setAttribute('target', '_blank');
+        });
+      }
+
+      // 4. 変更後のHTML文字列を取得
+      const updatedHtmlContents = tempContainer.innerHTML.trim();
+
       // コンテナにHTMLを挿入
-      markdownContainer.innerHTML = htmlContent;
+      markdownContainer.innerHTML = updatedHtmlContents;
 
     } catch (error) {
       // エラー処理

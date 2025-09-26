@@ -18,6 +18,7 @@ const TAG_OPTION = "option";
 const TAG_TEXTAREA = "textarea";
 const TAG_BUTTON = "button";
 const TAG_LABEL = "label";
+const TAG_A = "a";
 
 // 属性値
 const ATTR_BLOCK = "block";
