@@ -81,7 +81,7 @@ def get_gemini_response(
             response_text = str(response.text)
 
             split_str = const.SYM_BLANK
-            check_str_list = [const.SYM_NEW_LINE * 2]
+            check_str_list = [const.SYM_NEW_LINE * 2, const.SYM_NEW_LINE]
             for check_str in check_str_list:
                 if check_str in response_text:
                     split_str = check_str
@@ -94,6 +94,8 @@ def get_gemini_response(
                     if res_txt:
                         result_list.append(res_txt)
                 result = result_list
+            else:
+                result = [response_text]
 
     except ConnectionError as ce:
         exception_error = ["ConnectionError", ce]
@@ -135,6 +137,7 @@ def get_generate_text_image(
     try:
         config = types.GenerateContentConfig(response_modalities=["TEXT", "IMAGE"])
         response = get_gemini_response(div, contents, model, config)
+
     except Exception as e:
         func.print_error_msg(SCRIPT_NAME, model, div, e)
         response = const.NONE_CONSTANT
@@ -270,6 +273,8 @@ def get_recommend_outfit_dinner(today_weather: str) -> list[str]:
 
 # おすすめメニュー取得
 def get_recommend_menu(outfit_text: str, menu_text: str) -> tuple[str, str]:
+    curr_func_nm = sys._getframe().f_code.co_name
+
     contents = (
         f"{outfit_text}{NEW_LINE}{menu_text}{NEW_LINE}"
         "上記の内容を元に、気温と季節を考慮し、今日のコーデ・夕食をおすすめしてください。"
@@ -284,9 +289,16 @@ def get_recommend_menu(outfit_text: str, menu_text: str) -> tuple[str, str]:
         "チーズキムパ&味噌汁"
     )
 
-    response = get_gemini_response("recommend_menu", contents)
-    outfit = response[0]
-    dinner = response[1]
+    recommend_outfit_dinner = get_gemini_response(curr_func_nm, contents)
+    if len(recommend_outfit_dinner) != 2:
+        recommend_outfit_dinner = [
+            "Geminiレスポンスエラー#1",
+            "Geminiレスポンスエラー#2",
+        ]
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, recommend_outfit_dinner)
+
+    outfit = recommend_outfit_dinner[0]
+    dinner = recommend_outfit_dinner[1]
     return outfit, dinner
 
 
@@ -515,7 +527,7 @@ def test_gemini(div: str = const.STR_TEST):
     contents = get_sample_contents(div)
     response = get_gemini_response(div, contents)
     result = const.SYM_NEW_LINE.join(response)
-    func.print_test_data(div, result)
+    func.print_test_data(result)
 
 
 # [テスト] 生成イメージ取得

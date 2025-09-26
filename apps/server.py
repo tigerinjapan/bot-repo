@@ -266,17 +266,17 @@ async def gemini_api(request: Request):
 
     try:
         if mode == const.STR_IMG:
-            response = func_gemini.get_gemini_image(contents=contents)
+            message = func_gemini.get_gemini_image(contents=contents)
             func.print_info_msg(line.MSG_TYPE_IMG, func_line.URL_GEMINI_IMG)
         else:
             response = func_gemini.get_gemini_response(curr_func_nm, contents)
-            result = const.SYM_NEW_LINE.join(response)
+            message = const.SYM_NEW_LINE.join(response)
 
     except Exception as e:
         message = msg_const.MSG_ERR_PROC_FAILED
         func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
 
-    result = {const.STR_MESSAGE: response}
+    result = {const.STR_MESSAGE: message}
     return result
 
 
