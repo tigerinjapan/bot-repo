@@ -162,7 +162,7 @@ function showDialog(langCd) {
   dialog.innerHTML = `
     <h3>Game Rule</h3>
     <ul id="gameRule"></ul><br><br>
-    <button id="closeGameRuleDialog">Close</button>
+    <button type="button" id="closeGameRuleDialog">Close</button>
   `;
   document.body.appendChild(dialog);
 

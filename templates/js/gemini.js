@@ -17,23 +17,28 @@ function init() {
     changeLanguage('ja');
 
     const mode = getElem('generationMode').value;
-    const outputImage = getElem('outputImageContainer');
-    const outputText = getElem('outputTextContainer');
+    let outputImage = getElem('outputImageContainer');
+    let outputText = getElem('outputTextContainer');
+    let generatedImage = getElem('generatedImage');
+    let generatedText = getElem('generatedText');
 
-    if (mode === 'image') {
-        outputImage.style.display = 'block';
-        outputText.style.display = 'none';
+    if (mode === MODE_IMG) {
+        outputImage.style.display = ATTR_BLOCK;
+        generatedImage.style.display = ATTR_BLOCK;
+        outputText.style.display = ATTR_NONE;
+        generatedText.style.display = ATTR_NONE;
     } else {
-        outputImage.style.display = 'none';
-        outputText.style.display = 'block';
+        outputImage.style.display = ATTR_NONE;
+        generatedImage.style.display = ATTR_NONE;
+        outputText.style.display = ATTR_BLOCK;
+        generatedText.style.display = ATTR_BLOCK;
     }
 
-    getElem('generatedImage').style.display = 'none';
-    getElem('generatedImage').src = '';
-    setElemText('generatedText', '');
+    generatedImage.src = '';
+    generatedText.textContent = '';
 
     const copyButtons = document.querySelectorAll('.copy-button');
-    copyButtons.forEach(button => button.style.display = 'none');
+    copyButtons.forEach(button => button.style.display = ATTR_NONE);
 }
 
 // 言語設定
@@ -121,7 +126,7 @@ function generateContent() {
     const additionalPrompt = getElem('additionalPrompt').value;
 
     let mode_ja = "テキスト";
-    if (mode === 'img') {
+    if (mode === MODE_IMG) {
         mode_ja = "イメージ";
     }
 
@@ -140,10 +145,12 @@ function generateContent() {
 // APIリクエスト
 async function requestApi(mode, prompt) {
     let apiUrl = URL_GEMINI_SERVER;
+    let imgUrl = URL_GEMINI_IMG_SERVER;
     if (isLocal()) {
         apiUrl = URL_GEMINI_LOCAL;
+        // imgUrl = URL_GEMINI_IMG_LOCAL;
     }
-    const requestBody = { mode: mode, prompt: { text: prompt } };
+    const requestBody = { mode: mode, prompt: prompt };
 
     try {
         const response = await fetch(apiUrl, {
@@ -153,23 +160,37 @@ async function requestApi(mode, prompt) {
         });
 
         const data = await response.json();
-        const res = data.response;
         const msg = data.message;
-        alert(msg);
+
         if (!response.ok) {
+            alert(MSG_ERR_SEND);
             console.error('APIエラー:', msg);
             return;
         }
 
-        if (mode === 'img') {
-            const imgElement = getElem('generatedImage');
-            imgElement.src = res;
-            imgElement.style.display = 'block';
-        } else {
-            setElemText('generatedText', res);
-        }
+        alert(MSG_OK_SEND);
 
-        document.querySelector('#outputImageContainer .copy-button').style.display = 'block';
+        const outputImageContainer = getElem('outputImageContainer');
+        const generatedImage = getElem('generatedImage');
+        const copyImageButton = getElem('copyImageButton');
+        const outputTextContainer = getElem('outputTextContainer');
+        const generatedText = getElem('generatedText');
+        const copyTextButton = getElem('copyTextButton');
+
+        if (mode === MODE_IMG) {
+            generatedImage.src = imgUrl;
+            generatedImage.style.display = ATTR_BLOCK;
+            copyImageButton.style.display = ATTR_BLOCK;
+            outputImageContainer.style.display = ATTR_BLOCK;
+            outputTextContainer.style.display = ATTR_NONE;
+
+        } else {
+            generatedText.textContent = msg;
+            generatedText.style.display = ATTR_BLOCK;
+            copyTextButton.style.display = ATTR_BLOCK;
+            outputTextContainer.style.display = ATTR_BLOCK;
+            outputImageContainer.style.display = ATTR_NONE;
+        }
 
     } catch (error) {
         console.error('エラー:', error);
@@ -221,8 +242,8 @@ const UI_TEXT = {
         subtitle: '（明るく楽しい未来を創ろう！）',
         modeLabel: 'どの未来を創る？',
         modeOptions: [
-            { value: 'img', text: '🎨 画像生成' },
-            { value: 'txt', text: '📝 テキスト生成' }
+            { value: MODE_IMG, text: '🎨 画像生成' },
+            { value: MODE_TXT, text: '📝 テキスト生成' }
         ],
         subjectLabel: '🌟 主役は誰？',
         subjectOptions: [
@@ -316,8 +337,8 @@ const UI_TEXT = {
         subtitle: '（밝고 즐거운 미래를 만들자!）',
         modeLabel: '어떤 미래를 만들까?',
         modeOptions: [
-            { value: 'img', text: '🎨 이미지 생성' },
-            { value: 'txt', text: '📝 텍스트 생성' }
+            { value: MODE_IMG, text: '🎨 이미지 생성' },
+            { value: MODE_TXT, text: '📝 텍스트 생성' }
         ],
         subjectLabel: '🌟 주인공은 누구?',
         subjectOptions: [
@@ -411,8 +432,8 @@ const UI_TEXT = {
         subtitle: '(Create a bright and fun future!)',
         modeLabel: 'What future will you create?',
         modeOptions: [
-            { value: 'img', text: '🎨 Image Generation' },
-            { value: 'txt', text: '📝 Text Generation' }
+            { value: MODE_IMG, text: '🎨 Image Generation' },
+            { value: MODE_TXT, text: '📝 Text Generation' }
         ],
         subjectLabel: '🌟 Who is the star?',
         subjectOptions: [

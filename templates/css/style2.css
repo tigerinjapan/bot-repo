@@ -18,6 +18,8 @@
 /* --- 全体設定 --- */
 body {
 	font-family: "Meiryo UI", sans-serif;
+	/* モバイルでの見やすさを考慮して基本フォントサイズを設定 */
+	font-size: 16px;
 	line-height: 1.8;
 	color: black;
 	background-color: var(--main-bg);
@@ -28,22 +30,23 @@ body {
 /* --- コンテナ --- */
 .container {
 	max-width: 900px;
-	margin: 40px auto;
+	/* モバイル対応：左右に余白を設けて画面の端に張り付くのを防ぐ */
+	margin: 40px 15px;
 	padding: 20px;
 	background-color: var(--container-bg);
 	box-shadow: 0 4px 8px rgba(255, 215, 0, 0.10);
-	/* goldの薄い影 */
 	border-radius: 10px;
 }
 
 .board-container {
-	max-width: 600px;
-	margin: 40px auto;
+	margin: 30px auto;
 	background-color: var(--container-bg);
 	border-radius: 10px;
 	box-shadow: 0 4px 8px;
-	padding: 30px 20px 20px 20px;
+	padding: 20px;
 	border: 1px solid var(--section-title-color);
+	/* パディングとボーダーを幅の内側に含める */
+	box-sizing: border-box;
 }
 
 /* --- ヘッダー --- */
@@ -55,7 +58,7 @@ header {
 }
 
 h1 {
-	font-size: 2.5em;
+	font-size: 2em;
 	color: var(--header-color);
 	margin: 0;
 	margin-bottom: 10px;
@@ -63,12 +66,12 @@ h1 {
 
 /* --- セクションタイトル --- */
 h2 {
-	font-size: 1.8em;
+	font-size: 1.5em;
 	color: var(--section-title-color);
 	border-left: 5px solid var(--section-title-border);
 	padding-left: 10px;
-	margin-top: 40px;
-	margin-bottom: 20px;
+	margin-top: 30px;
+	margin-bottom: 15px;
 	background-color: var(--section-title-bg);
 	border-radius: 5px;
 }
@@ -89,8 +92,8 @@ ul li {
 
 label {
 	display: block;
-	margin-top: 18px;
-	margin-bottom: 6px;
+	margin-top: 15px;
+	margin-bottom: 5px;
 	font-weight: bold;
 	color: var(--section-title-color);
 }
@@ -110,6 +113,7 @@ textarea {
 	color: black;
 }
 
+/* --- テーブル (tableReviewを含む) --- */
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -119,6 +123,10 @@ table {
 	overflow: hidden;
 	box-shadow: 0 2px 4px;
 	border: none;
+	/* モバイル対応：テーブルがはみ出したら横スクロールできるようにする */
+	display: block;
+	overflow-x: auto;
+	white-space: nowrap;
 }
 
 th,
@@ -126,8 +134,11 @@ td {
 	border: 1px solid var(--section-title-color);
 	padding: 8px;
 	text-align: left;
-	font-size: 1em;
+	/* モバイル対応：文字サイズを調整 */
+	font-size: 0.9em;
 	color: black;
+	/* セル内のテキストは折り返す */
+	white-space: normal;
 }
 
 th {
@@ -137,12 +148,14 @@ th {
 }
 
 .subtitle {
-	font-size: 1.1em;
+	font-size: 1em;
 	color: #666;
 	margin-top: 5px;
 }
 
 .controls {
+	/* モバイル対応：子要素を折り返して表示 */
+	display: flex;
 	justify-content: center;
 	gap: 10px;
 	margin-bottom: 20px;
@@ -150,15 +163,18 @@ th {
 }
 
 .controls select {
-	padding: 10px 15px;
+	padding: 8px 12px;
 	border-radius: 8px;
 	border: 1px solid #ddd;
 	font-size: 1em;
 	background-color: #fff;
 	cursor: pointer;
+	min-width: unset;
+	flex-grow: 1;
 }
 
 .card-grid {
+	/* モバイル対応：基本は1列表示 */
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 10px;
@@ -166,7 +182,7 @@ th {
 
 .card {
 	background-color: #fff;
-	padding: 20px;
+	padding: 15px;
 	border-radius: 12px;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
@@ -178,23 +194,25 @@ th {
 
 .info-table th,
 .info-table td {
-	padding: 10px 0;
+	padding: 8px 0;
 	text-align: left;
 	border-bottom: 1px solid #eee;
 }
 
 .info-table th {
-	width: 20%;
+	/* モバイル対応：幅を調整 */
+	width: 30%;
 	font-weight: 600;
 	color: #555;
 	vertical-align: top;
 }
 
 .info-table th span {
-	font-size: 1.2em;
+	font-size: 1em;
 	margin-right: 5px;
 }
 
+/* --- モーダル/ダイアログ --- */
 .dialog {
 	display: none;
 	position: fixed;
@@ -211,11 +229,12 @@ th {
 
 .dialog-content {
 	background-color: #fff;
-	margin: 15% auto;
+	/* モバイル対応：上から少し下に配置し、横幅を広く取る */
+	margin: 20% auto;
 	padding: 20px;
 	border-radius: 12px;
-	width: 80%;
-	max-width: 400px;
+	width: 90%;
+	max-width: 350px;
 	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 	text-align: center;
 	position: relative;
@@ -285,7 +304,7 @@ th {
 /* --- 画像 --- */
 .image-container {
 	text-align: center;
-	margin: 30px 0;
+	margin: 20px 0;
 }
 
 .image-container img {
@@ -294,22 +313,40 @@ th {
 	border: 1px solid var(--image-border);
 	border-radius: 8px;
 	box-shadow: 0 2px 4px rgba(255, 215, 0, 0.15);
-	/* goldの薄い影 */
 }
 
 /* --- 画像キャプション --- */
 .image-caption {
-	margin-top: 10px;
-	font-size: 0.9em;
+	margin-top: 8px;
+	font-size: 0.85em;
 	color: var(--caption-color);
 }
 
+/* --- PC・タブレット向けの調整 (480px以上) --- */
 @media (min-width: 480px) {
+	.container {
+		/* PCでは中央寄せに戻す */
+		margin: 40px auto;
+	}
+
 	.card-grid {
+		/* PCでは2列表示 */
 		grid-template-columns: repeat(2, 1fr);
 	}
 
 	.card.full-width {
 		grid-column: 1 / -1;
+	}
+
+	table {
+		/* PCではテーブルの強制的なブロック表示を解除し、通常表示に戻す */
+		display: table;
+		overflow-x: visible;
+		white-space: normal;
+	}
+
+	th,
+	td {
+		font-size: 1em;
 	}
 }

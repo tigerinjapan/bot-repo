@@ -16,7 +16,7 @@
         <div>
             <p id="level"></p>
             <p id="rank">
-                <span id="rank-user"><img src="/templates/rank1.png" /> {{ rank_user }}</span>
+                <span id="rank-user"><img src="/templates/rank1.png" alt="rank1" /> {{ rank_user }}</span>
                 <span id="rank-time">{{ rank_time }}</span>
             </p>
         </div>
@@ -25,14 +25,14 @@
             <p id="timer"></p>
         </div>
         <div id="rule-detail">
-            <button id="btnRule">
-                <img src="/templates/click.png" />
+            <button type="button" id="btnRule">
+                <img src="/templates/click.png" alt="click" />
             </button>
         </div>
         <input id="expression" type="text" /><br />
-        <button id="btnStart"></button>
-        <button id="btnChk"></button>
-        <button id="btnNext" onclick="location.reload()"></button>
+        <button type="button" id="btnStart"></button>
+        <button type="button" id="btnChk"></button>
+        <button type="button" id="btnNext" onclick="location.reload()"></button>
         <div id="message"></div>
         <div id="number-answer" hidden>{{ ans }}</div>
     </div>

@@ -19,6 +19,14 @@ const TAG_TEXTAREA = "textarea";
 const TAG_BUTTON = "button";
 const TAG_LABEL = "label";
 
+// 属性値
+const ATTR_BLOCK = "block";
+const ATTR_NONE = "none";
+
+// モード
+const MODE_IMG = "img";
+const MODE_TXT = "txt";
+
 // 文字列
 const STR_APP = "app";
 const STR_CATEGORY = "category";
@@ -106,6 +114,10 @@ const URL_LOCAL = "http://127.0.0.1:5000";
 const API_GEMINI = "/gemini/api";
 const URL_GEMINI_SERVER = `${URL_SERVER}${API_GEMINI}`;
 const URL_GEMINI_LOCAL = `${URL_LOCAL}${API_GEMINI}`;
+
+const IMG_GEMINI = "/img/gemini";
+const URL_GEMINI_IMG_SERVER = `${URL_SERVER}${IMG_GEMINI}`;
+const URL_GEMINI_IMG_LOCAL = `${URL_LOCAL}${IMG_GEMINI}`;
 
 const URL_RANKING_API = "/number/ranking";
 const URL_RANKING_SERVER = `${URL_SERVER}${URL_RANKING_API}`;

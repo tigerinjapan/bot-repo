@@ -53,7 +53,7 @@ def get_client():
 
 # GEMINI回答取得
 def get_gemini_response(
-    func_name: str, contents, model: str = GEMINI_MODEL, config=const.NONE_CONSTANT
+    func_name: str, contents: str, model: str = GEMINI_MODEL, config=const.NONE_CONSTANT
 ) -> list[str]:
     curr_func_nm = sys._getframe().f_code.co_name
 
@@ -222,11 +222,11 @@ def get_today_news_image(
     contents = (
         "※以下内容を参考し、イメージを生成してください。"
         f"{const.LINE_IMG_SIZE_W}px * {const.LINE_IMG_SIZE_H}pxのサイズに合わせる"
+        f"生成イメージの背景は、天気情報の「{forecast}」が把握できるようにする。"
+        "生成イメージの背景は、黒系の暗い色は避けて、シンプルなイメージにする。"
         f"{contents_outfit}"
         "英語「Today's News」のシンプルなロゴを、生成イメージの左上に、改行せず1行に表示する。"
         "生成イメージには、ロゴの「Today's News」以外の文字は、何も表示しない。"
-        f"生成イメージの背景は、天気情報の「{forecast}」が把握できるようにする。"
-        "生成イメージの背景は、黒系の暗い色は避けて、シンプルなイメージにする。"
         "上記の内容以外には、何もイメージに反映しない。"
     )
 
@@ -462,7 +462,7 @@ def get_sample_contents(div: str = const.STR_GEMINI) -> str:
             "記号と絵文字は、使用しない。"
             "英数字は、全て半角に変換する。"
             "適切なところで、改行する。"
-            f"1行で、最大{NUM_WRAP_WIDTH * 2}バイト以内。"
+            f"1行で、最大{NUM_WRAP_WIDTH * 4}バイト以内。"
             "1行ずつ、文章として、完結する。"
         )
 

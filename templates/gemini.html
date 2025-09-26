@@ -11,19 +11,19 @@
 <body>
     <div class="container">
         <div id="language-switcher">
-            <button onclick="changeLanguage('ja')">日本語</button>
-            <button onclick="changeLanguage('ko')">한국어</button>
-            <button onclick="changeLanguage('en')">English</button>
+            <button type="button" onclick="changeLanguage('ja')">日本語</button>
+            <button type="button" onclick="changeLanguage('ko')">한국어</button>
+            <button type="button" onclick="changeLanguage('en')">English</button>
         </div>
 
         <h1>
-            <span data-key="title"></span><br>
+            <span data-key="title"></span><br />
             <span id="subtitle" class="subtitle" data-key="subtitle"></span>
         </h1>
 
-        <div class="mode-selection">
+        <div class="mode-selection" id="modeSelection">
             <label id="modeLabel" for="generationMode" data-key="modeLabel"></label>
-            <select id="generationMode" onchange="toggleFormVisibility()"></select>
+            <select id="generationMode"></select>
         </div>
 
         <div id="imageGenerationForm">
@@ -34,17 +34,19 @@
             </div>
         </div>
 
-        <button id="generateButton" data-key="generateButton" onclick="generateContent()"></button>
+        <button type="submit" id="generateButton" data-key="generateButton" onclick="generateContent()"></button>
 
         <div class="image-container" id="outputImageContainer">
-            <img id="generatedImage" src=""/>
-            <button id="copyImageButton" class="copy-button" onclick="copyImage()" data-key="copyImageButton"></button>
+            <img id="generatedImage" src="/img/gemini" alt="gemini" />
+            <button type="button" id="copyImageButton" class="copy-button" onclick="copyImage()"
+                data-key="copyImageButton"></button>
         </div>
 
         <div class="text-output" id="outputTextContainer">
             <h2 id="storyTitle" data-key="storyTitle"></h2>
             <pre id="generatedText"></pre>
-            <button id="copyTextButton" class="copy-button" onclick="copyText()" data-key="copyTextButton"></button>
+            <button type="button" id="copyTextButton" class="copy-button" onclick="copyText()"
+                data-key="copyTextButton"></button>
         </div>
     </div>
 </body>
