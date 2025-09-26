@@ -30,13 +30,8 @@ FI_USER_NAME = convert_field(const.TYPE_STR, ITEM_USER_NAME)
 FI_UPDATE_DATE = convert_field(const.TYPE_DATE, ITEM_UPDATE_DATE)
 
 # リスト
-LIST_APP = [
-    "LINE Message",
-    "Travel & Life",
-    "Number Plate",
-    "その他",
-]
-LIST_CATEGORY = ["レビュー", "メモ", "その他"]
+LIST_APP = ["LINE Message", "Travel & Life", "Gemini", "サーバー"]
+LIST_CATEGORY = ["レビュー", "メモ", "エラー", "その他"]
 LIST_TYPE = ["機能追加", "機能修正", "レイアウト", "その他"]
 LIST_STATUS = ["新規", "対応中", "保留", "対応完了"]
 

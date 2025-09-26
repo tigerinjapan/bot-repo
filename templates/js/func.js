@@ -115,6 +115,31 @@ async function getFetchApiData(url) {
   }
 }
 
+function getDataList(elemId) {
+  // 1. HTML要素（IDが'data'のpタグ）を取得
+  const dataElement = getElem(elemId);
+
+  // 2. その要素の中身（文字列）を取得
+  const dataString = dataElement.textContent.trim();
+
+  // 3. 文字列をJavaScriptのリスト（配列）に変換
+  //    Pythonのリスト形式の文字列を、JavaScriptのJSON形式として解釈する。
+  //    これにより、文字列がリストになる。
+
+  let dataList = [];
+  try {
+      // ※ Jinjaで渡されるリストの形式（二重引用符か単一引用符かなど）によっては、
+      //    この処理の前に、文字列の調整が必要になる場合がある。
+      dataList = JSON.parse(dataString.replace(/'/g, '"'));
+  } catch (e) {
+      console.error("リストの形式が正しくありません:", e);
+      // エラーが起きた場合は空のリストにするか、別の処理をします
+      dataList = [];
+  }
+  return dataList;
+}
+
+
 // ローカル環境判定
 function isLocal() {
   let localFlg = false;

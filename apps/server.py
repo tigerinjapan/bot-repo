@@ -17,6 +17,7 @@ import apps.appl as appl
 import apps.line as line
 import apps.test as test
 import apps.utils.board_dao as board_dao
+import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_gemini as func_gemini
@@ -200,8 +201,15 @@ async def apps(request: Request, app_name: str):
         curr_func_nm = sys._getframe().f_code.co_name
         except_http_error(curr_func_nm, request.url._url)
 
+    data_list = []
+    if app_name == const.APP_REVIEW:
+        data_list.append(board_dto.LIST_APP)
+        data_list.append(board_dto.LIST_CATEGORY)
+        data_list.append(board_dto.LIST_TYPE)
+
+    context = {const.STR_REQUEST: request, "app_name": app_name, "data_list": data_list}
+
     target_html = const.HTML_RESULT_2
-    context = {const.STR_REQUEST: request, "app_name": app_name}
     return templates.TemplateResponse(target_html, context)
 
 
@@ -326,7 +334,7 @@ async def board_update(seq: str):
 @app.get("/line/send")
 async def send_msg():
     line.main()
-    result = {const.STR_MESSAGE: "Line Message sent."}
+    result = {const.STR_MESSAGE: "LINE Message sent."}
     return result
 
 

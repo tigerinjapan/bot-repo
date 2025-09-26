@@ -25,7 +25,7 @@ def get_board_info():
             {dto.FI_UPDATE_DATE: {"$gte": target_date}},
         ]
     }
-    sort = {dto.FI_STATUS: 1, dto.FI_APP: 1, dto.FI_UPDATE_DATE: -1}
+    sort = {dto.FI_STATUS: 1, dto.FI_UPDATE_DATE: -1, dto.FI_USER_NAME: -1}
 
     result = func_mongo.db_find(client, COLL, cond, sort=sort)
     if result:
