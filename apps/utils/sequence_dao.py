@@ -8,10 +8,17 @@ from apps.utils.function import get_now
 COLL = const.COLL_SEQUENCE
 
 
-# シーケンス取得し、インクリメント
-def get_sequence_and_update(client, div: str, seq_val: int) -> int:
+# シーケンス取得
+def get_sequence(client, div: str) -> int:
     cond = {"sDiv": div}
-    update_data = {"$inc": {"nSeq": seq_val}, "$set": {"dUpdateDate": get_now()}}
-    result = func_mongo.db_find_update(client, COLL, cond, update_data)
+    select_data = {"nSeq": 1}
+    result = func_mongo.db_find_one(client, COLL, cond, select_data)
     seq = result["nSeq"]
     return seq
+
+
+# シーケンス更新
+def update_sequence(client, div: str, seq_val: int):
+    cond = {"sDiv": div}
+    update_data = {"$inc": {"nSeq": seq_val}, "$set": {"dUpdateDate": get_now()}}
+    func_mongo.db_find_update(client, COLL, cond, update_data)

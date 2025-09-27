@@ -197,14 +197,27 @@ use(database)
 // db.board.deleteMany({ nSeq: { $gte: currentSeq } });
 
 // find documents
-db.board.find(
-    {
-        $or: [
-            { nStatus: { $ne: status_done } },
-            // { dUpdateDate: { $gte: new Date(strDate) } },
-        ]
-    },
-    { _id: 0, nApp: 1, sContents: 1, sUserName: 1, dUpdateDate: 1 }
+// db.board.find(
+//     {
+//         $or: [
+//             { nStatus: { $ne: status_done } },
+//             // { dUpdateDate: { $gte: new Date(strDate) } },
+//         ]
+//     },
+//     { _id: 0, nApp: 1, sContents: 1, sUserName: 1, dUpdateDate: 1 }
+// ).sort(
+//     { nStatus: 1, nApp: 1, dUpdateDate: -1 }
+// ).pretty();
+
+db.board.find({
+    sUserName: { $ne: "test" },
+    sUserName: { $in: ["hong", "test"] },
+    sRemark: { $exists: true },
+    dUpdateDate: { $gte: new Date("2025-01-01"), $lte: new Date("2025-12-31") },
+    $and: [{ nApp: 3 }, { nCategory: 1 }],
+    $or: [{ nStatus: 0 }, { nStatus: 1 }, { nStatus: 3 }]
+},
+    { _id: 0, nApp: 1, sContents: 1, sRemark: 1, sUserName: 1, nStatus: 1, dUpdateDate: 1 }
 ).sort(
-    { nStatus: 1, nApp: 1, dUpdateDate: -1 }
-).pretty();
+    { nStatus: 1, dUpdateDate: -1, sUserName: 1, }
+).limit(10);

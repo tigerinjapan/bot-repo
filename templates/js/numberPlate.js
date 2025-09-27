@@ -11,11 +11,7 @@ let timerId = null;
 let isTimerRunning = false;
 
 // ヘッダー設定
-const headContents = `
-  ${CONTENTS_HEAD_1}
-  <link rel="stylesheet" href="/templates/numberPlate.css" />
-`;
-getElemByTag(TAG_HEAD).innerHTML = headContents;
+getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_1;
 
 // DOM読み込み後の処理
 document.addEventListener("DOMContentLoaded", () => {

@@ -144,7 +144,7 @@ def get_mlb_stat_of_api(team_id: int):
             games = team_schedule_dates[0]["games"][0]
 
             status = games["status"]["detailedState"]
-            if status == "Final":
+            if status in ["In Progress", "Final"]:
                 game_date = get_game_date(games["gameDate"])
                 game_link = games["link"]
 
@@ -158,7 +158,7 @@ def get_mlb_stat_of_api(team_id: int):
 
                 home_score = home_team_data["score"]
                 away_score = away_team_data["score"]
-                game_score = f"{away_score}:{home_score}"
+                game_score = f"[{status[:2]}] {away_score}:{home_score}"
 
                 game_url = f"{const.URL_MLB_STAT_API}{game_link}"
                 response_data = func_api.get_response_result(game_url)

@@ -142,10 +142,11 @@ def get_generate_text_image(
         func.print_error_msg(SCRIPT_NAME, model, div, e)
         response = const.NONE_CONSTANT
 
-    if not response:
+    response_content = response.candidates[0].content
+    if not response or not response_content:
         return file_path
 
-    for part in response.candidates[0].content.parts:
+    for part in response_content.parts:
         if part.text:
             continue
         elif part.inline_data:

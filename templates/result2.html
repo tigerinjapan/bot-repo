@@ -2,7 +2,7 @@
 <html lang="ja">
 
 <head>
-  <title></title>
+  <title data-key="title"></title>
   <script src="/templates/const.js"></script>
   <script src="/templates/func.js"></script>
   {% if app_name == 'travel' %}
@@ -57,6 +57,10 @@
 
   {% elif 'design' in app_name %}
   <div id="markdown-container" class="container"></div>
+
+  {% else %}
+  <div id="container"></div>
+
   {% endif %}
 </body>
 

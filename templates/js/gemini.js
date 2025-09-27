@@ -3,11 +3,7 @@ const commonConditions_image = "高品質、詳細、フォトリアル、明る
 const commonConditions_text = "明確、簡潔、丁寧、ポジティブ、想像力をかきたてる";
 
 // ヘッダー設定
-const headContents = `
-    ${CONTENTS_HEAD_1}
-    <link rel="stylesheet" href="/templates/gemini.css" />
-`;
-getElemByTag(TAG_HEAD).innerHTML = headContents;
+getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_1;
 
 let geminiDataUrl = URL_GEMINI_ITEMS_SERVER;
 let apiUrl = URL_GEMINI_SERVER;
