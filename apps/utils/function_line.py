@@ -108,7 +108,7 @@ def send_message(access_token: str, messages):
     url = f"{URL_LINE_API}/v2/bot/message/broadcast"
     headers = {"Authorization": access_token}
     data = {"messages": messages}
-    json_data = func.get_dumps_json(data)
+    json_data = func.get_dumps_json(data, ensure_ascii=const.FLG_ON)
     result = func_api.get_response_result(
         url, request_type=const.REQUEST_TYPE_POST, headers=headers, data=json_data
     )

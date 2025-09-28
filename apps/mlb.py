@@ -47,7 +47,6 @@ def get_mlb_game_data(
         stat_data_list.append(home_away)
 
         stat_data_list.append(game_score)
-        stat_data_list.append(const.SYM_NEW_LINE)
 
         my_team_data = teams_data[home_away_div]
         batters = my_team_data["batters"]
@@ -59,12 +58,8 @@ def get_mlb_game_data(
         if not all_flg:
             player_id_list = player_id_list[:1]
 
-        add_cnt = 0
         for player_id in player_id_list:
             if player_id in batters or player_id in pitchers:
-                if 0 < add_cnt and add_cnt < len(player_id_list):
-                    stat_data_list.append(const.SYM_NEW_LINE)
-
                 players_data = game_data["gameData"]["players"]
                 for key, value in players_data.items():
                     if value.get("id") == player_id:
@@ -74,9 +69,9 @@ def get_mlb_game_data(
 
                 player_data = my_team_data["players"][f"ID{player_id}"]["stats"]
                 if player_data:
+                    stat_data_list.append(const.SYM_NEW_LINE)
                     game_stat = get_game_stats(player_data, all_flg)
                     stat_data_list.extend(game_stat)
-                    add_cnt += 1
 
         if all_flg:
             player_of_game_data = get_player_of_game_data(team_id, game_data)

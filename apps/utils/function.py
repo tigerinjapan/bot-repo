@@ -419,9 +419,12 @@ def get_loads_json(data: str):
 
 
 # JSONデータ書き込み
-def get_dumps_json(data):
-    json_data = json.dumps(data)
-    result = json_data.encode(const.CHARSET_ASCII)
+def get_dumps_json(data, indent: int = 2, ensure_ascii: bool = const.FLG_OFF):
+    json_data = json.dumps(data, indent=indent, ensure_ascii=ensure_ascii)
+    if ensure_ascii:
+        result = json_data.encode(const.CHARSET_ASCII)
+    else:
+        result = json_data
     return result
 
 

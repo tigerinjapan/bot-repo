@@ -285,6 +285,7 @@ def get_recommend_menu(outfit_text: str, menu_text: str) -> tuple[str, str]:
         "各アイテムの最大の文字数は、8。"
         "各アイテムは、ちゃんとした単語として成立する。"
         "解説と他の文言、記号は不要。"
+        "コーデと夕食は、出力例のように「改行」で区切る。"
         f"※出力例{NEW_LINE}"
         f"白いTシャツ&デニムジーンズ{const.SYM_NEW_LINE}"
         "チーズキムパ&味噌汁"
