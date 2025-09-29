@@ -6,7 +6,6 @@ import apps.today_korea as today_korea
 import apps.utils.constants as const
 import apps.utils.message_constants as msg_const
 import apps.utils.function as func
-import apps.utils.function_gemini as func_gemini
 import apps.utils.function_kakao as func_kakao
 
 # スクリプト名
@@ -28,20 +27,12 @@ def main(temp_div: str = func_kakao.OBJECT_TYPE_FEED):
         token = func_kakao.get_access_token()
         if token:
             try:
-                img_flg = const.FLG_ON
-                if temp_div == func_kakao.OBJECT_TYPE_TEXT:
-                    img_flg = const.FLG_OFF
-
                 # 今日のニュース取得
-                (message, title, link, link_mo, forecast, outfit) = (
-                    today_korea.get_today_info(img_flg)
+                (message, title, link, link_mo, file_path) = today_korea.get_today_info(
+                    temp_div
                 )
 
                 if temp_div == func_kakao.OBJECT_TYPE_FEED:
-                    file_path = func_gemini.get_today_news_image(
-                        message, forecast, outfit[:20], const.APP_TODAY_KOREA
-                    )
-
                     if file_path:
                         msg = func_kakao.URL_TODAY_KOREA_IMG
                         func.print_info_msg(const.STR_IMG, msg)

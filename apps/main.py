@@ -87,6 +87,7 @@ def daily_job_3():
 def hourly_job():
     appl.update_news()
     line.get_msg_data_today()
+    appl.update_news(const.APP_TODAY_KOREA)
 
 
 # 随時ジョブ

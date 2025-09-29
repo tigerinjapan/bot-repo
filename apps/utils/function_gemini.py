@@ -157,6 +157,7 @@ def get_generate_text_image(
                 font_type = msg_data["font_type"]
                 font_size = msg_data["font_size"]
                 xy_size = msg_data["xy_size"]
+                img_size = msg_data["img_size"]
 
                 font_path = func.get_file_path(font_type, const.FILE_TYPE_TTC)
                 font = ImageFont.truetype(font=font_path, size=font_size)
@@ -169,21 +170,23 @@ def get_generate_text_image(
                 text_color = "black"
 
                 # 外枠を描画
-                x = xy_size[0]
-                y = xy_size[1]
+                x_size = xy_size[0]
+                y_size = xy_size[1]
                 for dx in [-2, 0, 2]:
                     for dy in [-2, 0, 2]:
                         if dx != 0 or dy != 0:  # 中心はスキップ
                             draw.text(
-                                (x + dx, y + dy), msg, font=font, fill=outline_color
+                                (x_size + dx, y_size + dy),
+                                msg,
+                                font=font,
+                                fill=outline_color,
                             )
 
                 draw.text(
                     xy=xy_size, text=msg, fill=text_color, font=font, align="left"
                 )
 
-            size = (const.LINE_IMG_SIZE_W, const.LINE_IMG_SIZE_H)
-            img = image_open.resize(size)
+            img = image_open.resize(img_size)
             img.save(file_path, optimize=const.FLG_ON)
             image_open.close()
             break
@@ -222,9 +225,13 @@ def get_today_news_image(
             f"{img_div}の今日のファッションは、{today_outfit}。"
         )
 
+    img_size = (const.LINE_IMG_SIZE_W, const.LINE_IMG_SIZE_H)
+    if div == const.APP_TODAY_KOREA:
+        img_size = (const.KAKAO_IMG_SIZE_W, const.KAKAO_IMG_SIZE_H)
+
     contents = (
         "※以下内容を参考し、イメージを生成してください。"
-        f"{const.LINE_IMG_SIZE_W}px * {const.LINE_IMG_SIZE_H}pxのサイズに合わせる"
+        f"{img_size[0]}px * {img_size[1]}pxのサイズに合わせる"
         f"生成イメージの背景は、天気情報の「{forecast}」が把握できるようにする。"
         "生成イメージの背景は、黒系の暗い色は避けて、シンプルなイメージにする。"
         f"{contents_outfit}"
@@ -237,11 +244,11 @@ def get_today_news_image(
     contents = func.get_translated_text(contents)
 
     font_type = const.FONT_TYPE_YUSEI
-    font_size = 30
+    font_size = const.LINE_FONT_SIZE
     xy_size = (const.LINE_X_AXIS, const.LINE_Y_AXIS)
     if div == const.APP_TODAY_KOREA:
         font_type = const.FONT_TYPE_NANUM
-        font_size = 36
+        font_size = const.KAKAO_FONT_SIZE
         xy_size = (const.KAKAO_X_AXIS, const.KAKAO_Y_AXIS)
 
     msg_data = {
@@ -249,6 +256,7 @@ def get_today_news_image(
         "font_type": font_type,
         "font_size": font_size,
         "xy_size": xy_size,
+        "img_size": img_size,
     }
     file_path = get_generate_text_image(div, contents, msg_data=msg_data)
     return file_path

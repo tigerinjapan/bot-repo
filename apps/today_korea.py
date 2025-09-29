@@ -4,7 +4,10 @@ import apps.ex as ex
 import apps.today as today
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.function_beautiful_soup as func_bs
+import apps.utils.function_gemini as func_gemini
+import apps.utils.function_kakao as func_kakao
 
 # 定数（韓国語）
 DIV_TITLE = "📢 {} 오늘의 뉴스 📢"
@@ -28,28 +31,49 @@ URL_NAVER_RANKING_NEWS_MO = "https://m.news.naver.com/rankingList"
 
 TITLE_LINK = "✈ 최저가 항공권 정보 ✈"
 
+# タイトル
+app_title = "今日の生活情報(韓国)"
+
+# カラムリスト
+col_list = today.col_list
+
+
+# アイテムリスト取得
+def get_item_list():
+    today_info_list = get_today_info_list()
+    today_info = zip(DIV_LIST, today_info_list)
+    item_list = [[div, info] for div, info in today_info if info]
+    return item_list
+
 
 # 今日の生活情報取得
-def get_today_info(img_flg: bool = const.FLG_ON):
+def get_today_info(temp_div: str = func_kakao.OBJECT_TYPE_FEED):
     # タイトル
     today_date = func.convert_date_to_str(func.get_now(), const.DATE_FORMAT_YYYYMMDD_KO)
     title = DIV_TITLE.format(today_date)
-    if img_flg:
+    if temp_div == func_kakao.OBJECT_TYPE_FEED:
         title = title.replace("📢", "■")
 
-    today_info_list = get_today_info_list()
-    item_list = [
-        f"[{div}] {info}" for div, info in zip(DIV_LIST, today_info_list) if info
+    json_data = func_api.get_result_on_app(const.APP_TODAY_KOREA)
+    data_list = [list(info.values()) for info in json_data]
+    today_info_list = [
+        f"【{data[0]}】{const.SYM_NEW_LINE}{data[1]}" for data in data_list if data[1]
     ]
-    item_list.insert(0, title)
-    today_info = const.SYM_NEW_LINE.join(item_list)
+    today_info_list.insert(0, title)
+    today_info = const.SYM_NEW_LINE.join(today_info_list)
 
     link_title = TITLE_LINK
     link = URL_LINK
     link_mo = URL_LINK_MO
     forecast = get_forecast()
     outfit = today.get_today_outfit()
-    return today_info, link_title, link, link_mo, forecast, outfit
+
+    file_path = const.SYM_BLANK
+    if temp_div == func_kakao.OBJECT_TYPE_FEED:
+        file_path = func_gemini.get_today_news_image(
+            today_info, forecast, outfit[:20], const.APP_TODAY_KOREA
+        )
+    return today_info, link_title, link, link_mo, file_path
 
 
 # 今日の生活情報取得
@@ -174,6 +198,4 @@ def get_phrase():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # today_info, link, link_mo, link_title, forecast, outfit = get_today_info_list()
-    # func.print_test_data(today_info)
-    get_forecast()
+    get_today_info()

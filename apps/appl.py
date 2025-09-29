@@ -12,6 +12,7 @@ import apps.ranking as ranking
 import apps.site as site
 import apps.study as study
 import apps.today as today
+import apps.today_korea as today_korea
 import apps.tv as tv
 import apps.user as user
 import apps.utils.constants as const
@@ -194,9 +195,14 @@ def update_news(app_name: str = const.SYM_BLANK):
     app_name_list = const.LIST_APP_NAME
 
     if app_name:
-        app_div_idx = app_name_list.index(app_name)
-        app_div_list = [app_div_list[app_div_idx]]
-        app_name_list = [app_name]
+        if app_name == const.APP_TODAY_KOREA:
+            app_div_list = [today_korea]
+            app_name_list = [const.APP_TODAY_KOREA]
+
+        else:
+            app_div_idx = app_name_list.index(app_name)
+            app_div_list = [app_div_list[app_div_idx]]
+            app_name_list = [app_name]
 
     for app_div, app_name in zip(app_div_list, app_name_list):
         app_exec = AppExec(app_div, app_name)
@@ -242,4 +248,5 @@ def no_sleep():
 if __name__ == const.MAIN_FUNCTION:
     # update_news()
     app_name = const.APP_TODAY
+    app_name = const.APP_TODAY_KOREA
     update_news(app_name)

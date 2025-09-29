@@ -130,8 +130,8 @@ def get_template_object(
                 "title": title,
                 "description": message,
                 "image_url": img_url,
-                "image_width": 480,
-                "image_height": 480,
+                "image_width": const.KAKAO_IMG_SIZE_W,
+                "image_height": const.KAKAO_IMG_SIZE_H,
                 "link": {"web_url": link, "mobile_web_url": link_mo},
             },
         }
