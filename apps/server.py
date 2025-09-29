@@ -14,6 +14,7 @@ from threading import Thread
 from uvicorn import Config, Server
 
 import apps.appl as appl
+import apps.kakao as kakao
 import apps.line as line
 import apps.test as test
 import apps.utils.board_dao as board_dao
@@ -27,6 +28,12 @@ import apps.utils.rank_dao as rank_dao
 import apps.utils.user_dao as user_dao
 import apps.utils.user_dto as user_dto
 
+# スクリプト名
+SCRIPT_NAME = func.get_app_name(__file__)
+
+# トークン有効期限（分）
+TOKEN_EXPIRATION_MINUTES = 10
+
 # FastAPIインスタンス生成とセッションミドルウェア追加
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="secret_key")
@@ -34,12 +41,6 @@ templates = Jinja2Templates(directory="templates")
 
 # OAuth2トークン認証設定
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-# スクリプト名
-SCRIPT_NAME = func.get_app_name(__file__)
-
-# トークン有効期限（分）
-TOKEN_EXPIRATION_MINUTES = 10
 
 
 # サーバー起動
@@ -115,7 +116,9 @@ async def issue_token(request: Request):
 async def root(request: Request):
     user = request.session.get(const.STR_USER)
     if user:
-        response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
+        response = RedirectResponse(
+            url=const.PATH_APP_NEWS, status_code=const.STATUS_CODE_OK
+        )
     else:
         context = {const.STR_REQUEST: request, const.STR_TITLE: const.SYSTEM_NAME}
         response = templates.TemplateResponse(const.HTML_INDEX, context)
@@ -144,7 +147,9 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
             user_dto.FI_LAST_LOGIN_DATE: func.get_now(),
         }
         user_dao.update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
-        response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
+        response = RedirectResponse(
+            url=const.PATH_APP_NEWS, status_code=const.STATUS_CODE_OK
+        )
         func.print_info_msg(
             user_info[user_dto.FI_USER_NAME],
             msg_const.MSG_INFO_LOGIN,
@@ -166,9 +171,11 @@ async def logout(request: Request):
     return templates.TemplateResponse(const.HTML_INDEX, context)
 
 
-# アプリケーション実行（ユーザー・数値・結果）
+# アプリケーション実行
 @app.get("/app/{app_name}")
 async def app_exec(request: Request, app_name: str):
+    curr_func_nm = sys._getframe().f_code.co_name
+
     try:
         if app_name == const.APP_USER:
             target_html, context = appl.exec_user(request, app_name)
@@ -176,13 +183,11 @@ async def app_exec(request: Request, app_name: str):
             target_html, context = appl.exec_number(request, app_name)
         else:
             if not app_name in const.LIST_ALL_APP_NAME:
-                curr_func_nm = sys._getframe().f_code.co_name
                 except_http_error(curr_func_nm, request.url._url)
 
             target_html, context = appl.exec_result(request, app_name)
 
     except Exception as e:
-        curr_func_nm = sys._getframe().f_code.co_name
         func.print_error_msg(SCRIPT_NAME, curr_func_nm, app_name, e)
         target_html = const.HTML_INDEX
         context = {
@@ -330,6 +335,15 @@ async def board_update(seq: str):
     return RedirectResponse(url=const.PATH_APP_BOARD)
 
 
+# ニュース情報更新
+@app.get(const.PATH_UPDATE)
+async def update_news():
+    appl.update_news()
+    line.get_msg_data_today()
+    result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
+    return result
+
+
 # LINEメッセージ送信
 @app.get("/line/send")
 async def send_msg():
@@ -338,12 +352,11 @@ async def send_msg():
     return result
 
 
-# ニュース情報更新
-@app.get(const.PATH_UPDATE)
-async def update_news():
-    appl.update_news()
-    line.get_msg_data_today()
-    result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
+# Kakaoメッセージ送信
+@app.get("/kakao/send")
+async def send_msg_kakao():
+    kakao.main()
+    result = {const.STR_MESSAGE: "Kakao Message sent."}
     return result
 
 

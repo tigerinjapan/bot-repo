@@ -63,13 +63,13 @@ def get_mlb_game_data(
                 players_data = game_data["gameData"]["players"]
                 for key, value in players_data.items():
                     if value.get("id") == player_id:
+                        stat_data_list.append(const.SYM_NEW_LINE)
                         player_name = value.get("boxscoreName")
                         stat_data_list.append(player_name)
                         break
 
                 player_data = my_team_data["players"][f"ID{player_id}"]["stats"]
                 if player_data:
-                    stat_data_list.append(const.SYM_NEW_LINE)
                     game_stat = get_game_stats(player_data, all_flg)
                     stat_data_list.extend(game_stat)
 

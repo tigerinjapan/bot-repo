@@ -31,7 +31,7 @@ DICT_EX = dict(zip(EX_LIST, EX_LIST_JA))
 
 
 # 今日のウォン取得
-def get_today_won() -> str:
+def get_today_won(ko_flg: bool = const.FLG_OFF) -> str:
     url = f"{const.URL_NAVER_FINANCE}/marketindex/exchangeDetail.naver?marketindexCd=FX_JPYKRW"
     class_ = "tbl_calculator"
 
@@ -41,7 +41,13 @@ def get_today_won() -> str:
     won = "950"
     if elem_list:
         won = get_ex_val(elem_list[0].text)
-    today_won_rate = f"100{const.STR_JPY_JA} = {won}{const.STR_KRW_JA}"
+
+    yen_unit = const.STR_JPY_JA
+    won_unit = const.STR_KRW_JA
+    if ko_flg:
+        yen_unit = const.STR_JPY_KO
+        won_unit = const.STR_KRW_KO
+    today_won_rate = f"100{yen_unit} = {won}{won_unit}"
     return today_won_rate
 
 

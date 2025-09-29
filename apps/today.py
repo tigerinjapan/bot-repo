@@ -207,8 +207,8 @@ def get_today_menu():
 
 
 # 今日のフレーズ取得
-def get_today_phrase():
-    file_path = func.get_file_path(const.STR_PHRASE, const.FILE_TYPE_CSV)
+def get_today_phrase(div: str = const.STR_PHRASE):
+    file_path = func.get_file_path(div, const.FILE_TYPE_CSV)
     dict_data = func.get_dict_from_csv(file_path)
     random_int = str(func.get_random_int(const.MAX_PHRASE_CSV))
     key = random_int.zfill(3)

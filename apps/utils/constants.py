@@ -59,6 +59,7 @@ DATE_FORMAT_OUTPUT_FILE = "%Y%m%d%H%M%S"
 DATE_FORMAT_YYYYMMDD = "%Y%m%d"
 DATE_FORMAT_YYYYMMDD_SLASH = "%Y/%m/%d(%a)"
 DATE_FORMAT_YYYYMMDD_HHMM = "%Y/%m/%d(%a) %H:%M"
+DATE_FORMAT_YYYYMMDD_KO = "%Y년%#m월%#d일"
 DATE_FORMAT_MMDD_SLASH_NO_ZERO = "%#m/%#d"
 DATE_FORMAT_ISO = "iso"
 
@@ -116,6 +117,8 @@ LINE_IMG_SIZE_W = 480
 LINE_IMG_SIZE_H = 360
 LINE_IMG_X_AXIS = 260
 LINE_IMG_Y_AXIS = 90
+KAKAO_X_AXIS = 60
+KAKAO_Y_AXIS = 180
 
 # 件数
 MIN_DISPLAY_CNT = 3
@@ -189,6 +192,13 @@ INPUT_TYPE_RADIO = "radio"
 INPUT_TYPE_SELECT = "select"
 INPUT_TYPE_DATE = "date"
 INPUT_TYPE_BUTTON = "button"
+
+##### フォントタイプ #####
+FONT_TYPE_MEIRYO = "meiryo"
+FONT_TYPE_MSGOTHIC = "msgothic"
+FONT_TYPE_UZURA = "uzura"
+FONT_TYPE_YUSEI = "yusei"
+FONT_TYPE_NANUM = "nanum"
 
 ##### 記号、特殊文字 #####
 SYM_NEW_LINE = "\n"
@@ -275,6 +285,7 @@ STR_USER_INFO = "userInfo"
 STR_ZIP_CODE = "zipCode"
 STR_ENV_VAR = "env_var"
 STR_NUMBER_PLATE = "numberPlate"
+STR_PHRASE_KO = "phrase_ko"
 
 STR_DB = "db"
 STR_MONGO = "mongo"
@@ -330,6 +341,9 @@ STR_TWD_JA = "ユェン"
 STR_VND_JA = "ドン"
 STR_THB_JA = "バーツ"
 STR_PHP_JA = "ペソ"
+
+STR_JPY_KO = "엔"
+STR_KRW_KO = "원"
 
 ##### マスキング #####
 MASKING_COMPANY = "zzzzzz"
@@ -403,8 +417,11 @@ URL_GOOGLE = "https://www.google.com"
 URL_TENKI = "https://tenki.jp"
 URL_CANCAM = "https://cancam.jp"
 URL_SMBC_FUND = "https://www.smd-am.co.jp/fund"
+URL_NAVER = "https://www.naver.com"
+URL_NAVER_MO = "https://m.naver.com"
 URL_NAVER_FINANCE = "https://finance.naver.com"
 URL_NAVER_SEARCH = "https://search.naver.com"
+URL_NAVER_NEWS = "https://news.naver.com"
 URL_KONEST = "https://www.konest.com"
 URL_WOWKOREA = "https://www.wowkorea.jp"
 URL_NIKKEI = "https://www.nikkei.com"
@@ -436,6 +453,8 @@ APP_BOARD = "board"
 
 APP_TRAVEL_DESIGN = "travel_design"
 APP_URL_DESIGN = "url_design"
+
+APP_TODAY_KOREA = "today_korea"
 
 LIST_APP_NAME = [
     APP_TODAY,

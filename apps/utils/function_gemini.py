@@ -196,10 +196,12 @@ def get_generate_text_image(
 
 # ニュースイメージ取得
 def get_today_news_image(
-    msg: str, forecast: str, today_outfit: str, img_div: str = const.STR_WOMAN_JA
+    msg: str,
+    forecast: str,
+    today_outfit: str,
+    div: str = const.APP_TODAY,
+    img_div: str = const.STR_WOMAN_JA,
 ) -> str:
-    div = const.APP_TODAY
-
     contents_outfit = img_woman = const.SYM_BLANK
     if today_outfit:
         if img_div == const.STR_WOMAN_JA:
@@ -234,11 +236,19 @@ def get_today_news_image(
     # 英語に翻訳
     contents = func.get_translated_text(contents)
 
+    font_type = const.FONT_TYPE_YUSEI
+    font_size = 30
+    xy_size = (const.LINE_X_AXIS, const.LINE_Y_AXIS)
+    if div == const.APP_TODAY_KOREA:
+        font_type = const.FONT_TYPE_NANUM
+        font_size = 36
+        xy_size = (const.KAKAO_X_AXIS, const.KAKAO_Y_AXIS)
+
     msg_data = {
         "msg": msg,
-        "font_type": "yusei",
-        "font_size": 30,
-        "xy_size": (const.LINE_X_AXIS, const.LINE_Y_AXIS),
+        "font_type": font_type,
+        "font_size": font_size,
+        "xy_size": xy_size,
     }
     file_path = get_generate_text_image(div, contents, msg_data=msg_data)
     return file_path

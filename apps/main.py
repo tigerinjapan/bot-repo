@@ -4,6 +4,7 @@ import dotenv
 import schedule
 
 import apps.appl as appl
+import apps.kakao as kakao
 import apps.line as line
 import apps.server as server
 import apps.utils.constants as const
@@ -16,6 +17,7 @@ dotenv.load_dotenv()
 TIME_WEEKLY_JOB = func.get_env_val("TIME_WEEKLY_JOB", masking_flg=const.FLG_OFF)
 TIME_DAILY_JOB = func.get_env_val("TIME_DAILY_JOB", masking_flg=const.FLG_OFF)
 TIME_DAILY_JOB_2 = func.get_env_val("TIME_DAILY_JOB_2", masking_flg=const.FLG_OFF)
+TIME_DAILY_JOB_3 = func.get_env_val("TIME_DAILY_JOB_3", masking_flg=const.FLG_OFF)
 MIN_HOURLY_JOB = func.get_env_val("MIN_HOURLY_JOB", masking_flg=const.FLG_OFF)
 SEC_NO_SLEEP = func.get_env_val("SEC_NO_SLEEP", masking_flg=const.FLG_OFF)
 
@@ -36,6 +38,7 @@ def job_scheduler():
     # 毎日指定された時間に実行（例：07:00）
     schedule.every().day.at(TIME_DAILY_JOB).do(daily_job)
     schedule.every().day.at(TIME_DAILY_JOB_2).do(daily_job_2)
+    schedule.every().day.at(TIME_DAILY_JOB_3).do(daily_job_3)
 
     # 1時間毎に実行（例：:30）
     schedule.every().hour.at(MIN_HOURLY_JOB).do(hourly_job)
@@ -73,6 +76,11 @@ def daily_job():
 def daily_job_2():
     line.main(data_div=const.NUM_TWO)
     line.sub(div=const.APP_MLB)
+
+
+# 日次ジョブ
+def daily_job_3():
+    kakao.main()
 
 
 # 時次ジョブ
