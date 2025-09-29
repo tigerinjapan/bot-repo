@@ -32,9 +32,7 @@ def get_lcc_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
     for lcc_info in lcc_list:
         lcc_data = []
 
-        date = func_bs.find_elem_by_attr(
-            lcc_info, attr_div=const.ATTR_CLASS, attr_val="bgdate"
-        ).text
+        date = func_bs.find_elem_by_class(lcc_info, "bgdate").text
         title_info = func_bs.find_elem_by_attr(lcc_info, tag=const.TAG_A)
         title_text = title_info.text.split(const.SYM_COMMA_JAP)
         company = title_text[0]

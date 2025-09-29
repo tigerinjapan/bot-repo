@@ -220,7 +220,7 @@ def get_today_phrase():
 def get_elem_val_by_class(soup, class_: str) -> str:
     elem_val = const.SYM_BLANK
 
-    elem = func_bs.find_elem_by_attr(soup, attr_div=const.ATTR_CLASS, attr_val=class_)
+    elem = func_bs.find_elem_by_class(soup, class_)
     if elem:
         if class_ == "forecast-image":
             elem_val = elem.get(const.ATTR_ALT)

@@ -17,7 +17,6 @@ URL_SERVER = func.get_server_url()
 # プロパティ
 IMG_NO = func.get_env_val("LINE_IMG_DIV", masking_flg=const.FLG_OFF)
 NUM_IMG_MAX_SEQ = 4
-FONT_TYPE_UZURA = "uzura"
 
 
 # リクエスト送信
@@ -91,7 +90,7 @@ def create_msg_img(div: str, msg: str, forecast: str = const.SYM_BLANK) -> str:
 
     img_file_base = f"{img_div}_{img_no}"
 
-    font_type = FONT_TYPE_UZURA
+    font_type = const.FONT_TYPE_UZURA
     font_size = 11
     xy_size = (45, 90)
     if div == const.APP_TODAY:

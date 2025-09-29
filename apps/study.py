@@ -58,10 +58,9 @@ def get_naver_news_summary(keyword: str) -> list[str]:
     news_list = []
     if a_elem_list:
         for a_elem in a_elem_list:
-            time_elem = func_bs.find_elem_by_attr(
+            time_elem = func_bs.find_elem_by_class(
                 a_elem,
-                attr_div=const.ATTR_CLASS,
-                attr_val="sds-comps-text sds-comps-text-type-body2 sds-comps-text-weight-sm sds-comps-profile-info-subtext",
+                "sds-comps-text sds-comps-text-type-body2 sds-comps-text-weight-sm sds-comps-profile-info-subtext",
             )
 
             if not time_elem:
@@ -69,20 +68,18 @@ def get_naver_news_summary(keyword: str) -> list[str]:
             time_text = time_elem.text
 
             if func.check_in_list(time_text, ["분 전", "시간 전"]):
-                contents_elem_list = func_bs.find_elem_by_attr(
+                contents_elem_list = func_bs.find_elem_by_class(
                     a_elem,
-                    attr_div=const.ATTR_CLASS,
-                    attr_val="sds-comps-text sds-comps-text-ellipsis sds-comps-text-ellipsis-1 sds-comps-text-type-headline1",
+                    "sds-comps-text sds-comps-text-ellipsis sds-comps-text-ellipsis-1 sds-comps-text-type-headline1",
                     list_flg=const.FLG_ON,
                 )
 
                 for contents_elem in contents_elem_list:
                     contents_text = contents_elem.text
                     if keyword in contents_text:
-                        contents_body_text = func_bs.find_elem_by_attr(
+                        contents_body_text = func_bs.find_elem_by_class(
                             a_elem,
-                            attr_div=const.ATTR_CLASS,
-                            attr_val="sds-comps-text sds-comps-text-ellipsis sds-comps-text-ellipsis-3 sds-comps-text-type-body1",
+                            "sds-comps-text sds-comps-text-ellipsis sds-comps-text-ellipsis-3 sds-comps-text-type-body1",
                         ).text
                         contents_text += contents_body_text
                         news_list.append(contents_text)

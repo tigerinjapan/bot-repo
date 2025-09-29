@@ -99,6 +99,14 @@ def find_elem_by_attr(
     return elem
 
 
+# 要素取得
+def find_elem_by_class(soup, attr_val: str, list_flg: bool = const.FLG_OFF):
+    elem = find_elem_by_attr(
+        soup, attr_div=const.ATTR_CLASS, attr_val=attr_val, list_flg=list_flg
+    )
+    return elem
+
+
 # 要素取得(href)
 def get_link_from_soup(soup) -> str:
     elem = find_elem_by_attr(soup, tag=const.TAG_A, attr_div=const.ATTR_HREF)

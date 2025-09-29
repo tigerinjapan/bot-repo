@@ -250,11 +250,8 @@ def get_ranking_info():
     url = f"{const.URL_MLB}/stats/pitching/whip?sortState=asc"
 
     soup = func_bs.get_elem_from_url(url, attr_val="table-scroller-GsCM0EhI scroller")
-    player_info_list = func_bs.find_elem_by_attr(
-        soup,
-        attr_div=const.ATTR_CLASS,
-        attr_val="top-wrapper-TqtRaIeD",
-        list_flg=const.FLG_ON,
+    player_info_list = func_bs.find_elem_by_class(
+        soup, "top-wrapper-TqtRaIeD", list_flg=const.FLG_ON
     )[0:5]
     for player_info in player_info_list:
         player_name = func_bs.find_elem_by_attr(
@@ -302,8 +299,8 @@ def get_last_game_info(player_div: int = const.NUM_ONE) -> tuple[str, str]:
 # テキスト取得
 def get_text_from_info(soup, div=const.NUM_ZERO):
     attr_val = "col-0 row-0 td--text" if div == const.NUM_ZERO else f"col-{div} row-0"
-    soup = func_bs.find_elem_by_attr(soup, attr_div=const.ATTR_CLASS, attr_val=attr_val)
-    text = func_bs.get_text_from_soup(soup)
+    elem = func_bs.find_elem_by_class(soup, attr_val)
+    text = func_bs.get_text_from_soup(elem)
     return text
 
 

@@ -72,9 +72,9 @@ def get_elem_val_list(div: str):
 
     attr_val_list = ["img-fluid lazy", "card-body pt-3 pt-lg-0"]
     for attr_val in attr_val_list:
-        elem_list = func_bs.find_elem_by_attr(
-            soup, attr_div=const.ATTR_CLASS, attr_val=attr_val, list_flg=const.FLG_ON
-        )[: const.MAX_DISPLAY_CNT]
+        elem_list = func_bs.find_elem_by_class(soup, attr_val, list_flg=const.FLG_ON)[
+            : const.MAX_DISPLAY_CNT
+        ]
         elem_val_list.append(elem_list)
 
     return elem_val_list

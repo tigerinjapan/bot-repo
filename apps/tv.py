@@ -43,18 +43,13 @@ def get_tv_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
     url = f"{const.URL_TV}/ranking/?genre_id=5"
     program_list = func_bs.get_elem_from_url(url, attr_val="program_list_convertible")
 
-    link_info_list = func_bs.find_elem_by_attr(
-        program_list,
-        attr_div=const.ATTR_CLASS,
-        attr_val="js-logging",
-        list_flg=const.FLG_ON,
+    link_info_list = func_bs.find_elem_by_class(
+        program_list, "js-logging", list_flg=const.FLG_ON
     )
 
     for link_info in link_info_list:
-        tv_info_text = func_bs.find_elem_by_attr(
-            link_info,
-            attr_div=const.ATTR_CLASS,
-            attr_val="program_supplement",
+        tv_info_text = func_bs.find_elem_by_class(
+            link_info, "program_supplement"
         ).text.split("　")
 
         date_txt = tv_info_text[0].split(" ")
@@ -70,9 +65,7 @@ def get_tv_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
             date += f" {time_text}"
             channel = tv_info_text[1]
 
-            title = func_bs.find_elem_by_attr(
-                link_info, attr_div=const.ATTR_CLASS, attr_val="program_title"
-            ).text
+            title = func_bs.find_elem_by_class(link_info, "program_title").text
             link = const.URL_TV + link_info[const.ATTR_HREF]
             title_link = func.get_a_tag(link, title)
 

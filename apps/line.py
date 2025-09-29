@@ -83,7 +83,7 @@ def main(
 
             except Exception as e:
                 curr_func_nm = sys._getframe().f_code.co_name
-                err_msg = msg_const.MSG_INFO_SERVER_KEEP_WORKING
+                err_msg = msg_const.MSG_ERR_MSG_SEND
                 func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg, e)
 
                 if not func.is_local_env():
@@ -239,7 +239,9 @@ def get_msg_data_list(
 
     if msg_type == MSG_TYPE_IMG:
         if msg_div == const.APP_TODAY:
-            file_path = func_gemini.get_today_news_image(text_msg, forecast, today_outfit)
+            file_path = func_gemini.get_today_news_image(
+                text_msg, forecast, today_outfit
+            )
 
         if file_path:
             msg = func_line.URL_TODAY_IMG
