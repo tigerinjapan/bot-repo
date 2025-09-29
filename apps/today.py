@@ -212,7 +212,10 @@ def get_today_phrase(div: str = const.STR_PHRASE):
     dict_data = func.get_dict_from_csv(file_path)
     random_int = str(func.get_random_int(const.MAX_PHRASE_CSV))
     key = random_int.zfill(3)
-    phrase = dict_data.get(key)[1]
+    data = dict_data.get(key)
+    phrase = data[1]
+    if div == const.STR_ENGLISH:
+        return data
     return phrase
 
 

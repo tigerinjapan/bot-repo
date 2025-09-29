@@ -14,8 +14,9 @@ DIV_TITLE = "📢 {} 오늘의 뉴스 📢"
 DIV_WEATHER = "날씨"
 DIV_RATE = "환율"
 DIV_JAPANESE = "일본어"
+DIV_ENGLISH = "영어"
 DIV_FLIGHT = "항공권"
-DIV_LIST = [DIV_WEATHER, DIV_RATE, DIV_JAPANESE, DIV_FLIGHT]
+DIV_LIST = [DIV_WEATHER, DIV_RATE, DIV_JAPANESE, DIV_ENGLISH, DIV_FLIGHT]
 
 LIST_CITY_KOR = ["서울", "인천", "대구"]
 LIST_CITY_JPN = ["도쿄", "후쿠오카", "오사카", "나고야", "오키나와"]
@@ -87,10 +88,13 @@ def get_today_info_list():
     # 日本語
     japanese = get_japanese_study()
 
+    # 英語
+    english_conversation = get_english_conversation()
+
     # 航空券セール
     flight_sale, link = get_flight_sale()
 
-    today_info = [weather_news, yen_to_won, japanese, flight_sale]
+    today_info = [weather_news, yen_to_won, japanese, english_conversation, flight_sale]
     return today_info
 
 
@@ -188,7 +192,16 @@ def get_japanese_study() -> str:
                 )
 
             study = f"{japanese} : {korean}"
+            if korean_elem.get("lang") == const.LANG_JA:
+                study = f"{korean} : {japanese}"
             return study
+
+
+# 英会話
+def get_english_conversation():
+    data = today.get_today_phrase(const.STR_ENGLISH)
+    english_conversation = f"{data[1]}{const.SYM_NEW_LINE}{data[2]}"
+    return english_conversation
 
 
 # 今日の一言取得

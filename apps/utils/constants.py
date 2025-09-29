@@ -121,10 +121,9 @@ LINE_IMG_Y_AXIS = 90
 
 KAKAO_FONT_SIZE = 32
 KAKAO_X_AXIS = 50
-KAKAO_Y_AXIS = 160
+KAKAO_Y_AXIS = 140
 KAKAO_IMG_SIZE_W = 480
 KAKAO_IMG_SIZE_H = 480
-
 
 # 件数
 MIN_DISPLAY_CNT = 3
@@ -282,6 +281,7 @@ STR_NUMBER = "number"
 STR_ANSWER = "answer"
 STR_LEVEL = "level"
 STR_REST = "rest"
+STR_ENGLISH = "english"
 
 STR_KPOP = "kpop"
 STR_NISA = "nisa"

@@ -10,22 +10,32 @@ import apps.utils.function_line as func_line
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
 
+# Kakao API情報
+STR_KAKAO_API_TOKEN = f"KakaoAPI{const.STR_TOKEN}"
+KAKAO_API_KEY = func.get_env_val("KAKAO_API_KEY")
+KAKAO_API_SECRET = func.get_env_val("KAKAO_API_SECRET")
+
 # URL
-URL_TOKEN = "https://kauth.kakao.com/oauth/token"
+URL_OAUTH = "https://kauth.kakao.com/oauth"
+URL_TOKEN = f"{URL_OAUTH}/token"
 URL_API_SEND = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
+URL_API_LOGOUT = "https://kapi.kakao.com/v1/user/logout"
 URI_REDIRECT = "http://localhost:5000/"
 URL_ICO = f"{func_line.URL_KOYEB_APP}/templates/favicon.ico"
 URL_TODAY_KOREA_IMG = f"{func_line.URL_KOYEB_IMG}/{const.APP_TODAY_KOREA}"
+
+# リダイレクトURI
+URL_SERVER = func.get_server_url()
+REDIRECT_URI = f"{URL_SERVER}/kakao/oauth"
+
+auth_url = f"{URL_OAUTH}/authorize?client_id={KAKAO_API_KEY}&redirect_uri={REDIRECT_URI}"
+auth_url += "&response_type=code&scope=talk_message&prompt=login"
+URL_AUTH = auth_url
 
 # Kakaoメッセージタイプ
 OBJECT_TYPE_FEED = "feed"
 OBJECT_TYPE_TEXT = "text"
 OBJECT_TYPE_LIST = "list"  # TODO: 実装要
-
-# Kakao API情報
-STR_KAKAO_API = "Kakao API"
-KAKAO_API_KEY = func.get_env_val("KAKAO_API_KEY")
-KAKAO_API_SECRET = func.get_env_val("KAKAO_API_SECRET")
 
 # 認証コード：毎回アクセスし、取得が必要であるため、
 # リフレッシュトークン方式でアクセストークン発行（有効期限：1か月）
@@ -94,11 +104,29 @@ def send_message(
     link: str = const.SYM_BLANK,
     link_mo: str = const.SYM_BLANK,
 ):
+    post_kakao_api(access_token, temp_div, title, message, link, link_mo)
+
+
+# メッセージ送信
+def post_kakao_api(
+    access_token: str,
+    temp_div: str = OBJECT_TYPE_FEED,
+    title: str = const.SYM_BLANK,
+    message: str = const.SYM_BLANK,
+    link: str = const.SYM_BLANK,
+    link_mo: str = const.SYM_BLANK,
+):
     url = URL_API_SEND
     headers = {"Authorization": access_token}
 
-    template_object = get_template_object(temp_div, title, message, link, link_mo)
-    data = {"template_object": template_object}
+    data = {}
+    if temp_div == const.STR_LOGIN:
+        url = URL_AUTH
+    elif temp_div == const.STR_LOGOUT:
+        url = URL_API_LOGOUT
+    else:
+        template_object = get_template_object(temp_div, title, message, link, link_mo)
+        data = {"template_object": template_object}
 
     result = func_api.get_response_result(
         url,
@@ -107,11 +135,7 @@ def send_message(
         data=data,
         header_json_flg=const.FLG_OFF,
     )
-    if result:
-        curr_func_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(
-            SCRIPT_NAME, curr_func_nm, STR_KAKAO_API, result["details"]
-        )
+    return result
 
 
 # テンプレート取得

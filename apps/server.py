@@ -4,7 +4,7 @@
 import sys
 
 from fastapi import FastAPI, Request, HTTPException, Form
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
 
@@ -22,6 +22,8 @@ import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_gemini as func_gemini
+import apps.utils.function_kakao as func_kakao
+import apps.utils.html_constants as html_const
 import apps.utils.function_line as func_line
 import apps.utils.message_constants as msg_const
 import apps.utils.rank_dao as rank_dao
@@ -344,20 +346,76 @@ async def update_news():
     return result
 
 
-# LINEメッセージ送信
-@app.get("/line/send")
-async def send_msg():
-    line.main()
-    result = {const.STR_MESSAGE: "LINE Message sent."}
-    return result
+@app.get("/kakao", response_class=HTMLResponse)
+async def root(request: Request):
+    """開始ページ"""
+
+    title = "카카오 인증"
+
+    token = get_token(request)
+    if token:
+        body = f"""
+            <h1>{title}</h1>
+            <p>로그인이 완료되었습니다. 메시지 보내기를 할 수 있습니다.</p>
+            <div>
+                {html_const.HTML_KAKAO_SEND_TEST}
+                {html_const.HTML_KAKAO_LOGOUT}
+            </div>
+        """
+
+    else:
+        body = f"""
+            <h1>{title}</h1>
+            <p>카카오 로그인이 필요합니다.</p>
+            {html_const.HTML_KAKAO_LOGIN}
+        """
+
+    return get_html_context(title, body)
 
 
-# Kakaoメッセージ送信
-@app.get("/kakao/send")
-async def send_msg_kakao():
-    kakao.main()
-    result = {const.STR_MESSAGE: "Kakao Message sent."}
-    return result
+@app.get("/kakao/login")
+async def login(request: Request):
+    """ログイン"""
+    auth_url = func_kakao.URL_AUTH
+    request.session[func_kakao.STR_KAKAO_API_TOKEN] = func_kakao.get_access_token()
+    return RedirectResponse(auth_url)
+
+
+@app.get("/kakao/logout")
+async def logout(request: Request):
+    """ログアウト"""
+
+    token = get_token(request)
+    if not token:
+        return RedirectResponse(url="/")
+
+    body = const.SYM_BLANK
+
+    try:
+        # ログアウト
+        result = func_kakao.post_kakao_api(token, const.STR_LOGOUT)
+
+        # 結果表示
+        body = f"""
+            <h1>로그아웃 <span class="success">완료</span></h1>
+            <p>카카오 계정에서 로그아웃되었습니다.</p>
+            <pre>{result}</pre>
+        """
+
+    except Exception as e:
+        body = f"""
+            <h1>로그아웃 <span class="warning">부분 완료</span></h1>
+            <p>로컬 세션에서 로그아웃되었지만, 카카오 서버 로그아웃 중 오류가 발생했습니다:</p>
+            <pre>{str(e)}</pre>
+        """
+
+    # セッションクリア
+    request.session.clear()
+
+    title = "로그아웃 결과"
+    body += html_const.HTML_KAKAO_GO_HOME
+    content = get_html_context(title, body)
+    return HTMLResponse(content=content)
 
 
 # テンプレートファイル取得
@@ -426,6 +484,38 @@ def except_http_error(func_name: str, url: str):
     err_msg = f"{status_msg} {url}"
     func.print_error_msg(SCRIPT_NAME, func_name, err_msg)
     raise HTTPException(status_code=http_status_code, detail=err_msg)
+
+
+# トークン取得
+def get_token(request: Request):
+    token = const.SYM_BLANK
+    request_session = request.session
+    if request_session:
+        token = request_session[func_kakao.STR_KAKAO_API_TOKEN]
+    return token
+
+
+# HTMLテキスト取得
+def get_html_context(title: str, body: str) -> str:
+    html_context = f"""
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title>{title}</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{func_kakao.URL_ICO}"></script>
+    {html_const.HTML_KAKAO_STYLE}
+</head>
+<body>
+    {body}
+</body>
+
+</html>
+    """
+
+    return html_context
 
 
 # メイン関数（サーバースレッド起動）
