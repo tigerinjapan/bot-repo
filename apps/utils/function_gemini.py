@@ -263,47 +263,24 @@ def get_today_news_image(
 
 
 # おすすめコーデ・夕食取得
-def get_recommend_outfit_dinner(today_weather: str) -> list[str]:
+def get_recommend_outfit_dinner(outfit_text: str, menu_text: str) -> tuple[str, str]:
     curr_func_nm = sys._getframe().f_code.co_name
 
-    contents = (
-        f"{today_weather}{NEW_LINE}上記の内容を元に、"
-        "気温と季節を考慮し、今日のコーデ・夕食をおすすめしてください。"
-    )
     condition_list = [
-        "コーデは、1番目が上着、2番目が中に着るもの",
-        "夕食は、1番目が主食、2番目がおかず",
-        "コーデ・夕食のそれぞれおすすめしたものを、&で結合",
-        f"コーデ・夕食は、コンマ区切り、{NUM_WRAP_WIDTH}バイト未満",
-        "解説と他の文言は不要",
+        "コーデは、2アイテム。1番目が上半身、2番目が下半身に着るもの。",
+        "夕食は、1番目が主食、2番目がおかずまたはスープ。",
+        "各アイテムは、&で繋げる。",
+        "各アイテムは、ちゃんとした単語として成立する。",
+        f"各アイテムは、{NUM_WRAP_WIDTH / 2}バイト未満。",
+        "解説と他の文言、記号は不要。",
+        "コーデと夕食は、出力例のように「改行」で区切る。",
     ]
     conditions = get_prompt_conditions(condition_list)
-    reference = f"※出力例{NEW_LINE}" + "長袖&ダウン,キムパ&キャベツの味噌汁"
-    contents += conditions + reference
-    recommend_outfit_dinner = get_gemini_response(curr_func_nm, contents)
-    if len(recommend_outfit_dinner) != 2:
-        recommend_outfit_dinner = [
-            "Geminiレスポンスエラー#1",
-            "Geminiレスポンスエラー#2",
-        ]
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, recommend_outfit_dinner)
-    return recommend_outfit_dinner
-
-
-# おすすめメニュー取得
-def get_recommend_menu(outfit_text: str, menu_text: str) -> tuple[str, str]:
-    curr_func_nm = sys._getframe().f_code.co_name
 
     contents = (
         f"{outfit_text}{NEW_LINE}{menu_text}{NEW_LINE}"
         "上記の内容を元に、気温と季節を考慮し、今日のコーデ・夕食をおすすめしてください。"
-        "コーデは、2アイテム。1番目が上半身、2番目が下半身に着るもの。"
-        "夕食は、1番目が主食、2番目がおかずまたはスープ。"
-        "各アイテムは、&で繋げる。"
-        "各アイテムの最大の文字数は、8。"
-        "各アイテムは、ちゃんとした単語として成立する。"
-        "解説と他の文言、記号は不要。"
-        "コーデと夕食は、出力例のように「改行」で区切る。"
+        f"{NEW_LINE}{conditions}{NEW_LINE}"
         f"※出力例{NEW_LINE}"
         f"白いTシャツ&デニムジーンズ{const.SYM_NEW_LINE}"
         "チーズキムパ&味噌汁"

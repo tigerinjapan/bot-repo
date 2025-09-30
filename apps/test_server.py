@@ -20,8 +20,8 @@ SCRIPT_NAME = func.get_app_name(__file__)
 REST_API_KEY = func_kakao.KAKAO_API_KEY
 
 # リダイレクトURI
-URL_SERVER = func.get_server_url()
-REDIRECT_URI = f"{URL_SERVER}/kakao/oauth"
+URL_SERVER = func.get_local_url()
+REDIRECT_URI = f"{URL_SERVER}/kakao/"
 
 # FastAPI
 app = FastAPI(title="カカオトーク - メッセージ送信テスト")
@@ -41,9 +41,15 @@ def run_server():
 async def root(request: Request):
     """開始ページ"""
 
-    title = "카카오 알림 테스트"
+    token = func_kakao.get_token(request)
+    content = get_login_content(token)
+    return content
 
-    token = get_token(request)
+
+# ログインHTML取得
+def get_login_content(token: str):
+    title = "카카오 인증"
+
     if token:
         body = f"""
             <h1>{title}</h1>
@@ -61,16 +67,15 @@ async def root(request: Request):
             {html_const.HTML_KAKAO_LOGIN}
         """
 
-    return get_html_context(title, body)
+    content = func_kakao.get_html_context(title, body)
+    return content
 
 
 @app.get("/kakao/login")
 async def login():
     """ログイン"""
 
-    auth_url = "https://kauth.kakao.com/oauth/authorize"
-    auth_url += f"?client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}"
-    auth_url += "&response_type=code&scope=talk_message&prompt=login"
+    auth_url = func_kakao.URL_AUTH
     return RedirectResponse(auth_url)
 
 
@@ -78,52 +83,51 @@ async def login():
 async def logout(request: Request):
     """ログアウト"""
 
-    token = get_token(request)
+    token = func_kakao.get_token(request)
     if not token:
-        return RedirectResponse(url="/")
+        return RedirectResponse(url="/kakao")
 
+    # セッションクリア
+    request.session.clear()
+
+    content = get_logout_content(token)
+    return HTMLResponse(content=content)
+
+
+# ログアウトHTML取得
+def get_logout_content(token: str) -> str:
     body = const.SYM_BLANK
 
-    logout_url = "https://kapi.kakao.com/v1/user/logout"
-    headers = {"Authorization": token}
-
     try:
-        async with httpx.AsyncClient() as client:
-            response = await client.post(logout_url, headers=headers)
-            result = response.json()
+        # ログアウト
+        result = func_kakao.send_message(token, const.STR_LOGOUT)
 
-            # セッションクリア
-            request.session.clear()
-
-            # 結果表示
-            result_json = func.get_dumps_json(result)
-            body = f"""
-                <h1>로그아웃 <span class="success">완료</span></h1>
-                <p>카카오 계정에서 로그아웃되었습니다.</p>
-                <pre>{result_json}</pre>
-            """
+        # 結果表示
+        body = f"""
+            <h1>로그아웃 <span class="success">완료</span></h1>
+            <p>카카오 계정에서 로그아웃되었습니다.</p>
+            <pre>{result}</pre><br>
+        """
 
     except Exception as e:
-        # セッションクリア
-        request.session.clear()
-
+        # 結果表示
         body = f"""
             <h1>로그아웃 <span class="warning">부분 완료</span></h1>
             <p>로컬 세션에서 로그아웃되었지만, 카카오 서버 로그아웃 중 오류가 발생했습니다:</p>
-            <pre>{str(e)}</pre>
+            <pre>{str(e)}</pre><br>
         """
 
     title = "로그아웃 결과"
     body += html_const.HTML_KAKAO_GO_HOME
-    content = get_html_context(title, body)
-    return HTMLResponse(content=content)
+    content = func_kakao.get_html_context(title, body)
+    return content
 
 
 @app.get("/kakao/unlink")
 async def unlink(request: Request):
     """アカウント連携解除"""
 
-    token = get_token(request)
+    token = func_kakao.get_token(request)
     if not token:
         return RedirectResponse(url="/")
 
@@ -154,12 +158,12 @@ async def unlink(request: Request):
         body = f"""
             <h1>앱 연결 해제 <span class="error">실패</span></h1>
             <p>연결 해제 중 오류가 발생했습니다:</p>
-            <pre>{str(e)}</pre>
+            <pre>{str(e)}</pre><br>
         """
 
     title = "연결 해제 결과"
     body += html_const.HTML_KAKAO_GO_HOME
-    content = get_html_context(title, body)
+    content = func_kakao.get_html_context(title, body)
     return HTMLResponse(content=content)
 
 
@@ -210,86 +214,48 @@ async def oauth(request: Request, code: str):
                 <p><a href="/kakao" class="button">다시 시도하기</a></p>
             """
 
-        content = get_html_context(title, body)
+        content = func_kakao.get_html_context(title, body)
         return content
 
 
 @app.get("/kakao/send-test", response_class=HTMLResponse)
-async def send_test():
+async def send_test(request: Request):
     """メッセージ送信テスト"""
 
-    send_url = func_kakao.URL_API_SEND
-
-    token = func_kakao.get_access_token()
+    token = func_kakao.get_token(request)
     if not token:
         return RedirectResponse(url="/kakao")
 
-    headers = {"Authorization": token}
-
-    template_object = func_kakao.get_template_object()
-    data = {"template_object": template_object}
-
-    async with httpx.AsyncClient() as client:
-        response = await client.post(send_url, headers=headers, data=data)
-        result = response.json()
-
-        success = "result_code" in result and result["result_code"] == 0
-
-        title = "메시지 전송 결과"
-
-        result_json = func.get_dumps_json(result)
-        body = f"""
-            <h1>메시지 전송 <span class="{'success' if success else 'error'}">
-                {('성공!' if success else '실패')}
-            </span></h1>
-            <p>결과:</p>
-            <pre>{result_json}</pre>
-            <div class="button-group">
-                {html_const.HTML_KAKAO_SEND_TEST}
-                {html_const.HTML_KAKAO_GO_HOME}
-                {html_const.HTML_KAKAO_LOGOUT}
-                {html_const.HTML_KAKAO_UNLINK}
-            </div>
-            <p style="margin-top: 20px; font-size: 0.9em; color: #666;">
-                * '앱 연결 해제'는 카카오 계정과 이 앱의 연결을 완전히 끊습니다. 
-                다시 사용하려면 처음부터 인증 과정을 거쳐야 합니다.
-            </p>
-        """
-
-        content = get_html_context(title, body)
-        return HTMLResponse(content=content)
+    content = get_test_message_content(token)
+    return HTMLResponse(content=content)
 
 
-# トークン取得
-def get_token(request: Request):
-    token = const.SYM_BLANK
-    request_session = request.session
-    if request_session:
-        token = request_session[const.STR_TOKEN]
-    return token
+# テストメッセージのHTML取得
+async def get_test_message_content(token: str) -> str:
+    object_type = const.STR_TEST
+    result = func_kakao.send_message(token, object_type)
 
+    title = "메시지 전송 결과"
 
-# HTMLテキスト取得
-def get_html_context(title: str, body: str) -> str:
-    html_context = f"""
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <title>{title}</title>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="{func_kakao.URL_ICO}"></script>
-    {html_const.HTML_KAKAO_STYLE}
-</head>
-<body>
-    {body}
-</body>
-
-</html>
+    body = f"""
+        <h1>메시지 전송 <span class="{'success' if result else 'error'}">
+            {('성공!' if result else '실패')}
+        </span></h1>
+        <p>결과:</p>
+        <pre>{result}</pre>
+        <div class="button-group">
+            {html_const.HTML_KAKAO_SEND_TEST}<br>
+            {html_const.HTML_KAKAO_LOGOUT}<br><br>
+            {html_const.HTML_KAKAO_GO_HOME}
+        </div>
+        <p style="margin-top: 20px; font-size: 0.9em; color: #666;">
+            * '앱 연결 해제'는 카카오 계정과 이 앱의 연결을 완전히 끊습니다. 
+            다시 사용하려면 처음부터 인증 과정을 거쳐야 합니다.
+        </p>
     """
 
-    return html_context
+    content = func_kakao.get_html_context(title, body)
+    return content
 
 
 # メイン関数（サーバースレッド起動）

@@ -44,7 +44,7 @@
                     {% for val in val_list %}
                     <td>
                         {% if 'https' in val | string and '/a>' not in val | string and '/img>' not in val | string %}
-                        <a href="{{ val|e }}" target="_blank" rel="noopener noreferrer">Link{{ idx }}</a>
+                        <a href="{{ val|e }}" target="_blank" rel="noopener noreferrer">{{ val_list[0] | e }}</a>
                         {% else %}
                         {% autoescape false %}
                         {{ val | replace("\n", "<br />")}}

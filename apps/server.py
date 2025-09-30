@@ -14,9 +14,9 @@ from threading import Thread
 from uvicorn import Config, Server
 
 import apps.appl as appl
-import apps.kakao as kakao
 import apps.line as line
 import apps.test as test
+import apps.test_server as test_server
 import apps.utils.board_dao as board_dao
 import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
@@ -118,9 +118,7 @@ async def issue_token(request: Request):
 async def root(request: Request):
     user = request.session.get(const.STR_USER)
     if user:
-        response = RedirectResponse(
-            url=const.PATH_APP_NEWS, status_code=const.STATUS_CODE_OK
-        )
+        response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
     else:
         context = {const.STR_REQUEST: request, const.STR_TITLE: const.SYSTEM_NAME}
         response = templates.TemplateResponse(const.HTML_INDEX, context)
@@ -149,9 +147,7 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
             user_dto.FI_LAST_LOGIN_DATE: func.get_now(),
         }
         user_dao.update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
-        response = RedirectResponse(
-            url=const.PATH_APP_NEWS, status_code=const.STATUS_CODE_OK
-        )
+        response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
         func.print_info_msg(
             user_info[user_dto.FI_USER_NAME],
             msg_const.MSG_INFO_LOGIN,
@@ -337,45 +333,19 @@ async def board_update(seq: str):
     return RedirectResponse(url=const.PATH_APP_BOARD)
 
 
-# ニュース情報更新
-@app.get(const.PATH_UPDATE)
-async def update_news():
-    appl.update_news()
-    line.get_msg_data_today()
-    result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
-    return result
-
-
 @app.get("/kakao", response_class=HTMLResponse)
 async def root(request: Request):
     """開始ページ"""
 
-    title = "카카오 인증"
-
-    token = get_token(request)
-    if token:
-        body = f"""
-            <h1>{title}</h1>
-            <p>로그인이 완료되었습니다. 메시지 보내기를 할 수 있습니다.</p>
-            <div>
-                {html_const.HTML_KAKAO_SEND_TEST}
-                {html_const.HTML_KAKAO_LOGOUT}
-            </div>
-        """
-
-    else:
-        body = f"""
-            <h1>{title}</h1>
-            <p>카카오 로그인이 필요합니다.</p>
-            {html_const.HTML_KAKAO_LOGIN}
-        """
-
-    return get_html_context(title, body)
+    token = func_kakao.get_token(request)
+    content = test_server.get_login_content(token)
+    return content
 
 
 @app.get("/kakao/login")
 async def login(request: Request):
     """ログイン"""
+
     auth_url = func_kakao.URL_AUTH
     request.session[func_kakao.STR_KAKAO_API_TOKEN] = func_kakao.get_access_token()
     return RedirectResponse(auth_url)
@@ -385,37 +355,34 @@ async def login(request: Request):
 async def logout(request: Request):
     """ログアウト"""
 
-    token = get_token(request)
+    token = func_kakao.get_token(request)
+
     if not token:
-        return RedirectResponse(url="/")
-
-    body = const.SYM_BLANK
-
-    try:
-        # ログアウト
-        result = func_kakao.post_kakao_api(token, const.STR_LOGOUT)
-
-        # 結果表示
-        body = f"""
-            <h1>로그아웃 <span class="success">완료</span></h1>
-            <p>카카오 계정에서 로그아웃되었습니다.</p>
-            <pre>{result}</pre>
-        """
-
-    except Exception as e:
-        body = f"""
-            <h1>로그아웃 <span class="warning">부분 완료</span></h1>
-            <p>로컬 세션에서 로그아웃되었지만, 카카오 서버 로그아웃 중 오류가 발생했습니다:</p>
-            <pre>{str(e)}</pre>
-        """
+        return RedirectResponse(url="/kakao")
 
     # セッションクリア
     request.session.clear()
 
-    title = "로그아웃 결과"
-    body += html_const.HTML_KAKAO_GO_HOME
-    content = get_html_context(title, body)
+    content = test_server.get_logout_content(token)
     return HTMLResponse(content=content)
+
+
+@app.get("/kakao/send-test", response_class=HTMLResponse)
+async def send_test(request: Request):
+    """メッセージ送信テスト"""
+
+    token = func_kakao.get_token(request)
+    if not token:
+        return RedirectResponse(url="/kakao")
+
+    content = test_server.get_test_message_content(token)
+    return HTMLResponse(content=content)
+
+
+@app.get("/kakao/today")
+async def today_korea():
+    url = f"/app/{const.APP_TODAY_KOREA}"
+    return RedirectResponse(url)
 
 
 # テンプレートファイル取得
@@ -484,38 +451,6 @@ def except_http_error(func_name: str, url: str):
     err_msg = f"{status_msg} {url}"
     func.print_error_msg(SCRIPT_NAME, func_name, err_msg)
     raise HTTPException(status_code=http_status_code, detail=err_msg)
-
-
-# トークン取得
-def get_token(request: Request):
-    token = const.SYM_BLANK
-    request_session = request.session
-    if request_session:
-        token = request_session[func_kakao.STR_KAKAO_API_TOKEN]
-    return token
-
-
-# HTMLテキスト取得
-def get_html_context(title: str, body: str) -> str:
-    html_context = f"""
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <title>{title}</title>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="{func_kakao.URL_ICO}"></script>
-    {html_const.HTML_KAKAO_STYLE}
-</head>
-<body>
-    {body}
-</body>
-
-</html>
-    """
-
-    return html_context
 
 
 # メイン関数（サーバースレッド起動）

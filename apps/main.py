@@ -69,7 +69,7 @@ def weekly_job():
 
 # 日次ジョブ
 def daily_job():
-    line.main(proc_flg=const.FLG_OFF)
+    line.main()
 
 
 # 日次ジョブ
@@ -86,7 +86,6 @@ def daily_job_3():
 # 時次ジョブ
 def hourly_job():
     appl.update_news()
-    line.get_msg_data_today()
     appl.update_news(const.APP_TODAY_KOREA)
 
 

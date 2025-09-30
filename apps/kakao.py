@@ -12,12 +12,12 @@ import apps.utils.function_kakao as func_kakao
 SCRIPT_NAME = func.get_app_name(__file__)
 
 
-def main(temp_div: str = func_kakao.OBJECT_TYPE_FEED):
+def main(object_type: str = func_kakao.OBJECT_TYPE_FEED):
     """
     メインの処理を実行
 
     引数:
-        temp_div (str): feed, text, list
+        object_type (str): feed, text, list
     """
 
     func.print_start(SCRIPT_NAME)
@@ -28,23 +28,25 @@ def main(temp_div: str = func_kakao.OBJECT_TYPE_FEED):
         if token:
             try:
                 # 今日のニュース取得
-                (message, title, link, link_mo, file_path) = today_korea.get_today_info(
-                    temp_div
-                )
+                message, file_path = today_korea.get_today_info(object_type)
+                title = today_korea.TITLE_LINK
+                link = today_korea.URL_LINK
+                link_mo = today_korea.URL_LINK_MO
 
-                if temp_div == func_kakao.OBJECT_TYPE_FEED:
-                    if file_path:
-                        msg = func_kakao.URL_TODAY_KOREA_IMG
-                        func.print_info_msg(const.STR_IMG, msg)
+                if file_path:
+                    msg = func_kakao.URL_TODAY_KOREA_IMG
+                    func.print_info_msg(const.STR_IMG, msg)
 
-                        title = "【오늘의 한마디】"
-                        message = today_korea.get_phrase()
+                    title = "【오늘의 한마디】"
+                    message = today_korea.get_phrase()
 
-                    else:
-                        temp_div = func_kakao.OBJECT_TYPE_TEXT
+                else:
+                    object_type = func_kakao.OBJECT_TYPE_TEXT
 
                 # メッセージ送信
-                func_kakao.send_message(token, temp_div, title, message, link, link_mo)
+                func_kakao.send_message(
+                    token, object_type, title, message, link, link_mo
+                )
 
             except Exception as e:
                 if e.args[0] != "details":
@@ -56,4 +58,4 @@ def main(temp_div: str = func_kakao.OBJECT_TYPE_FEED):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    main()
+    main(send_flg=const.FLG_OFF)

@@ -25,6 +25,10 @@ url_search_param = "/search.naver?where=news&query={}&service_area=1&sort=1"
 def get_item_list(keyword_list: list[str] = []) -> list[str]:
     item_list = []
 
+    # 7時に一度のみ実施
+    if func.get_now(const.DATE_HOUR) == 7:
+        return item_list
+
     if not keyword_list:
         keyword_list = LIST_KEYWORD
 

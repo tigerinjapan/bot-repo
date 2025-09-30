@@ -26,7 +26,8 @@ SCRIPT_NAME = func.get_app_name(__file__)
 
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
-LIST_ALL_APP_DIV = LIST_APP_DIV + ([site] * 4)
+LIST_APP_DIV_KOREA = [today_korea]
+LIST_ALL_APP_DIV = LIST_APP_DIV + ([site] * 4) + LIST_APP_DIV_KOREA
 
 LIST_APP_NUM_OFF = [
     const.APP_TODAY,
@@ -35,12 +36,10 @@ LIST_APP_NUM_OFF = [
     const.APP_CAFE,
     const.APP_TRAVEL,
     const.APP_BOARD,
+    const.APP_TODAY_KOREA,
 ]
 
-LIST_APP_AUTH_OFF = [
-    const.APP_CAFE,
-    const.APP_TRAVEL,
-]
+LIST_APP_AUTH_OFF = [const.APP_CAFE, const.APP_TRAVEL, const.APP_TODAY_KOREA]
 
 
 # クラスの定義
@@ -210,6 +209,8 @@ def update_news(app_name: str = const.SYM_BLANK):
 
         try:
             item_list = app_div.get_item_list()
+            if not item_list:
+                raise Exception
         except Exception as e:
             func.print_error_msg(SCRIPT_NAME, curr_func_nm, app_name, e)
             app_exec.end()
@@ -247,6 +248,6 @@ def no_sleep():
 
 if __name__ == const.MAIN_FUNCTION:
     # update_news()
-    app_name = const.APP_TODAY
-    app_name = const.APP_TODAY_KOREA
-    update_news(app_name)
+    app_name_list = [const.APP_TODAY, const.APP_TODAY_KOREA]
+    for app_name in app_name_list:
+        update_news(app_name)

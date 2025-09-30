@@ -4,6 +4,7 @@ import apps.ex as ex
 import apps.mlb as mlb
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
 
@@ -19,7 +20,7 @@ NEW_LINE = const.SYM_NEW_LINE
 # 定数（日本語）
 DIV_DATE = "日時"
 DIV_WEATHER = "天気"
-DIV_WEATHER_PLUS = "天気"
+DIV_WEATHER_PLUS = "天気+"
 DIV_NISA = "NISA"
 DIV_RATE = "為替"
 DIV_RATE_PLUS = "為替+"
@@ -69,13 +70,10 @@ def get_today_info():
     mlb_game = mlb.get_mlb_game_data()
 
     # コーデ
-    outfit_text = get_today_outfit()
+    outfit = get_today_outfit()
 
     # 夕食
-    menu_text = get_today_menu()
-
-    # コーデ・夕食
-    outfit, menu = func_gemini.get_recommend_menu(outfit_text, menu_text)
+    dinner = get_today_dinner()
 
     today_info_list = [
         date_time,
@@ -85,9 +83,42 @@ def get_today_info():
         today_rate,
         mlb_game,
         outfit,
-        menu,
+        dinner,
     ]
     return today_info_list
+
+
+# メッセージデータ取得
+def get_msg_data_today():
+    today_info = func_api.get_result_on_app(const.APP_TODAY)
+    if today_info:
+        key = app_title
+        date_today = func_api.get_target_data(today_info, DIV_DATE, key)
+        forecast = func_api.get_target_data(today_info, DIV_WEATHER, key)
+        forecast = forecast.split("・")[0]
+        outfit_text = func_api.get_target_data(today_info, DIV_OUTFIT, key)
+        dinner_text = func_api.get_target_data(today_info, DIV_DINNER, key)
+
+        # コーデ・夕食
+        outfit, dinner = func_gemini.get_recommend_outfit_dinner(
+            outfit_text, dinner_text
+        )
+
+        data_list = [list(info.values()) for info in today_info[1:]]
+
+        msg_data = []
+        for data in data_list:
+            div = data[0]
+            contents = data[1]
+            if div == DIV_OUTFIT:
+                contents = outfit
+            elif div == DIV_DINNER:
+                contents = dinner
+
+            msg = f"[{div}] {contents}"
+            msg_data.append(msg)
+
+        return msg_data, date_today, forecast, outfit
 
 
 # 今日の天気情報取得
@@ -196,7 +227,7 @@ def get_today_outfit():
 
 
 # 今日のレシピメニュー取得
-def get_today_menu():
+def get_today_dinner():
     url = "https://park.ajinomoto.co.jp/menu/"
     weekly_menu_list = func_bs.get_elem_from_url(
         url, attr_val="recipeTitle", list_flg=const.FLG_ON
@@ -233,5 +264,5 @@ def get_elem_val_by_class(soup, class_: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    item_list = get_item_list()
-    func.print_test_data(item_list)
+    # get_today_info()
+    get_msg_data_today()

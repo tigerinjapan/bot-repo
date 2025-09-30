@@ -9,6 +9,7 @@ HTML_KAKAO_GO_HOME = """ <a href="/kakao" class="button">홈으로 이동</a> ""
 HTML_KAKAO_UNLINK = (
     """ <a href="/kakao/unlink" class="button unlink">앱 연결 해제</a> """
 )
+HTML_KAKAO_TODAY = """ <a href="/kakao/today" class="button">오늘의 생활정보</a> """
 
 HTML_KAKAO_STYLE = """ <style>
 body {

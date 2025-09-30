@@ -116,7 +116,11 @@ def sub(div: str):
 # メッセージリスト取得
 def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
     if auto_flg:
-        msg_data_list, date_today = get_msg_data_today()
+        msg_data, date_today, forecast, outfit = today.get_msg_data_today()
+        msg_data_list = get_msg_data_list(
+            const.APP_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast, outfit
+        )
+
         if WEEKLY_DIV_FRI in date_today:
             ai_news_msg = news.get_news_msg_list(news.DIV_AI_NEWS_LIST)
             msg_data = get_msg_data_list(
@@ -131,23 +135,6 @@ def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
 
     msg_list = [msg_data_list]
     return msg_list
-
-
-# メッセージデータ取得
-def get_msg_data_today() -> tuple[list[str], str]:
-    today_info = func_api.get_result_on_app(const.APP_TODAY)
-    if today_info:
-        date_today = today_info[0][today.app_title]
-        forecast = today_info[1][today.app_title].split("・")[0]
-        today_outfit = today_info[2][today.app_title]
-
-        data_list = [list(info.values()) for info in today_info[1:]]
-        msg_data = [f"[{data[0]}] {data[1]}" for data in data_list]
-
-        msg_data_list = get_msg_data_list(
-            const.APP_TODAY, MSG_TYPE_IMG, msg_data, date_today, forecast, today_outfit
-        )
-        return msg_data_list, date_today
 
 
 # テンプレートメッセージ取得
@@ -281,7 +268,7 @@ def get_title(
 
 
 if __name__ == const.MAIN_FUNCTION:
-    get_msg_data_today()
+    get_msg_list()
     # get_template_actions()
     # get_flex_data_list()
     # main()

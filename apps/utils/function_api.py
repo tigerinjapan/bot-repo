@@ -43,8 +43,8 @@ def get_response_result(
             response = requests.post(url, headers=headers, data=data)
 
     except requests.exceptions.ConnectionError as ce:
-
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, url, ce)
+        msg = f"{msg_const.MSG_ERR_SERVER_NOT_WORKING} {url}"
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, msg, ce)
         return result
 
     res_status = response.status_code
@@ -71,7 +71,6 @@ def get_result_on_app(app_name: str):
 
 # 画像に文字列挿入
 def create_msg_img(div: str, msg: str, forecast: str = const.SYM_BLANK) -> str:
-
     if forecast:
         if "雨" in forecast:
             img_div = "rainy"
@@ -129,6 +128,20 @@ def insert_msg_to_img(
     file_path = func.get_file_path(div, const.FILE_TYPE_JPEG, const.STR_OUTPUT)
     img.save(file_path, optimize=const.FLG_ON)
     return file_path
+
+
+# リストの中で、一つ値をキーに、対象データ取得
+def get_target_data(
+    data, search_value: str, target_key: str, search_key: str = const.STR_DIV_JA
+):
+    target_info = const.SYM_BLANK
+
+    # リストの要素（辞書）を一つずつ確認
+    for item in data:
+        if item.get(search_key) == search_value:
+            target_info = item.get(target_key)
+            break
+    return target_info
 
 
 if __name__ == const.MAIN_FUNCTION:
