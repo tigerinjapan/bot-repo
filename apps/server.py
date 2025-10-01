@@ -16,19 +16,16 @@ from uvicorn import Config, Server
 import apps.appl as appl
 import apps.line as line
 import apps.test as test
-import apps.test_server as test_server
 import apps.utils.board_dao as board_dao
-import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_gemini as func_gemini
 import apps.utils.function_kakao as func_kakao
-import apps.utils.html_constants as html_const
 import apps.utils.function_line as func_line
 import apps.utils.message_constants as msg_const
+import apps.utils.mongo_constants as mongo_const
 import apps.utils.rank_dao as rank_dao
 import apps.utils.user_dao as user_dao
-import apps.utils.user_dto as user_dto
 
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
@@ -143,13 +140,13 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
         request.session[const.STR_USER] = user_info
         user_id = func.get_masking_data(userId)
         update_data = {
-            user_dto.FI_USER_ID: user_id,
-            user_dto.FI_LAST_LOGIN_DATE: func.get_now(),
+            mongo_const.FI_USER_ID: user_id,
+            mongo_const.FI_LAST_LOGIN_DATE: func.get_now(),
         }
         user_dao.update_user_info_on_form(update_data, form_flg=const.FLG_OFF)
         response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
         func.print_info_msg(
-            user_info[user_dto.FI_USER_NAME],
+            user_info[mongo_const.FI_USER_NAME],
             msg_const.MSG_INFO_LOGIN,
         )
     return response
@@ -158,7 +155,7 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
 # ログアウト処理
 @app.get(const.PATH_LOGOUT)
 async def logout(request: Request):
-    user_name = request.session[const.STR_USER][user_dto.FI_USER_NAME]
+    user_name = request.session[const.STR_USER][mongo_const.FI_USER_NAME]
     func.print_info_msg(user_name, msg_const.MSG_INFO_LOGOUT)
     request.session.clear()
     context = {
@@ -206,9 +203,9 @@ async def apps(request: Request, app_name: str):
 
     data_list = []
     if app_name == const.APP_REVIEW:
-        data_list.append(board_dto.LIST_APP)
-        data_list.append(board_dto.LIST_CATEGORY)
-        data_list.append(board_dto.LIST_TYPE)
+        data_list.append(mongo_const.LIST_APP)
+        data_list.append(mongo_const.LIST_CATEGORY)
+        data_list.append(mongo_const.LIST_TYPE)
 
     context = {const.STR_REQUEST: request, "app_name": app_name, "data_list": data_list}
 
@@ -338,7 +335,7 @@ async def root(request: Request):
     """開始ページ"""
 
     token = func_kakao.get_token(request)
-    content = test_server.get_login_content(token)
+    content = func_kakao.get_login_content(token)
     return content
 
 
@@ -346,9 +343,10 @@ async def root(request: Request):
 async def login(request: Request):
     """ログイン"""
 
-    auth_url = func_kakao.URL_AUTH
-    request.session[func_kakao.STR_KAKAO_API_TOKEN] = func_kakao.get_access_token()
+    auth_url = func_kakao.URL_KAKAO_AUTH
     return RedirectResponse(auth_url)
+    # request.session[func_kakao.STR_KAKAO_API_TOKEN] = func_kakao.get_access_token()
+    # return RedirectResponse("/kakao")
 
 
 @app.get("/kakao/logout")
@@ -360,11 +358,29 @@ async def logout(request: Request):
     if not token:
         return RedirectResponse(url="/kakao")
 
+    content = func_kakao.get_logout_content(token)
+
     # セッションクリア
     request.session.clear()
 
-    content = test_server.get_logout_content(token)
     return HTMLResponse(content=content)
+
+
+@app.get("/kakao/oauth?code={code}", response_class=HTMLResponse)
+async def oauth(request: Request, code: str):
+    """
+    認証コードで、アクセストークン発行
+    （初回のみ実施、リフレッシュトークンの確認にも使用）
+
+    引数:
+        code(str): 認証コード
+    """
+
+    token, content = func_kakao.get_auth_content(code)
+    if token:
+        request.session[func_kakao.STR_KAKAO_API_TOKEN] = token
+
+    return content
 
 
 @app.get("/kakao/send-test", response_class=HTMLResponse)
@@ -375,7 +391,7 @@ async def send_test(request: Request):
     if not token:
         return RedirectResponse(url="/kakao")
 
-    content = test_server.get_test_message_content(token)
+    content = func_kakao.get_test_message_content(token)
     return HTMLResponse(content=content)
 
 

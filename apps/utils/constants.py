@@ -282,16 +282,7 @@ STR_ANSWER = "answer"
 STR_LEVEL = "level"
 STR_REST = "rest"
 STR_ENGLISH = "english"
-
-STR_KPOP = "kpop"
-STR_NISA = "nisa"
-
-STR_AI = "AI"
-STR_USER_INFO = "userInfo"
-STR_ZIP_CODE = "zipCode"
-STR_ENV_VAR = "env_var"
-STR_NUMBER_PLATE = "numberPlate"
-STR_PHRASE_KO = "phrase_ko"
+STR_UNLINK = "unlink"
 
 STR_DB = "db"
 STR_MONGO = "mongo"
@@ -302,6 +293,17 @@ STR_CAPITALIZE = "capitalize"
 STR_EASY = "easy"
 STR_MEDIUM = "medium"
 STR_HARD = "hard"
+
+STR_KAKAO = "kakao"
+STR_KPOP = "kpop"
+STR_NISA = "nisa"
+
+STR_AI = "AI"
+STR_USER_INFO = "userInfo"
+STR_ZIP_CODE = "zipCode"
+STR_ENV_VAR = "env_var"
+STR_NUMBER_PLATE = "numberPlate"
+STR_PHRASE_KO = "phrase_ko"
 
 STR_LOGIN_JA = "ログイン"
 STR_LOGOUT_JA = "ログアウト"
@@ -410,12 +412,6 @@ FUND_NAME_US_TECH = "USテクノロ"
 
 LIST_FUND_NO = [FUND_NO_SP_500, FUND_NO_AI, FUND_NO_US_TECH]
 LIST_FUND_NAME = [FUND_NAME_SP_500, FUND_NAME_AI, FUND_NAME_US_TECH]
-
-##### DB情報 #####
-COLL_USER_INFO = "userInfo"
-COLL_RANK_INFO = "rankInfo"
-COLL_BOARD = "board"
-COLL_SEQUENCE = "sequence"
 
 ##### URL #####
 # サイトURL

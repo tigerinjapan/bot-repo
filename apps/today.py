@@ -7,6 +7,7 @@ import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
+import apps.utils.function_line as func_line
 
 # タイトル
 app_title = "今日の生活情報"
@@ -118,7 +119,15 @@ def get_msg_data_today():
             msg = f"[{div}] {contents}"
             msg_data.append(msg)
 
-        return msg_data, date_today, forecast, outfit
+        text_msg = NEW_LINE.join(msg_data)
+        img_url = func_line.URL_TODAY_IMG
+
+        file_path = func_gemini.get_today_news_image(text_msg, forecast, outfit)
+        if file_path:
+            func.print_info_msg(const.STR_IMG_JA, img_url)
+        else:
+            func_api.create_msg_img(const.APP_TODAY, text_msg, forecast)
+        return msg_data, date_today, img_url
 
 
 # 今日の天気情報取得

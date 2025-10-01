@@ -19,7 +19,7 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
-import apps.utils.user_dto as dto
+import apps.utils.mongo_constants as mongo_const
 
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
@@ -69,9 +69,9 @@ def exec_result(request: Request, app_name: str):
     if not func.check_in_list(app_name, LIST_APP_AUTH_OFF):
         user_info = request.session[const.STR_USER]
         user_div, user_name, app_menu = (
-            user_info[dto.FI_USER_DIV],
-            user_info[dto.FI_USER_NAME],
-            user_info[dto.FI_MENU],
+            user_info[mongo_const.FI_USER_DIV],
+            user_info[mongo_const.FI_USER_NAME],
+            user_info[mongo_const.FI_MENU],
         )
     else:
         user_div = user_name = app_menu = const.SYM_BLANK

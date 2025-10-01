@@ -3,7 +3,7 @@
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.user_dao as dao
-import apps.utils.user_dto as dto
+import apps.utils.mongo_constants as mongo_const
 
 # タイトル
 app_title = "ユーザー情報"
@@ -16,7 +16,7 @@ def user_test():
     func.print_info_msg(const.STR_USER, user_info)
 
     user_seq = dao.get_user_seq()
-    func.print_info_msg(dto.ITEM_SEQ, user_seq)
+    func.print_info_msg(mongo_const.ITEM_SEQ, user_seq)
 
 
 # CSVデータ取得

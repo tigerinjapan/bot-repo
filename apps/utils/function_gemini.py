@@ -53,11 +53,11 @@ def get_client():
 
 # GEMINI回答取得
 def get_gemini_response(
-    func_name: str, contents: str, model: str = GEMINI_MODEL, config=const.NONE_CONSTANT
+    div: str, contents: str, model: str = GEMINI_MODEL, config=const.NONE_CONSTANT
 ) -> list[str]:
     curr_func_nm = sys._getframe().f_code.co_name
 
-    div_msg = f"[{app_name}] {func_name}"
+    div_msg = f"[{app_name}] {div}"
     func.print_start(div_msg)
 
     if model == GEMINI_MODEL:
@@ -186,8 +186,8 @@ def get_generate_text_image(
                     xy=xy_size, text=msg, fill=text_color, font=font, align="left"
                 )
 
-            img = image_open.resize(img_size)
-            img.save(file_path, optimize=const.FLG_ON)
+                img = image_open.resize(img_size)
+                img.save(file_path, optimize=const.FLG_ON)
             image_open.close()
             break
 

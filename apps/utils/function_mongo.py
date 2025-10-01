@@ -7,6 +7,7 @@ from pymongo import MongoClient
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.message_constants as msg_const
+import apps.utils.mongo_constants as mongo_const
 
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
@@ -137,7 +138,7 @@ def db_insert(client, coll_nm: str, insert_data):
 # データ更新
 def db_update(client, coll_nm: str, cond, update_data):
     coll = get_collection(client, coll_nm)
-    update_data = {"$set": update_data}
+    update_data = {mongo_const.OPERATOR_SET: update_data}
     coll.update_one(filter=cond, update=update_data)
 
 
@@ -151,6 +152,6 @@ def db_find_update(client, coll_nm: str, cond, update_data):
 
 if __name__ == const.MAIN_FUNCTION:
     client = db_connect()
-    user_info = get_collection(client, const.COLL_USER_INFO)
+    user_info = get_collection(client, mongo_const.COLL_USER_INFO)
     db_close(client)
     func.print_test_data(user_info)

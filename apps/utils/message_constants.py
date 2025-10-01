@@ -15,6 +15,8 @@ MSG_INFO_SERVER_RESTART = "サーバーを再起動します。"
 MSG_INFO_SERVER_KEEP_WORKING = "サーバーは正常に稼働しています。"
 MSG_INFO_SERVER_SLEEP = "サーバーがスリープ状態です。"
 MSG_INFO_SESSION_EXPIRED = "セッション期限が切れました。再ログインしてください。"
+MSG_INFO_TOKEN_ISSUED_SUCCESS = "トークンの発行が完了しました。"
+MSG_INFO_TOKEN_UPDATE_SUCCESS = "トークンの更新が完了しました。"
 
 # エラーメッセージ
 MSG_ERR_USER_NOT_EXIST = "【ログイン】IDを再確認してください。"

@@ -1,0 +1,36 @@
+// db
+const database = "mongoDB";
+
+const div = "kakao";
+const dueDate = "20251031";
+const currentDate = new Date();
+
+// Select the database to use.
+use(database);
+
+// 正しいコードの基本的な流れ
+async function run() {
+    try {
+        // コレクションを取得
+        const collection = db.getCollection("auth");
+
+        // collection が undefined でないか確認しながら操作
+        if (collection) {
+            const result = await collection.insertOne({
+                "sDiv": div,
+                "sUserPw": "userPw",
+                "sToken": "xxxx9999XXXX",
+                "sDueDate": dueDate,
+                "dUpdateDate": currentDate
+            });
+            console.log('成功:', result);
+        } else {
+            console.error('コレクションが見つかりません。');
+        }
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+run();

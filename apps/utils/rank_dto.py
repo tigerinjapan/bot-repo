@@ -5,20 +5,6 @@ from datetime import datetime
 
 import apps.utils.constants as const
 from apps.utils.function import get_now
-from apps.utils.user_dto import convert_field
-
-
-# 項目ID:rank info
-ITEM_NUMBER = "number"
-ITEM_RANK_TIME = "rankTime"
-ITEM_USER_NAME = "userName"
-ITEM_UPDATE_DATE = "updateDate"
-
-# フィールド:rank info
-FI_NUMBER = convert_field(const.TYPE_NUM, ITEM_NUMBER)
-FI_RANK_TIME = convert_field(const.TYPE_STR, ITEM_RANK_TIME)
-FI_USER_NAME = convert_field(const.TYPE_STR, ITEM_USER_NAME)
-FI_UPDATE_DATE = convert_field(const.TYPE_DATE, ITEM_UPDATE_DATE)
 
 
 @dataclass

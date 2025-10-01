@@ -3,8 +3,8 @@ import itertools
 
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.mongo_constants as mongo_const
 import apps.utils.rank_dao as dao
-import apps.utils.rank_dto as dto
 
 # タイトル
 app_title = "ナンバープレートゲーム"
@@ -47,8 +47,8 @@ def get_ranking_info(number: int):
 
     ranking_info = dao.get_rank_info(number)
     if ranking_info:
-        rank_user = ranking_info[dto.FI_USER_NAME]
-        rank_time = ranking_info[dto.FI_RANK_TIME]
+        rank_user = ranking_info[mongo_const.FI_USER_NAME]
+        rank_time = ranking_info[mongo_const.FI_RANK_TIME]
         rank_time = float(rank_time)
 
     return rank_user, rank_time

@@ -1,13 +1,14 @@
 # 説明: 掲示板情報DAO
 
-import apps.utils.board_dto as dto
+import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_mongo as func_mongo
+import apps.utils.mongo_constants as mongo_const
 import apps.utils.sequence_dao as seq_dao
 
 # 掲示板情報
-COLL = const.COLL_BOARD
+COLL = mongo_const.COLL_BOARD
 
 
 # 掲示板データ取得
@@ -20,17 +21,29 @@ def get_board_info():
     target_date = func.get_calc_date(-30)
 
     cond = {
-        "$or": [
-            {dto.FI_STATUS: {"$ne": dto.STATUS_DONE}},
-            {dto.FI_UPDATE_DATE: {"$gte": target_date}},
+        mongo_const.OPERATOR_OR: [
+            {
+                mongo_const.FI_STATUS: {
+                    mongo_const.OPERATOR_NOT_EQUAL: mongo_const.STATUS_DONE
+                }
+            },
+            {
+                mongo_const.FI_UPDATE_DATE: {
+                    mongo_const.OPERATOR_GREATER_THAN_OR_EQUAL: target_date
+                }
+            },
         ]
     }
-    sort = {dto.FI_STATUS: 1, dto.FI_UPDATE_DATE: -1, dto.FI_USER_NAME: -1}
+    sort = {
+        mongo_const.FI_STATUS: 1,
+        mongo_const.FI_UPDATE_DATE: -1,
+        mongo_const.FI_USER_NAME: -1,
+    }
 
     result = func_mongo.db_find(client, COLL, cond, sort=sort)
     if result:
         for board_info in result:
-            json_data = dto.get_board_data(board_info)
+            json_data = board_dto.get_board_data(board_info)
             board_data.append(json_data)
 
     func_mongo.db_close(client)
@@ -46,7 +59,7 @@ def insert_board_data_of_api(json_data):
 
     for idx, data in enumerate(data_list):
         seq_val = seq + idx
-        update_data = dto.get_update_data_for_board_info(data, seq_val)
+        update_data = board_dto.get_update_data_for_board_info(data, seq_val)
         func_mongo.db_insert(client, COLL, update_data)
 
     seq = seq_dao.update_sequence(client, const.APP_BOARD, inc_val)
@@ -54,10 +67,10 @@ def insert_board_data_of_api(json_data):
 
 
 # ステータス更新
-def update_board_status(seq: str, status: int = dto.STATUS_DONE):
+def update_board_status(seq: str, status: int = mongo_const.STATUS_DONE):
     client = func_mongo.db_connect()
-    cond = {dto.FI_SEQ: int(seq)}
-    update_data = {dto.FI_STATUS: status}
+    cond = {mongo_const.FI_SEQ: int(seq)}
+    update_data = {mongo_const.FI_STATUS: status}
     func_mongo.db_update(client, COLL, cond, update_data)
     func_mongo.db_close(client)
 

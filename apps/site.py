@@ -6,6 +6,7 @@ import pandas as pd
 import apps.utils.board_dao as board_dao
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.mongo_constants as mongo_const
 
 # タイトル
 app_title = "お気に入りサイト"
@@ -56,14 +57,16 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
         df = df_all
 
         # データ型を int から str に変換
-        df["nSeq"] = df["nSeq"].astype(str)
+        df[mongo_const.FI_SEQ] = df[mongo_const.FI_SEQ].astype(str)
 
         # numpy.where()を使って新しい列を作成
         df[const.STR_URL] = np.where(
-            df["nStatus"] == "対応完了",
-            "-",
+            df[mongo_const.FI_STATUS] == "対応完了",
+            const.SYM_DASH,
             func.get_a_tag(
-                f"{URL_SERVER}/board/update/" + df["nSeq"], "☑", const.FLG_ON
+                f"{URL_SERVER}/board/update/" + df[mongo_const.FI_SEQ],
+                "☑",
+                const.FLG_ON,
             ),
         )
 
