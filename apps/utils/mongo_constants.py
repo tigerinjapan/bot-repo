@@ -1,4 +1,4 @@
-import com.const.const as const
+import apps.utils.constants as const
 
 # コレクション名 #
 COLL_USER_INFO = "userInfo"
@@ -71,6 +71,7 @@ OPERATOR_EXISTS = "$exists"
 
 OPERATOR_SET = "$set"
 OPERATOR_INCREMENT = "$inc"
+
 
 # フィールド変換
 def convert_field(type_div, id):
