@@ -28,6 +28,8 @@ URL_KAKAO_API = "https://kapi.kakao.com"
 URL_KAKAO_API_SEND = f"{URL_KAKAO_API}/v2/api/talk/memo/default/send"
 URL_KAKAO_API_LOGOUT = f"{URL_KAKAO_API}/v1/user/logout"
 URL_KAKAO_API_UNLINK = f"{URL_KAKAO_API}/v1/user/unlink"
+URL_KAKAO_API_FRIENDS = f"{URL_KAKAO_API}/v1/api/talk/friends"
+URL_KAKAO_API_SEND_FRIENDS = f"{URL_KAKAO_API}/message/default/send"
 
 URL_ICO = f"{func_line.URL_KOYEB_APP}/templates/favicon.ico"
 URL_TODAY_KOREA_IMG = f"{func_line.URL_KOYEB_IMG}/{const.APP_TODAY_KOREA}"
@@ -277,7 +279,7 @@ def get_logout_content(token: str) -> str:
 
 
 # アカウント認証
-def get_auth_content(code: str) -> str:
+def get_auth_content(code: str) -> tuple[str, str]:
     token = const.SYM_BLANK
     if code:
         token = get_access_token(code)
@@ -301,7 +303,7 @@ def get_auth_content(code: str) -> str:
         """
 
     content = get_html_context(title, body)
-    return content
+    return token, content
 
 
 # アカウント連携解除
@@ -382,4 +384,5 @@ def get_html_context(title: str, body: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    get_access_token()
+    code = ""
+    get_access_token(code)

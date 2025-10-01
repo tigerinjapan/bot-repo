@@ -1,7 +1,7 @@
 # 説明: サーバー処理
 # FastAPIによるWebサーバー。認証・セッション管理・各種APIエンドポイントを提供
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Query, Request
 from fastapi.responses import RedirectResponse, HTMLResponse
 import httpx
 from starlette.middleware.sessions import SessionMiddleware
@@ -10,18 +10,10 @@ from uvicorn import Config, Server
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_kakao as func_kakao
-import apps.utils.html_constants as html_const
 import apps.utils.message_constants as msg_const
 
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
-
-# REST API キー
-REST_API_KEY = func_kakao.KAKAO_API_KEY
-
-# リダイレクトURI
-URL_SERVER_LOCAL = func.get_local_url()
-REDIRECT_URI = f"{URL_SERVER_LOCAL}/kakao/"
 
 # FastAPI
 app = FastAPI(title="カカオトーク - メッセージ送信テスト")
@@ -70,6 +62,8 @@ async def logout(request: Request):
     return HTMLResponse(content=content)
 
 
+# @app.get("/kakao/oauth", response_class=HTMLResponse)
+# async def oauth(request: Request, code: str = Query(...)):
 @app.get("/kakao/oauth?code={code}", response_class=HTMLResponse)
 async def oauth(request: Request, code: str):
     """

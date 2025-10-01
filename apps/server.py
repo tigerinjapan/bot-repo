@@ -3,7 +3,7 @@
 
 import sys
 
-from fastapi import FastAPI, Request, HTTPException, Form
+from fastapi import FastAPI, Request, HTTPException, Form, Query
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
@@ -366,8 +366,8 @@ async def logout(request: Request):
     return HTMLResponse(content=content)
 
 
-@app.get("/kakao/oauth?code={code}", response_class=HTMLResponse)
-async def oauth(request: Request, code: str):
+@app.get("/kakao/oauth", response_class=HTMLResponse)
+async def oauth(request: Request, code: str = Query(...)):
     """
     認証コードで、アクセストークン発行
     （初回のみ実施、リフレッシュトークンの確認にも使用）

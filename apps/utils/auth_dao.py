@@ -33,7 +33,7 @@ def update_auth_token(div: str, token: str):
     cond = {mongo_const.FI_DIV: div}
     update_data = {
         mongo_const.FI_TOKEN: token,
-        mongo_const.OPERATOR_SET: {mongo_const.FI_UPDATE_DATE: func.get_now()},
+        mongo_const.FI_UPDATE_DATE: func.get_now(),
     }
     func_mongo.db_update(client, COLL, cond, update_data)
 

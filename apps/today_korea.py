@@ -115,7 +115,7 @@ def get_today_info_list():
 
     # 航空券セール
     flight_sale = get_flight_sale()
-    flight_sale_link = URL_LINK
+    flight_sale_link = URL_LINK_MO
 
     today_info_list = [
         update_time,
