@@ -356,7 +356,6 @@ async def kakao_logout(request: Request):
     """ログアウト"""
 
     token = func_kakao.get_token(request)
-
     if not token:
         return RedirectResponse(url="/kakao")
 
@@ -386,25 +385,17 @@ async def kakao_oauth(request: Request, code: str):
     return content
 
 
-@app.get("/kakao/send-test", response_class=HTMLResponse)
-async def kakao_send_test(request: Request):
-    """メッセージ送信テスト"""
-
-    token = func_kakao.get_token(request)
-    if not token:
-        return RedirectResponse(url="/kakao")
-
-    content = func_kakao.get_test_message_content(token)
-    return HTMLResponse(content=content)
-
-
 @app.get("/kakao/{app_name}")
 async def kakao_apps(request: Request, app_name: str):
     if app_name in kakao.LIST_APP_KOREA:
         if app_name == const.APP_TODAY:
             app_name == const.APP_TODAY_KOREA
             url = f"/app/{app_name}"
+
         else:
+            if app_name == const.TYPE_LIST:
+                app_name = const.APP_KAKAO_DESIGN
+
             url = f"/apps/{app_name}"
         return RedirectResponse(url)
 

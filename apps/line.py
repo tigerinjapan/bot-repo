@@ -254,12 +254,12 @@ def get_title(
 
 
 if __name__ == const.MAIN_FUNCTION:
-    get_msg_list()
     # get_template_actions()
     # get_flex_data_list()
-    # main()
+    main()
     # main(proc_flg=const.FLG_OFF)
     # main(data_div=const.NUM_TWO)
     # main(data_div=const.NUM_THREE)
     # main(auto_flg=const.FLG_OFF)
     # sub(const.APP_MLB)
+    # sub(div=const.APP_NISA)

@@ -254,7 +254,7 @@ def get_japanese_study() -> str:
 def get_english_conversation() -> str:
     data = today.get_today_phrase(
         const.STR_ENGLISH
-    )  # TODO: 英語も韓国語も16文字以内で再作成
+    )  # TODO: 英語も韓国語も半角スペース込みで16文字以内で再作成
     english_conversation = f"{data[1]}{const.SYM_NEW_LINE}{data[2]}"
     return english_conversation
 

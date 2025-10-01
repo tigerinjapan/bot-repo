@@ -5,14 +5,13 @@
   <title data-key="title"></title>
   <script src="/templates/const.js"></script>
   <script src="/templates/func.js"></script>
-  {% if '_design' in app_name %}
-  <script src="/templates/marked.min.js"></script>
-  <script src="/templates/design.js"></script>
-  {% elif 'travel' in app_name %}
+  {% if app_name in ['travel', 'travel_ko'] %}
   <script src="/templates/travel.js"></script>
   {% elif app_name == 'review' %}
   <script src="/templates/review.js"></script>
-
+  {% elif '_design' in app_name %}
+  <script src="/templates/marked.min.js"></script>
+  <script src="/templates/design.js"></script>
   {% endif %}
 </head>
 
@@ -20,11 +19,7 @@
   <p id="appName" hidden>{{ app_name }}</p>
   <p id="dataList" hidden>{{ data_list }}</p>
 
-  {% if '_design' in app_name %}
-  <div id="markdown-container" class="container"></div>
-
-
-  {% elif 'travel' in app_name %}
+  {% if app_name in ['travel', 'travel_ko'] %}
   <div class="container">
     <header>
       <h1 id="page-title"></h1>
@@ -58,6 +53,9 @@
     </form>
     <p id="message" class="msg"></p>
   </div>
+
+  {% elif '_design' in app_name %}
+  <div id="markdown-container" class="container"></div>
 
   {% else %}
   <div id="container"></div>

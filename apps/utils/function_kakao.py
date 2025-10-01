@@ -116,8 +116,9 @@ def get_access_token(code: str = const.SYM_BLANK) -> str:
         issue_type = ISSUE_TYPE_REFRESH_TOKEN
         # 認証コード：毎回アクセスし、アクセストークン取得が必要であるため、
         # リフレッシュトークン方式でアクセストークン発行（有効期限：1か月）
-        token = result["refresh_token"]
-        auth_dao.update_auth_token(app_name, token)
+        refresh_token = result["refresh_token"]
+        auth_token = func.get_masking_data(refresh_token)
+        auth_dao.update_auth_token(app_name, auth_token)
         func.print_info_msg(app_name, msg_const.MSG_INFO_TOKEN_UPDATE_SUCCESS)
 
     msg_div = f"{grant_type}で{issue_type}の発行、"
@@ -209,6 +210,7 @@ def get_template_object(
             },
             "button_title": "자세히 보기",
         }
+        func.print_info_msg(object_type, template_object[const.INPUT_TYPE_TEXT])
 
     template_object = func.get_dumps_json(template_object)
     return template_object
@@ -225,14 +227,16 @@ def get_token(request):
 
 # ログインHTML取得
 def get_login_content(token: str):
-    title = "카카오 인증 로그인"
+    title = "카카오 인증"
 
     if token:
         body = f"""
             <h1>{title}</h1>
-            <p>로그인이 완료되었습니다. 메시지 보내기를 할 수 있습니다.</p>
-            <div>
-                {html_const.HTML_KAKAO_SEND_TEST}
+            <p>인증이 완료되었습니다.</p>
+            <p>아래의 링크 리스트를 즐겨찾기에 등록해서 웹서비스를 이용해주세요.</p>
+            <p>매일 오전 9시에 카카오톡 메시지로 「오늘의 뉴스」를 전송할 예정입니다.</p>
+            <div class="button-group">
+                {html_const.HTML_KAKAO_LIST}
                 {html_const.HTML_KAKAO_LOGOUT}
             </div>
         """
@@ -288,9 +292,11 @@ def get_auth_content(code: str) -> tuple[str, str]:
         title = "인증 성공"
         body = f"""
             <h1>카카오 인증 <span class="success">성공!</span></h1>
-            <p>이제 메시지를 보낼 수 있습니다.</p>
+            <p>인증이 성공하였습니다.</p><br>
+            <p>아래의 링크 리스트를 즐겨찾기에 등록해서 웹서비스를 이용해주세요.</p><br>
+            <p>매일 오전 9시에 카카오톡 메시지로 「오늘의 뉴스」를 전송할 예정입니다.</p><br>
             <div class="button-group">
-                {html_const.HTML_KAKAO_SEND_TEST}
+                {html_const.HTML_KAKAO_LIST}
                 {html_const.HTML_KAKAO_LOGOUT}
             </div>
         """
@@ -298,7 +304,7 @@ def get_auth_content(code: str) -> tuple[str, str]:
         title = "인증 실패"
         body = f"""
             <h1>카카오 인증 <span class="error">실패</span></h1>
-            <p>인증 과정에서 오류가 발생했습니다:</p>
+            <p>인증 과정에서 오류가 발생했습니다.</p>
             <p><a href="/kakao" class="button">다시 시도하기</a></p>
         """
 
@@ -315,14 +321,14 @@ def get_unlink_content(token: str) -> str:
         # 結果表示
         body = f"""
             <h1>앱 연결 <span class="success">해제 완료</span></h1>
-            <p>카카오 계정과 앱의 연결이 해제되었습니다.</p>
+            <p>카카오 계정과 앱의 연결이 해제되었습니다.</p><br>
             <pre>{result}</pre>
         """
 
     except Exception as e:
         body = f"""
             <h1>앱 연결 해제 <span class="error">실패</span></h1>
-            <p>연결 해제 중 오류가 발생했습니다:</p>
+            <p>연결 해제 중 오류가 발생했습니다.</p><br>
             <pre>{str(e)}</pre><br>
         """
 
@@ -343,17 +349,13 @@ def get_test_message_content(token: str) -> str:
         <h1>메시지 전송 <span class="{'success' if result else 'error'}">
             {('성공!' if result else '실패')}
         </span></h1>
-        <p>결과:</p>
+        <p>결과</p><br>
         <pre>{result}</pre>
         <div class="button-group">
-            {html_const.HTML_KAKAO_SEND_TEST}<br>
-            {html_const.HTML_KAKAO_LOGOUT}<br><br>
+            {html_const.HTML_KAKAO_SEND_TEST}
+            {html_const.HTML_KAKAO_LOGOUT}
             {html_const.HTML_KAKAO_GO_HOME}
         </div>
-        <p style="margin-top: 20px; font-size: 0.9em; color: #666;">
-            * '앱 연결 해제'는 카카오 계정과 이 앱의 연결을 완전히 끊습니다. 
-            다시 사용하려면 처음부터 인증 과정을 거쳐야 합니다.
-        </p>
     """
 
     content = get_html_context(title, body)

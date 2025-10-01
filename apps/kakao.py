@@ -17,6 +17,7 @@ LIST_APP_KOREA = [
     const.APP_TRAVEL,
     const.APP_NUMBER,
     const.APP_REVIEW,
+    const.TYPE_LIST,
 ]
 
 
@@ -66,4 +67,4 @@ def main(object_type: str = func_kakao.OBJECT_TYPE_FEED):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    main(send_flg=const.FLG_OFF)
+    main()
