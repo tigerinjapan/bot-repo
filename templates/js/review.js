@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", init);
 // 初期表示
 function init() {
 
-  getElemByTag(TAG_H1).textContent = "アプリ・レビュー";
+  getElemByTag(TAG_H1).textContent = "🌈 Review Page 🌈";
 
   // アプリ名
   const dataList = getDataList("dataList");
@@ -35,8 +35,8 @@ function init() {
   const ctgTxtList = dataList[1];
 
   let selectList = [
-    ["アプリ", STR_APP, appTxtList, 0],
-    ["カテゴリー", STR_CATEGORY, ctgTxtList, 0],
+    ["Application", STR_APP, appTxtList, 0],
+    ["Category", STR_CATEGORY, ctgTxtList, 0],
   ];
 
   let parentElemId = ELEM_ID_DIV;
@@ -45,7 +45,7 @@ function init() {
     createOption(elemId, elemId, txtList, parentElemId, selectValIdx);
   }
 
-  const thList = ["No.", "区分", "内容"];
+  const thList = ["No.", "Type", "Contents"];
   const typeTxtList = dataList[2];
 
   parentElemId = ELEM_ID_TABLE;
@@ -76,13 +76,13 @@ function init() {
     }
   }
 
-  getElemByTag(TAG_BUTTON).textContent = "送信";
+  getElemByTag(TAG_BUTTON).textContent = "Send";
 }
 
 // ユーザ名設定
 function setUserName() {
   if (!userName || userName === SYM_BLANK) {
-    userName = prompt(MSG_INFO_INPUT_USER);
+    userName = prompt(MSG_INFO_INPUT_USER_EN);
     sessionStorage.setItem(STR_USER_NAME, userName);
   }
 }
@@ -113,7 +113,7 @@ function sendReview() {
 
     // 入力チェック
     if (addCnt === 0) {
-      getElem(STR_MESSAGE).textContent = MSG_ERR_NO_INPUT;
+      getElem(STR_MESSAGE).textContent = MSG_ERR_NO_INPUT_EN;
       return;
     }
 
@@ -140,12 +140,12 @@ function sendReview() {
       // getElem(STR_MESSAGE).textContent = msg;
       // getElem(ELEM_ID_FORM).reset();
       console.log(msg);
-      alert(msg);
+      alert(MSG_OK_SEND_EN);
 
       // ページ全体をリセット（再読み込み）
       location.reload();
     } catch {
-      setElemText(STR_MESSAGE, MSG_ERR_SEND);
+      setElemText(STR_MESSAGE, MSG_ERR_SEND_EN);
     }
   });
 }

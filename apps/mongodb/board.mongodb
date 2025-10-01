@@ -3,14 +3,15 @@ const database = "mongoDB";
 
 const app_line = 0;
 const app_travel = 1;
-const app_number = 2;
-const app_etc = 1;
+const app_kakao = 2;
+const app_etc = 9;
 const category_review = 0;
 const category_memo = 1;
-const category_etc = 2;
+const category_error = 2;
+const category_etc = 3;
 const type_add = 0;
 const type_modify = 1;
-const type_layout = 2;
+const type_design = 2;
 const type_etc = 3;
 const remark_default = "-";
 const status_new = 0;
@@ -159,8 +160,8 @@ use(database)
 // };
 
 // boardData_012 = {
-//     "nSeq": 12,
-//     "nApp": app_number,
+//     "nSeq": 99,
+//     "nApp": app_kakao,
 //     "nCategory": category_review,
 //     "nType": type_add,
 //     "sContents": "ゲームスタート、ストップ機能があると嬉しい",
@@ -197,27 +198,31 @@ use(database)
 // db.board.deleteMany({ nSeq: { $gte: currentSeq } });
 
 // find documents
+db.board.find({ nApp: { $eq: app_kakao } }).pretty();
+
 // db.board.find(
 //     {
 //         $or: [
+//             { nApp: { $eq: app_line } },
 //             { nStatus: { $ne: status_done } },
-//             // { dUpdateDate: { $gte: new Date(strDate) } },
+//             { dUpdateDate: { $gte: new Date(strDate) } },
 //         ]
 //     },
-//     { _id: 0, nApp: 1, sContents: 1, sUserName: 1, dUpdateDate: 1 }
+//     { _id: 0, nSeq: 1, nApp: 1, sContents: 1, nStatus: 1, sUserName: 1, dUpdateDate: 1 }
 // ).sort(
 //     { nStatus: 1, nApp: 1, dUpdateDate: -1 }
 // ).pretty();
 
-db.board.find({
-    sUserName: { $ne: "test" },
-    sUserName: { $in: ["hong", "test"] },
-    sRemark: { $exists: true },
-    dUpdateDate: { $gte: new Date("2025-01-01"), $lte: new Date("2025-12-31") },
-    $and: [{ nApp: 3 }, { nCategory: 1 }],
-    $or: [{ nStatus: 0 }, { nStatus: 1 }, { nStatus: 3 }]
-},
-    { _id: 0, nApp: 1, sContents: 1, sRemark: 1, sUserName: 1, nStatus: 1, dUpdateDate: 1 }
-).sort(
-    { nStatus: 1, dUpdateDate: -1, sUserName: 1, }
-).limit(10);
+
+// db.board.find({
+//     sUserName: { $ne: "test" },
+//     sUserName: { $in: ["hong", "test"] },
+//     sRemark: { $exists: true },
+//     dUpdateDate: { $gte: new Date("2025-01-01"), $lte: new Date("2025-12-31") },
+//     $and: [{ nApp: 3 }, { nCategory: 1 }],
+//     $or: [{ nStatus: 0 }, { nStatus: 1 }, { nStatus: 3 }]
+// },
+//     { _id: 0, nApp: 1, sContents: 1, sRemark: 1, sUserName: 1, nStatus: 1, dUpdateDate: 1 }
+// ).sort(
+//     { nStatus: 1, dUpdateDate: -1, sUserName: 1, }
+// ).limit(10);

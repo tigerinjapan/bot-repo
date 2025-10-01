@@ -24,7 +24,7 @@ def get_board_info():
         mongo_const.OPERATOR_OR: [
             {
                 mongo_const.FI_STATUS: {
-                    mongo_const.OPERATOR_NOT_EQUAL: mongo_const.STATUS_DONE
+                    mongo_const.OPERATOR_NOT_EQUAL: board_dto.STATUS_DONE
                 }
             },
             {
@@ -67,10 +67,13 @@ def insert_board_data_of_api(json_data):
 
 
 # ステータス更新
-def update_board_status(seq: str, status: int = mongo_const.STATUS_DONE):
+def update_board_status(seq: str, status: int = board_dto.STATUS_DONE):
     client = func_mongo.db_connect()
     cond = {mongo_const.FI_SEQ: int(seq)}
-    update_data = {mongo_const.FI_STATUS: status}
+    update_data = {
+        mongo_const.FI_STATUS: status,
+        mongo_const.FI_UPDATE_DATE: func.get_now(),
+    }
     func_mongo.db_update(client, COLL, cond, update_data)
     func_mongo.db_close(client)
 

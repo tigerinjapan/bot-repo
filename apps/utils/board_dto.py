@@ -7,6 +7,18 @@ import apps.utils.constants as const
 import apps.utils.mongo_constants as mongo_const
 from apps.utils.function import convert_date_to_str, get_now
 
+# リスト: board
+LIST_APP = ["LINE", "Travel", "Kakao", "Server"]
+LIST_CATEGORY = ["Review", "Memo", "Error", "Etc."]
+LIST_TYPE = ["Add", "Modify", "Design", "Etc."]
+LIST_STATUS = ["New", "Progress", "Pend", "Done"]
+
+# ステータス: board
+STATUS_NEW = 0
+STATUS_PROGRESS = 1
+STATUS_PEND = 2
+STATUS_DONE = 3
+
 
 @dataclass
 class board:
@@ -35,7 +47,7 @@ def get_update_data_for_board_info(data, seq: int):
     type = int(data[2])
     contents = data[3]
     remark = const.SYM_DASH
-    status = mongo_const.STATUS_NEW
+    status = STATUS_NEW
     userName = data[4]
 
     json_data = asdict(
@@ -47,12 +59,12 @@ def get_update_data_for_board_info(data, seq: int):
 # 掲示板データ取得
 def get_board_data(data):
     seq = data[mongo_const.FI_SEQ]
-    app = mongo_const.LIST_APP[data[mongo_const.FI_APP]]
-    category = mongo_const.LIST_CATEGORY[data[mongo_const.FI_CATEGORY]]
-    type = mongo_const.LIST_TYPE[data[mongo_const.FI_TYPE]]
+    app = LIST_APP[data[mongo_const.FI_APP]]
+    category = LIST_CATEGORY[data[mongo_const.FI_CATEGORY]]
+    type = LIST_TYPE[data[mongo_const.FI_TYPE]]
     contents = data[mongo_const.FI_CONTENTS]
     remark = data[mongo_const.FI_REMARK]
-    status = mongo_const.LIST_STATUS[data[mongo_const.FI_STATUS]]
+    status = LIST_STATUS[data[mongo_const.FI_STATUS]]
     userName = data[mongo_const.FI_USER_NAME]
     updateDate = convert_date_to_str(
         data[mongo_const.FI_UPDATE_DATE], const.DATE_FORMAT_YYYYMMDD_SLASH

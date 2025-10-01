@@ -384,5 +384,4 @@ def get_html_context(title: str, body: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    code = ""
-    get_access_token(code)
+    get_access_token()

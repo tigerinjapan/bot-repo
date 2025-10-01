@@ -56,7 +56,14 @@ function init() {
   // 画面内容の更新処理
   async function updateContent() {
 
-    const lang = langSelect.value;
+    let lang = langSelect.value;
+
+    // アプリ名
+    const appName = getElemText("appName");
+    if (appName.includes(LANG_CD_KO)) {
+      lang = LANG_CD_KO;
+    }
+
     const region = regionSelect.value;
 
     travelData = await getFetchApiData(travelDataUrl);
@@ -207,9 +214,9 @@ function init() {
     const rate = exchangeRateData[targetCurrencyCode];
     if (rate) {
       const baseAmount =
-        baseCountryCode === "ja"
+        baseCountryCode === LANG_CD_JA
           ? 100
-          : baseCountryCode === "ko"
+          : baseCountryCode === LANG_CD_KO
             ? 1000
             : 1;
 

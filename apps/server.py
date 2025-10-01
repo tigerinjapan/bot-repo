@@ -3,7 +3,7 @@
 
 import sys
 
-from fastapi import FastAPI, Request, HTTPException, Form, Query
+from fastapi import FastAPI, Request, HTTPException, Form
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
@@ -14,9 +14,11 @@ from threading import Thread
 from uvicorn import Config, Server
 
 import apps.appl as appl
+import apps.kakao as kakao
 import apps.line as line
 import apps.test as test
 import apps.utils.board_dao as board_dao
+import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_gemini as func_gemini
@@ -203,9 +205,9 @@ async def apps(request: Request, app_name: str):
 
     data_list = []
     if app_name == const.APP_REVIEW:
-        data_list.append(mongo_const.LIST_APP)
-        data_list.append(mongo_const.LIST_CATEGORY)
-        data_list.append(mongo_const.LIST_TYPE)
+        data_list.append(board_dto.LIST_APP)
+        data_list.append(board_dto.LIST_CATEGORY)
+        data_list.append(board_dto.LIST_TYPE)
 
     context = {const.STR_REQUEST: request, "app_name": app_name, "data_list": data_list}
 
@@ -215,7 +217,7 @@ async def apps(request: Request, app_name: str):
 
 # HTMLテンプレートファイルの返却
 @app.get("/apps/v1/{app_name}")
-async def apps2(app_name: str):
+async def apps_v1(app_name: str):
     if not app_name in const.LIST_APPS_NAME_2:
         curr_func_nm = sys._getframe().f_code.co_name
         except_http_error(curr_func_nm, app_name)
@@ -290,7 +292,7 @@ async def gemini_api(request: Request):
 
 # ランキング情報更新
 @app.post("/number/ranking")
-async def ranking_update(request: Request):
+async def number_ranking(request: Request):
     json_data = await request.json()
     rank_dao.update_rank_info_of_api(json_data)
     result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
@@ -331,7 +333,7 @@ async def board_update(seq: str):
 
 
 @app.get("/kakao", response_class=HTMLResponse)
-async def root(request: Request):
+async def kakao_root(request: Request):
     """開始ページ"""
 
     token = func_kakao.get_token(request)
@@ -340,7 +342,7 @@ async def root(request: Request):
 
 
 @app.get("/kakao/login")
-async def login(request: Request):
+async def kakao_login(request: Request):
     """ログイン"""
 
     auth_url = func_kakao.URL_KAKAO_AUTH
@@ -350,7 +352,7 @@ async def login(request: Request):
 
 
 @app.get("/kakao/logout")
-async def logout(request: Request):
+async def kakao_logout(request: Request):
     """ログアウト"""
 
     token = func_kakao.get_token(request)
@@ -367,7 +369,7 @@ async def logout(request: Request):
 
 
 @app.get("/kakao/oauth", response_class=HTMLResponse)
-async def oauth(request: Request, code: str = Query(...)):
+async def kakao_oauth(request: Request, code: str):
     """
     認証コードで、アクセストークン発行
     （初回のみ実施、リフレッシュトークンの確認にも使用）
@@ -378,13 +380,14 @@ async def oauth(request: Request, code: str = Query(...)):
 
     token, content = func_kakao.get_auth_content(code)
     if token:
+        func.print_info_msg(const.STR_KAKAO, msg_const.MSG_INFO_AUTH_SUCCESS)
         request.session[func_kakao.STR_KAKAO_API_TOKEN] = token
 
     return content
 
 
 @app.get("/kakao/send-test", response_class=HTMLResponse)
-async def send_test(request: Request):
+async def kakao_send_test(request: Request):
     """メッセージ送信テスト"""
 
     token = func_kakao.get_token(request)
@@ -395,15 +398,24 @@ async def send_test(request: Request):
     return HTMLResponse(content=content)
 
 
-@app.get("/kakao/today")
-async def today_korea():
-    url = f"/app/{const.APP_TODAY_KOREA}"
-    return RedirectResponse(url)
+@app.get("/kakao/{app_name}")
+async def kakao_apps(request: Request, app_name: str):
+    if app_name in kakao.LIST_APP_KOREA:
+        if app_name == const.APP_TODAY:
+            app_name == const.APP_TODAY_KOREA
+            url = f"/app/{app_name}"
+        else:
+            url = f"/apps/{app_name}"
+        return RedirectResponse(url)
+
+    else:
+        curr_func_nm = sys._getframe().f_code.co_name
+        except_http_error(curr_func_nm, request.url._url)
 
 
 # テンプレートファイル取得
 @app.get("/templates/{file_name}")
-async def temp(file_name: str):
+async def templates_file(file_name: str):
     file_ext = func.get_path_split(file_name, extension_flg=const.FLG_ON)
     file_path = f"templates/{file_ext}/{file_name}"
     return FileResponse(file_path)

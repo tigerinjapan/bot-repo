@@ -14,5 +14,5 @@
 | [url](https://kobe-dev.koyeb.app/apps/url_design)              | 開発サーバー URL 一覧  | 随時更新           |
 | [gemini](https://kobe-dev.koyeb.app/apps/v1/gemini)            | Gemini コンテンツ生成  | 画像、テキスト対応 |
 | [gemini image](https://kobe-dev.koyeb.app/img/gemini)          | Gemini 生成イメージ    | リクエスト毎更新   |
-| [today image](https://kobe-dev.koyeb.app/img/today)            | Today's News イメージ  | 毎時 10 分に更新   |
+| [today image](https://kobe-dev.koyeb.app/img/today)            | Today's News イメージ  | 毎日 07:10更新   |
 | [error log](https://kobe-dev.koyeb.app/log/error)              | エラーログ             | エラー発生時出力   |

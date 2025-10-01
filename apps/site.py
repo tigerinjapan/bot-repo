@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 
 import apps.utils.board_dao as board_dao
+import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.mongo_constants as mongo_const
@@ -32,8 +33,8 @@ col_list_board = [
     "備考",
     "状態",
     "作成者",
-    "作成日",
-    "完了",
+    "更新日",
+    "完了状態",
 ]
 
 menu_travel_div = ["両替所", "観光地", "レストラン", "その他"]
@@ -61,11 +62,11 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
 
         # numpy.where()を使って新しい列を作成
         df[const.STR_URL] = np.where(
-            df[mongo_const.FI_STATUS] == "対応完了",
-            const.SYM_DASH,
+            df[mongo_const.FI_STATUS] == board_dto.LIST_STATUS[board_dto.STATUS_DONE],
+            "✅",
             func.get_a_tag(
                 f"{URL_SERVER}/board/update/" + df[mongo_const.FI_SEQ],
-                "☑",
+                "▶️",
                 const.FLG_ON,
             ),
         )

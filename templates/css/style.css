@@ -245,6 +245,11 @@ tr:nth-child(even) td {
 	background: var(--accent-light);
 }
 
+/* アンダーライン非表示 */
+.no-underline-link {
+	text-decoration: none;
+}
+
 /* --- ログイン・ユーザー --- */
 .loginTbl,
 .userTbl {

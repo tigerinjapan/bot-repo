@@ -45,16 +45,6 @@ ITEM_STATUS = "status"
 ITEM_NUMBER = "number"
 ITEM_RANK_TIME = "rankTime"
 
-# リスト: board
-LIST_APP = ["LINE Message", "Travel & Life", "Gemini", "サーバー"]
-LIST_CATEGORY = ["レビュー", "メモ", "エラー", "その他"]
-LIST_TYPE = ["機能追加", "機能修正", "レイアウト", "その他"]
-LIST_STATUS = ["新規", "対応中", "保留", "対応完了"]
-
-# ステータス: board
-STATUS_NEW = 0
-STATUS_DONE = 3
-
 # 演算子
 OPERATOR_EQUAL = "$eq"
 OPERATOR_NOT_EQUAL = "$ne"

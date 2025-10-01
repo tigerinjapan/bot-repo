@@ -1,5 +1,6 @@
 // 記号
 const SYM_BLANK = "";
+const SYM_NEW_LINE = "\n";
 const SYM_LEVEL = "🌟";
 
 // タグ
@@ -79,6 +80,7 @@ const LIST_GAME_RULE_KO = [
 // メッセージ
 const MSG_OK_SEND = "送信成功！";
 const MSG_ERR_SEND = "送信エラー";
+const MSG_ERR_LOAD_JSON = "JSONファイルの読み込みに失敗しました!";
 
 const MSG_INFO_ANSWER_EXAMPLE = "解の例:";
 const MSG_INFO_OK_ANSWER = "正解です!";
@@ -93,7 +95,6 @@ const MSG_ERR_FORMAT = "数式の形式が正しくありません!";
 const MSG_ERR_DIVIDE_BY_ZERO = "ゼロ除算はできません!";
 const MSG_ERR_MATCH = "計算結果が一致しません!";
 const MSG_ERR_RANK = "ランク送信に失敗しました!";
-const MSG_ERR_LOAD_JSON = "JSONファイルの読み込みに失敗しました!";
 
 const MSG_INFO_OK_ANSWER_KO = "정답입니다!";
 const MSG_INFO_OK_RANK_KO = "신기록！랭킹 등록！";
@@ -107,6 +108,13 @@ const MSG_ERR_FORMAT_KO = "수식이 바르지 않습니다!";
 const MSG_ERR_DIVIDE_BY_ZERO_KO = "0으로 나눌 수 없습니다!";
 const MSG_ERR_MATCH_KO = "계산결과가 일치하지 않습니다!";
 const MSG_ERR_RANK_KO = "랭킹 등록에 실패했습니다.";
+
+const MSG_INFO_INPUT_USER_EN = "Input your nickname.";
+const MSG_OK_SEND_EN = "Send OK!";
+const MSG_ERR_SEND_EN = "Send NG!!";
+
+const MSG_ERR_NO_INPUT_EN = "No input data.";
+const MSG_ERR_LOAD_JSON_EN = "Failed to load json file!"
 
 // URL
 const URL_SERVER = "https://kobe-dev.koyeb.app";

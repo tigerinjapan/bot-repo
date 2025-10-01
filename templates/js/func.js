@@ -56,7 +56,7 @@ function createElem(tagName, elemVal, parentElemId) {
     elem.id = elemVal;
     if (tagName === TAG_TEXTAREA) {
       elem.maxLength = 40;
-      elem.placeholder = "レビュー内容を記載してください";
+      elem.placeholder = "Input the contents.";
     }
   }
 
@@ -110,8 +110,8 @@ async function getFetchApiData(url) {
 
   } catch (error) {
     // エラー処理
-    console.error('Failed to load json file:', error);
-    alert(MSG_ERR_LOAD_JSON);
+    console.error(`${MSG_ERR_LOAD_JSON}${SYM_NEW_LINE}`, error);
+    alert(MSG_ERR_LOAD_JSON_EN);
   }
 }
 

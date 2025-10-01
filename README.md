@@ -25,21 +25,25 @@ LINE Messaging API Bot
 
 ### 環境変数：Koyeb にて、secret 登録
 
-| 変数                  | 値                |
-| --------------------- | ----------------- |
-| PYTHONPATH            | bot               |
-| GEMINI_API_KEY        | api_key           |
-| GEMINI_MODEL          | model_name        |
-| LINE_CHANNEL_ID       | channel_id        |
-| LINE_CHANNEL_SECRET   | channel_secret    |
-| LINE_CHANNEL_ID_2     | channel_id_2      |
-| LINE_CHANNEL_SECRET_2 | channel_secret_2  |
-| LINE_IMG_DIV          | 1                 |
-| NUM_HOUR_DAILY_JOB    | 7                 |
-| NUM_HOUR_DAILY_JOB_2  | 19                |
-| NUM_MIN_HOURLY_JOB    | 30                |
-| NUM_SEC_NO_SLEEP      | 600               |
-| URL_KOYEB             | https://koyeb.app |
+| 変数                  | 値                  |
+| --------------------- | ------------------- |
+| PYTHONPATH            | bot                 |
+| GEMINI_API_KEY        | api_key             |
+| GEMINI_MODEL          | model_name          |
+| LINE_CHANNEL_ID       | channel id          |
+| LINE_CHANNEL_SECRET   | channel secret      |
+| LINE_CHANNEL_ID_2     | channel id2         |
+| LINE_CHANNEL_SECRET_2 | channel secret2     |
+| LINE_IMG_DIV          | 1                   |
+| TIME_WEEKLY_JOB       | 09:00               |
+| TIME_DAILY_JOB        | 07:00               |
+| TIME_DAILY_JOB_2      | 18:30               |
+| TIME_DAILY_JOB_3      | 09:00               |
+| MIN_HOURLY_JOB        | :05                 |
+| NUM_SEC_NO_SLEEP      | 600                 |
+| URL_KOYEB             | https://koyeb.app   |
+| KAKAO_API_KEY         | kakao client id     |
+| KAKAO_API_SECRET      | kakao client secret |
 
 ### 公開サーバ
 
