@@ -1,27 +1,32 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/10/02(Thu) 13:00",
+        "오늘의 생활정보": "2025/10/03(Fri) 08:42",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "단풍 절정은 언제?",
+        "오늘의 생활정보": "내일 전국 대부분 비",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 953원",
+        "오늘의 생활정보": "100엔 = 955원",
         "링크": "https://finance.naver.com/marketindex/"
     },
     {
         "구분": "일본어",
-        "오늘의 생활정보": "いつか : 오일.",
+        "오늘의 생활정보": "ぶんか : 문화.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "I need a new battery for my watch.\n시계에 쓸 새 배터리가 필요해요",
+        "오늘의 생활정보": "Please stop here.\n여기서 멈춰 주세요",
         "링크": "https://learn.dict.naver.com/conversation#/"
+    },
+    {
+        "구분": "항공권",
+        "오늘의 생활정보": "인천↔️오키나와 249,000원",
+        "링크": "https://mm.ttang.com/product/free/index.do"
     }
 ]

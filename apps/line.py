@@ -79,7 +79,7 @@ def main(
                         messages = get_flex_msg()
 
                 # メッセージ送信
-                func_line.send_message(token, messages)
+                func_line.send_line_msg(token, messages)
 
             except Exception as e:
                 curr_func_nm = sys._getframe().f_code.co_name

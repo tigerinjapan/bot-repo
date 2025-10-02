@@ -41,7 +41,6 @@ MSG_TYPE_BUBBLE = "bubble"
 # チャネル・アクセストークン取得
 def get_channel_access_token(admin_flg: bool = const.FLG_OFF) -> str:
     url = f"{URL_LINE_API}/oauth2/v3/token"
-    headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
     client_id = LINE_CHANNEL_ID
     client_secret = LINE_CHANNEL_SECRET
@@ -58,7 +57,6 @@ def get_channel_access_token(admin_flg: bool = const.FLG_OFF) -> str:
     result = func_api.get_response_result(
         url,
         request_type=const.REQUEST_TYPE_POST,
-        headers=headers,
         data=data,
         header_json_flg=const.FLG_OFF,
     )
@@ -104,7 +102,7 @@ def check_message_count(access_token: str) -> int:
 
 
 # メッセージ送信
-def send_message(access_token: str, messages):
+def send_line_msg(access_token: str, messages):
     url = f"{URL_LINE_API}/v2/bot/message/broadcast"
     headers = {"Authorization": access_token}
     data = {"messages": messages}
@@ -143,7 +141,7 @@ def get_line_messages(msg_list: list[list[str]]):
 def send_msg_for_admin(msg_json, admin_flg: bool = const.FLG_ON):
     token = get_channel_access_token(admin_flg)
     if token:
-        send_message(token, msg_json)
+        send_line_msg(token, msg_json)
 
 
 # テンプレート・メッセージ取得

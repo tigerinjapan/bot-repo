@@ -1,5 +1,20 @@
 [
     {
+        "日付": "2025年10月2日",
+        "会社": "<a href=\"https://www.jetstar.com/jp/ja/deals/sale\" target=\"_blank\" rel=\"noopener noreferrer\">ジェットスター・ジャパン</a>",
+        "LCCニュース": "「スーパースターセール」\n10月3日12時から開催！国内線 片道3,790円から"
+    },
+    {
+        "日付": "2025年10月1日",
+        "会社": "<a href=\"https://flyairseoul.com/CW/ja/eventView.do?seq=2070&type=I\" target=\"_blank\" rel=\"noopener noreferrer\">エアソウル</a>",
+        "LCCニュース": "「韓国冬旅 今がチャンス！」\nセール開催中！ソウル国際線 片道4,000円から"
+    },
+    {
+        "日付": "2025年10月1日",
+        "会社": "<a href=\"https://www.jinair.com/promotion/eventView?evntSeq=14577\" target=\"_blank\" rel=\"noopener noreferrer\">ジンエアー</a>",
+        "LCCニュース": "「10月の特別割引」\nセール開催中！ソウル/釜山国際線 最大15％割引"
+    },
+    {
         "日付": "2025年9月29日",
         "会社": "<a href=\"https://www.flypeach.com/um/specials/sale/sale\" target=\"_blank\" rel=\"noopener noreferrer\">Peach</a>",
         "LCCニュース": "「2日間限定 島旅セール」\n9月30日12時から開催！奄美・沖縄・石垣線 片道3,490円から"
@@ -8,15 +23,5 @@
         "日付": "2025年9月29日",
         "会社": "<a href=\"https://www.jetstar.com/jp/ja/deals/jq-int\" target=\"_blank\" rel=\"noopener noreferrer\">ジェットスター</a>",
         "LCCニュース": "「オーストラリア路線セール」\n9月30日12時から開催！12月～来年8月搭乗分"
-    },
-    {
-        "日付": "2025年9月24日",
-        "会社": "<a href=\"https://www.jejuair.net/ja/event/eventDetail.do?eventNo=0000003391\" target=\"_blank\" rel=\"noopener noreferrer\">チェジュ航空</a>",
-        "LCCニュース": "「48時間限定セール」\n開催中！ソウル・釜山線 片道1,100円から"
-    },
-    {
-        "日付": "2025年9月24日",
-        "会社": "<a href=\"https://www.jetstar.com/jp/ja/deals/sale\" target=\"_blank\" rel=\"noopener noreferrer\">ジェットスター・ジャパン</a>",
-        "LCCニュース": "「ワケアリ！復路 火水木限定 1,990円 国内全路線セール」\n9月26日12時から開催！10月～来年1月搭乗分"
     }
 ]

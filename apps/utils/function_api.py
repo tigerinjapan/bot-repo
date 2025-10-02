@@ -14,6 +14,10 @@ SCRIPT_NAME = func.get_app_name(__file__)
 # URL
 URL_SERVER = func.get_server_url()
 
+# HEADERS
+API_HEADERS_JSON = {"Content-Type": "application/json"}
+API_HEADERS_UTF8 = {"Content-Type": "application/x-www-form-urlencoded"}
+
 # プロパティ
 IMG_NO = func.get_env_val("LINE_IMG_DIV", masking_flg=const.FLG_OFF)
 NUM_IMG_MAX_SEQ = 4
@@ -27,13 +31,16 @@ def get_response_result(
     data={},
     header_json_flg: bool = const.FLG_ON,
 ):
-    result = const.NONE_CONSTANT
+    result = except_ = msg = const.NONE_CONSTANT
     curr_func_nm = sys._getframe().f_code.co_name
 
     func.print_info_msg(const.STR_API, url)
 
     if header_json_flg:
-        headers.update(const.HEADERS_JSON)
+        api_headers = API_HEADERS_JSON
+    else:
+        api_headers = API_HEADERS_UTF8
+    headers.update(api_headers)
 
     try:
         if request_type == const.REQUEST_TYPE_GET:
@@ -42,22 +49,27 @@ def get_response_result(
         elif request_type == const.REQUEST_TYPE_POST:
             response = requests.post(url, headers=headers, data=data)
 
+        res_status = response.status_code
+        res_text = response.text
+        if res_status in const.STATUS_CODE_NORMAL:
+            result = func.get_loads_json(res_text)
+        else:
+            err_msg = f"{res_status} {res_text}"
+            func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg)
+            if not response:
+                err_msg = f"{url} {msg_const.MSG_ERR_API_RESPONSE_NONE}"
+                func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg)
+
     except requests.exceptions.ConnectionError as ce:
         msg = f"{msg_const.MSG_ERR_SERVER_NOT_WORKING} {url}"
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, msg, ce)
-        return result
+        except_ = ce
 
-    res_status = response.status_code
-    res_text = response.text
-    if res_status in const.STATUS_CODE_NORMAL:
-        result = func.get_loads_json(res_text)
+    except KeyError as ke:
+        msg = msg_const.MSG_ERR_DATA_NOT_EXIST
+        except_ = ke
 
-    else:
-        err_msg = f"{res_status} {res_text}"
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg)
-        if not response:
-            err_msg = f"{url} {msg_const.MSG_ERR_API_RESPONSE_NONE}"
-            func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg)
+    if except_:
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, msg, ke)
 
     return result
 

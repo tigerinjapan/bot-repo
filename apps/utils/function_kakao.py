@@ -24,10 +24,14 @@ KAKAO_API_SECRET = func.get_env_val("KAKAO_API_SECRET")
 # URL
 URL_KAKAO_OAUTH = "https://kauth.kakao.com/oauth"
 URL_TOKEN = f"{URL_KAKAO_OAUTH}/token"
+
 URL_KAKAO_API = "https://kapi.kakao.com"
-URL_KAKAO_API_SEND = f"{URL_KAKAO_API}/v2/api/talk/memo/default/send"
 URL_KAKAO_API_LOGOUT = f"{URL_KAKAO_API}/v1/user/logout"
 URL_KAKAO_API_UNLINK = f"{URL_KAKAO_API}/v1/user/unlink"
+URL_KAKAO_API_SEND_ME = f"{URL_KAKAO_API}/v2/api/talk/memo/default/send"
+URL_KAKAO_API_USER_ME = f"{URL_KAKAO_API}/v2/user/me"
+
+# TODO: チャネル登録必要のため、保留
 URL_KAKAO_API_FRIENDS = f"{URL_KAKAO_API}/v1/api/talk/friends"
 URL_KAKAO_API_SEND_FRIENDS = f"{URL_KAKAO_API}/message/default/send"
 
@@ -55,6 +59,10 @@ ISSUE_TYPE_REFRESH_TOKEN = GRANT_TYPE_REFRESH_TOKEN
 OBJECT_TYPE_FEED = "feed"
 OBJECT_TYPE_TEXT = "text"
 OBJECT_TYPE_LIST = "list"  # TODO: 実装要
+
+# 結果コード
+RESULT_CODE_OK = 0
+RESULT_CODE_NG = 1
 
 
 # アクセストークン取得（トークン発行、更新）
@@ -87,11 +95,9 @@ def get_access_token(code: str = const.SYM_BLANK) -> str:
     client_data = {"client_id": KAKAO_API_KEY, "client_secret": KAKAO_API_SECRET}
     data.update(client_data)
 
-    headers = {"Content-Type": "application/x-www-form-urlencoded"}
     result = func_api.get_response_result(
         token_url,
         request_type=const.REQUEST_TYPE_POST,
-        headers=headers,
         data=data,
         header_json_flg=const.FLG_OFF,
     )
@@ -132,17 +138,57 @@ def get_access_token(code: str = const.SYM_BLANK) -> str:
     return token
 
 
+# ユーザー情報取得
+def get_user_me(access_token: str = const.SYM_BLANK) -> list[str]:
+    curr_func_nm = sys._getframe().f_code.co_name
+
+    if not access_token:
+        access_token = get_access_token()
+
+    url = URL_KAKAO_API_USER_ME
+    headers = {"Authorization": access_token}
+    result = func_api.get_response_result(url, headers=headers)
+    if result:
+        try:
+            account_info = result["kakao_account"]
+            uuid = result["for_partner"]["uuids"]
+
+        except KeyError as ke:
+            msg = msg_const.MSG_ERR_DATA_NOT_EXIST
+            func.print_error_msg(SCRIPT_NAME, curr_func_nm, msg, ke)
+
+    return result
+
+
+# 友達リスト検索 # TODO: チャネル登録必要のため、保留
+def get_receiver_uuids(access_token: str = const.SYM_BLANK) -> list[str]:
+    receiver_uuids = []
+
+    if not access_token:
+        access_token = get_access_token()
+
+    url = URL_KAKAO_API_FRIENDS
+    headers = {"Authorization": access_token}
+    result = func_api.get_response_result(url, headers=headers)
+    if result:
+        elements = result["elements"]
+        receiver_uuids = [element["uuid"] for element in elements]
+        # total_count = result["total_count"]
+
+    return receiver_uuids
+
+
 # メッセージ送信
-def send_message(
+def send_kakao_msg(
     access_token: str,
     object_type: str = OBJECT_TYPE_FEED,
     title: str = const.SYM_BLANK,
     message: str = const.SYM_BLANK,
     link: str = const.SYM_BLANK,
     link_mo: str = const.SYM_BLANK,
-    template_object=const.SYM_BLANK,
+    receiver_uuids=[],
 ):
-    url = URL_KAKAO_API_SEND
+    url = URL_KAKAO_API_SEND_ME
     headers = {"Authorization": access_token}
 
     data = {}
@@ -155,6 +201,9 @@ def send_message(
             object_type, title, message, link, link_mo
         )
         data = {"template_object": template_object}
+        if receiver_uuids:
+            url = URL_KAKAO_API_SEND_FRIENDS
+            data.update({"receiver_uuids": receiver_uuids})
 
     result = func_api.get_response_result(
         url,
@@ -236,6 +285,7 @@ def get_login_content(token: str):
             <p>아래의 링크 리스트를 즐겨찾기에 등록해서 웹서비스를 이용해주세요.</p>
             <p>매일 오전 9시에 카카오톡 메시지로 「오늘의 뉴스」를 전송할 예정입니다.</p>
             <div class="button-group">
+                {html_const.HTML_KAKAO_SEND_TEST}
                 {html_const.HTML_KAKAO_LIST}
                 {html_const.HTML_KAKAO_LOGOUT}
             </div>
@@ -259,7 +309,7 @@ def get_logout_content(token: str) -> str:
 
     try:
         # ログアウト
-        result = send_message(token, const.STR_LOGOUT)
+        result = send_kakao_msg(token, const.STR_LOGOUT)
 
         # 結果表示
         body = f"""
@@ -296,6 +346,7 @@ def get_auth_content(code: str) -> tuple[str, str]:
             <p>아래의 링크 리스트를 즐겨찾기에 등록해서 웹서비스를 이용해주세요.</p><br>
             <p>매일 오전 9시에 카카오톡 메시지로 「오늘의 뉴스」를 전송할 예정입니다.</p><br>
             <div class="button-group">
+                {html_const.HTML_KAKAO_SEND_TEST}
                 {html_const.HTML_KAKAO_LIST}
                 {html_const.HTML_KAKAO_LOGOUT}
             </div>
@@ -316,7 +367,7 @@ def get_auth_content(code: str) -> tuple[str, str]:
 def get_unlink_content(token: str) -> str:
     try:
         # 連携解除
-        result = send_message(token, const.STR_UNLINK)
+        result = send_kakao_msg(token, const.STR_UNLINK)
 
         # 結果表示
         body = f"""
@@ -339,18 +390,27 @@ def get_unlink_content(token: str) -> str:
 
 
 # テストメッセージのHTML取得
-def get_test_message_content(token: str) -> str:
+def get_test_message_content(token: str = const.SYM_BLANK) -> str:
+    if not token:
+        token = get_access_token()
+
     object_type = const.STR_TEST
-    result = send_message(token, object_type)
+    result = send_kakao_msg(token, object_type)
+    result_code = RESULT_CODE_OK
+    result_data = const.SYM_BLANK
+    if result:
+        result_code = result["result_code"]
+        result_data = func.get_dumps_json(result)
+    success_flg = const.FLG_ON if result_code == RESULT_CODE_OK else const.FLG_OFF
 
     title = "메시지 전송 결과"
 
     body = f"""
-        <h1>메시지 전송 <span class="{'success' if result else 'error'}">
-            {('성공!' if result else '실패')}
+        <h1>메시지 전송 <span class="{'success' if success_flg else 'error'}">
+            {('성공!' if success_flg else '실패')}
         </span></h1>
         <p>결과</p><br>
-        <pre>{result}</pre>
+        <pre>{result_data}</pre>
         <div class="button-group">
             {html_const.HTML_KAKAO_SEND_TEST}
             {html_const.HTML_KAKAO_LOGOUT}
@@ -386,4 +446,5 @@ def get_html_context(title: str, body: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    get_access_token()
+    # get_access_token()
+    get_test_message_content()

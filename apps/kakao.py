@@ -21,12 +21,15 @@ LIST_APP_KOREA = [
 ]
 
 
-def main(object_type: str = func_kakao.OBJECT_TYPE_FEED):
+def main(
+    object_type: str = func_kakao.OBJECT_TYPE_FEED, list_flg: bool = const.FLG_OFF
+):
     """
     メインの処理を実行
 
     引数:
-        object_type (str): feed, text, list
+        object_type (str): feed, text, list, test
+        list_flg (bool): 一括送信フラグ # TODO: チャネル登録必要のため、保留
     """
 
     func.print_start(SCRIPT_NAME)
@@ -52,9 +55,13 @@ def main(object_type: str = func_kakao.OBJECT_TYPE_FEED):
                 else:
                     object_type = func_kakao.OBJECT_TYPE_TEXT
 
+                receiver_uuids = []
+                if list_flg:
+                    receiver_uuids = func_kakao.get_receiver_uuids(token)
+
                 # メッセージ送信
-                func_kakao.send_message(
-                    token, object_type, title, message, link, link_mo
+                func_kakao.send_kakao_msg(
+                    token, object_type, title, message, link, link_mo, receiver_uuids
                 )
 
             except Exception as e:

@@ -72,9 +72,6 @@ PATTERN_YYYYMMDD = "^[0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$"
 PATTERN_NUMBER = "^[0-9]$"
 PATTERN_NUMBERS = r"(\d+)"
 
-##### API #####
-HEADERS_JSON = {"Content-Type": "application/json"}
-
 ##### ステータスコード #####
 STATUS_CODE_OK = 200
 STATUS_CODE_CREATED = 201
@@ -401,7 +398,7 @@ LIST_REPLACE = [
 ]
 
 ##### ログ出力対象外文字 #####
-LIST_LOG_MASKING = ["kobe-", "token", "kapi.", "kauth"]
+LIST_LOG_MASKING = ["kobe-", "token", "kapi.", "kauth", "koyeb", "kakao", "line."]
 LOG_MASKING = "XXXXX"
 
 ##### 曜日リスト #####
