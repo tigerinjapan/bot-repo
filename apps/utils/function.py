@@ -203,7 +203,7 @@ def print_info_msg(div: str, msg: str):
     print(info_msg, div, msg)
 
     log_msg = f"{div} {msg}"
-    if is_local_env():
+    if not is_local_env():
         write_log(log_msg, const.STR_INFO, INFO)
 
 
@@ -251,6 +251,8 @@ def write_log(msg: str, app_div: str = const.STR_ERROR, log_level: int = ERROR):
     if not app_div:
         app_div = __name__
     logger = getLogger(app_div)
+
+    msg = get_replace_data(msg, const.LIST_LOG_MASKING, const.LOG_MASKING)
 
     if log_level == DEBUG:
         logger.debug(msg)
@@ -564,10 +566,14 @@ def remove_duplicates(val_list):
 
 
 # 文字列置換
-def get_replace_data(data_str: str) -> str:
+def get_replace_data(
+    data_str: str,
+    target_list: list[str] = const.LIST_REPLACE,
+    replace_str: str = const.SYM_BLANK,
+) -> str:
     replace_data = convert_half_char(data_str)
-    for target in const.LIST_REPLACE:
-        replace_data = replace_data.replace(target, const.SYM_BLANK)
+    for target in target_list:
+        replace_data = replace_data.replace(target, replace_str)
     return replace_data
 
 

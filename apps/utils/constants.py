@@ -400,6 +400,10 @@ LIST_REPLACE = [
     "<br/>",
 ]
 
+##### ログ出力対象外文字 #####
+LIST_LOG_MASKING = ["kobe-", "token", "kapi.", "kauth"]
+LOG_MASKING = "XXXXX"
+
 ##### 曜日リスト #####
 LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
 
