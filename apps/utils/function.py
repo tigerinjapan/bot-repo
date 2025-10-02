@@ -198,9 +198,13 @@ def print_end(div: str, msg: str = msg_const.MSG_INFO_PROC_END):
 
 
 # 情報メッセージ出力
-def print_info_msg(div: str, msg: str = const.SYM_BLANK):
+def print_info_msg(div: str, msg: str):
     info_msg = f"[{get_now()}] {msg_const.MSG_DIV_INFO}"
     print(info_msg, div, msg)
+
+    log_msg = f"{div} {msg}"
+    if is_local_env():
+        write_log(log_msg, const.STR_INFO, INFO)
 
 
 # エラーメッセージ出力

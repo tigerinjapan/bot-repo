@@ -1,17 +1,17 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/10/02(Thu) 07:05",
+        "오늘의 생활정보": "2025/10/02(Thu) 13:00",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "설악산 첫 단풍 눈앞",
+        "오늘의 생활정보": "단풍 절정은 언제?",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 954원",
+        "오늘의 생활정보": "100엔 = 953원",
         "링크": "https://finance.naver.com/marketindex/"
     },
     {
@@ -21,7 +21,7 @@
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "Can I have some sugar?\n설탕 좀 주시겠어요?",
+        "오늘의 생활정보": "I need a new battery for my watch.\n시계에 쓸 새 배터리가 필요해요",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]
