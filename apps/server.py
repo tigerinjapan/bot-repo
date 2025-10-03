@@ -21,6 +21,7 @@ import apps.utils.board_dao as board_dao
 import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.function_gemini as func_gemini
 import apps.utils.function_kakao as func_kakao
 import apps.utils.function_line as func_line
@@ -115,6 +116,9 @@ async def issue_token(request: Request):
 # ルートページ（ログイン状態でリダイレクト）
 @app.get(const.PATH_ROOT)
 async def root(request: Request):
+    # client_ip = request.client.host
+    # func.print_info_msg(const.STR_IP, client_ip)
+
     user = request.session.get(const.STR_USER)
     if user:
         response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
@@ -397,15 +401,17 @@ async def kakao_send_test(request: Request):
 @app.get("/kakao/{app_name}")
 async def kakao_apps(request: Request, app_name: str):
     if app_name in kakao.LIST_APP_KOREA:
+        url = "/app/"
         if app_name == const.APP_TODAY:
             app_name == const.APP_TODAY_KOREA
-            url = f"/app/{app_name}"
-
+        elif app_name == const.APP_NUMBER:
+            app_name == const.APP_NUMBER_KO
         else:
+            url = url.replace("app", "apps")
             if app_name == const.TYPE_LIST:
                 app_name = const.APP_KAKAO_DESIGN
 
-            url = f"/apps/{app_name}"
+        url += app_name
         return RedirectResponse(url)
 
     else:

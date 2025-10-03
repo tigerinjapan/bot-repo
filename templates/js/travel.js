@@ -50,7 +50,7 @@ function init() {
   const dialogText = getElem("dialog-text");
 
   // セレクトボックスの初期化
-  createOptionVal(langSelect, LIST_LANG_VAL);
+  createOptionVal(langSelect, LIST_LANG_CD);
   createOptionVal(regionSelect, LIST_CITY_VAL);
 
   // 画面内容の更新処理
@@ -283,8 +283,8 @@ function createCardGrid() {
 function createOptionVal(selectElem, optValList) {
   selectElem.innerHTML = SYM_BLANK;
 
-  if (optValList === LIST_LANG_VAL) {
-    textValList = LIST_LANG;
+  if (optValList === LIST_LANG_CD) {
+    textValList = LIST_LANG_NM;
   } else {
     textValList = LIST_CITY_EN;
   }

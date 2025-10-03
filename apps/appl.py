@@ -140,7 +140,7 @@ def exec_user(request: Request, app_name: str):
 
 # 【画面】表示データ取得
 def exec_number(request: Request, app_name: str):
-    lang = const.LANG_JA
+    lang = const.LANG_CD_JA
     level = const.STR_HARD
     num = number.get_random_number(level)
     ans = number.get_answer_by_number(num)

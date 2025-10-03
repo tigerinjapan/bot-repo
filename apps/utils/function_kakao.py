@@ -285,7 +285,7 @@ def get_login_content(token: str):
             <p>아래의 링크 리스트를 즐겨찾기에 등록해서 웹서비스를 이용해주세요.</p>
             <p>매일 오전 9시에 카카오톡 메시지로 「오늘의 뉴스」를 전송할 예정입니다.</p>
             <div class="button-group">
-                {html_const.HTML_KAKAO_LIST}
+                {html_const.HTML_KAKAO_LIST}<br>
                 {html_const.HTML_KAKAO_LOGOUT}
             </div>
         """
@@ -345,7 +345,7 @@ def get_auth_content(code: str) -> tuple[str, str]:
             <p>아래의 링크 리스트를 즐겨찾기에 등록해서 웹서비스를 이용해주세요.</p><br>
             <p>매일 오전 9시에 카카오톡 메시지로 「오늘의 뉴스」를 전송할 예정입니다.</p><br>
             <div class="button-group">
-                {html_const.HTML_KAKAO_LIST}
+                {html_const.HTML_KAKAO_LIST}<br>
                 {html_const.HTML_KAKAO_LOGOUT}
             </div>
         """
@@ -371,14 +371,14 @@ def get_unlink_content(token: str) -> str:
         body = f"""
             <h1>앱 연결 <span class="success">해제 완료</span></h1>
             <p>카카오 계정과 앱의 연결이 해제되었습니다.</p><br>
-            <pre>{result}</pre>
+            <pre>{result}</pre><br>
         """
 
     except Exception as e:
         body = f"""
             <h1>앱 연결 해제 <span class="error">실패</span></h1>
             <p>연결 해제 중 오류가 발생했습니다.</p><br>
-            <pre>{str(e)}</pre><br>
+            <pre>{str(e)}</pre><br><br>
         """
 
     title = "연결 해제 결과"
@@ -408,9 +408,11 @@ def get_test_message_content(token: str = const.SYM_BLANK) -> str:
             {('성공!' if success_flg else '실패')}
         </span></h1>
         <p>결과</p><br>
-        <pre>{result_data}</pre>
+        <pre>{result_data}</pre><br>
+        <p>메시지 전송이 성공이지만 수신되지 않은 경우,<br>로그아웃 하고나서 다시 테스트 해 주세요.</p><br>
         <div class="button-group">
-            {html_const.HTML_KAKAO_LOGOUT}
+            {html_const.HTML_KAKAO_LOGOUT}<br>
+            {html_const.HTML_KAKAO_LOGOUT}<br>
             {html_const.HTML_KAKAO_GO_HOME}
         </div>
     """

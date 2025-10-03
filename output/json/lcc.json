@@ -1,5 +1,10 @@
 [
     {
+        "日付": "2025年10月3日",
+        "会社": "<a href=\"https://www.jinair.com/promotion/eventView?evntSeq=14588\" target=\"_blank\" rel=\"noopener noreferrer\">ジンエアー</a>",
+        "LCCニュース": "「ウィンターアーリーバードセール」\n開催中！韓国国際線 往復2,000円割引"
+    },
+    {
         "日付": "2025年10月2日",
         "会社": "<a href=\"https://www.jetstar.com/jp/ja/deals/sale\" target=\"_blank\" rel=\"noopener noreferrer\">ジェットスター・ジャパン</a>",
         "LCCニュース": "「スーパースターセール」\n10月3日12時から開催！国内線 片道3,790円から"
@@ -18,10 +23,5 @@
         "日付": "2025年9月29日",
         "会社": "<a href=\"https://www.flypeach.com/um/specials/sale/sale\" target=\"_blank\" rel=\"noopener noreferrer\">Peach</a>",
         "LCCニュース": "「2日間限定 島旅セール」\n9月30日12時から開催！奄美・沖縄・石垣線 片道3,490円から"
-    },
-    {
-        "日付": "2025年9月29日",
-        "会社": "<a href=\"https://www.jetstar.com/jp/ja/deals/jq-int\" target=\"_blank\" rel=\"noopener noreferrer\">ジェットスター</a>",
-        "LCCニュース": "「オーストラリア路線セール」\n9月30日12時から開催！12月～来年8月搭乗分"
     }
 ]

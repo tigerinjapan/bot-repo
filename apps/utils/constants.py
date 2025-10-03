@@ -49,10 +49,14 @@ CHARSET_UTF_8 = "utf-8"
 CHARSET_ASCII = "ascii"
 CHARSET_SJIS = "sjis"
 
+##### 国コード #####
+COUNTRY_CD_JP = "jp"
+COUNTRY_CD_KR = "kr"
+
 ##### 言語コード #####
-LANG_EN = "en"
-LANG_JA = "ja"
-LANG_KO = "ko"
+LANG_CD_EN = "en"
+LANG_CD_JA = "ja"
+LANG_CD_KO = "ko"
 
 ##### 日付フォーマット #####
 DATE_FORMAT_OUTPUT_FILE = "%Y%m%d%H%M%S"
@@ -118,7 +122,7 @@ LINE_IMG_Y_AXIS = 90
 
 KAKAO_FONT_SIZE = 32
 KAKAO_X_AXIS = 50
-KAKAO_Y_AXIS = 140
+KAKAO_Y_AXIS = 160
 KAKAO_IMG_SIZE_W = 480
 KAKAO_IMG_SIZE_H = 480
 
@@ -436,6 +440,7 @@ URL_LCC = "https://dsk.ne.jp"
 URL_TV = "https://bangumi.org"
 URL_MLB = "https://www.mlb.com"
 URL_MLB_STAT_API = "https://statsapi.mlb.com"
+URL_IP_INFO = "https://ipapi.co"
 
 ##### アプリケーション名 #####
 APP_TODAY = "today"
@@ -461,7 +466,9 @@ APP_URL_DESIGN = "url_design"
 APP_KAKAO_DESIGN = "kakao_design"
 
 APP_TODAY_KOREA = "today_korea"
+APP_NUMBER_KO = "number_ko"
 APP_TRAVEL_KO = "travel_ko"
+APP_REVIEW_KO = "review_ko"
 
 LIST_APP_NAME = [
     APP_TODAY,

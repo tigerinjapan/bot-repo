@@ -48,16 +48,16 @@ const TITLE_NUMBER_PLATE = "🚙Number Plate Game";
 const TITLE_NUMBER_PLATE_KO = "자동차 번호판 게임";
 
 // 言語名（表示用）
-const LANG_JA = "日本語";
-const LANG_KO = "한국어";
-const LANG_EN = "English";
-const LIST_LANG = [LANG_JA, LANG_KO, LANG_EN];
+const LANG_NM_JA = "日本語";
+const LANG_NM_KO = "한국어";
+const LANG_NM_EN = "English";
+const LIST_LANG_NM = [LANG_NM_JA, LANG_NM_KO, LANG_NM_EN];
 
 // 言語コード（データ参照用）
 const LANG_CD_JA = "ja";
 const LANG_CD_KO = "ko";
 const LANG_CD_EN = "en";
-const LIST_LANG_VAL = [LANG_CD_JA, LANG_CD_KO, LANG_CD_EN];
+const LIST_LANG_CD = [LANG_CD_JA, LANG_CD_KO, LANG_CD_EN];
 
 // 都市コード・都市名リスト
 const LIST_CITY_VAL = ["tokyo", "seoul", "taipei", "hanoi", "bangkok", "manila"];

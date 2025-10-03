@@ -5,7 +5,7 @@ import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 
 # タイトル
-app_title = const.APP_LCC.upper() + const.STR_NEWS_JA
+app_title = func.convert_upper_lower(const.APP_LCC) + const.STR_NEWS_JA
 
 # カラムリスト
 col_list = [const.STR_DATE_JA, const.STR_COMPANY_JA, app_title]

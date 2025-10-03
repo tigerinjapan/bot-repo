@@ -64,7 +64,7 @@ OPERATOR_INCREMENT = "$inc"
 
 
 # フィールド変換
-def convert_field(type_div, id):
+def convert_field(type_div: str, id: str):
     div = "ao" if type_div == const.TYPE_LIST else type_div[0]
     # func[capitalize]:Converts the first character of a string to an uppercase letter
     id_new = id.capitalize()[0] + id[1:]

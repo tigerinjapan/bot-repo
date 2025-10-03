@@ -231,7 +231,7 @@ def get_msg_data_list(
 def get_title(
     div: str, msg_type: str = const.SYM_BLANK, date_today: str = const.SYM_BLANK
 ) -> str:
-    title_div = div.upper()
+    title_div = func.convert_upper_lower(div)
 
     if div == const.APP_NEWS:
         title_div = news.DIV_NEWS.format(const.SYM_BLANK)

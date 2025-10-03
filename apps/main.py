@@ -27,8 +27,7 @@ def main():
     server.start_thread()
 
     # ジョブ実行
-    if not func.is_local_env():
-        job_scheduler()
+    job_scheduler()
 
 
 def job_scheduler():
@@ -69,19 +68,22 @@ def weekly_job():
 
 # 日次ジョブ
 def daily_job():
-    line.main()
+    if not func.is_local_env():
+        line.main()
 
 
 # 日次ジョブ
 def daily_job_2():
-    line.main(data_div=const.NUM_TWO)
-    line.sub(div=const.APP_MLB)
-    kakao.main()
+    if not func.is_local_env():
+        line.main(data_div=const.NUM_TWO)
+        line.sub(div=const.APP_MLB)
+        kakao.main()
 
 
 # 日次ジョブ
 def daily_job_3():
-    kakao.main()
+    if not func.is_local_env():
+        kakao.main()
 
 
 # 時次ジョブ
@@ -92,7 +94,8 @@ def hourly_job():
 
 # 随時ジョブ
 def every_min_job():
-    server.health_check()
+    if not func.is_local_env():
+        server.health_check()
 
 
 # プログラムのエントリーポイント

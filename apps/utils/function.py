@@ -598,7 +598,20 @@ def get_decoding_masking_data(target: str, encode_flg: bool = const.FLG_OFF):
     return target
 
 
-# 文字列の区切り
+# [正規表現] 文字列の検索
+def re_search(pattern: str, target: str) -> str:
+    result = const.SYM_BLANK
+
+    # 文字列内でパターンを検索
+    match = re.search(pattern, target)
+    if match:
+        # マッチした文字列を返却
+        result = match.group(0)
+
+    return result
+
+
+# [正規表現] 文字列の区切り
 def re_split(pattern: str, target: str) -> list[str]:
     result = re.split(pattern, target)
     return result
@@ -630,9 +643,9 @@ def convert_upper_lower(before_str: str, div: str = const.STR_UPPER) -> str:
 
 # 翻訳文の取得
 def get_translated_text(
-    target_text: str, from_lang: str = const.LANG_JA, to_lang: str = const.LANG_EN
+    target_text: str, from_lang: str = const.LANG_CD_JA, to_lang: str = const.LANG_CD_EN
 ) -> str:
-    # 日本語から英語への翻訳
+    # デフォルト：日本語から英語への翻訳
     translator = Translator(from_lang=from_lang, to_lang=to_lang)
 
     # 翻訳

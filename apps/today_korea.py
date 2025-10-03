@@ -13,7 +13,7 @@ import apps.utils.function_kakao as func_kakao
 DIV_TITLE = "📢 {} 오늘의 뉴스 📢"
 DIV_UPDATE_TIME = "업데이트일시"
 DIV_WEATHER = "날씨"
-DIV_STOCK = "S&P500"
+DIV_STOCK = "해외증시"
 DIV_RATE = "환율"
 DIV_JAPANESE = "일본어"
 DIV_ENGLISH = "영어"
@@ -62,16 +62,17 @@ def get_item_list():
 # 今日の生活情報取得
 def get_today_info(object_type: str = func_kakao.OBJECT_TYPE_FEED):
     # タイトル
-    today_date = func.convert_date_to_str(func.get_now(), const.DATE_FORMAT_YYYYMMDD_KO)
+    json_data = func_api.get_result_on_app(const.APP_TODAY_KOREA)
+
+    today_date = func.convert_date_format(
+        json_data[0], const.DATE_FORMAT_YYYYMMDD_KO, const.DATE_FORMAT_YYYYMMDD_HHMM
+    )
     title = DIV_TITLE.format(today_date)
     if object_type == func_kakao.OBJECT_TYPE_FEED:
         title = title.replace("📢", "■")
 
-    json_data = func_api.get_result_on_app(const.APP_TODAY_KOREA)[1:]
-    data_list = [list(info.values()) for info in json_data]
-    today_info_list = [
-        f"[{data[0]}]{const.SYM_NEW_LINE}{data[1]}" for data in data_list if data[1]
-    ]
+    data_list = [list(info.values()) for info in json_data[1:]]
+    today_info_list = [f"[{data[0]}] {data[1]}" for data in data_list if data[1]]
     today_info_list.insert(0, title)
     today_info = const.SYM_NEW_LINE.join(today_info_list)
 
@@ -193,7 +194,8 @@ def get_stock() -> str:
     exday_elem = func_bs.find_elem_by_class(soup, "no_exday")
     today_no = func_bs.get_text_from_soup(today_elem)
     exday_no = func_bs.get_text_from_soup(exday_elem)
-    stock_info = f"{today_no} {exday_no}"
+    exday_no = func.re_search(r"\(.+?\)", exday_no)
+    stock_info = f"{const.FUND_NAME_SP_500} {today_no} {exday_no}"
     return stock_info
 
 
@@ -263,7 +265,7 @@ def get_japanese_study() -> str:
                 )
 
             japanese_study = f"{japanese} : {korean}"
-            if korean_elem.get("lang") == const.LANG_JA:
+            if korean_elem.get("lang") == const.LANG_CD_JA:
                 japanese_study = f"{korean} : {japanese}"
                 break
 
@@ -272,9 +274,7 @@ def get_japanese_study() -> str:
 
 # 英会話
 def get_english_conversation() -> str:
-    data = today.get_today_phrase(
-        const.STR_ENGLISH
-    )  # TODO: 英語も韓国語も半角スペース込みで16文字以内で再作成
+    data = today.get_today_phrase(const.STR_ENGLISH)
     english_conversation = f"{data[1]}{const.SYM_NEW_LINE}{data[2]}"
     return english_conversation
 
