@@ -13,6 +13,7 @@ import apps.utils.function_kakao as func_kakao
 DIV_TITLE = "📢 {} 오늘의 뉴스 📢"
 DIV_UPDATE_TIME = "업데이트일시"
 DIV_WEATHER = "날씨"
+DIV_STOCK = "S&P500"
 DIV_RATE = "환율"
 DIV_JAPANESE = "일본어"
 DIV_ENGLISH = "영어"
@@ -20,6 +21,7 @@ DIV_FLIGHT = "항공권"
 DIV_LIST = [
     DIV_UPDATE_TIME,
     DIV_WEATHER,
+    DIV_STOCK,
     DIV_RATE,
     DIV_JAPANESE,
     DIV_ENGLISH,
@@ -101,9 +103,13 @@ def get_today_info_list():
     weather_news = get_today_weather_news()
     weather_news_link = "https://www.weather.go.kr/w/weather/forecast/short-term.do"
 
+    # S&P500
+    sp_500 = get_stock()
+    stock_link = f"{const.URL_NAVER_STOCK_MO}/worldstock/"
+
     # 為替
     yen_to_won = ex.get_today_won(const.FLG_ON)
-    finance_link = f"{const.URL_NAVER_FINANCE}/marketindex/"
+    finance_link = f"{const.URL_NAVER_STOCK_MO}/marketindex/home/exchangeRate/exchange"
 
     # 日本語
     japanese = get_japanese_study()
@@ -120,6 +126,7 @@ def get_today_info_list():
     today_info_list = [
         update_time,
         weather_news,
+        sp_500,
         yen_to_won,
         japanese,
         english_conversation,
@@ -128,6 +135,7 @@ def get_today_info_list():
     link_list = [
         const.SYM_DASH,
         weather_news_link,
+        stock_link,
         finance_link,
         japanese_link,
         english_link,
@@ -175,6 +183,18 @@ def get_forecast() -> str:
     )[1]
     forecast = func_bs.get_text_from_soup(soup)
     return forecast
+
+
+# S&P500
+def get_stock() -> str:
+    url = f"{const.URL_NAVER_FINANCE}/world/sise.naver?symbol=SPI@SPX"
+    soup = func_bs.get_elem_from_url(url, attr_val="today")
+    today_elem = func_bs.find_elem_by_class(soup, "no_today")
+    exday_elem = func_bs.find_elem_by_class(soup, "no_exday")
+    today_no = func_bs.get_text_from_soup(today_elem)
+    exday_no = func_bs.get_text_from_soup(exday_elem)
+    stock_info = f"{today_no} {exday_no}"
+    return stock_info
 
 
 # コーデ取得

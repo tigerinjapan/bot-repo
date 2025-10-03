@@ -1,18 +1,23 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/10/03(Fri) 08:42",
+        "오늘의 생활정보": "2025/10/03(Fri) 15:09",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "내일 전국 대부분 비",
+        "오늘의 생활정보": "추석 연휴 날씨는?",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
+    },
+    {
+        "구분": "S&P500",
+        "오늘의 생활정보": "6,715.35 전일대비4.15(+0.06%)",
+        "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
         "오늘의 생활정보": "100엔 = 955원",
-        "링크": "https://finance.naver.com/marketindex/"
+        "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
@@ -21,7 +26,7 @@
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "Please stop here.\n여기서 멈춰 주세요",
+        "오늘의 생활정보": "Is there a gym here?\n여기에 체육관이 있나요?",
         "링크": "https://learn.dict.naver.com/conversation#/"
     },
     {

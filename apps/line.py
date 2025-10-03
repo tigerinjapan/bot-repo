@@ -217,10 +217,11 @@ def get_msg_data_list(
     msg_data: list[str] | str,
     date_today: str = const.SYM_BLANK,
 ) -> list[str]:
-    title = get_title(msg_div, msg_type, date_today)
-    msg = title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
     if msg_type == MSG_TYPE_IMG:
         msg = msg_data
+    else:
+        title = get_title(msg_div, msg_type, date_today)
+        msg = title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
 
     msg_data_list = [msg_type, msg]
     return msg_data_list

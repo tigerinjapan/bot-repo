@@ -105,9 +105,10 @@ def get_msg_data_today():
             outfit_text, dinner_text
         )
 
-        data_list = [list(info.values()) for info in today_info[1:]]
+        title = f"■ {date_today} ■"
+        msg_data = [title]
 
-        msg_data = []
+        data_list = [list(info.values()) for info in today_info[1:]]
         for data in data_list:
             div = data[0]
             contents = data[1]
