@@ -14,12 +14,12 @@ import apps.utils.function as func
 dotenv.load_dotenv()
 
 # ジョブ実行時間を環境変数から取得
-TIME_WEEKLY_JOB = func.get_env_val("TIME_WEEKLY_JOB", masking_flg=const.FLG_OFF)
-TIME_DAILY_JOB = func.get_env_val("TIME_DAILY_JOB", masking_flg=const.FLG_OFF)
-TIME_DAILY_JOB_2 = func.get_env_val("TIME_DAILY_JOB_2", masking_flg=const.FLG_OFF)
-TIME_DAILY_JOB_3 = func.get_env_val("TIME_DAILY_JOB_3", masking_flg=const.FLG_OFF)
-MIN_HOURLY_JOB = func.get_env_val("MIN_HOURLY_JOB", masking_flg=const.FLG_OFF)
-SEC_NO_SLEEP = func.get_env_val("SEC_NO_SLEEP", masking_flg=const.FLG_OFF)
+TIME_WEEKLY_JOB = func.get_env_val("TIME_WEEKLY_JOB", div=const.STR_ENV_VAR)
+TIME_DAILY_JOB = func.get_env_val("TIME_DAILY_JOB", div=const.STR_ENV_VAR)
+TIME_DAILY_JOB_2 = func.get_env_val("TIME_DAILY_JOB_2", div=const.STR_ENV_VAR)
+TIME_DAILY_JOB_3 = func.get_env_val("TIME_DAILY_JOB_3", div=const.STR_ENV_VAR)
+MIN_HOURLY_JOB = func.get_env_val("MIN_HOURLY_JOB", div=const.STR_ENV_VAR)
+SEC_NO_SLEEP = func.get_env_val("SEC_NO_SLEEP", div=const.STR_ENV_VAR)
 
 
 def main():

@@ -17,6 +17,7 @@ import apps.appl as appl
 import apps.kakao as kakao
 import apps.line as line
 import apps.test as test
+import apps.utils.auth_dao as auth_dao
 import apps.utils.board_dao as board_dao
 import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
@@ -116,14 +117,11 @@ async def issue_token(request: Request):
 # ルートページ（ログイン状態でリダイレクト）
 @app.get(const.PATH_ROOT)
 async def root(request: Request):
-    # client_ip = request.client.host
-    # func.print_info_msg(const.STR_IP, client_ip)
-
     user = request.session.get(const.STR_USER)
     if user:
         response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
     else:
-        context = {const.STR_REQUEST: request, const.STR_TITLE: const.SYSTEM_NAME}
+        context = {const.STR_REQUEST: request, const.STR_PATH: const.PATH_KAKAO_LOGIN}
         response = templates.TemplateResponse(const.HTML_INDEX, context)
     return response
 
@@ -135,11 +133,7 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
     chk_msg = user_dao.check_login(userId, userPw, user_info)
     if chk_msg:
         request.session.clear()
-        context = {
-            const.STR_REQUEST: request,
-            const.STR_TITLE: const.SYSTEM_NAME,
-            const.STR_MESSAGE: chk_msg,
-        }
+        context = {const.STR_REQUEST: request, const.STR_MESSAGE: chk_msg}
         response = templates.TemplateResponse(const.HTML_INDEX, context)
 
     else:
@@ -166,8 +160,7 @@ async def logout(request: Request):
     request.session.clear()
     context = {
         const.STR_REQUEST: request,
-        const.STR_TITLE: const.SYSTEM_NAME,
-        const.STR_MESSAGE: msg_const.MSG_INFO_LOGOUT,
+        const.STR_MESSAGE: msg_const.MSG_INFO_LOGOUT_EN,
     }
     return templates.TemplateResponse(const.HTML_INDEX, context)
 
@@ -193,7 +186,6 @@ async def app_exec(request: Request, app_name: str):
         target_html = const.HTML_INDEX
         context = {
             const.STR_REQUEST: request,
-            const.STR_TITLE: const.SYSTEM_NAME,
             const.STR_MESSAGE: msg_const.MSG_INFO_SESSION_EXPIRED,
         }
 
@@ -208,12 +200,21 @@ async def apps(request: Request, app_name: str):
         except_http_error(curr_func_nm, request.url._url)
 
     data_list = []
+    user_name = const.SYM_BLANK
     if app_name == const.APP_REVIEW:
         data_list.append(board_dto.LIST_APP)
         data_list.append(board_dto.LIST_CATEGORY)
         data_list.append(board_dto.LIST_TYPE)
+    elif app_name == const.APP_REVIEW_KO:
+        app_name = const.APP_REVIEW
+        user_name = request.session.get(const.STR_USER)[mongo_const.FI_USER_NAME]
 
-    context = {const.STR_REQUEST: request, "app_name": app_name, "data_list": data_list}
+    context = {
+        const.STR_REQUEST: request,
+        "app_name": app_name,
+        "user_name": user_name,
+        "data_list": data_list,
+    }
 
     target_html = const.HTML_RESULT_2
     return templates.TemplateResponse(target_html, context)
@@ -336,33 +337,74 @@ async def board_update(seq: str):
     return RedirectResponse(url=const.PATH_APP_BOARD)
 
 
-@app.get("/kakao", response_class=HTMLResponse)
+@app.get("/kakao")
 async def kakao_root(request: Request):
     """開始ページ"""
 
-    token = func_kakao.get_token(request)
-    content = func_kakao.get_login_content(token)
-    return content
+    # client_ip = request.client.host
+    # func.print_info_msg(const.STR_IP, client_ip)
+
+    token = func_kakao.get_token(request.session)
+
+    # [MEMO] 認証時のみ使用
+    # content = func_kakao.get_login_content(token)
+    # return HTMLResponse(content)
+
+    # [MEMO] 認証時は、以下処理コメントアウト
+    if token:
+        response = RedirectResponse(url=const.PATH_KAKAO_TODAY, status_code=303)
+    else:
+        context = {const.STR_REQUEST: request, const.STR_PATH: const.PATH_KAKAO_LOGIN}
+        response = templates.TemplateResponse(const.HTML_INDEX, context)
+
+    return response
 
 
-@app.get("/kakao/login")
-async def kakao_login(request: Request):
-    """ログイン"""
+# [MEMO] 認証時のみ使用
+# @app.get("/kakao/login")
+# async def kakao_login():
+#     """ログイン"""
 
-    auth_url = func_kakao.URL_KAKAO_AUTH
-    return RedirectResponse(auth_url)
-    # request.session[func_kakao.STR_KAKAO_API_TOKEN] = func_kakao.get_access_token()
-    # return RedirectResponse("/kakao")
+#     auth_url = func_kakao.URL_KAKAO_AUTH
+#     return RedirectResponse(auth_url)
+
+
+@app.post("/kakao/login")
+async def kakao_login(request: Request, userId: str = Form(...)):
+    user_pw = auth_dao.get_auth_token(userId, key=mongo_const.FI_USER_PW)
+    if user_pw:
+        user_name = userId.split(const.SYM_AT)[0]
+        user_info = {
+            mongo_const.FI_USER_DIV: const.STR_KAKAO,
+            mongo_const.FI_USER_NAME: user_name,
+            mongo_const.FI_MENU: const.SYM_BLANK,
+        }
+        request.session[const.STR_USER] = user_info
+
+        request.session[func_kakao.STR_KAKAO_API_TOKEN] = user_pw
+        response = RedirectResponse(url=const.PATH_KAKAO_TODAY, status_code=303)
+    else:
+        request.session.clear()
+        context = {
+            const.STR_REQUEST: request,
+            const.STR_PATH: const.PATH_KAKAO_LOGIN,
+            const.STR_MESSAGE: msg_const.MSG_ERR_INCORRECT_ACCESS_EN,
+        }
+        response = templates.TemplateResponse(const.HTML_INDEX, context)
+
+    return response
 
 
 @app.get("/kakao/logout")
 async def kakao_logout(request: Request):
     """ログアウト"""
 
-    token = func_kakao.get_token(request)
+    token = func_kakao.get_token(request.session)
     if not token:
         return RedirectResponse(url="/kakao")
 
+    # [MEMO] 認証時は、以下行コメントアウト
+    token = const.SYM_BLANK
     content = func_kakao.get_logout_content(token)
 
     # セッションクリア
@@ -371,6 +413,7 @@ async def kakao_logout(request: Request):
     return HTMLResponse(content=content)
 
 
+# [MEMO] 認証時のみ使用
 @app.get("/kakao/oauth", response_class=HTMLResponse)
 async def kakao_oauth(request: Request, code: str):
     """
@@ -389,11 +432,12 @@ async def kakao_oauth(request: Request, code: str):
     return content
 
 
+# [MEMO] 認証時のみ使用
 @app.get("/kakao/send-test", response_class=HTMLResponse)
 async def kakao_send_test(request: Request):
     """メッセージ送信テスト"""
 
-    token = func_kakao.get_token(request)
+    token = func_kakao.get_token(request.session)
     content = func_kakao.get_test_message_content(token)
     return HTMLResponse(content=content)
 
@@ -403,12 +447,18 @@ async def kakao_apps(request: Request, app_name: str):
     if app_name in kakao.LIST_APP_KOREA:
         url = "/app/"
         if app_name == const.APP_TODAY:
-            app_name == const.APP_TODAY_KOREA
+            app_name = const.APP_TODAY_KOREA
         elif app_name == const.APP_NUMBER:
-            app_name == const.APP_NUMBER_KO
+            app_name = const.APP_NUMBER_KO
+        elif app_name == const.APP_BOARD:
+            app_name = app_name
         else:
             url = url.replace("app", "apps")
-            if app_name == const.TYPE_LIST:
+            if app_name == const.APP_TRAVEL:
+                app_name = const.APP_TRAVEL_KO
+            elif app_name == const.APP_REVIEW:
+                app_name = const.APP_REVIEW_KO
+            elif app_name == const.TYPE_LIST:
                 app_name = const.APP_KAKAO_DESIGN
 
         url += app_name

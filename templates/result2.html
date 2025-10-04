@@ -17,6 +17,7 @@
 
 <body>
   <p id="appName" hidden>{{ app_name }}</p>
+  <p id="userName" hidden>{{ user_name }}</p>
   <p id="dataList" hidden>{{ data_list }}</p>
 
   {% if app_name in ['travel', 'travel_ko'] %}
@@ -43,7 +44,7 @@
     </div>
   </div>
 
-  {% elif app_name == 'review' %}
+  {% elif app_name  in ['review', 'review_ko'] %}
   <div id="divBoard" class="board-container">
     <h1></h1>
     <form id="formReview">

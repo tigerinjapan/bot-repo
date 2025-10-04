@@ -24,12 +24,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>名前</td>
+                    <td>Name</td>
                     <td>
                         <input type="text" name="userName" value="{{ user_info['sUserName'] }}" maxlength="8"
                             pattern="^([a-zA-Z0-9\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF\uFF01-\uFF5E]{2,})$"
                             required />
-                        （2文字以上）
+                        （2+ characters）
                     </td>
                 </tr>
                 <tr>
@@ -38,39 +38,39 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>パスワード</td>
+                    <td>Password</td>
                     <td>
                         <input type="password" id="userPw" name="userPw" value="{{ user_info['sUserPw'] }}"
                             maxlength="8" pattern="^([a-zA-Z0-9]{4,})$" required />
-                        （英数字4文字以上）
+                        （4+ characters）
                     </td>
                 </tr>
                 <tr>
-                    <td>パスワード（再）</td>
+                    <td>Password（Check）</td>
                     <td>
                         <input type="password" id="pwCheck" value="{{ user_info['sUserPw'] }}" required />
-                        （もう一度入力）
+                        （Input the text again.）
                     </td>
                 </tr>
                 <tr>
-                    <td>生年</td>
+                    <td>Birth</td>
                     <td>
                         <select id="year" name="year" required></select>
                     </td>
                 </tr>
                 <tr>
-                    <td>性別</td>
+                    <td>Sex</td>
                     <td>
-                        <input type="radio" name="sex" value="0" required />男
-                        <input type="radio" name="sex" value="1" />女
+                        <input type="radio" name="sex" value="0" required />Man
+                        <input type="radio" name="sex" value="1" />Woman
                     </td>
                 </tr>
                 <tr>
-                    <td>住所</td>
+                    <td>Address</td>
                     <td>
                         <input type="text" id="zipCd" name="zipCd" value="{{ user_info['sZipCd'] }}" minlength="7"
                             maxlength="7" pattern="\d{7}" placeholder="1000001" required />
-                        <input type="button" id="searchAddressBtn" value="郵便番号検索" onclick="getAddress()" />
+                        <input type="button" id="searchAddressBtn" value="Zip Code" onclick="getAddress()" />
                     </td>
                 </tr>
                 <tr>
@@ -81,29 +81,28 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>最寄駅</td>
+                    <td>Station</td>
                     <td>
                         <select id="line" name="line" onchange="changeLine(this)" required></select>
                         <select id="station" name="station" required></select>
                     </td>
                 </tr>
                 <tr>
-                    <td>電話番号</td>
+                    <td>Tel.</td>
                     <td>
                         <input type="tel" name="tel" value="{{ user_info['sTel'] }}" minlength="9" maxlength="11"
                             pattern="\d{9,11}" placeholder="0312345678" />
-                        （「-」無し）
                     </td>
                 </tr>
                 <tr>
-                    <td>お気に入りメニュー</td>
+                    <td>Favorite Menu</td>
                     <td id="checkBoxMenu"></td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="2" style="text-align: center">
-                        <button type="submit" onclick="checkUserInfo()">登録</button>
+                        <button type="submit" onclick="checkUserInfo()">Register</button>
                     </td>
                 </tr>
                 <tr>
@@ -122,7 +121,7 @@
 </body>
 
 <footer>
-    <a href="/">ホーム画面へ</a>
+    <a href="/">Go To Home</a>
 </footer>
 
 </html>

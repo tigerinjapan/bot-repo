@@ -37,6 +37,11 @@ MSG_ERR_DATA_NOT_EXIST = "【データ】対象データが存在しません。
 MSG_ERR_FILE_NOT_EXIST = "【ファイル】対象パスにファイルが存在しません。"
 MSG_ERR_NO_SUCH_ELEMENT = "【要素】対象の画面要素が存在しません。"
 
+# [英語] メッセージ
+MSG_INFO_LOGIN_EN = "Login successful."
+MSG_INFO_LOGOUT_EN = "Logout successful."
+MSG_ERR_INCORRECT_ACCESS_EN = "Incorrect user id or password."
+
 # HTTPステータスメッセージ
 HTTP_STATUS_MESSAGES = {
     # 成功 (2xx)

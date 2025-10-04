@@ -9,15 +9,15 @@
             displayChkMsg();
         });
     </script>
-    <title>{{ title }}</title>
+    <title></title>
 </head>
 
 <body>
     <div>
-        <form id="frmLogin" method="post" action="/login">
+        <form id="frmLogin" method="post" action="{{ path }}">
             <table class="loginTbl">
                 <thead>
-                    <th id="thSysNm" colspan="2"></th>
+                    <th id="sysNm" colspan="2"></th>
                 </thead>
                 <br>
                 <br>
@@ -30,7 +30,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>PW</th>
+                        <th>Password</th>
                         <td>
                             <input type="password" id="userPw" name="userPw" placeholder="password" required />
                         </td>
@@ -39,7 +39,7 @@
                 <tfoot>
                     <tr>
                         <th colspan="2">
-                            <button type="submit" id="btnLogin">ログイン</button>
+                            <button type="submit" id="btnLogin">Login</button>
                         </th>
                     </tr>
                 </tfoot>

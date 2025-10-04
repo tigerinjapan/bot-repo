@@ -23,6 +23,11 @@ const LIST_APP_GUEST = [APP_TODAY, APP_SITE].concat(LIST_APP_GUEST_MO);
 const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_BOARD, APP_USER];
 const LIST_APP = LIST_APP_GUEST.concat(LIST_APP_NOT_GUEST);
 
+const APP_TRAVEL = "travel";
+const APP_NUMBER = "number";
+const APP_REVIEW = "review";
+const LIST_APP_KOREA = [APP_TODAY, APP_TRAVEL, APP_NUMBER, APP_REVIEW, APP_BOARD]
+
 // アプリケーション連番：お気に入り表示用
 const NUM_APP_TODAY = "0";
 const NUM_APP_SITE = "1";
@@ -35,12 +40,14 @@ const NUM_APP_STUDY = "7";
 const NUM_APP_BOARD = "8";
 
 // 項目名
-const TITLE_SYSTEM = "開発デモシステム";
+const TITLE_SYSTEM = "Kobe-Dev Demo System";
 const TH_NO = "No.";
-const BUTTON_LOGIN = "ログイン";
-const BUTTON_LOGOUT = "ログアウト";
-const BUTTON_SEARCH = "検索";
-const BUTTON_SETTING = "設定";
+const BUTTON_LOGIN = "Login";
+const BUTTON_LOGOUT = "Logout";
+
+// 定数
+const DIV_APP = "app";
+const DIV_KAKAO = "kakao";
 
 // ヘッダー情報読込
 const CONTENTS_HEAD = (`
@@ -54,11 +61,12 @@ document.getElementsByTagName("head")[0].innerHTML = CONTENTS_HEAD;
 
 // 初期表示
 function initDisplay() {
-  const thSysNmElement = document.getElementById("thSysNm");
+  const sysNmElement = document.getElementById("sysNm");
   const thNoElement = document.getElementById("thNo");
 
-  if (thSysNmElement) {
-    thSysNmElement.textContent = TITLE_SYSTEM;
+  if (sysNmElement) {
+    document.title = TITLE_SYSTEM;
+    sysNmElement.textContent = TITLE_SYSTEM;
   }
 
   if (thNoElement) {
@@ -72,7 +80,52 @@ function setTopMenu(userDiv, userNm, appNm, menuVal) {
     return;
   }
 
-  // アプリケーションリスト
+  let pathDiv = DIV_APP;
+  let pathDiv2 = "/";
+  if (userDiv === DIV_KAKAO) {
+    pathDiv = userDiv;
+    pathDiv2 += userDiv;
+  }
+
+  // アプリケーションリスト取得
+  let appList = getAppList(userDiv, menuVal);
+
+  // 配列の初期化
+  let liMenuList = [];
+  for (let i = 0; i < appList.length; i++) {
+    appDiv = appList[i];
+    liMenuList.push(`
+      <li><a href="/${pathDiv}/${appDiv}" id="${appDiv}">${appDiv}</a></li>
+    `);
+  }
+
+  // 配列を文字列に変換
+  const liMenu = liMenuList.join(SYM_BLANK);
+
+  // ログアウトメニュー
+  const liLogout = `<li><a href="${pathDiv2}/logout"><b>${userNm} </b>${BUTTON_LOGOUT}</a></li>`;
+
+  // トップメニュー
+  let topMenu = liMenu + liLogout;
+  if (isMobile()) {
+    topMenu = liLogout + liMenu;
+  }
+
+  const topMenuList = `<ul>${topMenu}</ul>`;
+
+  document.getElementById("topMenu").innerHTML = topMenuList;
+
+  // メニュー押下時、背景色設定
+  const screenId = document.getElementById(appNm);
+  screenId.setAttribute("style", "background-color: peru;");
+}
+
+// アプリケーションリスト取得
+function getAppList(userDiv, menuVal) {
+  if (userDiv === DIV_KAKAO) {
+    return LIST_APP_KOREA;
+  }
+
   let appList = LIST_APP;
   if (isMobile()) {
     if (userDiv === AUTH_GUEST) {
@@ -95,34 +148,7 @@ function setTopMenu(userDiv, userNm, appNm, menuVal) {
     }
   }
 
-  // 配列の初期化
-  let liMenuList = [];
-  for (let i = 0; i < appList.length; i++) {
-    appDiv = appList[i];
-    liMenuList.push(`
-      <li><a href="/app/${appDiv}" id="${appDiv}">${appDiv}</a></li>
-    `);
-  }
-
-  // 配列を文字列に変換
-  const liMenu = liMenuList.join(SYM_BLANK);
-
-  // ログアウトメニュー
-  const liLogout = `<li><a href="/logout"><b>${userNm} </b>${BUTTON_LOGOUT}</a></li>`;
-
-  // トップメニュー
-  let topMenu = liMenu + liLogout;
-  if (isMobile()) {
-    topMenu = liLogout + liMenu;
-  }
-
-  const topMenuList = `<ul>${topMenu}</ul>`;
-
-  document.getElementById("topMenu").innerHTML = topMenuList;
-
-  // メニュー押下時、背景色設定
-  const screenId = document.getElementById(appNm);
-  screenId.setAttribute("style", "background-color: peru;");
+  return appList;
 }
 
 function isMobile() {

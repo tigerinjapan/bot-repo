@@ -19,7 +19,7 @@ API_HEADERS_JSON = {"Content-Type": "application/json"}
 API_HEADERS_UTF8 = {"Content-Type": "application/x-www-form-urlencoded"}
 
 # プロパティ
-IMG_NO = func.get_env_val("LINE_IMG_DIV", masking_flg=const.FLG_OFF)
+IMG_NO = func.get_env_val("LINE_IMG_DIV", div=const.STR_ENV_VAR)
 NUM_IMG_MAX_SEQ = 4
 
 

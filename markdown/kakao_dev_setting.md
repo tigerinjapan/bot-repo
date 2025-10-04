@@ -118,9 +118,9 @@ curl -v -X POST "https://kapi.kakao.com/v2/api/talk/memo/default/send" \
 
 1. **앱 > 앱 설정 > 앱 > 멤버 > 멤버 추가**
 2. 초대할 멤버의 이메일 주소(카카오톡 계정) 입력
-3. 앱 권한 설정 (Editor / Message Editor / **Viewer**)
+3. 앱 권한 설정 (**Editor** / Message Editor / Viewer)
 4. 팀원: 카카오톡 계정 이메일에서 팀원 초대 메일 확인
-5. 팀원: 1회 이상 로그인 필요 (목적: 필수 권한에 동의 체크)
+5. 팀원: 1회 이상 로그인 필요 (목적: 메시지 수신 권한에 동의 체크)
 
 ## 📚 참고 문서
 

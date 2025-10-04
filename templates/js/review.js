@@ -83,8 +83,10 @@ function init() {
 function setUserName() {
   if (!userName || userName === SYM_BLANK) {
     userName = prompt(MSG_INFO_INPUT_USER_EN);
-    sessionStorage.setItem(STR_USER_NAME, userName);
+  } else {
+    userName = getElemText("userName");
   }
+  sessionStorage.setItem(STR_USER_NAME, userName);
 }
 
 // レビュー送信

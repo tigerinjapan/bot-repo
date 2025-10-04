@@ -13,7 +13,7 @@ SCRIPT_NAME = func.get_app_name(__file__)
 
 # 定数
 LIST_APP_KOREA = [
-    const.APP_TODAY_KOREA,
+    const.APP_TODAY,
     const.APP_TRAVEL,
     const.APP_NUMBER,
     const.APP_REVIEW,

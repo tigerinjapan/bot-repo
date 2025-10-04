@@ -1,0 +1,9 @@
+{
+    "LINE_IMG_DIV": "1",
+    "TIME_WEEKLY_JOB": "09:00",
+    "TIME_DAILY_JOB": "07:10",
+    "TIME_DAILY_JOB_2": "18:30",
+    "TIME_DAILY_JOB_3": "09:00",
+    "MIN_HOURLY_JOB": ":05",
+    "SEC_NO_SLEEP": "600"
+}

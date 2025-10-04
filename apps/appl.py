@@ -39,7 +39,7 @@ LIST_APP_NUM_OFF = [
     const.APP_TODAY_KOREA,
 ]
 
-LIST_APP_AUTH_OFF = [const.APP_CAFE, const.APP_TRAVEL, const.APP_TODAY_KOREA]
+LIST_APP_AUTH_OFF = [const.APP_CAFE, const.APP_TRAVEL]
 
 
 # クラスの定義

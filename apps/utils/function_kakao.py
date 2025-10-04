@@ -266,11 +266,10 @@ def get_template_object(
 
 
 # トークン取得
-def get_token(request):
+def get_token(session):
     token = const.SYM_BLANK
-    request_session = request.session
-    if request_session:
-        token = request_session[STR_KAKAO_API_TOKEN]
+    if session:
+        token = session[STR_KAKAO_API_TOKEN]
     return token
 
 
@@ -304,16 +303,17 @@ def get_login_content(token: str):
 
 # ログアウトHTML取得
 def get_logout_content(token: str) -> str:
-    body = const.SYM_BLANK
+    body = result = const.SYM_BLANK
 
     try:
-        # ログアウト
-        result = send_kakao_msg(token, const.STR_LOGOUT)
+        if token:
+            # ログアウト
+            result = send_kakao_msg(token, const.STR_LOGOUT)
 
         # 結果表示
         body = f"""
             <h1>로그아웃 <span class="success">완료</span></h1>
-            <p>카카오 계정에서 로그아웃되었습니다.</p>
+            <p>정상적으로 로그아웃되었습니다.</p>
             <pre>{result}</pre><br>
         """
 
@@ -321,7 +321,7 @@ def get_logout_content(token: str) -> str:
         # 結果表示
         body = f"""
             <h1>로그아웃 <span class="warning">부분 완료</span></h1>
-            <p>로컬 세션에서 로그아웃되었지만, 카카오 서버 로그아웃 중 오류가 발생했습니다:</p>
+            <p>로컬 세션에서 로그아웃되었지만, 로그아웃 중 서버 오류가 발생했습니다:</p>
             <pre>{str(e)}</pre><br>
         """
 

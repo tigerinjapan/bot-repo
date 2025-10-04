@@ -1,8 +1,5 @@
 # 説明: 定数一覧
 
-##### システム名 #####
-SYSTEM_NAME = "開発デモシステム"
-
 ##### main関数 #####
 MAIN_FUNCTION = "__main__"
 
@@ -285,6 +282,7 @@ STR_LEVEL = "level"
 STR_REST = "rest"
 STR_ENGLISH = "english"
 STR_UNLINK = "unlink"
+STR_PATH = "path"
 
 STR_DB = "db"
 STR_MONGO = "mongo"
@@ -304,6 +302,7 @@ STR_AI = "AI"
 STR_USER_INFO = "userInfo"
 STR_ZIP_CODE = "zipCode"
 STR_ENV_VAR = "env_var"
+STR_SECRET_KEY = "secret_key"
 STR_NUMBER_PLATE = "numberPlate"
 STR_PHRASE_KO = "phrase_ko"
 
@@ -466,8 +465,8 @@ APP_URL_DESIGN = "url_design"
 APP_KAKAO_DESIGN = "kakao_design"
 
 APP_TODAY_KOREA = "today_korea"
-APP_NUMBER_KO = "number_ko"
 APP_TRAVEL_KO = "travel_ko"
+APP_NUMBER_KO = "number_ko"
 APP_REVIEW_KO = "review_ko"
 
 LIST_APP_NAME = [
@@ -486,8 +485,9 @@ LIST_ALL_APP_NAME = LIST_APP_NAME + LIST_APP_SITE + LIST_APP_KOREA
 LIST_APPS_NAME = [
     APP_TRAVEL,
     APP_TRAVEL_KO,
-    APP_REVIEW,
     APP_TRAVEL_DESIGN,
+    APP_REVIEW,
+    APP_REVIEW_KO,
     APP_URL_DESIGN,
     APP_KAKAO_DESIGN,
 ]
@@ -513,7 +513,9 @@ PATH_LOGOUT = get_path(STR_LOGOUT)
 PATH_APP = get_path(STR_APP)
 PATH_APP_NEWS = f"{PATH_APP}{get_path(APP_NEWS)}"
 PATH_APP_BOARD = f"{PATH_APP}{get_path(APP_BOARD)}"
-PATH_UPDATE = get_path(STR_UPDATE)
+PATH_KAKAO = get_path(STR_KAKAO)
+PATH_KAKAO_LOGIN = f"{PATH_KAKAO}{PATH_LOGIN}"
+PATH_KAKAO_TODAY = f"{PATH_KAKAO}{get_path(APP_TODAY)}"
 
 ##### HTMLファイル名 #####
 HTML_INDEX = get_html(STR_INDEX)

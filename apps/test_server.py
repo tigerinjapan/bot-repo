@@ -33,7 +33,7 @@ def run_server():
 async def root(request: Request):
     """開始ページ"""
 
-    token = func_kakao.get_token(request)
+    token = func_kakao.get_token(request.session)
     content = func_kakao.get_login_content(token)
     return content
 
@@ -50,7 +50,7 @@ async def login():
 async def logout(request: Request):
     """ログアウト"""
 
-    token = func_kakao.get_token(request)
+    token = func_kakao.get_token(request.session)
     if not token:
         return RedirectResponse(url="/kakao")
 
@@ -85,7 +85,7 @@ async def oauth(request: Request, code: str):
 async def unlink(request: Request):
     """アカウント連携解除"""
 
-    token = func_kakao.get_token(request)
+    token = func_kakao.get_token(request.session)
     if not token:
         return RedirectResponse(url="/kakao")
 
@@ -101,7 +101,7 @@ async def unlink(request: Request):
 async def send_test(request: Request):
     """メッセージ送信テスト"""
 
-    token = func_kakao.get_token(request)
+    token = func_kakao.get_token(request.session)
     if not token:
         return RedirectResponse(url="/kakao")
 
