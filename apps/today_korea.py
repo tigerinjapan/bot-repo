@@ -64,8 +64,9 @@ def get_today_info(object_type: str = func_kakao.OBJECT_TYPE_FEED):
     # タイトル
     json_data = func_api.get_result_on_app(const.APP_TODAY_KOREA)
 
+    date_time_text = json_data[0].get(col_list[1])
     today_date = func.convert_date_format(
-        json_data[0], const.DATE_FORMAT_YYYYMMDD_KO, const.DATE_FORMAT_YYYYMMDD_HHMM
+        date_time_text, const.DATE_FORMAT_YYYYMMDD_KO, const.DATE_FORMAT_YYYYMMDD_HHMM
     )
     title = DIV_TITLE.format(today_date)
     if object_type == func_kakao.OBJECT_TYPE_FEED:

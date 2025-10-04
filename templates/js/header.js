@@ -81,10 +81,10 @@ function setTopMenu(userDiv, userNm, appNm, menuVal) {
   }
 
   let pathDiv = DIV_APP;
-  let pathDiv2 = "/";
+  let pathDiv2 = SYM_BLANK;
   if (userDiv === DIV_KAKAO) {
     pathDiv = userDiv;
-    pathDiv2 += userDiv;
+    pathDiv2 = `/${userDiv}`;
   }
 
   // アプリケーションリスト取得

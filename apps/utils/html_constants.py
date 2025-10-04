@@ -1,12 +1,27 @@
 # 説明: HTMLの定数
 
-HTML_KAKAO_LOGIN = """ <a href="/kakao/login" class="button">카카오 로그인</a> """
-HTML_KAKAO_LOGOUT = """ <a href="/kakao/logout" class="button logout">로그아웃</a> """
-HTML_KAKAO_SEND_TEST = (
-    """ <a href="/kakao/send-test" class="button">테스트 메시지 보내기</a> """
+HTML_KAKAO_BUTTON = """ <a href="/kakao{}" class="button{}">{}</a> """
+
+HTML_KAKAO_AUTH = f""" {HTML_KAKAO_BUTTON.format("/auth", "", "카카오 인증")} """
+HTML_KAKAO_LOGIN = f""" {HTML_KAKAO_BUTTON.format("/login", "","서버 로그인")} """
+HTML_KAKAO_LOGOUT = (
+    f""" {HTML_KAKAO_BUTTON.format("/logout", " logout","서버 로그아웃")} """
 )
-HTML_KAKAO_GO_HOME = """ <a href="/kakao" class="button">홈으로 이동</a> """
-HTML_KAKAO_UNLINK = """ <a href="/kakao/unlink" class="button unlink">앱 연결 해제</a> """
+HTML_KAKAO_AUTH_SUCCESS = (
+    f""" {HTML_KAKAO_BUTTON.format("/logout", " logout","카카오 인증완료")} """
+)
+HTML_KAKAO_SEND_TEST = (
+    f""" {HTML_KAKAO_BUTTON.format("/send-test", "", "테스트 메시지 보내기<")} """
+)
+
+HTML_KAKAO_GO_HOME = f""" {HTML_KAKAO_BUTTON.format("", "", "홈으로 이동")} """
+HTML_KAKAO_GO_MAIN = (
+    f""" {HTML_KAKAO_BUTTON.format("/main", "", "메인 페이지로 이동")} """
+)
+
+HTML_KAKAO_UNLINK = (
+    f""" {HTML_KAKAO_BUTTON.format("/unlink", " unlink", "앱 연결 해제")} """
+)
 HTML_KAKAO_LIST = """ <a href="/kakao/list" target="_blank" rel="noopener noreferrer" class="button">링크 리스트</a> """
 
 HTML_KAKAO_STYLE = """ <style>

@@ -121,7 +121,7 @@ async def root(request: Request):
     if user:
         response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
     else:
-        context = {const.STR_REQUEST: request, const.STR_PATH: const.PATH_KAKAO_LOGIN}
+        context = {const.STR_REQUEST: request, const.STR_PATH: const.PATH_LOGIN}
         response = templates.TemplateResponse(const.HTML_INDEX, context)
     return response
 
@@ -133,7 +133,11 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
     chk_msg = user_dao.check_login(userId, userPw, user_info)
     if chk_msg:
         request.session.clear()
-        context = {const.STR_REQUEST: request, const.STR_MESSAGE: chk_msg}
+        context = {
+            const.STR_REQUEST: request,
+            const.STR_PATH: const.PATH_LOGIN,
+            const.STR_MESSAGE: chk_msg,
+        }
         response = templates.TemplateResponse(const.HTML_INDEX, context)
 
     else:
@@ -160,6 +164,7 @@ async def logout(request: Request):
     request.session.clear()
     context = {
         const.STR_REQUEST: request,
+        const.STR_PATH: const.PATH_LOGIN,
         const.STR_MESSAGE: msg_const.MSG_INFO_LOGOUT_EN,
     }
     return templates.TemplateResponse(const.HTML_INDEX, context)
@@ -186,6 +191,7 @@ async def app_exec(request: Request, app_name: str):
         target_html = const.HTML_INDEX
         context = {
             const.STR_REQUEST: request,
+            const.STR_PATH: const.PATH_LOGIN,
             const.STR_MESSAGE: msg_const.MSG_INFO_SESSION_EXPIRED,
         }
 
@@ -201,13 +207,16 @@ async def apps(request: Request, app_name: str):
 
     data_list = []
     user_name = const.SYM_BLANK
-    if app_name == const.APP_REVIEW:
+    if const.APP_REVIEW in app_name:
         data_list.append(board_dto.LIST_APP)
         data_list.append(board_dto.LIST_CATEGORY)
         data_list.append(board_dto.LIST_TYPE)
-    elif app_name == const.APP_REVIEW_KO:
-        app_name = const.APP_REVIEW
-        user_name = request.session.get(const.STR_USER)[mongo_const.FI_USER_NAME]
+
+        if app_name == const.APP_REVIEW_KO:
+            app_name = const.APP_REVIEW
+            session_user = request.session.get(const.STR_USER)
+            if session_user:
+                user_name = session_user[mongo_const.FI_USER_NAME]
 
     context = {
         const.STR_REQUEST: request,
@@ -339,18 +348,22 @@ async def board_update(seq: str):
 
 @app.get("/kakao")
 async def kakao_root(request: Request):
-    """開始ページ"""
+    """認証開始"""
 
+    # クライアントIPチェック
     # client_ip = request.client.host
     # func.print_info_msg(const.STR_IP, client_ip)
 
     token = func_kakao.get_token(request.session)
+    content = func_kakao.get_auth_content(token)
+    return HTMLResponse(content)
 
-    # [MEMO] 認証時のみ使用
-    # content = func_kakao.get_login_content(token)
-    # return HTMLResponse(content)
 
-    # [MEMO] 認証時は、以下処理コメントアウト
+@app.get("/kakao/main")
+async def kakao_root(request: Request):
+    """メイン"""
+
+    token = func_kakao.get_token(request.session)
     if token:
         response = RedirectResponse(url=const.PATH_KAKAO_TODAY, status_code=303)
     else:
@@ -360,17 +373,10 @@ async def kakao_root(request: Request):
     return response
 
 
-# [MEMO] 認証時のみ使用
-# @app.get("/kakao/login")
-# async def kakao_login():
-#     """ログイン"""
-
-#     auth_url = func_kakao.URL_KAKAO_AUTH
-#     return RedirectResponse(auth_url)
-
-
 @app.post("/kakao/login")
 async def kakao_login(request: Request, userId: str = Form(...)):
+    """ログイン"""
+
     user_pw = auth_dao.get_auth_token(userId, key=mongo_const.FI_USER_PW)
     if user_pw:
         user_name = userId.split(const.SYM_AT)[0]
@@ -381,7 +387,7 @@ async def kakao_login(request: Request, userId: str = Form(...)):
         }
         request.session[const.STR_USER] = user_info
 
-        request.session[func_kakao.STR_KAKAO_API_TOKEN] = user_pw
+        request.session[mongo_const.FI_USER_PW] = user_pw
         response = RedirectResponse(url=const.PATH_KAKAO_TODAY, status_code=303)
     else:
         request.session.clear()
@@ -400,11 +406,6 @@ async def kakao_logout(request: Request):
     """ログアウト"""
 
     token = func_kakao.get_token(request.session)
-    if not token:
-        return RedirectResponse(url="/kakao")
-
-    # [MEMO] 認証時は、以下行コメントアウト
-    token = const.SYM_BLANK
     content = func_kakao.get_logout_content(token)
 
     # セッションクリア
@@ -413,7 +414,14 @@ async def kakao_logout(request: Request):
     return HTMLResponse(content=content)
 
 
-# [MEMO] 認証時のみ使用
+@app.get("/kakao/auth")
+async def kakao_auth():
+    """認証"""
+
+    auth_url = func_kakao.URL_KAKAO_AUTH
+    return RedirectResponse(auth_url)
+
+
 @app.get("/kakao/oauth", response_class=HTMLResponse)
 async def kakao_oauth(request: Request, code: str):
     """
@@ -424,7 +432,7 @@ async def kakao_oauth(request: Request, code: str):
         code(str): 認証コード
     """
 
-    token, content = func_kakao.get_auth_content(code)
+    token, content = func_kakao.get_auth_result_content(code)
     if token:
         func.print_info_msg(const.STR_KAKAO, msg_const.MSG_INFO_AUTH_SUCCESS)
         request.session[func_kakao.STR_KAKAO_API_TOKEN] = token

@@ -6,7 +6,7 @@ import apps.utils.user_dao as dao
 import apps.utils.mongo_constants as mongo_const
 
 # タイトル
-app_title = "ユーザー情報"
+app_title = "User Info"
 
 
 # [テスト] ユーザー情報取得

@@ -35,7 +35,7 @@ URL_KAKAO_API_USER_ME = f"{URL_KAKAO_API}/v2/user/me"
 URL_KAKAO_API_FRIENDS = f"{URL_KAKAO_API}/v1/api/talk/friends"
 URL_KAKAO_API_SEND_FRIENDS = f"{URL_KAKAO_API}/message/default/send"
 
-URL_ICO = f"{func_line.URL_KOYEB_APP}/templates/favicon.ico"
+URL_ICO = "/templates/favicon.ico"
 URL_TODAY_KOREA_IMG = f"{func_line.URL_KOYEB_IMG}/{const.APP_TODAY_KOREA}"
 
 # リダイレクトURI
@@ -273,35 +273,37 @@ def get_token(session):
     return token
 
 
-# ログインHTML取得
-def get_login_content(token: str):
+# 認証
+def get_auth_content(token: str):
     title = "카카오 인증"
 
     if token:
         body = f"""
             <h1>{title}</h1>
             <p>인증이 완료되었습니다.</p>
-            <p>아래의 링크 리스트를 즐겨찾기에 등록해서 웹서비스를 이용해주세요.</p>
-            <p>매일 오전 9시에 카카오톡 메시지로 「오늘의 뉴스」를 전송할 예정입니다.</p>
+            <p>아래 버튼으로 메시지 보내기를 테스트 할 수 있습니다.</p>
             <div class="button-group">
-                {html_const.HTML_KAKAO_LIST}<br>
-                {html_const.HTML_KAKAO_LOGOUT}
+                {html_const.HTML_KAKAO_SEND_TEST}<br>
+                {html_const.HTML_KAKAO_AUTH_SUCCESS}<br>
+                {html_const.HTML_KAKAO_GO_MAIN}
             </div>
         """
 
     else:
         body = f"""
             <h1>{title}</h1>
-            <p>카카오 로그인이 필요합니다.</p>
-            <p>카카오 로그인 후에 메시지수신동의를 체크해주세요.</p>
-            {html_const.HTML_KAKAO_LOGIN}
+            <p>카카오 인증이 필요합니다.</p>
+            <p>카카오 인증 시에 메시지 수신동의를 체크해주세요.</p>
+            <div class="button-group">
+                {html_const.HTML_KAKAO_AUTH}
+            </div>
         """
 
     content = get_html_context(title, body)
     return content
 
 
-# ログアウトHTML取得
+# ログアウト
 def get_logout_content(token: str) -> str:
     body = result = const.SYM_BLANK
 
@@ -312,8 +314,8 @@ def get_logout_content(token: str) -> str:
 
         # 結果表示
         body = f"""
-            <h1>로그아웃 <span class="success">완료</span></h1>
-            <p>정상적으로 로그아웃되었습니다.</p>
+            <h1>카카오 계정 로그아웃 <span class="success">완료</span></h1>
+            <p>정상적으로 카카오 계정이 로그아웃되었습니다.</p>
             <pre>{result}</pre><br>
         """
 
@@ -321,18 +323,18 @@ def get_logout_content(token: str) -> str:
         # 結果表示
         body = f"""
             <h1>로그아웃 <span class="warning">부분 완료</span></h1>
-            <p>로컬 세션에서 로그아웃되었지만, 로그아웃 중 서버 오류가 발생했습니다:</p>
+            <p>카카오 계정의 로그아웃은 처리되었지만, 로그아웃 중 서버 오류가 발생했습니다:</p>
             <pre>{str(e)}</pre><br>
         """
 
-    title = "로그아웃 결과"
-    body += html_const.HTML_KAKAO_GO_HOME
+    title = "카카오 계정 로그아웃 결과"
+    body += html_const.HTML_KAKAO_GO_MAIN
     content = get_html_context(title, body)
     return content
 
 
-# アカウント認証
-def get_auth_content(code: str) -> tuple[str, str]:
+# アカウント認証結果
+def get_auth_result_content(code: str) -> tuple[str, str]:
     token = const.SYM_BLANK
     if code:
         token = get_access_token(code)
@@ -341,12 +343,11 @@ def get_auth_content(code: str) -> tuple[str, str]:
         title = "인증 성공"
         body = f"""
             <h1>카카오 인증 <span class="success">성공!</span></h1>
-            <p>인증이 성공하였습니다.</p><br>
-            <p>아래의 링크 리스트를 즐겨찾기에 등록해서 웹서비스를 이용해주세요.</p><br>
-            <p>매일 오전 9시에 카카오톡 메시지로 「오늘의 뉴스」를 전송할 예정입니다.</p><br>
+            <p>인증이 성공하였습니다.</p>
+            <p>아래 버튼으로 메시지 보내기를 테스트 할 수 있습니다.</p>
             <div class="button-group">
-                {html_const.HTML_KAKAO_LIST}<br>
-                {html_const.HTML_KAKAO_LOGOUT}
+                {html_const.HTML_KAKAO_SEND_TEST}<br>
+                {html_const.HTML_KAKAO_AUTH_SUCCESS}
             </div>
         """
     else:
@@ -354,7 +355,10 @@ def get_auth_content(code: str) -> tuple[str, str]:
         body = f"""
             <h1>카카오 인증 <span class="error">실패</span></h1>
             <p>인증 과정에서 오류가 발생했습니다.</p>
-            <p><a href="/kakao" class="button">다시 시도하기</a></p>
+            <p>다시 인증을 실시 해주세요.</p>
+            <div class="button-group">
+                {html_const.HTML_KAKAO_GO_HOME}
+            </div>
         """
 
     content = get_html_context(title, body)
@@ -370,15 +374,15 @@ def get_unlink_content(token: str) -> str:
         # 結果表示
         body = f"""
             <h1>앱 연결 <span class="success">해제 완료</span></h1>
-            <p>카카오 계정과 앱의 연결이 해제되었습니다.</p><br>
+            <p>카카오 계정과 앱의 연결이 해제되었습니다.</p>
             <pre>{result}</pre><br>
         """
 
     except Exception as e:
         body = f"""
             <h1>앱 연결 해제 <span class="error">실패</span></h1>
-            <p>연결 해제 중 오류가 발생했습니다.</p><br>
-            <pre>{str(e)}</pre><br><br>
+            <p>연결 해제 중 오류가 발생했습니다.</p>
+            <pre>{str(e)}</pre><br>
         """
 
     title = "연결 해제 결과"
@@ -407,13 +411,11 @@ def get_test_message_content(token: str = const.SYM_BLANK) -> str:
         <h1>메시지 전송 <span class="{'success' if success_flg else 'error'}">
             {('성공!' if success_flg else '실패')}
         </span></h1>
-        <p>결과</p><br>
+        <p>결과</p>
         <pre>{result_data}</pre><br>
-        <p>메시지 전송이 성공이지만 수신되지 않은 경우,<br>로그아웃 하고나서 다시 테스트 해 주세요.</p><br>
+        <p>메시지 전송이 성공이지만 수신되지 않은 경우,<br>로그아웃 하고나서 다시 테스트 해 주세요.</p>
         <div class="button-group">
-            {html_const.HTML_KAKAO_LOGOUT}<br>
-            {html_const.HTML_KAKAO_LOGOUT}<br>
-            {html_const.HTML_KAKAO_GO_HOME}
+            {html_const.HTML_KAKAO_LOGOUT}
         </div>
     """
 

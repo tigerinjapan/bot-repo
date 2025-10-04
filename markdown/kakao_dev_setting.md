@@ -124,8 +124,7 @@ curl -v -X POST "https://kapi.kakao.com/v2/api/talk/memo/default/send" \
 
 ## 📚 참고 문서
 
-- [카카오톡 메시지 REST API 공식 문서](https://developers.kakao.com/docs/latest/ko/kakaotalk-message/rest-api)
-
-- [카카오 API 시작하기 튜토리얼](https://developers.kakao.com/docs/latest/ko/tutorial/start)
-
+- [🔧카카오 API 시작하기 튜토리얼](https://developers.kakao.com/docs/latest/ko/tutorial/start)
+- [🔧카카오톡 메시지 REST API 공식 문서](https://developers.kakao.com/docs/latest/ko/kakaotalk-message/rest-api)
+- [🔧카카오 앱](https://developers.kakao.com/console/app)
 - [[Python] FastAPI로 카카오톡 메시지 전송](https://dev-grace.tistory.com/)

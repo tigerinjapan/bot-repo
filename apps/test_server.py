@@ -74,7 +74,7 @@ async def oauth(request: Request, code: str):
         code(str): 認証コード
     """
 
-    token, content = func_kakao.get_auth_content(code)
+    token, content = func_kakao.get_auth_result_content(code)
     if token:
         request.session[func_kakao.STR_KAKAO_API_TOKEN] = token
 
