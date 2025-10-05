@@ -4,7 +4,7 @@ function writeFooter(userDiv) {
     return;
   }
 
-  const addr = "東京都新宿区新宿ビル5F";
+  const addr = "2F, Shinjuku Bldg, Shinjuku, Shinjuku-ku, Tokyo, Japan";
   const tel = "042-1234-567";
   const mailAddr = "kobe_dev@jh.com";
 

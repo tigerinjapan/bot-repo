@@ -7,6 +7,9 @@
   <script src="/templates/func.js"></script>
   {% if app_name in ['travel', 'travel_ko'] %}
   <script src="/templates/travel.js"></script>
+  {% elif app_name == 'itQuiz' %}
+  <script src="/templates/itQuiz.js"></script>
+  <link rel="stylesheet" href="/templates/itQuiz.css" />
   {% elif app_name == 'review' %}
   <script src="/templates/review.js"></script>
   {% elif '_design' in app_name %}
@@ -44,7 +47,25 @@
     </div>
   </div>
 
-  {% elif app_name  in ['review', 'review_ko'] %}
+  {% elif app_name == 'itQuiz' %}
+  <!-- メインコンテナ -->
+  <div id="app" class="shadow-soft fade-in">
+    <!-- コンテンツはJSで動的に挿入されます -->
+  </div>
+
+  <!-- ダイアログコンテナ (モーダル) -->
+  <div id="dialog-overlay" class="hidden">
+    <div id="dialog-content">
+      <h3 id="dialog-title" class="text-xl mb-4 text-accent font-bold"></h3>
+      <p id="dialog-message" class="mb-6"></p>
+      <div id="dialog-buttons" class="dialog-buttons-container">
+        <!-- 閉じるボタンはJSで動的に生成されます -->
+        <button class="cute-button px-4 py-2 text-sm gray" onclick="closeDialog()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  {% elif app_name in ['review', 'review_ko'] %}
   <div id="divBoard" class="board-container">
     <h1></h1>
     <form id="formReview">
@@ -63,5 +84,12 @@
 
   {% endif %}
 </body>
+
+<footer>
+    <script src="/templates/footer.js"></script>
+    <script>
+        writeFooter("{{ user_div }}");
+    </script>
+</footer>
 
 </html>

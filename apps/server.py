@@ -218,6 +218,10 @@ async def apps(request: Request, app_name: str):
             if session_user:
                 user_name = session_user[mongo_const.FI_USER_NAME]
 
+    elif const.APP_IT_QUIZ in app_name:
+        user_name = "mongo User Name"
+        data_list = "Ranking Data List" # TODO: コレクション追加(quizRanking)
+
     context = {
         const.STR_REQUEST: request,
         "app_name": app_name,
@@ -360,7 +364,7 @@ async def kakao_root(request: Request):
 
 
 @app.get("/kakao/main")
-async def kakao_root(request: Request):
+async def kakao_main(request: Request):
     """メイン"""
 
     token = func_kakao.get_token(request.session)
@@ -401,7 +405,7 @@ async def kakao_login(request: Request, userId: str = Form(...)):
     return response
 
 
-@app.get("/kakao/logout")
+@app.get("/kakao/logout", response_class=HTMLResponse)
 async def kakao_logout(request: Request):
     """ログアウト"""
 
@@ -411,7 +415,7 @@ async def kakao_logout(request: Request):
     # セッションクリア
     request.session.clear()
 
-    return HTMLResponse(content=content)
+    return content
 
 
 @app.get("/kakao/auth")
@@ -447,7 +451,7 @@ async def kakao_send_test(request: Request):
 
     token = func_kakao.get_token(request.session)
     content = func_kakao.get_test_message_content(token)
-    return HTMLResponse(content=content)
+    return content
 
 
 @app.get("/kakao/{app_name}")
@@ -478,11 +482,11 @@ async def kakao_apps(request: Request, app_name: str):
 
 
 # テンプレートファイル取得
-@app.get("/templates/{file_name}")
+@app.get("/templates/{file_name}", response_class=FileResponse)
 async def templates_file(file_name: str):
     file_ext = func.get_path_split(file_name, extension_flg=const.FLG_ON)
     file_path = f"templates/{file_ext}/{file_name}"
-    return FileResponse(file_path)
+    return file_path
 
 
 # ファイル取得（例：/img/today、/font/meiryo、/log/error）

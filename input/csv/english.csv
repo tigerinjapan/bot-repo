@@ -1,4 +1,4 @@
-000,Check in, please.,체크인요.
+000,Check in please.,체크인요.
 001,Where is my gate?,게이트 어디예요?
 002,Can I get a map?,지도 주세요?
 003,How much is this?,이거 얼마예요?
@@ -11,7 +11,7 @@
 010,Can I pay by card?,카드로 돼요?
 011,I want a menu.,메뉴판 볼게요.
 012,It's too cold.,너무 추워요.
-013,Excuse me?,저기요, 질문요.
+013,Excuse me?,저기요 질문요.
 014,Where is the bathroom?,화장실이 어디예요?
 015,I need help.,도움이 필요해요
 016,Can I try this?,이거 입어봐요?
@@ -37,7 +37,7 @@
 036,I feel sick.,오늘 몸이 안 좋아요
 037,I need a blanket.,담요가 필요해요
 038,What is this street?,이 거리는 뭐예요?
-039,Your name, please?,성함을 알려주세요
+039,Your name please?,성함을 알려주세요
 040,I need a single.,싱글룸이 필요해요
 041,Speak slowly.,천천히 말해주세요
 042,Which bus?,어떤 버스가 가요?
@@ -54,7 +54,7 @@
 053,I need a train.,기차를 타야 해요
 054,Take credit cards?,신용카드 받나요?
 055,Need bigger size.,더 큰 사이즈요.
-056,Hurry up, please.,서둘러 주세요
+056,Hurry up please.,서둘러 주세요
 057,It's my first time.,처음이에요
 058,Can I use my phone?,제 폰 써도 돼요?
 059,I need a quiet room.,조용한 방이 필요해요
@@ -66,7 +66,7 @@
 065,Can I get a towel?,수건을 받을까요?
 066,I need adapter.,어댑터가 필요해요
 067,Where is the ATM?,ATM은 어디예요?
-068,Spoon, please?,숟가락 주세요?
+068,Spoon please?,숟가락 주세요?
 069,Going to the beach.,해변에 갈 거예요
 070,Room number?,방 번호가 몇 번이에요?
 071,I'll pay for us.,저희가 계산할게요
@@ -84,7 +84,7 @@
 083,I need to call home.,집에 전화해야 해요
 084,How was your flight?,비행은 어땠어요?
 085,Is there a pool?,수영장이 있나요?
-086,Receipt, please.,영수증 좀 주세요?
+086,Receipt please.,영수증 좀 주세요?
 087,Need smaller size.,더 작은 사이즈요.
 088,Where to buy ticket?,표는 어디서 사요?
 089,I want a window seat.,창가 자리 원해요.
@@ -101,14 +101,14 @@
 100,I need a doctor.,의사가 필요해요
 101,I want a round trip.,왕복표 원해요.
 102,Baggage claim?,수하물 찾는 곳은?
-103,Table outside, please.,야외 테이블로요.
+103,Table outside please.,야외 테이블로요.
 104,Is there a gym here?,여기에 체육관이 있나요?
 105,Need a new key.,새 키 카드가 필요해요
 106,Breakfast time?,아침 식사는 몇 시예요?
 107,I want to exchange.,이걸 교환하고 싶어요
 108,Here on business.,업무차 왔습니다
 109,I want a castle.,성을 보고 싶어요
-110,Some sugar, please?,설탕 좀 주시겠어요?
+110,Some sugar please?,설탕 좀 주시겠어요?
 111,Non-smoking room.,금연실로 부탁해요
 112,Charge to my room.,방에 달아 주세요
 113,Check-out time?,체크아웃 시간은요?
@@ -170,7 +170,7 @@
 169,Need a warm coat.,따뜻한 코트가 필요해요
 170,Is there a station?,근처에 역이 있나요?
 171,I want a museum.,박물관을 보고 싶어요
-172,Small bag, please.,작은 봉투 좀 주세요
+172,Small bag please.,작은 봉투 좀 주세요
 173,I need an iron.,다리미가 필요해요
 174,Main reason?,주요 이유는 무엇인가요?
 175,Going to the park.,공원에 갈 거예요
@@ -208,7 +208,7 @@
 207,I need small change.,잔돈이 필요해요
 208,Your email address?,이메일 주소는 뭐예요?
 209,Stay one more night.,하룻밤 더 묵을게요
-210,Hot drink, please.,따뜻한 음료 주세요
+210,Hot drink please.,따뜻한 음료 주세요
 211,I need shoehorn.,구둣주걱이 필요해요
 212,Charge phone where?,폰 충전은 어디서 해요?
 213,I want some wine.,와인을 좀 사고 싶어요
@@ -216,7 +216,7 @@
 215,Need safety box.,금고가 필요해요
 216,Local currency?,현지 통화가 뭐예요?
 217,Visit family.,가족 방문차 왔습니다
-218,Cold drink, please.,차가운 음료 주세요
+218,Cold drink please.,차가운 음료 주세요
 219,Need needle and thread.,바늘과 실이 필요해요
 220,Best price?,이게 최저가인가요?
 221,I want to shop.,쇼핑하러 가고 싶어요
@@ -228,7 +228,7 @@
 227,I need a new battery.,새 배터리가 필요해요
 228,What's the password?,비밀번호가 뭐예요?
 229,Try something new.,새로운 것을 해보고 싶어요
-230,Some butter, please?,버터 좀 주시겠어요?
+230,Some butter please?,버터 좀 주시겠어요?
 231,I need bottle opener.,병따개가 필요해요
 232,Is the line long?,줄이 긴가요?
 233,Here for few days.,며칠 동안 있을 거예요
@@ -241,13 +241,13 @@
 240,What's the weather?,날씨가 어때요?
 241,Going to cinema.,영화관에 갈 거예요
 242,Can I get dessert?,디저트를 주시겠어요?
-243,Receipt, please.,영수증 부탁해요
+243,Receipt please.,영수증 부탁해요
 244,Museum open now?,박물관이 지금 여나요?
 245,I want to walk.,주변을 걷고 싶어요
 246,Can I have some ice?,얼음 좀 주시겠어요?
 247,Book a flight.,비행기를 예약해야 해요
 248,Get haircut where?,이발은 어디서 해요?
-249,I'm sorry, late.,죄송해요, 늦었어요
+249,I'm sorry late.,죄송해요 늦었어요
 250,I need double room.,더블룸이 필요해요
 251,Pay with dollars?,달러로 계산할 수 있나요?
 252,Seat near exit.,출구 근처 좌석 원해요.
@@ -267,7 +267,7 @@
 266,I need extra chair.,여분의 의자가 필요해요
 267,What is the address?,여기 주소가 뭐예요?
 268,Here for conference.,회의차 왔습니다
-269,Clean towel, please?,깨끗한 수건 주시겠어요?
+269,Clean towel please?,깨끗한 수건 주시겠어요?
 270,Need bus schedule.,버스 시간표가 필요해요
 271,Show cancelled?,쇼가 취소됐나요?
 272,See city lights.,도시 야경을 보고 싶어요
@@ -275,7 +275,7 @@
 274,I need painkiller.,진통제가 필요해요
 275,Find bookstore where?,서점은 어디서 찾아요?
 276,I want a temple.,사원에 가고 싶어요
-277,Diet coke, please.,다이어트 콜라 주세요
+277,Diet coke please.,다이어트 콜라 주세요
 278,Need plug adapter.,플러그 어댑터가 필요해요
 279,Is this seat open?,이 자리는 비어있나요?
 280,Waiting for reply.,답장을 기다리고 있어요
@@ -287,7 +287,7 @@
 286,Need luggage tag.,수하물 꼬리표가 필요해요
 287,Smoking area?,흡연 구역이 있나요?
 288,Going to the bank.,은행에 갈 거예요
-289,Bill, please.,계산서 주세요
+289,Bill please.,계산서 주세요
 290,I need new toothbrush.,새 칫솔이 필요해요
 291,Best way to go?,가장 좋은 방법은 뭐예요?
 292,I want the bridge.,다리를 보고 싶어요
@@ -303,7 +303,7 @@
 302,Need quiet spot.,조용한 장소가 필요해요
 303,Entrance fee?,입장료는 얼마예요?
 304,Here for long trip.,장기 여행 중이에요
-305,Plastic cup, please?,플라스틱 컵을 주시겠어요?
+305,Plastic cup please?,플라스틱 컵을 주시겠어요?
 306,Wash my clothes.,옷을 세탁해야 해요
 307,Museum free today?,오늘 박물관은 무료인가요?
 308,I want the market.,시장에 가고 싶어요
@@ -311,15 +311,15 @@
 310,Need charging cable.,충전 케이블이 필요해요
 311,Exchange rate?,환율은 얼마예요?
 312,Going to mountain.,산에 갈 거예요
-313,Paper bag, please?,종이봉투 좀 주시겠어요?
+313,Paper bag please?,종이봉투 좀 주시겠어요?
 314,Check my bags.,가방을 확인해야 해요
 315,Train on time?,기차가 정시인가요?
 316,I want some gifts.,선물을 좀 사고 싶어요
-317,Small coffee, please.,작은 커피 한 잔 주세요
+317,Small coffee please.,작은 커피 한 잔 주세요
 318,I need a spare key.,여분의 열쇠가 필요해요
 319,Closest toilet?,가장 가까운 화장실은?
 320,Here for two weeks.,2주 동안 있을 거예요
-321,Cold water, please?,찬물 좀 주시겠어요?
+321,Cold water please?,찬물 좀 주시겠어요?
 322,Find public phone.,공중전화를 찾아야 해요
 323,Best time to visit?,방문하기 좋은 시간은요?
 324,I want a shower.,샤워하고 싶어요
@@ -327,7 +327,7 @@
 326,Need phone charger.,휴대폰 충전기가 필요해요
 327,Is park crowded?,공원이 붐비나요?
 328,Going to concert hall.,콘서트장으로 갈 거예요
-329,More bread, please?,빵 좀 더 주시겠어요?
+329,More bread please?,빵 좀 더 주시겠어요?
 330,Stamp for the US.,미국으로 보낼 우표가 필요해요
 331,Buy postcard where?,엽서는 어디서 사요?
 332,Try that dessert.,저 디저트를 먹고 싶어요
@@ -335,15 +335,15 @@
 334,I need laundry bag.,세탁 봉투가 필요해요
 335,Opening hour?,개장 시간은 몇 시예요?
 336,Here with friends.,친구들과 함께 왔어요
-337,Sweet wine, please.,달콤한 와인 주세요
+337,Sweet wine please.,달콤한 와인 주세요
 338,I need corkscrew.,코르크 마개가 필요해요
 339,Included in tour?,이게 투어에 포함되나요?
 340,Walk to station.,역까지 걸어가고 싶어요
 341,Use your map?,지도 좀 써도 될까요?
-342,Need toothbrush, paste.,칫솔과 치약이 필요해요
+342,Need toothbrush paste.,칫솔과 치약이 필요해요
 343,Information desk?,안내 데스크는 어디예요?
 344,Going back tomorrow.,내일 돌아갈 거예요
-345,Quiet seat, please.,조용한 좌석으로 주세요
+345,Quiet seat please.,조용한 좌석으로 주세요
 346,Call my office.,사무실에 전화해야 해요
 347,Bus number?,버스 번호는 뭐예요?
 348,I want a scooter.,스쿠터를 빌리고 싶어요
@@ -355,7 +355,7 @@
 354,Taxi to airport.,공항 가는 택시가 필요해요
 355,Nearest cafe?,가장 가까운 카페는요?
 356,Try new haircut.,새로운 헤어스타일을 원해요
-357,Check, please.,계산서 좀 주세요
+357,Check please.,계산서 좀 주세요
 358,Room with two beds.,침대 두 개 있는 방이요
 359,Time difference?,시차는 어떻게 돼요?
 360,Just passing through.,그냥 지나가는 중이에요
@@ -363,11 +363,11 @@
 362,I need small umbrella.,작은 우산이 필요해요
 363,Good restaurant nearby?,근처에 좋은 식당 있나요?
 364,I want old town.,구시가지를 보고 싶어요
-365,Cold beer, please.,시원한 맥주 주세요
+365,Cold beer please.,시원한 맥주 주세요
 366,Catch next flight.,다음 비행기를 타야 해요
 367,Ticket office where?,표 파는 곳은 어디예요?
 368,Going to beach soon.,곧 해변에 갈 거예요
-369,Window table, please.,창가 자리로 주시겠어요?
+369,Window table please.,창가 자리로 주시겠어요?
 370,I need simple meal.,간단한 식사가 필요해요
 371,Flight duration?,비행 시간은 얼마나 돼요?
 372,Look around.,주변을 둘러보고 싶어요
@@ -387,7 +387,7 @@
 386,Need luggage scale.,수하물 저울이 필요해요
 387,Is the food spicy?,음식이 매운가요?
 388,I want to port.,항구에 가고 싶어요
-389,Hot sauce, please?,핫소스 좀 주시겠어요?
+389,Hot sauce please?,핫소스 좀 주시겠어요?
 390,I need a tour guide.,여행 가이드가 필요해요
 391,Departure time?,출발 시간은 몇 시예요?
 392,Here for short stay.,짧게 머물러요
@@ -395,7 +395,7 @@
 394,Need local paper.,지역 신문이 필요해요
 395,Good coffee where?,맛있는 커피는 어디예요?
 396,I want concert.,콘서트를 보고 싶어요
-397,Little ice, please?,얼음 조금만 주시겠어요?
+397,Little ice please?,얼음 조금만 주시겠어요?
 398,I need sewing kit.,바느질 도구가 필요해요
 399,Is the internet fast?,인터넷이 빠른가요?
 400,I want sweets.,단것을 좀 사고 싶어요
@@ -411,11 +411,11 @@
 410,Taxi in 10 minutes.,10분 뒤에 택시 부탁해요
 411,Police station?,경찰서는 어디예요?
 412,Here for sightseeing.,관광하러 왔습니다
-413,Dessert menu, please.,디저트 메뉴판 주세요
+413,Dessert menu please.,디저트 메뉴판 주세요
 414,Small water bottle.,작은 물 한 병이 필요해요
 415,Last bus?,이게 마지막 버스인가요?
 416,I want to the top.,꼭대기에 가고 싶어요
-417,Some milk, please?,우유 좀 주시겠어요?
+417,Some milk please?,우유 좀 주시겠어요?
 418,Buy power bank.,보조 배터리를 사야 해요
 419,Find pharmacy where?,약국은 어디서 찾아요?
 420,Going to office.,사무실에 갈 거예요
@@ -427,7 +427,7 @@
 426,Bus to the center.,시내 가는 버스가 필요해요
 427,Luggage room?,수하물 보관실이 있나요?
 428,Waiting for train.,기차를 기다리고 있어요
-429,Hot tea, please.,뜨거운 차 한 잔 주세요
+429,Hot tea please.,뜨거운 차 한 잔 주세요
 430,I need simple map.,간단한 지도가 필요해요
 431,Buy ticket now?,지금 표를 어디서 사요?
 432,I want this dish.,이 요리를 맛보고 싶어요
@@ -435,7 +435,7 @@
 434,Room ground floor.,1층 방이 필요해요
 435,Currency symbol?,통화 기호가 뭐예요?
 436,Going to park next.,다음은 공원에 갈 거예요
-437,Some sugar, please.,설탕 좀 주세요
+437,Some sugar please.,설탕 좀 주세요
 438,Return this.,이것을 반납해야 해요
 439,Right platform?,이 승강장이 맞나요?
 440,I want a newspaper.,신문을 사고 싶어요
@@ -451,7 +451,7 @@
 450,I need extra bed.,여분의 침대가 필요해요
 451,Tour in English?,투어는 영어 가이드인가요?
 452,Here for a wedding.,결혼식 때문에 왔습니다
-453,Ketchup, please?,케첩 좀 주시겠어요?
+453,Ketchup please?,케첩 좀 주시겠어요?
 454,Room with balcony.,발코니가 있는 방이요
 455,Main entrance?,정문은 어디예요?
 456,I want the sunset.,일몰을 보고 싶어요
@@ -459,11 +459,11 @@
 458,Postcard and stamp.,엽서와 우표가 필요해요
 459,Bus fare?,버스 요금은 얼마예요?
 460,Going to station now.,지금 역에 갈 거예요
-461,Smaller one, please?,더 작은 걸로 주시겠어요?
+461,Smaller one please?,더 작은 걸로 주시겠어요?
 462,Need luggage lock.,여행 가방 자물쇠가 필요해요
 463,Ferry running today?,오늘 페리가 운행하나요?
 464,Try something sweet.,달콤한 것을 먹고 싶어요
-465,Cup of milk, please?,우유 한 잔 주시겠어요?
+465,Cup of milk please?,우유 한 잔 주시겠어요?
 466,Reservation at 7.,7시에 예약해야 해요
 467,Buy souvenir where?,기념품은 어디서 사요?
 468,Here for business.,출장으로 왔습니다
@@ -471,7 +471,7 @@
 470,New battery for this.,이것에 쓸 새 배터리가 필요해요
 471,Next stop?,다음 정거장은 어디예요?
 472,I want the fountain.,분수를 보고 싶어요
-473,Some salt, please?,소금 좀 주시겠어요?
+473,Some salt please?,소금 좀 주시겠어요?
 474,Extend my stay.,숙박을 연장해야 해요
 475,Open all night?,이곳은 밤새 영업하나요?
 476,Leaving tomorrow.,내일 떠날 거예요
@@ -479,7 +479,7 @@
 478,Copy of this.,이것을 복사해야 해요
 479,Train platform?,기차 승강장은 어디예요?
 480,I want some tea.,차를 좀 사고 싶어요
-481,Small spoon, please?,작은 숟가락 주시겠어요?
+481,Small spoon please?,작은 숟가락 주시겠어요?
 482,I need a tissue.,티슈가 필요해요
 483,Meeting time?,미팅 시간은 언제예요?
 484,Going to the river.,강에 갈 거예요
@@ -491,7 +491,7 @@
 490,Need bigger locker.,더 큰 사물함이 필요해요
 491,Boat departure where?,배는 어디서 출발해요?
 492,Here for a weekend.,주말 동안 왔어요
-493,Some pepper, please?,후추 좀 주시겠어요?
+493,Some pepper please?,후추 좀 주시겠어요?
 494,Call ambulance.,구급차를 불러야 해요
 495,Check-out time?,퇴실 시간은 몇 시예요?
 496,I want clock tower.,시계탑을 보고 싶어요
@@ -503,7 +503,7 @@
 502,Room with a view.,전망 좋은 방이 필요해요
 503,Closest bus stop?,가장 가까운 정류장은?
 504,Leaving on Friday.,금요일에 떠날게요
-505,Fresh juice, please.,신선한 주스 주세요
+505,Fresh juice please.,신선한 주스 주세요
 506,English guide tour.,영어 가이드 투어가
 507,Best way to travel?,여행하기 좋은 방법은?
 508,Want to send parcel.,소포를 보내고 싶어요
@@ -511,7 +511,7 @@
 510,Need quiet table.,조용한 테이블이 필요해요
 511,Safe at night here?,이 거리는 밤에 안전해요?
 512,Here for few weeks.,몇 주 동안 있을게요
-513,New towel, please.,새 수건 좀 주실까요?
+513,New towel please.,새 수건 좀 주실까요?
 514,Small bottle opener.,작은 병따개 필요해요
 515,Buy fresh fruit?,신선한 과일은 어디서 사요?
 516,See the waterfall.,폭포를 보고 싶어요
@@ -575,7 +575,7 @@
 574,Key for locker.,사물함 열쇠가 필요해요
 575,Check-in counter?,체크인 카운터는 어디예요?
 576,Go to bank today.,오늘 은행에 갈 거예요
-577,Cold beer, please.,시원한 맥주 한 잔 주세요
+577,Cold beer please.,시원한 맥주 한 잔 주세요
 578,Small paper piece.,작은 종이 한 장이 필요해요
 579,Exchange fee?,환전 수수료는 얼마예요?
 580,Want to take train.,기차를 타고 싶어요
@@ -591,7 +591,7 @@
 590,Glass for water.,물 마실 컵이 필요해요
 591,Best route?,가장 좋은 경로는 뭐예요?
 592,Going to market.,슈퍼마켓에 갈 거예요
-593,Hot water, please.,뜨거운 물 좀 주시겠어요?
+593,Hot water please.,뜨거운 물 좀 주시겠어요?
 594,Translator app.,번역 앱이 필요해요
 595,Tax included?,가격에 세금이 포함되나요?
 596,Try that soup.,저 수프를 맛보고 싶어요
@@ -607,7 +607,7 @@
 606,Bigger shirt.,더 큰 셔츠가 필요해요
 607,Flight delayed?,비행기가 연착되었나요?
 608,Going to library.,도서관에 갈 거예요
-609,More salt, please.,소금 좀 더 주시겠어요?
+609,More salt please.,소금 좀 더 주시겠어요?
 610,New toothbrush set.,새 칫솔 세트가 필요해요
 611,Find an embassy?,대사관은 어디서 찾아요?
 612,See the aquarium.,수족관을 보고 싶어요
@@ -631,7 +631,7 @@
 630,Room with bathtub.,욕조가 있는 방이 필요해요
 631,Pool on roof?,옥상에 수영장이 있나요?
 632,Here until Monday.,월요일까지 있을 거예요
-633,Light meal, please.,가벼운 식사 주세요
+633,Light meal please.,가벼운 식사 주세요
 634,Map of the area.,이 지역 지도가 필요해요
 635,Nearest drug store?,가장 가까운 약국은요?
 636,Buy postcards.,엽서를 좀 사고 싶어요
@@ -643,7 +643,7 @@
 642,Need luggage belt.,여행 가방 벨트가 필요해요
 643,Taxi meter run?,택시 미터기가 작동하나요?
 644,See main square.,중앙 광장을 보고 싶어요
-645,Sweet wine, please.,달콤한 와인 한 잔 주세요
+645,Sweet wine please.,달콤한 와인 한 잔 주세요
 646,Call the hotel.,호텔에 전화해야 해요
 647,Rent a car where?,차는 어디서 빌려요?
 648,Here for business.,업무차 방문했습니다
@@ -711,7 +711,7 @@
 710,Room on west side.,서쪽 방이 필요해요
 711,Distance to city?,도시까지 거리가 얼마나 돼요?
 712,Here sightseeing.,관광 목적으로 왔습니다
-713,Light beer, please.,가벼운 맥주 주세요
+713,Light beer please.,가벼운 맥주 주세요
 714,Receipt with date.,날짜가 있는 영수증이 필요해요
 715,Info point where?,안내 지점은 어디예요?
 716,Visit a factory.,공장에 방문하고 싶어요
@@ -719,7 +719,7 @@
 718,Room with a safe.,금고가 있는 방이 필요해요
 719,Fee for luggage?,수하물 요금이 있나요?
 720,Going to the pier.,부두에 갈 거예요
-721,Olive oil, please.,올리브 오일 좀 주시겠어요?
+721,Olive oil please.,올리브 오일 좀 주시겠어요?
 722,Ticket to castle.,성으로 가는 표가 필요해요
 723,Best hotel?,가장 좋은 호텔은 어디예요?
 724,Want to take selfie.,셀카를 찍고 싶어요
@@ -759,7 +759,7 @@
 758,Room with shower.,샤워 시설이 있는 방이요
 759,Tourist office?,관광 안내소는 어디예요?
 760,Leaving tomorrow.,내일 아침에 떠날 거예요
-761,More rice, please.,밥 좀 더 주시겠어요?
+761,More rice please.,밥 좀 더 주시겠어요?
 762,Small wine bottle.,작은 와인 한 병이 필요해요
 763,Gate number?,게이트 번호가 몇 번이에요?
 764,Visit mountains.,산에 방문하고 싶어요
@@ -811,7 +811,7 @@
 810,New camera batt.,카메라 새 배터리가 필요해요
 811,Bus stop name?,버스 정류장 이름이 뭐예요?
 812,Going riverside.,강변에 갈 거예요
-813,Warm milk, please.,따뜻한 우유 주세요
+813,Warm milk please.,따뜻한 우유 주세요
 814,Universal adapter.,만능 어댑터가 필요해요
 815,Good museum where?,좋은 박물관은 어디예요?
 816,Try local beer.,현지 맥주를 마시고 싶어요
@@ -827,7 +827,7 @@
 826,Laundry form.,세탁 서비스 용지가 필요해요
 827,Closest pharmacy?,가장 가까운 약국은요?
 828,Beach later.,나중에 해변에 갈 거예요
-829,Cold juice, please.,시원한 주스 주세요
+829,Cold juice please.,시원한 주스 주세요
 830,New pair of socks.,새 양말 한 켤레가 필요해요
 831,Coffee free?,커피는 무료인가요?
 832,Walk to beach.,해변까지 걸어가고 싶어요
@@ -879,7 +879,7 @@
 878,Receipt with time.,시간이 있는 영수증이 필요해요
 879,Open on Mondays?,월요일에도 가게가 여나요?
 880,See local market.,현지 시장을 보고 싶어요
-881,Warm tea, please.,따뜻한 차 한 잔 주세요
+881,Warm tea please.,따뜻한 차 한 잔 주세요
 882,Taxi to port.,항구 가는 택시가 필요해요
 883,Ticket machine?,표 사는 기계는 어디예요?
 884,Leaving for home.,곧 집으로 떠날 거예요
@@ -927,7 +927,7 @@
 926,Map city center.,시내 중심가 지도가 필요해요
 927,Bus stop airport?,공항 가는 버스 정류장은?
 928,Alone today.,오늘은 혼자 여행 중이에요
-929,Cold soda, please.,시원한 탄산음료 주세요
+929,Cold soda please.,시원한 탄산음료 주세요
 930,Small beer bottle.,작은 맥주 한 병이 필요해요
 931,Late check-out?,늦은 체크아웃이 되나요?
 932,See night view.,야경을 보고 싶어요
@@ -959,7 +959,7 @@
 958,Ticket main stn.,중앙역 가는 표가 필요해요
 959,Train to Incheon?,인천 가는 기차는 어디예요?
 960,Leaving Sunday.,일요일에 떠날 거예요
-961,Hot tea, please.,뜨거운 차 좀 주시겠어요?
+961,Hot tea please.,뜨거운 차 좀 주시겠어요?
 962,Small soda bottle.,작은 탄산음료 한 병이 필요해요
 963,Exchange rate?,환전 환율은 얼마예요?
 964,See port now.,지금 항구를 보고 싶어요

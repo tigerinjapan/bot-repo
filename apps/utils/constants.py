@@ -459,10 +459,12 @@ APP_MLB = "mlb"
 APP_NUMBER = "number"
 APP_REVIEW = "review"
 APP_BOARD = "board"
+APP_IT_QUIZ = "itQuiz"
 
-APP_TRAVEL_DESIGN = "travel_design"
 APP_URL_DESIGN = "url_design"
 APP_KAKAO_DESIGN = "kakao_design"
+APP_TRAVEL_DESIGN = "travel_design"
+APP_IT_QUIZ_DESIGN = "itQuiz_design"
 
 APP_TODAY_KOREA = "today_korea"
 APP_TRAVEL_KO = "travel_ko"
@@ -486,6 +488,8 @@ LIST_APPS_NAME = [
     APP_TRAVEL,
     APP_TRAVEL_KO,
     APP_TRAVEL_DESIGN,
+    APP_IT_QUIZ,
+    APP_IT_QUIZ_DESIGN,
     APP_REVIEW,
     APP_REVIEW_KO,
     APP_URL_DESIGN,

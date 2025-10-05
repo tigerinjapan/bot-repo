@@ -11,7 +11,7 @@ HTML_KAKAO_AUTH_SUCCESS = (
     f""" {HTML_KAKAO_BUTTON.format("/logout", " logout","카카오 인증완료")} """
 )
 HTML_KAKAO_SEND_TEST = (
-    f""" {HTML_KAKAO_BUTTON.format("/send-test", "", "테스트 메시지 보내기<")} """
+    f""" {HTML_KAKAO_BUTTON.format("/send-test", "", "테스트 메시지 보내기")} """
 )
 
 HTML_KAKAO_GO_HOME = f""" {HTML_KAKAO_BUTTON.format("", "", "홈으로 이동")} """
