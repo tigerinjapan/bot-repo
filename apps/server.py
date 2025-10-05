@@ -196,7 +196,7 @@ async def app_exec(request: Request, app_name: str):
     return templates.TemplateResponse(target_html, context)
 
 
-# HTMLテンプレートファイルの返却
+# アプリケーション実行
 @app.get("/apps/{app_name}")
 async def apps(request: Request, app_name: str):
     if not app_name in const.LIST_APPS_NAME:
@@ -429,6 +429,7 @@ async def kakao_send_test(request: Request):
     return content
 
 
+# アプリケーション実行
 @app.get("/kakao/{app_name}")
 async def kakao_apps(request: Request, app_name: str):
     if app_name in kakao.LIST_APP_KOREA:

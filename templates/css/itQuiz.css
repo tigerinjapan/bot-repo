@@ -1,487 +1,278 @@
-/* --- キュートでシンプルなCSSスタイル --- */
-
-/* キュートでシンプルなカラーパレット */
-:root {
-	--main-pink: #FFC0CB;
-	/* ライトピンク */
-	--main-blue: #B0E0E6;
-	/* パウダーブルー */
-	--bg-color: #F0F8FF;
-	/* アリスブルー (非常に淡い背景) */
-	--container-bg: #FFFFFF;
-	/* ホワイト */
-	--text-color-dark: #333333;
-	--text-color-light: #666666;
-	--shadow-primary: 0 10px 30px rgba(255, 192, 203, 0.3);
-	/* ソフトピンクの影 */
-	--shadow-secondary: 0 0 15px rgba(176, 224, 230, 0.5);
-	/* ソフトブルーの光 */
-}
-
+/* グローバルリセットとフォント設定 */
 body {
-	font-family: 'Inter', sans-serif;
-	background-color: var(--bg-color);
-	color: var(--text-color-dark);
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
-	/* モバイルでコンテンツが上部に寄るように調整 */
-	min-height: 100vh;
-	padding: 10px;
+	font-family: 'Noto Sans JP', 'Noto Sans KR', 'Inter', sans-serif;
+	background-color: #f7f7f7;
+	/* 薄いグレーの背景 */
 	margin: 0;
-	box-sizing: border-box;
-}
-
-/* メインコンテナ */
-#app {
-	background-color: var(--container-bg);
-	border: none;
-	border-radius: 1.5rem;
-	/* 大きな丸み */
-	width: 100%;
-	max-width: 640px;
-	/* max-w-xl 相当 */
-	padding: 24px;
-	/* p-6 相当 */
-	box-sizing: border-box;
-}
-
-/* md:p-10 相当のレスポンシブパディング */
-@media (min-width: 768px) {
-	#app {
-		padding: 40px;
-		/* p-10 相当 */
-	}
-}
-
-/* モバイルでのパディング調整 */
-@media (max-width: 640px) {
-	#app {
-		padding: 16px;
-		margin-top: 10px;
-		/* 上部に少しマージン */
-	}
-}
-
-.shadow-soft {
-	box-shadow: var(--shadow-primary), var(--shadow-secondary);
-}
-
-.text-accent {
-	color: var(--main-pink);
-	font-weight: 800;
-}
-
-/* シンプルでキュートなボタン (ピル型) */
-.cute-button {
-	transition: all 0.2s ease;
-	background-color: var(--main-blue);
-	color: white;
-	border: none;
-	border-radius: 9999px;
-	/* ピル型 */
-	font-weight: 600;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	padding: 0.75rem 1.5rem;
-	cursor: pointer;
-	width: 100%;
-	/* モバイルフレンドリーのためデフォルトで幅いっぱいに */
-}
-
-/* デスクトップで幅を調整 */
-@media (min-width: 640px) {
-	.cute-button {
-		width: auto;
-	}
-}
-
-.cute-button:hover {
-	transform: translateY(-2px);
-	background-color: var(--main-pink);
-	box-shadow: 0 6px 12px rgba(255, 192, 203, 0.5);
-}
-
-.cute-button:active {
-	transform: translateY(0);
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* 灰色のボタンのスタイル */
-.cute-button.gray {
-	background-color: #d1d5db;
-	/* bg-gray-300 相当 */
-	color: var(--text-color-dark);
-	width: auto;
-	/* サイズ固定 */
-}
-
-/* マスクされた文字のスタイル (未公開) */
-.masked-letter {
-	cursor: pointer;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	min-width: 35px;
-	/* 文字幅の統一 (最小幅) */
-	height: 45px;
-	margin: 0 5px;
-	border-bottom: 3px solid var(--main-pink);
-	background-color: rgba(255, 192, 203, 0.1);
-	color: var(--text-color-dark);
-	font-size: 1.8rem;
-	line-height: 1;
-	transition: all 0.2s;
-	border-radius: 0.5rem;
-	font-weight: bold;
-	flex-shrink: 0;
-	/* 縮小防止 */
-}
-
-.masked-letter:hover {
-	background-color: rgba(255, 192, 203, 0.4);
-}
-
-/* 埋まった文字のスタイル (公開済み) */
-.filled-letter {
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	min-width: 35px;
-	/* 文字幅の統一 (最小幅) */
-	height: 45px;
-	margin: 0 5px;
-	background-color: var(--main-pink);
-	color: white;
-	font-size: 1.8rem;
-	line-height: 1;
-	border-radius: 0.5rem;
-	font-weight: bold;
-	cursor: default;
-	flex-shrink: 0;
-}
-
-/* モバイル向け文字サイズ調整 */
-@media (max-width: 640px) {
-
-	.masked-letter,
-	.filled-letter {
-		min-width: 30px;
-		height: 40px;
-		font-size: 1.5rem;
-		margin: 0 3px;
-	}
-
-	/* クイズ説明文の文字サイズ調整 */
-	.quiz-description-text {
-		font-size: 1rem !important;
-		/* text-lg から text-base に */
-		height: auto !important;
-		/* 高さの固定を解除 */
-		min-height: 40px;
-		padding-top: 0.5rem !important;
-		padding-bottom: 0.5rem !important;
-	}
-}
-
-/* 単語コンテナのレスポンシブ設定 */
-#quiz-word-container-wrapper {
-	/* 横スクロール対応 */
-	overflow-x: auto;
-	overflow-y: hidden;
-	padding: 0.5rem 0;
-	/* 上下のパディングで影などが切れないように */
-}
-
-#quiz-word-container {
+	padding: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-wrap: nowrap;
-	/* 強制的に折り返しを禁止し、横スクロールを発生させる */
-	min-width: max-content;
-	/* コンテンツに合わせて幅を確保 */
+	min-height: 100vh;
+	color: #333;
+	transition: background-color 0.3s;
 }
 
-/* ダイアログ/モーダルのスタイル */
-#dialog-overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.3);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 50;
-}
-
-#dialog-overlay.hidden {
-	display: none;
-}
-
-#dialog-content {
-	background-color: var(--container-bg);
-	border-radius: 1rem;
-	box-shadow: var(--shadow-primary);
-	padding: 32px;
-	/* p-8 相当 */
-	max-width: 384px;
-	/* max-w-sm 相当 */
-	width: 90%;
-	/* w-full 相当 */
-}
-
-.dialog-buttons-container {
-	display: flex;
-	justify-content: flex-end;
-	/* justify-end 相当 */
-	gap: 12px;
-	/* gap-3 相当 */
-}
-
-/* 画面遷移アニメーション */
-.fade-in {
-	animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(10px);
-	}
-
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-/* 汎用レイアウトクラスの定義 (Tailwindクラスの代替) */
-.space-y-8>*+*,
-.space-y-6>*+* {
-	margin-top: 1.5rem;
-}
-
-.text-center {
-	text-align: center;
-}
-
-.font-bold {
-	font-weight: 700;
-}
-
-.border-b-2 {
-	border-bottom-width: 2px;
-}
-
-.pb-4 {
-	padding-bottom: 1rem;
-}
-
-.p-4 {
-	padding: 1rem;
-}
-
-.p-6 {
-	padding: 1.5rem;
-}
-
-.mb-4 {
-	margin-bottom: 1rem;
-}
-
-.mb-6 {
-	margin-bottom: 1.5rem;
-}
-
-.mb-2 {
-	margin-bottom: 0.5rem;
-}
-
-.mt-3 {
-	margin-top: 0.75rem;
-}
-
-.mt-6 {
-	margin-top: 1.5rem;
-}
-
-.py-1 {
-	padding-top: 0.25rem;
-	padding-bottom: 0.25rem;
-}
-
-.px-4 {
-	padding-left: 1rem;
-	padding-right: 1rem;
-}
-
-.py-2 {
-	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
-}
-
-.rounded-xl {
-	border-radius: 0.75rem;
-}
-
-.border-2 {
-	border-width: 2px;
-}
-
-.shadow-inner {
-	box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-}
-
-.list-none {
-	list-style: none;
-}
-
-.w-6 {
-	width: 1.5rem;
-}
-
-.flex-1 {
-	flex: 1 1 0%;
-}
-
-.w-16 {
-	width: 4rem;
-}
-
-.text-right {
-	text-align: right;
-}
-
-.text-sm {
-	font-size: 0.875rem;
-}
-
-.text-xs {
-	font-size: 0.75rem;
-}
-
-.text-lg {
-	font-size: 1.125rem;
-}
-
-.text-xl {
-	font-size: 1.25rem;
-}
-
-.text-3xl {
-	font-size: 1.875rem;
-}
-
-.text-4xl {
-	font-size: 2.25rem;
-}
-
-.h-12 {
-	height: 3rem;
-}
-
-.border-gray-100 {
-	border-color: #f3f4f6;
-}
-
-.border-gray-200 {
-	border-color: #e5e7eb;
-}
-
-.bg-gray-50 {
-	background-color: #f9fafb;
-}
-
-.bg-white {
+/* メインコンテナ - レスポンシブ対応 */
+.container {
+	width: 95%;
+	max-width: 600px;
+	/* PCでの最大幅 */
 	background-color: #ffffff;
+	border-radius: 20px;
+	/* 角を丸く */
+	box-shadow: 0 10px 30px rgba(255, 192, 203, 0.4);
+	/* 柔らかいピンクの影 */
+	padding: 20px;
+	box-sizing: border-box;
+	transition: all 0.3s ease-in-out;
 }
 
-.bg-pink-300 {
-	background-color: #f9a8d4;
+/* タイトルスタイル */
+.title {
+	text-align: center;
+	font-size: 1.8rem;
+	font-weight: 700;
+	color: #ff69b4;
+	/* ショッキングピンク */
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+	border-bottom: 3px solid #f0f0f0;
 }
 
-.hover\:bg-pink-400:hover {
-	background-color: #f472b6;
+/* 共通ボタンとクリック可能な要素のスタイル */
+.btn,
+.quiz-char-blank {
+	padding: 10px 15px;
+	border: none;
+	border-radius: 12px;
+	/* さらに丸く */
+	font-weight: 700;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	margin: 5px;
+	text-transform: uppercase;
+	/* キーボード対応のため候補文字は常に大文字 */
 }
 
-.hover\:bg-main-pink:hover {
-	background-color: var(--main-pink);
+/* プライマリボタン (ゲーム開始、確認) */
+.btn-primary {
+	background-color: #ffb6c1;
+	/* ライトピンク */
+	color: #fff;
+	box-shadow: 0 5px 0 #ff69b4;
+	/* 濃いピンクのシャドウ */
 }
 
-.hover\:bg-main-blue:hover {
-	background-color: var(--main-blue);
+.btn-primary:active {
+	box-shadow: 0 2px 0 #ff69b4;
+	transform: translateY(3px);
 }
 
-/* Flex Layouts */
-.flex {
+/* セカンダリボタン (ヒント、ルール) */
+.btn-secondary {
+	background-color: #add8e6;
+	/* ライトブルー */
+	color: #fff;
+	box-shadow: 0 5px 0 #87ceeb;
+	/* スカイブルーのシャドウ */
+}
+
+.btn-secondary:active {
+	box-shadow: 0 2px 0 #87ceeb;
+	transform: translateY(3px);
+}
+
+/* ユーティリティクラス */
+.flex-row {
 	display: flex;
-}
-
-.flex-col {
-	flex-direction: column;
-}
-
-.flex-wrap {
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15px;
 	flex-wrap: wrap;
 }
 
-.flex-nowrap {
-	flex-wrap: nowrap;
-}
-
-.justify-center {
+.flex-center {
+	display: flex;
 	justify-content: center;
-}
-
-.justify-between {
-	justify-content: space-between;
-}
-
-.items-start {
-	align-items: flex-start;
-}
-
-.items-center {
 	align-items: center;
 }
 
-.gap-x-6 {
-	column-gap: 1.5rem;
+.flex-end {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
 }
 
-.gap-y-2 {
-	row-gap: 0.5rem;
+.text-label {
+	font-size: 0.9rem;
+	color: #888;
 }
 
-.gap-4 {
-	gap: 1rem;
+.text-value {
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: #333;
 }
 
-.gap-3 {
-	gap: 0.75rem;
+.text-error {
+	color: #ff0000;
+	font-weight: 700;
 }
 
-.overflow-x-auto {
-	overflow-x: auto;
+/* クイズ単語領域 */
+#quiz-word {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin: 25px 0;
+	min-height: 40px;
+	/* レイアウト崩れ防止 */
 }
 
-/* レスポンシブ対応 (sm: / 640px) */
-@media (min-width: 640px) {
-	.sm\:flex-row {
-		flex-direction: row;
-	}
+.quiz-char-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 40px;
+	/* 各文字のボックスサイズ */
+	height: 40px;
+	margin: 5px;
+	font-size: 1.5rem;
+	font-weight: 700;
+	border: 2px solid #ddd;
+	border-radius: 8px;
+	color: #333;
+	background-color: #f9f9f9;
+}
 
-	.sm\:p-6 {
-		padding: 1.5rem;
-	}
+.quiz-char-blank {
+	background-color: #fff0f5;
+	/* 薄いピンク */
+	color: #ff69b4;
+	border: 2px dashed #ff69b4;
+	cursor: pointer;
+}
 
-	.sm\:text-4xl {
-		font-size: 2.25rem;
-	}
+.quiz-char-blank:hover {
+	background-color: #ffe4e9;
+}
 
-	.sm\:mb-0 {
-		margin-bottom: 0;
-	}
+/* クイズ説明領域 */
+#quiz-description {
+	background-color: #f0fff0;
+	/* 薄いミントグリーン */
+	border: 1px solid #e0eee0;
+	padding: 15px;
+	border-radius: 12px;
+	text-align: center;
+	margin-bottom: 20px;
+	font-size: 1rem;
+	line-height: 1.5;
+	color: #4b0082;
+	/* 濃い紫 */
+}
+
+/* タイムバー */
+#timer-bar {
+	height: 10px;
+	background-color: #e0e0e0;
+	border-radius: 5px;
+	overflow: hidden;
+	margin-bottom: 15px;
+}
+
+#timer-progress {
+	height: 100%;
+	width: 100%;
+	background-color: #ff69b4;
+	transition: width 0.1s linear;
+}
+
+/* モーダル（ダイアログ）の基本スタイル */
+dialog {
+	border: none;
+	padding: 20px;
+	border-radius: 15px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+	max-width: 90%;
+	background-color: #fff;
+}
+
+dialog::backdrop {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.choice-buttons-container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	/* 3列 */
+	gap: 10px;
+	margin-top: 15px;
+}
+
+.choice-btn {
+	width: 100%;
+	height: 50px;
+	font-size: 1.3rem;
+	background-color: #fff0f5;
+	color: #ff69b4;
+	border: 2px solid #ff69b4;
+	border-radius: 10px;
+	transition: background-color 0.2s;
+}
+
+.choice-btn:hover:not(:disabled) {
+	background-color: #ffc0cb;
+	color: #fff;
+}
+
+.choice-btn:disabled {
+	background-color: #e9e9e9;
+	color: #ccc;
+	cursor: not-allowed;
+	border-color: #ccc;
+	box-shadow: none;
+}
+
+/* 言語選択画面のスタイル */
+.language-selection {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	margin-top: 20px;
+}
+
+/* ランキング表示 */
+#ranking-list {
+	list-style: none;
+	padding: 0;
+	margin-top: 20px;
+	border-top: 1px solid #eee;
+}
+
+.ranking-item {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 0;
+	border-bottom: 1px solid #eee;
+}
+
+.ranking-item span {
+	font-weight: normal;
+}
+
+.ranking-item:nth-child(1) .rank {
+	color: gold;
+	font-size: 1.2rem;
+}
+
+.ranking-item:nth-child(2) .rank {
+	color: silver;
+}
+
+.ranking-item:nth-child(3) .rank {
+	color: #cd7f32;
+	/* bronze */
 }

@@ -1,722 +1,639 @@
-// --- ランキングダミーデータ (静的ランキングダミーデータ) ---
-const staticRankings = [
-  { username: "kobe", score: 100, date: "2025/10/01" },
-  { username: "song", score: 90, date: "2025/10/02" },
-  { username: "sera", score: 75, date: "2025/10/03" },
-  { username: "juni", score: 60, date: "2025/10/04" },
-  { username: "hana", score: 55, date: "2025/10/05" },
-];
-
-// ランキングデータをソートして取得する関数
-function loadRankings() {
-  // スコアが高い順にソート
-  const sortedRankings = [...staticRankings].sort((a, b) => b.score - a.score);
-  return sortedRankings;
-}
-window.loadRankings = loadRankings;
-
-// ユーザーIDを取得するダミー関数
-function getUserId() {
-  return 'Cute_User_ID_0000';
-}
-window.getUserId = getUserId;
-
-// --- クイズデータ (Quiz Data) ---
-const quizData = [
-  { id: 1, word: "GEMINI", description_kr: "구글에서 만든 AI모델로, 텍스트와 이미지 생성이 가능해요.", description_jp: "Googleが開発したAIモデル。テキストや画像を生成可能。", description_en: "AI model by Google, generating text and images." },
-  { id: 2, word: "HTML", description_kr: "웹페이지의 뼈대를 만드는 데 사용하는 언어예요.", description_jp: "ウェブページの骨格を作成するために使う言語。", description_en: "Language used to create the structure of a webpage." },
-  { id: 3, word: "CSS", description_kr: "웹페이지의 색깔이나 디자인을 꾸밀 때 사용해요.", description_jp: "ウェブページの色やデザインを装飾する際に使用。", description_en: "Used to style the colors and design of a webpage." },
-  { id: 4, word: "FIREWALL", description_kr: "외부의 나쁜 침입을 막아주는 보안 장치예요.", description_jp: "外部からの不正侵入を防ぐためのセキュリティ装置。", description_en: "A security device that blocks harmful external intrusions." },
-  { id: 5, word: "COOKIE", description_kr: "웹사이트가 사용자 정보를 잠시 저장하는 작은 파일이에요.", description_jp: "ウェブサイトがユーザー情報を一時的に保存する小さなファイル。", description_en: "A small file where a website stores user information temporarily." },
-  { id: 6, word: "CLOUD", description_kr: "인터넷으로 파일을 저장하고 프로그램을 쓰는 기술이에요.", description_jp: "インターネット経由でファイルを保存し、プログラムを使う技術。", description_en: "Technology for storing files and using programs via the internet." },
-  { id: 7, word: "API", description_kr: "서로 다른 프로그램이 정보를 주고받게 연결해 줘요.", description_jp: "異なるプログラム同士が情報をやり取りできるように繋ぐもの。", description_en: "Connects different programs to exchange information." },
-  { id: 8, word: "SQL", description_kr: "데이터베이스에서 정보를 찾거나 관리하는 언어예요.", description_jp: "データベースから情報を検索・管理するための言語。", description_en: "Language for finding and managing information in a database." },
-  { id: 9, word: "AI", description_kr: "사람처럼 생각하고 배우는 컴퓨터 기술을 말해요.", description_jp: "人のように考え学習するコンピューター技術。", description_en: "Computer technology that thinks and learns like a human." },
-  { id: 10, word: "IP ADDRESS", description_kr: "인터넷에 연결된 기기마다 있는 고유한 주소예요.", description_jp: "インターネットに接続された機器それぞれが持つ固有のアドレス。", description_en: "A unique address for every device connected to the internet." }
-];
-
-// --- グローバルゲーム状態管理オブジェクト (Global game state) ---
-const gameState = {
-  currentQuizIndex: 0, // 現在のクイズ番号
-  score: 0,           // 現在のスコア
-  currentWord: [],    // 現在の単語の解答状況 (例: ['G', '_', 'M', '_'])
-  timer: null,        // タイマーID
-  timeRemaining: 0,   // 残り時間（秒）
-  initialTime: 0,     // クイズ開始時の初期時間
-  quizSet: [],        // 今回のゲームで使用するクイズセット
-  hintsUsed: 0,       // 使用したヒントの数
-  selectedLanguage: 'ko', // 選択された言語
-  isAuthReady: true,  // 認証準備完了フラグ (ダミー)
-};
-window.gameState = gameState;
-
-// テキストマッピングオブジェクト (言語別テキスト)
-const textMap = {
-  'ko': {
-    title: "IT 상식 퀴즈", rankingTitle: "TOP 5 랭킹", user: "유저명", score: "점수", status: "퀴즈상황",
-    rules: "게임 규칙", hint: "힌트 사용 (-1점)", check: "정답 확인", quizDescTitle: "퀴즈 설명",
-    placeholder: "빈 칸을 눌러 글자를 선택하고, 모두 채운 후 정답 확인 버튼을 누르세요.",
-    noRanking: "아직 랭킹 데이터가 없어요.", sec: "초", point: "점", ok: "확인"
-  },
-  'jp': {
-    title: "IT常識クイズ", rankingTitle: "TOP 5 ランキング", user: "ユーザー名", score: "スコア", status: "クイズ状況",
-    rules: "ゲームのルール", hint: "ヒントを使う (-1点)", check: "正解を確認", quizDescTitle: "クイズの説明",
-    placeholder: "空欄をタップして文字を選択し、全て埋めたら正解確認ボタンを押してください。",
-    noRanking: "まだランキングデータはありません。", sec: "秒", point: "点", ok: "OK"
-  },
-  'en': {
-    title: "IT Common Sense Quiz", rankingTitle: "TOP 5 Ranking", user: "User", score: "Score", status: "Quiz Status",
-    rules: "Game Rules", hint: "Use Hint (-1 point)", check: "Check Answer", quizDescTitle: "Quiz Description",
-    placeholder: "Tap the empty space to select a letter, then check the answer.",
-    noRanking: "No ranking data yet.", sec: "sec", point: "points", ok: "OK"
-  }
-};
-
-// ダイアログおよび動的メッセージマッピング
-const msgMap = {
-  'time_over_title': { 'ko': '시간 초과', 'jp': '時間切れ', 'en': 'Time Over' },
-  'time_over_msg': { 'ko': '시간이 다 되었어요. 다음 문제로 넘어갑니다.', 'jp': '時間が終了しました。次の問題に進みます。', 'en': 'Time is up. Moving to the next quiz.' },
-
-  'correct_10_title': (time, lang) => {
-    const t = textMap[lang];
-    return `정답! (+10${t.point})`;
-  },
-  'correct_10_msg': (time, lang) => {
-    const t = textMap[lang];
-    return `${time}${t.sec} 이내 정답! +10${t.point}을 획득했어요!`;
-  },
-
-  'correct_5_title': { 'ko': '정답! (+5점)', 'jp': '正解! (+5点)', 'en': 'Correct! (+5 Points)' },
-  'correct_5_msg': { 'ko': '+5점을 획득했어요!', 'jp': '+5点を獲得しました!', 'en': 'You got +5 points!' },
-
-  'game_over_title': { 'ko': '게임 종료!', 'jp': 'ゲーム終了!', 'en': 'GAME OVER!' },
-  'game_over_msg': (score, lang) => {
-    const t = textMap[lang];
-    return `${t.score}: ${score}${t.point} 입니다! 수고하셨어요.`;
-  },
-
-  'no_hints_title': { 'ko': '힌트 없음', 'jp': 'ヒントなし', 'en': 'No Hints' },
-  'no_hints_all_revealed_msg': { 'ko': '모든 글자가 공개되었어요.', 'jp': '全ての文字が公開されました。', 'en': 'All letters are revealed.' },
-  'no_hints_max_used_msg': { 'ko': '더 이상 힌트를 사용할 수 없어요.', 'jp': 'これ以上ヒントは使えません。', 'en': 'No more hints available.' },
-
-  'hint_revealed_title': { 'ko': '힌트 사용 (-1점)', 'jp': 'ヒント使用 (-1点)', 'en': 'Hint Used (-1 Point)' },
-  'hint_revealed_msg': { 'ko': '단어의 한 글자가 공개되었고, 점수 -1점 처리되었습니다.', 'jp': '単語の文字が一つ公開され、スコアから-1点が引かれました。', 'en': 'A letter has been revealed, and 1 point has been deducted.' },
-
-  'select_letter_title': { 'ko': '글자 선택', 'jp': '文字選択', 'en': 'Select Letter' },
-  'select_letter_msg': { 'ko': '이 칸에 들어갈 글자를 5개의 후보 중 골라보세요!', 'jp': 'この欄に入る文字を5つの候補から選んでください!', 'en': 'Choose the letter for this space from 5 candidates!' },
-
-  'incorrect_title': { 'ko': '❌ 아쉽네요! (-1점)', 'jp': '❌ 残念! (-1点)', 'en': '❌ Oops! (-1 Point)' },
-  'incorrect_msg': { 'ko': '선택이 틀렸어요. 점수 -1점. 다시 시도해 보세요.', 'jp': '選択が間違っています。スコア -1点。再試行してください。', 'en': 'Incorrect selection. Score -1 point. Please try again.' },
-
-  'incomplete_title': { 'ko': '미완성', 'jp': '未完成', 'en': 'Incomplete' },
-  'incomplete_msg': { 'ko': '아직 단어가 완성되지 않았어요. 빈 칸을 눌러 글자를 채워주세요.', 'jp': 'まだ単語が完成していません。空欄をタップして文字を埋めてください。', 'en': 'The word is not complete. Tap the empty spaces.' },
-
-  'rules_title': { 'ko': '게임 규칙', 'jp': 'ゲームのルール', 'en': 'Game Rules' },
-  'rules_msg': (wordLength, lang) => {
-    const t = textMap[lang];
-    const initialTime = wordLength * 10;
-    const thresholdTime = initialTime / 2;
-    return `
-            <p class="mb-2" style="color: var(--text-color-dark);">1. 10개의 퀴즈를 풀어요. 문제당 글자 수 $\\times 10$초가 주어져요. (예: 6글자 단어 $\\to$ ${initialTime}${t.sec})</p>
-            <p class="mb-2" style="color: var(--text-color-dark);">2. **${thresholdTime}${t.sec} 이내** 정답: **+10${t.point}**, 그 외 정답: **+5${t.point}**</p>
-            <p class="mb-2" style="color: var(--text-color-dark);">3. 글자 선택 오답 시: **-1${t.point}** (최소 점수는 0점)</p>
-            <p class="mb-2" style="color: var(--text-color-dark);">4. 힌트: '힌트 사용' 버튼을 누르면 한 글자씩 공개되며, **-1${t.point}** 차감됩니다. (최대 글자 수 -1)</p>
-            <p style="color: var(--text-color-dark);">5. 단어의 빈 칸을 눌러 5개의 후보 중 정답 글자를 선택합니다.</p>
-        `;
-  },
-};
-
 /**
- * @brief ローカライズされたメッセージを取得する
- * @param {string} key - メッセージキー
- * @param {any} data - メッセージ関数に渡すデータ (スコアや文字長など)
- * @returns {string} ローカライズされたメッセージ
+ * =================================================================
+ * 定数と初期データ定義
+ * =================================================================
  */
-function getLocalizedMessage(key, data) {
-  const lang = gameState.selectedLanguage;
-  const message = msgMap[key];
-  if (typeof message === 'function') {
-    // 関数型メッセージの場合、データと言語コードを渡して実行
-    return message(data, lang);
-  }
-  // 通常のオブジェクトの場合、該当言語、または英語で代用
-  return message[lang] || message['en'];
-}
 
-/**
- * @brief スペースを除いた現在のクイズの単語の長さを取得する
- * @returns {number} 単語の有効な文字数
- */
-function getCurrentWordLength() {
-  if (!gameState.quizSet.length) return 0;
-  const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
-  if (!currentQuiz) return 0;
-  // スペースを除外した文字数
-  return currentQuiz.word.toUpperCase().replace(/ /g, '').length;
-}
+// ページ読み込み時にsessionStorageからデータを取得
+let userId = sessionStorage.getItem(STR_USER_NAME);
 
-// --- ダイアログユーティリティ関数 (Dialog Utility Functions) ---
-/**
- * @brief カスタムボタン付きのモーダルダイアログを表示する
- */
-function showDialog(title, message, onClose, customButtonsHtml) {
-  const t = textMap[gameState.selectedLanguage] || textMap['ko'];
-
-  document.getElementById('dialog-title').textContent = title;
-  document.getElementById('dialog-message').innerHTML = message;
-
-  const dialogButtons = document.getElementById('dialog-buttons');
-  dialogButtons.innerHTML = '';
-
-  if (customButtonsHtml) {
-    dialogButtons.innerHTML = customButtonsHtml;
+// ユーザ名設定
+function setUserName() {
+  if (!userId || userId === SYM_BLANK) {
+    userId = prompt(MSG_INFO_INPUT_USER_EN);
   } else {
-    const closeBtn = document.createElement('button');
-    // モーダル内でボタン幅がautoになるように調整
-    closeBtn.className = 'cute-button px-4 py-2 text-sm gray';
-    closeBtn.style.width = 'auto';
-    closeBtn.textContent = t.ok;
-    closeBtn.onclick = () => {
-      closeDialog();
-      if (onClose) onClose();
-    };
-    dialogButtons.appendChild(closeBtn);
+    userId = getElemText("userName");
+  }
+  sessionStorage.setItem(STR_USER_NAME, userId);
+}
+
+// グローバルなゲーム状態を保持するオブジェクト
+const gameState = {
+  selectedLanguage: 'ko', // 初期言語設定は韓国語
+  currentQuizIndex: 0,
+  score: 0,
+  currentWord: [], // 現在の単語の状態（例: ['G', '_', 'M', '_', 'N', 'I']）
+  quizSet: [], // 今回のゲームで使う10問のセット
+  timeRemaining: 0,
+  initialTime: 0,
+  timerInterval: null,
+  hintsUsed: 0,
+  selectedCharIndex: -1, // 現在選択されている空欄のインデックス
+  isGameOver: false,
+};
+
+// ランキングダミーデータ (MongoDBの代わりに静的データを使用)
+const staticRankings = [
+  { userId: "kobe", score: 100, lastLoginDate: "2025/10/01" },
+  { userId: "song", score: 90, lastLoginDate: "2025/10/02" },
+  { userId: "sera", score: 75, lastLoginDate: "2025/10/03" },
+  { userId: "juni", score: 60, lastLoginDate: "2025/10/04" },
+  { userId: "hana", score: 55, lastLoginDate: "2025/10/05" },
+];
+
+// UI要素の多言語テキスト辞書 (ボタン名やラベルなど)
+const textMap = {
+  "title": { "ko": "IT 상식 퀴즈", "ja": "IT クイズ", "en": "IT Quiz" },
+  "user_label": { "ko": "유저:", "ja": "ユーザー:", "en": "User:" },
+  "score_label": { "ko": "점수:", "ja": "スコア:", "en": "Score:" },
+  "quiz_status_label": { "ko": "문제:", "ja": "問題:", "en": "Quiz:" },
+  "start_game": { "ko": "게임 시작", "ja": "ゲームスタート", "en": "START GAME" },
+  "view_ranking": { "ko": "랭킹 보기", "ja": "ランキング表示", "en": "VIEW RANKING" },
+  "game_rule": { "ko": "게임 규칙", "ja": "ゲームルール", "en": "GAME RULE" },
+  "hint": { "ko": "힌트", "ja": "ヒント", "en": "HINT" },
+  "check_answer": { "ko": "정답 확인", "ja": "正解確認", "en": "CHECK ANSWER" },
+  "ranking": { "ko": "랭킹", "ja": "ランキング", "en": "RANKING" },
+  "select_language": { "ko": "언어 선택:", "ja": "言語選択:", "en": "Select Language:" },
+};
+
+// メッセージ、エラー、ダイアログコンテンツの多言語辞書
+const msgMap = {
+  "rule_content": {
+    "ko": `
+        <p><strong>1. 게임내용</strong><br>주어진 설명으로 IT 단어 맞추기 (총 10문제)</p>
+        <p><strong>2. 제한시간</strong><br>단어 글자수 x 10초 (예: 3글자: 30초)</p>
+        <p><strong>3. 힌트</strong><br>단어의 첫 글자는 공개. <br>
+        [힌트]를 누르면 1글자씩 공개 (힌트 = 최대 글자수 -1)</p>
+        <p><strong>4. 득점</strong><br></p>
+        <ul>
+            <li>제한 시간의 절반 이내 정답: <b>+10점</b></li>
+            <li>그 외 시간 내 정답: <b>+5점</b></li>
+        </ul>
+        <p><strong>5. 감점</strong><br></p>
+        <ul>
+            <li>글자 선택 오답: <b>-1점</b></li>
+            <li>힌트 사용 시: <b>-1점</b></li>
+        </ul>
+        <p>※최소 점수: 0점</p>
+    `,
+    "ja": `
+        <p><strong>1. 目標:</strong> 与えられた説明をヒントにIT用語を当てます (全10問)。</p>
+        <p><strong>2. 時間:</strong> 制限時間は単語の文字数 $\times 10$ 秒です。</p>
+        <p><strong>3. ヒント:</strong> 単語の最初の文字は公開されます。<br>
+        「ヒント」を押すと1文字ずつ公開されます (最大文字数 $-1$まで)。</p>
+        <p><strong>4. 得点:</strong></p>
+        <ul>
+            <li>制限時間の半分以内での正解: <b>+10点</b></li>
+            <li>それ以外の時間内での正解: <b>+5点</b></li>
+        </ul>
+        <p><strong>5. 減点:</strong></p>
+        <ul>
+            <li>文字選択での不正解: <b>-1点</b></li>
+            <li>ヒント使用時: <b>-1点</b></li>
+        </ul>
+        <p>最低点数は0点です。</p>
+    `,
+    "en": `
+        <p><strong>1. Goal:</strong> Guess the IT term based on the provided description (Total 10 questions).</p>
+        <p><strong>2. Time Limit:</strong> Word length $\times 10$ seconds.</p>
+        <p><strong>3. Hint:</strong> The first letter is revealed. Using 'HINT' reveals one letter at a time (up to Word Length - 1).</p>
+        <p><strong>4. Scoring:</strong></p>
+        <ul>
+            <li>Correct within half the time limit: <b>+10 points</b></li>
+            <li>Correct after half the time limit: <b>+5 points</b></li>
+        </ul>
+        <p><strong>5. Penalties:</strong></p>
+        <ul>
+            <li>Incorrect character selection: <b>-1 point</b></li>
+            <li>Using a hint: <b>-1 point</b></li>
+        </ul>
+        <p>The minimum score is 0.</p>
+    `
+  },
+  "game_over": { "ko": "게임 오버! 최종 점수:", "ja": "ゲームオーバー! 最終スコア:", "en": "GAME OVER! Final Score:" },
+  "correct": { "ko": "정답입니다! 다음 문제로 넘어갑니다.", "ja": "正解です！次の問題に進みます。", "en": "Correct! Moving to the next quiz." },
+  "timeout": { "ko": "시간 초과! 정답은 %WORD%였습니다.", "ja": "時間切れです！正解は %WORD% でした。", "en": "Time up! The answer was %WORD%." },
+  "invalid_choice": { "ko": "X 오답입니다! (-1점)", "ja": "X 不正解です！(-1点)", "en": "X Incorrect choice! (-1 point)" },
+  "wrong_answer": { "ko": "아직 정답이 아닙니다.", "ja": "まだ正解ではありません。", "en": "Not the correct answer yet." },
+  "hint_used": { "ko": "힌트를 사용했습니다! (-1점)", "ja": "ヒントを使用しました！(-1点)", "en": "Hint used! (-1 point)" },
+  "no_more_hints": { "ko": "더 이상 힌트를 사용할 수 없습니다.", "ja": "これ以上ヒントは使えません。", "en": "No more hints available." },
+  "already_solved": { "ko": "이미 해결된 빈칸입니다.", "ja": "すでに解決済みの空欄です。", "en": "This blank is already solved." },
+  "input_error": { "ko": "잘못된 입력입니다.", "ja": "不正な入力です。", "en": "Invalid input." }
+};
+
+// 英語の文字と数字のプール
+const charPool = {
+  letters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  numbers: '0123456789'
+};
+
+/**
+ * =================================================================
+ * ユーティリティ関数
+ * =================================================================
+ */
+
+// 多言語テキスト取得ヘルパー
+const getLocalizedText = (key) => {
+  const lang = gameState.selectedLanguage;
+  return textMap[key] ? (textMap[key][lang] || textMap[key]['en']) : key;
+};
+
+// 多言語メッセージ取得ヘルパー
+const getLocalizedMessage = (key, placeholder = {}) => {
+  const lang = gameState.selectedLanguage;
+  let msg = msgMap[key] ? (msgMap[key][lang] || msgMap[key]['en']) : key;
+  for (const p in placeholder) {
+    msg = msg.replace(`%${p}%`, placeholder[p]);
+  }
+  return msg;
+};
+
+// モーダル表示
+const showDialog = (id, contentKey = null, placeholder = {}) => {
+  const dialog = getElem(id);
+  if (contentKey) {
+    getElem('dialog-content').innerHTML = getLocalizedMessage(contentKey, placeholder);
+  }
+  if (dialog) {
+    dialog.showModal();
+  }
+};
+
+// モーダル非表示
+const closeDialog = (id) => {
+  const dialog = getElem(id);
+  if (dialog) {
+    dialog.close();
+  }
+};
+
+// 配列シャッフル (フィッシャー・イェーツ)
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
+/**
+ * =================================================================
+ * ゲーム画面のレンダリング
+ * =================================================================
+ */
+
+// 最初の言語選択/ランキング画面をレンダリングする
+const renderInitialScreen = () => {
+  const container = getElem('main-container');
+
+  // ユーザー名表示は英語固定
+  const userDisplay = `<p class="text-label" style="text-align: right;">User: ${userId}</p>`;
+
+  // ランキングリストの作成
+  const rankingsHtml = staticRankings.map((r, index) => `
+      <li class="ranking-item">
+          <span class="rank" style="font-weight: 700;">#${index + 1}</span>
+          <span>${r.userId}</span>
+          <span>${r.score} pts</span>
+      </li>
+  `).join('');
+
+  container.innerHTML = `
+      ${userDisplay}
+      <h1 class="title">${getLocalizedText('title')}</h1>
+      <div class="flex-center" style="margin-bottom: 30px; gap: 10px;">
+          <p class="text-value">${getLocalizedText('select_language')}</p>
+          <button class="btn btn-secondary" onclick="startGame('ja')">日本語</button>
+          <button class="btn btn-secondary" onclick="startGame('ko')">한국어</button>
+          <button class="btn btn-secondary" onclick="startGame('en')">English</button>
+      </div>
+
+      <div class="flex-end">
+          <button class="btn btn-secondary" onclick="showRuleDialog()">${getLocalizedText('game_rule')}</button>
+      </div>
+
+      <h2 style="font-size: 1.4rem; color: #4682b4; border-bottom: 2px dashed #eee; padding-bottom: 5px;">${getLocalizedText('ranking')}</h2>
+      <ul id="ranking-list">
+          ${rankingsHtml}
+      </ul>
+  `;
+};
+
+// ゲームプレイ画面をレンダリングする
+const renderQuizScreen = () => {
+  const container = getElem('main-container');
+
+  // UIラベルは英語固定
+  container.innerHTML = `
+      <h1 class="title">IT Common Sense Quiz</h1>
+      
+      <!-- ユーザー情報とステータス -->
+      <div class="flex-row">
+          <div style="font-size: 0.9rem;">
+              <span class="text-label">User:</span> <span class="text-value">${userId}</span>
+          </div>
+          <div>
+              <span class="text-label">Score:</span> <span class="text-value" id="current-score">${gameState.score} pts</span>
+          </div>
+          <div>
+              <span class="text-label">Quiz:</span> <span class="text-value" id="quiz-status">1 / 10</span>
+          </div>
+      </div>
+
+      <!-- タイムバー -->
+      <div id="timer-bar"><div id="timer-progress"></div></div>
+
+      <!-- ゲームルールボタン -->
+      <div class="flex-end" style="margin-bottom: 10px;">
+          <button class="btn btn-secondary" onclick="showRuleDialog()">GAME RULE</button>
+      </div>
+
+      <!-- クイズ単語表示領域 -->
+      <div id="quiz-word" oncontextmenu="return false;">
+          <!-- 文字ボックスがここに挿入されます -->
+      </div>
+
+      <!-- クイズ説明 -->
+      <div id="quiz-description"></div>
+
+      <!-- 操作ボタン -->
+      <div class="flex-center" style="gap: 15px; margin-top: 25px;">
+          <button class="btn btn-secondary" id="hint-button" onclick="useHint()">HINT</button>
+          <button class="btn btn-primary" id="check-button" onclick="checkAnswer()">CHECK ANSWER</button>
+      </div>
+  `;
+
+  renderQuizStatus();
+  renderQuizWord();
+};
+
+// スコア、ステータス、説明を更新する
+const renderQuizStatus = () => {
+  const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
+  if (!currentQuiz) return;
+
+  setElemText('current-score', `${gameState.score} pts`);
+  setElemText('quiz-status', `${gameState.currentQuizIndex + 1} / ${gameState.quizSet.length}`);
+
+  // 説明文は選択言語に合わせる
+  const descriptionKey = `description_${gameState.selectedLanguage}`;
+  setElemText('quiz-description', currentQuiz[descriptionKey]);
+
+  updateTimerDisplay();
+};
+
+// クイズ単語の状態を画面に反映する
+const renderQuizWord = () => {
+  const quizWordElement = getElem('quiz-word');
+  if (!quizWordElement) return;
+
+  quizWordElement.innerHTML = gameState.currentWord.map((char, index) => {
+    // スペースの場合
+    if (char === ' ') {
+      return `<div class="quiz-char-box" style="background-color: transparent; border: none;">&nbsp;</div>`;
+    }
+    // 空欄の場合
+    if (char === '_') {
+      return `<div class="quiz-char-box quiz-char-blank" data-index="${index}" onclick="openChoiceDialog(${index})" tabindex="0">?</div>`;
+    }
+    // 公開されている文字の場合
+    return `<div class="quiz-char-box">${char}</div>`;
+  }).join('');
+};
+
+// タイマー表示の更新
+const updateTimerDisplay = () => {
+  const progress = getElem('timer-progress');
+  if (!progress || gameState.initialTime === 0) return;
+
+  const percentage = (gameState.timeRemaining / gameState.initialTime) * 100;
+  progress.style.width = `${Math.max(0, percentage)}%`;
+  progress.style.backgroundColor = percentage > 25 ? (percentage > 50 ? '#ff69b4' : '#ffc0cb') : '#ff4500'; // 色変化
+};
+
+/**
+ * =================================================================
+ * ゲームロジックと状態管理
+ * =================================================================
+ */
+
+// ゲームの開始
+async function startGame(language) {
+  if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+
+  gameState.selectedLanguage = language;
+  gameState.score = 0;
+  gameState.currentQuizIndex = -1; // nextQuizで0から開始するため
+  gameState.isGameOver = false;
+
+  let quizDataUrl = URL_IT_QUIZ_SERVER;
+  if (isLocal()) {
+    quizDataUrl = URL_IT_QUIZ_LOCAL;
   }
 
-  document.getElementById('dialog-overlay').classList.remove('hidden');
-}
+  // クイズデータ (IT関連用語、単語は全て大文字) - シャッフルし、10問を選択
+  const quizDataList = await getFetchApiData(quizDataUrl);
+  const randomTenList = shuffleArray([...quizDataList]).slice(0, 10);
+  gameState.quizSet = randomTenList;
 
-/**
- * @brief モーダルダイアログを閉じる
- */
-function closeDialog() {
-  document.getElementById('dialog-overlay').classList.add('hidden');
-  document.getElementById('dialog-buttons').innerHTML = '';
-}
+  // ゲーム画面へ移行
+  renderQuizScreen();
 
-// --- ゲームフロー関数 (Game Flow Functions) ---
-/**
- * @brief ゲームを初期化する
- */
-function initializeGame() {
-  // クイズデータをシャッフルして10問選択
-  gameState.quizSet = [...quizData].sort(() => 0.5 - Math.random()).slice(0, 10);
-  gameState.currentQuizIndex = 0;
-  gameState.score = 0;
-  loadQuiz(gameState.currentQuizIndex);
-}
+  // 最初の問題を開始
+  nextQuiz();
 
-/**
- * @brief クイズを読み込む (時間設定を含む)
- * @param {number} index - ロードするクイズのインデックス
- */
-function loadQuiz(index) {
-  if (index >= gameState.quizSet.length) {
-    endGame();
+  // キーボードイベントリスナーを設定
+  setupKeyboardListener();
+};
+
+// 次のクイズへ
+const nextQuiz = () => {
+  // タイマーを停止
+  if (gameState.timerInterval) {
+    clearInterval(gameState.timerInterval);
+  }
+
+  gameState.currentQuizIndex++;
+  if (gameState.currentQuizIndex >= gameState.quizSet.length) {
+    // 全てのクイズが終了
+    gameOver();
     return;
   }
 
-  const currentQuiz = gameState.quizSet[index];
-  const word = currentQuiz.word.toUpperCase();
-  const wordLength = getCurrentWordLength();
+  const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
+  const word = currentQuiz.word;
 
-  // 新しい時間設定ロジック: 文字数 * 10秒
-  gameState.initialTime = wordLength * 10;
-  gameState.timeRemaining = gameState.initialTime;
-
-  // 現在の単語の状態を初期化
-  gameState.currentWord = Array(word.length).fill('_');
+  // 状態リセット
   gameState.hintsUsed = 0;
+  gameState.currentWord = Array(word.length).fill('_');
 
-  // 最初の有効な文字を自動で公開する (空白でない最初の文字)
+  // 最初の文字を公開する（2文字の単語は除く）
   if (word.length > 2) {
-    let firstCharIndex = -1;
+    // 最初の有効な文字（スペース以外）を見つけて公開
     for (let i = 0; i < word.length; i++) {
       if (word[i] !== ' ') {
-        firstCharIndex = i;
+        gameState.currentWord[i] = word[i];
         break;
       }
     }
-    if (firstCharIndex !== -1) {
-      gameState.currentWord[firstCharIndex] = word[firstCharIndex];
-    }
   }
 
-  renderGameScreen();
-  startTimer();
-}
-
-/**
-  * @brief タイマーを開始する
-  */
-function startTimer() {
-  if (gameState.timer) clearInterval(gameState.timer);
-  const t = textMap[gameState.selectedLanguage] || textMap['ko'];
-
-  gameState.timer = setInterval(() => {
-    gameState.timeRemaining--;
-    const timerDisplay = document.getElementById('timer-display');
-    if (timerDisplay) {
-      timerDisplay.textContent = `${gameState.timeRemaining}${t.sec}`;
-    }
-
-    // 時間切れの場合
-    if (gameState.timeRemaining <= 0) {
-      clearInterval(gameState.timer);
-      showDialog(
-        getLocalizedMessage('time_over_title'),
-        getLocalizedMessage('time_over_msg'),
-        () => goToNextQuiz()
-      );
-    }
-  }, 1000);
-}
-
-/**
-  * @brief 次のクイズへ進む
-  */
-function goToNextQuiz() {
-  gameState.currentQuizIndex++;
-  loadQuiz(gameState.currentQuizIndex);
-}
-
-/**
-  * @brief 正解時の処理 (得点ロジック更新)
-  */
-function handleCorrectAnswer() {
-  clearInterval(gameState.timer);
-  const t = textMap[gameState.selectedLanguage] || textMap['ko'];
-
-  const initialTime = gameState.initialTime;
-  const thresholdTime = initialTime / 2; // 基準時間
-  const elapsedTime = initialTime - gameState.timeRemaining; // 経過時間
-
-  let points = 0;
-  let titleKey, msgKey;
-  let msgData = null;
-
-  if (elapsedTime <= thresholdTime) {
-    // 基準時間(initialTime / 2)以内に正解 -> +10点
-    points = 10;
-    titleKey = 'correct_10_title';
-    msgKey = 'correct_10_msg';
-    msgData = thresholdTime; // メッセージに関数を渡す
-  } else {
-    // 基準時間超過後に正解 -> +5点
-    points = 5;
-    titleKey = 'correct_5_title';
-    msgKey = 'correct_5_msg';
-  }
-
-  gameState.score += points;
-  const scoreDisplay = document.getElementById('score-display');
-  if (scoreDisplay) {
-    scoreDisplay.textContent = `${gameState.score} ${t.point}`;
-  }
-
-  // ローカライズされたタイトルとメッセージを動的に取得
-  showDialog(
-    getLocalizedMessage(titleKey, msgData),
-    getLocalizedMessage(msgKey, msgData),
-    () => goToNextQuiz()
-  );
-}
-
-/**
-  * @brief ゲームを終了する
-  */
-function endGame() {
-  clearInterval(gameState.timer);
-
-  gameState.score = Math.max(0, gameState.score); // スコアがマイナスにならないように
-
-  showDialog(
-    getLocalizedMessage('game_over_title'),
-    getLocalizedMessage('game_over_msg', gameState.score),
-    () => {
-      closeDialog();
-      renderInitialScreen(); // 初期画面に戻る
-    }
-  );
-}
-
-// --- ゲーム内アクション関数 (In-Game Action Functions) ---
-/**
-  * @brief ヒントを使用する (ペナルティ -1点)
-  */
-function useHint() {
-  const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
-  const word = currentQuiz.word.toUpperCase();
-
-  const maxHints = word.replace(/ /g, '').length - 1; // 最初の文字公開分を除いた最大ヒント数
-  const currentReveals = gameState.currentWord.filter(c => c !== '_' && c !== ' ').length;
-
-  if (currentReveals >= word.replace(/ /g, '').length) {
-    // すでに全文字公開済み
-    showDialog(getLocalizedMessage('no_hints_title'), getLocalizedMessage('no_hints_all_revealed_msg'), () => closeDialog());
-    return;
-  }
-  if (gameState.hintsUsed >= maxHints) {
-    // 最大ヒント数に達した
-    showDialog(getLocalizedMessage('no_hints_title'), getLocalizedMessage('no_hints_max_used_msg'), () => closeDialog());
-    return;
-  }
-
-  // ペナルティロジック: スコア -1点
-  gameState.score = Math.max(0, gameState.score - 1);
-  const t = textMap[gameState.selectedLanguage] || textMap['ko'];
-  const scoreDisplay = document.getElementById('score-display');
-  if (scoreDisplay) {
-    scoreDisplay.textContent = `${gameState.score} ${t.point}`;
-  }
-
-  // マスクされているインデックスを収集
-  let maskedIndices = [];
-  for (let i = 0; i < gameState.currentWord.length; i++) {
-    if (gameState.currentWord[i] === '_') {
-      maskedIndices.push(i);
-    }
-  }
-
-  if (maskedIndices.length === 0) { return; }
-
-  // ランダムに一つのマスクを解除
-  const randomIndex = maskedIndices[Math.floor(Math.random() * maskedIndices.length)];
-  gameState.currentWord[randomIndex] = word[randomIndex];
-  gameState.hintsUsed++;
-
-  renderQuizWord();
-
-  showDialog(getLocalizedMessage('hint_revealed_title'), getLocalizedMessage('hint_revealed_msg'), () => closeDialog());
-}
-
-/**
-  * @brief 未公開文字クリック処理 (文字選択ダイアログ表示) - 文字タイプ一致ロジックを含む
-  * @param {number} index - クリックされた単語のインデックス
-  */
-function handleLetterClick(index) {
-  const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
-  const word = currentQuiz.word.toUpperCase();
-
-  if (gameState.currentWord[index] !== '_') {
-    return; // 既に公開されている文字は無視
-  }
-
-  const correctLetter = word[index];
-  let possibleCharsPool = []; // 候補を取得するための文字プール
-
-  // 1. 正解文字のタイプ確認とプール設定
-  if (/[A-Z]/.test(correctLetter)) {
-    // 英語大文字の場合: アルファベットプールを使用
-    possibleCharsPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
-  } else if (/[0-9]/.test(correctLetter)) {
-    // 数字の場合: 数字プールを使用
-    possibleCharsPool = "0123456789".split('');
-  } else {
-    // その他の文字（スペースなど）はクリック対象外
-    return;
-  }
-
-  let candidates = new Set();
-  candidates.add(correctLetter); // 2. 正解文字を必ず含める
-
-  // 正解文字をプールから一時的に除外し、重複しない誤答を選択できるようにする
-  let filteredPool = possibleCharsPool.filter(char => char !== correctLetter);
-
-  // 3. 4つの誤答候補を生成 (合計5つの候補)
-  while (candidates.size < 5 && filteredPool.length > 0) {
-    const randomIndex = Math.floor(Math.random() * filteredPool.length);
-    // 選択された誤答をプールから削除し (splice)、候補に追加
-    const randomLetter = filteredPool.splice(randomIndex, 1)[0];
-    candidates.add(randomLetter);
-  }
-
-  // 候補をランダムに並び替える
-  const candidateArray = Array.from(candidates).sort(() => 0.5 - Math.random());
-
-  // ダイアログ内のボタンHTMLを生成
-  const buttonsHtml = candidateArray.map(letter =>
-    `<button class="cute-button px-4 py-2 text-xl bg-pink-300 hover:bg-pink-400 text-white" 
-                  style="width: 45%; margin: 0.5rem 0;" 
-                  onclick="selectCandidate('${letter}', ${index})">
-            ${letter}
-        </button>`
-  ).join('');
-
-  showDialog(
-    getLocalizedMessage('select_letter_title'),
-    getLocalizedMessage('select_letter_msg'),
-    null,
-    `<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem;">${buttonsHtml}</div>`
-  );
-}
-
-/**
-  * @brief 文字選択ダイアログで候補文字が選択された時の処理
-  * @param {string} selectedLetter - ユーザーが選択した文字
-  * @param {number} index - 単語のインデックス
-  */
-function selectCandidate(selectedLetter, index) {
-  const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
-  const word = currentQuiz.word.toUpperCase();
-  const correctLetter = word[index];
-
-  closeDialog();
-
-  if (selectedLetter === correctLetter) {
-    // 正解の場合
-    gameState.currentWord[index] = correctLetter;
-    renderQuizWord();
-
-    // 単語が完成したかチェック (スペースを除いて比較)
-    if (gameState.currentWord.join('').replace(/ /g, '') === word.replace(/ /g, '')) {
-      handleCorrectAnswer();
-    }
-
-  } else {
-    // 不正解の場合: 1点減点 (ペナルティ -1点)
-    gameState.score = Math.max(0, gameState.score - 1);
-    const t = textMap[gameState.selectedLanguage] || textMap['ko'];
-    const scoreDisplay = document.getElementById('score-display');
-    if (scoreDisplay) {
-      scoreDisplay.textContent = `${gameState.score} ${t.point}`;
-    }
-
-    showDialog(
-      getLocalizedMessage('incorrect_title'),
-      getLocalizedMessage('incorrect_msg'),
-      () => closeDialog()
-    );
-  }
-}
-
-/**
-  * @brief 答えを確認する
-  */
-function checkAnswer() {
-  const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
-  const word = currentQuiz.word.toUpperCase();
-
-  const currentGuess = gameState.currentWord.join('');
-
-  // スペースを除いて比較
-  if (currentGuess.replace(/ /g, '') === word.replace(/ /g, '')) {
-    handleCorrectAnswer();
-  } else {
-    showDialog(getLocalizedMessage('incomplete_title'), getLocalizedMessage('incomplete_msg'), () => closeDialog());
-  }
-}
-
-/**
-  * @brief ゲームルールを表示する
-  */
-function showRules() {
-  const wordLength = getCurrentWordLength();
-  showDialog(getLocalizedMessage('rules_title'), getLocalizedMessage('rules_msg', wordLength));
-}
-
-// --- UIレンダリング関数 (UI Rendering Functions) ---
-/**
-  * @brief 初期画面をレンダリングする (言語選択・ランキング表示)
-  */
-async function renderInitialScreen() {
-
-  const rankings = loadRankings();
-  const t = textMap[gameState.selectedLanguage] || textMap['ko'];
-
-  // ランキングリストのHTMLを生成
-  const rankingHtml = rankings.length > 0 ? rankings.map((r, i) => `
-        <li style="display: flex; justify-content: space-between; font-size: 0.875rem; padding-top: 0.25rem; padding-bottom: 0.25rem; border-bottom: 1px solid #f3f4f6;">
-            <span class="text-accent" style="width: 1.5rem; text-align: center; font-weight: bold;">${i + 1}</span>
-            <span style="color: var(--text-color-dark); flex: 1 1 0%;">${r.username}</span>
-            <span style="color: var(--main-blue); font-weight: bold; width: 4rem; text-align: right;">${r.score}</span>
-        </li>
-    `).join('') : `<li style="text-align: center; font-size: 0.875rem; padding-top: 1rem; padding-bottom: 1rem; color: var(--text-color-light);">${t.noRanking}</li>`;
-
-  // HTMLコンテンツを構築
-  const html = `
-        <div class="fade-in" style="margin-top: 0.5rem;">
-            <h1 style="font-size: 1.875rem; text-align: center; color: var(--main-pink); font-weight: bold; border-bottom: 2px solid var(--main-blue); padding-bottom: 1rem; margin-bottom: 1.5rem;">
-                ${t.title}
-            </h1>
-
-            <!-- 言語選択 -->
-            <div style="padding: 1rem; background-color: #f9fafb; border-radius: 0.75rem; margin-bottom: 1.5rem;">
-                <div style="display: flex; flex-direction: column; justify-content: center; gap: 0.75rem;">
-                    <!-- ボタンの幅をモバイルでも対応できるように調整 -->
-                    <button class="cute-button" style="font-size: 1rem; background-color: var(--main-blue);" onclick="setLanguage('jp')">日本語</button>
-                    <button class="cute-button" style="font-size: 1rem; background-color: var(--main-blue);" onclick="setLanguage('ko')">한국어</button>
-                    <button class="cute-button" style="font-size: 1rem; background-color: var(--main-blue);" onclick="setLanguage('en')">English</button>
-                </div>
-            </div>
-
-            <!-- ランキング表示 (静的データ) -->
-            <div style="padding: 1.5rem; background-color: #f9fafb; border-radius: 0.75rem; border: 2px solid var(--main-pink); box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);">
-                <h2 style="font-size: 1.25rem; text-align: center; margin-bottom: 1rem; font-weight: bold; color: var(--main-pink);">${t.rankingTitle}</h2>
-                <ul style="list-style: none; padding: 0; margin: 0; margin-top: 0.25rem;">
-                    ${rankingHtml}
-                </ul>
-            </div>
-        </div>
-    `;
-  document.getElementById('app').innerHTML = html;
-}
-
-/**
-  * @brief 言語を設定してゲームを開始する
-  * @param {string} lang - 選択された言語コード
-  */
-function setLanguage(lang) {
-  gameState.selectedLanguage = lang;
-  initializeGame();
-}
-
-/**
-  * @brief クイズの単語部分をレンダリングする
-  */
-function renderQuizWord() {
-  const wordContainerWrapper = document.getElementById('quiz-word-container-wrapper');
-  if (!wordContainerWrapper) return;
-
-  // コンテナがなければ作成（レスポンシブ対応のためラッパー構造を使用）
-  let wordContainer = document.getElementById('quiz-word-container');
-  if (!wordContainer) {
-    wordContainer = document.createElement('div');
-    wordContainer.id = 'quiz-word-container';
-    wordContainerWrapper.appendChild(wordContainer);
-  }
-
-  const word = gameState.quizSet[gameState.currentQuizIndex].word.toUpperCase();
-
-  let html = '';
-
+  // スペースは最初から公開
   for (let i = 0; i < word.length; i++) {
-    const char = word[i];
-    if (char === ' ') {
-      // スペースは空白として表示
-      html += `<span style="display: inline-block; width: 1rem; margin-left: 0.5rem; margin-right: 0.5rem; flex-shrink: 0;"></span>`;
-    } else {
-      const displayChar = gameState.currentWord[i];
-      const isMasked = displayChar === '_';
-
-      if (isMasked) {
-        // 未公開の文字
-        html += `
-                    <span class="masked-letter" data-index="${i}" 
-                          onclick="handleLetterClick(${i})">
-                        ${displayChar}
-                    </span>`;
-      } else {
-        // 公開済みの文字
-        html += `
-                    <span class="filled-letter" data-index="${i}">
-                        ${displayChar}
-                    </span>`;
-      }
+    if (word[i] === ' ') {
+      gameState.currentWord[i] = ' ';
     }
   }
 
-  wordContainer.innerHTML = html;
-}
+  // 新しい時間制限を設定
+  const wordWithoutSpaces = word.replace(/\s/g, '');
+  gameState.initialTime = wordWithoutSpaces.length * 10;
+  gameState.timeRemaining = gameState.initialTime;
 
-/**
-  * @brief ゲーム画面をレンダリングする
-  */
-function renderGameScreen() {
-  const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
-  const t = textMap[gameState.selectedLanguage] || textMap['ko'];
-
-  // 選択された言語の説明を取得
-  const description = currentQuiz[`description_${gameState.selectedLanguage}`] || currentQuiz.description_kr;
-
-  const currentUserId = getUserId();
-
-  // HTMLコンテンツを構築
-  const html = `
-        <div class="fade-in" style="margin-top: 0.5rem;">
-            <!-- タイトル、スコア、状況表示エリア -->
-            <header style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; border-bottom: 2px solid var(--main-pink); padding-bottom: 0.75rem;">
-                <h1 style="font-size: 1.5rem; color: var(--main-pink); font-weight: bold; margin-bottom: 0.5rem;">${t.title}</h1>
-                <div style="display: flex; flex-wrap: wrap; gap: 0 1.5rem; row-gap: 0.5rem; text-align: right; font-size: 0.875rem; color: var(--text-color-light); width: 100%; justify-content: space-between;">
-                    <span>${t.user}: <span id="user-display" class="text-accent">${currentUserId}</span></span>
-                    <span>${t.score}: <span id="score-display" class="text-accent font-bold">${gameState.score} ${t.point}</span></span>
-                    <span>${t.status}: <span id="status-display" class="text-accent font-bold">${gameState.currentQuizIndex + 1} / ${gameState.quizSet.length}</span></span>
-                </div>
-            </header>
-            <!-- デスクトップ用レイアウト調整 -->
-            <style>
-                @media (min-width: 640px) {
-                    header {
-                        flex-direction: row;
-                        align-items: center;
-                    }
-                    header h1 {
-                        font-size: 1.875rem;
-                        margin-bottom: 0;
-                    }
-                    header div {
-                        width: auto;
-                    }
-                }
-            </style>
-
-            <!-- ゲームルールボタンとタイマー -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <button class="cute-button px-4 py-2 text-sm gray" style="width: auto;" onclick="showRules()">
-                    ${t.rules}
-                </button>
-                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                    <span style="font-size: 1rem; color: var(--text-color-light);">Time:</span>
-                    <div id="timer-display" style="font-size: 1.5rem; font-weight: bold; color: var(--main-blue);">
-                        ${gameState.timeRemaining}${t.sec}
-                    </div>
-                </div>
-            </div>
-
-            <!-- クイズ表示エリア -->
-            <div style="padding: 1rem; background-color: #f9fafb; border-radius: 0.75rem; border: 2px solid var(--main-blue); box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);">
-                <h2 style="text-align: center; font-size: 1rem; margin-bottom: 0.75rem; font-weight: bold; color: var(--main-pink);">${t.quizDescTitle}</h2>
-                <p class="quiz-description-text" style="text-align: center; font-size: 1.125rem; margin-bottom: 1.5rem; color: var(--text-color-dark); min-height: 48px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.75rem; padding-top: 0.75rem;">
-                    ${description}
-                </p>
-
-                <div id="quiz-word-container-wrapper" style="margin-top: 2rem; margin-bottom: 2rem; padding: 1rem; background-color: white; border-radius: 0.75rem; border: 1px solid #e5e7eb;">
-                    <!-- クイズの単語がここに描画されます (renderQuizWord関数) -->
-                </div>
-
-                <!-- 힌트ボタンおよび正解確認ボタン -->
-                <div style="display: flex; flex-direction: column; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
-                    <!-- ボタンの幅はデフォルトで 100% -->
-                    <button class="cute-button" style="font-size: 1.125rem; background-color: var(--main-blue);" onclick="useHint()">
-                        ${t.hint}
-                    </button>
-                    <button class="cute-button" style="font-size: 1.125rem; background-color: var(--main-pink);" onclick="checkAnswer()">
-                        ${t.check}
-                    </button>
-                </div>
-                <p style="text-align: center; font-size: 0.75rem; margin-top: 0.75rem; color: var(--text-color-light);">
-                    ${t.placeholder}
-                </p>
-            </div>
-        </div>
-    `;
-  document.getElementById('app').innerHTML = html;
-  renderQuizWord(); // 単語部分をレンダリング
-}
-
-// ページロード時に初期画面をレンダリング
-window.onload = () => {
-  renderInitialScreen();
+  // 画面を更新し、タイマーを開始
+  renderQuizStatus();
+  renderQuizWord();
+  startTimer();
 };
 
-// グローバル公開関数
-window.initializeGame = initializeGame;
-window.renderInitialScreen = renderInitialScreen;
-window.setLanguage = setLanguage;
-window.handleLetterClick = handleLetterClick;
-window.selectCandidate = selectCandidate;
-window.useHint = useHint;
-window.checkAnswer = checkAnswer;
-window.showRules = showRules;
-window.showDialog = showDialog;
-window.closeDialog = closeDialog;
+// タイマー開始
+const startTimer = () => {
+  if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+
+  gameState.timerInterval = setInterval(() => {
+    gameState.timeRemaining--;
+    updateTimerDisplay();
+
+    if (gameState.timeRemaining <= 0) {
+      clearInterval(gameState.timerInterval);
+      handleTimeout();
+    }
+  }, 1000);
+};
+
+// タイムアウト処理
+const handleTimeout = () => {
+  if (gameState.isGameOver) return; // 二重処理防止
+
+  const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
+  showDialog('message-dialog', 'timeout', { 'WORD': currentQuiz.word });
+
+  // 3秒後に次の問題へ
+  setTimeout(nextQuiz, 3000);
+};
+
+// ヒント使用
+const useHint = () => {
+  const currentWord = gameState.quizSet[gameState.currentQuizIndex].word;
+  const blanks = gameState.currentWord
+    .map((char, index) => char === '_' ? index : -1)
+    .filter(index => index !== -1);
+
+  // 残りの空欄数が最大ヒント回数を超えていないかチェック
+  if (gameState.hintsUsed >= currentWord.length - 1 || blanks.length === 0) {
+    showDialog('message-dialog', 'no_more_hints');
+    return;
+  }
+
+  // ランダムに空欄を一つ選ぶ
+  const randomIndex = blanks[Math.floor(Math.random() * blanks.length)];
+
+  // 文字を公開し、状態とスコアを更新
+  gameState.currentWord[randomIndex] = currentWord[randomIndex];
+  gameState.hintsUsed++;
+
+  // 減点処理 (-1点)
+  gameState.score = Math.max(0, gameState.score - 1);
+
+  showDialog('message-dialog', 'hint_used');
+  renderQuizStatus();
+  renderQuizWord();
+};
+
+// 正解チェック
+const checkAnswer = () => {
+  const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
+  const currentWordString = gameState.currentWord.join(''); // 配列を文字列に変換
+
+  // 2単語の場合に対応するため、全てのスペース('_'になっていないことを確認)を含めた完全一致をチェック
+  if (currentWordString === currentQuiz.word) {
+    // 正解時のスコアリング
+    clearInterval(gameState.timerInterval);
+
+    const timeElapsed = gameState.initialTime - gameState.timeRemaining;
+    const halfTime = gameState.initialTime / 2;
+    let points = 0;
+
+    if (timeElapsed <= halfTime) {
+      points = 10;
+    } else {
+      points = 5;
+    }
+
+    gameState.score += points;
+
+    showDialog('message-dialog', 'correct');
+
+    // 3秒後に次の問題へ
+    setTimeout(nextQuiz, 3000);
+  } else {
+    showDialog('message-dialog', 'wrong_answer');
+  }
+};
+
+// 文字選択ダイアログを開く
+const openChoiceDialog = (index) => {
+  if (gameState.currentWord[index] !== '_') {
+    showDialog('message-dialog', 'already_solved');
+    return;
+  }
+
+  gameState.selectedCharIndex = index;
+
+  const targetWord = gameState.quizSet[gameState.currentQuizIndex].word;
+  const correctChar = targetWord[index];
+  const isLetter = charPool.letters.includes(correctChar);
+  const isNumber = charPool.numbers.includes(correctChar);
+
+  let availablePool = [];
+  if (isLetter) {
+    availablePool = charPool.letters.split('');
+  } else if (isNumber) {
+    availablePool = charPool.numbers.split('');
+  } else {
+    // 文字でも数字でもない場合（通常はスペースのはずだが、_として残っている場合はエラー回避）
+    return;
+  }
+
+  // 正解文字をプールから除外（後のシャッフル用）
+  const filteredPool = availablePool.filter(char => char !== correctChar);
+
+  // 候補を作成: 正解文字 + 誤答文字4つ (重複なし)
+  let choices = [correctChar];
+  while (choices.length < 5 && filteredPool.length > 0) {
+    const randomIndex = Math.floor(Math.random() * filteredPool.length);
+    choices.push(filteredPool.splice(randomIndex, 1)[0]);
+  }
+
+  shuffleArray(choices); // 候補をシャッフル
+  
+  // ダイアログの中身をレンダリング
+  const container = getElem('choice-buttons-container');
+  container.innerHTML = '';
+
+  const instruction = getElem('choice-instruction');
+
+  // キーボード入力に対応している旨を案内（英語）
+  instruction.textContent = "Select a character or use your keyboard (A-Z, 0-9).";
+
+  choices.forEach(char => {
+    const button = document.createElement('button');
+    button.className = 'choice-btn';
+    button.textContent = char;
+    button.setAttribute('data-char', char);
+    button.onclick = () => handleChoice(char);
+    container.appendChild(button);
+  });
+
+  // ダイアログを表示
+  getElem('choice-dialog').showModal();
+};
+
+// 文字選択処理
+const handleChoice = (char) => {
+  const index = gameState.selectedCharIndex;
+  const targetWord = gameState.quizSet[gameState.currentQuizIndex].word;
+  const correctChar = targetWord[index];
+  const choiceDialog = getElem('choice-dialog');
+
+  if (char === correctChar) {
+    // 正解の場合
+    gameState.currentWord[index] = char;
+    closeDialog('choice-dialog');
+    renderQuizWord();
+
+    // 正解をチェックし、クリアしていれば次の問題へ
+    if (gameState.currentWord.join('') === targetWord) {
+      checkAnswer();
+    }
+  } else {
+    // 不正解の場合
+    // 減点処理 (-1点)
+    gameState.score = Math.max(0, gameState.score - 1);
+    renderQuizStatus();
+
+    // ダイアログを閉じずに、不正解のボタンを無効化
+    const chosenButton = choiceDialog.querySelector(`[data-char="${char}"]`);
+    if (chosenButton) {
+      chosenButton.disabled = true;
+    }
+
+    // 誤答メッセージを可愛く表示
+    showDialog('message-dialog', 'invalid_choice');
+  }
+};
+
+// キーボード入力のセットアップ
+const setupKeyboardListener = () => {
+  // 既存のリスナーがあれば一度削除（二重登録防止）
+  document.removeEventListener('keydown', handleGlobalKeydown);
+  document.addEventListener('keydown', handleGlobalKeydown);
+};
+
+// グローバルなキーボードイベントハンドラ
+const handleGlobalKeydown = (event) => {
+  const key = event.key.toUpperCase();
+  const choiceDialog = getElem('choice-dialog');
+
+  // 文字選択ダイアログが開いている場合のみ処理
+  if (choiceDialog.open && gameState.selectedCharIndex !== -1) {
+    // A-Z または 0-9 のキー入力をチェック
+    if (charPool.letters.includes(key) || charPool.numbers.includes(key)) {
+      const choiceButton = choiceDialog.querySelector(`[data-char="${key}"]`);
+
+      // 候補ボタンが存在し、かつ無効化されていない場合のみ処理を実行
+      if (choiceButton && !choiceButton.disabled) {
+        event.preventDefault(); // 予期せぬブラウザ動作を防止
+        handleChoice(key);
+      } else if (charPool.letters.includes(key) || charPool.numbers.includes(key)) {
+        // 候補にない文字や無効なボタンを押した場合もエラー表示
+        showDialog('message-dialog', 'input_error');
+      }
+    }
+  } else if (key === 'ESCAPE') {
+    // Escapeキーで開いているダイアログを閉じる
+    if (choiceDialog.open) closeDialog('choice-dialog');
+    if (getElem('message-dialog').open) closeDialog('message-dialog');
+    if (getElem('rule-dialog').open) closeDialog('rule-dialog');
+  }
+};
+
+// ゲーム終了
+const gameOver = () => {
+  gameState.isGameOver = true;
+  if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+
+  showDialog('message-dialog', 'game_over', { 'WORD': gameState.score });
+
+  // 3秒後に初期画面へ
+  setTimeout(renderInitialScreen, 3000);
+};
+
+// ルールダイアログ表示
+const showRuleDialog = () => {
+  getElem('rule-content').innerHTML = getLocalizedMessage('rule_content');
+  getElem('rule-dialog').showModal();
+};
+
+/**
+ * =================================================================
+ * 初期化処理
+ * =================================================================
+ */
+
+// ページロード時の初期化
+window.onload = () => {
+  setUserName();
+  renderInitialScreen();
+};

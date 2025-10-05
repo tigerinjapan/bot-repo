@@ -1,0 +1,250 @@
+{
+      "items": [
+            {
+                  "word": "GEMINI",
+                  "description_ko": "구글에서 만든 AI모델로, 텍스트 뿐 아니라 이미지 생성도 가능하다.",
+                  "description_ja": "Googleが開発したAIモデル。テキストだけでなく、画像生成も可能。",
+                  "description_en": "AI model created by Google that can generate both text and images."
+            },
+            {
+                  "word": "CLOUD",
+                  "description_ko": "인터넷을 통해 컴퓨팅 자원(서버, 저장소 등)을 제공하는 서비스.",
+                  "description_ja": "インターネット経由でコンピューティング資源（サーバー、ストレージなど）を提供するサービス。",
+                  "description_en": "A service that provides computing resources (servers, storage, etc.) over the internet."
+            },
+            {
+                  "word": "PIXEL",
+                  "description_ko": "디지털 이미지를 구성하는 가장 작은 단위로, 보통 정사각형 모양이다.",
+                  "description_ja": "デジタル画像を構成する最小単位。通常、正方形の形をしている。",
+                  "description_en": "The smallest unit that makes up a digital image, usually square-shaped."
+            },
+            {
+                  "word": "SERVER",
+                  "description_ko": "네트워크를 통해 다른 컴퓨터에 서비스와 데이터를 제공하는 시스템.",
+                  "description_ja": "ネットワークを介して他のコンピュータにサービスやデータを提供するシステム。",
+                  "description_en": "A system that provides services and data to other computers over a network."
+            },
+            {
+                  "word": "HACKING",
+                  "description_ko": "컴퓨터 시스템의 보안 취약점을 이용해 침입하거나 조작하는 행위.",
+                  "description_ja": "コンピュータシステムのセキュリティ脆弱性を利用して侵入または操作する行為。",
+                  "description_en": "The act of intruding or manipulating a computer system using security vulnerabilities."
+            },
+            {
+                  "word": "ALGORITHM",
+                  "description_ko": "어떤 문제를 해결하기 위한 일련의 명확하고 단계적인 절차.",
+                  "description_ja": "ある問題を解決するための一連の明確で段階的な手順。",
+                  "description_en": "A set of clear and stepwise procedures for solving a particular problem."
+            },
+            {
+                  "word": "FIREWALL",
+                  "description_ko": "외부 네트워크의 침입으로부터 내부 네트워크를 보호하는 보안 시스템.",
+                  "description_ja": "外部ネットワークの侵入から内部ネットワークを保護するセキュリティシステム。",
+                  "description_en": "A security system that protects an internal network from external intrusions."
+            },
+            {
+                  "word": "BLUETOOTH",
+                  "description_ko": "가까운 거리에서 기기 간에 데이터를 무선으로 연결하는 기술.",
+                  "description_ja": "近距離でデバイス間でデータを無線で接続する技術。",
+                  "description_en": "A technology for wirelessly connecting devices over a short distance."
+            },
+            {
+                  "word": "IPADDRESS",
+                  "description_ko": "네트워크 상에서 장치들을 식별하고 통신하기 위해 부여되는 고유 주소.",
+                  "description_ja": "ネットワーク上でデバイスを識別し通信するために割り当てられる一意のアドレス。",
+                  "description_en": "A unique address assigned to devices for identification and communication on a network."
+            },
+            {
+                  "word": "AI CHAT",
+                  "description_ko": "인공지능을 이용해 사람과 대화하는 것처럼 상호작용하는 프로그램.",
+                  "description_ja": "AIを利用し、人間と会話するように対話するプログラム。",
+                  "description_en": "A program that uses artificial intelligence to interact as if having a conversation with a person."
+            },
+            {
+                  "word": "CPU",
+                  "description_ko": "컴퓨터의 가장 핵심 부품으로, 모든 명령을 해석하고 실행하는 장치.",
+                  "description_ja": "コンピュータの中核部品で、すべての命令を解釈し実行する装置。",
+                  "description_en": "The central and most important part of a computer that interprets and executes all instructions."
+            },
+            {
+                  "word": "GPU",
+                  "description_ko": "주로 그래픽 처리와 병렬 연산을 가속하기 위해 설계된 전용 프로세서.",
+                  "description_ja": "主にグラフィック処理と並列演算を加速するために設計された専用プロセッサ。",
+                  "description_en": "A specialized processor designed mainly to accelerate graphics processing and parallel computation."
+            },
+            {
+                  "word": "DATA",
+                  "description_ko": "처리, 저장, 전송할 수 있는 형태로 표현된 사실이나 정보.",
+                  "description_ja": "処理、保存、送信できる形で表現された事実や情報。",
+                  "description_en": "Facts or information represented in a form suitable for processing, storage, and transmission."
+            },
+            {
+                  "word": "WIFI",
+                  "description_ko": "무선 주파수를 사용하여 인터넷 연결을 가능하게 하는 기술 표준.",
+                  "description_ja": "無線周波数を使用してインターネット接続を可能にする技術標準。",
+                  "description_en": "A technical standard that enables internet connection using radio frequencies."
+            },
+            {
+                  "word": "DOMAIN",
+                  "description_ko": "인터넷 상에서 특정 웹사이트를 식별하는 고유한 이름.",
+                  "description_ja": "インターネット上で特定のウェブサイトを識別する固有の名前。",
+                  "description_en": "A unique name that identifies a specific website on the internet."
+            },
+            {
+                  "word": "DATABASE",
+                  "description_ko": "체계적으로 수집, 저장된 데이터의 집합.",
+                  "description_ja": "体系的に収集・保存されたデータの集合体。",
+                  "description_en": "A systematically collected and stored set of data."
+            },
+            {
+                  "word": "PROGRAM",
+                  "description_ko": "컴퓨터에게 특정 작업을 수행하도록 지시하는 명령어의 집합.",
+                  "description_ja": "コンピュータに特定のタスクを実行するように指示する命令の集合。",
+                  "description_en": "A set of instructions that direct a computer to perform a specific task."
+            },
+            {
+                  "word": "NETWORK",
+                  "description_ko": "정보를 교환하기 위해 상호 연결된 컴퓨터 시스템의 그룹.",
+                  "description_ja": "情報を交換するために相互に接続されたコンピュータシステムのグループ。",
+                  "description_en": "A group of interconnected computer systems for exchanging information."
+            },
+            {
+                  "word": "SENSOR",
+                  "description_ko": "물리적 환경의 변화를 감지하고 데이터를 수집하는 장치.",
+                  "description_ja": "物理的な環境の変化を検知し、データを収集する装置。",
+                  "description_en": "A device that detects changes in the physical environment and collects data."
+            },
+            {
+                  "word": "SOFTWARE",
+                  "description_ko": "컴퓨터 하드웨어의 작동을 지시하는 프로그램과 운영 절차.",
+                  "description_ja": "コンピュータハードウェアの動作を指示するプログラムと操作手順。",
+                  "description_en": "Programs and operating procedures that direct the operation of computer hardware."
+            },
+            {
+                  "word": "INTERFACE",
+                  "description_ko": "두 시스템, 장치 또는 사용자 간의 상호작용 지점.",
+                  "description_ja": "2つのシステム、デバイス、またはユーザー間の相互作用の接点。",
+                  "description_en": "A point of interaction between two systems, devices, or users."
+            },
+            {
+                  "word": "SECURITY",
+                  "description_ko": "시스템과 데이터를 무단 접근, 사용, 파괴로부터 보호하는 행위.",
+                  "description_ja": "システムとデータを不正なアクセス、使用、破壊から保護する行為。",
+                  "description_en": "The act of protecting systems and data from unauthorized access, use, or destruction."
+            },
+            {
+                  "word": "BROWSER",
+                  "description_ko": "사용자가 웹페이지를 탐색하고 상호작용할 수 있게 해주는 응용 프로그램.",
+                  "description_ja": "ユーザーがウェブページを閲覧し、操作できるようにするアプリケーション。",
+                  "description_en": "An application program that allows users to explore and interact with web pages."
+            },
+            {
+                  "word": "ROBOTICS",
+                  "description_ko": "로봇의 설계, 건설, 작동 및 응용에 관련된 학문 및 기술.",
+                  "description_ja": "ロボットの設計、構築、操作、および応用に関連する学問と技術。",
+                  "description_en": "The science and technology concerned with the design, construction, operation, and application of robots."
+            },
+            {
+                  "word": "VIRTUAL",
+                  "description_ko": "실제로는 존재하지 않지만 컴퓨터 소프트웨어로 생성된 환경 또는 개체.",
+                  "description_ja": "実際には存在しないが、コンピュータソフトウェアで生成された環境またはオブジェクト。",
+                  "description_en": "An environment or object that does not physically exist but is created by computer software."
+            },
+            {
+                  "word": "STORAGE",
+                  "description_ko": "디지털 데이터를 보관하고 검색할 수 있는 모든 형태의 매체.",
+                  "description_ja": "デジタルデータを保管し、検索できるあらゆる形態のメディア。",
+                  "description_en": "Any form of medium capable of retaining and retrieving digital data."
+            },
+            {
+                  "word": "PROTOCOL",
+                  "description_ko": "네트워크 통신을 위해 장치들이 따르는 일련의 규칙.",
+                  "description_ja": "ネットワーク通信のためにデバイスが従う一連の規則。",
+                  "description_en": "A set of rules governing the exchange of information between devices on a network."
+            },
+            {
+                  "word": "CRYPTOGRAPHY",
+                  "description_ko": "정보를 안전하게 보호하기 위해 코드를 사용하는 기술.",
+                  "description_ja": "情報を安全に保護するためにコードを使用する技術。",
+                  "description_en": "The art of using code to protect information securely."
+            },
+            {
+                  "word": "MALWARE",
+                  "description_ko": "컴퓨터 시스템에 해를 끼치거나 무단으로 접근하기 위해 설계된 소프트웨어.",
+                  "description_ja": "コンピュータシステムに損害を与えたり、不正にアクセスするために設計されたソフトウェア。",
+                  "description_en": "Software designed to harm or gain unauthorized access to a computer system."
+            },
+            {
+                  "word": "OPERATING SYSTEM",
+                  "description_ko": "컴퓨터 하드웨어와 소프트웨어를 관리하는 핵심 시스템 소프트웨어.",
+                  "description_ja": "コンピュータのハードウェアとソフトウェアを管理する中核的なシステムソフトウェア。",
+                  "description_en": "The essential system software that manages computer hardware and software."
+            },
+            {
+                  "word": "JAVASCRIPT",
+                  "description_ko": "웹 페이지에 동적 기능을 추가하는 데 주로 사용되는 프로그래밍 언어.",
+                  "description_ja": "ウェブページに動的な機能を追加するために主に使用されるプログラミング言語。",
+                  "description_en": "A programming language primarily used to add dynamic functionality to web pages."
+            },
+            {
+                  "word": "PYTHON",
+                  "description_ko": "가독성이 높고 다양한 분야에 사용되는 인기 있는 고급 프로그래밍 언어.",
+                  "description_ja": "可読性が高く、多様な分野で使用される人気の高い高水準プログラミング言語。",
+                  "description_en": "A popular high-level programming language known for its readability and wide range of uses."
+            },
+            {
+                  "word": "BLOCKCHAIN",
+                  "description_ko": "분산된 P2P 네트워크에서 거래 기록을 분산 저장하는 기술.",
+                  "description_ja": "分散型P2Pネットワークで取引記録を分散して保存する技術。",
+                  "description_en": "A technology that stores transaction records in a distributed manner across a peer-to-peer network."
+            },
+            {
+                  "word": "API",
+                  "description_ko": "두 소프트웨어 구성 요소가 서로 통신하는 데 사용되는 인터페이스.",
+                  "description_ja": "2つのソフトウェアコンポーネントが相互に通信するために使用されるインターフェース。",
+                  "description_en": "An interface used for two software components to communicate with each other."
+            },
+            {
+                  "word": "CABLE",
+                  "description_ko": "데이터 또는 전력을 전송하는 데 사용되는 여러 가닥의 선.",
+                  "description_ja": "データまたは電力を伝送するために使用される複数の線。",
+                  "description_en": "A set of wires used to transmit data or electrical power."
+            },
+            {
+                  "word": "CHIP",
+                  "description_ko": "컴퓨터의 기능을 수행하는 작은 실리콘 조각(집적 회로).",
+                  "description_ja": "コンピュータの機能を実行する小さなシリコン片（集積回路）。",
+                  "description_en": "A small piece of silicon (integrated circuit) that performs computer functions."
+            },
+            {
+                  "word": "DEBUGGING",
+                  "description_ko": "소프트웨어 코드에서 버그(오류)를 찾아 수정하는 과정.",
+                  "description_ja": "ソフトウェアコード内のバグ（エラー）を見つけて修正するプロセス。",
+                  "description_en": "The process of finding and fixing bugs (errors) in software code."
+            },
+            {
+                  "word": "ENCRYPTION",
+                  "description_ko": "데이터를 읽을 수 없는 형태로 변환하여 보안을 강화하는 과정.",
+                  "description_ja": "データを読み取り不可能な形式に変換してセキュリティを強化するプロセス。",
+                  "description_en": "The process of converting data into an unreadable form to enhance security."
+            },
+            {
+                  "word": "HTML",
+                  "description_ko": "웹페이지의 구조를 만드는 데 사용되는 마크업 언어.",
+                  "description_ja": "ウェブページの構造を作成するために使用されるマークアップ言語。",
+                  "description_en": "A markup language used to create the structure of a web page."
+            },
+            {
+                  "word": "URL",
+                  "description_ko": "인터넷상의 리소스 주소를 지정하는 표준 방법.",
+                  "description_ja": "インターネット上のリソースのアドレスを指定する標準的な方法。",
+                  "description_en": "A standard method for specifying the address of resources on the internet."
+            },
+            {
+                  "word": "VIRUS",
+                  "description_ko": "자신을 복제하여 다른 프로그램에 삽입하는 악성 코드.",
+                  "description_ja": "自身を複製して他のプログラムに挿入する悪意のあるコード。",
+                  "description_en": "Malicious code that copies itself and inserts itself into other programs."
+            }
+      ]
+}

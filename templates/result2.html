@@ -49,22 +49,37 @@
   </div>
 
   {% elif app_name == 'itQuiz' %}
-  <!-- メインコンテナ -->
-  <div id="app" class="shadow-soft fade-in">
-    <!-- コンテンツはJSで動的に挿入されます -->
+  <!-- メインのコンテナ -->
+  <div class="container" id="main-container">
+    <!-- コンテンツはJavaScriptで動的にレンダリングされます -->
   </div>
 
-  <!-- ダイアログコンテナ (モーダル) -->
-  <div id="dialog-overlay" class="hidden">
-    <div id="dialog-content">
-      <h3 id="dialog-title" class="text-xl mb-4 text-accent font-bold"></h3>
-      <p id="dialog-message" class="mb-6"></p>
-      <div id="dialog-buttons" class="dialog-buttons-container">
-        <!-- 閉じるボタンはJSで動的に生成されます -->
-        <button class="cute-button px-4 py-2 text-sm gray" onclick="closeDialog()">Close</button>
-      </div>
+  <!-- モーダル（ダイアログ）要素 -->
+  <dialog id="message-dialog">
+    <p id="dialog-content" style="text-align: center; font-size: 1.2rem; font-weight: 700; color: #ff69b4;"></p>
+    <div class="flex-center">
+      <button class="btn btn-primary" id="dialog-close-btn" onclick="closeDialog('message-dialog')">Close</button>
     </div>
-  </div>
+  </dialog>
+
+  <dialog id="rule-dialog">
+    <h3 style="text-align: center; color: #4682b4;">Game Rules</h3>
+    <div id="rule-content" style="font-size: 0.95rem; line-height: 1.6; color: #555;"></div>
+    <div class="flex-center" style="margin-top: 20px;">
+      <button class="btn btn-secondary" onclick="closeDialog('rule-dialog')">Close</button>
+    </div>
+  </dialog>
+
+  <dialog id="choice-dialog">
+    <h3 id="choice-title" style="text-align: center; color: #ff69b4;">Select a Character</h3>
+    <p id="choice-instruction" style="text-align: center; font-size: 0.9rem; color: #888;"></p>
+    <div id="choice-buttons-container" class="choice-buttons-container">
+      <!-- 選択肢ボタンはここに動的に挿入されます -->
+    </div>
+    <div class="flex-center" style="margin-top: 20px;">
+      <button class="btn btn-secondary" onclick="closeDialog('choice-dialog')">Close</button>
+    </div>
+  </dialog>
 
   {% elif app_name == 'review' %}
   <div id="divBoard" class="board-container">

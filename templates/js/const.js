@@ -148,6 +148,10 @@ const URL_LANG_API = "/api/langData/items";
 const URL_LANG_SERVER = `${URL_SERVER}${URL_LANG_API}`;
 const URL_LANG_LOCAL = `${URL_LOCAL}${URL_LANG_API}`;
 
+const URL_IT_QUIZ_API = "/api/itQuizData/items";
+const URL_IT_QUIZ_SERVER = `${URL_SERVER}${URL_IT_QUIZ_API}`;
+const URL_IT_QUIZ_LOCAL = `${URL_LOCAL}${URL_IT_QUIZ_API}`;
+
 // ヘッダー情報読込
 const CONTENTS_HEAD_1 = `
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
