@@ -15,6 +15,7 @@ import apps.today as today
 import apps.today_korea as today_korea
 import apps.tv as tv
 import apps.user as user
+import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
@@ -124,6 +125,40 @@ def get_context_data(app_name: str, user_div: str = const.AUTH_DEV):
     return app_title, data_list, num_flg
 
 
+# 【画面】パラメータ取得
+def get_context_data2(request: Request, app_name: str):
+    lang_cd = const.LANG_CD_JA
+
+    if const.SYM_UNDER in app_name and const.STR_DESIGN not in app_name:
+        lang_cd = app_name.split(const.SYM_UNDER)[1]
+        app_name = app_name.split(const.SYM_UNDER)[0]
+
+    user_name = const.SYM_BLANK
+    session_user = request.session.get(const.STR_USER)
+    if session_user:
+        user_name = session_user[mongo_const.FI_USER_NAME]
+
+    data_list = []
+    if const.APP_REVIEW in app_name:
+        data_list.append(board_dto.LIST_APP)
+        data_list.append(board_dto.LIST_CATEGORY)
+        data_list.append(board_dto.LIST_TYPE)
+
+    elif const.APP_IT_QUIZ in app_name:
+        user_name = "mongo User Name"
+        data_list = "Ranking Data List"  # TODO: コレクション追加(quizRanking)
+
+    context = {
+        const.STR_REQUEST: request,
+        "app_name": app_name,
+        "lang_cd": lang_cd,
+        "user_name": user_name,
+        "data_list": data_list,
+    }
+
+    return context
+
+
 # 【画面】表示データ取得
 def exec_user(request: Request, app_name: str):
     user_info = request.session[const.STR_USER]
@@ -140,14 +175,14 @@ def exec_user(request: Request, app_name: str):
 
 # 【画面】表示データ取得
 def exec_number(request: Request, app_name: str):
-    lang = const.LANG_CD_JA
+    lang_cd = const.LANG_CD_JA
     level = const.STR_HARD
     num = number.get_random_number(level)
     ans = number.get_answer_by_number(num)
     rank_user, rank_time = number.get_ranking_info(num)
 
     if const.SYM_UNDER in app_name:
-        lang = app_name.split(const.SYM_UNDER)[1]
+        lang_cd = app_name.split(const.SYM_UNDER)[1]
         app_name = app_name.split(const.SYM_UNDER)[0]
 
     target_html = const.HTML_NUMBER_PLATE
@@ -155,7 +190,7 @@ def exec_number(request: Request, app_name: str):
         const.STR_REQUEST: request,
         const.STR_TITLE: number.app_title,
         "app_name": app_name,
-        "lang": lang,
+        "lang_cd": lang_cd,
         "level": level,
         "num": num,
         "ans": ans,

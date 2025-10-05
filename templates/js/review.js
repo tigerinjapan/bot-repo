@@ -34,8 +34,16 @@ function init() {
   const appTxtList = dataList[0];
   const ctgTxtList = dataList[1];
 
+  // 言語コード
+  const langCd = getElemText("langCd");
+
+  let appInitVal = 0;
+  if (langCd === LANG_CD_KO) {
+    appInitVal = 2;
+  }
+
   let selectList = [
-    ["Application", STR_APP, appTxtList, 0],
+    ["Application", STR_APP, appTxtList, appInitVal],
     ["Category", STR_CATEGORY, ctgTxtList, 0],
   ];
 

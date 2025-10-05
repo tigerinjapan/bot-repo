@@ -19,10 +19,8 @@ import apps.line as line
 import apps.test as test
 import apps.utils.auth_dao as auth_dao
 import apps.utils.board_dao as board_dao
-import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
 import apps.utils.function as func
-import apps.utils.function_api as func_api
 import apps.utils.function_gemini as func_gemini
 import apps.utils.function_kakao as func_kakao
 import apps.utils.function_line as func_line
@@ -205,31 +203,8 @@ async def apps(request: Request, app_name: str):
         curr_func_nm = sys._getframe().f_code.co_name
         except_http_error(curr_func_nm, request.url._url)
 
-    data_list = []
-    user_name = const.SYM_BLANK
-    if const.APP_REVIEW in app_name:
-        data_list.append(board_dto.LIST_APP)
-        data_list.append(board_dto.LIST_CATEGORY)
-        data_list.append(board_dto.LIST_TYPE)
-
-        if app_name == const.APP_REVIEW_KO:
-            app_name = const.APP_REVIEW
-            session_user = request.session.get(const.STR_USER)
-            if session_user:
-                user_name = session_user[mongo_const.FI_USER_NAME]
-
-    elif const.APP_IT_QUIZ in app_name:
-        user_name = "mongo User Name"
-        data_list = "Ranking Data List" # TODO: コレクション追加(quizRanking)
-
-    context = {
-        const.STR_REQUEST: request,
-        "app_name": app_name,
-        "user_name": user_name,
-        "data_list": data_list,
-    }
-
     target_html = const.HTML_RESULT_2
+    context = appl.get_context_data2(request, app_name)
     return templates.TemplateResponse(target_html, context)
 
 
@@ -391,7 +366,7 @@ async def kakao_login(request: Request, userId: str = Form(...)):
         }
         request.session[const.STR_USER] = user_info
 
-        request.session[mongo_const.FI_USER_PW] = user_pw
+        # request.session[mongo_const.FI_USER_PW] = user_pw
         response = RedirectResponse(url=const.PATH_KAKAO_TODAY, status_code=303)
     else:
         request.session.clear()

@@ -25,8 +25,9 @@ const LIST_APP = LIST_APP_GUEST.concat(LIST_APP_NOT_GUEST);
 
 const APP_TRAVEL = "travel";
 const APP_NUMBER = "number";
+const APP_IT_QUIZ = "itQuiz";
 const APP_REVIEW = "review";
-const LIST_APP_KOREA = [APP_TODAY, APP_TRAVEL, APP_NUMBER, APP_REVIEW, APP_BOARD]
+const LIST_APP_KOREA = [APP_TODAY, APP_TRAVEL, APP_NUMBER, APP_IT_QUIZ, APP_REVIEW, APP_BOARD]
 
 // アプリケーション連番：お気に入り表示用
 const NUM_APP_TODAY = "0";
@@ -114,6 +115,10 @@ function setTopMenu(userDiv, userNm, appNm, menuVal) {
   const topMenuList = `<ul>${topMenu}</ul>`;
 
   document.getElementById("topMenu").innerHTML = topMenuList;
+
+  if (appNm == "today_korea") {
+    appNm = APP_TODAY;
+  }
 
   // メニュー押下時、背景色設定
   const screenId = document.getElementById(appNm);

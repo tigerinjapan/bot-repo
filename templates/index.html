@@ -26,15 +26,21 @@
                     <tr>
                         <th>ID</th>
                         <td>
+                            {% if path == '/login' %}
                             <input type="email" id="userId" name="userId" placeholder="name@name.com" required />
+                            {% else %}
+                            <input type="text" id="userId" name="userId" placeholder="kobe" required />
+                            {% endif %}
                         </td>
                     </tr>
+                    {% if path == '/login' %}
                     <tr>
                         <th>Password</th>
                         <td>
                             <input type="password" id="userPw" name="userPw" placeholder="password" required />
                         </td>
                     </tr>
+                    {% endif %}
                 </tbody>
                 <tfoot>
                     <tr>

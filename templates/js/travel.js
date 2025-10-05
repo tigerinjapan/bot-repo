@@ -55,12 +55,14 @@ function init() {
 
   // 画面内容の更新処理
   async function updateContent() {
+    // アプリ名
+    const appName = getElemText("appName");
 
     let lang = langSelect.value;
 
-    // アプリ名
-    const appName = getElemText("appName");
-    if (appName.includes(LANG_CD_KO)) {
+    // 言語コード
+    const langCd = getElemText("langCd");
+    if (langCd === LANG_CD_KO) {
       lang = LANG_CD_KO;
     }
 

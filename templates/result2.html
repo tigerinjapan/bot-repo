@@ -5,7 +5,7 @@
   <title data-key="title"></title>
   <script src="/templates/const.js"></script>
   <script src="/templates/func.js"></script>
-  {% if app_name in ['travel', 'travel_ko'] %}
+  {% if app_name == 'travel' %}
   <script src="/templates/travel.js"></script>
   {% elif app_name == 'itQuiz' %}
   <script src="/templates/itQuiz.js"></script>
@@ -20,10 +20,11 @@
 
 <body>
   <p id="appName" hidden>{{ app_name }}</p>
+  <p id="langCd" hidden>{{ lang_cd }}</p>
   <p id="userName" hidden>{{ user_name }}</p>
   <p id="dataList" hidden>{{ data_list }}</p>
 
-  {% if app_name in ['travel', 'travel_ko'] %}
+  {% if app_name == 'travel' %}
   <div class="container">
     <header>
       <h1 id="page-title"></h1>
@@ -65,7 +66,7 @@
     </div>
   </div>
 
-  {% elif app_name in ['review', 'review_ko'] %}
+  {% elif app_name == 'review' %}
   <div id="divBoard" class="board-container">
     <h1></h1>
     <form id="formReview">
@@ -86,10 +87,10 @@
 </body>
 
 <footer>
-    <script src="/templates/footer.js"></script>
-    <script>
-        writeFooter("{{ user_div }}");
-    </script>
+  <script src="/templates/footer.js"></script>
+  <script>
+    writeFooter("{{ user_div }}");
+  </script>
 </footer>
 
 </html>

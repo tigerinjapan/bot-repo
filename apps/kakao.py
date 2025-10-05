@@ -16,6 +16,7 @@ LIST_APP_KOREA = [
     const.APP_TODAY,
     const.APP_TRAVEL,
     const.APP_NUMBER,
+    const.APP_IT_QUIZ,
     const.APP_REVIEW,
     const.APP_BOARD,
     const.TYPE_LIST,

@@ -35,7 +35,7 @@ URL_KAKAO_API_USER_ME = f"{URL_KAKAO_API}/v2/user/me"
 URL_KAKAO_API_FRIENDS = f"{URL_KAKAO_API}/v1/api/talk/friends"
 URL_KAKAO_API_SEND_FRIENDS = f"{URL_KAKAO_API}/message/default/send"
 
-URL_ICO = "/templates/favicon.ico"
+URL_ICO = f"{func_line.URL_KOYEB_APP}/templates/favicon.ico"
 URL_TODAY_KOREA_IMG = f"{func_line.URL_KOYEB_IMG}/{const.APP_TODAY_KOREA}"
 
 # リダイレクトURI
@@ -269,7 +269,10 @@ def get_template_object(
 def get_token(session):
     token = const.SYM_BLANK
     if session:
-        token = session[STR_KAKAO_API_TOKEN]
+        try:
+            token = session[STR_KAKAO_API_TOKEN]
+        except:
+            token = const.SYM_BLANK
     return token
 
 
@@ -305,17 +308,18 @@ def get_auth_content(token: str):
 
 # ログアウト
 def get_logout_content(token: str) -> str:
-    body = result = const.SYM_BLANK
+    body = result = account_str = const.SYM_BLANK
 
     try:
         if token:
             # ログアウト
             result = send_kakao_msg(token, const.STR_LOGOUT)
+            account_str = "카카오 계정 "
 
         # 結果表示
         body = f"""
-            <h1>카카오 계정 로그아웃 <span class="success">완료</span></h1>
-            <p>정상적으로 카카오 계정이 로그아웃되었습니다.</p>
+            <h1>{account_str}로그아웃 <span class="success">완료</span></h1>
+            <p>정상적으로 {account_str}로그아웃되었습니다.</p>
             <pre>{result}</pre><br>
         """
 
@@ -323,11 +327,11 @@ def get_logout_content(token: str) -> str:
         # 結果表示
         body = f"""
             <h1>로그아웃 <span class="warning">부분 완료</span></h1>
-            <p>카카오 계정의 로그아웃은 처리되었지만, 로그아웃 중 서버 오류가 발생했습니다:</p>
+            <p>{account_str}로그아웃은 처리되었지만, 로그아웃 중 서버 오류가 발생했습니다:</p>
             <pre>{str(e)}</pre><br>
         """
 
-    title = "카카오 계정 로그아웃 결과"
+    title = f"{account_str}로그아웃 결과"
     body += html_const.HTML_KAKAO_GO_MAIN
     content = get_html_context(title, body)
     return content

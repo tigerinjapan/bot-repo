@@ -542,7 +542,6 @@ async function renderInitialScreen() {
 
             <!-- 言語選択 -->
             <div style="padding: 1rem; background-color: #f9fafb; border-radius: 0.75rem; margin-bottom: 1.5rem;">
-                <h2 style="font-size: 1.125rem; text-align: center; margin-bottom: 1rem; font-weight: bold; color: var(--main-blue);">${t.rules}</h2>
                 <div style="display: flex; flex-direction: column; justify-content: center; gap: 0.75rem;">
                     <!-- ボタンの幅をモバイルでも対応できるように調整 -->
                     <button class="cute-button" style="font-size: 1rem; background-color: var(--main-blue);" onclick="setLanguage('jp')">日本語</button>
@@ -558,10 +557,6 @@ async function renderInitialScreen() {
                     ${rankingHtml}
                 </ul>
             </div>
-            
-            <p style="text-align: center; font-size: 0.875rem; margin-top: 1.5rem; color: var(--text-color-light);">
-                (원하는 언어를 선택하면 바로 게임이 시작됩니다!)
-            </p>
         </div>
     `;
   document.getElementById('app').innerHTML = html;

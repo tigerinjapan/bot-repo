@@ -23,7 +23,10 @@ def get_auth_info(div: str):
 # 権限情報取得
 def get_auth_token(div: str, key: str = mongo_const.FI_TOKEN):
     auth_info = get_auth_info(div)
-    token = auth_info[key]
+    if key == mongo_const.FI_TOKEN:
+        token = auth_info[key]
+    else:
+        token = const.FLG_ON if auth_info else const.FLG_OFF
     return token
 
 
