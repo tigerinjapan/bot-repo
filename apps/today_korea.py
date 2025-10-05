@@ -1,5 +1,7 @@
 # 説明: 今日の生活情報
 
+import sys
+
 import apps.ex as ex
 import apps.today as today
 import apps.utils.constants as const
@@ -8,6 +10,9 @@ import apps.utils.function_api as func_api
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
 import apps.utils.function_kakao as func_kakao
+
+# スクリプト名
+SCRIPT_NAME = func.get_app_name(__file__)
 
 # 定数（韓国語）
 DIV_TITLE = "📢 {} 오늘의 뉴스 📢"
@@ -61,7 +66,6 @@ def get_item_list():
 
 # 今日の生活情報取得
 def get_today_info(object_type: str = func_kakao.OBJECT_TYPE_FEED):
-    # タイトル
     json_data = func_api.get_result_on_app(const.APP_TODAY_KOREA)
 
     date_time_text = json_data[0].get(col_list[1])
@@ -96,34 +100,50 @@ def get_news_image(today_info: str) -> str:
 
 # 今日の生活情報取得
 def get_today_info_list():
+    curr_func_nm = sys._getframe().f_code.co_name
+
     # 更新日時
     update_time = func.convert_date_to_str(
         func.get_now(), const.DATE_FORMAT_YYYYMMDD_HHMM
     )
 
-    # 天気
-    weather_news = get_today_weather_news()
-    weather_news_link = "https://www.weather.go.kr/w/weather/forecast/short-term.do"
+    div_idx = 0
+    try:
+        # 天気
+        div_idx += 1
+        weather_news = get_today_weather_news()
+        weather_news_link = "https://www.weather.go.kr/w/weather/forecast/short-term.do"
 
-    # S&P500
-    sp_500 = get_stock()
-    stock_link = f"{const.URL_NAVER_STOCK_MO}/worldstock/"
+        # S&P500
+        div_idx += 1
+        sp_500 = get_stock()
+        stock_link = f"{const.URL_NAVER_STOCK_MO}/worldstock/"
 
-    # 為替
-    yen_to_won = ex.get_today_won(const.FLG_ON)
-    finance_link = f"{const.URL_NAVER_STOCK_MO}/marketindex/home/exchangeRate/exchange"
+        # 為替
+        div_idx += 1
+        yen_to_won = ex.get_today_won(const.FLG_ON)
+        finance_link = (
+            f"{const.URL_NAVER_STOCK_MO}/marketindex/home/exchangeRate/exchange"
+        )
 
-    # 日本語
-    japanese = get_japanese_study()
-    japanese_link = "https://ja.dict.naver.com/#/main"
+        # 日本語
+        div_idx += 1
+        japanese = get_japanese_study()
+        japanese_link = "https://ja.dict.naver.com/#/main"
 
-    # 英語
-    english_conversation = get_english_conversation()
-    english_link = "https://learn.dict.naver.com/conversation#/"
+        # 英語
+        div_idx += 1
+        english_conversation = get_english_conversation()
+        english_link = "https://learn.dict.naver.com/conversation#/"
 
-    # 航空券セール
-    flight_sale = get_flight_sale()
-    flight_sale_link = URL_LINK_MO
+        # 航空券セール
+        div_idx += 1
+        flight_sale = get_flight_sale()
+        flight_sale_link = URL_LINK_MO
+
+    except Exception as e:
+        div = DIV_LIST[div_idx]
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, div, e)
 
     today_info_list = [
         update_time,

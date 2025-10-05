@@ -30,7 +30,7 @@ def find_user_info(client, user_id: str):
     count = func_mongo.db_count(client, COLL, cond)
 
     select_data = {
-        "_id": 0,
+        mongo_const.FI_ID: 0,
         mongo_const.FI_MODIFIED_DATE: 0,
         mongo_const.FI_LAST_LOGIN_DATE: 0,
     }

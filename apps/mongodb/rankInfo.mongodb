@@ -18,15 +18,58 @@ use(database)
 // });
 
 // find documents
+// sRankTimeが4文字の上位5件のみ抽出
 cond = {
-    sUserName: { $ne: userName }, $expr: {
-        $lte: [
-            { $strLenBytes: "$sRankTime" },
-            5
-        ]
+    sUserName: { $eq: userName }, sRankTime: { $regex: "^.{5}$" }
+};
+selectData = {
+    _id: 0,
+    nNumber: 1,
+    sRankTime: 1,
+    sUserName: 1,
+    dUpdateDate: {
+        $dateToString: {
+            format: "%Y/%m/%d %H:%M",
+            date: "$dUpdateDate"
+        }
     }
 };
-selectData = { _id: 0 }
-sortData = { sRankTime: 1 }
+sortData = { sRankTime: 1, dUpdateDate: -1 };
 
-db.rankInfo.find(cond, selectData).sort(sortData).pretty();
+db.rankInfo.find(cond, selectData).sort(sortData).limit(5).pretty();
+
+// db.rankInfo.aggregate([
+//     {
+//         // ステップ1: データ絞込
+//         $match: {
+//             sRankTime: { $regex: "^.{4}$" }
+//         }
+//     },
+//     {
+//         // ステップ2: 並び替え
+//         $sort: {
+//             sRankTime: 1,
+//             dUpdateDate: -1
+//         }
+//     },
+//     {
+//         // ステップ3: 件数を絞り込む
+//         $limit: 5
+//     },
+//     {
+//         // ステップ4: 出力するフィールド整形
+//         $project: {
+//             nNumber: 1,
+//             sRankTime: 1,
+//             sUserName: 1,
+//             dUpdateDate: {
+//                 $dateToString: {
+//                     format: "%Y/%m/%d %H:%M",
+//                     date: "$dUpdateDate",
+//                     timezone: "Asia/Tokyo"
+//                 }
+//             },
+//             _id: 0 // _idフィールドは除外
+//         }
+//     }
+// ])

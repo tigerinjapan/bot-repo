@@ -69,7 +69,7 @@ def get_response_result(
         except_ = ke
 
     if except_:
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, msg, ke)
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, msg, except_)
 
     return result
 

@@ -58,6 +58,7 @@ OPERATOR_AND = "$and"
 OPERATOR_OR = "$or"
 OPERATOR_NOT = "$not"
 OPERATOR_EXISTS = "$exists"
+OPERATOR_REGEX = "$regex"
 
 OPERATOR_SET = "$set"
 OPERATOR_INCREMENT = "$inc"

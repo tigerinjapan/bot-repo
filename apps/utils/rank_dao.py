@@ -33,7 +33,41 @@ def update_rank_info_of_api(json_data):
     func_mongo.db_close(client)
 
 
+# ランキング情報取得
+def get_rank_top_5(app_name: str = const.APP_NUMBER):
+    # 5桁で「.」が含まれている
+    conditions = {
+        mongo_const.OPERATOR_REGEX: "^.{5}$",
+        mongo_const.OPERATOR_REGEX: "\\.",
+    }
+
+    if app_name == const.APP_IT_QUIZ:
+        # 数値のみ
+        conditions.update({mongo_const.OPERATOR_REGEX: "^\\d+$"})
+
+    cond = {mongo_const.FI_RANK_TIME: conditions}
+    select_data = {
+        mongo_const.FI_ID: 0,
+        mongo_const.FI_NUMBER: 1,
+        mongo_const.FI_RANK_TIME: 1,
+        mongo_const.FI_USER_NAME: 1,
+        mongo_const.FI_UPDATE_DATE: {
+            "$dateToString": {"format": "%Y/%m/%d %H:%M", "date": "$dUpdateDate"}
+        },
+    }
+    sort = {mongo_const.FI_RANK_TIME: 1, mongo_const.FI_UPDATE_DATE: -1}
+
+    client = func_mongo.db_connect()
+    rank_info_list = func_mongo.db_find(client, COLL, cond, select_data, sort).limit(5)
+
+    rank_top_5 = []
+    for rank_info in rank_info_list:
+        rank_top_5.append(rank_info)
+
+    func_mongo.db_close(client)
+    return rank_top_5
+
+
 if __name__ == const.MAIN_FUNCTION:
-    number = 8889
-    rank_info = get_rank_info(number)
-    print(rank_info)
+    rank_top_5 = get_rank_top_5(const.APP_IT_QUIZ)
+    print(rank_top_5)
