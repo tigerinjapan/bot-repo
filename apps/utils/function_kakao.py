@@ -226,7 +226,7 @@ def get_template_object(
 ):
     if object_type == OBJECT_TYPE_FEED:
         template_object = {
-            "object_type": object_type,
+            "object_type": OBJECT_TYPE_FEED,
             "content": {
                 "title": title,
                 "description": message,
@@ -413,7 +413,7 @@ def get_test_message_content(token: str = const.SYM_BLANK) -> str:
         </span></h1>
         <p>결과</p>
         <pre>{result_data}</pre><br>
-        <p>메시지 전송이 성공이지만 수신되지 않은 경우,<br>로그아웃 하고나서 다시 테스트 해 주세요.</p>
+        <p>메시지 전송이 성공이지만 수신되지 않은 경우,<br>로그아웃 후에 다시 테스트 해 주세요.</p>
         <div class="button-group">
             {html_const.HTML_KAKAO_LOGOUT}
         </div>
