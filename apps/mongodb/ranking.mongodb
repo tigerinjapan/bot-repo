@@ -1,0 +1,38 @@
+// db
+const database = "mongoDB";
+const div = "itQuiz";
+const userName = "hong";
+const strDate = "2025-10-01 09:00";
+
+// Select the database to use.
+use(database)
+
+// // get indexes
+// db.ranking.getIndexes();
+
+// // insert documents
+// db.ranking.insertMany([
+//     { sDiv: div, nRank: 1, nScore: 100, sUserName: userName, dUpdateDate: new Date(strDate) },
+//     { sDiv: div, nRank: 2, nScore: 90, sUserName: "song", dUpdateDate: new Date("2025/10/02") },
+//     { sDiv: div, nRank: 3, nScore: 80, sUserName: "sera", dUpdateDate: new Date("2025/10/03") },
+//     { sDiv: div, nRank: 4, nScore: 70, sUserName: "juni", dUpdateDate: new Date("2025/10/04") },
+//     { sDiv: div, nRank: 5, nScore: 60, sUserName: "hana", dUpdateDate: new Date("2025/10/05") },
+// ]);
+
+// find documents
+cond = { sDiv: { $eq: div } };
+selectData = {
+    _id: 0,
+    nRank: 1,
+    nScore: 1,
+    sUserName: 1,
+    dUpdateDate: {
+        $dateToString: {
+            format: "%Y/%m/%d %H:%M",
+            date: "$dUpdateDate"
+        }
+    }
+};
+sortData = { nRank: 1 };
+
+db.ranking.find(cond, selectData).sort(sortData).limit(5).pretty();

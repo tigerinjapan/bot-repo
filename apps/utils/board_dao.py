@@ -7,9 +7,6 @@ import apps.utils.function_mongo as func_mongo
 import apps.utils.mongo_constants as mongo_const
 import apps.utils.sequence_dao as seq_dao
 
-# 掲示板情報
-COLL = mongo_const.COLL_BOARD
-
 
 # 掲示板データ取得
 def get_board_info():
@@ -40,7 +37,7 @@ def get_board_info():
         mongo_const.FI_USER_NAME: -1,
     }
 
-    result = func_mongo.db_find(client, COLL, cond, sort=sort)
+    result = func_mongo.db_find(client, mongo_const.COLL_AUTH, cond, sort=sort)
     if result:
         for board_info in result:
             json_data = board_dto.get_board_data(board_info)
@@ -60,7 +57,7 @@ def insert_board_data_of_api(json_data):
     for idx, data in enumerate(data_list):
         seq_val = seq + idx
         update_data = board_dto.get_update_data_for_board_info(data, seq_val)
-        func_mongo.db_insert(client, COLL, update_data)
+        func_mongo.db_insert(client, mongo_const.COLL_BOARD, update_data)
 
     seq = seq_dao.update_sequence(client, const.APP_BOARD, inc_val)
     func_mongo.db_close(client)
@@ -74,7 +71,7 @@ def update_board_status(seq: str, status: int = board_dto.STATUS_DONE):
         mongo_const.FI_STATUS: status,
         mongo_const.FI_UPDATE_DATE: func.get_now(),
     }
-    func_mongo.db_update(client, COLL, cond, update_data)
+    func_mongo.db_update(client, mongo_const.COLL_BOARD, cond, update_data)
     func_mongo.db_close(client)
 
 

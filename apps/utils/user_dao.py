@@ -9,9 +9,6 @@ import apps.utils.message_constants as msg_const
 import apps.utils.mongo_constants as mongo_const
 import apps.utils.user_dto as user_dto
 
-# コレクション: ユーザー情報
-COLL = mongo_const.COLL_USER_INFO
-
 
 # ユーザー情報取得
 def get_user_info(userId: str):
@@ -27,7 +24,7 @@ def get_user_info(userId: str):
 # ユーザー情報検索
 def find_user_info(client, user_id: str):
     cond = {mongo_const.FI_USER_ID: user_id}
-    count = func_mongo.db_count(client, COLL, cond)
+    count = func_mongo.db_count(client, mongo_const.COLL_USER_INFO, cond)
 
     select_data = {
         mongo_const.FI_ID: 0,
@@ -37,7 +34,9 @@ def find_user_info(client, user_id: str):
     result = (
         const.NONE_CONSTANT
         if count == 0
-        else func_mongo.db_find_one(client, COLL, cond, select_data)
+        else func_mongo.db_find_one(
+            client, mongo_const.COLL_USER_INFO, cond, select_data
+        )
     )
     return result
 
@@ -48,7 +47,9 @@ def get_user_seq():
     cond = {mongo_const.FI_USER_DIV: {mongo_const.OPERATOR_EQUAL: const.AUTH_GUEST}}
     select_data = {mongo_const.FI_SEQ: 1}
     sort = [(mongo_const.FI_SEQ, DESCENDING)]
-    result = func_mongo.db_find(client, COLL, cond, select_data, sort)
+    result = func_mongo.db_find(
+        client, mongo_const.COLL_USER_INFO, cond, select_data, sort
+    )
     seq = result[0].get(mongo_const.FI_SEQ) + 1
     func_mongo.db_close(client)
     return seq
@@ -56,14 +57,14 @@ def get_user_seq():
 
 # ユーザー情報登録
 def insert_user_info(client, insert_data):
-    func_mongo.db_insert(client, COLL, insert_data)
+    func_mongo.db_insert(client, mongo_const.COLL_USER_INFO, insert_data)
 
 
 # ユーザー情報更新
 def update_user_info(client, update_data):
     user_id = update_data[mongo_const.FI_USER_ID]
     cond = {mongo_const.FI_USER_ID: user_id}
-    func_mongo.db_update(client, COLL, cond, update_data)
+    func_mongo.db_update(client, mongo_const.COLL_USER_INFO, cond, update_data)
 
 
 # ユーザー情報登録（フォーム）

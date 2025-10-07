@@ -4,6 +4,7 @@ import apps.utils.constants as const
 COLL_USER_INFO = "userInfo"
 COLL_AUTH = "auth"
 COLL_RANK_INFO = "rankInfo"
+COLL_RANKING = "ranking"
 COLL_BOARD = "board"
 COLL_SEQUENCE = "sequence"
 
@@ -44,6 +45,10 @@ ITEM_STATUS = "status"
 # 項目ID: rank info
 ITEM_NUMBER = "number"
 ITEM_RANK_TIME = "rankTime"
+
+# 項目ID: ranking
+ITEM_RANK = "rank"
+ITEM_SCORE = "score"
 
 # 演算子
 OPERATOR_EQUAL = "$eq"
@@ -112,3 +117,7 @@ FI_STATUS = convert_field(const.TYPE_NUM, ITEM_STATUS)
 # フィールド: rank info
 FI_NUMBER = convert_field(const.TYPE_NUM, ITEM_NUMBER)
 FI_RANK_TIME = convert_field(const.TYPE_STR, ITEM_RANK_TIME)
+
+# フィールド: ranking
+FI_RANK = convert_field(const.TYPE_NUM, ITEM_RANK)
+FI_SCORE = convert_field(const.TYPE_NUM, ITEM_SCORE)

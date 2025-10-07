@@ -21,6 +21,7 @@ import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
 import apps.utils.mongo_constants as mongo_const
+import apps.utils.rank_dao as rank_dao
 
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
@@ -144,9 +145,8 @@ def get_context_data2(request: Request, app_name: str):
         data_list.append(board_dto.LIST_CATEGORY)
         data_list.append(board_dto.LIST_TYPE)
 
-    elif const.APP_IT_QUIZ in app_name:
-        user_name = "mongo User Name"
-        data_list = "Ranking Data List"  # TODO: コレクション追加(quizRanking)
+    elif app_name == const.APP_IT_QUIZ:
+        data_list = rank_dao.get_ranking_top(app_name)
 
     context = {
         const.STR_REQUEST: request,
@@ -284,6 +284,5 @@ def no_sleep():
 if __name__ == const.MAIN_FUNCTION:
     # update_news()
     app_name_list = [const.APP_TODAY, const.APP_TODAY_KOREA]
-    app_name_list = [const.APP_TODAY_KOREA]
     for app_name in app_name_list:
         update_news(app_name)
