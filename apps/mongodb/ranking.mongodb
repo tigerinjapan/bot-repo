@@ -36,3 +36,13 @@ selectData = {
 sortData = { nRank: 1 };
 
 db.ranking.find(cond, selectData).sort(sortData).limit(5).pretty();
+
+// // update document
+// db.ranking.updateMany(
+//     { nRank: { $gt: 3 } },
+//     {
+//         $inc: {
+//             nRank: 1 // 順位 (nRank) を 1 増やす (+1)
+//         }
+//     }
+// );

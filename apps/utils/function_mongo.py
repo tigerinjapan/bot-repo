@@ -74,7 +74,15 @@ def get_collection(client, collection_name: str):
 # 件数取得
 def db_count(client, coll_nm: str, cond):
     coll = get_collection(client, coll_nm)
-    result = coll.count_documents(cond)
+
+    try:
+        result = coll.count_documents(cond)
+    except Exception as e:
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(
+            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_DB_PROC_FAILED, str(e)
+        )
+
     func.print_info_msg("count", coll_nm)
     return result
 
@@ -124,29 +132,65 @@ def db_find_one(
     select_data=const.NONE_CONSTANT,
     sort=const.NONE_CONSTANT,
 ):
-    result = db_find(client, coll_nm, cond, select_data, sort, one_flg=const.FLG_ON)
 
+    result = db_find(client, coll_nm, cond, select_data, sort, one_flg=const.FLG_ON)
     return result
 
 
 # データ登録
 def db_insert(client, coll_nm: str, insert_data):
     coll = get_collection(client, coll_nm)
-    coll.insert_one(document=insert_data)
+
+    try:
+        coll.insert_one(document=insert_data)
+    except Exception as e:
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(
+            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_DB_PROC_FAILED, str(e)
+        )
 
 
 # データ更新
 def db_update(client, coll_nm: str, cond, update_data):
     coll = get_collection(client, coll_nm)
     update_data = {mongo_const.OPERATOR_SET: update_data}
-    coll.update_one(filter=cond, update=update_data)
+
+    try:
+        coll.update_one(filter=cond, update=update_data)
+    except Exception as e:
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(
+            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_DB_PROC_FAILED, str(e)
+        )
+
+
+# データ更新
+def db_update_many(client, coll_nm: str, cond, update_data):
+    coll = get_collection(client, coll_nm)
+
+    try:
+        coll.update_many(filter=cond, update=update_data)
+    except Exception as e:
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(
+            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_DB_PROC_FAILED, str(e)
+        )
 
 
 # データ検索＆更新
 def db_find_update(client, coll_nm: str, cond, update_data):
     coll = get_collection(client, coll_nm)
+
     result = coll.find_one(filter=cond)
-    coll.update_one(filter=cond, update=update_data)
+
+    try:
+        coll.update_one(filter=cond, update=update_data)
+    except Exception as e:
+        curr_func_nm = sys._getframe().f_code.co_name
+        func.print_error_msg(
+            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_DB_PROC_FAILED, str(e)
+        )
+
     return result
 
 

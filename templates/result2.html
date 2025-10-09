@@ -22,7 +22,13 @@
   <p id="appName" hidden>{{ app_name }}</p>
   <p id="langCd" hidden>{{ lang_cd }}</p>
   <p id="userName" hidden>{{ user_name }}</p>
-  <p id="dataList" hidden>{{ data_list }}</p>
+  <p id="dataList" hidden>
+    {% if app_name == 'itQuiz' %}
+    {{ data_list | tojson }}
+    {% else %}
+    {{ data_list }}
+    {% endif %}
+  </p>
 
   {% if app_name == 'travel' %}
   <div class="container">

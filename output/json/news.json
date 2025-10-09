@@ -1,22 +1,18 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUA0371W0T01C25A0000000/\" target=\"_blank\" rel=\"noopener noreferrer\">高市氏「積極財政」鮮明赤字企業の賃上げ支援\n金融政策「政府に責任」</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGKKZO91830090Z01C25A0MM8000/\" target=\"_blank\" rel=\"noopener noreferrer\">北川氏にノーベル化学賞金属有機構造体を開発\n脱炭素に寄与京大特別教授</a>"
     },
     {
         "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2510/03/news103.html\" target=\"_blank\" rel=\"noopener noreferrer\">動画生成AI「Sora2」に“Pro”登場15秒まで延長ChatGPTProユーザー向け</a>"
-    },
-    {
-        "区分": "韓国",
-        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56278\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 イジョンジェとイムジヨンがドラマで共演11月に放送スタート</a>"
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2510/08/news061.html\" target=\"_blank\" rel=\"noopener noreferrer\">Google、PC操作を自動化するAI「Gemini2.5ComputerUse」のプレビュー版公開</a>"
     },
     {
         "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/503690.html\" target=\"_blank\" rel=\"noopener noreferrer\">「めちゃくちゃ食べたじゃない」ヒョナ(元4Minute)\n妊娠説否認後ダイエットを予告\n夫ヨンジュンヒョン(元HIGHLIGHT)との空港ショットが話題</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/503843.html\" target=\"_blank\" rel=\"noopener noreferrer\">「ASTRO」チャウヌ\nうれしい秋夕のあいさつ\n「また会う時まで元気で」</a>"
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/503739.html\" target=\"_blank\" rel=\"noopener noreferrer\">「80sソウル歌謡祭」イジュニョン(UKISS)&イジョクが大賞受賞\n「飛ぶなら何する」最高視聴率を更新</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/503948.html\" target=\"_blank\" rel=\"noopener noreferrer\">JENNIE(BLACKPINK) のパワー\nソウル観光で疾走\nBGMに「Seoul City」</a>"
     }
 ]

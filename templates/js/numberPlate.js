@@ -290,9 +290,9 @@ function sendRanking(number, time, langCd) {
 
   setUserName(inputMsg);
 
-  let rankingUrl = URL_RANKING_SERVER;
+  let rankingUrl = URL_NUMBER_RANKING_SERVER;
   if (isLocal()) {
-    rankingUrl = URL_RANKING_LOCAL;
+    rankingUrl = URL_NUMBER_RANKING_LOCAL;
   }
 
   fetch(rankingUrl, {

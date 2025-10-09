@@ -276,7 +276,7 @@ async def gemini_api(request: Request):
             message = const.SYM_NEW_LINE.join(response)
 
     except Exception as e:
-        message = msg_const.MSG_ERR_PROC_FAILED
+        message = msg_const.MSG_ERR_SERVER_PROC_FAILED
         func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
 
     result = {const.STR_MESSAGE: message}
@@ -288,6 +288,15 @@ async def gemini_api(request: Request):
 async def number_ranking(request: Request):
     json_data = await request.json()
     rank_dao.update_rank_info_of_api(json_data)
+    result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
+    return result
+
+
+# ランキング情報更新
+@app.post("/quiz/ranking")
+async def quiz_ranking(request: Request):
+    json_data = await request.json()
+    rank_dao.update_ranking_of_api(json_data)
     result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
     return result
 
@@ -306,7 +315,7 @@ async def board_add(request: Request):
 
     except Exception as e:
         curr_func_nm = sys._getframe().f_code.co_name
-        message = msg_const.MSG_ERR_PROC_FAILED
+        message = msg_const.MSG_ERR_SERVER_PROC_FAILED
         func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
 
     result = {const.STR_MESSAGE: message}

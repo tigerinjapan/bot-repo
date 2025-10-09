@@ -4,18 +4,17 @@
  * =================================================================
  */
 
+// クイズ数
+const quizNum = 5;
+
+// 単語長さ制限
+const MAX_WORD_LENGTH = 6;
+
+// 1問のポイント
+const MAX_POINT = 20;
+
 // ページ読み込み時にsessionStorageからデータを取得
 let userId = sessionStorage.getItem(STR_USER_NAME);
-
-// ユーザ名設定
-function setUserName() {
-  if (!userId || userId === SYM_BLANK) {
-    userId = prompt(MSG_INFO_INPUT_USER_EN);
-  } else {
-    userId = getElemText("userName");
-  }
-  sessionStorage.setItem(STR_USER_NAME, userId);
-}
 
 // グローバルなゲーム状態を保持するオブジェクト
 const gameState = {
@@ -23,7 +22,7 @@ const gameState = {
   currentQuizIndex: 0,
   score: 0,
   currentWord: [], // 現在の単語の状態（例: ['G', '_', 'M', '_', 'N', 'I']）
-  quizSet: [], // 今回のゲームで使う10問のセット
+  quizSet: [],
   timeRemaining: 0,
   initialTime: 0,
   timerInterval: null,
@@ -32,35 +31,27 @@ const gameState = {
   isGameOver: false,
 };
 
-// ランキングダミーデータ (MongoDBの代わりに静的データを使用)
-const staticRankings = [
-  { userId: "kobe", score: 100, lastLoginDate: "2025/10/01" },
-  { userId: "song", score: 90, lastLoginDate: "2025/10/02" },
-  { userId: "sera", score: 75, lastLoginDate: "2025/10/03" },
-  { userId: "juni", score: 60, lastLoginDate: "2025/10/04" },
-  { userId: "hana", score: 55, lastLoginDate: "2025/10/05" },
-];
-
 // UI要素の多言語テキスト辞書 (ボタン名やラベルなど)
 const textMap = {
   "title": { "ko": "IT 상식 퀴즈", "ja": "IT クイズ", "en": "IT Quiz" },
-  "user_label": { "ko": "유저:", "ja": "ユーザー:", "en": "User:" },
+  "user_label": { "ko": "유저 ", "ja": "ユーザー ", "en": "User " },
   "score_label": { "ko": "점수:", "ja": "スコア:", "en": "Score:" },
-  "quiz_status_label": { "ko": "문제:", "ja": "問題:", "en": "Quiz:" },
+  "quiz_status_label": { "ko": "문제 ", "ja": "問題 ", "en": "Quiz " },
   "start_game": { "ko": "게임 시작", "ja": "ゲームスタート", "en": "START GAME" },
   "view_ranking": { "ko": "랭킹 보기", "ja": "ランキング表示", "en": "VIEW RANKING" },
   "game_rule": { "ko": "게임 규칙", "ja": "ゲームルール", "en": "GAME RULE" },
   "hint": { "ko": "힌트", "ja": "ヒント", "en": "HINT" },
   "check_answer": { "ko": "정답 확인", "ja": "正解確認", "en": "CHECK ANSWER" },
   "ranking": { "ko": "랭킹", "ja": "ランキング", "en": "RANKING" },
-  "select_language": { "ko": "언어 선택:", "ja": "言語選択:", "en": "Select Language:" },
+  "select_language": { "ko": "언어 선택 ", "ja": "言語選択 ", "en": "Select Language " },
+  "instruction_message": { "ko": "알파벳 또는 숫자만 입력가능합니다.", "ja": "英数字のみ入力してください。", "en": "Select a character or use your keyboard." },
 };
 
 // メッセージ、エラー、ダイアログコンテンツの多言語辞書
 const msgMap = {
   "rule_content": {
     "ko": `
-        <p><strong>1. 게임내용</strong><br>주어진 설명으로 IT 단어 맞추기 (총 10문제)</p>
+        <p><strong>1. 게임내용</strong><br>주어진 설명으로 IT 단어 맞추기 (총 ${quizNum} 문제)</p>
         <p><strong>2. 제한시간</strong><br>단어 글자수 x 10초 (예: 3글자: 30초)</p>
         <p><strong>3. 힌트</strong><br>단어의 첫 글자는 공개. <br>
         [힌트]를 누르면 1글자씩 공개 (힌트 = 최대 글자수 -1)</p>
@@ -77,7 +68,7 @@ const msgMap = {
         <p>※최소 점수: 0점</p>
     `,
     "ja": `
-        <p><strong>1. 目標:</strong> 与えられた説明をヒントにIT用語を当てます (全10問)。</p>
+        <p><strong>1. 目標:</strong> 与えられた説明をヒントにIT用語を当てます (全${quizNum}問)。</p>
         <p><strong>2. 時間:</strong> 制限時間は単語の文字数 $\times 10$ 秒です。</p>
         <p><strong>3. ヒント:</strong> 単語の最初の文字は公開されます。<br>
         「ヒント」を押すと1文字ずつ公開されます (最大文字数 $-1$まで)。</p>
@@ -94,7 +85,7 @@ const msgMap = {
         <p>最低点数は0点です。</p>
     `,
     "en": `
-        <p><strong>1. Goal:</strong> Guess the IT term based on the provided description (Total 10 questions).</p>
+        <p><strong>1. Goal:</strong> Guess the IT term based on the provided description (Total ${quizNum} questions).</p>
         <p><strong>2. Time Limit:</strong> Word length $\times 10$ seconds.</p>
         <p><strong>3. Hint:</strong> The first letter is revealed. Using 'HINT' reveals one letter at a time (up to Word Length - 1).</p>
         <p><strong>4. Scoring:</strong></p>
@@ -187,16 +178,25 @@ const shuffleArray = (array) => {
 const renderInitialScreen = () => {
   const container = getElem('main-container');
 
+  setUserName();
+
   // ユーザー名表示は英語固定
   const userDisplay = `<p class="text-label" style="text-align: right;">User: ${userId}</p>`;
 
+  // ランキングデータ
+  const dataList = getElemText("dataList");
+
+  // JSON形式の文字列に変換する
+  const rankingDataJson = JSON.parse(dataList);
+
   // ランキングリストの作成
-  const rankingsHtml = staticRankings.map((r, index) => `
-      <li class="ranking-item">
-          <span class="rank" style="font-weight: 700;">#${index + 1}</span>
-          <span>${r.userId}</span>
-          <span>${r.score} pts</span>
-      </li>
+  const rankingsHtml = rankingDataJson.map(item => `
+    <li class="ranking-item">
+      <span class="rank" style="font-weight: 700;">${item.rank}</span>
+      <span>${item.userId}</span>
+      <span>${item.score} pts</span>
+      <span>${item.lastLoginDate}</span>
+    </li>
   `).join('');
 
   container.innerHTML = `
@@ -237,7 +237,7 @@ const renderQuizScreen = () => {
               <span class="text-label">Score:</span> <span class="text-value" id="current-score">${gameState.score} pts</span>
           </div>
           <div>
-              <span class="text-label">Quiz:</span> <span class="text-value" id="quiz-status">1 / 10</span>
+              <span class="text-label">Quiz:</span> <span class="text-value" id="quiz-status">1 / ${quizNum}</span>
           </div>
       </div>
 
@@ -332,9 +332,10 @@ async function startGame(language) {
     quizDataUrl = URL_IT_QUIZ_LOCAL;
   }
 
-  // クイズデータ (IT関連用語、単語は全て大文字) - シャッフルし、10問を選択
+  // クイズデータ (IT関連用語、単語は全て大文字) - シャッフルし、選択
   const quizDataList = await getFetchApiData(quizDataUrl);
-  const randomTenList = shuffleArray([...quizDataList]).slice(0, 10);
+  const filteredList = quizDataList.filter(q => q.word.replace(/\s/g, '').length <= MAX_WORD_LENGTH);
+  const randomTenList = shuffleArray([...filteredList]).slice(0, quizNum);
   gameState.quizSet = randomTenList;
 
   // ゲーム画面へ移行
@@ -466,9 +467,9 @@ const checkAnswer = () => {
     let points = 0;
 
     if (timeElapsed <= halfTime) {
-      points = 10;
+      points = MAX_POINT;
     } else {
-      points = 5;
+      points = MAX_POINT / 2;
     }
 
     gameState.score += points;
@@ -517,15 +518,15 @@ const openChoiceDialog = (index) => {
   }
 
   shuffleArray(choices); // 候補をシャッフル
-  
+
   // ダイアログの中身をレンダリング
   const container = getElem('choice-buttons-container');
   container.innerHTML = '';
 
   const instruction = getElem('choice-instruction');
 
-  // キーボード入力に対応している旨を案内（英語）
-  instruction.textContent = "Select a character or use your keyboard (A-Z, 0-9).";
+  // キーボード入力案内
+  instruction.textContent = `${getLocalizedText('instruction_message')} (A-Z, 0-9)`;
 
   choices.forEach(char => {
     const button = document.createElement('button');
@@ -609,16 +610,94 @@ const handleGlobalKeydown = (event) => {
   }
 };
 
-// ゲーム終了
+/**
+ * =================================================================
+ * ランキング更新処理
+ * =================================================================
+ */
+
+// ランキング更新が必要か判定
+function getUpdateRank() {
+  // 5位以内のランキングで自分のスコアより低いランクを検索
+  let updateRank = null;
+
+  // ランキングデータ
+  const dataList = getElemText("dataList");
+
+  // JSON形式の文字列に変換する
+  const rankingDataJson = JSON.parse(dataList);
+
+  for (let i = 0; i < Math.min(5, rankingDataJson.length); i++) {
+    if (gameState.score > rankingDataJson[i].score) {
+      updateRank = rankingDataJson[i].rank;
+      break;
+    }
+  }
+  return updateRank;
+}
+
+/**
+ * =================================================================
+ * ゲーム終了処理
+ * =================================================================
+ */
 const gameOver = () => {
   gameState.isGameOver = true;
   if (gameState.timerInterval) clearInterval(gameState.timerInterval);
 
-  showDialog('message-dialog', 'game_over', { 'WORD': gameState.score });
+  // スコアを明示的に表示
+  const msg = `${getLocalizedMessage('game_over')} ${gameState.score} pts`;
+  getElem('dialog-content').textContent = msg;
+  getElem('message-dialog').showModal();
+
+  // ランキング更新判定・API送信
+  const updateRank = getUpdateRank();
+  if (updateRank !== null) {
+    // setUserName();
+    updateRanking(updateRank, userId, gameState.score);
+  }
 
   // 3秒後に初期画面へ
   setTimeout(renderInitialScreen, 3000);
 };
+
+// ユーザ名設定
+function setUserName() {
+  if (!userId || userId === SYM_BLANK) {
+    userId = prompt(MSG_INFO_INPUT_USER_EN);
+  } else {
+    userId = getElemText("userName");
+  }
+  sessionStorage.setItem(STR_USER_NAME, userId);
+}
+
+// ランキングをAPI経由で更新
+async function updateRanking(rank, userId, score) {
+  let url = URL_QUIZ_RANKING_SERVER;
+  if (isLocal()) {
+    url = URL_QUIZ_RANKING_LOCAL;
+  }
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        rank: rank,
+        userId: userId,
+        score: score,
+      })
+    });
+    const result = await res.json();
+    if (result.success) {
+      alert("Ranking updated！");
+    } else {
+      alert("Failed to update ranking.");
+    }
+  } catch (e) {
+    alert("通信エラーでランキング更新できませんでした。");
+  }
+}
 
 // ルールダイアログ表示
 const showRuleDialog = () => {
@@ -634,6 +713,5 @@ const showRuleDialog = () => {
 
 // ページロード時の初期化
 window.onload = () => {
-  setUserName();
   renderInitialScreen();
 };
