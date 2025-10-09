@@ -91,8 +91,8 @@ def get_update_data_for_rank_info(json_data):
 # JSONデータ取得（ランキング情報の登録・更新）
 def get_update_data_for_ranking(div, json_data):
     rank = json_data[mongo_const.ITEM_RANK]
-    userName = json_data[mongo_const.ITEM_USER_ID]
     score = json_data[mongo_const.ITEM_SCORE]
+    userName = json_data[mongo_const.ITEM_USER_ID]
 
-    json_data = asdict(ranking(div, rank, userName, score))
-    return json_data, rank
+    json_data = asdict(ranking(div, rank, score, userName))
+    return json_data, rank, score

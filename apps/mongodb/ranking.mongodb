@@ -2,7 +2,7 @@
 const database = "mongoDB";
 const div = "itQuiz";
 const userName = "hong";
-const strDate = "2025-10-01 09:00";
+const strDate = "2025-10-10 09:00";
 
 // Select the database to use.
 use(database)
@@ -13,10 +13,10 @@ use(database)
 // // insert documents
 // db.ranking.insertMany([
 //     { sDiv: div, nRank: 1, nScore: 100, sUserName: userName, dUpdateDate: new Date(strDate) },
-//     { sDiv: div, nRank: 2, nScore: 90, sUserName: "song", dUpdateDate: new Date("2025/10/02") },
-//     { sDiv: div, nRank: 3, nScore: 80, sUserName: "sera", dUpdateDate: new Date("2025/10/03") },
-//     { sDiv: div, nRank: 4, nScore: 70, sUserName: "juni", dUpdateDate: new Date("2025/10/04") },
-//     { sDiv: div, nRank: 5, nScore: 60, sUserName: "hana", dUpdateDate: new Date("2025/10/05") },
+//     { sDiv: div, nRank: 1, nScore: 100, sUserName: userName, dUpdateDate: new Date("2025/10/02 09:00") },
+//     { sDiv: div, nRank: 1, nScore: 100, sUserName: userName, dUpdateDate: new Date("2025/10/03 09:00") },
+//     { sDiv: div, nRank: 4, nScore: 95, sUserName: userName, dUpdateDate: new Date("2025/10/04 09:00") },
+//     { sDiv: div, nRank: 5, nScore: 90, sUserName: userName, dUpdateDate: new Date("2025/10/05 09:00") },
 // ]);
 
 // find documents
@@ -33,13 +33,13 @@ selectData = {
         }
     }
 };
-sortData = { nRank: 1 };
+sortData = { nRank: 1, dUpdateDate: -1 };
 
 db.ranking.find(cond, selectData).sort(sortData).limit(5).pretty();
 
-// // update document
+// update document
 // db.ranking.updateMany(
-//     { nRank: { $gt: 3 } },
+//     { nRank: { $gte: 3 } },
 //     {
 //         $inc: {
 //             nRank: 1 // 順位 (nRank) を 1 増やす (+1)

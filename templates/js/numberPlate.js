@@ -171,11 +171,11 @@ function showDialog(langCd) {
 
 // 正解判定
 function checkAnswer(langCd) {
-  let okAnswerMsg = MSG_INFO_OK_ANSWER;
+  let okAnswerMsg = MSG_OK_ANSWER;
   let noAnswerMsg = MSG_ERR_NO_ANSWER;
 
   if (langCd === LANG_CD_KO) {
-    okAnswerMsg = MSG_INFO_OK_ANSWER_KO;
+    okAnswerMsg = MSG_OK_ANSWER_KO;
     noAnswerMsg = MSG_ERR_NO_ANSWER_KO;
   }
 
@@ -278,13 +278,13 @@ function validate(num, ans, expr, langCd) {
 
 // ランキング送信
 function sendRanking(number, time, langCd) {
-  let inputMsg = MSG_INFO_INPUT_USER;
-  let rankOkMsg = MSG_INFO_OK_RANK;
+  let inputMsg = MSG_INPUT_USER;
+  let rankOkMsg = MSG_OK_RANK;
   let rankNgMsg = MSG_ERR_RANK;
 
   if (langCd === LANG_CD_KO) {
-    inputMsg = MSG_INFO_INPUT_USER_KO;
-    rankOkMsg = MSG_INFO_OK_RANK_KO;
+    inputMsg = MSG_INPUT_USER_KO;
+    rankOkMsg = MSG_OK_RANK_KO;
     rankNgMsg = MSG_ERR_RANK_KO;
   }
 

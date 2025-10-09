@@ -43,7 +43,7 @@ function init() {
       const anchorTags = tempContainer.querySelectorAll(TAG_A);
 
       // 3. a タグのリストを一つずつ取り出し、target="_blank"（別タブへ遷移）を追加
-      if (anchorTags.length > 0) {
+      if (0 < anchorTags.length) {
         anchorTags.forEach(anchorTag => {
           anchorTag.setAttribute('target', '_blank');
         });

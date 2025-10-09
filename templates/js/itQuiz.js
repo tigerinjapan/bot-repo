@@ -161,7 +161,7 @@ const closeDialog = (id) => {
 
 // 配列シャッフル (フィッシャー・イェーツ)
 const shuffleArray = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
+  for (let i = array.length - 1; 0 < i; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
@@ -177,8 +177,6 @@ const shuffleArray = (array) => {
 // 最初の言語選択/ランキング画面をレンダリングする
 const renderInitialScreen = () => {
   const container = getElem('main-container');
-
-  setUserName();
 
   // ユーザー名表示は英語固定
   const userDisplay = `<p class="text-label" style="text-align: right;">User: ${userId}</p>`;
@@ -309,7 +307,7 @@ const updateTimerDisplay = () => {
 
   const percentage = (gameState.timeRemaining / gameState.initialTime) * 100;
   progress.style.width = `${Math.max(0, percentage)}%`;
-  progress.style.backgroundColor = percentage > 25 ? (percentage > 50 ? '#ff69b4' : '#ffc0cb') : '#ff4500'; // 色変化
+  progress.style.backgroundColor = 25 < percentage ? (50 < percentage ? '#ff69b4' : '#ffc0cb') : '#ff4500'; // 色変化
 };
 
 /**
@@ -370,7 +368,7 @@ const nextQuiz = () => {
   gameState.currentWord = Array(word.length).fill('_');
 
   // 最初の文字を公開する（2文字の単語は除く）
-  if (word.length > 2) {
+  if (2 < word.length) {
     // 最初の有効な文字（スペース以外）を見つけて公開
     for (let i = 0; i < word.length; i++) {
       if (word[i] !== ' ') {
@@ -512,7 +510,7 @@ const openChoiceDialog = (index) => {
 
   // 候補を作成: 正解文字 + 誤答文字4つ (重複なし)
   let choices = [correctChar];
-  while (choices.length < 5 && filteredPool.length > 0) {
+  while (choices.length < 5 && 0 < filteredPool.length) {
     const randomIndex = Math.floor(Math.random() * filteredPool.length);
     choices.push(filteredPool.splice(randomIndex, 1)[0]);
   }
@@ -628,7 +626,7 @@ function getUpdateRank() {
   const rankingDataJson = JSON.parse(dataList);
 
   for (let i = 0; i < Math.min(5, rankingDataJson.length); i++) {
-    if (gameState.score > rankingDataJson[i].score) {
+    if (rankingDataJson[i].score <= gameState.score) {
       updateRank = rankingDataJson[i].rank;
       break;
     }
@@ -654,7 +652,7 @@ const gameOver = () => {
   const updateRank = getUpdateRank();
   if (updateRank !== null) {
     // setUserName();
-    updateRanking(updateRank, userId, gameState.score);
+    updateRanking(updateRank, gameState.score, userId);
   }
 
   // 3秒後に初期画面へ
@@ -664,7 +662,7 @@ const gameOver = () => {
 // ユーザ名設定
 function setUserName() {
   if (!userId || userId === SYM_BLANK) {
-    userId = prompt(MSG_INFO_INPUT_USER_EN);
+    userId = prompt(MSG_INPUT_USER_EN);
   } else {
     userId = getElemText("userName");
   }
@@ -672,7 +670,19 @@ function setUserName() {
 }
 
 // ランキングをAPI経由で更新
-async function updateRanking(rank, userId, score) {
+async function updateRanking(rank, score, userId) {
+  let rankOkMsg = MSG_OK_RANK;
+  let rankNgMsg = MSG_ERR_RANK;
+
+  const langCd = gameState.selectedLanguage;
+  if (langCd === LANG_CD_KO) {
+    rankOkMsg = MSG_OK_RANK_KO;
+    rankNgMsg = MSG_ERR_RANK_KO;
+  } else if (langCd === LANG_CD_EN) {
+    rankOkMsg = MSG_OK_RANK_EN;
+    rankNgMsg = MSG_ERR_RANK_EN;
+  }
+
   let url = URL_QUIZ_RANKING_SERVER;
   if (isLocal()) {
     url = URL_QUIZ_RANKING_LOCAL;
@@ -684,19 +694,20 @@ async function updateRanking(rank, userId, score) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         rank: rank,
-        userId: userId,
         score: score,
+        userId: userId,
       })
     });
-    const result = await res.json();
-    if (result.success) {
-      alert("Ranking updated！");
-    } else {
-      alert("Failed to update ranking.");
-    }
+
+    const data = await res.json();
+    console.log(data.message);
+    alert(rankOkMsg);
   } catch (e) {
-    alert("通信エラーでランキング更新できませんでした。");
+    alert(rankNgMsg);
   }
+
+  // ページ全体をリセット（再読み込み）
+  location.reload();
 }
 
 // ルールダイアログ表示
@@ -713,5 +724,6 @@ const showRuleDialog = () => {
 
 // ページロード時の初期化
 window.onload = () => {
+  setUserName();
   renderInitialScreen();
 };

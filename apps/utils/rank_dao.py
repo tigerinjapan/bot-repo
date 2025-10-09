@@ -60,7 +60,7 @@ def get_ranking_top(app_name: str = const.APP_IT_QUIZ):
             }
         },
     }
-    sort = {mongo_const.FI_RANK: 1}
+    sort = {mongo_const.FI_RANK: 1, mongo_const.FI_UPDATE_DATE: -1}
 
     ranking_top = get_rank_top(cond, select_data, sort)
     return ranking_top
@@ -105,29 +105,42 @@ def update_rank_info_of_api(json_data):
     if count == 0:
         func_mongo.db_insert(client, coll_rank, update_data)
     else:
-        func_mongo.db_update(client, coll_rank, cond, update_data)
+        func_mongo.db_update_one(client, coll_rank, cond, update_data)
     func_mongo.db_close(client)
 
 
 # ランキング情報更新（API）
 def update_ranking_of_api(json_data, div: str = const.APP_IT_QUIZ):
     coll_rank = mongo_const.COLL_RANKING
-    update_data, rank = rank_dto.get_update_data_for_ranking(div, json_data)
+    insert_data, target_rank, target_score = rank_dto.get_update_data_for_ranking(
+        div, json_data
+    )
 
     client = func_mongo.db_connect()
 
+    # 1. 同じスコアを持つドキュメントが存在するかを確認
+    existing_score_count = func_mongo.db_count(
+        client, coll_rank, {mongo_const.FI_SCORE: target_score}
+    )
+
+    # 2. 更新条件の設定
+    if 0 < existing_score_count:
+        # 重複ありの場合
+        update_rank = target_rank + 1
+    else:
+        # 重複なしの場合
+        update_rank = target_rank
+
+    # 3. 更新
     cond = {
         mongo_const.FI_DIV: div,
-        mongo_const.FI_RANK: {mongo_const.OPERATOR_GREATER_THAN_OR_EQUAL: rank},
+        mongo_const.FI_RANK: {mongo_const.OPERATOR_GREATER_THAN_OR_EQUAL: update_rank},
     }
-
-    # TODO: コレクションの見直し
-
     update_data = {mongo_const.OPERATOR_INCREMENT: {mongo_const.FI_RANK: 1}}
     func_mongo.db_update_many(client, coll_rank, cond, update_data)
 
-    cond = {mongo_const.FI_DIV: div, mongo_const.FI_RANK: rank}
-    func_mongo.db_insert(client, coll_rank, update_data)
+    # 4. 登録
+    func_mongo.db_insert(client, coll_rank, insert_data)
 
     func_mongo.db_close(client)
 

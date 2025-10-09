@@ -71,7 +71,7 @@ def update_board_status(seq: str, status: int = board_dto.STATUS_DONE):
         mongo_const.FI_STATUS: status,
         mongo_const.FI_UPDATE_DATE: func.get_now(),
     }
-    func_mongo.db_update(client, mongo_const.COLL_BOARD, cond, update_data)
+    func_mongo.db_update_one(client, mongo_const.COLL_BOARD, cond, update_data)
     func_mongo.db_close(client)
 
 

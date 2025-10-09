@@ -53,10 +53,12 @@ db.createCollection(coll,
 // create index
 db.getCollection(coll).createIndex({
     "sDiv": 1,
-    "nRank": 1
+    "nScore": 1,
+    "sUserName": 1,
+    "dUpdateDate": 1
 },
     {
-        "name": "indexDivRank",
+        "name": "indexRanking",
         "unique": true
     });
 

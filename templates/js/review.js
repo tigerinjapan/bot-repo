@@ -90,7 +90,7 @@ function init() {
 // ユーザ名設定
 function setUserName() {
   if (!userName || userName === SYM_BLANK) {
-    userName = prompt(MSG_INFO_INPUT_USER_EN);
+    userName = prompt(MSG_INPUT_USER_EN);
   } else {
     userName = getElemText("userName");
   }

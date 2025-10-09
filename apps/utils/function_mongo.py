@@ -151,7 +151,7 @@ def db_insert(client, coll_nm: str, insert_data):
 
 
 # データ更新
-def db_update(client, coll_nm: str, cond, update_data):
+def db_update_one(client, coll_nm: str, cond, update_data):
     coll = get_collection(client, coll_nm)
     update_data = {mongo_const.OPERATOR_SET: update_data}
 
