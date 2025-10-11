@@ -105,6 +105,8 @@ function sendReview() {
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
+    setUserName();
+
     const app = getElem(STR_APP).value;
     const category = getElem(STR_CATEGORY).value;
 
@@ -134,8 +136,6 @@ function sendReview() {
       if (isLocal()) {
         url = URL_BOARD_LOCAL;
       }
-
-      setUserName();
 
       const res = await fetch(url, {
         method: "POST",

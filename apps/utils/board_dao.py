@@ -37,7 +37,7 @@ def get_board_info():
         mongo_const.FI_USER_NAME: -1,
     }
 
-    result = func_mongo.db_find(client, mongo_const.COLL_AUTH, cond, sort=sort)
+    result = func_mongo.db_find(client, mongo_const.COLL_BOARD, cond, sort=sort)
     if result:
         for board_info in result:
             json_data = board_dto.get_board_data(board_info)

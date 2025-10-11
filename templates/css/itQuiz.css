@@ -7,15 +7,15 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 100vh;
 	color: darkslategray;
 	transition: background-color 0.3s;
 }
 
 /* メインコンテナ - レスポンシブ対応 */
 .container {
-	width: 95%;
-	max-width: 600px;
+	width: 100%;
+	max-width: 640px;
+	max-height: 640px;
 	background-color: white;
 	border-radius: 20px;
 	box-shadow: 0 10px 30px rgba(255, 192, 203, 0.4);
@@ -71,27 +71,6 @@ body {
 .btn-secondary:active {
 	box-shadow: 0 2px 0 lightblue;
 	transform: translateY(3px);
-}
-
-/* ユーティリティクラス */
-.flex-row {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 15px;
-	flex-wrap: wrap;
-}
-
-.flex-center {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.flex-end {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
 }
 
 .text-label {
@@ -267,7 +246,6 @@ dialog::backdrop {
 	}
 
 	.container {
-		max-width: 80vw;
 		border-radius: 0;
 		padding: 8px 2vw;
 		box-shadow: none;
@@ -289,14 +267,6 @@ dialog::backdrop {
 	.btn-primary,
 	.btn-secondary {
 		font-size: 1rem;
-	}
-
-	.flex-row,
-	.flex-center,
-	.flex-end {
-		flex-direction: column;
-		align-items: stretch;
-		gap: 8px;
 	}
 
 	#quiz-word {
