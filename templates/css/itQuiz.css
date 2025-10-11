@@ -1,15 +1,14 @@
 /* グローバルリセットとフォント設定 */
 body {
 	font-family: 'Noto Sans JP', 'Noto Sans KR', 'Inter', sans-serif;
-	background-color: #f7f7f7;
-	/* 薄いグレーの背景 */
+	background-color: lightgray;
 	margin: 0;
 	padding: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
-	color: #333;
+	color: darkslategray;
 	transition: background-color 0.3s;
 }
 
@@ -17,12 +16,9 @@ body {
 .container {
 	width: 95%;
 	max-width: 600px;
-	/* PCでの最大幅 */
-	background-color: #ffffff;
+	background-color: white;
 	border-radius: 20px;
-	/* 角を丸く */
 	box-shadow: 0 10px 30px rgba(255, 192, 203, 0.4);
-	/* 柔らかいピンクの影 */
 	padding: 20px;
 	box-sizing: border-box;
 	transition: all 0.3s ease-in-out;
@@ -33,11 +29,10 @@ body {
 	text-align: center;
 	font-size: 1.8rem;
 	font-weight: 700;
-	color: #ff69b4;
-	/* ショッキングピンク */
+	color: lightpink;
 	margin-bottom: 20px;
 	padding-bottom: 10px;
-	border-bottom: 3px solid #f0f0f0;
+	border-bottom: 3px solid white;
 }
 
 /* 共通ボタンとクリック可能な要素のスタイル */
@@ -46,41 +41,35 @@ body {
 	padding: 10px 15px;
 	border: none;
 	border-radius: 12px;
-	/* さらに丸く */
 	font-weight: 700;
 	cursor: pointer;
 	transition: all 0.2s ease;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	margin: 5px;
 	text-transform: uppercase;
-	/* キーボード対応のため候補文字は常に大文字 */
 }
 
 /* プライマリボタン (ゲーム開始、確認) */
 .btn-primary {
-	background-color: #ffb6c1;
-	/* ライトピンク */
-	color: #fff;
-	box-shadow: 0 5px 0 #ff69b4;
-	/* 濃いピンクのシャドウ */
+	background-color: lightpink;
+	color: white;
+	box-shadow: 0 5px 0 pink;
 }
 
 .btn-primary:active {
-	box-shadow: 0 2px 0 #ff69b4;
+	box-shadow: 0 2px 0 pink;
 	transform: translateY(3px);
 }
 
 /* セカンダリボタン (ヒント、ルール) */
 .btn-secondary {
-	background-color: #add8e6;
-	/* ライトブルー */
-	color: #fff;
-	box-shadow: 0 5px 0 #87ceeb;
-	/* スカイブルーのシャドウ */
+	background-color: lightblue;
+	color: white;
+	box-shadow: 0 5px 0 skyblue;
 }
 
 .btn-secondary:active {
-	box-shadow: 0 2px 0 #87ceeb;
+	box-shadow: 0 2px 0 lightblue;
 	transform: translateY(3px);
 }
 
@@ -107,17 +96,17 @@ body {
 
 .text-label {
 	font-size: 0.9rem;
-	color: #888;
+	color: gray;
 }
 
 .text-value {
 	font-size: 1.1rem;
 	font-weight: 700;
-	color: #333;
+	color: gray;
 }
 
 .text-error {
-	color: #ff0000;
+	color: orangered;
 	font-weight: 700;
 }
 
@@ -128,7 +117,6 @@ body {
 	flex-wrap: wrap;
 	margin: 25px 0;
 	min-height: 40px;
-	/* レイアウト崩れ防止 */
 }
 
 .quiz-char-box {
@@ -136,48 +124,44 @@ body {
 	justify-content: center;
 	align-items: center;
 	width: 40px;
-	/* 各文字のボックスサイズ */
 	height: 40px;
 	margin: 5px;
 	font-size: 1.5rem;
 	font-weight: 700;
-	border: 2px solid #ddd;
+	border: 2px solid silver;
 	border-radius: 8px;
-	color: #333;
-	background-color: #f9f9f9;
+	color: darkslategray;
+	background-color: white;
 }
 
 .quiz-char-blank {
-	background-color: #fff0f5;
-	/* 薄いピンク */
-	color: #ff69b4;
-	border: 2px dashed #ff69b4;
+	background-color: silver;
+	color: lightpink;
+	border: 2px dashed lightpink;
 	cursor: pointer;
 }
 
 .quiz-char-blank:hover {
-	background-color: #ffe4e9;
+	background-color: white;
 }
 
 /* クイズ説明領域 */
 #quiz-description {
-	background-color: #f0fff0;
-	/* 薄いミントグリーン */
-	border: 1px solid #e0eee0;
+	background-color: mintcream;
+	border: 1px solid white;
 	padding: 15px;
 	border-radius: 12px;
 	text-align: center;
 	margin-bottom: 20px;
 	font-size: 1rem;
 	line-height: 1.5;
-	color: #4b0082;
-	/* 濃い紫 */
+	color: purple;
 }
 
 /* タイムバー */
 #timer-bar {
 	height: 10px;
-	background-color: #e0e0e0;
+	background-color: white;
 	border-radius: 5px;
 	overflow: hidden;
 	margin-bottom: 15px;
@@ -186,7 +170,7 @@ body {
 #timer-progress {
 	height: 100%;
 	width: 100%;
-	background-color: #ff69b4;
+	background-color: pink;
 	transition: width 0.1s linear;
 }
 
@@ -197,7 +181,7 @@ dialog {
 	border-radius: 15px;
 	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 	max-width: 90%;
-	background-color: #fff;
+	background-color: white;
 }
 
 dialog::backdrop {
@@ -216,23 +200,23 @@ dialog::backdrop {
 	width: 100%;
 	height: 50px;
 	font-size: 1.3rem;
-	background-color: #fff0f5;
-	color: #ff69b4;
-	border: 2px solid #ff69b4;
+	background-color: white;
+	color: pink;
+	border: 2px solid pink;
 	border-radius: 10px;
 	transition: background-color 0.2s;
 }
 
 .choice-btn:hover:not(:disabled) {
-	background-color: #ffc0cb;
-	color: #fff;
+	background-color: lightpink;
+	color: white;
 }
 
 .choice-btn:disabled {
-	background-color: #e9e9e9;
-	color: #ccc;
+	background-color: whitesmoke;
+	color: lightgray;
 	cursor: not-allowed;
-	border-color: #ccc;
+	border-color: whitesmoke;
 	box-shadow: none;
 }
 
@@ -249,14 +233,14 @@ dialog::backdrop {
 	list-style: none;
 	padding: 0;
 	margin-top: 20px;
-	border-top: 1px solid #eee;
+	border-top: 1px solid white;
 }
 
 .ranking-item {
 	display: flex;
 	justify-content: space-between;
 	padding: 10px 0;
-	border-bottom: 1px solid #eee;
+	border-bottom: 1px solid white;
 }
 
 .ranking-item span {
@@ -273,6 +257,97 @@ dialog::backdrop {
 }
 
 .ranking-item:nth-child(3) .rank {
-	color: #cd7f32;
-	/* bronze */
+	color: orange;
+}
+
+/* --- モバイル最適化 --- */
+@media (max-width: 480px) {
+	body {
+		padding: 0;
+	}
+
+	.container {
+		max-width: 80vw;
+		border-radius: 0;
+		padding: 8px 2vw;
+		box-shadow: none;
+	}
+
+	.title {
+		font-size: 1.2rem;
+		padding-bottom: 6px;
+	}
+
+	.btn,
+	.quiz-char-blank {
+		padding: 8px 8px;
+		font-size: 0.9rem;
+		margin: 3px;
+		border-radius: 8px;
+	}
+
+	.btn-primary,
+	.btn-secondary {
+		font-size: 1rem;
+	}
+
+	.flex-row,
+	.flex-center,
+	.flex-end {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 8px;
+	}
+
+	#quiz-word {
+		margin: 12px 0;
+		min-height: 32px;
+	}
+
+	.quiz-char-box {
+		width: 28px;
+		height: 28px;
+		font-size: 1.1rem;
+		margin: 2px;
+		border-radius: 6px;
+	}
+
+	#quiz-description {
+		font-size: 0.9rem;
+		padding: 10px;
+		margin-bottom: 12px;
+	}
+
+	#timer-bar {
+		height: 8px;
+		margin-bottom: 10px;
+	}
+
+	.choice-buttons-container {
+		grid-template-columns: 1fr;
+		gap: 6px;
+		margin-top: 10px;
+	}
+
+	.choice-btn {
+		height: 38px;
+		font-size: 1rem;
+		border-radius: 7px;
+	}
+
+	#ranking-list {
+		margin-top: 10px;
+	}
+
+	.ranking-item {
+		padding: 7px 0;
+		font-size: 0.9rem;
+	}
+
+	dialog {
+		padding: 10px;
+		border-radius: 10px;
+		max-width: 95vw;
+		font-size: 0.9rem;
+	}
 }

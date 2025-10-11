@@ -35,15 +35,13 @@ const gameState = {
 const textMap = {
   "title": { "ko": "IT 상식 퀴즈", "ja": "IT クイズ", "en": "IT Quiz" },
   "user_label": { "ko": "유저 ", "ja": "ユーザー ", "en": "User " },
-  "score_label": { "ko": "점수:", "ja": "スコア:", "en": "Score:" },
+  "score_label": { "ko": "점수 ", "ja": "スコア ", "en": "Score " },
   "quiz_status_label": { "ko": "문제 ", "ja": "問題 ", "en": "Quiz " },
-  "start_game": { "ko": "게임 시작", "ja": "ゲームスタート", "en": "START GAME" },
-  "view_ranking": { "ko": "랭킹 보기", "ja": "ランキング表示", "en": "VIEW RANKING" },
+  // "start_game": { "ko": "게임 시작", "ja": "ゲームスタート", "en": "START GAME" },
   "game_rule": { "ko": "게임 규칙", "ja": "ゲームルール", "en": "GAME RULE" },
   "hint": { "ko": "힌트", "ja": "ヒント", "en": "HINT" },
+  "home": { "ko": "홈", "ja": "ホームへ", "en": "HOME" },
   "check_answer": { "ko": "정답 확인", "ja": "正解確認", "en": "CHECK ANSWER" },
-  "ranking": { "ko": "랭킹", "ja": "ランキング", "en": "RANKING" },
-  "select_language": { "ko": "언어 선택 ", "ja": "言語選択 ", "en": "Select Language " },
   "instruction_message": { "ko": "알파벳 또는 숫자만 입력가능합니다.", "ja": "英数字のみ入力してください。", "en": "Select a character or use your keyboard." },
 };
 
@@ -69,7 +67,7 @@ const msgMap = {
     `,
     "ja": `
         <p><strong>1. 目標:</strong> 与えられた説明をヒントにIT用語を当てます (全${quizNum}問)。</p>
-        <p><strong>2. 時間:</strong> 制限時間は単語の文字数 $\times 10$ 秒です。</p>
+        <p><strong>2. 時間:</strong> 制限時間は単語の文字数 x 10秒です。(例: 3文字: 30秒)</p>
         <p><strong>3. ヒント:</strong> 単語の最初の文字は公開されます。<br>
         「ヒント」を押すと1文字ずつ公開されます (最大文字数 $-1$まで)。</p>
         <p><strong>4. 得点:</strong></p>
@@ -86,7 +84,7 @@ const msgMap = {
     `,
     "en": `
         <p><strong>1. Goal:</strong> Guess the IT term based on the provided description (Total ${quizNum} questions).</p>
-        <p><strong>2. Time Limit:</strong> Word length $\times 10$ seconds.</p>
+        <p><strong>2. Time Limit:</strong> Word length x 10 seconds.(ex) 3ch: 30s.</p>
         <p><strong>3. Hint:</strong> The first letter is revealed. Using 'HINT' reveals one letter at a time (up to Word Length - 1).</p>
         <p><strong>4. Scoring:</strong></p>
         <ul>
@@ -174,7 +172,7 @@ const shuffleArray = (array) => {
  * =================================================================
  */
 
-// 最初の言語選択/ランキング画面をレンダリングする
+// 初期画面：言語選択/ランキング表示
 const renderInitialScreen = () => {
   const container = getElem('main-container');
 
@@ -199,24 +197,62 @@ const renderInitialScreen = () => {
 
   container.innerHTML = `
       ${userDisplay}
-      <h1 class="title">${getLocalizedText('title')}</h1>
+      <h1 class="title">IT Quiz</h1>
       <div class="flex-center" style="margin-bottom: 30px; gap: 10px;">
-          <p class="text-value">${getLocalizedText('select_language')}</p>
-          <button class="btn btn-secondary" onclick="startGame('ja')">日本語</button>
-          <button class="btn btn-secondary" onclick="startGame('ko')">한국어</button>
-          <button class="btn btn-secondary" onclick="startGame('en')">English</button>
+          <p class="text-value">Language</p>
+          <button class="btn btn-secondary lang-btn" data-lang="ja" onclick="onLanguageSelect('ja')">日本語</button>
+          <button class="btn btn-secondary lang-btn" data-lang="ko" onclick="onLanguageSelect('ko')">한국어</button>
+          <button class="btn btn-secondary lang-btn" data-lang="en" onclick="onLanguageSelect('en')">English</button>
       </div>
-
-      <div class="flex-end">
-          <button class="btn btn-secondary" onclick="showRuleDialog()">${getLocalizedText('game_rule')}</button>
+      <div class="flex-center" style="margin-bottom: 30px;">
+          <button class="btn" id="btnStartGame" disabled>START GAME</button>
+          <button class="btn" id="btnGameRule" disabled onclick="showRuleDialog()">GAME RULE</button>
       </div>
-
-      <h2 style="font-size: 1.4rem; color: #4682b4; border-bottom: 2px dashed #eee; padding-bottom: 5px;">${getLocalizedText('ranking')}</h2>
+      <h2 style="font-size: 1.4rem; color: #4682b4; border-bottom: 2px dashed #eee; padding-bottom: 5px;">Ranking</h2>
       <ul id="ranking-list">
           ${rankingsHtml}
       </ul>
   `;
+
+  // START GAMEボタンにイベントを付与
+  const btnStart = getElem('btnStartGame');
+  if (btnStart) {
+    btnStart.addEventListener('click', () => {
+      startGame(gameState.selectedLanguage);
+    });
+  }
 };
+
+// 言語選択ボタン押下時の処理（背景色変更＆START GAME活性化）
+function onLanguageSelect(lang) {
+  gameState.selectedLanguage = lang;
+
+  // 言語ボタンの背景色を切り替え
+  const langBtns = document.querySelectorAll('.lang-btn');
+  langBtns.forEach(btn => {
+    if (btn.dataset.lang === lang) {
+      btn.style.backgroundColor = 'blue';
+      btn.style.color = 'white';
+      btn.style.fontWeight = 'bold';
+    } else {
+      btn.style.backgroundColor = '';
+      btn.style.color = '';
+      btn.style.fontWeight = '';
+    }
+  });
+
+  // START GAMEボタンを有効化
+  const btnStart = getElem('btnStartGame');
+  const btnRule = getElem('btnGameRule');
+  if (btnStart) {
+    btnStart.className = "btn btn-primary";
+    btnStart.disabled = false;
+    btnStart.classList.add('active');
+    btnRule.className = "btn btn-secondary";
+    btnRule.disabled = false;
+    btnRule.classList.add('active');
+  }
+}
 
 // ゲームプレイ画面をレンダリングする
 const renderQuizScreen = () => {
@@ -224,18 +260,18 @@ const renderQuizScreen = () => {
 
   // UIラベルは英語固定
   container.innerHTML = `
-      <h1 class="title">IT Common Sense Quiz</h1>
+      <h1 class="title">${getLocalizedText('title')}</h1>
       
       <!-- ユーザー情報とステータス -->
       <div class="flex-row">
           <div style="font-size: 0.9rem;">
-              <span class="text-label">User:</span> <span class="text-value">${userId}</span>
+              <span class="text-label">${getLocalizedText('user_label')}</span> <span class="text-value">${userId}</span>
           </div>
           <div>
-              <span class="text-label">Score:</span> <span class="text-value" id="current-score">${gameState.score} pts</span>
+              <span class="text-label">${getLocalizedText('score_label')}</span> <span class="text-value" id="current-score">${gameState.score} pts</span>
           </div>
           <div>
-              <span class="text-label">Quiz:</span> <span class="text-value" id="quiz-status">1 / ${quizNum}</span>
+              <span class="text-label">${getLocalizedText('quiz_status_label')}</span> <span class="text-value" id="quiz-status">1 / ${quizNum}</span>
           </div>
       </div>
 
@@ -244,7 +280,7 @@ const renderQuizScreen = () => {
 
       <!-- ゲームルールボタン -->
       <div class="flex-end" style="margin-bottom: 10px;">
-          <button class="btn btn-secondary" onclick="showRuleDialog()">GAME RULE</button>
+          <button class="btn btn-secondary" onclick="showRuleDialog()">${getLocalizedText('game_rule')}</button>
       </div>
 
       <!-- クイズ単語表示領域 -->
@@ -257,8 +293,9 @@ const renderQuizScreen = () => {
 
       <!-- 操作ボタン -->
       <div class="flex-center" style="gap: 15px; margin-top: 25px;">
-          <button class="btn btn-secondary" id="hint-button" onclick="useHint()">HINT</button>
-          <button class="btn btn-primary" id="check-button" onclick="checkAnswer()">CHECK ANSWER</button>
+          <button class="btn btn-secondary" id="hint-button" onclick="useHint()">${getLocalizedText('hint')}</button>
+          <button class="btn btn-secondary" id="home-button" onclick="goHome()">${getLocalizedText('home')}</button>
+          <button class="btn btn-primary" id="check-button" onclick="checkAnswer()">${getLocalizedText('check_answer')}</button>
       </div>
   `;
 
@@ -320,7 +357,6 @@ const updateTimerDisplay = () => {
 async function startGame(language) {
   if (gameState.timerInterval) clearInterval(gameState.timerInterval);
 
-  gameState.selectedLanguage = language;
   gameState.score = 0;
   gameState.currentQuizIndex = -1; // nextQuizで0から開始するため
   gameState.isGameOver = false;
@@ -421,6 +457,15 @@ const handleTimeout = () => {
   // 3秒後に次の問題へ
   setTimeout(nextQuiz, 3000);
 };
+
+// ホーム画面へ
+function goHome() {
+  gameState.isGameOver = true;
+  if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+
+  renderInitialScreen();
+}
+
 
 // ヒント使用
 const useHint = () => {

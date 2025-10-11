@@ -1,18 +1,22 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGKKZO91830090Z01C25A0MM8000/\" target=\"_blank\" rel=\"noopener noreferrer\">北川氏にノーベル化学賞金属有機構造体を開発\n脱炭素に寄与京大特別教授</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOGN1102R0R11C25A0000000/\" target=\"_blank\" rel=\"noopener noreferrer\">トランプ氏｢対中関税100%追加｣11月1日から\n輸出規制に対抗</a>"
     },
     {
         "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2510/08/news061.html\" target=\"_blank\" rel=\"noopener noreferrer\">Google、PC操作を自動化するAI「Gemini2.5ComputerUse」のプレビュー版公開</a>"
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2510/09/news120.html\" target=\"_blank\" rel=\"noopener noreferrer\">「法務でAIがどこまで使えるか」を測るデータセット、デジタル庁が公開</a>"
+    },
+    {
+        "区分": "韓国",
+        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56301\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 東方神起ユンホがアルバム発売へ 13日にタイトル曲先行配信</a>"
     },
     {
         "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/503843.html\" target=\"_blank\" rel=\"noopener noreferrer\">「ASTRO」チャウヌ\nうれしい秋夕のあいさつ\n「また会う時まで元気で」</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/503991.html\" target=\"_blank\" rel=\"noopener noreferrer\">キムグァンギュ\nユナ(少女時代)X イチェミンと共にした「暴君のシェフ」打ち上げパーティーのビハインド公開</a>"
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/503948.html\" target=\"_blank\" rel=\"noopener noreferrer\">JENNIE(BLACKPINK) のパワー\nソウル観光で疾走\nBGMに「Seoul City」</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/504120.html\" target=\"_blank\" rel=\"noopener noreferrer\">「BTS」JUNG KOOKの「Standing Next to You」がSpotifyで13億ストリーミングを突破</a>"
     }
 ]
