@@ -13,7 +13,7 @@ body {
 
 /* メインコンテナ - レスポンシブ対応 */
 .container {
-	/* width: 100%; */
+	width: 95%;
 	max-width: 800px;
 	max-height: 640px;
 	background-color: white;
@@ -240,12 +240,13 @@ dialog::backdrop {
 }
 
 /* --- モバイル最適化 --- */
-@media (max-width: 480px) {
+@media (max-width: 640px) {
 	body {
 		padding: 0;
 	}
 
 	.container {
+		width: 75%;
 		border-radius: 0;
 		padding: 8px 2vw;
 		box-shadow: none;

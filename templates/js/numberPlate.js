@@ -290,9 +290,9 @@ async function sendRanking(number, time, langCd) {
 
   setUserName(inputMsg);
 
-  let rankingUrl = URL_NUMBER_RANKING_SERVER;
+  let url = URL_NUMBER_RANKING_SERVER;
   if (isLocal()) {
-    rankingUrl = URL_NUMBER_RANKING_LOCAL;
+    url = URL_NUMBER_RANKING_LOCAL;
   }
 
   const requestBody = { number: number, user: userName, time: time, date: new Date() };

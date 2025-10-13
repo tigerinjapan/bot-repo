@@ -149,7 +149,7 @@ async function getFetchApiData(url, requestBody) {
   } catch (error) {
     // エラー処理
     console.error('エラー:', error);
-    alert(MSG_ERR_LOAD_JSON_EN); // TODO: エラー
+    alert(MSG_ERR_LOAD_JSON_EN);
   }
 }
 

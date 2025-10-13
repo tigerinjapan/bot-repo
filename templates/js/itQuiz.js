@@ -8,7 +8,7 @@
 const quizNum = 5;
 
 // 単語長さ制限
-const MAX_WORD_LENGTH = 7;
+const MAX_WORD_LENGTH = 6;
 
 // 1問のポイント
 const PLUS_POINT = 20;
@@ -510,14 +510,32 @@ const checkAnswer = () => {
     // 正解時のスコアリング
     clearInterval(gameState.timerInterval);
 
-    const timeElapsed = gameState.initialTime - gameState.timeRemaining;
     const halfTime = gameState.initialTime / 2;
     let points = 0;
 
-    if (timeElapsed <= halfTime) {
+    if (halfTime < gameState.timeRemaining) {
       points = PLUS_POINT;
     } else {
-      points = PLUS_POINT / 2;
+      // halfTime を5等分した1区間の時間
+      const segmentTime = halfTime / 5;
+
+      // timeRemaining が halfTime からどれだけ遅れているかを計算
+      const delay = halfTime - gameState.timeRemaining;
+
+      // 遅延がどの区間に該当するかを計算 (1区間目なら1, 2区間目なら2, ...)
+      // Math.ceil() で切り上げることにより、0.01秒遅れた時点で次の区間に入るようにする
+      let segmentIndex = Math.ceil(delay / segmentTime);
+
+      // 区間インデックスを最大5（5等分）に制限
+      if (segmentIndex > 5) {
+        segmentIndex = 5;
+      }
+
+      // 減点ポイントを計算 (1区間目は -2点, 2区間目は -4点, ...)
+      const deduction = segmentIndex * 2;
+
+      // 点数を計算
+      points = PLUS_POINT - deduction;
     }
 
     gameState.score += points;

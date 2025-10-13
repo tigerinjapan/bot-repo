@@ -153,7 +153,7 @@ async function requestApi(mode, prompt) {
     const requestBody = { mode: mode, prompt: prompt };
 
     try {
-        const data = await getFetchApiData(url, requestBody);
+        const data = await getFetchApiData(apiUrl, requestBody);
         console.log(data.message);
         alert(MSG_OK_SEND);
 

@@ -329,11 +329,14 @@ async def board_update(request: Request):
     try:
         json_data = await request.json()
         board_dao.update_board_status(json_data)
+        message = msg_const.MSG_INFO_PROC_COMPLETED
     except Exception as e:
         curr_func_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, json_data, e)
+        message = msg_const.MSG_ERR_SERVER_PROC_FAILED
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
 
-    return RedirectResponse(url=const.PATH_APP_BOARD)
+    result = {const.STR_MESSAGE: message}
+    return result
 
 
 @app.get("/kakao")

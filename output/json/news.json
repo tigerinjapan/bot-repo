@@ -1,18 +1,22 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUF292F90Z20C25A9000000/\" target=\"_blank\" rel=\"noopener noreferrer\">大阪万博､マハティール氏も見つめた未来の種課題先進国が示した｢解｣</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOGM063QN0W5A001C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">インドネシア高速鉄道\n中国と債務交渉赤字止まらず「時限爆弾」に</a>"
     },
     {
         "区分": "AI",
         "今日のニュース": "<a href=\"https://www.itmedia.co.jp/enterprise/articles/2510/11/news003.html\" target=\"_blank\" rel=\"noopener noreferrer\">“AIエージェントの次”のトレンドは何かGartnerが描く未来志向型インフラのハイプサイクル</a>"
     },
     {
+        "区分": "韓国",
+        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56321\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 洪羅喜氏、RM、徐道濩氏\n韓国美術市場をけん引する20人に選定</a>"
+    },
+    {
         "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/topic/read/147932.html\" target=\"_blank\" rel=\"noopener noreferrer\">イジュノ(2PM)\nナイトクラブ乱闘で警察行き\n父親ソンドンイルの怒り爆発(テプン商事)</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/467010.html\" target=\"_blank\" rel=\"noopener noreferrer\">「太陽を抱く月」や「于氏王后」出演の俳優ソンジェリムさん\n自宅で死亡\n遺書が見つかる</a>"
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/504211.html\" target=\"_blank\" rel=\"noopener noreferrer\">「TWS」\n新曲「OVERDRIVE」チャレンジパフォーマンス映像公開</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/504253.html\" target=\"_blank\" rel=\"noopener noreferrer\">「HIGHLIGHT」\n16日にデビュー16周年記念新曲「RAINBOW」発売\n永遠を約束するファンソング</a>"
     }
 ]
