@@ -35,7 +35,6 @@ URL_KAKAO_API_USER_ME = f"{URL_KAKAO_API}/v2/user/me"
 URL_KAKAO_API_FRIENDS = f"{URL_KAKAO_API}/v1/api/talk/friends"
 URL_KAKAO_API_SEND_FRIENDS = f"{URL_KAKAO_API}/message/default/send"
 
-URL_ICO = f"{func_line.URL_KOYEB_APP}/templates/favicon.ico"
 URL_TODAY_KOREA_IMG = f"{func_line.URL_KOYEB_IMG}/{const.APP_TODAY_KOREA}"
 
 # リダイレクトURI
@@ -302,7 +301,7 @@ def get_auth_content(token: str):
             </div>
         """
 
-    content = get_html_context(title, body)
+    content = html_const.get_html_context(title, body)
     return content
 
 
@@ -333,7 +332,7 @@ def get_logout_content(token: str) -> str:
 
     title = f"{account_str}로그아웃 결과"
     body += html_const.HTML_KAKAO_GO_MAIN
-    content = get_html_context(title, body)
+    content = html_const.get_html_context(title, body)
     return content
 
 
@@ -365,7 +364,7 @@ def get_auth_result_content(code: str) -> tuple[str, str]:
             </div>
         """
 
-    content = get_html_context(title, body)
+    content = html_const.get_html_context(title, body)
     return token, content
 
 
@@ -391,7 +390,7 @@ def get_unlink_content(token: str) -> str:
 
     title = "연결 해제 결과"
     body += html_const.HTML_KAKAO_GO_HOME
-    content = get_html_context(title, body)
+    content = html_const.get_html_context(title, body)
     return content
 
 
@@ -423,31 +422,8 @@ def get_test_message_content(token: str = const.SYM_BLANK) -> str:
         </div>
     """
 
-    content = get_html_context(title, body)
+    content = html_const.get_html_context(title, body)
     return content
-
-
-# HTMLテキスト取得
-def get_html_context(title: str, body: str) -> str:
-    html_context = f"""
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <title>{title}</title>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="{URL_ICO}"></script>
-    {html_const.HTML_KAKAO_STYLE}
-</head>
-<body>
-    {body}
-</body>
-
-</html>
-    """
-
-    return html_context
 
 
 if __name__ == const.MAIN_FUNCTION:

@@ -1,62 +1,61 @@
-/* --- フォント定義 --- */
-@font-face {
-	font-family: "meiryo";
-	src: url('/font/meiryo') format('truetype');
-}
-
-@font-face {
-	font-family: "msgothic";
-	src: url('/font/msgothic') format('truetype');
-}
-
-@font-face {
-	font-family: "uzura";
-	src: url('/font/uzura') format('truetype');
-}
-
-@font-face {
-	font-family: "yusei";
-	src: url('/font/yusei') format('truetype');
-}
-
 /* --- ベースカラー定義 --- */
 :root {
-	--main-bg: aliceblue;
 	/* 背景色 */
-	--main-color: black;
+	--main-bg: aliceblue;
+
 	/* 文字色 */
+	--main-color: black;
+
+	/* アクセント色 */
 	--accent: royalblue;
-	/* アクセント色 */
 	--accent-light: lightblue;
-	/* アクセント色 */
-	--border-color: lightblue;
+
 	/* 枠線 */
+	--border-color: lightblue;
+
+	/* テーブル背景 */
 	--table-header: lightblue;
-	/* テーブルヘッダー背景 */
 	--table-row: white;
-	/* テーブル行背景 */
-	--menu-bg: steelblue;
+
 	/* メニュー背景 */
-	--menu-hover: skyblue;
+	--menu-bg: steelblue;
 	/* メニューhover */
-	--menu-text: white;
+	--menu-hover: skyblue;
 	/* メニュー文字色 */
+	--menu-text: white;
+
 	--button-bg: royalblue;
 	--button-hover: skyblue;
 	--button-text: white;
+
 	--input-bg: aliceblue;
 	--input-border: lightblue;
+
+	/* result2.html用 */
+	--main-bg2: lemonchiffon;
+	--container-bg: white;
+	--shadow-color: gold;
+	--header-color: mediumslateblue;
+	--section-title-bg: aliceblue;
+	--section-title-border: skyblue;
+	--section-title-color: mediumslateblue;
+	--list-bg: honeydew;
+	--list-border: lightblue;
+	--sub-list-bg: white;
+	--sub-list-border: skyblue;
+	--caption-color: deepskyblue;
+	--image-border: gold;
 }
 
 /* --- 全体設定 --- */
 body {
-	margin: 0;
-	padding: 0;
-	color: var(--main-color);
 	font-family: "Meiryo UI", sans-serif;
 	font-size: 16px;
-	background: var(--main-bg);
 	line-height: 1.8;
+	color: var(--main-color);
+	background: var(--main-bg);
+	margin: 0;
+	padding: 0;
 	-webkit-text-size-adjust: none;
 }
 

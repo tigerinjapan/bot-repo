@@ -64,10 +64,15 @@ def insert_board_data_of_api(json_data):
 
 
 # ステータス更新
-def update_board_status(seq: str, status: int = board_dto.STATUS_DONE):
+def update_board_status(json_data):
+    seq = int(json_data[const.STR_TITLE])
+    remark = json_data[const.INPUT_TYPE_TEXT]
+    status = int(json_data[const.STR_STATUS])
+
     client = func_mongo.db_connect()
-    cond = {mongo_const.FI_SEQ: int(seq)}
+    cond = {mongo_const.FI_SEQ: seq}
     update_data = {
+        mongo_const.FI_REMARK: remark,
         mongo_const.FI_STATUS: status,
         mongo_const.FI_UPDATE_DATE: func.get_now(),
     }

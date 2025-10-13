@@ -1,22 +1,18 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOCD10A590Q5A011C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">公明党の連立離脱\n慌てる海外勢日本の「トリプル安」警戒</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUF292F90Z20C25A9000000/\" target=\"_blank\" rel=\"noopener noreferrer\">大阪万博､マハティール氏も見つめた未来の種課題先進国が示した｢解｣</a>"
     },
     {
         "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2510/09/news120.html\" target=\"_blank\" rel=\"noopener noreferrer\">「法務でAIがどこまで使えるか」を測るデータセット、デジタル庁が公開</a>"
-    },
-    {
-        "区分": "韓国",
-        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56301\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 東方神起ユンホがアルバム発売へ 13日にタイトル曲先行配信</a>"
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/enterprise/articles/2510/11/news003.html\" target=\"_blank\" rel=\"noopener noreferrer\">“AIエージェントの次”のトレンドは何かGartnerが描く未来志向型インフラのハイプサイクル</a>"
     },
     {
         "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/503991.html\" target=\"_blank\" rel=\"noopener noreferrer\">キムグァンギュ\nユナ(少女時代)X イチェミンと共にした「暴君のシェフ」打ち上げパーティーのビハインド公開</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/topic/read/147932.html\" target=\"_blank\" rel=\"noopener noreferrer\">イジュノ(2PM)\nナイトクラブ乱闘で警察行き\n父親ソンドンイルの怒り爆発(テプン商事)</a>"
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/504127.html\" target=\"_blank\" rel=\"noopener noreferrer\">「MAMAMOO」ファサ\n新曲「Good Goodbye」のティーザーに漂う切ないムード\nパクジョンミンと恋人演技</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/504211.html\" target=\"_blank\" rel=\"noopener noreferrer\">「TWS」\n新曲「OVERDRIVE」チャレンジパフォーマンス映像公開</a>"
     }
 ]

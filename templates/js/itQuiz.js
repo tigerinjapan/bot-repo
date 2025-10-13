@@ -8,10 +8,16 @@
 const quizNum = 5;
 
 // 単語長さ制限
-const MAX_WORD_LENGTH = 6;
+const MAX_WORD_LENGTH = 7;
 
 // 1問のポイント
-const MAX_POINT = 20;
+const PLUS_POINT = 20;
+
+// 1問のポイント
+const PLUS_POINT_HALF = PLUS_POINT / 2;
+
+// 減点
+const MINUS_POINT = (PLUS_POINT / 10) * -1;
 
 // ページ読み込み時にsessionStorageからデータを取得
 let userId = sessionStorage.getItem(STR_USER_NAME);
@@ -31,7 +37,7 @@ const gameState = {
   isGameOver: false,
 };
 
-// UI要素の多言語テキスト辞書 (ボタン名やラベルなど)
+// UI要素の多言語テキスト辞書（ボタン名やラベルなど）
 const textMap = {
   "title": { "ko": "IT 상식 퀴즈", "ja": "IT クイズ", "en": "IT Quiz" },
   "user_label": { "ko": "유저 ", "ja": "ユーザー ", "en": "User " },
@@ -55,13 +61,13 @@ const msgMap = {
         [힌트]를 누르면 1글자씩 공개 (힌트 = 최대 글자수 -1)</p>
         <p><strong>4. 득점</strong><br></p>
         <ul>
-            <li>제한 시간의 절반 이내 정답: <b>+10점</b></li>
-            <li>그 외 시간 내 정답: <b>+5점</b></li>
+            <li>제한 시간의 절반 이내 정답: <b>${PLUS_POINT}점</b></li>
+            <li>그 외 시간 내 정답: <b>${PLUS_POINT_HALF}점</b></li>
         </ul>
         <p><strong>5. 감점</strong><br></p>
         <ul>
-            <li>글자 선택 오답: <b>-1점</b></li>
-            <li>힌트 사용 시: <b>-1점</b></li>
+            <li>글자 선택 오답: <b>${MINUS_POINT}점</b></li>
+            <li>힌트 사용 시: <b>${MINUS_POINT}점</b></li>
         </ul>
         <p>※최소 점수: 0점</p>
     `,
@@ -72,13 +78,13 @@ const msgMap = {
         「ヒント」を押すと1文字ずつ公開されます (最大文字数 $-1$まで)。</p>
         <p><strong>4. 得点:</strong></p>
         <ul>
-            <li>制限時間の半分以内での正解: <b>+10点</b></li>
-            <li>それ以外の時間内での正解: <b>+5点</b></li>
+            <li>制限時間の半分以内での正解: <b>${PLUS_POINT}点</b></li>
+            <li>それ以外の時間内での正解: <b>${PLUS_POINT_HALF}点</b></li>
         </ul>
         <p><strong>5. 減点:</strong></p>
         <ul>
-            <li>文字選択での不正解: <b>-1点</b></li>
-            <li>ヒント使用時: <b>-1点</b></li>
+            <li>文字選択での不正解: <b>${MINUS_POINT}点</b></li>
+            <li>ヒント使用時: <b>${MINUS_POINT}点</b></li>
         </ul>
         <p>最低点数は0点です。</p>
     `,
@@ -88,13 +94,13 @@ const msgMap = {
         <p><strong>3. Hint:</strong> The first letter is revealed. Using 'HINT' reveals one letter at a time (up to Word Length - 1).</p>
         <p><strong>4. Scoring:</strong></p>
         <ul>
-            <li>Correct within half the time limit: <b>+10 points</b></li>
-            <li>Correct after half the time limit: <b>+5 points</b></li>
+            <li>Correct within half the time limit: <b>${PLUS_POINT} points</b></li>
+            <li>Correct after half the time limit: <b>${PLUS_POINT_HALF} points</b></li>
         </ul>
         <p><strong>5. Penalties:</strong></p>
         <ul>
-            <li>Incorrect character selection: <b>-1 point</b></li>
-            <li>Using a hint: <b>-1 point</b></li>
+            <li>Incorrect character selection: <b>${MINUS_POINT} point</b></li>
+            <li>Using a hint: <b>${MINUS_POINT} point</b></li>
         </ul>
         <p>The minimum score is 0.</p>
     `
@@ -102,9 +108,9 @@ const msgMap = {
   "game_over": { "ko": "게임 오버! 최종 점수:", "ja": "ゲームオーバー! 最終スコア:", "en": "GAME OVER! Final Score:" },
   "correct": { "ko": "정답입니다! 다음 문제로 넘어갑니다.", "ja": "正解です！次の問題に進みます。", "en": "Correct! Moving to the next quiz." },
   "timeout": { "ko": "시간 초과! 정답은 %WORD%였습니다.", "ja": "時間切れです！正解は %WORD% でした。", "en": "Time up! The answer was %WORD%." },
-  "invalid_choice": { "ko": "X 오답입니다! (-1점)", "ja": "X 不正解です！(-1点)", "en": "X Incorrect choice! (-1 point)" },
+  "invalid_choice": { "ko": `X 오답입니다! (${MINUS_POINT}점)`, "ja": `X 不正解です！(${MINUS_POINT}点)`, "en": `X Incorrect choice! (${MINUS_POINT} point)` },
   "wrong_answer": { "ko": "아직 정답이 아닙니다.", "ja": "まだ正解ではありません。", "en": "Not the correct answer yet." },
-  "hint_used": { "ko": "힌트를 사용했습니다! (-1점)", "ja": "ヒントを使用しました！(-1点)", "en": "Hint used! (-1 point)" },
+  "hint_used": { "ko": `힌트를 사용했습니다! (${MINUS_POINT}점)`, "ja": `ヒントを使用しました！(${MINUS_POINT}点)`, "en": `Hint used! (${MINUS_POINT} point)` },
   "no_more_hints": { "ko": "더 이상 힌트를 사용할 수 없습니다.", "ja": "これ以上ヒントは使えません。", "en": "No more hints available." },
   "already_solved": { "ko": "이미 해결된 빈칸입니다.", "ja": "すでに解決済みの空欄です。", "en": "This blank is already solved." },
   "input_error": { "ko": "잘못된 입력입니다.", "ja": "不正な入力です。", "en": "Invalid input." }
@@ -142,7 +148,7 @@ const getLocalizedMessage = (key, placeholder = {}) => {
 const showDialog = (id, contentKey = null, placeholder = {}) => {
   const dialog = getElem(id);
   if (contentKey) {
-    getElem('dialog-content').innerHTML = getLocalizedMessage(contentKey, placeholder);
+    setElemContents('dialog-content', getLocalizedMessage(contentKey, placeholder));
   }
   if (dialog) {
     dialog.showModal();
@@ -157,7 +163,7 @@ const closeDialog = (id) => {
   }
 };
 
-// 配列シャッフル (フィッシャー・イェーツ)
+// 配列シャッフル（フィッシャー・イェーツ）
 const shuffleArray = (array) => {
   for (let i = array.length - 1; 0 < i; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -367,7 +373,7 @@ async function startGame(language) {
   }
 
   // クイズデータ (IT関連用語、単語は全て大文字) - シャッフルし、選択
-  const quizDataList = await getFetchApiData(quizDataUrl);
+  const quizDataList = await getFetchApiData(quizDataUrl, null);
   const filteredList = quizDataList.filter(q => q.word.replace(/\s/g, '').length <= MAX_WORD_LENGTH);
   const randomTenList = shuffleArray([...filteredList]).slice(0, quizNum);
   gameState.quizSet = randomTenList;
@@ -466,7 +472,6 @@ function goHome() {
   renderInitialScreen();
 }
 
-
 // ヒント使用
 const useHint = () => {
   const currentWord = gameState.quizSet[gameState.currentQuizIndex].word;
@@ -487,8 +492,8 @@ const useHint = () => {
   gameState.currentWord[randomIndex] = currentWord[randomIndex];
   gameState.hintsUsed++;
 
-  // 減点処理 (-1点)
-  gameState.score = Math.max(0, gameState.score - 1);
+  // 減点処理
+  gameState.score = Math.max(0, gameState.score - MINUS_POINT);
 
   showDialog('message-dialog', 'hint_used');
   renderQuizStatus();
@@ -510,9 +515,9 @@ const checkAnswer = () => {
     let points = 0;
 
     if (timeElapsed <= halfTime) {
-      points = MAX_POINT;
+      points = PLUS_POINT;
     } else {
-      points = MAX_POINT / 2;
+      points = PLUS_POINT / 2;
     }
 
     gameState.score += points;
@@ -553,7 +558,7 @@ const openChoiceDialog = (index) => {
   // 正解文字をプールから除外（後のシャッフル用）
   const filteredPool = availablePool.filter(char => char !== correctChar);
 
-  // 候補を作成: 正解文字 + 誤答文字4つ (重複なし)
+  // 候補を作成: 正解文字 + 誤答文字4つ（重複なし）
   let choices = [correctChar];
   while (choices.length < 5 && 0 < filteredPool.length) {
     const randomIndex = Math.floor(Math.random() * filteredPool.length);
@@ -603,8 +608,8 @@ const handleChoice = (char) => {
     }
   } else {
     // 不正解の場合
-    // 減点処理 (-1点)
-    gameState.score = Math.max(0, gameState.score - 1);
+    // 減点処理
+    gameState.score = Math.max(0, gameState.score - MINUS_POINT);
     renderQuizStatus();
 
     // ダイアログを閉じずに、不正解のボタンを無効化
@@ -690,7 +695,7 @@ const gameOver = () => {
 
   // スコアを明示的に表示
   const msg = `${getLocalizedMessage('game_over')} ${gameState.score} pts`;
-  getElem('dialog-content').textContent = msg;
+  setElemText('dialog-content', msg);
   getElem('message-dialog').showModal();
 
   // ランキング更新判定・API送信
@@ -733,18 +738,10 @@ async function updateRanking(rank, score, userId) {
     url = URL_QUIZ_RANKING_LOCAL;
   }
 
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        rank: rank,
-        score: score,
-        userId: userId,
-      })
-    });
+  const requestBody = { rank: rank, score: score, userId: userId };
 
-    const data = await res.json();
+  try {
+    const data = await getFetchApiData(url, requestBody);
     console.log(data.message);
     alert(rankOkMsg);
   } catch (e) {
@@ -757,7 +754,7 @@ async function updateRanking(rank, score, userId) {
 
 // ルールダイアログ表示
 const showRuleDialog = () => {
-  getElem('rule-content').innerHTML = getLocalizedMessage('rule_content');
+  setElemContents('rule-content', getLocalizedMessage('rule_content'));
   getElem('rule-dialog').showModal();
 };
 

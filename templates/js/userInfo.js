@@ -1,38 +1,3 @@
-// 文字列
-const STR_LINES = "Lines";
-const STR_STATIONS = "Stations";
-
-const STR_SELECT_JA = "選択";
-const STR_ZIP_CD_JA = "郵便番号";
-const STR_LINE_JA = "沿線";
-const STR_STATION_JA = "駅";
-
-// ID
-const ID_SEX = "sex";
-const ID_ZIP_CD = "zipCd";
-const ID_PREF = "pref";
-const ID_TOWN = "town";
-const ID_LINE = "line";
-const ID_STATION = "station";
-
-// メッセージ
-const MSG_VAL_NOT_EXIST = "が存在しません";
-const MSG_ERR_PASSWORD_NOT_MATCH = "パスワードが一致しません";
-const MSG_ERR_MENU_NO_CHECKED_ELEMENTS = "メニューは、1つ以上チェックしてください";
-const MSG_ERR_MENU_CHECKED_MAX = "メニューは、最大5つまでチェックしてください";
-
-// URL
-const URL_SERVER = "https://kobe-dev.koyeb.app";
-const URL_LOCAL = "http://127.0.0.1:5000";
-
-const URL_ZIP_API = "/api/zipCode";
-const URL_ZIP_SERVER = `${URL_SERVER}${URL_ZIP_API}`;
-const URL_ZIP_LOCAL = `${URL_LOCAL}${URL_ZIP_API}`;
-const URL_ADDR_INFO = "https://express.heartrails.com";
-const URL_ADDR_API = `${URL_ADDR_INFO}/api/json?method=get`;
-const URL_LINE_API = `${URL_ADDR_API}${STR_LINES}`;
-const URL_STATION_API = `${URL_ADDR_API}${STR_STATIONS}`;
-
 // 生年設定
 function setYear(yearVal) {
   const startYear = 1970;
@@ -43,7 +8,7 @@ function setYear(yearVal) {
 
 // オプション値生成
 function createOptionVal(elemId, valList, defaultVal, selectVal) {
-  const selectElem = document.getElementById(elemId);
+  const selectElem = getElem(elemId);
   selectElem.innerHTML = SYM_BLANK;
 
   // Option for "SELECT"
@@ -82,7 +47,7 @@ function setAddress(selectLineVal, selectStationVal) {
     zipUrl = URL_ZIP_LOCAL;
   }
 
-  const zipCd = document.getElementById(ID_ZIP_CD);
+  const zipCd = getElem(ID_ZIP_CD);
   const zipCdUrl = `${zipUrl}/${zipCd.value}`;
   const api_header = {
     method: "GET",
@@ -97,8 +62,8 @@ function setAddress(selectLineVal, selectStationVal) {
       // 郵便番号より、住所設定
       const prefVal = data.pref;
       const townVal = data.city;
-      document.getElementById(ID_PREF).value = prefVal;
-      document.getElementById(ID_TOWN).value = townVal;
+      getElem(ID_PREF).value = prefVal;
+      getElem(ID_TOWN).value = townVal;
 
       const lineUrl = `${URL_LINE_API}&prefecture=${prefVal}`;
       fetch(lineUrl)
@@ -155,7 +120,7 @@ function changeLine(elem) {
 
 // メニュー設定
 function setMenu(menuVal) {
-  const container = document.getElementById('checkBoxMenu');
+  const container = getElem('checkBoxMenu');
   const labels = LIST_APP;
 
   for (let i = 0; i < labels.length; i++) {
@@ -178,7 +143,7 @@ function setMenu(menuVal) {
   for (let i = 0; i < menuVal.length; i++) {
     const val = menuVal[i];
     const menuId = `menu${val}`
-    const checkbox = document.getElementById(menuId);
+    const checkbox = getElem(menuId);
     checkbox.checked = true; // 指定された状態に設定
   }
 }
@@ -187,10 +152,10 @@ function setMenu(menuVal) {
 function checkUserInfo() {
   let checkFlg = true;
   let errMsg = SYM_BLANK;
-  const msgElem = document.getElementById("chkMsg");
+  const msgElem = getElem("chkMsg");
 
-  const pwVal = document.getElementById("userPw").value;
-  const pwCheckVal = document.getElementById("pwCheck").value;
+  const pwVal = getElem("userPw").value;
+  const pwCheckVal = getElem("pwCheck").value;
   if (pwVal !== pwCheckVal) {
     checkFlg = false;
     errMsg = MSG_ERR_PASSWORD_NOT_MATCH;
@@ -214,13 +179,4 @@ function checkUserInfo() {
       location.reload();
     });
   }
-};
-
-// ローカル環境判定
-function isLocal() {
-  let localFlg = false;
-  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-    localFlg = true;
-  }
-  return localFlg;
 };

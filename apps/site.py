@@ -21,7 +21,6 @@ col_list = [
     const.STR_TITLE_JA,
     const.STR_CONTENTS_JA,
 ]
-
 col_list_cafe = ["店名", "住所", "メニュー", "内観"]
 col_list_travel = ["区分", "内容", "アクセス", "画像"]
 col_list_board = [
@@ -35,7 +34,7 @@ col_list_board = [
     "作成者",
     "更新日",
 ]
-col_list_status = ["完了状態"]
+col_list_board_all = col_list_board + ["完了状態"]
 
 menu_travel_div = ["両替所", "観光地", "レストラン", "その他"]
 
@@ -56,6 +55,7 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
 
     if app_div == const.APP_BOARD:
         df = df_all
+        col_list_ = col_list_board
 
         # データ型を int から str に変換
         df[mongo_const.FI_SEQ] = df[mongo_const.FI_SEQ].astype(str)
@@ -67,15 +67,14 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
                 df[mongo_const.FI_STATUS]
                 == board_dto.LIST_STATUS[board_dto.STATUS_DONE],
                 "✅",
-                func.get_a_tag(
-                    f"{URL_SERVER}/board/update/" + df[mongo_const.FI_SEQ],
-                    "▶️",
-                    const.FLG_ON,
+                func.get_dialog_button(
+                    df[mongo_const.FI_SEQ], df[mongo_const.FI_REMARK], "▶️"
                 ),
             )
-            col_list_board.extend(col_list_status)
 
-        df.columns = col_list_board
+            col_list_ = col_list_board_all
+
+        df.columns = col_list_
 
     elif app_div == const.APP_SITE:
         user_auth = get_user_auth_num(user_div)

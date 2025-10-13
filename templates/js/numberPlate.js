@@ -11,7 +11,7 @@ let timerId = null;
 let isTimerRunning = false;
 
 // ヘッダー設定
-getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_1;
+setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 
 // DOM読み込み後の処理
 document.addEventListener("DOMContentLoaded", () => {
@@ -164,7 +164,7 @@ function showDialog(langCd) {
 
   setGameRule(langCd);
 
-  document.getElementById("closeGameRuleDialog").onclick = () => {
+  getElem("closeGameRuleDialog").onclick = () => {
     dialog.remove();
   };
 }
@@ -277,7 +277,7 @@ function validate(num, ans, expr, langCd) {
 }
 
 // ランキング送信
-function sendRanking(number, time, langCd) {
+async function sendRanking(number, time, langCd) {
   let inputMsg = MSG_INPUT_USER;
   let rankOkMsg = MSG_OK_RANK;
   let rankNgMsg = MSG_ERR_RANK;
@@ -295,22 +295,15 @@ function sendRanking(number, time, langCd) {
     rankingUrl = URL_NUMBER_RANKING_LOCAL;
   }
 
-  fetch(rankingUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      number: number,
-      user: userName,
-      time: time,
-      date: new Date()
-    })
-  })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data.message);
-      showMessage(rankOkMsg, true);
-    })
-    .catch(() => {
+  const requestBody = { number: number, user: userName, time: time, date: new Date() };
+
+  try {
+    const data = await getFetchApiData(url, requestBody);
+    console.log(data.message);
+    showMessage(rankOkMsg, true);
+
+  } catch (error) {
+      console.error('エラー:', error);
       alert(rankNgMsg);
-    });
+  }
 }

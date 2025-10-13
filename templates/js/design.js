@@ -1,8 +1,8 @@
 // ヘッダー設定
-getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_2;
+setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_2);
 
 // タイトル設定
-document.title = "📄設計書";
+document.title = TITLE_DESIGN;
 
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", init);
@@ -26,7 +26,9 @@ function init() {
 
       // ネットワークエラーなどをチェック
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errMsg = `HTTP error! status: ${response.status}`
+        alert(errMsg);
+        throw new Error(errMsg);
       }
 
       // テキストとしてレスポンスを取得

@@ -7,6 +7,8 @@ const SYM_LEVEL = "🌟";
 const TAG_HEAD = "head";
 const TAG_DIV = "div";
 const TAG_H1 = "h1";
+const TAG_H2 = "h2";
+const TAG_H3 = "h3";
 const TAG_FORM = "form";
 const TAG_TABLE = "table";
 const TAG_TR = "tr";
@@ -20,6 +22,8 @@ const TAG_TEXTAREA = "textarea";
 const TAG_BUTTON = "button";
 const TAG_LABEL = "label";
 const TAG_A = "a";
+const TAG_FOOTER = "footer";
+const TAG_BR = "br";
 
 // 属性値
 const ATTR_BLOCK = "block";
@@ -29,23 +33,47 @@ const ATTR_NONE = "none";
 const MODE_IMG = "img";
 const MODE_TXT = "txt";
 
+// ユーザ
+const AUTH_ADMIN = "admin";
+const AUTH_DEV = "dev";
+const AUTH_GUEST = "guest";
+
 // 文字列
 const STR_APP = "app";
 const STR_CATEGORY = "category";
 const STR_TYPE = "type";
+const STR_STATUS = "status";
 const STR_CONTENTS = "contents";
 const STR_USER_NAME = "userName";
 const STR_MESSAGE = "message";
 
+const STR_LINES = "Lines";
+const STR_STATIONS = "Stations";
+
+const STR_SELECT_JA = "選択";
+const STR_ZIP_CD_JA = "郵便番号";
+const STR_LINE_JA = "沿線";
+const STR_STATION_JA = "駅";
+
+// ID
+const ID_SEX = "sex";
+const ID_ZIP_CD = "zipCd";
+const ID_PREF = "pref";
+const ID_TOWN = "town";
+const ID_LINE = "line";
+const ID_STATION = "station";
+
+const BUTTON_LOGIN = "Login";
+const BUTTON_LOGOUT = "Logout";
+
 const COLOR_RED = "red";
 const COLOR_GREEN = "green";
+
+const ALIGN_CENTER = "center";
 
 const LEVEL_EASY = "easy";
 const LEVEL_MEDIUM = "medium";
 const LEVEL_HARD = "hard";
-
-const TITLE_NUMBER_PLATE = "🚙Number Plate Game";
-const TITLE_NUMBER_PLATE_KO = "자동차 번호판 게임";
 
 // 言語名（表示用）
 const LANG_NM_JA = "日本語";
@@ -65,6 +93,52 @@ const LIST_CITY_JA = ["東京", "ソウル", "台北", "ハノイ", "バンコ�
 const LIST_CITY_KO = ["도쿄", "서울", "타이베이", "하노이", "방콕", "마닐라"];
 const LIST_CITY_EN = ["Tokyo", "Seoul", "Taipei", "Hanoi", "Bangkok", "Manila"];
 
+// アプリケーションリスト
+const APP_TODAY = "today";
+const APP_SITE = "site";
+const APP_DRAMA = "drama";
+const APP_RANKING = "ranking";
+const APP_LCC = "lcc";
+const APP_TV = "tv";
+const APP_NEWS = "news";
+const APP_STUDY = "study";
+const APP_BOARD = "board";
+const APP_USER = "user";
+
+const LIST_APP_GUEST_MO = [APP_DRAMA, APP_RANKING, APP_LCC, APP_TV];
+const LIST_APP_GUEST = [APP_TODAY, APP_SITE].concat(LIST_APP_GUEST_MO);
+const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_BOARD, APP_USER];
+const LIST_APP = LIST_APP_GUEST.concat(LIST_APP_NOT_GUEST);
+
+const APP_TRAVEL = "travel";
+const APP_NUMBER = "number";
+const APP_IT_QUIZ = "itQuiz";
+const APP_REVIEW = "review";
+const LIST_APP_KOREA = [APP_TODAY, APP_TRAVEL, APP_NUMBER, APP_IT_QUIZ, APP_REVIEW, APP_BOARD]
+
+const APP_KAKAO = "kakao";
+
+// アプリケーション連番：お気に入り表示用
+const NUM_APP_TODAY = "0";
+const NUM_APP_SITE = "1";
+const NUM_APP_DRAMA = "2";
+const NUM_APP_RANKING = "3";
+const NUM_APP_LCC = "4";
+const NUM_APP_TV = "5";
+const NUM_APP_NEWS = "6";
+const NUM_APP_STUDY = "7";
+const NUM_APP_BOARD = "8";
+
+// タイトル
+const TITLE_SYSTEM = "Kobe-Dev Demo System";
+const TITLE_TRAVEL = "🌏 Travel & Life";
+const TITLE_NUMBER_PLATE = "🚙Number Plate Game";
+const TITLE_NUMBER_PLATE_KO = "자동차 번호판 게임";
+const TITLE_REVIEW = "🌈 Review Page 🌈";
+const TITLE_DESIGN = "📄設計書";
+
+const TH_NO = "No.";
+
 // ゲームルール
 const LIST_GAME_RULE = [
   "4つの数字を使い正しい数式を作る",
@@ -77,7 +151,74 @@ const LIST_GAME_RULE_KO = [
   "등호(=)는 반드시 한번 사용!"
 ];
 
+// レビュー
+const LIST_REVIEW_APP = ["LINE", "Travel", "Kakao", "Server"]
+const LIST_REVIEW_CATEGORY = ["Review", "Memo", "Error", "Etc."]
+const LIST_REVIEW_TYPE = ["Add", "Modify", "Design", "Etc."];
+const LIST_REVIEW_STATUS = ["New", "Progress", "Pend", "Done"]
+
+// API
+const METHOD_GET = "GET";
+const METHOD_POST = "POST";
+
+// URL
+const URL_SERVER = "https://kobe-dev.koyeb.app";
+const URL_LOCAL = "http://127.0.0.1:5000";
+
+const URL_ZIP_API = "/api/zipCode";
+const URL_ZIP_SERVER = `${URL_SERVER}${URL_ZIP_API}`;
+const URL_ZIP_LOCAL = `${URL_LOCAL}${URL_ZIP_API}`;
+
+const URL_ADDR_API = "https://express.heartrails.com/api/json?method=get";
+const URL_LINE_API = `${URL_ADDR_API}${STR_LINES}`;
+const URL_STATION_API = `${URL_ADDR_API}${STR_STATIONS}`;
+
+const URL_GEMINI_API = "/gemini/api";
+const URL_GEMINI_SERVER = `${URL_SERVER}${URL_GEMINI_API}`;
+const URL_GEMINI_LOCAL = `${URL_LOCAL}${URL_GEMINI_API}`;
+
+const URL_IMG_GEMINI = "/img/gemini";
+const URL_GEMINI_IMG_SERVER = `${URL_SERVER}${URL_IMG_GEMINI}`;
+const URL_GEMINI_IMG_LOCAL = `${URL_LOCAL}${URL_IMG_GEMINI}`;
+
+const URL_NUMBER_RANKING_API = "/number/ranking";
+const URL_NUMBER_RANKING_SERVER = `${URL_SERVER}${URL_NUMBER_RANKING_API}`;
+const URL_NUMBER_RANKING_LOCAL = `${URL_LOCAL}${URL_NUMBER_RANKING_API}`;
+
+const URL_QUIZ_RANKING_API = "/quiz/ranking";
+const URL_QUIZ_RANKING_SERVER = `${URL_SERVER}${URL_QUIZ_RANKING_API}`;
+const URL_QUIZ_RANKING_LOCAL = `${URL_LOCAL}${URL_QUIZ_RANKING_API}`;
+
+const URL_BOARD_ADD_API = "/board/add";
+const URL_BOARD_ADD_SERVER = `${URL_SERVER}${URL_BOARD_ADD_API}`;
+const URL_BOARD_ADD_LOCAL = `${URL_LOCAL}${URL_BOARD_ADD_API}`;
+
+const URL_BOARD_UPDATE_API = "/board/update";
+const URL_BOARD_UPDATE_SERVER = `${URL_SERVER}${URL_BOARD_UPDATE_API}`;
+const URL_BOARD_UPDATE_LOCAL = `${URL_LOCAL}${URL_BOARD_UPDATE_API}`;
+
+const URL_GEMINI_ITEMS_API = "/api/geminiData/items";
+const URL_GEMINI_ITEMS_SERVER = `${URL_SERVER}${URL_GEMINI_ITEMS_API}`;
+const URL_GEMINI_ITEMS_LOCAL = `${URL_LOCAL}${URL_GEMINI_ITEMS_API}`;
+
+const URL_TRAVEL_API = "/api/travelData/items";
+const URL_TRAVEL_SERVER = `${URL_SERVER}${URL_TRAVEL_API}`;
+const URL_TRAVEL_LOCAL = `${URL_LOCAL}${URL_TRAVEL_API}`;
+
+const URL_LANG_API = "/api/langData/items";
+const URL_LANG_SERVER = `${URL_SERVER}${URL_LANG_API}`;
+const URL_LANG_LOCAL = `${URL_LOCAL}${URL_LANG_API}`;
+
+const URL_IT_QUIZ_API = "/api/itQuizData/items";
+const URL_IT_QUIZ_SERVER = `${URL_SERVER}${URL_IT_QUIZ_API}`;
+const URL_IT_QUIZ_LOCAL = `${URL_LOCAL}${URL_IT_QUIZ_API}`;
+
 // メッセージ
+const MSG_VAL_NOT_EXIST = "が存在しません";
+const MSG_ERR_PASSWORD_NOT_MATCH = "パスワードが一致しません";
+const MSG_ERR_MENU_NO_CHECKED_ELEMENTS = "メニューは、1つ以上チェックしてください";
+const MSG_ERR_MENU_CHECKED_MAX = "メニューは、最大5つまでチェックしてください";
+
 const MSG_OK_SEND = "送信成功！";
 const MSG_ERR_SEND = "送信エラー";
 const MSG_ERR_LOAD_JSON = "JSONファイルの読み込みに失敗しました!";
@@ -119,47 +260,7 @@ const MSG_ERR_RANK_EN = "Failed to update ranking."
 const MSG_ERR_NO_INPUT_EN = "No input data.";
 const MSG_ERR_LOAD_JSON_EN = "Failed to load json file!"
 
-// URL
-const URL_SERVER = "https://kobe-dev.koyeb.app";
-const URL_LOCAL = "http://127.0.0.1:5000";
-
-const API_GEMINI = "/gemini/api";
-const URL_GEMINI_SERVER = `${URL_SERVER}${API_GEMINI}`;
-const URL_GEMINI_LOCAL = `${URL_LOCAL}${API_GEMINI}`;
-
-const IMG_GEMINI = "/img/gemini";
-const URL_GEMINI_IMG_SERVER = `${URL_SERVER}${IMG_GEMINI}`;
-const URL_GEMINI_IMG_LOCAL = `${URL_LOCAL}${IMG_GEMINI}`;
-
-const URL_NUMBER_RANKING_API = "/number/ranking";
-const URL_NUMBER_RANKING_SERVER = `${URL_SERVER}${URL_NUMBER_RANKING_API}`;
-const URL_NUMBER_RANKING_LOCAL = `${URL_LOCAL}${URL_NUMBER_RANKING_API}`;
-
-const URL_QUIZ_RANKING_API = "/quiz/ranking";
-const URL_QUIZ_RANKING_SERVER = `${URL_SERVER}${URL_QUIZ_RANKING_API}`;
-const URL_QUIZ_RANKING_LOCAL = `${URL_LOCAL}${URL_QUIZ_RANKING_API}`;
-
-const API_BOARD_ADD = "/board/add";
-const URL_BOARD_ADD = `${URL_SERVER}${API_BOARD_ADD}`;
-const URL_BOARD_LOCAL = `${URL_LOCAL}${API_BOARD_ADD}`;
-
-const URL_GEMINI_ITEMS = "/api/geminiData/items";
-const URL_GEMINI_ITEMS_SERVER = `${URL_SERVER}${URL_GEMINI_ITEMS}`;
-const URL_GEMINI_ITEMS_LOCAL = `${URL_LOCAL}${URL_GEMINI_ITEMS}`;
-
-const URL_TRAVEL_API = "/api/travelData/items";
-const URL_TRAVEL_SERVER = `${URL_SERVER}${URL_TRAVEL_API}`;
-const URL_TRAVEL_LOCAL = `${URL_LOCAL}${URL_TRAVEL_API}`;
-
-const URL_LANG_API = "/api/langData/items";
-const URL_LANG_SERVER = `${URL_SERVER}${URL_LANG_API}`;
-const URL_LANG_LOCAL = `${URL_LOCAL}${URL_LANG_API}`;
-
-const URL_IT_QUIZ_API = "/api/itQuizData/items";
-const URL_IT_QUIZ_SERVER = `${URL_SERVER}${URL_IT_QUIZ_API}`;
-const URL_IT_QUIZ_LOCAL = `${URL_LOCAL}${URL_IT_QUIZ_API}`;
-
-// ヘッダー情報読込
+// ヘッダー情報
 const CONTENTS_HEAD_1 = `
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -167,8 +268,16 @@ const CONTENTS_HEAD_1 = `
   <script src="/templates/jquery-3.6.1.min.js"></script>
 `;
 
-// ヘッダー情報読込
+// ヘッダー情報
+const CONTENTS_HEAD = `
+  ${CONTENTS_HEAD_1}
+  <link rel="stylesheet" href="/templates/common.css" />
+  <link rel="stylesheet" href="/templates/style.css" />
+`;
+
+// ヘッダー情報
 const CONTENTS_HEAD_2 = `
   ${CONTENTS_HEAD_1}
+  <link rel="stylesheet" href="/templates/common.css" />
   <link rel="stylesheet" href="/templates/style2.css" />
 `;

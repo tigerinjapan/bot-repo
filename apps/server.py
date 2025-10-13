@@ -24,6 +24,7 @@ import apps.utils.function as func
 import apps.utils.function_gemini as func_gemini
 import apps.utils.function_kakao as func_kakao
 import apps.utils.function_line as func_line
+import apps.utils.html_constants as html_const
 import apps.utils.message_constants as msg_const
 import apps.utils.mongo_constants as mongo_const
 import apps.utils.rank_dao as rank_dao
@@ -220,18 +221,6 @@ async def apps_v1(app_name: str):
     return FileResponse(file_path)
 
 
-# ユーザー情報更新（フォーム）
-@app.post("/user/update")
-async def user_update(request: Request, userId: str = Form(...)):
-    form_data = await request.form()
-    dict_data = dict(form_data)
-    user_dao.update_user_info_on_form(dict_data)
-    user_info = user_dao.get_user_info(userId)
-    request.session[const.STR_USER] = user_info
-    target_html, context = appl.exec_user(request, const.APP_USER)
-    return templates.TemplateResponse(target_html, context)
-
-
 # JSONデータ取得（認証付き）（例：/json/today?token=token）
 @app.get("/json/{app_name}")
 @token_required
@@ -283,6 +272,18 @@ async def gemini_api(request: Request):
     return result
 
 
+# ユーザー情報更新（フォーム）
+@app.post("/user/update")
+async def user_update(request: Request, userId: str = Form(...)):
+    form_data = await request.form()
+    dict_data = dict(form_data)
+    user_dao.update_user_info_on_form(dict_data)
+    user_info = user_dao.get_user_info(userId)
+    request.session[const.STR_USER] = user_info
+    target_html, context = appl.exec_user(request, const.APP_USER)
+    return templates.TemplateResponse(target_html, context)
+
+
 # ランキング情報更新
 @app.post("/number/ranking")
 async def number_ranking(request: Request):
@@ -323,13 +324,14 @@ async def board_add(request: Request):
 
 
 # 掲示板データ・ステータス更新
-@app.get("/board/update/{seq}")
-async def board_update(seq: str):
+@app.post("/board/update")
+async def board_update(request: Request):
     try:
-        board_dao.update_board_status(seq)
+        json_data = await request.json()
+        board_dao.update_board_status(json_data)
     except Exception as e:
         curr_func_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, seq, e)
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, json_data, e)
 
     return RedirectResponse(url=const.PATH_APP_BOARD)
 

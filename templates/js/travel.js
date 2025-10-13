@@ -1,5 +1,5 @@
 // ヘッダー設定
-getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_2;
+setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_2);
 
 let travelDataUrl = URL_TRAVEL_SERVER;
 let langDataUrl = URL_LANG_SERVER;
@@ -18,36 +18,14 @@ function init() {
   let langData = null;
 
   // タイトル設定
-  document.title = "🌏 Travel & Life";
+  document.title = TITLE_TRAVEL;
 
   // セレクトボックス・各表示領域の取得
   const langSelect = getElem("lang-select");
   const regionSelect = getElem("region-select");
 
-  const pageTitle = getElem("page-title");
-  const pageSubtitle = getElem("page-subtitle");
-
+  // カードグリッド作成
   createCardGrid();
-
-  const infoTitle = getElem("info-title");
-  const langTitle = getElem("lang-title");
-  const tourTitle = getElem("tour-title");
-  const foodTitle = getElem("food-title");
-  const usefulTitle = getElem("useful-title");
-  const siteTitle = getElem("site-title");
-
-  const infoContent = getElem("info-content");
-  const langContent = getElem("lang-content");
-  const tourContent = getElem("tour-content");
-  const foodContent = getElem("food-content");
-  const usefulContent = getElem("useful-content");
-  const siteContent = getElem("site-content");
-
-  // ダイアログ関連要素
-  const dialog = getElem("dialog");
-  const closeBtn = document.querySelector(".close-btn");
-  const dialogTitle = getElem("dialog-title");
-  const dialogText = getElem("dialog-text");
 
   // セレクトボックスの初期化
   createOptionVal(langSelect, LIST_LANG_CD);
@@ -68,8 +46,8 @@ function init() {
 
     const region = regionSelect.value;
 
-    travelData = await getFetchApiData(travelDataUrl);
-    langData = await getFetchApiData(langDataUrl);
+    travelData = await getFetchApiData(travelDataUrl, null);
+    langData = await getFetchApiData(langDataUrl, null);
 
     travelData = travelData[lang];
 
@@ -83,11 +61,11 @@ function init() {
     const currencyCd = data.info.currency;
 
     // タイトル・サブタイトル表示
-    pageTitle.textContent = data.title;
-    pageSubtitle.textContent = data.subtitle;
+    setElemText("page-title", data.title);
+    setElemText("page-subtitle", data.subtitle);
 
     // 基本情報
-    infoTitle.textContent = `ℹ️ ${data.info.name}`;
+    setElemText("info-title", `ℹ️ ${data.info.name}`);
 
     let infoHtml = SYM_BLANK;
     const infoDataList = [
@@ -109,11 +87,11 @@ function init() {
           `;
       }
     }
-    infoContent.innerHTML = infoHtml;
+    setElemContents("info-content", infoHtml);
 
     // 言語（基本会話）
-    langTitle.textContent = `🌐 ${label.basicConversation}`;
-    langContent.innerHTML = `
+    setElemText("lang-title", `🌐 ${label.basicConversation}`);
+    const langHtml = `
       ${basicConversation
         .map(
           (s) => `
@@ -125,10 +103,11 @@ function init() {
         )
         .join(SYM_BLANK)}
     `;
+    setElemContents("lang-content", langHtml);
 
     // 観光スポット
-    tourTitle.textContent = `📸 ${label.tourInfo}`;
-    tourContent.innerHTML = `
+    setElemText("tour-title", `📸 ${label.tourInfo}`);
+    const tourHtml = `
       <tr>
           <th>${label.category}</th>
           <th>${label.spot}</th>
@@ -148,10 +127,11 @@ function init() {
         )
         .join(SYM_BLANK)}
     `;
+    setElemContents("tour-content", tourHtml);
 
     // グルメ
-    foodTitle.textContent = `🍽️ ${label.food}`;
-    foodContent.innerHTML = `
+    setElemText("food-title", `🍽️ ${label.food}`);
+    const foodHtml = `
       ${data.food.foods
         .map(
           (f) => `
@@ -164,10 +144,11 @@ function init() {
         )
         .join(SYM_BLANK)}
     `;
+    setElemContents("food-content", foodHtml);
 
     // 有用な情報
-    usefulTitle.textContent = `💡 ${label.usefulInfo}`;
-    usefulContent.innerHTML = `
+    setElemText("useful-title", `💡 ${label.usefulInfo}`);
+    const usefulHtml = `
       <tr>
           <th>${label.exchange}</th>
           <td><a href="${data.useful.exchange.url}" target="_blank">${data.useful.exchange.name}</a></td>
@@ -183,16 +164,17 @@ function init() {
           <td>${data.useful.transportCard.name}</td>
           <td>${data.useful.transportCard.fare.toLocaleString()}${currencyCd} (${label.baseFare})</td>
       </tr>
-  `;
+    `;
+    setElemContents("useful-content", usefulHtml);
 
     // サイト情報
-    siteTitle.textContent = `🌐 ${label.site}`;
-    let siteHtml = `
+    setElemText("site-title", `🌐 ${label.site}`);
+    const siteHtml = `
       <tr><th>${label.tourism}</th><td><a href="${data.site.tourism.url}" target="_blank">${data.site.tourism.name}</a></td></tr>
       <tr><th>${label.travel}</th><td><a href="${data.site.travel.url}" target="_blank">${data.site.travel.name}</a></td></tr>
       <tr><th>${label.youtube}</th><td><a href="${data.site.youtube.url}" target="_blank">${data.site.youtube.name}</a></td></tr>
   `;
-    siteContent.innerHTML = siteHtml;
+    setElemContents("site-content", siteHtml);
 
     // イベントリスナー追加
     addEventListeners();
@@ -230,13 +212,18 @@ function init() {
     return SYM_BLANK;
   }
 
+  // ダイアログ関連要素
+  const dialog = getElem("dialog");
+  const closeBtn = document.querySelector(".close-btn");
+
   // 観光スポットリンクのクリックイベントなどを設定
   function addEventListeners() {
     document.querySelectorAll(".spot-link").forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
-        dialogTitle.textContent = e.target.textContent;
-        dialogText.textContent = e.target.dataset.map;
+
+        setElemText("dialog-title", e.target.textContent);
+        setElemText("dialog-text", e.target.dataset.map);
         dialog.style.display = "block";
       });
     });
@@ -244,11 +231,11 @@ function init() {
 
   // ダイアログの閉じる処理
   closeBtn.addEventListener("click", () => {
-    dialog.style.display = "none";
+    dialog.style.display = ATTR_NONE;
   });
   window.addEventListener("click", (event) => {
     if (event.target === dialog) {
-      dialog.style.display = "none";
+      dialog.style.display = ATTR_NONE;
     }
   });
 
@@ -262,11 +249,11 @@ function init() {
 
 // カードグリッド作成
 function createCardGrid() {
-  let infoHtml = SYM_BLANK;
+  let gridHtml = SYM_BLANK;
 
   const grid_div_list = ['info', 'lang', 'tour', 'food', 'useful', 'site'];
   for (const grid_div of grid_div_list) {
-    infoHtml += `
+    gridHtml += `
       <div class="card" id="${grid_div}-card">
         <h2>
           <span id="${grid_div}-title"></span>
@@ -277,8 +264,7 @@ function createCardGrid() {
       </div>
   `};
 
-  const cardGrid = getElem("card-grid");
-  cardGrid.innerHTML = infoHtml;
+  setElemContents("card-grid", gridHtml);
 }
 
 // セレクトボックスのオプション生成

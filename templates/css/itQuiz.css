@@ -13,8 +13,8 @@ body {
 
 /* メインコンテナ - レスポンシブ対応 */
 .container {
-	width: 100%;
-	max-width: 640px;
+	/* width: 100%; */
+	max-width: 800px;
 	max-height: 640px;
 	background-color: white;
 	border-radius: 20px;

@@ -1,6 +1,8 @@
 // メッセージ表示
 function showMessage(msg, answerFlg) {
-  const elem = setElem(STR_MESSAGE, msg, false);
+  const elem = getElem(STR_MESSAGE);
+  elem.innerHTML = msg;
+
   let color = COLOR_RED;
   if (answerFlg) {
     color = COLOR_GREEN;
@@ -16,21 +18,25 @@ function getElem(elemId) {
   return elem;
 }
 
-// 要素取得
-function getElemByTag(tagName) {
-  const elem = document.getElementsByTagName(tagName)[0];
-  return elem;
-}
-
 // 要素のテキスト取得
 function getElemText(elemId) {
   const elem = getElem(elemId);
   return elem.textContent;
 }
 
+// 要素取得（タグ）
+function getElemByTag(tagName) {
+  const elem = document.getElementsByTagName(tagName)[0];
+  return elem;
+}
+
 // 要素設定
-function setElem(elemId, text, textFlg) {
-  const elem = getElem(elemId);
+function setElem(elemId, text, tagFlg, textFlg) {
+  let elem = getElem(elemId);
+  if (tagFlg) {
+    elem = getElemByTag(elemId);
+  }
+
   if (textFlg) {
     elem.textContent = text;
   } else {
@@ -41,7 +47,22 @@ function setElem(elemId, text, textFlg) {
 
 // 要素のテキスト設定
 function setElemText(elemId, text) {
-  setElem(elemId, text, true);
+  setElem(elemId, text, false, true);
+}
+
+// 要素のHTML設定
+function setElemContents(elemId, contents) {
+  setElem(elemId, contents, false, false);
+}
+
+// 要素のテキスト設定（タグ）
+function setElemTextByTag(elemId, text) {
+  setElem(elemId, text, true, true);
+}
+
+// 要素のHTML設定（タグ）
+function setElemContentsByTag(elemId, contents) {
+  setElem(elemId, contents, true, false);
 }
 
 // 要素生成
@@ -53,10 +74,13 @@ function createElem(tagName, elemVal, parentElemId) {
   } else if (parentElemId === "gameRule") {
     elem.textContent = elemVal;
   } else {
-    elem.id = elemVal;
-    if (tagName === TAG_TEXTAREA) {
-      elem.maxLength = 40;
-      elem.placeholder = "Input the contents.";
+    if (tagName !== TAG_BR) {
+      elem.id = elemVal;
+      elem.className = elemVal;
+      if (tagName === TAG_TEXTAREA) {
+        elem.maxLength = 40;
+        elem.placeholder = "Input the contents.";
+      }
     }
   }
 
@@ -64,6 +88,7 @@ function createElem(tagName, elemVal, parentElemId) {
     const parentElem = getElem(parentElemId);
     parentElem.appendChild(elem);
   }
+  return elem;
 }
 
 // オプション生成
@@ -87,21 +112,34 @@ function createOption(elemId, elemName, txtList, parentElemId, selectValIdx) {
   parentElem.appendChild(selectElem);
 }
 
-// fetch APIを使ってファイルを読み込む関数
-async function getFetchApiData(url) {
-  const api_header = {
-    method: "GET",
+// fetch API関数
+async function getFetchApiData(url, requestBody) {
+  let method = METHOD_GET;
+
+  // requestBodyが存在する場合
+  if (requestBody) {
+    method = METHOD_POST;
+  }
+
+  let apiHeader = {
+    method: method,
     headers: {
       "Content-Type": "application/json"
     },
   };
 
+  if (method === METHOD_POST) {
+    // POSTの場合、リクエストボディをJSON文字列化して 'body' プロパティに追加
+    apiHeader.body = JSON.stringify(requestBody);
+  }
+
   try {
-    return await fetch(url, api_header)
+    return await fetch(url, apiHeader)
       .then(response => {
         // ネットワークエラーなどをチェック
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+          const errMsg = `HTTP error! status: ${response.status}${SYM_NEW_LINE}${response.statusText}`;
+          throw new Error(errMsg);
         };
         return response.json();
       }).then(data => {
@@ -110,11 +148,12 @@ async function getFetchApiData(url) {
 
   } catch (error) {
     // エラー処理
-    console.error(`${MSG_ERR_LOAD_JSON}${SYM_NEW_LINE}`, error);
-    alert(MSG_ERR_LOAD_JSON_EN);
+    console.error('エラー:', error);
+    alert(MSG_ERR_LOAD_JSON_EN); // TODO: エラー
   }
 }
 
+// JSONデータリスト取得
 function getDataList(elemId) {
   // 1. HTML要素（IDが'data'のpタグ）を取得
   const dataElement = getElem(elemId);
@@ -128,17 +167,16 @@ function getDataList(elemId) {
 
   let dataList = [];
   try {
-      // ※ Jinjaで渡されるリストの形式（二重引用符か単一引用符かなど）によっては、
-      //    この処理の前に、文字列の調整が必要になる場合がある。
-      dataList = JSON.parse(dataString.replace(/'/g, '"'));
+    // ※ Jinjaで渡されるリストの形式（二重引用符か単一引用符かなど）によっては、
+    //    この処理の前に、文字列の調整が必要になる場合がある。
+    dataList = JSON.parse(dataString.replace(/'/g, '"'));
   } catch (e) {
-      console.error("リストの形式が正しくありません:", e);
-      // エラーが起きた場合は空のリストにするか、別の処理をします
-      dataList = [];
+    console.error("リストの形式が正しくありません:", e);
+    // エラーが起きた場合は空のリストにするか、別の処理をします
+    dataList = [];
   }
   return dataList;
 }
-
 
 // ローカル環境判定
 function isLocal() {

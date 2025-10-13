@@ -3,7 +3,7 @@ const commonConditions_image = "高品質、詳細、フォトリアル、明る
 const commonConditions_text = "明確、簡潔、丁寧、ポジティブ、想像力をかきたてる";
 
 // ヘッダー設定
-getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_1;
+setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 
 let geminiDataUrl = URL_GEMINI_ITEMS_SERVER;
 let apiUrl = URL_GEMINI_SERVER;
@@ -13,7 +13,6 @@ if (isLocal()) {
     apiUrl = URL_GEMINI_LOCAL;
     // imgUrl = URL_GEMINI_IMG_LOCAL;
 }
-
 
 // DOM読み込み後の処理
 document.addEventListener('DOMContentLoaded', init);
@@ -51,7 +50,7 @@ function init() {
 async function changeLanguage(lang) {
     document.documentElement.lang = lang;
 
-    const geminiData = await getFetchApiData(geminiDataUrl);
+    const geminiData = await getFetchApiData(geminiDataUrl, null);
     const texts = geminiData[lang];
 
     // data-keyを持つすべての要素のテキストを更新
@@ -154,21 +153,8 @@ async function requestApi(mode, prompt) {
     const requestBody = { mode: mode, prompt: prompt };
 
     try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestBody),
-        });
-
-        const data = await response.json();
-        const msg = data.message;
-
-        if (!response.ok) {
-            alert(MSG_ERR_SEND);
-            console.error('APIエラー:', msg);
-            return;
-        }
-
+        const data = await getFetchApiData(url, requestBody);
+        console.log(data.message);
         alert(MSG_OK_SEND);
 
         const outputImageContainer = getElem('outputImageContainer');

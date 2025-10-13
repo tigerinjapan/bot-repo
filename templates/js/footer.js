@@ -19,6 +19,6 @@ function writeFooter(userDiv) {
     </div>`);
 
   if (userDiv === AUTH_ADMIN) {
-    document.getElementsByTagName("footer")[0].innerHTML = footerContents;
+    setElemContentsByTag(TAG_FOOTER, footerContents);
   }
 }

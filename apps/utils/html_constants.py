@@ -80,3 +80,26 @@ h1 {
 
 </style>
 """
+
+
+# HTMLテキスト取得
+def get_html_context(title: str, body: str, style: str = HTML_KAKAO_STYLE) -> str:
+    html_context = f"""
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title>{title}</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/templates/favicon.ico" type="image/x-icon">
+    {style}
+</head>
+<body>
+    {body}
+</body>
+
+</html>
+    """
+
+    return html_context

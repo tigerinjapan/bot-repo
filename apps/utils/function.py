@@ -222,8 +222,8 @@ def print_error_msg(
         except_msg = f" {str(exception)}"
         log_msg += except_msg
 
-        if 200 < len(log_msg):
-            log_msg = f"{log_msg[:200]}..."
+        if not is_local_env() and 100 < len(log_msg):
+            log_msg = f"{log_msg[:100]}..."
 
     print(err_msg, log_msg)
     if not is_local_env():
@@ -533,13 +533,31 @@ def get_df(data_list: list, columns: list[str]):
     return df
 
 
-# リンク文字列取得
+# リンクタグ取得
 def get_a_tag(url: str, text: str, alert_flg: bool = const.FLG_OFF):
     a_attr = '" target="_blank" rel="noopener noreferrer">'
     if alert_flg:
         a_attr = '" onclick="' + f"alert('{msg_const.MSG_INFO_PROC_COMPLETED}');" + '">'
 
     result = '<a href="' + url + a_attr + text + "</a>"
+    return result
+
+
+# ボタンタグ取得
+def get_dialog_button(title: str, contents: str, text: str):
+    result = (
+        '<button id="btn'
+        + title
+        + '" class="spot-link" onclick="'
+        + "openDialog('"
+        + title
+        + "', '"
+        + contents
+        + "')"
+        + '">'
+        + text
+        + "</button>"
+    )
     return result
 
 

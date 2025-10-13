@@ -1,69 +1,10 @@
-// 記号
-const SYM_BLANK = "";
-
-// ユーザ
-const AUTH_ADMIN = "admin";
-const AUTH_DEV = "dev";
-const AUTH_GUEST = "guest";
-
-// アプリケーションリスト
-const APP_TODAY = "today";
-const APP_SITE = "site";
-const APP_DRAMA = "drama";
-const APP_RANKING = "ranking";
-const APP_LCC = "lcc";
-const APP_TV = "tv";
-const APP_NEWS = "news";
-const APP_STUDY = "study";
-const APP_BOARD = "board";
-const APP_USER = "user";
-
-const LIST_APP_GUEST_MO = [APP_DRAMA, APP_RANKING, APP_LCC, APP_TV];
-const LIST_APP_GUEST = [APP_TODAY, APP_SITE].concat(LIST_APP_GUEST_MO);
-const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_BOARD, APP_USER];
-const LIST_APP = LIST_APP_GUEST.concat(LIST_APP_NOT_GUEST);
-
-const APP_TRAVEL = "travel";
-const APP_NUMBER = "number";
-const APP_IT_QUIZ = "itQuiz";
-const APP_REVIEW = "review";
-const LIST_APP_KOREA = [APP_TODAY, APP_TRAVEL, APP_NUMBER, APP_IT_QUIZ, APP_REVIEW, APP_BOARD]
-
-// アプリケーション連番：お気に入り表示用
-const NUM_APP_TODAY = "0";
-const NUM_APP_SITE = "1";
-const NUM_APP_DRAMA = "2";
-const NUM_APP_RANKING = "3";
-const NUM_APP_LCC = "4";
-const NUM_APP_TV = "5";
-const NUM_APP_NEWS = "6";
-const NUM_APP_STUDY = "7";
-const NUM_APP_BOARD = "8";
-
-// 項目名
-const TITLE_SYSTEM = "Kobe-Dev Demo System";
-const TH_NO = "No.";
-const BUTTON_LOGIN = "Login";
-const BUTTON_LOGOUT = "Logout";
-
-// 定数
-const DIV_APP = "app";
-const DIV_KAKAO = "kakao";
-
 // ヘッダー情報読込
-const CONTENTS_HEAD = (`
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/templates/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="/templates/style.css">
-  <script src="/templates/jquery-3.6.1.min.js"></script>
-`);
-document.getElementsByTagName("head")[0].innerHTML = CONTENTS_HEAD;
+setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD);
 
 // 初期表示
 function initDisplay() {
-  const sysNmElement = document.getElementById("sysNm");
-  const thNoElement = document.getElementById("thNo");
+  const sysNmElement = getElem("sysNm");
+  const thNoElement = getElem("thNo");
 
   if (sysNmElement) {
     document.title = TITLE_SYSTEM;
@@ -81,9 +22,9 @@ function setTopMenu(userDiv, userNm, appNm, menuVal) {
     return;
   }
 
-  let pathDiv = DIV_APP;
+  let pathDiv = STR_APP;
   let pathDiv2 = SYM_BLANK;
-  if (userDiv === DIV_KAKAO) {
+  if (userDiv === APP_KAKAO) {
     pathDiv = userDiv;
     pathDiv2 = `/${userDiv}`;
   }
@@ -114,20 +55,20 @@ function setTopMenu(userDiv, userNm, appNm, menuVal) {
 
   const topMenuList = `<ul>${topMenu}</ul>`;
 
-  document.getElementById("topMenu").innerHTML = topMenuList;
+  setElemContents("topMenu", topMenuList);
 
   if (appNm == "today_korea") {
     appNm = APP_TODAY;
   }
 
   // メニュー押下時、背景色設定
-  const screenId = document.getElementById(appNm);
+  const screenId = getElem(appNm);
   screenId.setAttribute("style", "background-color: peru;");
 }
 
 // アプリケーションリスト取得
 function getAppList(userDiv, menuVal) {
-  if (userDiv === DIV_KAKAO) {
+  if (userDiv === APP_KAKAO) {
     return LIST_APP_KOREA;
   }
 
@@ -175,17 +116,104 @@ function isMobile() {
 
 // チェックメッセージ表示
 function displayChkMsg() {
-  const chkMsgElem = document.getElementById("chkMsg");
+  const chkMsgElem = getElem("chkMsg");
 
   window.addEventListener("load", function () {
     if (chkMsgElem) {
       const chkMsg = chkMsgElem.textContent;
       if (chkMsg === SYM_BLANK || chkMsg === undefined) {
-        chkMsgElem.style.display = "none";
+        chkMsgElem.style.display = ATTR_NONE;
       } else {
-        chkMsgElem.style.color = "red";
-        chkMsgElem.style.textAlign = "center";
+        chkMsgElem.style.color = COLOR_RED;
+        chkMsgElem.style.textAlign = ALIGN_CENTER;
       }
     }
   });
+}
+
+/**
+ * ダイアログを表示する関数
+ * @param {string} title - ダイアログのタイトル
+ * @param {string} text - ダイアログの本文
+ */
+function openDialog(title, text) {
+  // ダイアログ要素取得
+  const dialog = createElem(TAG_DIV, "dialog", "searchResult");
+
+  const parentElemId = "dialog-content";
+  const dialog_content = createElem(TAG_DIV, parentElemId, "dialog");
+
+  createElem(TAG_H3, "dialog-title", parentElemId);
+  setElemText("dialog-title", title);
+
+  const selectList = [
+    // [STR_APP, LIST_REVIEW_APP, 3],
+    // [STR_CATEGORY, LIST_REVIEW_CATEGORY, 1],
+    // [STR_TYPE, LIST_REVIEW_TYPE, 1],
+    [STR_STATUS, LIST_REVIEW_STATUS, 1],
+  ];
+
+  for (const [elemId, txtList, initValIdx] of selectList) {
+    createElem(TAG_LABEL, elemId, parentElemId);
+    createOption(elemId, elemId, txtList, parentElemId, initValIdx);
+    createElem(TAG_BR, SYM_BLANK, parentElemId);
+    createElem(TAG_BR, SYM_BLANK, parentElemId);
+  }
+
+  createElem(TAG_TEXTAREA, "dialog-text", parentElemId);
+  setElemText("dialog-text", text);
+
+  const closeBtn = createElem(TAG_BUTTON, "close-btn", parentElemId);
+  setElemText("close-btn", "×");
+  closeBtn.onclick = () => closeDialog();
+
+  const saveBtn = createElem(TAG_BUTTON, "save-btn", parentElemId);
+  setElemText("save-btn", "Send");
+  saveBtn.onclick = () => requestApi();
+
+  // CSSで非表示にしていたものを表示
+  dialog.style.display = "block";
+}
+
+/**
+ * APIリクエスト関数
+ */
+async function requestApi() {
+  const dialog_title = getElemText("dialog-title");
+  const dialog_text = getElem("dialog-text").value;
+  const status = getElem(STR_STATUS).value;
+
+  let url = URL_BOARD_UPDATE_SERVER;
+  if (isLocal()) {
+    url = URL_BOARD_UPDATE_LOCAL;
+  }
+
+  const requestBody = { title: dialog_title, text: dialog_text, status: status };
+
+  try {
+    const data = await getFetchApiData(url, requestBody);
+    if (data) {
+      const msg = data[STR_MESSAGE];
+      console.log(msg);
+      alert(MSG_OK_SEND_EN);
+    } else {
+      closeDialog();
+      throw new Error(MSG_ERR_SEND_EN);
+    }
+
+    // ページ全体をリセット（再読み込み）
+    location.reload();
+  } catch (error) {
+    console.error('エラー:', error);
+    alert(error);
+  }
+}
+
+/**
+ * ダイアログを非表示にする関数
+ */
+function closeDialog() {
+  const dialog = getElem("dialog");
+  dialog.style.display = ATTR_NONE;
+  dialog.remove();
 }

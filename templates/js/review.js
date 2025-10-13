@@ -15,10 +15,10 @@ const ELEM_NAME_ITEMS = "items[]";
 let userName = sessionStorage.getItem(STR_USER_NAME);
 
 // ヘッダー設定
-getElemByTag(TAG_HEAD).innerHTML = CONTENTS_HEAD_2;
+setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_2);
 
 // タイトル設定
-document.title = STR_REVIEW;
+document.title = TITLE_REVIEW;
 
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", init);
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", init);
 // 初期表示
 function init() {
 
-  getElemByTag(TAG_H1).textContent = "🌈 Review Page 🌈";
+  setElemTextByTag(TAG_H1, TITLE_REVIEW);
 
   // アプリ名
   const dataList = getDataList("dataList");
@@ -74,7 +74,7 @@ function init() {
         createElem(TAG_TD, tdId2, trId);
 
         if (j === 0) {
-          getElem(tdId2).textContent = i;
+          setElemText(tdId2, i);
         } else if (j === 1) {
           createOption(STR_TYPE + strIdx, STR_TYPE, typeTxtList, tdId2, 0);
         } else {
@@ -84,7 +84,7 @@ function init() {
     }
   }
 
-  getElemByTag(TAG_BUTTON).textContent = "Send";
+  setElemTextByTag(TAG_BUTTON, "Send");
 }
 
 // ユーザ名設定
@@ -125,27 +125,21 @@ function sendReview() {
 
     // 入力チェック
     if (addCnt === 0) {
-      getElem(STR_MESSAGE).textContent = MSG_ERR_NO_INPUT_EN;
+      setElemText(STR_MESSAGE, MSG_ERR_NO_INPUT_EN);
       return;
     }
 
+    let url = URL_BOARD_ADD_SERVER;
+    if (isLocal()) {
+      url = URL_BOARD_ADD_LOCAL;
+    }
+
+    const requestBody = { data: reviewList };
+
     // MongoDB保存API呼び出し
     try {
-
-      let url = URL_BOARD_ADD;
-      if (isLocal()) {
-        url = URL_BOARD_LOCAL;
-      }
-
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          data: reviewList
-        }),
-      });
-      const result = await res.json();
-      const msg = result[STR_MESSAGE];
+      const data = await getFetchApiData(url, requestBody);
+      const msg = data[STR_MESSAGE];
 
       // getElem(STR_MESSAGE).textContent = msg;
       // getElem(ELEM_ID_FORM).reset();
