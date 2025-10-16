@@ -16,10 +16,11 @@ const TAG_TH = "th";
 const TAG_TD = "td";
 const TAG_UL = "ul";
 const TAG_LI = "li";
+const TAG_INPUT = "input";
 const TAG_SELECT = "select";
 const TAG_OPTION = "option";
-const TAG_TEXTAREA = "textarea";
 const TAG_BUTTON = "button";
+const TAG_TEXTAREA = "textarea";
 const TAG_LABEL = "label";
 const TAG_A = "a";
 const TAG_FOOTER = "footer";
@@ -136,6 +137,7 @@ const TITLE_NUMBER_PLATE = "🚙Number Plate Game";
 const TITLE_NUMBER_PLATE_KO = "자동차 번호판 게임";
 const TITLE_REVIEW = "🌈 Review Page 🌈";
 const TITLE_DESIGN = "📄設計書";
+const TITLE_DASH_BOARD = "📊 Dash Board";
 
 const TH_NO = "No.";
 

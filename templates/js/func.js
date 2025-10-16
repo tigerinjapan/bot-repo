@@ -66,15 +66,27 @@ function setElemContentsByTag(elemId, contents) {
 }
 
 // 要素生成
+function createElemOnly(tagName) {
+  const elem = createElem(tagName, null, null);
+  return elem;
+}
+
+// 要素生成
+function createElemNoVal(tagName, parentElemId) {
+  const elem = createElem(tagName, null, parentElemId);
+  return elem;
+}
+
+// 要素生成
 function createElem(tagName, elemVal, parentElemId) {
   const elem = document.createElement(tagName);
 
-  if (tagName === TAG_LABEL || tagName === TAG_H1 || tagName === TAG_TH) {
-    elem.textContent = elemVal;
-  } else if (parentElemId === "gameRule") {
-    elem.textContent = elemVal;
-  } else {
-    if (tagName !== TAG_BR) {
+  if (elemVal) {
+    if (tagName === TAG_LABEL || tagName === TAG_H1 || tagName === TAG_TH) {
+      elem.textContent = elemVal;
+    } else if (parentElemId === "gameRule") {
+      elem.textContent = elemVal;
+    } else {
       elem.id = elemVal;
       elem.className = elemVal;
       if (tagName === TAG_TEXTAREA) {
@@ -93,12 +105,12 @@ function createElem(tagName, elemVal, parentElemId) {
 
 // オプション生成
 function createOption(elemId, elemName, txtList, parentElemId, selectValIdx) {
-  const selectElem = document.createElement(TAG_SELECT);
+  const selectElem = createElemOnly(TAG_SELECT);
   selectElem.id = elemId;
   selectElem.name = elemName;
 
   for (let i = 0; i < txtList.length; i++) {
-    const option = document.createElement(TAG_OPTION);
+    const option = createElemOnly(TAG_OPTION);
     option.value = i;
     option.textContent = txtList[i];
     selectElem.appendChild(option);
@@ -156,10 +168,10 @@ async function getFetchApiData(url, requestBody) {
 // JSONデータリスト取得
 function getDataList(elemId) {
   // 1. HTML要素（IDが'data'のpタグ）を取得
-  const dataElement = getElem(elemId);
+  const dataElem = getElem(elemId);
 
   // 2. その要素の中身（文字列）を取得
-  const dataString = dataElement.textContent.trim();
+  const dataString = dataElem.textContent.trim();
 
   // 3. 文字列をJavaScriptのリスト（配列）に変換
   //    Pythonのリスト形式の文字列を、JavaScriptのJSON形式として解釈する。

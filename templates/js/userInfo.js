@@ -12,13 +12,13 @@ function createOptionVal(elemId, valList, defaultVal, selectVal) {
   selectElem.innerHTML = SYM_BLANK;
 
   // Option for "SELECT"
-  const defaultOption = document.createElement("option");
+  const defaultOption = createElemOnly(TAG_OPTION);
   defaultOption.value = SYM_BLANK;
   defaultOption.textContent = defaultVal;
   selectElem.appendChild(defaultOption);
 
   for (let i = 0; i < valList.length; i++) {
-    const option = document.createElement("option");
+    const option = createElemOnly(TAG_OPTION);
     option.value = valList[i];
     option.textContent = valList[i];
     selectElem.appendChild(option);
@@ -124,9 +124,9 @@ function setMenu(menuVal) {
   const labels = LIST_APP;
 
   for (let i = 0; i < labels.length; i++) {
-    const label = document.createElement('label');
+    const label = createElemOnly(TAG_LABEL);
 
-    const checkbox = document.createElement('input');
+    const checkbox = createElemOnly(TAG_INPUT);
     checkbox.type = 'checkbox';
     checkbox.id = `menu${i}`;
     checkbox.name = `menu${i}`;
@@ -136,7 +136,7 @@ function setMenu(menuVal) {
     label.appendChild(document.createTextNode(labels[i]));
     container.appendChild(label);
     if ((i + 1) % 3 === 0) {
-      container.appendChild(document.createElement('br')); // 改行追加
+      container.appendChild(createElemOnly(TAG_BR)); // 改行追加
     }
   }
 

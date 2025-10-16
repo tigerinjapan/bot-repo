@@ -8,10 +8,14 @@
   {% if app_name == 'travel' %}
   <script src="/templates/travel.js"></script>
   {% elif app_name == 'itQuiz' %}
-  <script src="/templates/itQuiz.js"></script>
   <link rel="stylesheet" href="/templates/itQuiz.css" />
+  <script src="/templates/itQuiz.js"></script>
   {% elif app_name == 'review' %}
   <script src="/templates/review.js"></script>
+  {% elif app_name == 'dashboard' %}
+  <link rel="stylesheet" href="/templates/dashboard.css" />
+  <script src="/templates/chart.js"></script>
+  <script src="/templates/dashboard.js"></script>
   {% elif '_design' in app_name %}
   <script src="/templates/marked.min.js"></script>
   <script src="/templates/design.js"></script>
@@ -96,6 +100,21 @@
       <button type="submit" id="save-btn" class="save-btn" onclick="sendReview()"></button>
     </form>
     <p id="message" class="msg"></p>
+  </div>
+
+  {% elif app_name == 'dashboard' %}
+  <div class="header">
+    <div class="container">
+      <h1 id="header-title"></h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="controls">
+      <label id="time-period-label" for="time-period"></label>
+      <select id="time-period"></select>
+    </div>
+    <div class="dashboard-grid" id="dashboard-grid"></div>
   </div>
 
   {% elif '_design' in app_name %}

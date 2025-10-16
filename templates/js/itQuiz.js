@@ -326,10 +326,10 @@ const renderQuizStatus = () => {
 
 // クイズ単語の状態を画面に反映する
 const renderQuizWord = () => {
-  const quizWordElement = getElem('quiz-word');
-  if (!quizWordElement) return;
+  const quizWordElem = getElem('quiz-word');
+  if (!quizWordElem) return;
 
-  quizWordElement.innerHTML = gameState.currentWord.map((char, index) => {
+  quizWordElem.innerHTML = gameState.currentWord.map((char, index) => {
     // スペースの場合
     if (char === ' ') {
       return `<div class="quiz-char-box" style="background-color: transparent; border: none;">&nbsp;</div>`;
@@ -595,7 +595,7 @@ const openChoiceDialog = (index) => {
   instruction.textContent = `${getLocalizedText('instruction_message')} (A-Z, 0-9)`;
 
   choices.forEach(char => {
-    const button = document.createElement('button');
+    const button = createElemOnly(TAG_BUTTON);
     button.className = 'choice-btn';
     button.textContent = char;
     button.setAttribute('data-char', char);

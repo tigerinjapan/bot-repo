@@ -38,7 +38,7 @@ function init() {
       const htmlContent = marked.parse(markdownText);
 
       // 1. 文字列をDOM要素に変換するための「コンテナ」を作成
-      const tempContainer = document.createElement(TAG_DIV);
+      const tempContainer = createElemOnly(TAG_DIV);
       tempContainer.innerHTML = htmlContent;
 
       // 2. コンテナの中から 全ての a タグを取得

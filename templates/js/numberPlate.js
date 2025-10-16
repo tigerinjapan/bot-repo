@@ -153,7 +153,7 @@ function setGameRule(langCd) {
 
 // ダイアログ表示用関数
 function showDialog(langCd) {
-  dialog = document.createElement("div");
+  dialog = createElemOnly(TAG_DIV);
   dialog.id = "gameRuleDialog";
   dialog.innerHTML = `
     <h3>Game Rule</h3>

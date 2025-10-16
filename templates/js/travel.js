@@ -278,7 +278,7 @@ function createOptionVal(selectElem, optValList) {
   }
 
   for (let i = 0; i < optValList.length; i++) {
-    const option = document.createElement("option");
+    const option = createElemOnly(TAG_OPTION);
     option.value = optValList[i];
     option.textContent = textValList[i];
     selectElem.appendChild(option);

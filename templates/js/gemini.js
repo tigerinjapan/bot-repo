@@ -73,14 +73,14 @@ async function changeLanguage(lang) {
     imageFormSection.innerHTML = '';
 
     SELECT_DATA.forEach(item => {
-        const formGroup = document.createElement('div');
+        const formGroup = createElemOnly(TAG_DIV);
         formGroup.className = 'form-group';
 
-        const label = document.createElement('label');
+        const label = createElemOnly(TAG_LABEL);
         label.setAttribute('for', item.selectId);
         label.textContent = texts[item.labelId];
 
-        const select = document.createElement('select');
+        const select = createElemOnly(TAG_SELECT);
         select.id = item.selectId;
 
         createSelect(select, texts[item.options]);
@@ -109,7 +109,7 @@ const SELECT_DATA = [
 function createSelect(selectElement, options) {
     selectElement.innerHTML = '';
     options.forEach(optionData => {
-        const option = document.createElement('option');
+        const option = createElemOnly(TAG_OPTION);
         option.value = optionData.value;
         option.textContent = optionData.text;
         selectElement.appendChild(option);
@@ -185,14 +185,14 @@ async function requestApi(mode, prompt) {
 
 // テキストコピー
 async function copyText() {
-    const textElement = getElem('generatedText');
-    if (!textElement.textContent) {
+    const textElem = getElem('generatedText');
+    if (!textElem.textContent) {
         alert('テキストがありません。');
         return;
     }
 
     try {
-        await navigator.clipboard.writeText(textElement.textContent);
+        await navigator.clipboard.writeText(textElem.textContent);
         alert('テキストをコピーしました！');
     } catch (err) {
         console.error('テキストのコピーに失敗しました:', err);

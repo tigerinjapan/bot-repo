@@ -3,16 +3,16 @@ setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD);
 
 // 初期表示
 function initDisplay() {
-  const sysNmElement = getElem("sysNm");
-  const thNoElement = getElem("thNo");
+  const sysNmElem = getElem("sysNm");
+  const thNoElem = getElem("thNo");
 
-  if (sysNmElement) {
+  if (sysNmElem) {
     document.title = TITLE_SYSTEM;
-    sysNmElement.textContent = TITLE_SYSTEM;
+    sysNmElem.textContent = TITLE_SYSTEM;
   }
 
-  if (thNoElement) {
-    thNoElement.textContent = TH_NO;
+  if (thNoElem) {
+    thNoElem.textContent = TH_NO;
   }
 }
 
@@ -156,8 +156,8 @@ function openDialog(title, text) {
   for (const [elemId, txtList, initValIdx] of selectList) {
     createElem(TAG_LABEL, elemId, parentElemId);
     createOption(elemId, elemId, txtList, parentElemId, initValIdx);
-    createElem(TAG_BR, SYM_BLANK, parentElemId);
-    createElem(TAG_BR, SYM_BLANK, parentElemId);
+    createElemNoVal(TAG_BR, parentElemId);
+    createElemNoVal(TAG_BR, parentElemId);
   }
 
   createElem(TAG_TEXTAREA, "dialog-text", parentElemId);
