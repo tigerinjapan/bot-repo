@@ -215,6 +215,10 @@ const URL_IT_QUIZ_API = "/api/itQuizData/items";
 const URL_IT_QUIZ_SERVER = `${URL_SERVER}${URL_IT_QUIZ_API}`;
 const URL_IT_QUIZ_LOCAL = `${URL_LOCAL}${URL_IT_QUIZ_API}`;
 
+const URL_DASHBOARD_API = "/json/dashboard";
+const URL_DASHBOARD_SERVER = `${URL_SERVER}${URL_DASHBOARD_API}`;
+const URL_DASHBOARD_LOCAL = `${URL_LOCAL}${URL_DASHBOARD_API}`;
+
 // メッセージ
 const MSG_VAL_NOT_EXIST = "が存在しません";
 const MSG_ERR_PASSWORD_NOT_MATCH = "パスワードが一致しません";

@@ -224,7 +224,7 @@ const renderInitialScreen = () => {
   const btnStart = getElem('btnStartGame');
   if (btnStart) {
     btnStart.addEventListener('click', () => {
-      startGame(gameState.selectedLanguage);
+      startGame();
     });
   }
 };
@@ -360,7 +360,7 @@ const updateTimerDisplay = () => {
  */
 
 // ゲームの開始
-async function startGame(language) {
+async function startGame() {
   if (gameState.timerInterval) clearInterval(gameState.timerInterval);
 
   gameState.score = 0;

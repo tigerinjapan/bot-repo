@@ -21,9 +21,9 @@ body {
 
 /* 画面中央のコンテンツコンテナ */
 .container {
-	max-width: 1200px;
+	max-width: 960px;
 	margin: 0 auto;
-	padding: 10px;
+	padding: 16px;
 	box-sizing: border-box;
 }
 
@@ -67,15 +67,20 @@ body {
 	==================== */
 .dashboard-grid {
 	display: grid;
-	/* モバイルでは1列（縦長表示） */
-	grid-template-columns: 1fr;
-	gap: 10px;
+	align-items: start;
 }
 
-/* PC/タブレット (768px以上) では2列 */
-@media (min-width: 768px) {
+/* モバイルでは1列に切り替え */
+@media (max-width: 480px) {
 	.dashboard-grid {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1fr;
+		gap: 10px;
+	}
+}
+
+@media (min-width: 960px) {
+	.dashboard-grid {
+		grid-template-columns: repeat(2, 1fr);
 		gap: 20px;
 	}
 }
@@ -91,15 +96,7 @@ body {
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	display: flex;
 	flex-direction: column;
-	/* モバイルでのチャートのコンパクト化 */
-	height: 350px;
-}
-
-/* PC/タブレットでの高さ調整 */
-@media (min-width: 768px) {
-	.kpi-card {
-		height: 450px;
-	}
+	height: 480px;
 }
 
 .kpi-card h2 {

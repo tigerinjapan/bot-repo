@@ -1,32 +1,32 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/10/16(Thu) 18:41",
+        "오늘의 생활정보": "2025/10/17(Fri) 09:06",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "내일 밤~모레 오전, 전국 대부분 비 10~50mm",
+        "오늘의 생활정보": "오늘 밤~주말 오전 비",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "오늘의 생활정보": "S&P500 6,671.06 (+0.40%)",
+        "오늘의 생활정보": "S&P500 6,629.07 (-0.63%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 937원",
+        "오늘의 생활정보": "100엔 = 943원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "오늘의 생활정보": "しんねん : 신년",
+        "오늘의 생활정보": "なまビール : 생맥주",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "Get local map?\n현지 지도는 어디서 얻어요?",
+        "오늘의 생활정보": "Safe at night here?\n이 거리는 밤에 안전해요?",
         "링크": "https://learn.dict.naver.com/conversation#/"
     },
     {

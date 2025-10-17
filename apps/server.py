@@ -210,7 +210,7 @@ async def apps(request: Request, app_name: str):
 
 
 # HTMLテンプレートファイルの返却
-@app.get("/apps/v1/{app_name}")
+@app.get("/apps/v1/{app_name}", response_class=FileResponse)
 async def apps_v1(app_name: str):
     if not app_name in const.LIST_APPS_NAME_2:
         curr_func_nm = sys._getframe().f_code.co_name
@@ -218,14 +218,13 @@ async def apps_v1(app_name: str):
 
     target_html = const.get_html(app_name)
     file_path = f"templates/{target_html}"
-    return FileResponse(file_path)
+    return file_path
 
 
 # JSONデータ取得（認証付き）（例：/json/today?token=token）
 @app.get("/json/{app_name}")
-@token_required
-async def app_json(request: Request):
-    app_name = request.path_params["app_name"]
+# @token_required
+async def app_json(app_name: str):
     result = func.get_json_data(app_name, const.STR_OUTPUT)
     return result
 
@@ -285,34 +284,32 @@ async def user_update(request: Request, userId: str = Form(...)):
 
 
 # ランキング情報更新
-@app.post("/number/ranking")
-async def number_ranking(request: Request):
+@app.post("/{app_name}/ranking")
+async def update_ranking(request: Request, app_name: str):
     json_data = await request.json()
-    rank_dao.update_rank_info_of_api(json_data)
+    if app_name == const.APP_NUMBER:
+        rank_dao.update_rank_info_of_api(json_data)
+    else:
+        rank_dao.update_ranking_of_api(json_data)
     result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
     return result
 
 
-# ランキング情報更新
-@app.post("/quiz/ranking")
-async def quiz_ranking(request: Request):
-    json_data = await request.json()
-    rank_dao.update_ranking_of_api(json_data)
-    result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
-    return result
-
-
-# 掲示板データ保存
-@app.post("/board/add")
-async def board_add(request: Request):
+# 掲示板データ登録・更新
+@app.post("/board/{div}")
+async def board_update(request: Request, div: str):
     try:
         json_data = await request.json()
-        board_dao.insert_board_data_of_api(json_data)
+        if div == const.STR_ADD:
+            board_dao.insert_board_data_of_api(json_data)
+        else:
+            board_dao.update_board_status(json_data)
+
         message = msg_const.MSG_INFO_PROC_COMPLETED
 
         if not func.is_local_env():
             msg = json_data
-            func_line.send_msg_for_admin(msg)
+            func_line.send_msg_for_admin(msg)  # TODO: [check] 実行されない
 
     except Exception as e:
         curr_func_nm = sys._getframe().f_code.co_name
@@ -323,23 +320,7 @@ async def board_add(request: Request):
     return result
 
 
-# 掲示板データ・ステータス更新
-@app.post("/board/update")
-async def board_update(request: Request):
-    try:
-        json_data = await request.json()
-        board_dao.update_board_status(json_data)
-        message = msg_const.MSG_INFO_PROC_COMPLETED
-    except Exception as e:
-        curr_func_nm = sys._getframe().f_code.co_name
-        message = msg_const.MSG_ERR_SERVER_PROC_FAILED
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
-
-    result = {const.STR_MESSAGE: message}
-    return result
-
-
-@app.get("/kakao")
+@app.get("/kakao", response_class=HTMLResponse)
 async def kakao_root(request: Request):
     """認証開始"""
 
@@ -349,7 +330,7 @@ async def kakao_root(request: Request):
 
     token = func_kakao.get_token(request.session)
     content = func_kakao.get_auth_content(token)
-    return HTMLResponse(content)
+    return content
 
 
 @app.get("/kakao/main")
@@ -407,12 +388,12 @@ async def kakao_logout(request: Request):
     return content
 
 
-@app.get("/kakao/auth")
+@app.get("/kakao/auth", response_class=RedirectResponse)
 async def kakao_auth():
     """認証"""
 
     auth_url = func_kakao.URL_KAKAO_AUTH
-    return RedirectResponse(auth_url)
+    return auth_url
 
 
 @app.get("/kakao/oauth", response_class=HTMLResponse)
@@ -480,7 +461,7 @@ async def templates_file(file_name: str):
 
 
 # ファイル取得（例：/img/today、/font/meiryo、/log/error）
-@app.get("/{div}/{file_name}")
+@app.get("/{div}/{file_name}", response_class=FileResponse)
 async def file_response(request: Request, div: str, file_name: str):
     except_flg = const.FLG_OFF
 
@@ -505,7 +486,7 @@ async def file_response(request: Request, div: str, file_name: str):
 
     if not except_flg:
         file_path = func.get_file_path(file_name, file_type, file_div)
-        return FileResponse(file_path)
+        return file_path
     else:
         curr_func_nm = sys._getframe().f_code.co_name
         except_http_error(curr_func_nm, request.url._url)

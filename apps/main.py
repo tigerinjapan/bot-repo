@@ -88,8 +88,8 @@ def daily_job_3():
 
 # 時次ジョブ
 def hourly_job():
-    appl.update_news()
     appl.update_news(const.APP_TODAY_KOREA)
+    appl.update_news()
 
 
 # 随時ジョブ
