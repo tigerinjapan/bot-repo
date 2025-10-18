@@ -1,7 +1,0 @@
-2025-10-18 19:47:04,043 [DEBUG] api https://api.XXXXXme/oauth2/v3/XXXXX
-2025-10-18 19:47:05,091 [DEBUG] トークン 有効期限: 15分
-2025-10-18 19:57:54,059 [DEBUG] api https://statsapi.mlb.com/api/v1/schedule?sportId=1&teamId=119
-2025-10-18 19:57:55,455 [DEBUG] api https://statsapi.mlb.com/api/v1.1/game/813031/feed/live
-2025-10-18 20:05:39,846 [DEBUG] api https://statsapi.mlb.com/api/v1/schedule?sportId=1&teamId=119
-2025-10-18 20:05:41,245 [DEBUG] api https://statsapi.mlb.com/api/v1.1/game/813031/feed/live
-2025-10-18 20:13:51,081 [DEBUG] api http://127.0.0.1:5000/json/today
