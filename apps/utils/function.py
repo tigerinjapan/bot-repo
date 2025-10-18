@@ -12,7 +12,7 @@ import time
 import urllib
 
 from datetime import datetime, timedelta
-from logging import DEBUG, ERROR, INFO, basicConfig, getLogger
+import logging
 from pprint import pprint
 from translate import Translator
 
@@ -117,7 +117,7 @@ def is_network() -> bool:
     try:
         response = urllib.request.urlopen(const.URL_GOOGLE)
         network_flg = const.FLG_ON
-        # print_info_msg(curr_func_nm, response)
+        # print_debug_msg(curr_func_nm, response)
     except Exception as e:
         print_error_msg(SCRIPT_NAME, curr_func_nm, const.STR_REQUEST, str(e))
     return network_flg
@@ -199,12 +199,18 @@ def print_end(div: str, msg: str = msg_const.MSG_INFO_PROC_END):
 
 # 情報メッセージ出力
 def print_info_msg(div: str, msg: str):
-    info_msg = f"[{get_now()}] {msg_const.MSG_DIV_INFO}"
-    print(info_msg, div, msg)
+    print_msg(div, msg)
 
+
+# デバックメッセージ出力
+def print_debug_msg(div: str, msg: str):
+    print_msg(div, msg, const.STR_DEBUG)
+
+
+# メッセージ出力
+def print_msg(div: str, msg: str, log_div: str = const.STR_INFO):
     log_msg = f"{div} {msg}"
-    if not is_local_env():
-        write_log(log_msg, const.STR_INFO, INFO)
+    write_log(log_msg, log_div)
 
 
 # エラーメッセージ出力
@@ -215,51 +221,71 @@ def print_error_msg(
     exception=const.NONE_CONSTANT,
     sys_exit: bool = const.FLG_OFF,
 ):
-    err_msg = f"[{get_now()}] {msg_const.MSG_DIV_ERR}"
     log_msg = f"[{script_name}.{func_name}] {div}"
 
     if exception:
         except_msg = f" {str(exception)}"
         log_msg += except_msg
 
-        if not is_local_env() and 100 < len(log_msg):
-            log_msg = f"{log_msg[:100]}..."
+        if const.MAX_TEXT_LENGTH < len(log_msg):
+            log_msg = f"{log_msg[:const.MAX_TEXT_LENGTH]}..."
 
-    print(err_msg, log_msg)
-    if not is_local_env():
-        write_log(log_msg)
+    write_log(log_msg)
 
     if sys_exit:
         sys.exit()
 
 
 # ログ出力
-def write_log(msg: str, app_div: str = const.STR_ERROR, log_level: int = ERROR):
-    log_path = get_file_path(
-        app_div, file_type=const.FILE_TYPE_LOG, file_div=const.STR_OUTPUT
-    )
+def write_log(log_msg: str, log_div: str = const.STR_ERROR):
+    log_level = logging.ERROR
+    if log_div == const.STR_INFO:
+        log_level = logging.INFO
+    elif log_div == const.STR_DEBUG:
+        log_level = logging.DEBUG
+    else:
+        log_level = logging.INFO
+
+    logger = logging.getLogger(log_div)
+    logger.setLevel(log_level)
+    logger.propagate = const.FLG_OFF
+
     # log_format = "%(asctime)s %(name)s:%(lineno)s %(funcName)s [%(levelname)s]: %(message)s"
     log_format = "%(asctime)s [%(levelname)s] %(message)s"
+    formatter = logging.Formatter(log_format)
 
-    basicConfig(
-        level=log_level,
-        filename=log_path,
-        format=log_format,
-        encoding=const.CHARSET_UTF_8,
+    # コンソール出力設定
+    stream_handler = logging.StreamHandler(sys.stdout)
+    stream_handler.setLevel(log_level)
+    stream_handler.setFormatter(formatter)
+
+    # ファイル出力設定
+    log_path = get_file_path(
+        log_div, file_type=const.FILE_TYPE_LOG, file_div=const.STR_OUTPUT
     )
+    file_handler = logging.FileHandler(log_path, encoding=const.CHARSET_UTF_8)
+    file_handler.setLevel(log_level)
+    file_handler.setFormatter(formatter)
 
-    if not app_div:
-        app_div = __name__
-    logger = getLogger(app_div)
+    logger.addHandler(stream_handler)
+    if not is_local_env():
+        logger.addHandler(file_handler)
 
-    msg = get_replace_data(msg, const.LIST_LOG_MASKING, const.LOG_MASKING)
+    msg = get_replace_data(log_msg, const.LIST_LOG_MASKING, const.LOG_MASKING)
 
-    if log_level == DEBUG:
+    if log_level == logging.DEBUG:
         logger.debug(msg)
-    elif log_level == ERROR:
+    elif log_level == logging.ERROR:
         logger.error(msg)
     else:
         logger.info(msg)
+
+    # 登録されているハンドラーをリストで取得
+    handlers = logger.handlers[:]
+
+    # ハンドラーを一つずつ削除
+    for handler in handlers:
+        logger.removeHandler(handler)
 
 
 # 文字列を日付型に変換
@@ -402,17 +428,24 @@ def write_file(file_path: str, data, file_encode: str = const.CHARSET_UTF_8):
 
 
 # CSVファイルを読み込み
-def get_dict_from_csv(file_path: str):
+def get_dict_from_csv(file_path: str, search_key: str = const.SYM_BLANK):
     # データを格納する辞書
     data_dict = {}
 
     with open(file_path, newline="", encoding=const.CHARSET_UTF_8) as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            # 1番目の値をキーとして使用
-            key = row[0]
-            # 全体の行を値として格納
-            data_dict[key] = row
+            if search_key:
+                for row_data in row:
+                    search_value = row_data.strip()
+                    if search_key == search_value:
+                        return row
+
+            else:
+                # 1番目の値をキーとして使用
+                key = row[0]
+                # 全体の行を値として格納
+                data_dict[key] = row
 
         return data_dict
 
@@ -509,14 +542,14 @@ def get_df_from_file_path(div: str, file_div, file_type):
     if check_path_exists(file_path):
         if file_type == const.FILE_TYPE_JSON:
             # func[read_json]:Read JSON file with Pandas
-            df = pd.read_json(file_path)
+            df = get_df_read_json(file_path)
 
         elif file_type == const.FILE_TYPE_CSV:
             if div == const.STR_ZIP_CODE:
                 # func[read_csv]:Read CSV file with Pandas
                 df = pd.read_csv(file_path, dtype={div: str})
             else:
-                df = pd.read_csv(file_path)
+                df = get_df_read_csv(file_path)
     else:
         curr_func_nm = sys._getframe().f_code.co_name
         print_error_msg(
@@ -527,9 +560,9 @@ def get_df_from_file_path(div: str, file_div, file_type):
 
 
 # DataFrame取得
-def get_df(data_list: list, columns: list[str]):
+def get_df(data, columns: list[str] = const.NONE_CONSTANT):
     # DataFrame作成
-    df = pd.DataFrame(data_list, columns=columns)
+    df = pd.DataFrame(data, columns=columns)
     return df
 
 

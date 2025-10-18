@@ -14,6 +14,7 @@ from threading import Thread
 from uvicorn import Config, Server
 
 import apps.appl as appl
+import apps.dashboard as dashboard
 import apps.kakao as kakao
 import apps.line as line
 import apps.test as test
@@ -180,10 +181,12 @@ async def app_exec(request: Request, app_name: str):
         elif const.APP_NUMBER in app_name:
             target_html, context = appl.exec_number(request, app_name)
         else:
-            if not app_name in const.LIST_ALL_APP_NAME:
+            if not app_name in const.LIST_APP_ALL:
                 except_http_error(curr_func_nm, request.url._url)
 
             target_html, context = appl.exec_result(request, app_name)
+
+        dashboard.write_dashboard_log(request, app_name)
 
     except Exception as e:
         func.print_error_msg(SCRIPT_NAME, curr_func_nm, app_name, e)
@@ -200,19 +203,22 @@ async def app_exec(request: Request, app_name: str):
 # アプリケーション実行
 @app.get("/apps/{app_name}")
 async def apps(request: Request, app_name: str):
-    if not app_name in const.LIST_APPS_NAME:
+    if not app_name in const.LIST_APPS_ALL:
         curr_func_nm = sys._getframe().f_code.co_name
         except_http_error(curr_func_nm, request.url._url)
 
     target_html = const.HTML_RESULT_2
     context = appl.get_context_data2(request, app_name)
+
+    dashboard.write_dashboard_log(request, app_name)
+
     return templates.TemplateResponse(target_html, context)
 
 
 # HTMLテンプレートファイルの返却
 @app.get("/apps/v1/{app_name}", response_class=FileResponse)
 async def apps_v1(app_name: str):
-    if not app_name in const.LIST_APPS_NAME_2:
+    if not app_name in const.LIST_APPS_ALL_2:
         curr_func_nm = sys._getframe().f_code.co_name
         except_http_error(curr_func_nm, app_name)
 
@@ -258,7 +264,7 @@ async def gemini_api(request: Request):
     try:
         if mode == const.STR_IMG:
             message = func_gemini.get_gemini_image(contents=contents)
-            func.print_info_msg(line.MSG_TYPE_IMG, func_line.URL_GEMINI_IMG)
+            func.print_debug_msg(line.MSG_TYPE_IMG, func_line.URL_GEMINI_IMG)
         else:
             response = func_gemini.get_gemini_response(curr_func_nm, contents)
             message = const.SYM_NEW_LINE.join(response)
@@ -323,10 +329,6 @@ async def board_update(request: Request, div: str):
 @app.get("/kakao", response_class=HTMLResponse)
 async def kakao_root(request: Request):
     """認証開始"""
-
-    # クライアントIPチェック
-    # client_ip = request.client.host
-    # func.print_info_msg(const.STR_IP, client_ip)
 
     token = func_kakao.get_token(request.session)
     content = func_kakao.get_auth_content(token)

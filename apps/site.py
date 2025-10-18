@@ -51,7 +51,7 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
         json_data = func.get_input_data(app_div)
 
     # DataFrame変換
-    df_all = pd.DataFrame(json_data)
+    df_all = func.get_df(json_data)
 
     if app_div == const.APP_BOARD:
         df = df_all

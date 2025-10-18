@@ -4,6 +4,7 @@ import dotenv
 import schedule
 
 import apps.appl as appl
+import apps.dashboard as dashboard
 import apps.kakao as kakao
 import apps.line as line
 import apps.server as server
@@ -31,13 +32,14 @@ def main():
 
 
 def job_scheduler():
-    # 毎週指定された時間に実行（例：09:00）
-    schedule.every().monday.at(TIME_WEEKLY_JOB).do(weekly_job)
+    if not func.is_local_env():
+        # 毎週指定された時間に実行（例：09:00）
+        schedule.every().monday.at(TIME_WEEKLY_JOB).do(weekly_job)
 
-    # 毎日指定された時間に実行（例：07:00）
-    schedule.every().day.at(TIME_DAILY_JOB).do(daily_job)
-    schedule.every().day.at(TIME_DAILY_JOB_2).do(daily_job_2)
-    schedule.every().day.at(TIME_DAILY_JOB_3).do(daily_job_3)
+        # 毎日指定された時間に実行（例：07:00）
+        schedule.every().day.at(TIME_DAILY_JOB).do(daily_job)
+        schedule.every().day.at(TIME_DAILY_JOB_2).do(daily_job_2)
+        schedule.every().day.at(TIME_DAILY_JOB_3).do(daily_job_3)
 
     # 1時間毎に実行（例：:30）
     schedule.every().hour.at(MIN_HOURLY_JOB).do(hourly_job)
@@ -68,34 +70,31 @@ def weekly_job():
 
 # 日次ジョブ
 def daily_job():
-    if not func.is_local_env():
-        line.main()
+    line.main()
 
 
 # 日次ジョブ
 def daily_job_2():
-    if not func.is_local_env():
-        line.main(data_div=const.NUM_TWO)
-        line.sub(div=const.APP_MLB)
-        kakao.main()
+    line.main(data_div=const.NUM_TWO)
+    line.sub(div=const.APP_MLB)
+    kakao.main()
 
 
 # 日次ジョブ
 def daily_job_3():
-    if not func.is_local_env():
-        kakao.main()
+    kakao.main()
 
 
 # 時次ジョブ
 def hourly_job():
     appl.update_news(const.APP_TODAY_KOREA)
     appl.update_news()
+    dashboard.get_dashboard_json()
 
 
 # 随時ジョブ
 def every_min_job():
-    if not func.is_local_env():
-        server.health_check()
+    server.health_check()
 
 
 # プログラムのエントリーポイント

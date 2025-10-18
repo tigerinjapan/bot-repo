@@ -34,7 +34,7 @@ def get_response_result(
     result = except_ = msg = const.NONE_CONSTANT
     curr_func_nm = sys._getframe().f_code.co_name
 
-    func.print_info_msg(const.STR_API, url)
+    func.print_debug_msg(const.STR_API, url)
 
     if header_json_flg:
         api_headers = API_HEADERS_JSON

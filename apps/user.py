@@ -13,10 +13,10 @@ app_title = "User Info"
 def user_test():
     user_id = "dev@jh.com"
     user_info = dao.get_user_info(user_id)
-    func.print_info_msg(const.STR_USER, user_info)
+    func.print_debug_msg(const.STR_USER, user_info)
 
     user_seq = dao.get_user_seq()
-    func.print_info_msg(mongo_const.ITEM_SEQ, user_seq)
+    func.print_debug_msg(mongo_const.ITEM_SEQ, user_seq)
 
 
 # CSVデータ取得

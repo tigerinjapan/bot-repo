@@ -31,7 +31,7 @@ URL_KAKAO_API_UNLINK = f"{URL_KAKAO_API}/v1/user/unlink"
 URL_KAKAO_API_SEND_ME = f"{URL_KAKAO_API}/v2/api/talk/memo/default/send"
 URL_KAKAO_API_USER_ME = f"{URL_KAKAO_API}/v2/user/me"
 
-# TODO: チャネル登録必要のため、保留
+# TODO: [pending] チャネル登録必要
 URL_KAKAO_API_FRIENDS = f"{URL_KAKAO_API}/v1/api/talk/friends"
 URL_KAKAO_API_SEND_FRIENDS = f"{URL_KAKAO_API}/message/default/send"
 
@@ -57,7 +57,7 @@ ISSUE_TYPE_REFRESH_TOKEN = GRANT_TYPE_REFRESH_TOKEN
 # Kakaoメッセージタイプ
 OBJECT_TYPE_FEED = "feed"
 OBJECT_TYPE_TEXT = "text"
-OBJECT_TYPE_LIST = "list"  # TODO: 実装要
+OBJECT_TYPE_LIST = "list"  # TODO: [add] 実装要
 
 # 結果コード
 RESULT_CODE_OK = 0
@@ -159,7 +159,7 @@ def get_user_me(access_token: str = const.SYM_BLANK) -> list[str]:
     return result
 
 
-# 友達リスト検索 # TODO: チャネル登録必要のため、保留
+# 友達リスト検索 # TODO: [pending] チャネル登録必要
 def get_receiver_uuids(access_token: str = const.SYM_BLANK) -> list[str]:
     receiver_uuids = []
 
@@ -258,7 +258,7 @@ def get_template_object(
             },
             "button_title": "자세히 보기",
         }
-        func.print_info_msg(object_type, template_object[const.INPUT_TYPE_TEXT])
+        func.print_debug_msg(object_type, template_object[const.INPUT_TYPE_TEXT])
 
     template_object = func.get_dumps_json(template_object)
     return template_object

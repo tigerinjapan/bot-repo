@@ -40,6 +40,15 @@ UA_OPT_PC = "--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KH
 UA_OPT_MO = "--user-agent=Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Mobile Safari/537.36"
 UA_DIV_MO = "Mobile"
 UA_DIV_PC = "PC"
+UA_DIV_TABLET = "Tablet"
+UA_OS_ANDROID = "Android"
+UA_OS_IOS = "iOS"
+UA_OS_WINDOWS = "Windows"
+UA_OS_LINUX = "Linux"
+UA_BROWSER_CHROME = "Chrome"
+UA_BROWSER_EDGE = "Edge"
+UA_BROWSER_SAFARI = "Safari"
+UA_BROWSER_FIREFOX = "Firefox"
 
 ##### 文字コード #####
 CHARSET_UTF_8 = "utf-8"
@@ -61,6 +70,7 @@ DATE_FORMAT_YYYYMMDD = "%Y%m%d"
 DATE_FORMAT_YYYYMMDD_SLASH = "%Y/%m/%d(%a)"
 DATE_FORMAT_YYYYMMDD_HHMM = "%Y/%m/%d(%a) %H:%M"
 DATE_FORMAT_YYYYMMDD_KO = "%Y년%#m월%#d일"
+DATE_FORMAT_MMDD = "%m/%d"
 DATE_FORMAT_MMDD_SLASH_NO_ZERO = "%#m/%#d"
 DATE_FORMAT_ISO = "iso"
 
@@ -233,6 +243,7 @@ STR_LOGOUT = "logout"
 STR_LOG = "log"
 STR_INFO = "info"
 STR_ERROR = "error"
+STR_DEBUG = "debug"
 STR_USER = "user"
 STR_NAME = "name"
 STR_ID = "id"
@@ -246,7 +257,6 @@ STR_STATUS = "status"
 STR_MESSAGE = "message"
 STR_APP = "app"
 STR_URL = "url"
-STR_IP = "IP"
 STR_HOST = "host"
 STR_SERVER = "server"
 STR_INDEX = "index"
@@ -285,6 +295,12 @@ STR_ENGLISH = "english"
 STR_UNLINK = "unlink"
 STR_PATH = "path"
 STR_DESIGN = "design"
+STR_CATEGORY = "category"
+STR_COUNTRY = "country"
+STR_DEVICE = "device"
+STR_OS = "os"
+STR_BROWSER = "browser"
+STR_DUMMY = "dummy"
 
 STR_DB = "db"
 STR_MONGO = "mongo"
@@ -300,6 +316,7 @@ STR_KAKAO = "kakao"
 STR_KPOP = "kpop"
 STR_NISA = "nisa"
 
+STR_IP = "IP"
 STR_AI = "AI"
 STR_USER_INFO = "userInfo"
 STR_ZIP_CODE = "zipCode"
@@ -336,6 +353,8 @@ STR_X_TREND_JA = "Xトレンド"
 STR_KOREAN_JA = "韓国語"
 STR_MAN_JA = "男性"
 STR_WOMAN_JA = "女性"
+STR_TIME_JA = "時間"
+STR_JAPAN_JA = "日本"
 
 STR_JPY = "JPY"
 STR_KRW = "KRW"
@@ -474,7 +493,7 @@ APP_TRAVEL_KO = "travel_ko"
 APP_NUMBER_KO = "number_ko"
 APP_REVIEW_KO = "review_ko"
 
-LIST_APP_NAME = [
+LIST_APP_SERVER = [
     APP_TODAY,
     APP_NEWS,
     APP_DRAMA,
@@ -485,9 +504,9 @@ LIST_APP_NAME = [
 ]
 LIST_APP_SITE = [APP_SITE, APP_CAFE, APP_TRAVEL, APP_BOARD]
 LIST_APP_KOREA = [APP_TODAY_KOREA]
-LIST_ALL_APP_NAME = LIST_APP_NAME + LIST_APP_SITE + LIST_APP_KOREA
+LIST_APP_ALL = LIST_APP_SERVER + LIST_APP_SITE + LIST_APP_KOREA
 
-LIST_APPS_NAME = [
+LIST_APPS_ALL = [
     APP_TRAVEL,
     APP_TRAVEL_KO,
     APP_TRAVEL_DESIGN,
@@ -499,7 +518,40 @@ LIST_APPS_NAME = [
     APP_URL_DESIGN,
     APP_KAKAO_DESIGN,
 ]
-LIST_APPS_NAME_2 = [STR_GEMINI]
+LIST_APPS_ALL_2 = [STR_GEMINI]
+
+LIST_APP_NEWS = [APP_TODAY, APP_NEWS, APP_TV, APP_TODAY_KOREA]
+LIST_APP_ENTERTAINMENT = [
+    APP_DRAMA,
+    APP_RANKING,
+    APP_MLB,
+    APP_NUMBER,
+    APP_NUMBER_KO,
+    APP_IT_QUIZ,
+]
+LIST_APP_SERVICE = [APP_LCC, APP_CAFE, APP_TRAVEL, APP_TRAVEL_KO, APP_SITE, APP_STUDY]
+LIST_APP_MANAGEMENT = [
+    APP_USER,
+    APP_REVIEW,
+    APP_REVIEW_KO,
+    APP_BOARD,
+    APP_DASHBOARD,
+]
+LIST_APP_DOCUMENT = [
+    APP_KAKAO_DESIGN,
+    APP_TRAVEL_DESIGN,
+    APP_IT_QUIZ_DESIGN,
+    APP_URL_DESIGN,
+]
+
+LIST_CATEGORY = ["news", "entertainment", "service", "management", "document"]
+LIST_APP_CATEGORY = [
+    LIST_APP_NEWS,
+    LIST_APP_ENTERTAINMENT,
+    LIST_APP_SERVICE,
+    LIST_APP_MANAGEMENT,
+    LIST_APP_DOCUMENT,
+]
 
 
 # パス取得

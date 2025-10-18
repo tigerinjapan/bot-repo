@@ -96,7 +96,7 @@ def exec_result(request: Request, app_name: str):
 
 # 【画面】パラメータ取得
 def get_context_data(app_name: str, user_div: str = const.AUTH_DEV):
-    app_div_idx = const.LIST_ALL_APP_NAME.index(app_name)
+    app_div_idx = const.LIST_APP_ALL.index(app_name)
     app_div = LIST_ALL_APP_DIV[app_div_idx]
 
     app_title = app_div.app_title
@@ -226,7 +226,7 @@ def update_news(app_name: str = const.SYM_BLANK):
     func.print_start(curr_func_nm, msg_const.MSG_INFO_PROC_START)
 
     app_div_list = LIST_APP_DIV
-    app_name_list = const.LIST_APP_NAME
+    app_name_list = const.LIST_APP_SERVER
 
     if app_name:
         if app_name == const.APP_TODAY_KOREA:

@@ -44,7 +44,7 @@ def get_connect_info(db_div: str = const.STR_MONGO) -> str:
     auth_data = func.get_input_data(const.STR_AUTH, const.STR_MONGO)
     if auth_data:
         db_user = db_div + func.convert_upper_lower(
-            const.STR_USER, div=const.STR_CAPITALIZE
+            const.STR_USER, const.STR_CAPITALIZE
         )
         db_pw = db_div
 

@@ -1,9 +1,5 @@
 # 説明: メッセージ一覧
 
-# メッセージ区分
-MSG_DIV_INFO = "[INFO]"
-MSG_DIV_ERR = "[ERROR]"
-
 # インフォメーションメッセージ
 MSG_INFO_PROC_START = "処理を開始します。"
 MSG_INFO_PROC_END = "処理を終了します。"
@@ -42,6 +38,7 @@ MSG_ERR_NO_SUCH_ELEMENT = "[要素] 対象の画面要素が存在しません�
 MSG_INFO_LOGIN_EN = "Login successful."
 MSG_INFO_LOGOUT_EN = "Logout successful."
 MSG_ERR_INCORRECT_ACCESS_EN = "Incorrect user id or password."
+MSG_ERR_USER_AGENT_NOT_FOUND_EN = "User-Agent header not found."
 
 # HTTPステータスメッセージ
 HTTP_STATUS_MESSAGES = {

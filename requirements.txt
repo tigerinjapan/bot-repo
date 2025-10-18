@@ -13,3 +13,4 @@ schedule
 google-genai
 python-multipart
 translate
+user_agents

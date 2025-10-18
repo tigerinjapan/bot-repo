@@ -1,0 +1,52 @@
+{
+    "label": "日",
+    "users": {
+        "total": "8",
+        "labels": [
+            "10/18"
+        ],
+        "data": [
+            8
+        ]
+    },
+    "category": {
+        "labels": [
+            "news",
+            "management",
+            "service",
+            "entertainment",
+            "document"
+        ],
+        "data": [
+            2,
+            2,
+            2,
+            1,
+            1
+        ]
+    },
+    "country": [
+        {
+            "name": "日本",
+            "value": 100
+        }
+    ],
+    "device": [
+        {
+            "name": "PC",
+            "value": 100
+        }
+    ],
+    "os": [
+        {
+            "name": "Windows",
+            "value": 100
+        }
+    ],
+    "browser": [
+        {
+            "name": "Windows",
+            "value": 100
+        }
+    ]
+}

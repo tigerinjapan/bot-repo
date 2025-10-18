@@ -31,7 +31,7 @@ def main(
 
     引数:
         object_type (str): feed, text, list, test
-        list_flg (bool): 一括送信フラグ # TODO: チャネル登録必要のため、保留
+        list_flg (bool): 一括送信フラグ # TODO: [pending] チャネル登録必要
     """
 
     func.print_start(SCRIPT_NAME)
@@ -49,7 +49,7 @@ def main(
 
                 if file_path:
                     msg = func_kakao.URL_TODAY_KOREA_IMG
-                    func.print_info_msg(const.STR_IMG, msg)
+                    func.print_debug_msg(const.STR_IMG, msg)
 
                     title = "【오늘의 한마디】"
                     message = today_korea.get_phrase()

@@ -125,7 +125,7 @@ def get_msg_data_today():
 
         file_path = func_gemini.get_today_news_image(text_msg, forecast, outfit)
         if file_path:
-            func.print_info_msg(const.STR_IMG_JA, img_url)
+            func.print_debug_msg(const.STR_IMG_JA, img_url)
         else:
             func_api.create_msg_img(const.APP_TODAY, text_msg, forecast)
         return msg_data, date_today, img_url

@@ -233,7 +233,7 @@ def get_game_date(game_date: str) -> str:
     game_date = func.convert_str_to_date(game_date)
 
     # タイムゾーンを削除
-    game_date_naive = game_date.replace(tzinfo=None)
+    game_date_naive = game_date.replace(tzinfo=const.NONE_CONSTANT)
 
     # 日本時間に計算
     calc_date = func.get_calc_date(9, const.DATE_HOUR, game_date_naive)

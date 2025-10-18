@@ -27,7 +27,7 @@ def async_main():
 
 
 async def async_test():
-    func.print_info_msg(const.STR_TEST, "非同期処理テスト")
+    func.print_debug_msg(const.STR_TEST, "非同期処理テスト")
 
 
 if __name__ == const.MAIN_FUNCTION:

@@ -88,7 +88,7 @@ def main(
 
                 if not func.is_local_env():
                     msg = f"[{err_msg}]\n{e[:100]}"
-                    func_line.send_msg_for_admin(msg)
+                    func_line.send_msg_for_admin(msg) # TODO: [check] 実行されない
 
     func.print_end(SCRIPT_NAME)
 
@@ -148,7 +148,7 @@ def get_template_msg():
 
     file_path = func_gemini.get_gemini_image(const.STR_REST)
     if file_path:
-        func.print_info_msg(MSG_TYPE_IMG, func_line.URL_REST_IMG)
+        func.print_debug_msg(MSG_TYPE_IMG, func_line.URL_REST_IMG)
 
     template_msg = func_line.get_template_msg_json(
         alt_text, template_title, template_text, actions

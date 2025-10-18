@@ -15,14 +15,96 @@ const appTexts = {
 // KPI項目定義とHTML生成 (ループ処理)
 // ====================
 const kpiItems = [
-  { id: "users", title: "👤 アクセスしたユーザー数", type: "line", dataKey: "users" },
-  { id: "pages", title: "📄 アクセスしたページ", type: "bar", dataKey: "pages" },
-  { id: "device", title: "📱 使用したデバイス", type: "doughnut", dataKey: "devices" },
-  { id: "os", title: "💻 デバイスのOS", type: "doughnut", dataKey: "os" }
+  { id: "users", title: "👤 ユーザー数", type: "line", dataKey: "users" },
+  { id: "category", title: "📄 カテゴリ", type: "bar", dataKey: "category" },
+  { id: "country", title: "🌐 国", type: "doughnut", dataKey: "country" },
+  { id: "device", title: "📱 デバイス", type: "doughnut", dataKey: "device" },
+  { id: "os", title: "💻 OS", type: "doughnut", dataKey: "os" },
+  { id: "browser", title: "🌐 ブラウザ", type: "doughnut", dataKey: "browser" }
 ];
 
 // グラフオブジェクトを保持するMap
 const charts = new Map();
+
+// ページロード時の初期化処理
+function initializeApp() {
+  // テキスト定義の適用
+  document.title = TITLE_DASH_BOARD;
+  setElemText("header-title", TITLE_DASH_BOARD);
+  setElemText('time-period-label', appTexts.timePeriodLabel);
+
+  // プルダウンオプションの生成
+  const selectElem = getElem('time-period');
+  appTexts.periodOptions.forEach(option => {
+    const opt = createElemOnly(TAG_OPTION);
+    opt.value = option.value;
+    opt.textContent = option.text;
+    selectElem.appendChild(opt);
+  });
+
+  // KPIカードの生成
+  initializeKpiCards();
+
+  // 初期データ表示
+  updateDashboard('day');
+
+  // プルダウン変更時のイベントリスナー
+  selectElem.addEventListener('change', (event) => {
+    updateDashboard(event.target.value);
+  });
+}
+
+// KPIカードのHTMLを生成し、グリッドに追加する
+function initializeKpiCards() {
+  const grid = getElem('dashboard-grid');
+  let html = '';
+
+  kpiItems.forEach(item => {
+    const isUsers = item.id === 'users';
+    html += `
+      <div class="kpi-card">
+          <h2>${item.title}</h2>
+          ${isUsers ? `<span id="${item.id}-count" class="current-value"></span>` : ''}
+          <div class="chart-container">
+              <canvas id="${item.id}Chart"></canvas>
+          </div>
+      </div>
+    `;
+  });
+
+  grid.innerHTML = html;
+}
+
+// データをHTMLとグラフに反映させるメイン関数
+async function updateDashboard(period) {
+  let dashboardDataUrl = URL_DASHBOARD_SERVER;
+  if (isLocal()) {
+    dashboardDataUrl = URL_DASHBOARD_LOCAL;
+  }
+
+  // 期間ごとのデータ
+  const dashboardData = await getFetchApiData(dashboardDataUrl, null);
+
+  const data = dashboardData[period];
+  if (!data) return;
+
+  kpiItems.forEach(item => {
+    const chartId = `${item.id}Chart`;
+    const itemData = data[item.dataKey];
+
+    if (item.type === 'line') {
+      // ユーザー数
+      setElemText(`${item.id}-count`, itemData.total.toLocaleString());
+      updateLineBarChart(chartId, 'line', itemData, item.title.replace(/👤\s*/, ''), 'steelblue');
+    } else if (item.type === 'bar') {
+      // アクセスしたページ
+      updateLineBarChart(chartId, 'bar', itemData, item.title.replace(/📄\s*/, ''), 'forestgreen');
+    } else if (item.type === 'doughnut') {
+      // デバイス/OS
+      updateDoughnutChart(chartId, itemData);
+    }
+  });
+}
 
 // 棒グラフ/折れ線グラフを描画する共通関数
 function updateLineBarChart(chartId, type, dataItems, title, color) {
@@ -80,86 +162,6 @@ function updateDoughnutChart(chartId, dataItems) {
     }
   });
   charts.set(chartId, newChart);
-}
-
-// KPIカードのHTMLを生成し、グリッドに追加する
-function initializeKpiCards() {
-  const grid = getElem('dashboard-grid');
-  let html = '';
-
-  kpiItems.forEach(item => {
-    const isUsers = item.id === 'users';
-    html += `
-      <div class="kpi-card">
-          <h2>${item.title}</h2>
-          ${isUsers ? `<span id="${item.id}-count" class="current-value"></span>` : ''}
-          <div class="chart-container">
-              <canvas id="${item.id}Chart"></canvas>
-          </div>
-      </div>
-    `;
-  });
-
-  grid.innerHTML = html;
-}
-
-// データをHTMLとグラフに反映させるメイン関数
-async function updateDashboard(period) {
-  let dashboardDataUrl = URL_DASHBOARD_SERVER;
-  if (isLocal()) {
-    dashboardDataUrl = URL_DASHBOARD_LOCAL;
-  }
-
-  // 期間ごとのデータ
-  const dashboardData = await getFetchApiData(dashboardDataUrl, null);
-
-  const data = dashboardData[period];
-  if (!data) return;
-
-  kpiItems.forEach(item => {
-    const chartId = `${item.id}Chart`;
-    const itemData = data[item.dataKey];
-
-    if (item.type === 'line') {
-      // ユーザー数
-      setElemText(`${item.id}-count`, itemData.total.toLocaleString());
-      updateLineBarChart(chartId, 'line', itemData, item.title.replace(/👤\s*/, ''), 'steelblue');
-    } else if (item.type === 'bar') {
-      // アクセスしたページ
-      updateLineBarChart(chartId, 'bar', itemData, item.title.replace(/📄\s*/, ''), 'forestgreen');
-    } else if (item.type === 'doughnut') {
-      // デバイス/OS
-      updateDoughnutChart(chartId, itemData);
-    }
-  });
-}
-
-// ページロード時の初期化処理
-function initializeApp() {
-  // テキスト定義の適用
-  document.title = TITLE_DASH_BOARD;
-  setElemText("header-title", TITLE_DASH_BOARD);
-  setElemText('time-period-label', appTexts.timePeriodLabel);
-
-  // プルダウンオプションの生成
-  const selectElem = getElem('time-period');
-  appTexts.periodOptions.forEach(option => {
-    const opt = createElemOnly(TAG_OPTION);
-    opt.value = option.value;
-    opt.textContent = option.text;
-    selectElem.appendChild(opt);
-  });
-
-  // KPIカードの生成
-  initializeKpiCards();
-
-  // 初期データ表示
-  updateDashboard('day');
-
-  // プルダウン変更時のイベントリスナー
-  selectElem.addEventListener('change', (event) => {
-    updateDashboard(event.target.value);
-  });
 }
 
 // ページロード時の初期化
