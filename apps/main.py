@@ -89,7 +89,7 @@ def daily_job_3():
 def hourly_job():
     appl.update_news(const.APP_TODAY_KOREA)
     appl.update_news()
-    dashboard.get_dashboard_json()
+    dashboard.update_data()
 
 
 # 随時ジョブ

@@ -2,6 +2,7 @@
 
 import numpy as np
 import pandas as pd
+from dateutil.relativedelta import relativedelta
 from fastapi import Request
 from user_agents import parse
 
@@ -26,9 +27,15 @@ COL_LIST_DASHBOARD = [
     const.STR_BROWSER,
 ]
 
+# リスト
+LIST_DATE = [const.STR_DAY, const.STR_MONTH, const.STR_YEAR]
 
-# ダッシュボードデータ取得
-def get_dashboard_json():
+# デフォルト値
+DEFAULT_VALUE = "Unknown"
+
+
+# データ更新
+def update_data():
     func.print_start(SCRIPT_NAME)
 
     log_path = func.get_file_path(
@@ -36,24 +43,71 @@ def get_dashboard_json():
     )
     log_data_text = func.read_file(log_path)
     log_data_list = log_data_text.split(const.SYM_NEW_LINE)
+
     data_list = []
     for log_data in log_data_list:
-        data = log_data.split(const.SYM_SPACE)
-        if len(data) == len(COL_LIST_DASHBOARD):
-            data_list.append(data)
+        data = log_data.split(const.SYM_SPACE)[: len(COL_LIST_DASHBOARD)]
+        data_list.append(data)
 
-    df = func.get_df(data_list, COL_LIST_DASHBOARD)
-    df[const.STR_DATE] = pd.to_datetime(df[const.STR_DATE]).dt.strftime(
-        const.DATE_FORMAT_MMDD
-    )
-    df[const.STR_COUNTRY] = np.where(
-        df[const.STR_COUNTRY] == const.COUNTRY_CD_JP,
-        const.STR_JAPAN_JA,
-        const.STR_KOREA_JA,
-    )
+    if data_list:
+        df = func.get_df(data_list, COL_LIST_DASHBOARD)
 
-    daily_access = df[const.STR_DATE].value_counts().sort_index()
-    total_access = daily_access.sum()
+        json_data = func.get_json_data(const.STR_DUMMY, const.STR_OUTPUT)
+        for data_div in LIST_DATE:
+            dashboard_json = get_dashboard_json(df, data_div)
+
+            if dashboard_json:
+                json_data[data_div] = dashboard_json
+
+        file_path = func.get_file_path(
+            app_div, file_type=const.FILE_TYPE_JSON, file_div=const.STR_OUTPUT
+        )
+        func.write_file(file_path, json_data)
+
+    else:
+        func.print_info_msg(app_div, msg_const.MSG_ERR_DATA_NOT_EXIST)
+
+    func.print_end(SCRIPT_NAME)
+
+
+# ダッシュボードデータ取得
+def get_dashboard_json(df_all, data_div: str):
+    df_all[const.STR_DATE] = pd.to_datetime(df_all[const.STR_DATE])
+
+    df_all[const.STR_MONTH] = df_all[const.STR_DATE].dt.month
+    df_all[const.STR_YEAR] = df_all[const.STR_DATE].dt.year
+
+    if data_div == const.STR_DAY:
+        # 7日前のデータ
+        target_date = func.get_calc_date(-7)
+        date_format = const.DATE_FORMAT_MMDD_SLASH
+
+    else:
+        today = pd.to_datetime(func.get_now())
+        if data_div == const.STR_MONTH:
+            # 今月の1日を取得
+
+            this_month_start = today.replace(day=1)
+
+            # 先月の1日を取得
+            last_month_start = this_month_start - relativedelta(months=3)
+            target_date = last_month_start
+            date_format = const.DATE_FORMAT_YYYYMM_SLASH
+
+        elif data_div == const.STR_YEAR:
+            # 今年の1月1日を取得
+            this_year_start = today.replace(month=1, day=1)
+
+            # 去年の1月1日を取得
+            last_year_start = this_year_start - relativedelta(years=1)
+            target_date = last_year_start
+            date_format = const.DATE_FORMAT_YYYY
+
+    df = df_all[target_date <= df_all[const.STR_DATE]]
+    df.loc[:, const.STR_DATE] = df[const.STR_DATE].dt.strftime(date_format)
+
+    term_access = df[const.STR_DATE].value_counts().sort_index()
+    total_access = term_access.sum()
     category_counts = df[const.STR_CATEGORY].value_counts()
     country_counts = df[const.STR_COUNTRY].value_counts()
     device_counts = df[const.STR_DEVICE].value_counts()
@@ -61,12 +115,12 @@ def get_dashboard_json():
     browser_counts = df[const.STR_BROWSER].value_counts()
 
     # JSON形式のデータを作成
-    json_data = {
-        "label": "日",
+    dashboard_json = {
+        "label": data_div,
         "users": {
             "total": f"{total_access:,}",
-            "labels": daily_access.index.tolist(),
-            "data": daily_access.values.tolist(),
+            "labels": term_access.index.tolist(),
+            "data": term_access.values.tolist(),
         },
         const.STR_CATEGORY: {
             "labels": category_counts.index.tolist(),
@@ -77,19 +131,8 @@ def get_dashboard_json():
         const.STR_OS: calculate_percentage_to_100(os_counts),
         const.STR_BROWSER: calculate_percentage_to_100(browser_counts),
     }
-    json_data = {"day": json_data}
 
-    dummy_data = func.get_json_data(const.STR_DUMMY, const.STR_OUTPUT)
-    json_data.update(dummy_data)
-
-    file_path = func.get_file_path(
-        app_div, file_type=const.FILE_TYPE_JSON, file_div=const.STR_OUTPUT
-    )
-
-    # 結果をJSON形式で表示
-    func.write_file(file_path, json_data)
-
-    func.print_end(SCRIPT_NAME)
+    return dashboard_json
 
 
 # デバイスとOSの割合（パーセンテージ）計算
@@ -136,13 +179,15 @@ def write_dashboard_log(request: Request, app_name: str):
     if user_agent_str:
         app_category = get_app_category(app_name)
 
-        country_cd = get_user_country_cd(request)
+        country = get_user_country(request)
 
         # 解析
         user_agent = parse(user_agent_str)
 
-        ua_div = const.UA_DIV_MO
-        if user_agent.is_pc:
+        ua_div = DEFAULT_VALUE
+        if user_agent.is_mobile:
+            ua_div = const.UA_DIV_MO
+        elif user_agent.is_pc:
             ua_div = const.UA_DIV_PC
         elif user_agent.is_tablet:
             ua_div = const.UA_DIV_TABLET
@@ -150,7 +195,7 @@ def write_dashboard_log(request: Request, app_name: str):
         ua_os = user_agent.os.family
         ua_browser = user_agent.browser.family
 
-        msg_list = [app_category, country_cd, ua_div, ua_os, ua_browser]
+        msg_list = [app_category, country, ua_div, ua_os, ua_browser]
         msg = const.SYM_SPACE.join(msg_list)
         func.print_msg(app_name, msg, app_div)
     else:
@@ -160,7 +205,7 @@ def write_dashboard_log(request: Request, app_name: str):
 
 # カテゴリ名取得
 def get_app_category(app_name: str) -> str:
-    app_category = "unknown"
+    app_category = DEFAULT_VALUE
 
     # カテゴリ名とアプリリストを同時に処理する
     for category, apps in zip(const.LIST_CATEGORY, const.LIST_APP_CATEGORY):
@@ -172,9 +217,8 @@ def get_app_category(app_name: str) -> str:
     return app_category
 
 
-# IPアドレスより、国コード取得
-def get_user_country_cd(request: Request) -> str:
-
+# IPアドレスより、国取得
+def get_user_country(request: Request) -> str:
     # サーバーに直接アクセスの場合
     client_ip = request.client.host
 
@@ -186,13 +230,20 @@ def get_user_country_cd(request: Request) -> str:
     else:
         ip_address = client_ip
 
-    country = get_country_cd_from_csv(ip_address)
+    country_cd = get_country_cd_from_csv(ip_address)
+
+    country = DEFAULT_VALUE
+    if country_cd == const.COUNTRY_CD_JP:
+        country = const.STR_JAPAN
+    elif country_cd == const.COUNTRY_CD_KR:
+        country = const.STR_KOREA
+
     return country
 
 
 # CSVより、国コード取得
 def get_country_cd_from_csv(ip_address: str) -> str:
-    country_cd = const.COUNTRY_CD_JP
+    country_cd = const.SYM_BLANK
     file_path = func.get_file_path(const.STR_IP, const.FILE_TYPE_CSV)
     data = func.get_dict_from_csv(file_path, ip_address)
     if data:
@@ -201,4 +252,4 @@ def get_country_cd_from_csv(ip_address: str) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    get_dashboard_json()
+    update_data()

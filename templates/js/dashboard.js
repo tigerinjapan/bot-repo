@@ -2,12 +2,11 @@
 // テキストコンテンツ定義
 // ====================
 const appTexts = {
-  timePeriodLabel: "表示期間:",
+  timePeriodLabel: "Term ",
   periodOptions: [
-    { value: "day", text: "日 (直近1週間)" },
-    { value: "week", text: "週 (直近4週)" },
-    { value: "month", text: "月 (直近12か月)" },
-    { value: "year", text: "年 (直近5年)" }
+    { value: "day", text: "Day" },
+    { value: "month", text: "Month" },
+    { value: "year", text: "Year" }
   ]
 };
 
@@ -15,12 +14,12 @@ const appTexts = {
 // KPI項目定義とHTML生成 (ループ処理)
 // ====================
 const kpiItems = [
-  { id: "users", title: "👤 ユーザー数", type: "line", dataKey: "users" },
-  { id: "category", title: "📄 カテゴリ", type: "bar", dataKey: "category" },
-  { id: "country", title: "🌐 国", type: "doughnut", dataKey: "country" },
-  { id: "device", title: "📱 デバイス", type: "doughnut", dataKey: "device" },
+  { id: "users", title: "👤 Users", type: "line", dataKey: "users" },
+  { id: "category", title: "📄 Category", type: "bar", dataKey: "category" },
+  { id: "country", title: "🌐 Country", type: "doughnut", dataKey: "country" },
+  { id: "device", title: "📱 Device", type: "doughnut", dataKey: "device" },
   { id: "os", title: "💻 OS", type: "doughnut", dataKey: "os" },
-  { id: "browser", title: "🌐 ブラウザ", type: "doughnut", dataKey: "browser" }
+  { id: "browser", title: "🌐 Browser", type: "doughnut", dataKey: "browser" }
 ];
 
 // グラフオブジェクトを保持するMap

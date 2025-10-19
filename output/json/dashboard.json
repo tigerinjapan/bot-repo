@@ -1,307 +1,231 @@
 {
     "day": {
-        "label": "日",
+        "label": "day",
         "users": {
-            "total": "11",
+            "total": "51",
             "labels": [
-                "10/18"
+                "10/13",
+                "10/14",
+                "10/15",
+                "10/16",
+                "10/17",
+                "10/18",
+                "10/19"
             ],
             "data": [
-                11
-            ]
-        },
-        "category": {
-            "labels": [
-                "management",
-                "service",
-                "document"
-            ],
-            "data": [
-                7,
                 2,
-                2
-            ]
-        },
-        "country": [
-            {
-                "name": "日本",
-                "value": 100
-            }
-        ],
-        "device": [
-            {
-                "name": "PC",
-                "value": 100
-            }
-        ],
-        "os": [
-            {
-                "name": "Windows",
-                "value": 100
-            }
-        ],
-        "browser": [
-            {
-                "name": "Chrome",
-                "value": 100
-            }
-        ]
-    },
-    "week": {
-        "label": "週",
-        "users": {
-            "total": "128",
-            "labels": [
-                "4週前",
-                "3週前",
-                "2週前",
-                "1週前"
-            ],
-            "data": [
-                28,
-                32,
-                30,
-                38
+                3,
+                4,
+                5,
+                6,
+                24,
+                7
             ]
         },
         "category": {
             "labels": [
-                "news",
-                "entertainment",
-                "service",
                 "management",
-                "document"
+                "document",
+                "news",
+                "service"
             ],
             "data": [
-                45,
-                30,
-                25,
-                15,
-                13
+                27,
+                14,
+                6,
+                4
             ]
         },
         "country": [
             {
-                "name": "日本",
-                "value": 80
+                "name": "Japan",
+                "value": 87
             },
             {
-                "name": "韓国",
-                "value": 20
+                "name": "Unknown",
+                "value": 12
+            },
+            {
+                "name": "Korea",
+                "value": 1
             }
         ],
         "device": [
             {
                 "name": "Mobile",
-                "value": 60
+                "value": 81
             },
             {
                 "name": "PC",
-                "value": 35
-            },
-            {
-                "name": "Tablet",
-                "value": 5
+                "value": 19
             }
         ],
         "os": [
             {
                 "name": "Android",
-                "value": 50
-            },
-            {
-                "name": "iOS",
-                "value": 20
+                "value": 81
             },
             {
                 "name": "Windows",
-                "value": 20
-            },
-            {
-                "name": "Linux",
-                "value": 10
+                "value": 19
             }
         ],
         "browser": [
             {
                 "name": "Chrome",
-                "value": 80
+                "value": 97
             },
             {
-                "name": "Windows",
-                "value": 20
+                "name": "LINE",
+                "value": 3
             }
         ]
     },
     "month": {
-        "label": "月",
+        "label": "month",
         "users": {
-            "total": "1,000",
+            "total": "60",
             "labels": [
-                "12ヶ月前",
-                "9ヶ月前",
-                "6ヶ月前",
-                "3ヶ月前",
-                "先月",
-                "今月"
+                "2025/07",
+                "2025/08",
+                "2025/09",
+                "2025/10"
             ],
             "data": [
-                190,
-                180,
-                170,
-                160,
-                155,
-                145
+                1,
+                2,
+                3,
+                54
             ]
         },
         "category": {
             "labels": [
-                "news",
-                "entertainment",
-                "service",
                 "management",
-                "document"
+                "document",
+                "news",
+                "service"
             ],
             "data": [
-                300,
-                250,
-                200,
-                150,
-                100
+                33,
+                17,
+                6,
+                4
             ]
         },
         "country": [
             {
-                "name": "日本",
-                "value": 80
+                "name": "Japan",
+                "value": 89
             },
             {
-                "name": "韓国",
-                "value": 20
+                "name": "Unknown",
+                "value": 10
+            },
+            {
+                "name": "Korea",
+                "value": 1
             }
         ],
         "device": [
             {
                 "name": "Mobile",
-                "value": 70
+                "value": 74
             },
             {
                 "name": "PC",
-                "value": 25
-            },
-            {
-                "name": "Tablet",
-                "value": 5
+                "value": 26
             }
         ],
         "os": [
             {
                 "name": "Android",
-                "value": 30
-            },
-            {
-                "name": "iOS",
-                "value": 35
+                "value": 74
             },
             {
                 "name": "Windows",
-                "value": 25
-            },
-            {
-                "name": "Linux",
-                "value": 10
+                "value": 26
             }
         ],
         "browser": [
             {
                 "name": "Chrome",
-                "value": 80
+                "value": 97
             },
             {
-                "name": "Windows",
-                "value": 20
+                "name": "LINE",
+                "value": 3
             }
         ]
     },
     "year": {
-        "label": "年",
+        "label": "year",
         "users": {
-            "total": "3,500",
+            "total": "76",
             "labels": [
-                "去年",
-                "今年"
+                "2024",
+                "2025"
             ],
             "data": [
-                2000,
-                1500
+                16,
+                60
             ]
         },
         "category": {
             "labels": [
-                "news",
-                "entertainment",
-                "service",
                 "management",
-                "document"
+                "document",
+                "news",
+                "service"
             ],
             "data": [
-                900,
-                800,
-                700,
-                600,
-                500
+                41,
+                20,
+                9,
+                6
             ]
         },
         "country": [
             {
-                "name": "日本",
-                "value": 80
+                "name": "Japan",
+                "value": 91
             },
             {
-                "name": "韓国",
-                "value": 20
+                "name": "Unknown",
+                "value": 8
+            },
+            {
+                "name": "Korea",
+                "value": 1
             }
         ],
         "device": [
             {
                 "name": "Mobile",
-                "value": 75
+                "value": 79
             },
             {
                 "name": "PC",
-                "value": 20
-            },
-            {
-                "name": "Tablet",
-                "value": 5
+                "value": 21
             }
         ],
         "os": [
             {
                 "name": "Android",
-                "value": 40
-            },
-            {
-                "name": "iOS",
-                "value": 30
+                "value": 79
             },
             {
                 "name": "Windows",
-                "value": 20
-            },
-            {
-                "name": "Linux",
-                "value": 10
+                "value": 21
             }
         ],
         "browser": [
             {
                 "name": "Chrome",
-                "value": 80
+                "value": 97
             },
             {
-                "name": "Windows",
-                "value": 20
+                "name": "LINE",
+                "value": 3
             }
         ]
     }

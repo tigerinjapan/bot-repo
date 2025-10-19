@@ -1,19 +1,25 @@
 {
-    "week": {
-        "label": "週",
+    "day": {
+        "label": "日",
         "users": {
-            "total": "128",
+            "total": "240",
             "labels": [
-                "4週前",
-                "3週前",
-                "2週前",
-                "1週前"
+                "10/8",
+                "10/9",
+                "10/10",
+                "10/11",
+                "10/12",
+                "10/13",
+                "10/14"
             ],
             "data": [
-                28,
-                32,
+                35,
                 30,
-                38
+                25,
+                30,
+                35,
+                40,
+                45
             ]
         },
         "category": {
@@ -25,11 +31,11 @@
                 "document"
             ],
             "data": [
-                45,
+                90,
+                60,
+                50,
                 30,
-                25,
-                15,
-                13
+                10
             ]
         },
         "country": [
@@ -45,11 +51,11 @@
         "device": [
             {
                 "name": "Mobile",
-                "value": 60
+                "value": 55
             },
             {
                 "name": "PC",
-                "value": 35
+                "value": 40
             },
             {
                 "name": "Tablet",
@@ -59,29 +65,19 @@
         "os": [
             {
                 "name": "Android",
-                "value": 50
+                "value": 25
             },
             {
                 "name": "iOS",
-                "value": 20
+                "value": 30
             },
             {
                 "name": "Windows",
-                "value": 20
+                "value": 35
             },
             {
                 "name": "Linux",
                 "value": 10
-            }
-        ],
-        "browser": [
-            {
-                "name": "Chrome",
-                "value": 80
-            },
-            {
-                "name": "Windows",
-                "value": 20
             }
         ]
     },

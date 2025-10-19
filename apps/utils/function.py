@@ -29,6 +29,8 @@ def get_now(div: int = const.DATE_NOW):
         now = now.strftime(const.DATE_FORMAT_YYYYMMDD)
     elif div == const.DATE_YEAR:
         now = now.year
+    elif div == const.DATE_MONTH:
+        now = now.month
     elif div == const.DATE_HOUR:
         now = now.hour
     elif div == const.DATE_WEEKDAY:
@@ -238,13 +240,11 @@ def print_error_msg(
 
 # ログ出力
 def write_log(log_msg: str, log_div: str = const.STR_ERROR):
-    log_level = logging.ERROR
-    if log_div == const.STR_INFO:
-        log_level = logging.INFO
-    elif log_div == const.STR_DEBUG:
+    log_level = logging.INFO
+    if log_div == const.STR_DEBUG:
         log_level = logging.DEBUG
-    else:
-        log_level = logging.INFO
+    elif log_div == const.STR_ERROR:
+        log_level = logging.ERROR
 
     logger = logging.getLogger(log_div)
     logger.setLevel(log_level)
@@ -268,8 +268,7 @@ def write_log(log_msg: str, log_div: str = const.STR_ERROR):
     file_handler.setFormatter(formatter)
 
     logger.addHandler(stream_handler)
-    if not is_local_env():
-        logger.addHandler(file_handler)
+    logger.addHandler(file_handler)
 
     msg = get_replace_data(log_msg, const.LIST_LOG_MASKING, const.LOG_MASKING)
 
