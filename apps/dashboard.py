@@ -74,9 +74,6 @@ def update_data():
 def get_dashboard_json(df_all, data_div: str):
     df_all[const.STR_DATE] = pd.to_datetime(df_all[const.STR_DATE])
 
-    df_all[const.STR_MONTH] = df_all[const.STR_DATE].dt.month
-    df_all[const.STR_YEAR] = df_all[const.STR_DATE].dt.year
-
     if data_div == const.STR_DAY:
         # 7日前のデータ
         target_date = func.get_calc_date(-7)
@@ -85,26 +82,28 @@ def get_dashboard_json(df_all, data_div: str):
     else:
         today = pd.to_datetime(func.get_now())
         if data_div == const.STR_MONTH:
-            # 今月の1日を取得
+            # 今月1日取得
 
             this_month_start = today.replace(day=1)
 
-            # 先月の1日を取得
+            # 先月1日取得
             last_month_start = this_month_start - relativedelta(months=3)
             target_date = last_month_start
             date_format = const.DATE_FORMAT_YYYYMM_SLASH
 
         elif data_div == const.STR_YEAR:
-            # 今年の1月1日を取得
+            # 今年1月1日取得
             this_year_start = today.replace(month=1, day=1)
 
-            # 去年の1月1日を取得
+            # 去年1月1日取得
             last_year_start = this_year_start - relativedelta(years=1)
             target_date = last_year_start
             date_format = const.DATE_FORMAT_YYYY
 
     df = df_all[target_date <= df_all[const.STR_DATE]]
-    df.loc[:, const.STR_DATE] = df[const.STR_DATE].dt.strftime(date_format)
+
+    # TODO: [check] pandasエラー
+    df[const.STR_DATE] = df[const.STR_DATE].dt.strftime(date_format)
 
     term_access = df[const.STR_DATE].value_counts().sort_index()
     total_access = term_access.sum()

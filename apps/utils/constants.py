@@ -314,9 +314,11 @@ STR_UPPER = "upper"
 STR_LOWER = "lower"
 STR_CAPITALIZE = "capitalize"
 
+STR_BEGINNER = "beginner"
 STR_EASY = "easy"
 STR_MEDIUM = "medium"
 STR_HARD = "hard"
+STR_MASTER = "master"
 
 STR_KAKAO = "kakao"
 STR_KPOP = "kpop"

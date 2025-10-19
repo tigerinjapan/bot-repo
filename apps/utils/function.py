@@ -183,7 +183,7 @@ def is_holiday(weekend_flg: bool = const.FLG_ON) -> bool:
         holiday_flg = const.FLG_ON
 
     if weekend_flg:
-        if get_now(const.DATE_WEEKDAY) >= 5:
+        if 5 <= get_now(const.DATE_WEEKDAY):
             holiday_flg = const.FLG_ON
 
     return holiday_flg
