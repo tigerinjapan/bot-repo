@@ -87,6 +87,9 @@ def get_item_list():
             target_list = []
             for ans in answer_list:
                 if not func.check_in_list(ans, check_list):
+                    target_list.append(ans)
+
+            if 4 <= len(target_list):
                 continue
 
         answer = const.SYM_SEMI_COLON.join(answer_list)
@@ -105,9 +108,9 @@ def get_item_list():
 def find_answer(number):
     """
     4桁の数字（順番固定）から、四則演算・累乗・平方根・括弧を使った等式を全探索し、解となる式を返す。
-      1) 桁間の「結合（空文字）」を演算子候補に追加し、隣接桁を連結して多桁数（例: 4 と 9 -> 49）を作れるようにした。
-         ただし連結は両側が純粋な桁（digit）の場合にのみ許可する（sqrt 適用などは連結不可）。
-      2) sqrt の許可範囲を 4..81（sqrt 値 2..9）に制限した（以前は 4..961）。
+    桁間の「結合（空文字）」を演算子候補に追加し、隣接桁を連結して多桁数（例: 4 と 9 -> 49）を作れるようにした。
+    ただし連結は両側が純粋な桁（digit）の場合にのみ許可する（sqrt 適用などは連結不可）。
+    sqrt の許可範囲を 4..81（sqrt 値 2..9）に制限した（以前は 4..961）。
     """
 
     digits = list(number)

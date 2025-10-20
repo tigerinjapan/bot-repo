@@ -298,7 +298,7 @@ function renderInputButtons(numberStr) {
     updateHiddenExpression();
   }
 
-  // 数字ボタン押下: 選択肢を簡潔に表示（√ と 上付き / back 対応）
+  // 数字ボタン押下: 選択肢の表示（√ と 上付き / back 対応）
   function onDigitClick(e) {
     const idx = Number(e.currentTarget.dataset.idx);
     const token = exprArea._tokens[idx];
@@ -337,8 +337,8 @@ function renderInputButtons(numberStr) {
     }
 
     // 左に空箱がある単一桁 0/1/2 の場合は上付きを提示
-    if (!hasSqrt && !hasSup && !hasHistory && leftIsEmptySlot) {
-      if (/^[012]$/.test(raw)) {
+    if (!hasSqrt && !hasSup && !hasHistory) {
+      if (leftIsEmptySlot && (/^[012]$/.test(raw))) {
         choices = choices.concat(["⁰", "¹", "²"]);
       }
       // 未装飾かつ左空箱では √ も提示できる（対象なら）
