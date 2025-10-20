@@ -336,7 +336,7 @@ function renderInputButtons(numberStr) {
       }
     }
 
-    // 左に空箱がある単一桁 0/1/2 の場合は上付きを提示（最左禁止は既存ロジックのまま）
+    // 左に空箱がある単一桁 0/1/2 の場合は上付きを提示
     if (!hasSqrt && !hasSup && !hasHistory && leftIsEmptySlot) {
       if (/^[012]$/.test(raw)) {
         choices = choices.concat(["⁰", "¹", "²"]);
@@ -527,13 +527,13 @@ function renderInputButtons(numberStr) {
     return popup;
   }
 
-  // √の適用可否（要求仕様: 4..961 の完全平方数で sqrt が 2..31 の整数）
+  // √の適用可否（要求仕様: 4..81 の完全平方数で sqrt が 2..9 の整数）
   function isSqrtEligible(valStr) {
     if (!/^\d+$/.test(valStr)) return false;
     const v = parseInt(valStr, 10);
-    if (!(4 <= v && v < 1000)) return false;
+    if (!(4 <= v && v < 100)) return false;
     const r = Math.floor(Math.sqrt(v));
-    return r * r === v && (2 <= r && r <= 31);
+    return r * r === v && (2 <= r && r <= 9);
   }
 
   // 表示用値から装飾(√/上付き)を外して生数字のみを返す

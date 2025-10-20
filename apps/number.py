@@ -79,6 +79,16 @@ def get_item_list():
     for num in range(1000, 10000):
         str_num = str(num)
         answer_list = find_answer(str_num)
+        if not answer_list or 8 <= len(answer_list):
+            continue
+
+        if 4 <= len(answer_list):
+            check_list = ["√", "⁰", "¹", "²"]
+            target_list = []
+            for ans in answer_list:
+                if not func.check_in_list(ans, check_list):
+                continue
+
         answer = const.SYM_SEMI_COLON.join(answer_list)
 
         level = get_game_level(answer_list)
@@ -95,37 +105,44 @@ def get_item_list():
 def find_answer(number):
     """
     4桁の数字（順番固定）から、四則演算・累乗・平方根・括弧を使った等式を全探索し、解となる式を返す。
-    表示は √ と 上付き文字（⁰〜⁵）を使用するが、評価は math.sqrt と ** を使用する。
-    丸括弧 () は最大2ペア（各ペアは開き/閉じ）まで許可する（組合せでネスト可、交差は不可）。
+      1) 桁間の「結合（空文字）」を演算子候補に追加し、隣接桁を連結して多桁数（例: 4 と 9 -> 49）を作れるようにした。
+         ただし連結は両側が純粋な桁（digit）の場合にのみ許可する（sqrt 適用などは連結不可）。
+      2) sqrt の許可範囲を 4..81（sqrt 値 2..9）に制限した（以前は 4..961）。
     """
+
     digits = list(number)
-    operators = ["+", "-", "*", "/", "**"]
+    # 演算子候補に空文字（結合）を追加
+    operators = ["+", "-", "*", "/", "**", ""]  # '' は桁結合（concat）
     answer = set()
+
+    digits_a = const.SYM_BLANK.join(digits[0:2])
+    digits_b = f"{digits[1]}{digits[0]}"
+    digits_c = const.SYM_BLANK.join(digits[2:])
+    if digits_a == digits_c or digits_b == digits_c:
+        # 簡単過ぎるため、除外する
+        return answer
 
     n = len(digits)
     # sqrt 適用パターン（各桁ごとに sqrt を使うか）
-    # ただし sqrt の引数は整数かつ 4 <= val <= 961（sqrt の値が 2..31 の整数）でなければ適用しない
     for sqrt_mask in range(1 << n):
         disp_digits = []
         eval_digits = []
         invalid_mask = False
         for i, d in enumerate(digits):
             if (sqrt_mask >> i) & 1:
-                # 数字文字を整数化して条件判定
                 try:
                     v = int(d)
                 except Exception:
                     invalid_mask = True
                     break
-                # 条件：4 <= v <= 961 かつ 完全平方数（sqrt が整数で 2..31）
-                if not (4 <= v <= 961):
+                # 修正: sqrt は 4 <= v <= 81（sqrt が 2..9 の整数）のみ許可
+                if not (4 <= v <= 81):
                     invalid_mask = True
                     break
                 r = math.isqrt(v)
-                if r * r != v or not (2 <= r <= 31):
+                if r * r != v or not (2 <= r <= 9):
                     invalid_mask = True
                     break
-                # 条件合格なら √ を適用（表示は √n、評価は math.sqrt(n)）
                 disp_digits.append(f"√{d}")
                 eval_digits.append(f"math.sqrt({d})")
             else:
@@ -134,14 +151,13 @@ def find_answer(number):
         if invalid_mask:
             continue
 
-        # 演算子数 1..3
+        # 演算子数 1..3（各スロットに演算子または結合を入れる）
         for ops in itertools.product(operators, repeat=3):
-            # '**' を使う場合の右オペランド制約（表示・評価上安全な単一桁 0/1/2 のみ）
+            # '**' の右オペランド制約（単一桁 0/1/2 のみ）
             bad = False
             for i, op in enumerate(ops):
                 if op == "**":
                     right_eval = eval_digits[i + 1]
-                    # math.sqrt(...) や複雑な式が来ないこと、かつ単一桁 '0'/'1'/'2' であることを要求
                     if (
                         right_eval.startswith("math.sqrt")
                         or not right_eval.isdigit()
@@ -149,10 +165,18 @@ def find_answer(number):
                     ):
                         bad = True
                         break
+                # 追加: 空文字（結合）は両側が純粋数字であることを要求
+                if op == "":
+                    left_eval = eval_digits[i]
+                    right_eval = eval_digits[i + 1]
+                    # 片側でも math.sqrt や非数字が来たら結合不可
+                    if not (left_eval.isdigit() and right_eval.isdigit()):
+                        bad = True
+                        break
             if bad:
                 continue
 
-            # トークンリスト作成（数, 演算子, 数, ...） — ops は長さ3なので安全に参照できる
+            # 表示/評価用トークン列を作成（空文字は要素間の文字連結として扱われる）
             disp_tokens = []
             eval_tokens = []
             for i in range(3):
@@ -163,8 +187,7 @@ def find_answer(number):
             disp_tokens.append(disp_digits[3])
             eval_tokens.append(eval_digits[3])
 
-            # 安全な分割方法：左辺を「数トークン k 個 (k=1..3)」で区切る
-            # （これにより左右とも数で始まり数で終わる式を構築でき、不正な連結を防ぐ）
+            # make_display: '**' は上付き表示に変換する既存ロジックを流用
             def make_display(tokens):
                 out = []
                 i2 = 0
@@ -184,16 +207,17 @@ def find_answer(number):
                     else:
                         out.append(t)
                         i2 += 1
+                # tokens に空文字 '' が含まれている場合、join でそのまま文字連結される（期待挙動）
                 return "".join(out)
 
-            # k = 左辺の数トークン数（1～3）
+            # k = 左辺の数トークン数（1～3） — ここでは元の桁単位で分割を試行
             for k in range(1, 4):
-                # 左辺組立
+                # 左辺組立（eval用）
                 left_parts = [eval_digits[0]]
                 for i_num in range(0, k - 1):
                     left_parts.append(ops[i_num])
                     left_parts.append(eval_digits[i_num + 1])
-                # 右辺組立
+                # 右辺組立（eval用）
                 right_parts = [eval_digits[k]]
                 for i_num in range(k, 3):
                     right_parts.append(ops[i_num])
@@ -215,7 +239,7 @@ def find_answer(number):
                 # 数値比較（浮動小数点誤差を許容）
                 try:
                     if abs(builtins.float(lv) - builtins.float(rv)) < 1e-9:
-                        # 表示用に同様の手順で組み立て
+                        # 表示用に組み立て（disp_digits と ops を同様に結合）
                         left_disp_parts = [disp_digits[0]]
                         for i_num in range(0, k - 1):
                             left_disp_parts.append(ops[i_num])
@@ -228,6 +252,11 @@ def find_answer(number):
                         left_disp = make_display(left_disp_parts)
                         right_disp = make_display(right_disp_parts)
                         expr = f"{left_disp}={right_disp}"
+
+                        expr_digits = list(expr)
+                        ng_pattern = r"[⁰¹²][⁰¹²0-9]|0[⁰¹²]|[0-9][0-9][⁰¹²]"
+                        if len(expr_digits) == 5 or func.re_search(ng_pattern, expr):
+                            continue
 
                         # 簡易フィルタ（不正な連結記号等）
                         bad_patterns = ["+=", "-=", "*=", "/=", "=-", "=*", "=/"]
@@ -271,8 +300,8 @@ def test_number():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # output_df_to_csv()
+    output_df_to_csv()
     # test_number()
     # get_random_number()
-    rank_user, rank_time = get_ranking_info(8889)
-    print(rank_user, rank_time)
+    # rank_user, rank_time = get_ranking_info(8889)
+    # print(rank_user, rank_time)
