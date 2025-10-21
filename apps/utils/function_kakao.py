@@ -427,5 +427,6 @@ def get_test_message_content(token: str = const.SYM_BLANK) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # get_access_token()
-    get_test_message_content()
+    get_access_token()
+    # get_test_message_content()
+    # get_receiver_uuids()

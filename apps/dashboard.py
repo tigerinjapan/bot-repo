@@ -246,7 +246,8 @@ def get_country_cd_from_csv(ip_address: str) -> str:
     file_path = func.get_file_path(const.STR_IP, const.FILE_TYPE_CSV)
     data = func.get_dict_from_csv(file_path, ip_address)
     if data:
-        country_cd = data[0]
+        if data[1] in ip_address:
+            country_cd = data[0]
     return country_cd
 
 
