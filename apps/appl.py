@@ -242,23 +242,25 @@ def update_news(app_name: str = const.SYM_BLANK):
         app_exec = AppExec(app_div, app_name)
         app_exec.start()
 
+        skip_flg = const.FLG_OFF
+
         try:
             item_list = app_div.get_item_list()
-            if not item_list:
-                raise Exception
         except Exception as e:
             func.print_error_msg(SCRIPT_NAME, curr_func_nm, app_name, e)
-            app_exec.end()
-            continue
+            skip_flg = const.FLG_ON
 
-        col_list = app_div.col_list
-
-        df = func.get_df(item_list, col_list)
+        if item_list and not skip_flg:
+            col_list = app_div.col_list
+            df = func.get_df(item_list, col_list)
+        else:
+            df = func.init_df()
 
         if df.empty:
-            func.print_error_msg(
-                SCRIPT_NAME, curr_func_nm, app_name, msg_const.MSG_ERR_DATA_NOT_EXIST
-            )
+            func.print_info_msg(app_name, msg_const.MSG_ERR_DATA_NOT_EXIST)
+            skip_flg = const.FLG_ON
+
+        if skip_flg:
             app_exec.end()
             continue
 
@@ -283,6 +285,6 @@ def no_sleep():
 
 if __name__ == const.MAIN_FUNCTION:
     # update_news()
-    app_name_list = [const.APP_TODAY, const.APP_TODAY_KOREA]
+    app_name_list = [const.APP_TODAY_KOREA, const.APP_TODAY]
     for app_name in app_name_list:
         update_news(app_name)

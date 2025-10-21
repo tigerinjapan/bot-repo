@@ -259,16 +259,17 @@ def write_log(log_msg: str, log_div: str = const.STR_ERROR):
     stream_handler.setLevel(log_level)
     stream_handler.setFormatter(formatter)
 
-    # ファイル出力設定
-    log_path = get_file_path(
-        log_div, file_type=const.FILE_TYPE_LOG, file_div=const.STR_OUTPUT
-    )
-    file_handler = logging.FileHandler(log_path, encoding=const.CHARSET_UTF_8)
-    file_handler.setLevel(log_level)
-    file_handler.setFormatter(formatter)
-
     logger.addHandler(stream_handler)
-    logger.addHandler(file_handler)
+
+    if not is_local_env():
+        # ファイル出力設定
+        log_path = get_file_path(
+            log_div, file_type=const.FILE_TYPE_LOG, file_div=const.STR_OUTPUT
+        )
+        file_handler = logging.FileHandler(log_path, encoding=const.CHARSET_UTF_8)
+        file_handler.setLevel(log_level)
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
 
     msg = get_replace_data(log_msg, const.LIST_LOG_MASKING, const.LOG_MASKING)
 
@@ -412,7 +413,7 @@ def write_file(file_path: str, data, file_encode: str = const.CHARSET_UTF_8):
 
     try:
         with open(file_path, mode=const.FILE_MODE_WRITE, encoding=file_encode) as f:
-            if is_local_env() and file_ext == const.FILE_TYPE_JSON:
+            if file_ext == const.FILE_TYPE_JSON:
                 json.dump(data, f, ensure_ascii=const.FLG_OFF, indent=4)
             else:
                 # func[write]:Writing file

@@ -1,37 +1,37 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/10/19(Sun) 09:05",
+        "오늘의 생활정보": "2025/10/22(Wed) 07:56",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "휴일 찬 바람 강해져",
+        "오늘의 생활정보": "내일 낮부터 기온 제자리",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "오늘의 생활정보": "S&P500 6,664.01 (+0.53%)",
+        "오늘의 생활정보": "S&P500 6,735.35 (+0.00%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 945원",
+        "오늘의 생활정보": "100엔 = 942원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "오늘의 생활정보": "てがみ : 편지",
+        "오늘의 생활정보": "かぎ : 열쇠",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "How long takes it?\n얼마나 걸려요?",
+        "오늘의 생활정보": "Can I get a towel?\n수건을 받을까요?",
         "링크": "https://learn.dict.naver.com/conversation#/"
     },
     {
         "구분": "항공권",
-        "오늘의 생활정보": "인천↔️오사카 239,000원",
+        "오늘의 생활정보": "인천↔️오사카 279,000원",
         "링크": "https://mm.ttang.com/product/free/index.do"
     }
 ]
