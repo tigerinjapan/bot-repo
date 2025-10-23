@@ -37,12 +37,12 @@ sortData = { nRank: 1, dUpdateDate: -1 };
 
 db.ranking.find(cond, selectData).sort(sortData).limit(5).pretty();
 
-// update document
+// // update document
 // db.ranking.updateMany(
-//     { nRank: { $gte: 3 } },
+//     { nRank: { $gte: 1 } },
 //     {
 //         $inc: {
-//             nRank: 1 // 順位 (nRank) を 1 増やす (+1)
+//             nRank: -1 // 順位(nRank)を増やす(1)。減らす(-1)
 //         }
 //     }
 // );

@@ -14,15 +14,16 @@
         <h1 id="title">{{ title }}</h1>
         <p id="langCd" hidden>{{ lang_cd }}</p>
         <p id="levelVal" hidden>{{ level }}</p>
+        <p id="dataList" hidden>{{ data_list | tojson }}</p>
         <div>
             <p id="level"></p>
             <p id="rank">
-                <span id="rank-user"><img src="/templates/rank1.png" alt="rank1" /> {{ rank_user }}</span>
-                <span id="rank-time">{{ rank_time }}</span>
+                <span id="rank-user"><img src="/templates/rank1.png" alt="rank1" /></span>
+                <span id="rank-time"></span>
             </p>
         </div>
         <div>
-            <p id="number-display">{{ num }}</p>
+            <p id="number-display"></p>
             <p id="timer"></p>
             <button type="button" id="btnRule">
                 <img src="/templates/click.png" alt="click" />
@@ -33,7 +34,7 @@
         <button type="button" id="btnChk"></button>
         <button type="button" id="btnNext" onclick="location.reload()"></button>
         <div id="message"></div>
-        <div id="number-answer" hidden>{{ ans }}</div>
+        <div id="number-answer" hidden></div>
     </div>
 </body>
 

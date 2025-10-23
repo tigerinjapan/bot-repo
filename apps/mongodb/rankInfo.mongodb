@@ -17,11 +17,19 @@ use(database)
 //     "dUpdateDate": new Date()
 // });
 
-// find documents
-// sRankTimeが4文字の上位5件のみ抽出
+// // find documents
+// // sRankTimeが4文字の上位5件のみ抽出
 cond = {
     sUserName: { $eq: userName }, sRankTime: { $regex: "^.{5}$" }
 };
+
+// // 5桁ではない
+// cond = {
+//     sRankTime: {
+//         $not: "/^.{5}$/"
+//     }
+// };
+
 selectData = {
     _id: 0,
     nNumber: 1,
@@ -36,7 +44,7 @@ selectData = {
 };
 sortData = { sRankTime: 1, dUpdateDate: -1 };
 
-db.rankInfo.find(cond, selectData).sort(sortData).limit(5).pretty();
+db.rankInfo.find(cond, selectData).sort(sortData).limit(10).pretty();
 
 // db.rankInfo.aggregate([
 //     {
@@ -73,3 +81,31 @@ db.rankInfo.find(cond, selectData).sort(sortData).limit(5).pretty();
 //         }
 //     }
 // ])
+
+// // delete documents
+// db.rankInfo.deleteMany({
+//     sRankTime: {
+//         $not: /^0/,  // 1桁目が0ではない
+//         $regex: /^.{5,}$/ // 文字列の長さが5以上である
+//     }
+// });
+
+// // update documents
+// db.rankInfo.updateMany(
+//     {
+//         // 1. 更新するデータを探す条件
+//         sRankTime: {
+//             $regex: /^.{4}$/ // sRankTimeが4文字である（正規表現）
+//         }
+//     },
+//     [
+//         // 2. データの更新内容（パイプライン形式で処理）
+//         {
+//             $set: {
+//                 sRankTime: {
+//                     $concat: ["0", "$sRankTime"]
+//                 }
+//             }
+//         }
+//     ]
+// );

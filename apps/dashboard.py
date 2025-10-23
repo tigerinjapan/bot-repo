@@ -1,6 +1,5 @@
 # 説明: ダッシュボード
 
-import numpy as np
 import pandas as pd
 from dateutil.relativedelta import relativedelta
 from fastapi import Request
@@ -8,6 +7,7 @@ from user_agents import parse
 
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
 
 # スクリプト名
@@ -178,7 +178,9 @@ def write_dashboard_log(request: Request, app_name: str):
     if user_agent_str:
         app_category = get_app_category(app_name)
 
-        country = get_user_country(request)
+        country = DEFAULT_VALUE
+        if not func.is_local_env():
+            country = get_user_country(request)
 
         # 解析
         user_agent = parse(user_agent_str)
@@ -232,10 +234,13 @@ def get_user_country(request: Request) -> str:
     country_cd = get_country_cd_from_csv(ip_address)
 
     country = DEFAULT_VALUE
-    if country_cd == const.COUNTRY_CD_JP:
-        country = const.STR_JAPAN
-    elif country_cd == const.COUNTRY_CD_KR:
-        country = const.STR_KOREA
+    if country_cd:
+        if country_cd == const.COUNTRY_CD_JP:
+            country = const.STR_JAPAN
+        elif country_cd == const.COUNTRY_CD_KR:
+            country = const.STR_KOREA
+        else:
+            country = country_cd
 
     return country
 
@@ -248,6 +253,11 @@ def get_country_cd_from_csv(ip_address: str) -> str:
     if data:
         if data[1] in ip_address:
             country_cd = data[0]
+    else:
+        url = f"{const.URL_IP_INFO}/{ip_address}/json"
+        result = func_api.get_response_result(url)
+        country_cd = result[const.STR_COUNTRY]
+
     return country_cd
 
 

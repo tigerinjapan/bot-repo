@@ -71,6 +71,7 @@ def weekly_job():
 # 日次ジョブ
 def daily_job():
     line.main()
+    appl.update_news(const.APP_NUMBER)
 
 
 # 日次ジョブ

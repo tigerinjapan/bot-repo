@@ -177,13 +177,12 @@ def exec_user(request: Request, app_name: str):
 def exec_number(request: Request, app_name: str):
     lang_cd = const.LANG_CD_JA
     level = const.STR_HARD
-    num = number.get_random_number(level)
-    ans = number.get_answer_by_number(num)
-    rank_user, rank_time = number.get_ranking_info(num)
 
     if const.SYM_UNDER in app_name:
         lang_cd = app_name.split(const.SYM_UNDER)[1]
         app_name = app_name.split(const.SYM_UNDER)[0]
+
+    data_list = func.get_json_data(const.APP_NUMBER, const.STR_OUTPUT)
 
     target_html = const.HTML_NUMBER_PLATE
     context = {
@@ -192,10 +191,7 @@ def exec_number(request: Request, app_name: str):
         "app_name": app_name,
         "lang_cd": lang_cd,
         "level": level,
-        "num": num,
-        "ans": ans,
-        "rank_user": rank_user,
-        "rank_time": rank_time,
+        "data_list": data_list,
     }
     return target_html, context
 
@@ -232,6 +228,10 @@ def update_news(app_name: str = const.SYM_BLANK):
         if app_name == const.APP_TODAY_KOREA:
             app_div_list = [today_korea]
             app_name_list = [const.APP_TODAY_KOREA]
+
+        elif app_name == const.APP_NUMBER:
+            app_div_list = [number]
+            app_name_list = [const.APP_NUMBER]
 
         else:
             app_div_idx = app_name_list.index(app_name)

@@ -2,7 +2,7 @@
 let userName = sessionStorage.getItem(STR_USER_NAME);
 
 // 制限時間
-let limitTime = 30.00;
+let limitTime = 20.00;
 
 // タイマーID
 let timerId = null;
@@ -15,6 +15,9 @@ setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 
 // DOM読み込み後の処理
 document.addEventListener("DOMContentLoaded", () => {
+  // ゲームデータ設定
+  setGameData();
+
   // 初期表示
   init();
 
@@ -92,8 +95,7 @@ function init() {
     exprArea = document.createElement("div");
     exprArea.id = "exprArea";
     exprArea.className = "expr-area";
-    const ref = getElem("number-display");
-    if (ref && ref.parentNode) ref.parentNode.insertBefore(exprArea, ref.nextSibling);
+    if (number && number.parentNode) number.parentNode.insertBefore(exprArea, number.nextSibling);
     else document.body.appendChild(exprArea);
   }
   // 内部保持用プロパティ初期化（expression id に依存しない）
@@ -124,12 +126,34 @@ function init() {
     footerElem.style.visibility = 'hidden';
   }
 
-  setElemText("timer", limitTime.toFixed(2));
   setElemText("btnRule", btnRuleNm);
   setElemText("btnChk", btnChkNm);
   setElemText("btnNext", btnNextNm);
 
   setLevel(level);
+}
+
+// ゲームデータ設定
+function setGameData() {
+  setElemText("timer", limitTime.toFixed(2));
+
+  const dataList = getElemText("dataList");
+
+  // JSON形式の文字列に変換する
+  const rankingDataJson = JSON.parse(dataList);
+
+  const idx = Math.floor(Math.random() * rankingDataJson.length);
+  const gameData = rankingDataJson[idx];
+
+  const number = gameData.number;
+  const answer = gameData.answer;
+  const rankUser = gameData.userName;
+  const rankTime = gameData.rankTime.toFixed(2);
+
+  setElemText("number-display", number);
+  setElemText("number-answer", answer);
+  setElemText("rank-user", rankUser);
+  setElemText("rank-time", rankTime);
 }
 
 // レベル設定
@@ -215,7 +239,7 @@ function checkAnswer(langCd) {
   // DOM取得
   const num = getElemText("number-display");
   const ans = getElemText("number-answer");
-  const rank = getElemText("rank-time");
+  const rankTime = getElemText("rank-time");
   const timeVal = getElemText("timer");
   // exprArea の内部トークンから現在の式文字列を組み立てる（expression id に依存しない）
   const exprArea = getElem("exprArea");
@@ -238,9 +262,9 @@ function checkAnswer(langCd) {
       const ansHtml = "<ul>" + ansList.map(a => `<li>${a}</li>`).join(SYM_BLANK) + "</ul>";
       showMessage(okAnswerMsg + ansHtml, true);
 
-      const clearTime = 30 - parseFloat(timeVal);
+      const clearTime = limitTime - parseFloat(timeVal);
       const clearTimeVal = clearTime.toFixed(2);
-      const rankTimeVal = parseFloat(rank);
+      const rankTimeVal = parseFloat(rankTime);
       if (clearTime != null && clearTimeVal < rankTimeVal) {
         const numVal = parseInt(num);
         // ランキング送信

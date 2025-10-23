@@ -515,8 +515,8 @@ def get_df_read_json(file_path: str):
 
 
 # CSVからDataFrameデータ取得
-def get_df_read_csv(file_path: str):
-    df = pd.read_csv(file_path)
+def get_df_read_csv(file_path: str, dtype):
+    df = pd.read_csv(file_path, dtype=dtype, skipinitialspace=const.FLG_ON)
     return df
 
 
@@ -545,11 +545,12 @@ def get_df_from_file_path(div: str, file_div, file_type):
             df = get_df_read_json(file_path)
 
         elif file_type == const.FILE_TYPE_CSV:
+            dtype = const.NONE_CONSTANT
             if div == const.STR_ZIP_CODE:
-                # func[read_csv]:Read CSV file with Pandas
-                df = pd.read_csv(file_path, dtype={div: str})
-            else:
-                df = get_df_read_csv(file_path)
+                dtype = {div: str}
+
+            # func[read_csv]:Read CSV file with Pandas
+            df = get_df_read_csv(file_path, dtype)
     else:
         curr_func_nm = sys._getframe().f_code.co_name
         print_error_msg(

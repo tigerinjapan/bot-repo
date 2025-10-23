@@ -7,14 +7,18 @@ import apps.utils.rank_dto as rank_dto
 
 
 # ランク情報取得
-def get_rank_info(number: int):
+def get_rank_info_list(number_list: list[int]):
+    rank_info_list = []
+
     client = func_mongo.db_connect()
-    cond = {mongo_const.FI_NUMBER: number}
-    rank_info = func_mongo.db_find_one(client, mongo_const.COLL_RANK_INFO, cond)
-    if not rank_info:
-        rank_info = const.NONE_CONSTANT
+    cond = {mongo_const.FI_NUMBER: {mongo_const.OPERATOR_IN: number_list}}
+    result = func_mongo.db_find(client, mongo_const.COLL_RANK_INFO, cond)
+    for rank_info in result:
+        rank_info_data = rank_dto.get_rank_info_data(rank_info)
+        rank_info_list.append(rank_info_data)
+
     func_mongo.db_close(client)
-    return rank_info
+    return rank_info_list
 
 
 # ランキング情報取得
@@ -98,7 +102,8 @@ def get_rank_top(
 # ランク情報更新（API）
 def update_rank_info_of_api(json_data):
     coll_rank = mongo_const.COLL_RANK_INFO
-    update_data = rank_dto.get_update_data_for_rank_info(json_data)
+    update_data = rank_dto.get_rank_info_data(json_data, update_flg=const.FLG_ON)
+
     client = func_mongo.db_connect()
     cond = {mongo_const.FI_NUMBER: update_data[mongo_const.FI_NUMBER]}
     count = func_mongo.db_count(client, coll_rank, cond)

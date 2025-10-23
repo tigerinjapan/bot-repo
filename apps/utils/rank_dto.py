@@ -54,6 +54,27 @@ class ranking:
         return asdict(self)
 
 
+# JSONデータ取得（ランク情報の登録・更新）
+def get_rank_info_data(json_data, update_flg: bool = const.FLG_OFF):
+    if update_flg:
+        number = json_data[const.STR_NUMBER]
+        rank_time = json_data[const.STR_TIME].zfill(5)
+        user_name = json_data[const.STR_USER]
+    else:
+        number = json_data[mongo_const.FI_NUMBER]
+        rank_time = json_data[mongo_const.FI_RANK_TIME]
+        user_name = json_data[mongo_const.FI_USER_NAME]
+
+    json_data = asdict(
+        rankInfo(
+            number,
+            rank_time,
+            user_name,
+        )
+    )
+    return json_data
+
+
 # JSONデータ取得（ランキング情報の取得）
 def get_ranking_data(json_data):
     rank = json_data[mongo_const.FI_RANK]
@@ -67,22 +88,6 @@ def get_ranking_data(json_data):
             userId,
             score,
             lastLoginDate,
-        )
-    )
-    return json_data
-
-
-# JSONデータ取得（ランク情報の登録・更新）
-def get_update_data_for_rank_info(json_data):
-    number = json_data[const.STR_NUMBER]
-    rank_time = json_data[const.STR_TIME].zfill(5)
-    user_name = json_data[const.STR_USER]
-
-    json_data = asdict(
-        rankInfo(
-            number,
-            rank_time,
-            user_name,
         )
     )
     return json_data

@@ -59,6 +59,7 @@ def run_server():
 def start_thread():
     t = Thread(target=run_server)
     t.start()
+    # t.join()
 
 
 # トークン認証

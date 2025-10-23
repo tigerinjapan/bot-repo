@@ -470,7 +470,7 @@ URL_LCC = "https://dsk.ne.jp"
 URL_TV = "https://bangumi.org"
 URL_MLB = "https://www.mlb.com"
 URL_MLB_STAT_API = "https://statsapi.mlb.com"
-URL_IP_INFO = "https://ipapi.co"
+URL_IP_INFO = "https://ipinfo.io"
 
 ##### アプリケーション名 #####
 APP_TODAY = "today"
