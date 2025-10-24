@@ -1,61 +1,115 @@
 [
     {
-        "number": 8276,
-        "answer": "8=2*7-6",
+        "number": 1465,
+        "answer": "1-√4+6=5;1=√4-6+5",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 6986,
-        "answer": "6/√9=8-6",
+        "number": 9325,
+        "answer": "9/3+2=5",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 3032,
-        "answer": "3⁰=3-2",
+        "number": 1439,
+        "answer": "1=√4-3/√9",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 5458,
-        "answer": "5=√4-5+8;5-√4+5=8",
+        "number": 6614,
+        "answer": "6/6+1=√4",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 7911,
-        "answer": "7=9-1-1",
+        "number": 4601,
+        "answer": "√4=6⁰+1;√4-6⁰=1",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 3382,
-        "answer": "3+3=8-2",
+        "number": 3326,
+        "answer": "3=3²-6",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 1433,
-        "answer": "1=√4-3/3",
+        "number": 3974,
+        "answer": "3*√9=7+√4;3*√9-7=√4",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 2254,
-        "answer": "2/2=5-4",
+        "number": 5804,
+        "answer": "5-8⁰=4;5=8⁰+4",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 6968,
-        "answer": "6/√9+6=8",
+        "number": 7916,
+        "answer": "7+9=16",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 4505,
-        "answer": "4+5⁰=5",
+        "number": 3921,
+        "answer": "3/√9=2-1",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 3374,
+        "answer": "3*3=7+√4;3*3-7=√4",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 4881,
+        "answer": "√4=8/8+1;√4-8/8=1",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 1723,
+        "answer": "1=7-2*3",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 8544,
+        "answer": "8=5*√4-√4",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 5726,
+        "answer": "5+7=2*6",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 1328,
+        "answer": "1=3²-8",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 5299,
+        "answer": "5-2=9/√9;5=2+9/√9",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 7098,
+        "answer": "7⁰=9-8",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 2995,
+        "answer": "2+9/√9=5",
         "userName": "master",
         "rankTime": 10.0
     },
@@ -64,59 +118,5 @@
         "answer": "7+1=9-1",
         "userName": "hong",
         "rankTime": 7.08
-    },
-    {
-        "number": 4577,
-        "answer": "4=5-7/7",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 4065,
-        "answer": "4⁰=6-5;√4⁰=6-5",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 8993,
-        "answer": "8=9-√9/3",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 7925,
-        "answer": "7+√9=2*5",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 5164,
-        "answer": "5=1+6-√4;5-1=6-√4",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 4813,
-        "answer": "4=8-1-3",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 2972,
-        "answer": "2+√9=7-2",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 8933,
-        "answer": "8=9-3/3",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 4801,
-        "answer": "√4-8⁰=1;√4=8⁰+1",
-        "userName": "master",
-        "rankTime": 10.0
     }
 ]

@@ -1,12 +1,12 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/10/24(Fri) 12:14",
+        "오늘의 생활정보": "2025/10/24(Fri) 20:36",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "호우주의보 내려진 강릉",
+        "오늘의 생활정보": "경북 동해안 호우특보",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
@@ -16,17 +16,17 @@
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 939원",
+        "오늘의 생활정보": "100엔 = 941원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "오늘의 생활정보": "なんじ\n하시",
+        "오늘의 생활정보": "なんじ\n하시; 몇 시(시간을 묻는 말).",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "Going to station now.\n지금 역에 갈 거예요",
+        "오늘의 생활정보": "I need a receipt.\n영수증이 필요해요",
         "링크": "https://learn.dict.naver.com/conversation#/"
     },
     {

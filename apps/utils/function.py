@@ -492,17 +492,11 @@ def init_df():
 
 
 # DataFrameからJSON出力
-def df_to_json(
-    div: str, df, file_div: str = const.STR_OUTPUT, dict_flg: bool = const.FLG_OFF
-):
+def df_to_json(div: str, df, file_div: str = const.STR_OUTPUT):
     # DataFrameをJSONファイルに出力
     file_path = get_file_path(div, const.FILE_TYPE_JSON, file_div)
 
-    if dict_flg or is_local_env():
-        # DataFrameをリスト形式の辞書に変換
-        data = df.to_dict(orient="records")
-    else:
-        data = df.to_json(orient="records", lines=const.FLG_OFF)
+    data = df.to_dict(orient="records")
 
     # JSONファイルに書き込む
     write_file(file_path, data)
