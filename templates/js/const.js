@@ -272,7 +272,6 @@ const MSG_ERR_LOAD_JSON_EN = "Failed to load json file!"
 const CONTENTS_HEAD_1 = `
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/templates/favicon.ico" type="image/x-icon">
   <script src="/templates/jquery-3.6.1.min.js"></script>
 `;
 
@@ -281,6 +280,7 @@ const CONTENTS_HEAD = `
   ${CONTENTS_HEAD_1}
   <link rel="stylesheet" href="/templates/common.css" />
   <link rel="stylesheet" href="/templates/style.css" />
+  <link rel="icon" href="/templates/favicon.ico" type="image/x-icon">
 `;
 
 // ヘッダー情報

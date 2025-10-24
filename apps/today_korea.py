@@ -14,6 +14,8 @@ import apps.utils.function_kakao as func_kakao
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
 
+TITLE_LINK = "✈ 최저가 항공권 정보 ✈"
+
 # 定数（韓国語）
 DIV_TITLE = "📢 {} 오늘의 뉴스 📢"
 DIV_UPDATE_TIME = "업데이트일시"
@@ -45,7 +47,23 @@ URL_LINK_MO = f"{URL_FLIGHT_MO}{URL_FLIGHT_PARAM}"
 URL_NAVER_RANKING_NEWS = "https://news.naver.com/main/ranking/popularDay.naver"
 URL_NAVER_RANKING_NEWS_MO = "https://m.news.naver.com/rankingList"
 
-TITLE_LINK = "✈ 최저가 항공권 정보 ✈"
+# 天気
+weather_news_link = "https://www.weather.go.kr/w/weather/forecast/short-term.do"
+
+# S&P500
+stock_link = f"{const.URL_NAVER_STOCK_MO}/worldstock/"
+
+# 為替
+finance_link = f"{const.URL_NAVER_STOCK_MO}/marketindex/home/exchangeRate/exchange"
+
+# 日本語
+japanese_link = "https://ja.dict.naver.com/#/main"
+
+# 英語
+english_link = "https://learn.dict.naver.com/conversation#/"
+
+# 航空券セール
+flight_sale_link = URL_LINK_MO
 
 # タイトル
 app_title = "Today's News"
@@ -107,55 +125,19 @@ def get_today_info_list():
         func.get_now(), const.DATE_FORMAT_YYYYMMDD_HHMM
     )
 
-    div_idx = 0
-    try:
-        # 天気
-        div_idx += 1
-        weather_news = get_today_weather_news()
-        weather_news_link = "https://www.weather.go.kr/w/weather/forecast/short-term.do"
+    today_info_list = [update_time]
+    today_link_list = [const.SYM_DASH]
 
-        # S&P500
-        div_idx += 1
-        sp_500 = get_stock()
-        stock_link = f"{const.URL_NAVER_STOCK_MO}/worldstock/"
-
-        # 為替
-        div_idx += 1
-        yen_to_won = ex.get_today_won(const.FLG_ON)
-        finance_link = (
-            f"{const.URL_NAVER_STOCK_MO}/marketindex/home/exchangeRate/exchange"
-        )
-
-        # 日本語
-        div_idx += 1
-        japanese = get_japanese_study()
-        japanese_link = "https://ja.dict.naver.com/#/main"
-
-        # 英語
-        div_idx += 1
-        english_conversation = get_english_conversation()
-        english_link = "https://learn.dict.naver.com/conversation#/"
-
-        # 航空券セール
-        div_idx += 1
-        flight_sale = get_flight_sale()
-        flight_sale_link = URL_LINK_MO
-
-    except Exception as e:
-        div = DIV_LIST[div_idx]
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, div, e)
-
-    today_info_list = [
-        update_time,
-        weather_news,
-        sp_500,
-        yen_to_won,
-        japanese,
-        english_conversation,
-        flight_sale,
+    tasks = [
+        get_today_weather_news,
+        get_stock,
+        get_won,
+        get_japanese_study,
+        get_english_conversation,
+        get_flight_sale,
     ]
+
     link_list = [
-        const.SYM_DASH,
         weather_news_link,
         stock_link,
         finance_link,
@@ -163,7 +145,20 @@ def get_today_info_list():
         english_link,
         flight_sale_link,
     ]
-    return today_info_list, link_list
+
+    for idx, (task, link) in enumerate(zip(tasks, link_list)):
+        div = DIV_LIST[idx + 1]
+
+        try:
+            info = task()
+            if info:
+                today_info_list.append(info)
+                today_link_list.append(link)
+
+        except Exception as e:
+            func.print_error_msg(SCRIPT_NAME, curr_func_nm, div, e)
+
+    return today_info_list, today_link_list
 
 
 # 天気ニュース取得
@@ -220,6 +215,12 @@ def get_stock() -> str:
     return stock_info
 
 
+# ウォン取得
+def get_won() -> str:
+    today_won = ex.get_today_won(const.FLG_ON)
+    return today_won
+
+
 # コーデ取得
 def get_outfit() -> str:
     today_outfit = today.get_today_outfit()
@@ -263,32 +264,29 @@ def get_japanese_study() -> str:
     url = "https://wquiz.dict.naver.com/jakodict/today/quiz.dict#tab=1"
     soup = func_bs.get_elem_from_url(url, attr_val="todayword_quiz _primary_quiz")
 
-    japanese = func_bs.find_elem_by_class(soup, "_primary_btn_listen btn_pron").get(
-        "data-sentence"
-    )
-
-    korean_elem_list = func_bs.find_elem_by_class(
+    quiz_word = func_bs.find_elem_by_class(soup, "quiz_word_text").text
+    answer_elem_list = func_bs.find_elem_by_class(
         soup, "multiple_answer_item _primary_answer_item", list_flg=const.FLG_ON
     )
 
-    for korean_elem in korean_elem_list:
-        if korean_elem.get("data-correct") == "1":
-            korean = func_bs.get_text_from_soup(korean_elem)
+    for answer_elem in answer_elem_list:
+        if answer_elem.get("data-correct") == "1":
+            answer = func_bs.get_text_from_soup(answer_elem)
+
+            japanese = quiz_word
+            korean = answer
+            if answer_elem.get("lang") == const.LANG_CD_JA:
+                japanese = answer
+                korean = quiz_word
+
             split_str = const.SYM_SEMI_COLON
-            if split_str in korean:
+            if 20 <= len(korean) and split_str in korean:
                 korean = korean.split(split_str)[0].replace(
                     const.SYM_DOT, const.SYM_BLANK
                 )
 
-            if split_str in japanese:
-                japanese = japanese.split(split_str)[0].replace(
-                    const.SYM_DOT, const.SYM_BLANK
-                )
-
-            japanese_study = f"{japanese} : {korean}"
-            if korean_elem.get("lang") == const.LANG_CD_JA:
-                japanese_study = f"{korean} : {japanese}"
-                break
+            japanese_study = f"{japanese}{const.SYM_NEW_LINE}{korean}"
+            break
 
     return japanese_study
 

@@ -36,17 +36,33 @@
                 4
             ]
         },
-        "country": [
+        "app": [
             {
-                "name": "Japan",
-                "value": 87
+                "name": "url_design",
+                "value": 20
             },
             {
-                "name": "Unknown",
-                "value": 12
+                "name": "number",
+                "value": 10
             },
             {
-                "name": "Korea",
+                "name": "dashboard",
+                "value": 5
+            },
+            {
+                "name": "itQuiz",
+                "value": 5
+            },
+            {
+                "name": "review",
+                "value": 5
+            },
+            {
+                "name": "board",
+                "value": 5
+            },
+            {
+                "name": "kakao_design",
                 "value": 1
             }
         ],

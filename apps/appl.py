@@ -246,18 +246,18 @@ def update_news(app_name: str = const.SYM_BLANK):
 
         try:
             item_list = app_div.get_item_list()
-        except Exception as e:
-            func.print_error_msg(SCRIPT_NAME, curr_func_nm, app_name, e)
-            skip_flg = const.FLG_ON
-
-        if item_list and not skip_flg:
-            col_list = app_div.col_list
-            df = func.get_df(item_list, col_list)
-        else:
             df = func.init_df()
 
-        if df.empty:
-            func.print_info_msg(app_name, msg_const.MSG_ERR_DATA_NOT_EXIST)
+            if item_list:
+                col_list = app_div.col_list
+                df = func.get_df(item_list, col_list)
+
+            if df.empty:
+                func.print_info_msg(app_name, msg_const.MSG_ERR_DATA_NOT_EXIST)
+                skip_flg = const.FLG_ON
+
+        except Exception as e:
+            func.print_error_msg(SCRIPT_NAME, curr_func_nm, app_name, e)
             skip_flg = const.FLG_ON
 
         if skip_flg:

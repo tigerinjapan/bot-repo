@@ -1,3 +1,6 @@
+// ヘッダー設定
+setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_2);
+
 // 文字列
 const STR_REVIEW = "Review";
 
@@ -13,9 +16,6 @@ const ELEM_NAME_ITEMS = "items[]";
 
 // ページ読み込み時にsessionStorageからデータを取得
 let userName = sessionStorage.getItem(STR_USER_NAME);
-
-// ヘッダー設定
-setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_2);
 
 // タイトル設定
 document.title = TITLE_REVIEW;

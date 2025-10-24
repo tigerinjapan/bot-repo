@@ -16,7 +16,7 @@ const appTexts = {
 const kpiItems = [
   { id: "users", title: "👤 Users", type: "line", dataKey: "users" },
   { id: "category", title: "📄 Category", type: "bar", dataKey: "category" },
-  { id: "country", title: "🌐 Country", type: "doughnut", dataKey: "country" },
+  { id: "app", title: "🌐 App", type: "doughnut", dataKey: "app" },
   { id: "device", title: "📱 Device", type: "doughnut", dataKey: "device" },
   { id: "os", title: "💻 OS", type: "doughnut", dataKey: "os" },
   { id: "browser", title: "🌐 Browser", type: "doughnut", dataKey: "browser" }

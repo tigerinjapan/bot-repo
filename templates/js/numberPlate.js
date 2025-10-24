@@ -1,3 +1,6 @@
+// ヘッダー設定
+setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
+
 // ページ読み込み時にsessionStorageからデータを取得
 let userName = sessionStorage.getItem(STR_USER_NAME);
 
@@ -9,9 +12,6 @@ let timerId = null;
 
 // タイマー状態管理
 let isTimerRunning = false;
-
-// ヘッダー設定
-setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 
 // DOM読み込み後の処理
 document.addEventListener("DOMContentLoaded", () => {

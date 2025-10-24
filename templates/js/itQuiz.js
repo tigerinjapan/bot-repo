@@ -493,7 +493,7 @@ const useHint = () => {
   gameState.hintsUsed++;
 
   // 減点処理
-  gameState.score = Math.max(0, gameState.score - MINUS_POINT);
+  gameState.score = Math.max(0, gameState.score + MINUS_POINT);
 
   showDialog('message-dialog', 'hint_used');
   renderQuizStatus();
@@ -627,7 +627,7 @@ const handleChoice = (char) => {
   } else {
     // 不正解の場合
     // 減点処理
-    gameState.score = Math.max(0, gameState.score - MINUS_POINT);
+    gameState.score = Math.max(0, gameState.score + MINUS_POINT);
     renderQuizStatus();
 
     // ダイアログを閉じずに、不正解のボタンを無効化

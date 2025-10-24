@@ -21,7 +21,6 @@ COL_LIST_DASHBOARD = [
     const.STR_LEVEL,
     const.STR_APP,
     const.STR_CATEGORY,
-    const.STR_COUNTRY,
     const.STR_DEVICE,
     const.STR_OS,
     const.STR_BROWSER,
@@ -38,16 +37,20 @@ DEFAULT_VALUE = "Unknown"
 def update_data():
     func.print_start(SCRIPT_NAME)
 
+    data_list = []
+
     log_path = func.get_file_path(
         app_div, file_type=const.FILE_TYPE_LOG, file_div=const.STR_OUTPUT
     )
-    log_data_text = func.read_file(log_path)
-    log_data_list = log_data_text.split(const.SYM_NEW_LINE)
 
-    data_list = []
-    for log_data in log_data_list:
-        data = log_data.split(const.SYM_SPACE)[: len(COL_LIST_DASHBOARD)]
-        data_list.append(data)
+    log_data_text = func.read_file(log_path)
+
+    if log_data_text:
+        log_data_list = log_data_text.split(const.SYM_NEW_LINE)
+        for log_data in log_data_list:
+            data = log_data.split(const.SYM_SPACE)[: len(COL_LIST_DASHBOARD)]
+            if data and data[0]:
+                data_list.append(data)
 
     if data_list:
         df = func.get_df(data_list, COL_LIST_DASHBOARD)
@@ -108,7 +111,7 @@ def get_dashboard_json(df_all, data_div: str):
     term_access = df[const.STR_DATE].value_counts().sort_index()
     total_access = term_access.sum()
     category_counts = df[const.STR_CATEGORY].value_counts()
-    country_counts = df[const.STR_COUNTRY].value_counts()
+    app_counts = df[const.STR_APP].value_counts()
     device_counts = df[const.STR_DEVICE].value_counts()
     os_counts = df[const.STR_OS].value_counts()
     browser_counts = df[const.STR_BROWSER].value_counts()
@@ -125,7 +128,7 @@ def get_dashboard_json(df_all, data_div: str):
             "labels": category_counts.index.tolist(),
             "data": category_counts.values.tolist(),
         },
-        const.STR_COUNTRY: calculate_percentage_to_100(country_counts),
+        const.STR_APP: calculate_percentage_to_100(app_counts),
         const.STR_DEVICE: calculate_percentage_to_100(device_counts),
         const.STR_OS: calculate_percentage_to_100(os_counts),
         const.STR_BROWSER: calculate_percentage_to_100(browser_counts),
@@ -178,10 +181,6 @@ def write_dashboard_log(request: Request, app_name: str):
     if user_agent_str:
         app_category = get_app_category(app_name)
 
-        country = DEFAULT_VALUE
-        if not func.is_local_env():
-            country = get_user_country(request)
-
         # 解析
         user_agent = parse(user_agent_str)
 
@@ -196,7 +195,7 @@ def write_dashboard_log(request: Request, app_name: str):
         ua_os = user_agent.os.family
         ua_browser = user_agent.browser.family
 
-        msg_list = [app_category, country, ua_div, ua_os, ua_browser]
+        msg_list = [app_category, ua_div, ua_os, ua_browser]
         msg = const.SYM_SPACE.join(msg_list)
         func.print_msg(app_name, msg, app_div)
     else:
@@ -218,47 +217,11 @@ def get_app_category(app_name: str) -> str:
     return app_category
 
 
-# IPアドレスより、国取得
-def get_user_country(request: Request) -> str:
-    # サーバーに直接アクセスの場合
-    client_ip = request.client.host
-
-    # クラウドサービスなどを経由している場合
-    forwarded_for = request.headers.get("x-forwarded-for")
-
-    if forwarded_for:
-        ip_address = forwarded_for.split(",")[0].strip()
-    else:
-        ip_address = client_ip
-
-    country_cd = get_country_cd_from_csv(ip_address)
-
-    country = DEFAULT_VALUE
-    if country_cd:
-        if country_cd == const.COUNTRY_CD_JP:
-            country = const.STR_JAPAN
-        elif country_cd == const.COUNTRY_CD_KR:
-            country = const.STR_KOREA
-        else:
-            country = country_cd
-
-    return country
-
-
-# CSVより、国コード取得
-def get_country_cd_from_csv(ip_address: str) -> str:
-    country_cd = const.SYM_BLANK
-    file_path = func.get_file_path(const.STR_IP, const.FILE_TYPE_CSV)
-    data = func.get_dict_from_csv(file_path, ip_address)
-    if data:
-        if data[1] in ip_address:
-            country_cd = data[0]
-    else:
-        url = f"{const.URL_IP_INFO}/{ip_address}/json"
-        result = func_api.get_response_result(url)
-        country_cd = result[const.STR_COUNTRY]
-
-    return country_cd
+# IP情報取得
+def get_ip_info(ip_address: str):
+    url = f"{const.URL_IP_INFO}/{ip_address}/json"
+    ip_info = func_api.get_response_result(url)
+    return ip_info
 
 
 if __name__ == const.MAIN_FUNCTION:

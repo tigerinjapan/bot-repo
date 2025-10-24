@@ -71,7 +71,6 @@ def weekly_job():
 # 日次ジョブ
 def daily_job():
     line.main()
-    appl.update_news(const.APP_NUMBER)
 
 
 # 日次ジョブ
@@ -90,6 +89,7 @@ def daily_job_3():
 def hourly_job():
     appl.update_news(const.APP_TODAY_KOREA)
     appl.update_news()
+    appl.update_news(const.APP_NUMBER)
     dashboard.update_data()
 
 

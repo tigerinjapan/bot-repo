@@ -432,7 +432,7 @@ LIST_REPLACE = [
 ]
 
 ##### ログ出力対象外文字 #####
-LIST_LOG_MASKING = ["kobe-", "token", "kapi.", "kauth", "koyeb", "kakao", "line."]
+LIST_LOG_MASKING = ["kobe-", "koyeb", "token", "kapi.", "kauth", "oauth", "line."]
 LOG_MASKING = "XXXXX"
 
 ##### 曜日リスト #####
