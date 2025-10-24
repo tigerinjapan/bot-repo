@@ -12,7 +12,6 @@ import apps.utils.message_constants as msg_const
 
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
-app_div = SCRIPT_NAME
 
 # カラム
 COL_LIST_DASHBOARD = [
@@ -39,23 +38,27 @@ def update_data():
 
     data_list = []
 
-    log_path = func.get_file_path(
-        app_div, file_type=const.FILE_TYPE_LOG, file_div=const.STR_OUTPUT
-    )
+    try:
+        log_path = func.get_file_path(
+            SCRIPT_NAME, file_type=const.FILE_TYPE_LOG, file_div=const.STR_OUTPUT
+        )
 
-    log_data_text = func.read_file(log_path)
+        log_data_text = func.read_file(log_path)
 
-    if log_data_text:
-        log_data_list = log_data_text.split(const.SYM_NEW_LINE)
-        for log_data in log_data_list:
-            data = log_data.split(const.SYM_SPACE)[: len(COL_LIST_DASHBOARD)]
-            if data and data[0]:
-                data_list.append(data)
+        if log_data_text:
+            log_data_list = log_data_text.split(const.SYM_NEW_LINE)
+            for log_data in log_data_list:
+                data = log_data.split(const.SYM_SPACE)[: len(COL_LIST_DASHBOARD)]
+                if data and data[0]:
+                    data_list.append(data)
+
+    except Exception as e:
+        func.print_info_msg(SCRIPT_NAME, e)
 
     if data_list:
         df = func.get_df(data_list, COL_LIST_DASHBOARD)
 
-        json_data = func.get_json_data(const.STR_DUMMY, const.STR_OUTPUT)
+        json_data = {}
         for data_div in LIST_DATE:
             dashboard_json = get_dashboard_json(df, data_div)
 
@@ -63,12 +66,22 @@ def update_data():
                 json_data[data_div] = dashboard_json
 
         file_path = func.get_file_path(
-            app_div, file_type=const.FILE_TYPE_JSON, file_div=const.STR_OUTPUT
+            SCRIPT_NAME, file_type=const.FILE_TYPE_JSON, file_div=const.STR_OUTPUT
         )
         func.write_file(file_path, json_data)
 
     else:
-        func.print_info_msg(app_div, msg_const.MSG_ERR_DATA_NOT_EXIST)
+        func.print_info_msg(SCRIPT_NAME, msg_const.MSG_ERR_DATA_NOT_EXIST)
+
+        json_data = func.get_json_data(const.STR_DUMMY, const.STR_OUTPUT)
+        for data_div in LIST_DATE:
+            label_list = get_dummy_label_list(data_div)
+            json_data[data_div]["users"]["labels"] = label_list
+
+    file_path = func.get_file_path(
+        SCRIPT_NAME, file_type=const.FILE_TYPE_JSON, file_div=const.STR_OUTPUT
+    )
+    func.write_file(file_path, json_data)
 
     func.print_end(SCRIPT_NAME)
 
@@ -77,31 +90,7 @@ def update_data():
 def get_dashboard_json(df_all, data_div: str):
     df_all[const.STR_DATE] = pd.to_datetime(df_all[const.STR_DATE])
 
-    if data_div == const.STR_DAY:
-        # 7日前のデータ
-        target_date = func.get_calc_date(-7)
-        date_format = const.DATE_FORMAT_MMDD_SLASH
-
-    else:
-        today = pd.to_datetime(func.get_now())
-        if data_div == const.STR_MONTH:
-            # 今月1日取得
-
-            this_month_start = today.replace(day=1)
-
-            # 先月1日取得
-            last_month_start = this_month_start - relativedelta(months=3)
-            target_date = last_month_start
-            date_format = const.DATE_FORMAT_YYYYMM_SLASH
-
-        elif data_div == const.STR_YEAR:
-            # 今年1月1日取得
-            this_year_start = today.replace(month=1, day=1)
-
-            # 去年1月1日取得
-            last_year_start = this_year_start - relativedelta(years=1)
-            target_date = last_year_start
-            date_format = const.DATE_FORMAT_YYYY
+    target_date, date_format = get_target_date(data_div)
 
     df = df_all[target_date <= df_all[const.STR_DATE]]
 
@@ -135,6 +124,39 @@ def get_dashboard_json(df_all, data_div: str):
     }
 
     return dashboard_json
+
+
+# 処理対処日取得
+def get_target_date(data_div: str):
+    target_date = func.get_now()
+    date_format = const.DATE_FORMAT_YYYYMMDD
+
+    if data_div == const.STR_DAY:
+        # 7日前のデータ
+        target_date = func.get_calc_date(-7)
+        date_format = const.DATE_FORMAT_MMDD_SLASH
+
+    else:
+        today = pd.to_datetime(func.get_now())
+        if data_div == const.STR_MONTH:
+            # 今月1日取得
+            this_month_start = today.replace(day=1)
+
+            # 先月1日取得
+            last_month_start = this_month_start - relativedelta(months=1)
+            target_date = last_month_start
+            date_format = const.DATE_FORMAT_YYYYMM_SLASH
+
+        elif data_div == const.STR_YEAR:
+            # 今年1月1日取得
+            this_year_start = today.replace(month=1, day=1)
+
+            # 去年1月1日取得
+            last_year_start = this_year_start - relativedelta(years=1)
+            target_date = last_year_start
+            date_format = const.DATE_FORMAT_YYYY
+
+    return target_date, date_format
 
 
 # デバイスとOSの割合（パーセンテージ）計算
@@ -173,6 +195,25 @@ def calculate_percentage_to_100(counts):
     return result
 
 
+# ダミーラベルリスト取得
+def get_dummy_label_list(data_div: str):
+    date_list = []
+    today = func.get_now()
+    if data_div == const.STR_DAY:
+        for i in range(7):
+            target_date = func.get_calc_date(-i)
+            formatted_date = f"{target_date.month}/{target_date.day}"
+            date_list.append(formatted_date)
+    else:
+        target_date, date_format = get_target_date(data_div)
+        last_date = func.convert_date_to_str(target_date, date_format)
+        this_date = func.convert_date_to_str(today, date_format)
+        date_list = [last_date, this_date]
+
+    date_list.sort()
+    return date_list
+
+
 # ダッシュボードデータ出力
 def write_dashboard_log(request: Request, app_name: str):
     # ユーザーエージェントの文字列を取得
@@ -197,7 +238,7 @@ def write_dashboard_log(request: Request, app_name: str):
 
         msg_list = [app_category, ua_div, ua_os, ua_browser]
         msg = const.SYM_SPACE.join(msg_list)
-        func.print_msg(app_name, msg, app_div)
+        func.print_msg(app_name, msg, SCRIPT_NAME)
     else:
         message = msg_const.MSG_ERR_USER_AGENT_NOT_FOUND_EN
         func.print_error_msg(app_name, message)

@@ -26,7 +26,7 @@ import apps.utils.message_constants as msg_const
 def get_now(div: int = const.DATE_NOW):
     now = datetime.now()
     if div == const.DATE_TODAY:
-        now = now.strftime(const.DATE_FORMAT_YYYYMMDD)
+        now = convert_date_to_str(now, const.DATE_FORMAT_YYYYMMDD)
     elif div == const.DATE_YEAR:
         now = now.year
     elif div == const.DATE_MONTH:

@@ -1,213 +1,75 @@
 {
     "day": {
-        "label": "日",
+        "label": "day",
         "users": {
-            "total": "240",
+            "total": "50",
             "labels": [
-                "10/8",
-                "10/9",
-                "10/10",
-                "10/11",
-                "10/12",
-                "10/13",
-                "10/14"
+                "10/18",
+                "10/19",
+                "10/20",
+                "10/21",
+                "10/22",
+                "10/23",
+                "10/24"
             ],
             "data": [
-                35,
-                30,
-                25,
-                30,
-                35,
-                40,
-                45
-            ]
-        },
-        "category": {
-            "labels": [
-                "news",
-                "entertainment",
-                "service",
-                "management",
-                "document"
-            ],
-            "data": [
-                90,
-                60,
-                50,
-                30,
+                5,
+                5,
+                5,
+                5,
+                5,
+                15,
                 10
             ]
         },
-        "country": [
-            {
-                "name": "日本",
-                "value": 80
-            },
-            {
-                "name": "韓国",
-                "value": 20
-            }
-        ],
-        "device": [
-            {
-                "name": "Mobile",
-                "value": 55
-            },
-            {
-                "name": "PC",
-                "value": 40
-            },
-            {
-                "name": "Tablet",
-                "value": 5
-            }
-        ],
-        "os": [
-            {
-                "name": "Android",
-                "value": 25
-            },
-            {
-                "name": "iOS",
-                "value": 30
-            },
-            {
-                "name": "Windows",
-                "value": 35
-            },
-            {
-                "name": "Linux",
-                "value": 10
-            }
-        ]
-    },
-    "month": {
-        "label": "月",
-        "users": {
-            "total": "1,000",
-            "labels": [
-                "12ヶ月前",
-                "9ヶ月前",
-                "6ヶ月前",
-                "3ヶ月前",
-                "先月",
-                "今月"
-            ],
-            "data": [
-                190,
-                180,
-                170,
-                160,
-                155,
-                145
-            ]
-        },
         "category": {
             "labels": [
-                "news",
                 "entertainment",
-                "service",
                 "management",
-                "document"
+                "document",
+                "news",
+                "service"
             ],
             "data": [
-                300,
-                250,
-                200,
-                150,
-                100
+                15,
+                15,
+                10,
+                5,
+                5
             ]
         },
-        "country": [
+        "app": [
             {
-                "name": "日本",
-                "value": 80
-            },
-            {
-                "name": "韓国",
+                "name": "url_design",
                 "value": 20
-            }
-        ],
-        "device": [
-            {
-                "name": "Mobile",
-                "value": 70
             },
             {
-                "name": "PC",
-                "value": 25
+                "name": "number",
+                "value": 20
             },
             {
-                "name": "Tablet",
-                "value": 5
-            }
-        ],
-        "os": [
-            {
-                "name": "Android",
-                "value": 30
-            },
-            {
-                "name": "iOS",
-                "value": 35
-            },
-            {
-                "name": "Windows",
-                "value": 25
-            },
-            {
-                "name": "Linux",
+                "name": "itQuiz",
                 "value": 10
-            }
-        ],
-        "browser": [
-            {
-                "name": "Chrome",
-                "value": 80
             },
             {
-                "name": "Windows",
-                "value": 20
-            }
-        ]
-    },
-    "year": {
-        "label": "年",
-        "users": {
-            "total": "3,500",
-            "labels": [
-                "去年",
-                "今年"
-            ],
-            "data": [
-                2000,
-                1500
-            ]
-        },
-        "category": {
-            "labels": [
-                "news",
-                "entertainment",
-                "service",
-                "management",
-                "document"
-            ],
-            "data": [
-                900,
-                800,
-                700,
-                600,
-                500
-            ]
-        },
-        "country": [
-            {
-                "name": "日本",
-                "value": 80
+                "name": "dashboard",
+                "value": 10
             },
             {
-                "name": "韓国",
-                "value": 20
+                "name": "review",
+                "value": 10
+            },
+            {
+                "name": "board",
+                "value": 10
+            },
+            {
+                "name": "news",
+                "value": 10
+            },
+            {
+                "name": "travel",
+                "value": 10
             }
         ],
         "device": [
@@ -227,11 +89,11 @@
         "os": [
             {
                 "name": "Android",
-                "value": 40
+                "value": 50
             },
             {
                 "name": "iOS",
-                "value": 30
+                "value": 25
             },
             {
                 "name": "Windows",
@@ -239,17 +101,253 @@
             },
             {
                 "name": "Linux",
-                "value": 10
+                "value": 5
             }
         ],
         "browser": [
             {
                 "name": "Chrome",
-                "value": 80
+                "value": 70
+            },
+            {
+                "name": "Edge",
+                "value": 15
+            },
+            {
+                "name": "LINE",
+                "value": 10
+            },
+            {
+                "name": "Kakao",
+                "value": 5
+            }
+        ]
+    },
+    "month": {
+        "label": "month",
+        "users": {
+            "total": "500",
+            "labels": [
+                "2025/09",
+                "2025/10"
+            ],
+            "data": [
+                300,
+                200
+            ]
+        },
+        "category": {
+            "labels": [
+                "entertainment",
+                "management",
+                "document",
+                "news",
+                "service"
+            ],
+            "data": [
+                150,
+                150,
+                100,
+                50,
+                50
+            ]
+        },
+        "app": [
+            {
+                "name": "url_design",
+                "value": 20
+            },
+            {
+                "name": "number",
+                "value": 20
+            },
+            {
+                "name": "itQuiz",
+                "value": 10
+            },
+            {
+                "name": "dashboard",
+                "value": 10
+            },
+            {
+                "name": "review",
+                "value": 10
+            },
+            {
+                "name": "board",
+                "value": 10
+            },
+            {
+                "name": "news",
+                "value": 10
+            },
+            {
+                "name": "travel",
+                "value": 10
+            }
+        ],
+        "device": [
+            {
+                "name": "Mobile",
+                "value": 75
+            },
+            {
+                "name": "PC",
+                "value": 20
+            },
+            {
+                "name": "Tablet",
+                "value": 5
+            }
+        ],
+        "os": [
+            {
+                "name": "Android",
+                "value": 50
+            },
+            {
+                "name": "iOS",
+                "value": 25
             },
             {
                 "name": "Windows",
                 "value": 20
+            },
+            {
+                "name": "Linux",
+                "value": 5
+            }
+        ],
+        "browser": [
+            {
+                "name": "Chrome",
+                "value": 70
+            },
+            {
+                "name": "Edge",
+                "value": 15
+            },
+            {
+                "name": "LINE",
+                "value": 10
+            },
+            {
+                "name": "Kakao",
+                "value": 5
+            }
+        ]
+    },
+    "year": {
+        "label": "year",
+        "users": {
+            "total": "5,000",
+            "labels": [
+                "2024",
+                "2025"
+            ],
+            "data": [
+                3000,
+                2000
+            ]
+        },
+        "category": {
+            "labels": [
+                "entertainment",
+                "management",
+                "document",
+                "news",
+                "service"
+            ],
+            "data": [
+                1500,
+                1500,
+                1000,
+                500,
+                500
+            ]
+        },
+        "app": [
+            {
+                "name": "url_design",
+                "value": 20
+            },
+            {
+                "name": "number",
+                "value": 20
+            },
+            {
+                "name": "itQuiz",
+                "value": 10
+            },
+            {
+                "name": "dashboard",
+                "value": 10
+            },
+            {
+                "name": "review",
+                "value": 10
+            },
+            {
+                "name": "board",
+                "value": 10
+            },
+            {
+                "name": "news",
+                "value": 10
+            },
+            {
+                "name": "travel",
+                "value": 10
+            }
+        ],
+        "device": [
+            {
+                "name": "Mobile",
+                "value": 75
+            },
+            {
+                "name": "PC",
+                "value": 20
+            },
+            {
+                "name": "Tablet",
+                "value": 5
+            }
+        ],
+        "os": [
+            {
+                "name": "Android",
+                "value": 50
+            },
+            {
+                "name": "iOS",
+                "value": 25
+            },
+            {
+                "name": "Windows",
+                "value": 20
+            },
+            {
+                "name": "Linux",
+                "value": 5
+            }
+        ],
+        "browser": [
+            {
+                "name": "Chrome",
+                "value": 70
+            },
+            {
+                "name": "Edge",
+                "value": 15
+            },
+            {
+                "name": "LINE",
+                "value": 10
+            },
+            {
+                "name": "Kakao",
+                "value": 5
             }
         ]
     }

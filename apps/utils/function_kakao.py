@@ -248,7 +248,9 @@ def get_template_object(
         }
 
     else:
-        current_time = func.get_now().strftime(const.DATE_FORMAT_YYYYMMDD_HHMM)
+        current_time = func.convert_date_to_str(
+            func.get_now(), const.DATE_FORMAT_YYYYMMDD_HHMM
+        )
         template_object = {
             "object_type": OBJECT_TYPE_TEXT,
             "text": f"📢 메시지 보내기 테스트 📢\n\n테스트 중입니다.\n전송 시간: {current_time}",
