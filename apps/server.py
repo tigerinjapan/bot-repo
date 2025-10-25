@@ -34,9 +34,6 @@ import apps.utils.user_dao as user_dao
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
 
-# トークン有効期限（分）
-TOKEN_EXPIRATION_MINUTES = 10
-
 # FastAPIインスタンス生成とセッションミドルウェア追加
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="secret_key")
@@ -106,7 +103,7 @@ async def protected_resource(request: Request, token: str):
 @app.post("/token")
 async def issue_token(request: Request):
     access_token = "token_" + func.get_now(const.DATE_TODAY)
-    # expiration = func.get_calc_date(TOKEN_EXPIRATION_MINUTES, const.DATE_MIN)
+    # expiration = func.get_calc_date(const.MAX_TOKEN_EXPIRATION_MINUTES, const.DATE_MIN)
     token_data = {
         const.STR_TOKEN: access_token,
         const.STR_TYPE: "bearer",
@@ -265,7 +262,7 @@ async def gemini_api(request: Request):
     try:
         if mode == const.STR_IMG:
             message = func_gemini.get_gemini_image(contents=contents)
-            func.print_debug_msg(line.MSG_TYPE_IMG, func_line.URL_GEMINI_IMG)
+            func.print_debug_msg(const.MSG_TYPE_IMG, func_line.URL_GEMINI_IMG)
         else:
             response = func_gemini.get_gemini_response(curr_func_nm, contents)
             message = const.SYM_NEW_LINE.join(response)
@@ -430,7 +427,7 @@ async def kakao_send_test(request: Request):
 # アプリケーション実行
 @app.get("/kakao/{app_name}")
 async def kakao_apps(request: Request, app_name: str):
-    if app_name in kakao.LIST_APP_KOREA:
+    if app_name in const.LIST_APP_KOREA:
         url = "/app/"
         if app_name == const.APP_TODAY:
             app_name = const.APP_TODAY_KOREA

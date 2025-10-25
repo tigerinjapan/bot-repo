@@ -5,9 +5,6 @@ import asyncio
 import apps.utils.constants as const
 import apps.utils.function as func
 
-# タイトル
-app_title = "テスト"
-
 # カラムリスト
 col_list = [
     const.STR_DIV_JA,

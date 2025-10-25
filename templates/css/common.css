@@ -19,6 +19,55 @@
 	src: url('/font/yusei') format('truetype');
 }
 
+/* --- ベースカラー定義 --- */
+:root {
+	/* 背景色 */
+	--main-bg: aliceblue;
+
+	/* 文字色 */
+	--main-color: black;
+
+	/* アクセント色 */
+	--accent: royalblue;
+	--accent-light: lightblue;
+
+	/* 枠線 */
+	--border-color: lightblue;
+
+	/* テーブル背景 */
+	--table-header: lightblue;
+	--table-row: white;
+
+	/* メニュー背景 */
+	--menu-bg: steelblue;
+	/* メニューhover */
+	--menu-hover: skyblue;
+	/* メニュー文字色 */
+	--menu-text: white;
+
+	--button-bg: royalblue;
+	--button-hover: skyblue;
+	--button-text: white;
+
+	--input-bg: aliceblue;
+	--input-border: lightblue;
+
+	/* result2.html用 */
+	--main-bg2: lemonchiffon;
+	--container-bg: white;
+	--shadow-color: gold;
+	--header-color: mediumslateblue;
+	--section-title-bg: aliceblue;
+	--section-title-border: skyblue;
+	--section-title-color: mediumslateblue;
+	--list-bg: honeydew;
+	--list-border: lightblue;
+	--sub-list-bg: white;
+	--sub-list-border: skyblue;
+	--caption-color: deepskyblue;
+	--image-border: gold;
+}
+
 /* --- モーダル/ダイアログ --- */
 .dialog {
 	display: none;
@@ -63,13 +112,15 @@
 
 .save-btn {
 	display: block;
-	width: 100%;
+	width: 50%;
+	align-content: center;
 	background-color: var(--section-title-color);
-	color: white;
+	color: whitesmoke;
 	border: none;
 	border-radius: 6px;
 	font-size: 1.1em;
 	padding: 12px 0;
+	margin: 0 auto;
 	margin-top: 18px;
 	cursor: pointer;
 	transition: background 0.2s;
@@ -77,5 +128,5 @@
 
 .save-btn:hover {
 	background-color: var(--section-title-color);
-	color: white;
+	color: whitesmoke;
 }

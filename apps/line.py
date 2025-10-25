@@ -21,19 +21,6 @@ SCRIPT_NAME = func.get_app_name(__file__)
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
 
-# メッセージタイプ
-MSG_TYPE_TXT = "text"
-MSG_TYPE_IMG = "image"
-
-# ファイル区分
-FILE_DIV_AI_NEWS = "ai_news"
-
-# タイトル
-DIV_MARK = "*----*----*----*----*----*"
-DIV_MARK_TXT = "*--- {}  ---*"
-# DIV_MARK_IMG = "=== {} ==="
-DIV_MARK_IMG = "■ {} ■"
-
 # 曜日
 WEEKLY_DIV_FRI = "Fri"
 
@@ -65,7 +52,7 @@ def main(
                         msg_list = get_msg_list(auto_flg)
 
                     else:
-                        msg_list = [[MSG_TYPE_IMG, func_line.URL_TODAY_IMG]]
+                        msg_list = [[const.MSG_TYPE_IMG, func_line.URL_TODAY_IMG]]
 
                     # メッセージ取得
                     messages = func_line.get_line_messages(msg_list)
@@ -88,7 +75,7 @@ def main(
 
                 if not func.is_local_env():
                     msg = f"[{err_msg}]\n{e[:100]}"
-                    func_line.send_msg_for_admin(msg) # TODO: [check] 実行されない
+                    func_line.send_msg_for_admin(msg)  # TODO: [check] 実行されない
 
     func.print_end(SCRIPT_NAME)
 
@@ -101,7 +88,9 @@ def sub(div: str):
             func.get_now(), const.DATE_FORMAT_YYYYMMDD_SLASH
         )
         msg_data = mlb.get_mlb_game_data(all_flg=const.FLG_ON)
-        msg_data_list = get_msg_data_list(div, MSG_TYPE_TXT, [msg_data], date_today)
+        msg_data_list = get_msg_data_list(
+            div, const.MSG_TYPE_TXT, [msg_data], date_today
+        )
         msg_list = func_line.get_line_messages([msg_data_list])
 
     elif div == const.STR_NISA:
@@ -118,20 +107,20 @@ def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
     if auto_flg:
         msg_data, date_today, img_url = today.get_msg_data_today()
         msg_data_list = get_msg_data_list(
-            const.APP_TODAY, MSG_TYPE_IMG, img_url, date_today
+            const.APP_TODAY, const.MSG_TYPE_IMG, img_url, date_today
         )
 
         if WEEKLY_DIV_FRI in date_today:
             ai_news_msg = news.get_news_msg_list(news.DIV_AI_NEWS_LIST)
             msg_data = get_msg_data_list(
-                FILE_DIV_AI_NEWS, MSG_TYPE_TXT, ai_news_msg, date_today
+                const.STR_AI_NEWS, const.MSG_TYPE_TXT, ai_news_msg, date_today
             )
             msg_data_list.append(msg_data)
 
     else:
         msg_div = const.STR_NOTIFY
         msg_data = func.get_input_data(const.STR_MESSAGE, msg_div)
-        msg_data_list = get_msg_data_list(msg_div, MSG_TYPE_TXT, msg_data)
+        msg_data_list = get_msg_data_list(msg_div, const.MSG_TYPE_TXT, msg_data)
 
     msg_list = [msg_data_list]
     return msg_list
@@ -148,7 +137,7 @@ def get_template_msg():
 
     file_path = func_gemini.get_gemini_image(const.STR_REST)
     if file_path:
-        func.print_debug_msg(MSG_TYPE_IMG, func_line.URL_REST_IMG)
+        func.print_debug_msg(const.MSG_TYPE_IMG, func_line.URL_REST_IMG)
 
     template_msg = func_line.get_template_msg_json(
         alt_text, template_title, template_text, actions
@@ -217,7 +206,7 @@ def get_msg_data_list(
     msg_data: list[str] | str,
     date_today: str = const.SYM_BLANK,
 ) -> list[str]:
-    if msg_type == MSG_TYPE_IMG:
+    if msg_type == const.MSG_TYPE_IMG:
         msg = msg_data
     else:
         title = get_title(msg_div, msg_type, date_today)
@@ -235,18 +224,18 @@ def get_title(
 
     if div == const.APP_NEWS:
         title_div = news.DIV_NEWS.format(const.SYM_BLANK)
-    elif div == FILE_DIV_AI_NEWS:
+    elif div == const.STR_AI_NEWS:
         title_div = news.DIV_AI_NEWS
     else:
         if date_today:
             title_div = date_today
 
-    if msg_type == MSG_TYPE_TXT:
-        title_txt = DIV_MARK_TXT.format(title_div)
-        title_list = [DIV_MARK, title_txt, DIV_MARK]
+    if msg_type == const.MSG_TYPE_TXT:
+        title_txt = const.DIV_MARK_TXT.format(title_div)
+        title_list = [const.DIV_MARK, title_txt, const.DIV_MARK]
         title = NEW_LINE.join(title_list)
-    elif msg_type == MSG_TYPE_IMG:
-        title_img = DIV_MARK_IMG.format(title_div)
+    elif msg_type == const.MSG_TYPE_IMG:
+        title_img = const.DIV_MARK_IMG.format(title_div)
         title = title_img
     else:
         title = title_div

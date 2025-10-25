@@ -1,7 +1,6 @@
 # 説明: メニュー
 
 import numpy as np
-import pandas as pd
 
 import apps.utils.board_dao as board_dao
 import apps.utils.board_dto as board_dto
@@ -63,12 +62,14 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
         user_auth = get_user_auth_num(user_div)
         if user_auth == const.NUM_AUTH_ADMIN:
             # numpy.where()を使って新しい列を作成
-            df[const.STR_URL] = np.where(
-                df[mongo_const.FI_STATUS]
-                == board_dto.LIST_STATUS[board_dto.STATUS_DONE],
-                "✅",
-                func.get_dialog_button(
-                    df[mongo_const.FI_SEQ], df[mongo_const.FI_REMARK], "▶️"
+            df[const.STR_URL] = func.get_dialog_button(
+                df[mongo_const.FI_SEQ],
+                df[mongo_const.FI_REMARK],
+                np.where(
+                    df[mongo_const.FI_STATUS]
+                    == const.LIST_BOARD_STATUS[const.STATUS_DONE],
+                    "✅",
+                    "▶️",
                 ),
             )
 

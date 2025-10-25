@@ -7,27 +7,7 @@ import apps.utils.function_beautiful_soup as func_bs
 # URLパラメータ
 URL_PARAM = "finance/quote/JPY-{}"
 
-# JPY単位
-JPY_LIST = [100, 1000, 10000]
-
-# カラムリスト
-EX_LIST = [
-    const.STR_KRW,
-    const.STR_USD,
-    const.STR_TWD,
-    const.STR_THB,
-    const.STR_PHP,
-    const.STR_VND,
-]
-EX_LIST_JA = [
-    const.STR_KRW_JA,
-    const.STR_USD_JA,
-    const.STR_TWD_JA,
-    const.STR_THB_JA,
-    const.STR_PHP_JA,
-    const.STR_VND_JA,
-]
-DICT_EX = dict(zip(EX_LIST, EX_LIST_JA))
+DICT_EX = dict(zip(const.EX_LIST, const.EX_LIST_JA))
 
 
 # 今日のウォン取得
@@ -54,12 +34,12 @@ def get_today_won(ko_flg: bool = const.FLG_OFF) -> str:
 # 今日の為替情報取得
 def get_ex_yen_list():
     col_list = [const.STR_DIV_JA]
-    for jpy in JPY_LIST:
+    for jpy in const.JPY_LIST:
         col_list.append(f"{jpy}{const.STR_JPY_JA}")
 
     ex_yen_list = []
 
-    for ex_div in EX_LIST:
+    for ex_div in const.EX_LIST:
         ex_info = get_ex_info(ex_div)
         ex_yen_list.append(ex_info)
     return ex_yen_list

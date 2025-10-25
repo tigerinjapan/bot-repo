@@ -3,7 +3,6 @@
 
 from fastapi import FastAPI, Query, Request
 from fastapi.responses import RedirectResponse, HTMLResponse
-import httpx
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server
 

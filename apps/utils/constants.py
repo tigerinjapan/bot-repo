@@ -76,14 +76,14 @@ DATE_FORMAT_MMDD_SLASH = "%m/%d"
 DATE_FORMAT_MMDD_SLASH_NO_ZERO = "%#m/%#d"
 DATE_FORMAT_ISO = "iso"
 
-##### リクエストタイプ #####
-REQUEST_TYPE_GET = "get"
-REQUEST_TYPE_POST = "post"
-
 ##### 正規表現 #####
 PATTERN_YYYYMMDD = "^[0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$"
 PATTERN_NUMBER = "^[0-9]$"
 PATTERN_NUMBERS = r"(\d+)"
+
+##### リクエストタイプ #####
+REQUEST_TYPE_GET = "get"
+REQUEST_TYPE_POST = "post"
 
 ##### ステータスコード #####
 STATUS_CODE_OK = 200
@@ -103,6 +103,11 @@ STATUS_CODE_GATEWAY_TIMEOUT = 504
 
 STATUS_CODE_NORMAL = [200, 201, 204]
 
+##### API #####
+# API HEADERS
+API_HEADERS_JSON = {"Content-Type": "application/json"}
+API_HEADERS_UTF8 = {"Content-Type": "application/x-www-form-urlencoded"}
+
 ##### 数値 #####
 NUM_ZERO = 0
 NUM_ONE = 1
@@ -110,7 +115,7 @@ NUM_TWO = 2
 NUM_THREE = 3
 NUM_FOUR = 4
 
-##### 日付 #####
+# 日付
 DATE_NOW = 0
 DATE_YEAR = 1
 DATE_MONTH = 2
@@ -139,9 +144,22 @@ KAKAO_IMG_SIZE_H = 480
 MIN_DISPLAY_CNT = 3
 MAX_DISPLAY_CNT = 5
 MAX_RETRY_CNT = 3
+
 MAX_TEMP_MSG = 20
+MAX_WRAP_WIDTH = 32
 MAX_TEXT_LENGTH = 200
 MAX_PHRASE_CSV = 999
+
+MAX_TOKEN_EXPIRATION_MINUTES = 10
+
+MAX_RANDOM_IMG = 4
+MAX_USER_MENU = 10
+
+NUM_TARGET_DAYS = 7
+MAX_TARGET_DAYS_BOARD = -14
+
+MAX_NUMBER_DATA = 20
+MAX_MSG_API_CNT = 200
 
 ##### 型 #####
 TYPE_DICT = "dict"
@@ -328,12 +346,14 @@ STR_JAPAN = "Japan"
 STR_KOREA = "Korea"
 
 STR_AI = "AI"
-STR_USER_INFO = "userInfo"
-STR_ZIP_CODE = "zipCode"
+STR_AI_NEWS = "ai_news"
 STR_ENV_VAR = "env_var"
-STR_SECRET_KEY = "secret_key"
+STR_LINE_API = "LINE API"
 STR_NUMBER_PLATE = "numberPlate"
 STR_PHRASE_KO = "phrase_ko"
+STR_SECRET_KEY = "secret_key"
+STR_USER_INFO = "userInfo"
+STR_ZIP_CODE = "zipCode"
 
 STR_LOGIN_JA = "ログイン"
 STR_LOGOUT_JA = "ログアウト"
@@ -438,6 +458,22 @@ LOG_MASKING = "XXXXX"
 ##### 曜日リスト #####
 LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
 
+##### LINE #####
+# メッセージタイプ
+MSG_TYPE_TXT = "text"
+MSG_TYPE_IMG = "image"
+MSG_TYPE_TMP = "template"
+MSG_TYPE_BTN = "button"
+MSG_TYPE_FLEX = "flex"
+MSG_TYPE_CAROUSEL = "carousel"
+MSG_TYPE_BUBBLE = "bubble"
+
+# タイトル
+DIV_MARK = "*----*----*----*----*----*"
+DIV_MARK_TXT = "*--- {}  ---*"
+# DIV_MARK_IMG = "=== {} ==="
+DIV_MARK_IMG = "■ {} ■"
+
 ##### ファンド #####
 FUND_NO_SP_500 = "182809"
 FUND_NO_AI = "179702"
@@ -448,6 +484,52 @@ FUND_NAME_US_TECH = "USテクノロ"
 
 LIST_FUND_NO = [FUND_NO_SP_500, FUND_NO_AI, FUND_NO_US_TECH]
 LIST_FUND_NAME = [FUND_NAME_SP_500, FUND_NAME_AI, FUND_NAME_US_TECH]
+
+
+##### EX（為替） #####
+# JPY単位
+JPY_LIST = [100, 1000, 10000]
+
+# カラムリスト
+EX_LIST = [
+    STR_KRW,
+    STR_USD,
+    STR_TWD,
+    STR_THB,
+    STR_PHP,
+    STR_VND,
+]
+EX_LIST_JA = [
+    STR_KRW_JA,
+    STR_USD_JA,
+    STR_TWD_JA,
+    STR_THB_JA,
+    STR_PHP_JA,
+    STR_VND_JA,
+]
+
+##### MLB #####
+# ID
+TEAM_ID_LAD = 119
+PLAYER_ID_OHTANI = 660271
+PLAYER_ID_YAMAMOTO = 808967
+PLAYER_ID_KIM = 808975
+
+LIST_TEAM_ID = [TEAM_ID_LAD]
+LIST_PLAYER_ID_LAD = [PLAYER_ID_OHTANI, PLAYER_ID_YAMAMOTO, PLAYER_ID_KIM]
+LIST_PLAYER_ID = [LIST_PLAYER_ID_LAD]
+
+##### 掲示板 #####
+LIST_BOARD_APP = ["LINE", "Travel", "Kakao", "Server"]
+LIST_BOARD_CATEGORY = ["Review", "Memo", "Error", "Etc."]
+LIST_BOARD_TYPE = ["Add", "Modify", "Design", "Etc."]
+LIST_BOARD_STATUS = ["New", "Progress", "Pend", "Done"]
+
+# ステータス
+STATUS_NEW = 0
+STATUS_PROGRESS = 1
+STATUS_PEND = 2
+STATUS_DONE = 3
 
 ##### URL #####
 # サイトURL
@@ -471,6 +553,9 @@ URL_TV = "https://bangumi.org"
 URL_MLB = "https://www.mlb.com"
 URL_MLB_STAT_API = "https://statsapi.mlb.com"
 URL_IP_INFO = "https://ipinfo.io"
+URL_LINE_API = "https://api.line.me"
+URL_KAKAO_AUTH = "https://kauth.kakao.com"
+URL_KAKAO_API = "https://kapi.kakao.com"
 
 ##### アプリケーション名 #####
 APP_TODAY = "today"
@@ -503,6 +588,7 @@ APP_TRAVEL_KO = "travel_ko"
 APP_NUMBER_KO = "number_ko"
 APP_REVIEW_KO = "review_ko"
 
+##### アプリケーションリスト #####
 LIST_APP_SERVER = [
     APP_TODAY,
     APP_NEWS,
@@ -513,8 +599,8 @@ LIST_APP_SERVER = [
     APP_STUDY,
 ]
 LIST_APP_SITE = [APP_SITE, APP_CAFE, APP_TRAVEL, APP_BOARD]
-LIST_APP_KOREA = [APP_TODAY_KOREA]
-LIST_APP_ALL = LIST_APP_SERVER + LIST_APP_SITE + LIST_APP_KOREA
+LIST_APP_SERVER_2 = [APP_TODAY_KOREA]
+LIST_APP_ALL = LIST_APP_SERVER + LIST_APP_SITE + LIST_APP_SERVER_2
 
 LIST_APPS_ALL = [
     APP_TRAVEL,
@@ -562,6 +648,28 @@ LIST_APP_CATEGORY = [
     LIST_APP_MANAGEMENT,
     LIST_APP_DOCUMENT,
 ]
+
+LIST_APP_KOREA = [
+    APP_TODAY,
+    APP_TRAVEL,
+    APP_NUMBER,
+    APP_IT_QUIZ,
+    APP_REVIEW,
+    APP_BOARD,
+    TYPE_LIST,
+]
+
+LIST_APP_NUM_OFF = [
+    APP_TODAY,
+    APP_STUDY,
+    APP_SITE,
+    APP_CAFE,
+    APP_TRAVEL,
+    APP_BOARD,
+    APP_TODAY_KOREA,
+]
+
+LIST_APP_AUTH_OFF = [APP_CAFE, APP_TRAVEL]
 
 
 # パス取得

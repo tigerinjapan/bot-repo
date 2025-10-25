@@ -22,18 +22,17 @@ KAKAO_API_KEY = func.get_env_val("KAKAO_API_KEY")
 KAKAO_API_SECRET = func.get_env_val("KAKAO_API_SECRET")
 
 # URL
-URL_KAKAO_OAUTH = "https://kauth.kakao.com/oauth"
-URL_TOKEN = f"{URL_KAKAO_OAUTH}/token"
+URL_KAKAO_OAUTH = f"{const.URL_KAKAO_AUTH}/oauth"
+URL_KAKAO_TOKEN = f"{URL_KAKAO_OAUTH}/token"
 
-URL_KAKAO_API = "https://kapi.kakao.com"
-URL_KAKAO_API_LOGOUT = f"{URL_KAKAO_API}/v1/user/logout"
-URL_KAKAO_API_UNLINK = f"{URL_KAKAO_API}/v1/user/unlink"
-URL_KAKAO_API_SEND_ME = f"{URL_KAKAO_API}/v2/api/talk/memo/default/send"
-URL_KAKAO_API_USER_ME = f"{URL_KAKAO_API}/v2/user/me"
+URL_KAKAO_API_LOGOUT = f"{const.URL_KAKAO_API}/v1/user/logout"
+URL_KAKAO_API_UNLINK = f"{const.URL_KAKAO_API}/v1/user/unlink"
+URL_KAKAO_API_SEND_ME = f"{const.URL_KAKAO_API}/v2/api/talk/memo/default/send"
+URL_KAKAO_API_USER_ME = f"{const.URL_KAKAO_API}/v2/user/me"
 
 # TODO: [pending] チャネル登録必要
-URL_KAKAO_API_FRIENDS = f"{URL_KAKAO_API}/v1/api/talk/friends"
-URL_KAKAO_API_SEND_FRIENDS = f"{URL_KAKAO_API}/message/default/send"
+URL_KAKAO_API_FRIENDS = f"{const.URL_KAKAO_API}/v1/api/talk/friends"
+URL_KAKAO_API_SEND_FRIENDS = f"{const.URL_KAKAO_API}/message/default/send"
 
 URL_TODAY_KOREA_IMG = f"{func_line.URL_KOYEB_IMG}/{const.APP_TODAY_KOREA}"
 
@@ -69,7 +68,6 @@ def get_access_token(code: str = const.SYM_BLANK) -> str:
     curr_func_nm = sys._getframe().f_code.co_name
 
     token = const.SYM_BLANK
-    token_url = URL_TOKEN
 
     if code:
         data = {
@@ -95,7 +93,7 @@ def get_access_token(code: str = const.SYM_BLANK) -> str:
     data.update(client_data)
 
     result = func_api.get_response_result(
-        token_url,
+        URL_KAKAO_TOKEN,
         request_type=const.REQUEST_TYPE_POST,
         data=data,
         header_json_flg=const.FLG_OFF,

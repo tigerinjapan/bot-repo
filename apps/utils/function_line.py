@@ -10,7 +10,6 @@ import apps.utils.function_api as func_api
 SCRIPT_NAME = func.get_app_name(__file__)
 
 # URL
-URL_LINE_API = "https://api.line.me"
 URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
 URL_KOYEB_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}"
 URL_TODAY_IMG = f"{URL_KOYEB_IMG}/{const.APP_TODAY}"
@@ -18,29 +17,18 @@ URL_GEMINI_IMG = f"{URL_KOYEB_IMG}/{const.STR_GEMINI}"
 URL_REST_IMG = f"{URL_KOYEB_IMG}/{const.STR_REST}"
 
 # LINE API情報
-STR_LINE_API = "LINE API"
 LINE_CHANNEL_ID = func.get_env_val("LINE_CHANNEL_ID")
 LINE_CHANNEL_SECRET = func.get_env_val("LINE_CHANNEL_SECRET")
 LINE_CHANNEL_ID_2 = func.get_env_val("LINE_CHANNEL_ID_2")
 LINE_CHANNEL_SECRET_2 = func.get_env_val("LINE_CHANNEL_SECRET_2")
-MAX_MSG_API_CNT = 200
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
 
-# メッセージタイプ
-MSG_TYPE_TXT = "text"
-MSG_TYPE_IMG = "image"
-MSG_TYPE_TMP = "template"
-MSG_TYPE_BTN = "button"
-MSG_TYPE_FLEX = "flex"
-MSG_TYPE_CAROUSEL = "carousel"
-MSG_TYPE_BUBBLE = "bubble"
-
 
 # チャネル・アクセストークン取得
 def get_channel_access_token(admin_flg: bool = const.FLG_OFF) -> str:
-    url = f"{URL_LINE_API}/oauth2/v3/token"
+    url = f"{const.URL_LINE_API}/oauth2/v3/token"
 
     client_id = LINE_CHANNEL_ID
     client_secret = LINE_CHANNEL_SECRET
@@ -81,29 +69,29 @@ def get_channel_access_token(admin_flg: bool = const.FLG_OFF) -> str:
     # メッセージ数チェック
     total_usage = check_message_count(token)
 
-    if (MAX_MSG_API_CNT - 20) < total_usage:
+    if (const.MAX_MSG_API_CNT - 20) < total_usage:
         token = const.NONE_CONSTANT
     return token
 
 
 # メッセージ件数取得
 def check_message_count(access_token: str) -> int:
-    url = f"{URL_LINE_API}/v2/bot/message/quota/consumption"
+    url = f"{const.URL_LINE_API}/v2/bot/message/quota/consumption"
     headers = {"Authorization": access_token}
     result = func_api.get_response_result(url, headers=headers)
     if result:
         total_usage = result["totalUsage"]
     else:
-        total_usage = MAX_MSG_API_CNT
+        total_usage = const.MAX_MSG_API_CNT
 
-    message_count = f"{total_usage} / {MAX_MSG_API_CNT}"
+    message_count = f"{total_usage} / {const.MAX_MSG_API_CNT}"
     func.print_info_msg(const.STR_MESSAGE_JA, message_count)
     return total_usage
 
 
 # メッセージ送信
 def send_line_msg(access_token: str, messages):
-    url = f"{URL_LINE_API}/v2/bot/message/broadcast"
+    url = f"{const.URL_LINE_API}/v2/bot/message/broadcast"
     headers = {"Authorization": access_token}
     data = {"messages": messages}
     json_data = func.get_dumps_json(data, ensure_ascii=const.FLG_ON)
@@ -113,7 +101,7 @@ def send_line_msg(access_token: str, messages):
 
     if result:
         curr_func_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, STR_LINE_API, result["details"])
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, const.STR_LINE_API, result["details"])
 
 
 # LINE送信用のJSONデータ取得
@@ -125,7 +113,7 @@ def get_line_messages(msg_list: list[list[str]]):
         text_msg = msg_data[1]
         json_object = {const.STR_TYPE: msg_type}
 
-        if msg_type == MSG_TYPE_IMG:
+        if msg_type == const.MSG_TYPE_IMG:
             img_url = text_msg
             update_data = {"originalContentUrl": img_url, "previewImageUrl": img_url}
         else:
@@ -152,7 +140,7 @@ def get_template_msg_json(
     img_url = URL_REST_IMG
 
     json_object = {
-        "type": MSG_TYPE_TMP,
+        "type": const.MSG_TYPE_TMP,
         "altText": alt_text,
         "template": {
             "type": "buttons",
@@ -174,10 +162,12 @@ def get_template_msg_json(
 
 
 # フレックスメッセージ取得
-def get_flex_msg_json(alt_text: str, data_list, flex_type: str = MSG_TYPE_CAROUSEL):
+def get_flex_msg_json(
+    alt_text: str, data_list, flex_type: str = const.MSG_TYPE_CAROUSEL
+):
     contents = get_bubble_contents(data_list)
     json_object = {
-        "type": MSG_TYPE_FLEX,
+        "type": const.MSG_TYPE_FLEX,
         "altText": alt_text,
         "contents": {"type": flex_type, "contents": contents},
     }

@@ -14,14 +14,14 @@ def get_board_info():
 
     client = func_mongo.db_connect()
 
-    # 30日前のデータ
-    target_date = func.get_calc_date(-30)
+    # 取得対象
+    target_date = func.get_calc_date(const.MAX_TARGET_DAYS_BOARD)
 
     cond = {
         mongo_const.OPERATOR_OR: [
             {
                 mongo_const.FI_STATUS: {
-                    mongo_const.OPERATOR_NOT_EQUAL: board_dto.STATUS_DONE
+                    mongo_const.OPERATOR_NOT_EQUAL: const.STATUS_DONE
                 }
             },
             {

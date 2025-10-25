@@ -1,9 +1,9 @@
+// ヘッダー設定
+setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
+
 // プロンプトに追加する共通の条件
 const commonConditions_image = "高品質、詳細、フォトリアル、明るい色調、楽しい雰囲気";
 const commonConditions_text = "明確、簡潔、丁寧、ポジティブ、想像力をかきたてる";
-
-// ヘッダー設定
-setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 
 let geminiDataUrl = URL_GEMINI_ITEMS_SERVER;
 let apiUrl = URL_GEMINI_SERVER;

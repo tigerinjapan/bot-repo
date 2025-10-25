@@ -1,122 +1,122 @@
 [
     {
-        "number": 1465,
-        "answer": "1-√4+6=5;1=√4-6+5",
+        "number": 1438,
+        "answer": "1+4+3=8",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 9325,
-        "answer": "9/3+2=5",
+        "number": 2597,
+        "answer": "2*5-√9=7;2*5=√9+7",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 1439,
-        "answer": "1=√4-3/√9",
+        "number": 7076,
+        "answer": "7⁰=7-6",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 6614,
-        "answer": "6/6+1=√4",
+        "number": 4458,
+        "answer": "√4=√4*5-8",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 4601,
-        "answer": "√4=6⁰+1;√4-6⁰=1",
+        "number": 3257,
+        "answer": "3=2*5-7",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 3326,
-        "answer": "3=3²-6",
+        "number": 9846,
+        "answer": "√9*8/4=6;√9*8=4*6",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 3974,
-        "answer": "3*√9=7+√4;3*√9-7=√4",
+        "number": 5532,
+        "answer": "5/5=3-2",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 5804,
-        "answer": "5-8⁰=4;5=8⁰+4",
+        "number": 1754,
+        "answer": "1*7-5=√4;1*7=5+√4",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 7916,
-        "answer": "7+9=16",
+        "number": 6252,
+        "answer": "6/2=5-2",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 3921,
-        "answer": "3/√9=2-1",
+        "number": 2889,
+        "answer": "2+8/8=√9",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 3374,
-        "answer": "3*3=7+√4;3*3-7=√4",
+        "number": 6357,
+        "answer": "6/3+5=7",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 4881,
-        "answer": "√4=8/8+1;√4-8/8=1",
+        "number": 6307,
+        "answer": "6+3⁰=7",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 1723,
-        "answer": "1=7-2*3",
+        "number": 1998,
+        "answer": "1=√9*√9-8",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 8544,
-        "answer": "8=5*√4-√4",
+        "number": 2267,
+        "answer": "2/2+6=7",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 5726,
-        "answer": "5+7=2*6",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 1328,
-        "answer": "1=3²-8",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 5299,
-        "answer": "5-2=9/√9;5=2+9/√9",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 7098,
-        "answer": "7⁰=9-8",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 2995,
-        "answer": "2+9/√9=5",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 7191,
-        "answer": "7+1=9-1",
+        "number": 1915,
+        "answer": "1+√9+1=5",
         "userName": "hong",
         "rankTime": 7.08
+    },
+    {
+        "number": 6805,
+        "answer": "6=8⁰+5;6-8⁰=5",
+        "userName": "hong",
+        "rankTime": 9.97
+    },
+    {
+        "number": 9575,
+        "answer": "√9-5+7=5;√9=5-7+5",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 1774,
+        "answer": "1+7/7=√4",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 5972,
+        "answer": "5+9=7*2",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 2773,
+        "answer": "2+7/7=3",
+        "userName": "master",
+        "rankTime": 10.0
     }
 ]

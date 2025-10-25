@@ -14,13 +14,8 @@ SCRIPT_NAME = func.get_app_name(__file__)
 # URL
 URL_SERVER = func.get_server_url()
 
-# HEADERS
-API_HEADERS_JSON = {"Content-Type": "application/json"}
-API_HEADERS_UTF8 = {"Content-Type": "application/x-www-form-urlencoded"}
-
 # プロパティ
 IMG_NO = func.get_env_val("LINE_IMG_DIV", div=const.STR_ENV_VAR)
-NUM_IMG_MAX_SEQ = 4
 
 
 # リクエスト送信
@@ -37,9 +32,9 @@ def get_response_result(
     func.print_debug_msg(const.STR_API, url)
 
     if header_json_flg:
-        api_headers = API_HEADERS_JSON
+        api_headers = const.API_HEADERS_JSON
     else:
-        api_headers = API_HEADERS_UTF8
+        api_headers = const.API_HEADERS_UTF8
     headers.update(api_headers)
 
     try:
@@ -97,7 +92,7 @@ def create_msg_img(div: str, msg: str, forecast: str = const.SYM_BLANK) -> str:
         img_div = const.APP_NEWS
 
     # 任意の数値取得
-    img_seq = str(func.get_random_int(NUM_IMG_MAX_SEQ, const.NUM_ONE))
+    img_seq = str(func.get_random_int(const.MAX_RANDOM_IMG, const.NUM_ONE))
     img_no = str(IMG_NO) + img_seq.zfill(2)
 
     img_file_base = f"{img_div}_{img_no}"

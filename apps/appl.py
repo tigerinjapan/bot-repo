@@ -31,18 +31,6 @@ LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
 LIST_APP_DIV_KOREA = [today_korea]
 LIST_ALL_APP_DIV = LIST_APP_DIV + ([site] * 4) + LIST_APP_DIV_KOREA
 
-LIST_APP_NUM_OFF = [
-    const.APP_TODAY,
-    const.APP_STUDY,
-    const.APP_SITE,
-    const.APP_CAFE,
-    const.APP_TRAVEL,
-    const.APP_BOARD,
-    const.APP_TODAY_KOREA,
-]
-
-LIST_APP_AUTH_OFF = [const.APP_CAFE, const.APP_TRAVEL]
-
 
 # クラスの定義
 class AppExec:
@@ -68,7 +56,7 @@ class AppExec:
 
 # 【画面】取得結果
 def exec_result(request: Request, app_name: str):
-    if not func.check_in_list(app_name, LIST_APP_AUTH_OFF):
+    if not func.check_in_list(app_name, const.LIST_APP_AUTH_OFF):
         user_info = request.session[const.STR_USER]
         user_div, user_name, app_menu = (
             user_info[mongo_const.FI_USER_DIV],
@@ -109,7 +97,7 @@ def get_context_data(app_name: str, user_div: str = const.AUTH_DEV):
         app_title = site.app_title_board
 
     num_flg = const.FLG_ON
-    if func.check_in_list(app_name, LIST_APP_NUM_OFF):
+    if func.check_in_list(app_name, const.LIST_APP_NUM_OFF):
         num_flg = const.FLG_OFF
 
     app_exec = AppExec(app_div, app_name)
@@ -141,9 +129,9 @@ def get_context_data2(request: Request, app_name: str):
 
     data_list = []
     if const.APP_REVIEW in app_name:
-        data_list.append(board_dto.LIST_APP)
-        data_list.append(board_dto.LIST_CATEGORY)
-        data_list.append(board_dto.LIST_TYPE)
+        data_list.append(const.LIST_BOARD_APP)
+        data_list.append(const.LIST_BOARD_CATEGORY)
+        data_list.append(const.LIST_BOARD_TYPE)
 
     elif app_name == const.APP_IT_QUIZ:
         data_list = rank_dao.get_ranking_top(app_name)

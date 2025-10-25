@@ -69,7 +69,7 @@ def get_json_data_for_user_info(form_data):
     seq = form_data[mongo_const.ITEM_SEQ]
 
     menu_val_list = []
-    for idx in range(10):
+    for idx in range(const.MAX_USER_MENU):
         try:
             menu_val = form_data[f"{mongo_const.ITEM_MENU}{idx}"]
             menu_val_list.append(menu_val)

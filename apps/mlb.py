@@ -10,16 +10,6 @@ from apps.utils.message_constants import MSG_ERR_DATA_NOT_EXIST
 # タイトル
 app_title = const.APP_MLB
 
-# ID
-TEAM_ID_LAD = 119
-PLAYER_ID_OHTANI = 660271
-PLAYER_ID_YAMAMOTO = 808967
-PLAYER_ID_KIM = 808975
-
-LIST_TEAM_ID = [TEAM_ID_LAD]
-LIST_PLAYER_ID_LAD = [PLAYER_ID_OHTANI, PLAYER_ID_YAMAMOTO, PLAYER_ID_KIM]
-LIST_PLAYER_ID = [LIST_PLAYER_ID_LAD]
-
 
 # アイテムリスト取得
 def get_item_list():
@@ -30,7 +20,7 @@ def get_item_list():
 
 # MLB Stat取得
 def get_mlb_game_data(
-    team_id: int = TEAM_ID_LAD,
+    team_id: int = const.TEAM_ID_LAD,
     all_flg: bool = const.FLG_OFF,
 ) -> list[str]:
     stat_data_list = []
@@ -52,8 +42,8 @@ def get_mlb_game_data(
         batters = my_team_data["batters"]
         pitchers = my_team_data["pitchers"]
 
-        idx = LIST_TEAM_ID.index(team_id)
-        player_id_list = LIST_PLAYER_ID[idx]
+        idx = const.LIST_TEAM_ID.index(team_id)
+        player_id_list = const.LIST_PLAYER_ID[idx]
 
         if not all_flg:
             player_id_list = player_id_list[:1]
@@ -83,7 +73,7 @@ def get_mlb_game_data(
 
 # 今日のヒーロー
 def get_player_of_game_data(
-    team_id: int = TEAM_ID_LAD, game_data=const.NONE_CONSTANT
+    team_id: int = const.TEAM_ID_LAD, game_data=const.NONE_CONSTANT
 ) -> str:
     stat_data_list = ["[POG]"]
 
@@ -109,8 +99,8 @@ def get_player_of_game_data(
 
         player_id = person_data["id"]
 
-        idx = LIST_TEAM_ID.index(team_id)
-        player_id_list = LIST_PLAYER_ID[idx]
+        idx = const.LIST_TEAM_ID.index(team_id)
+        player_id_list = const.LIST_PLAYER_ID[idx]
         if player_id in player_id_list:
             return const.SYM_BLANK
 

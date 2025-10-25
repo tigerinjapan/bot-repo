@@ -141,7 +141,7 @@ function openDialog(title, text) {
   const dialog = createElem(TAG_DIV, "dialog", "searchResult");
 
   const parentElemId = "dialog-content";
-  const dialog_content = createElem(TAG_DIV, parentElemId, "dialog");
+  createElem(TAG_DIV, parentElemId, "dialog");
 
   createElem(TAG_H3, "dialog-title", parentElemId);
   setElemText("dialog-title", title);
@@ -150,7 +150,7 @@ function openDialog(title, text) {
     // [STR_APP, LIST_REVIEW_APP, 3],
     // [STR_CATEGORY, LIST_REVIEW_CATEGORY, 1],
     // [STR_TYPE, LIST_REVIEW_TYPE, 1],
-    [STR_STATUS, LIST_REVIEW_STATUS, 1],
+    [STR_STATUS, LIST_REVIEW_STATUS, 3],
   ];
 
   for (const [elemId, txtList, initValIdx] of selectList) {

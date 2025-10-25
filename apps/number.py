@@ -21,9 +21,6 @@ col_list = [
     mongo_const.ITEM_RANK_TIME,
 ]
 
-# データリスト
-DATA_LIST_CNT = 20
-
 # ランク情報（デフォルト値）
 DEFAULT_RANK = {
     const.STR_EASY: {
@@ -83,7 +80,7 @@ def get_game_data_list(level: str = const.STR_HARD):
 def get_answer_list(level: str = const.STR_MEDIUM):
     df = func.get_df_from_csv(const.APP_NUMBER)[0]
     df_level = df[df[const.STR_LEVEL] == level]
-    df_result = df_level.sample(n=DATA_LIST_CNT)
+    df_result = df_level.sample(n=const.MAX_NUMBER_DATA)
 
     # データの内容をリストのリスト（行のリスト）として取得
     answer_list = df_result[[const.STR_NUMBER, const.STR_ANSWER]].values.tolist()

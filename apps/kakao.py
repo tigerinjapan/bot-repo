@@ -11,17 +11,6 @@ import apps.utils.function_kakao as func_kakao
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
 
-# 定数
-LIST_APP_KOREA = [
-    const.APP_TODAY,
-    const.APP_TRAVEL,
-    const.APP_NUMBER,
-    const.APP_IT_QUIZ,
-    const.APP_REVIEW,
-    const.APP_BOARD,
-    const.TYPE_LIST,
-]
-
 
 def main(
     object_type: str = func_kakao.OBJECT_TYPE_FEED, list_flg: bool = const.FLG_OFF

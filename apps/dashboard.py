@@ -133,7 +133,7 @@ def get_target_date(data_div: str):
 
     if data_div == const.STR_DAY:
         # 7日前のデータ
-        target_date = func.get_calc_date(-7)
+        target_date = func.get_calc_date(-const.NUM_TARGET_DAYS)
         date_format = const.DATE_FORMAT_MMDD_SLASH
 
     else:
@@ -200,7 +200,7 @@ def get_dummy_label_list(data_div: str):
     date_list = []
     today = func.get_now()
     if data_div == const.STR_DAY:
-        for i in range(7):
+        for i in range(const.NUM_TARGET_DAYS):
             target_date = func.get_calc_date(-i)
             formatted_date = f"{target_date.month}/{target_date.day}"
             date_list.append(formatted_date)
