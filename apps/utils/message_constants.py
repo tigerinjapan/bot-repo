@@ -14,6 +14,7 @@ MSG_INFO_SESSION_EXPIRED = "セッション期限が切れました。再ログ�
 MSG_INFO_AUTH_SUCCESS = "認証が完了しました。"
 MSG_INFO_TOKEN_ISSUED_SUCCESS = "トークンの発行が完了しました。"
 MSG_INFO_TOKEN_UPDATE_SUCCESS = "トークンの更新が完了しました。"
+MSG_INFO_DATA_NOT_EXIST = "更新データが存在しません。"
 
 # エラーメッセージ
 MSG_ERR_USER_NOT_EXIST = "[ログイン] IDを再確認してください。"

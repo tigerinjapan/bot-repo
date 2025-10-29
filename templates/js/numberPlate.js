@@ -360,12 +360,8 @@ function renderInputButtons(numberStr) {
       }
     }
 
-    // 左に空箱がある単一桁 0/1/2 の場合は上付きを提示
     if (!hasSqrt && !hasSup && !hasHistory) {
-      if (leftIsEmptySlot && (/^[012]$/.test(raw))) {
-        choices = choices.concat(["⁰", "¹", "²"]);
-      }
-      // 未装飾かつ左空箱では √ も提示できる（対象なら）
+      // 未装飾かつ左空箱では √ も提示できる
       if (isSqrtEligible(raw)) {
         choices.push("√");
       }
@@ -428,23 +424,11 @@ function renderInputButtons(numberStr) {
         }
 
         // 例: "2¹" のような base+上付き（merge 2桁向け）
-        if (/^[0-9][⁰¹²]$/.test(choice)) {
+        if (/^[1-9][⁰¹²]$/.test(choice)) {
           token._history = token._history || [];
           token._history.push({ type: "modify", prevVal: token.val });
           token.val = choice;
           refresh();
-          return;
-        }
-
-        // 単一の上付き（⁰/¹/²）選択（左に空箱があるときの処理）
-        if (["⁰", "¹", "²"].includes(choice)) {
-          const base = stripDecor(token.val);
-          if (/^[012]$/.test(base)) {
-            token._history = token._history || [];
-            token._history.push({ type: "modify", prevVal: token.val });
-            token.val = base + choice;
-            refresh();
-          }
           return;
         }
       });

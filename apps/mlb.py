@@ -4,8 +4,7 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.function_beautiful_soup as func_bs
-
-from apps.utils.message_constants import MSG_ERR_DATA_NOT_EXIST
+import apps.utils.message_constants as msg_const
 
 # タイトル
 app_title = const.APP_MLB
@@ -155,7 +154,7 @@ def get_mlb_stat_of_api(team_id: int):
                 func.print_info_msg(const.APP_MLB, info_msg)
 
     if not game_data:
-        func.print_info_msg(const.APP_MLB, MSG_ERR_DATA_NOT_EXIST)
+        func.print_info_msg(const.APP_MLB, msg_const.MSG_INFO_DATA_NOT_EXIST)
 
     return game_data, game_date, game_score, home_away_div
 

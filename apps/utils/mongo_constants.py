@@ -1,11 +1,12 @@
 import apps.utils.constants as const
 
-# コレクション名 #
+# コレクション名
 COLL_USER_INFO = "userInfo"
 COLL_AUTH = "auth"
 COLL_RANK_INFO = "rankInfo"
 COLL_RANKING = "ranking"
 COLL_BOARD = "board"
+COLL_DASHBOARD = "dashboard"
 COLL_SEQUENCE = "sequence"
 
 # 項目ID: 共通
@@ -15,10 +16,6 @@ ITEM_USER_PW = "userPw"
 
 ITEM_SEQ = "seq"
 ITEM_UPDATE_DATE = "updateDate"
-
-# 項目ID: auth
-ITEM_USER_DIV = "userDiv"
-ITEM_DUE_DATE = "dueDate"
 
 # 項目ID: user info
 ITEM_USER_DIV = "userDiv"
@@ -34,13 +31,8 @@ ITEM_MENU = "menu"
 ITEM_MODIFIED_DATE = "modifiedDate"
 ITEM_LAST_LOGIN_DATE = "lastLoginDate"
 
-# 項目ID: board
-ITEM_APP = "app"
-ITEM_CATEGORY = "category"
-ITEM_TYPE = "type"
-ITEM_CONTENTS = "contents"
-ITEM_REMARK = "remark"
-ITEM_STATUS = "status"
+# 項目ID: auth
+ITEM_DUE_DATE = "dueDate"
 
 # 項目ID: rank info
 ITEM_NUMBER = "number"
@@ -49,6 +41,23 @@ ITEM_RANK_TIME = "rankTime"
 # 項目ID: ranking
 ITEM_RANK = "rank"
 ITEM_SCORE = "score"
+
+# 項目ID: board
+ITEM_APP = "app"
+ITEM_CATEGORY = "category"
+ITEM_TYPE = "type"
+ITEM_CONTENTS = "contents"
+ITEM_REMARK = "remark"
+ITEM_STATUS = "status"
+
+# 項目ID: dashboard
+ITEM_TARGET_DATE = "targetDate"
+ITEM_USERS = "users"
+ITEM_DEVICE = "device"
+ITEM_OS = "os"
+ITEM_BROWSER = "browser"
+ITEM_NAME = "name"
+ITEM_VALUE = "value"
 
 # 演算子
 OPERATOR_EQUAL = "$eq"
@@ -64,13 +73,16 @@ OPERATOR_OR = "$or"
 OPERATOR_NOT = "$not"
 OPERATOR_EXISTS = "$exists"
 OPERATOR_REGEX = "$regex"
+OPERATOR_SWITCH = "$switch"
+OPERATOR_MAP = "$map"
 
 OPERATOR_SET = "$set"
 OPERATOR_INCREMENT = "$inc"
+OPERATOR_ADD = "$add"
 
 
 # フィールド変換
-def convert_field(type_div: str, id: str):
+def convert_field(id: str, type_div: str = const.TYPE_STR):
     div = "ao" if type_div == const.TYPE_LIST else type_div[0]
     # func[capitalize]:Converts the first character of a string to an uppercase letter
     id_new = id.capitalize()[0] + id[1:]
@@ -80,44 +92,55 @@ def convert_field(type_div: str, id: str):
 
 # フィールド: 共通
 FI_ID = "_id"
-FI_USER_ID = convert_field(const.TYPE_STR, ITEM_USER_ID)
-FI_USER_NAME = convert_field(const.TYPE_STR, ITEM_USER_NAME)
-FI_USER_PW = convert_field(const.TYPE_STR, ITEM_USER_PW)
+FI_USER_ID = convert_field(ITEM_USER_ID)
+FI_USER_NAME = convert_field(ITEM_USER_NAME)
+FI_USER_PW = convert_field(ITEM_USER_PW)
 
-FI_DIV = convert_field(const.TYPE_STR, const.STR_DIV)
-FI_SEQ = convert_field(const.TYPE_NUM, ITEM_SEQ)
-FI_UPDATE_DATE = convert_field(const.TYPE_DATE, ITEM_UPDATE_DATE)
+FI_DIV = convert_field(const.STR_DIV)
+FI_SEQ = convert_field(ITEM_SEQ, const.TYPE_NUM)
+FI_UPDATE_DATE = convert_field(ITEM_UPDATE_DATE, const.TYPE_DATE)
 
 # フィールド: user info
-FI_USER_DIV = convert_field(const.TYPE_STR, ITEM_USER_DIV)
-FI_YEAR = convert_field(const.TYPE_NUM, ITEM_YEAR)
-FI_SEX = convert_field(const.TYPE_NUM, ITEM_SEX)
-FI_ZIP_CD = convert_field(const.TYPE_STR, ITEM_ZIP_CD)
-FI_PREF = convert_field(const.TYPE_STR, ITEM_PREF)
-FI_TOWN = convert_field(const.TYPE_STR, ITEM_TOWN)
-FI_LINE = convert_field(const.TYPE_STR, ITEM_LINE)
-FI_STATION = convert_field(const.TYPE_STR, ITEM_STATION)
-FI_TEL = convert_field(const.TYPE_STR, ITEM_TEL)
-FI_MENU = convert_field(const.TYPE_STR, ITEM_MENU)
-FI_MODIFIED_DATE = convert_field(const.TYPE_DATE, ITEM_MODIFIED_DATE)
-FI_LAST_LOGIN_DATE = convert_field(const.TYPE_DATE, ITEM_LAST_LOGIN_DATE)
+FI_USER_DIV = convert_field(ITEM_USER_DIV)
+FI_YEAR = convert_field(ITEM_YEAR, const.TYPE_NUM)
+FI_SEX = convert_field(ITEM_SEX, const.TYPE_NUM)
+FI_ZIP_CD = convert_field(ITEM_ZIP_CD)
+FI_PREF = convert_field(ITEM_PREF)
+FI_TOWN = convert_field(ITEM_TOWN)
+FI_LINE = convert_field(ITEM_LINE)
+FI_STATION = convert_field(ITEM_STATION)
+FI_TEL = convert_field(ITEM_TEL)
+FI_MENU = convert_field(ITEM_MENU)
+FI_MODIFIED_DATE = convert_field(ITEM_MODIFIED_DATE, const.TYPE_DATE)
+FI_LAST_LOGIN_DATE = convert_field(ITEM_LAST_LOGIN_DATE, const.TYPE_DATE)
 
 # フィールド: auth
-FI_TOKEN = convert_field(const.TYPE_STR, const.STR_TOKEN)
-FI_DUE_DATE = convert_field(const.TYPE_STR, ITEM_DUE_DATE)
-
-# フィールド: board
-FI_APP = convert_field(const.TYPE_NUM, ITEM_APP)
-FI_CATEGORY = convert_field(const.TYPE_NUM, ITEM_CATEGORY)
-FI_TYPE = convert_field(const.TYPE_NUM, ITEM_TYPE)
-FI_CONTENTS = convert_field(const.TYPE_STR, ITEM_CONTENTS)
-FI_REMARK = convert_field(const.TYPE_STR, ITEM_REMARK)
-FI_STATUS = convert_field(const.TYPE_NUM, ITEM_STATUS)
+FI_TOKEN = convert_field(const.STR_TOKEN)
+FI_DUE_DATE = convert_field(ITEM_DUE_DATE)
 
 # フィールド: rank info
-FI_NUMBER = convert_field(const.TYPE_NUM, ITEM_NUMBER)
-FI_RANK_TIME = convert_field(const.TYPE_STR, ITEM_RANK_TIME)
+FI_NUMBER = convert_field(ITEM_NUMBER, const.TYPE_NUM)
+FI_RANK_TIME = convert_field(ITEM_RANK_TIME)
 
 # フィールド: ranking
-FI_RANK = convert_field(const.TYPE_NUM, ITEM_RANK)
-FI_SCORE = convert_field(const.TYPE_NUM, ITEM_SCORE)
+FI_RANK = convert_field(ITEM_RANK, const.TYPE_NUM)
+FI_SCORE = convert_field(ITEM_SCORE, const.TYPE_NUM)
+
+# フィールド: board
+FI_APP = convert_field(ITEM_APP, const.TYPE_NUM)
+FI_CATEGORY = convert_field(ITEM_CATEGORY, const.TYPE_NUM)
+FI_TYPE = convert_field(ITEM_TYPE, const.TYPE_NUM)
+FI_CONTENTS = convert_field(ITEM_CONTENTS)
+FI_REMARK = convert_field(ITEM_REMARK)
+FI_STATUS = convert_field(ITEM_STATUS, const.TYPE_NUM)
+
+# フィールド: dashboard
+FI_TARGET_DATE = convert_field(ITEM_TARGET_DATE)
+FI_USERS = convert_field(ITEM_USERS, const.TYPE_NUM)
+FI_CATEGORY_LIST = convert_field(ITEM_CATEGORY, const.TYPE_LIST)
+FI_APP_LIST = convert_field(ITEM_APP, const.TYPE_LIST)
+FI_DEVICE_LIST = convert_field(ITEM_DEVICE, const.TYPE_LIST)
+FI_OS_LIST = convert_field(ITEM_OS, const.TYPE_LIST)
+FI_BROWSER_LIST = convert_field(ITEM_BROWSER, const.TYPE_LIST)
+FI_NAME = convert_field(ITEM_NAME)
+FI_VALUE = convert_field(ITEM_VALUE, const.TYPE_NUM)

@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup as bs
 
 import apps.utils.constants as const
 import apps.utils.function as func
-from apps.utils.message_constants import MSG_ERR_NO_SUCH_ELEMENT
+import apps.utils.message_constants as msg_const
 
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
@@ -92,7 +92,7 @@ def find_elem_by_attr(
                 elem = find_func(id=attr_val)
 
     except Exception as e:
-        div = f"{attr_div} : {attr_val}, {MSG_ERR_NO_SUCH_ELEMENT}"
+        div = f"{attr_div} : {attr_val}, {msg_const.MSG_ERR_NO_SUCH_ELEMENT}"
         curr_func_nm = sys._getframe().f_code.co_name
         func.print_error_msg(SCRIPT_NAME, curr_func_nm, div, e)
 

@@ -241,7 +241,7 @@ def update_news(app_name: str = const.SYM_BLANK):
                 df = func.get_df(item_list, col_list)
 
             if df.empty:
-                func.print_info_msg(app_name, msg_const.MSG_ERR_DATA_NOT_EXIST)
+                func.print_info_msg(app_name, msg_const.MSG_INFO_DATA_NOT_EXIST)
                 skip_flg = const.FLG_ON
 
         except Exception as e:

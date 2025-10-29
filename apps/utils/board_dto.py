@@ -7,8 +7,6 @@ import apps.utils.constants as const
 import apps.utils.mongo_constants as mongo_const
 from apps.utils.function import convert_date_to_str, get_now
 
-# リスト: board
-
 
 @dataclass
 class board:
