@@ -118,8 +118,8 @@ def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
                 log_dao.insert_log_data(backup_log_list)
 
                 # ログファイル：本日分以外削除
-                data_list = const.SYM_NEW_LINE.join(data_list)
-                func.write_file(log_path, data_list)
+                log_data = const.SYM_NEW_LINE.join(data_list) + const.SYM_NEW_LINE
+                func.write_file(log_path, log_data)
 
         else:
             if backup_flg:

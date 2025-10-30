@@ -56,7 +56,7 @@ ISSUE_TYPE_REFRESH_TOKEN = GRANT_TYPE_REFRESH_TOKEN
 # Kakaoメッセージタイプ
 OBJECT_TYPE_FEED = "feed"
 OBJECT_TYPE_TEXT = "text"
-OBJECT_TYPE_LIST = "list"  # TODO: [add] 実装要
+OBJECT_TYPE_LIST = "list"
 
 # 結果コード
 RESULT_CODE_OK = 0
@@ -178,7 +178,7 @@ def get_receiver_uuids(access_token: str = const.SYM_BLANK) -> list[str]:
 # メッセージ送信
 def send_kakao_msg(
     access_token: str,
-    object_type: str = OBJECT_TYPE_FEED,
+    object_type: str = OBJECT_TYPE_TEXT,
     title: str = const.SYM_BLANK,
     message: str = const.SYM_BLANK,
     link: str = const.SYM_BLANK,
@@ -186,22 +186,19 @@ def send_kakao_msg(
     receiver_uuids=[],
 ):
     url = URL_KAKAO_API_SEND_ME
+    template_object = get_template_object(object_type, title, message, link, link_mo)
+    data = {"template_object": template_object}
+    if receiver_uuids:
+        url = URL_KAKAO_API_SEND_FRIENDS
+        data.update({"receiver_uuids": receiver_uuids})
+
+    result = post_kakao_api(url, access_token, data)
+    return result
+
+
+# API通信
+def post_kakao_api(url: str, access_token: str, data={}):
     headers = {"Authorization": access_token}
-
-    data = {}
-    if object_type == const.STR_LOGIN:
-        url = URL_KAKAO_AUTH
-    elif object_type == const.STR_LOGOUT:
-        url = URL_KAKAO_API_LOGOUT
-    else:
-        template_object = get_template_object(
-            object_type, title, message, link, link_mo
-        )
-        data = {"template_object": template_object}
-        if receiver_uuids:
-            url = URL_KAKAO_API_SEND_FRIENDS
-            data.update({"receiver_uuids": receiver_uuids})
-
     result = func_api.get_response_result(
         url,
         request_type=const.REQUEST_TYPE_POST,
@@ -221,22 +218,133 @@ def get_template_object(
     link_mo: str = const.SYM_BLANK,
     img_url: str = URL_TODAY_KOREA_IMG,
 ):
-    if object_type == OBJECT_TYPE_FEED:
-        template_object = {
-            "object_type": OBJECT_TYPE_FEED,
-            "content": {
-                "title": title,
-                "description": message,
-                "image_url": img_url,
-                "image_width": const.KAKAO_IMG_SIZE_W,
-                "image_height": const.KAKAO_IMG_SIZE_H,
-                "link": {"web_url": link, "mobile_web_url": link_mo},
+    if not link and not link_mo:
+        link = const.URL_NAVER
+        link_mo = const.URL_NAVER_MO
+
+    content_list = []
+    param_list = [
+        [
+            "자전거 라이더를 위한 공간\n자전거 라이더를 위한 공간",
+            "매거진뉴스1매거진뉴스2매거진뉴스3매거진뉴스4매거진뉴스5매거진",
+            img_url,
+            link,
+            link_mo,
+            "main",
+            "main",
+        ],
+        [
+            "비쥬얼이 끝내주는 오레오\n비쥬얼이 끝내주는 오레오",
+            "매거진뉴스1매거진뉴스2매거진뉴스3매거진뉴스4매거진뉴스5매거진",
+            img_url,
+            link,
+            link_mo,
+            "main",
+            "main",
+        ],
+        [
+            "이국적 감성 가득한 분위기\n이국적 감성 가득한 분위기",
+            "매거진뉴스1매거진뉴스2매거진뉴스3매거진뉴스4매거진뉴스5매거진",
+            img_url,
+            link,
+            link_mo,
+            "main",
+            "main",
+        ],
+    ]
+
+    for param in param_list:
+        content = {
+            "title": param[0],
+            "description": param[1],
+            "image_url": param[2],
+            "image_width": 640,
+            "image_height": 640,
+            "link": {
+                "web_url": param[3],
+                "mobile_web_url": param[4],
+                "android_execution_params": param[5],
+                "ios_execution_params": param[6],
             },
         }
+        content_list.append(content)
 
-    elif object_type == OBJECT_TYPE_TEXT:
-        template_object = {
-            "object_type": object_type,
+    button_list = [
+        {
+            "title": "웹으로 이동",
+            "link": {
+                "web_url": link,
+                "mobile_web_url": link_mo,
+            },
+        },
+        {
+            "title": "앱으로 이동",
+            "link": {
+                "android_execution_params": "main",
+                "ios_execution_params": "main",
+            },
+        },
+    ]
+
+    if object_type == OBJECT_TYPE_FEED:
+        content = content_list[0]
+        if message:
+            content["title"] = title
+            content["description"] = message
+
+        item_list = [
+            {"item": "CakeTe", "item_op": "1,000,000원"},
+            {"item": "ケーキテスト", "item_op": "2,000,000원"},
+            {"item": "케이크테스트", "item_op": "3,000,000원"},
+            {"item": "케이크테스트", "item_op": "4,000,000원"},
+            {"item": "케이크테스트", "item_op": "5,000,000원"},
+        ]
+        contents = {
+            "item_content": {
+                "profile_image_url": img_url,
+                "profile_text": "profile_text",
+                "title_image_url": img_url,
+                "title_image_text": "title_image_text",
+                "title_image_category": "title_image_category",
+                "items": item_list,
+                "sum": "Total",
+                "sum_op": "15,000,000원",
+            },
+            "content": content,
+            "social": {
+                "like_count": 1,
+                "comment_count": 2,
+                "shared_count": 3,
+                "view_count": 4,
+                "subscriber_count": 5,
+            },
+            "buttons": button_list,
+        }
+
+    elif object_type == OBJECT_TYPE_LIST:
+        contents = {
+            "header_title": "WEEKLY NEWS",
+            "header_link": {
+                "web_url": link,
+                "mobile_web_url": link_mo,
+                "android_execution_params": "main",
+                "ios_execution_params": "main",
+            },
+            "contents": content_list,
+            "buttons": button_list,
+        }
+
+    else:
+        if not message:
+            object_type = OBJECT_TYPE_TEXT
+            title = "자세히 보기 x 자세히 보기"
+
+            current_time = func.convert_date_to_str(
+                func.get_now(), const.DATE_FORMAT_YYYYMMDD_HHMM
+            )
+            message = f"📢 메시지 보내기 테스트 📢\n\n테스트 중입니다.\n전송 시간: {current_time}"
+
+        contents = {
             "text": message,
             "link": {
                 "web_url": link,
@@ -245,23 +353,10 @@ def get_template_object(
             "button_title": title,
         }
 
-    else:
-        current_time = func.convert_date_to_str(
-            func.get_now(), const.DATE_FORMAT_YYYYMMDD_HHMM
-        )
-        template_object = {
-            "object_type": OBJECT_TYPE_TEXT,
-            "text": f"📢 메시지 보내기 테스트 📢\n\n테스트 중입니다.\n전송 시간: {current_time}",
-            "link": {
-                "web_url": const.URL_NAVER,
-                "mobile_web_url": const.URL_NAVER_MO,
-            },
-            "button_title": "자세히 보기",
-        }
-        func.print_debug_msg(object_type, template_object[const.INPUT_TYPE_TEXT])
-
-    template_object = func.get_dumps_json(template_object)
-    return template_object
+    template_object = {"object_type": object_type}
+    template_object.update(contents)
+    template_json = func.get_dumps_json(template_object)
+    return template_json
 
 
 # トークン取得
@@ -312,7 +407,7 @@ def get_logout_content(token: str) -> str:
     try:
         if token:
             # ログアウト
-            result = send_kakao_msg(token, const.STR_LOGOUT)
+            result = post_kakao_api(URL_KAKAO_API_LOGOUT, token)
             account_str = "카카오 계정 "
 
         # 結果表示
@@ -372,7 +467,7 @@ def get_auth_result_content(code: str) -> tuple[str, str]:
 def get_unlink_content(token: str) -> str:
     try:
         # 連携解除
-        result = send_kakao_msg(token, const.STR_UNLINK)
+        result = post_kakao_api(URL_KAKAO_API_UNLINK, token)
 
         # 結果表示
         body = f"""
@@ -399,8 +494,7 @@ def get_test_message_content(token: str = const.SYM_BLANK) -> str:
     if not token:
         token = get_access_token()
 
-    object_type = const.STR_TEST
-    result = send_kakao_msg(token, object_type)
+    result = send_kakao_msg(token)
     result_code = RESULT_CODE_OK
     result_data = const.SYM_BLANK
     if result:
@@ -427,6 +521,7 @@ def get_test_message_content(token: str = const.SYM_BLANK) -> str:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    get_access_token()
-    # get_test_message_content()
-    # get_receiver_uuids()
+    # token = get_access_token()
+    # object_type = OBJECT_TYPE_FEED
+    # send_kakao_msg(token, object_type)
+    get_test_message_content()
