@@ -5,7 +5,7 @@ const userName = "hong";
 const strDate = "2025-10-10 09:00";
 
 // Select the database to use.
-use(database)
+use(database);
 
 // // get indexes
 // db.ranking.getIndexes();

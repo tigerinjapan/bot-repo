@@ -3,7 +3,7 @@ const database = "mongoDB";
 const coll_auth = "auth";
 
 // Select the database to use.
-use(database)
+use(database);
 
 // delete collection
 db.getCollection(coll_auth).drop();

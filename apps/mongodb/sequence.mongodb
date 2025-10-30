@@ -4,7 +4,7 @@ const userName = "hong";
 const currentDate = new Date();
 
 // Select the database to use.
-use(database)
+use(database);
 
 // // get indexes
 // db.sequence.getIndexes();
@@ -28,7 +28,7 @@ use(database)
 
 // find documents
 cond = {};
-selectData = { _id: 0 }
-sortData = { sDiv: 1 }
+selectData = { _id: 0 };
+sortData = { sDiv: 1 };
 
 db.sequence.find(cond, selectData).sort(sortData).pretty();

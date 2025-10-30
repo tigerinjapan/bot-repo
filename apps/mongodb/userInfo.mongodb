@@ -3,7 +3,7 @@ const database = "mongoDB";
 const currentDate = new Date();
 
 // Select the database to use.
-use(database)
+use(database);
 
 // 全てのドキュメントを削除
 db.userInfo.deleteMany({});
@@ -98,5 +98,5 @@ bulkData.push(userData_2);
 bulkData.push(userData_3);
 bulkData.push(userData_4);
 db.userInfo.insertMany(bulkData);
-const cnt = db.userInfo.count()
+const cnt = db.userInfo.count();
 console.log(`${cnt}件のデータが登録されました。`);

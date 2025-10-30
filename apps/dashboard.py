@@ -6,6 +6,8 @@ from fastapi import Request
 from user_agents import parse
 
 import apps.utils.constants as const
+import apps.utils.log_dao as log_dao
+import apps.utils.log_dto as log_dto
 import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
@@ -36,7 +38,7 @@ DEFAULT_VALUE = "Unknown"
 def update_data():
     func.print_start(SCRIPT_NAME)
 
-    data_list = get_log_data_list()
+    data_list = get_data_list(const.APP_DASHBOARD)
     if data_list:
         df = func.get_df(data_list, COL_LIST_DASHBOARD)
         dummy_data = func.get_json_data(const.APP_DASHBOARD, const.STR_OUTPUT)
@@ -67,12 +69,12 @@ def update_data():
 
 
 # データリスト取得
-def get_log_data_list():
+def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
     data_list = []
 
     try:
         log_path = func.get_file_path(
-            const.APP_DASHBOARD,
+            log_div,
             file_type=const.FILE_TYPE_LOG,
             file_div=const.STR_OUTPUT,
         )
@@ -80,15 +82,58 @@ def get_log_data_list():
         log_data_text = func.read_file(log_path)
         if log_data_text:
             log_data_list = log_data_text.split(const.SYM_NEW_LINE)
+
+            backup_log_list = []
+            if not backup_flg:
+                target_date = get_target_date(const.STR_YEAR)[0]
+                log_backup_list = log_dao.get_log_data_list(log_div, target_date)
+                log_data_list.extend(log_backup_list)
+
             for log_data in log_data_list:
-                data = log_data.split(const.SYM_SPACE)[: len(COL_LIST_DASHBOARD)]
-                if data and data[0]:
+                data = log_data.split(const.SYM_SPACE)
+                if log_div == const.APP_DASHBOARD:
+                    data = data[: len(COL_LIST_DASHBOARD)]
+
+                if not data[0]:
+                    continue
+
+                if backup_flg:
+                    cutoff_date = func.get_calc_date(-1)
+                    log_datetime = func.convert_str_to_date(
+                        data[0], const.DATE_FORMAT_YYYYMMDD_DASH
+                    )
+                    # 1日以前のログか判定
+                    if log_datetime <= cutoff_date:
+                        log_backup = [log_div, log_data, log_datetime]
+                        json_data = log_dto.get_insert_data_for_log(log_backup)
+                        backup_log_list.append(json_data)
+                    else:
+                        data_list.append(log_data)
+
+                else:
                     data_list.append(data)
+
+            if backup_flg:
+                # DB登録
+                log_dao.insert_log_data(backup_log_list)
+
+                # ログファイル：本日分以外削除
+                data_list = const.SYM_NEW_LINE.join(data_list)
+                func.write_file(log_path, data_list)
+
+        else:
+            if backup_flg:
+                func.print_info_msg(SCRIPT_NAME, msg_const.MSG_ERR_DATA_NOT_EXIST)
 
     except Exception as e:
         func.print_info_msg(SCRIPT_NAME, e)
 
     return data_list
+
+
+# ログバックアップ
+def backup_log(log_div: str = const.APP_DASHBOARD):
+    get_data_list(log_div, backup_flg=const.FLG_ON)
 
 
 # ダッシュボードデータ取得
@@ -274,3 +319,4 @@ def get_ip_info(ip_address: str):
 
 if __name__ == const.MAIN_FUNCTION:
     update_data()
+    # backup_log()

@@ -6,7 +6,7 @@ COLL_AUTH = "auth"
 COLL_RANK_INFO = "rankInfo"
 COLL_RANKING = "ranking"
 COLL_BOARD = "board"
-COLL_DASHBOARD = "dashboard"
+COLL_LOG = "log"
 COLL_SEQUENCE = "sequence"
 
 # 項目ID: 共通
@@ -50,14 +50,9 @@ ITEM_CONTENTS = "contents"
 ITEM_REMARK = "remark"
 ITEM_STATUS = "status"
 
-# 項目ID: dashboard
+# 項目ID: log
 ITEM_TARGET_DATE = "targetDate"
-ITEM_USERS = "users"
-ITEM_DEVICE = "device"
-ITEM_OS = "os"
-ITEM_BROWSER = "browser"
-ITEM_NAME = "name"
-ITEM_VALUE = "value"
+ITEM_MESSAGE = "message"
 
 # 演算子
 OPERATOR_EQUAL = "$eq"
@@ -134,13 +129,6 @@ FI_CONTENTS = convert_field(ITEM_CONTENTS)
 FI_REMARK = convert_field(ITEM_REMARK)
 FI_STATUS = convert_field(ITEM_STATUS, const.TYPE_NUM)
 
-# フィールド: dashboard
-FI_TARGET_DATE = convert_field(ITEM_TARGET_DATE)
-FI_USERS = convert_field(ITEM_USERS, const.TYPE_NUM)
-FI_CATEGORY_LIST = convert_field(ITEM_CATEGORY, const.TYPE_LIST)
-FI_APP_LIST = convert_field(ITEM_APP, const.TYPE_LIST)
-FI_DEVICE_LIST = convert_field(ITEM_DEVICE, const.TYPE_LIST)
-FI_OS_LIST = convert_field(ITEM_OS, const.TYPE_LIST)
-FI_BROWSER_LIST = convert_field(ITEM_BROWSER, const.TYPE_LIST)
-FI_NAME = convert_field(ITEM_NAME)
-FI_VALUE = convert_field(ITEM_VALUE, const.TYPE_NUM)
+# フィールド: log
+FI_TARGET_DATE = convert_field(ITEM_TARGET_DATE, const.TYPE_DATE)
+FI_MESSAGE = convert_field(ITEM_MESSAGE)

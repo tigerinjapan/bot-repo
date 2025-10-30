@@ -24,7 +24,7 @@ const user_name_2 = "yuri";
 const strDate = "2025-09-01";
 
 // Select the database to use.
-use(database)
+use(database);
 
 // // insert documents
 // boardData_001 = {

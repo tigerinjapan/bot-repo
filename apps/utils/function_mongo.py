@@ -96,7 +96,6 @@ def db_find(
     sort=const.NONE_CONSTANT,
     one_flg=const.FLG_OFF,
 ):
-
     coll = get_collection(client, coll_nm)
 
     coll_find = coll.find
@@ -138,11 +137,15 @@ def db_find_one(
 
 
 # データ登録
-def db_insert(client, coll_nm: str, insert_data):
+def db_insert(client, coll_nm: str, insert_data, many_flg: bool = const.FLG_OFF):
     coll = get_collection(client, coll_nm)
 
+    coll_insert = coll.insert_one
+    if many_flg:
+        coll_insert = coll.insert_many
+
     try:
-        coll.insert_one(document=insert_data)
+        coll_insert(insert_data)
     except Exception as e:
         curr_func_nm = sys._getframe().f_code.co_name
         func.print_error_msg(
@@ -150,13 +153,22 @@ def db_insert(client, coll_nm: str, insert_data):
         )
 
 
+# データ登録（複数件）
+def db_insert_many(client, coll_nm: str, insert_data):
+    db_insert(client, coll_nm, insert_data, many_flg=const.FLG_ON)
+
+
 # データ更新
-def db_update_one(client, coll_nm: str, cond, update_data):
+def db_update(client, coll_nm: str, cond, update_data, many_flg: bool = const.FLG_OFF):
     coll = get_collection(client, coll_nm)
-    update_data = {mongo_const.OPERATOR_SET: update_data}
+
+    coll_update = coll.update_many
+    if not many_flg:
+        coll_update = coll.update_one
+        update_data = {mongo_const.OPERATOR_SET: update_data}
 
     try:
-        coll.update_one(filter=cond, update=update_data)
+        coll_update(filter=cond, update=update_data)
     except Exception as e:
         curr_func_nm = sys._getframe().f_code.co_name
         func.print_error_msg(
@@ -164,17 +176,9 @@ def db_update_one(client, coll_nm: str, cond, update_data):
         )
 
 
-# データ更新
+# データ更新（複数件）
 def db_update_many(client, coll_nm: str, cond, update_data):
-    coll = get_collection(client, coll_nm)
-
-    try:
-        coll.update_many(filter=cond, update=update_data)
-    except Exception as e:
-        curr_func_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(
-            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_DB_PROC_FAILED, str(e)
-        )
+    db_update(client, coll_nm, cond, update_data, many_flg=const.FLG_ON)
 
 
 # データ検索＆更新

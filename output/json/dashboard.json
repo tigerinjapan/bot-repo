@@ -2,24 +2,24 @@
     "day": {
         "label": "day",
         "users": {
-            "total": "248",
+            "total": "249",
             "labels": [
-                "10/23",
                 "10/24",
                 "10/25",
                 "10/26",
                 "10/27",
                 "10/28",
-                "10/29"
+                "10/29",
+                "10/30"
             ],
             "data": [
-                12,
                 41,
                 47,
                 72,
                 35,
                 3,
-                38
+                38,
+                13
             ]
         },
         "category": {
@@ -31,21 +31,21 @@
                 "service"
             ],
             "data": [
-                152,
-                35,
-                32,
+                160,
+                36,
+                26,
                 19,
-                10
+                8
             ]
         },
         "app": [
             {
                 "name": "number",
-                "value": 57
+                "value": 60
             },
             {
                 "name": "url_design",
-                "value": 11
+                "value": 12
             },
             {
                 "name": "dashboard",
@@ -56,11 +56,11 @@
                 "value": 6
             },
             {
-                "name": "review",
+                "name": "itQuiz",
                 "value": 4
             },
             {
-                "name": "itQuiz",
+                "name": "review",
                 "value": 3
             },
             {
@@ -68,19 +68,15 @@
                 "value": 2
             },
             {
-                "name": "kakao_design",
-                "value": 2
-            },
-            {
-                "name": "travel",
-                "value": 2
-            },
-            {
-                "name": "review_ko",
-                "value": 2
+                "name": "itQuiz_design",
+                "value": 1
             },
             {
                 "name": "tv",
+                "value": 1
+            },
+            {
+                "name": "travel",
                 "value": 1
             },
             {
@@ -92,28 +88,28 @@
                 "value": 1
             },
             {
-                "name": "itQuiz_design",
+                "name": "kakao_design",
                 "value": 1
             }
         ],
         "device": [
             {
                 "name": "Mobile",
-                "value": 69
+                "value": 71
             },
             {
                 "name": "PC",
-                "value": 31
+                "value": 29
             }
         ],
         "os": [
             {
                 "name": "Android",
-                "value": 69
+                "value": 71
             },
             {
                 "name": "Windows",
-                "value": 29
+                "value": 27
             },
             {
                 "name": "Linux",
@@ -123,27 +119,27 @@
         "browser": [
             {
                 "name": "Chrome",
-                "value": 62
+                "value": 58
             },
             {
                 "name": "Edge",
-                "value": 24
+                "value": 27
             },
             {
                 "name": "LINE",
-                "value": 14
+                "value": 15
             }
         ]
     },
     "month": {
         "label": "month",
         "users": {
-            "total": "248",
+            "total": "261",
             "labels": [
                 "2025/10"
             ],
             "data": [
-                248
+                261
             ]
         },
         "category": {
@@ -155,9 +151,9 @@
                 "service"
             ],
             "data": [
-                152,
-                35,
-                32,
+                160,
+                38,
+                34,
                 19,
                 10
             ]
@@ -169,7 +165,7 @@
             },
             {
                 "name": "url_design",
-                "value": 11
+                "value": 12
             },
             {
                 "name": "dashboard",
@@ -177,7 +173,7 @@
             },
             {
                 "name": "news",
-                "value": 6
+                "value": 5
             },
             {
                 "name": "review",
@@ -185,11 +181,7 @@
             },
             {
                 "name": "itQuiz",
-                "value": 3
-            },
-            {
-                "name": "board",
-                "value": 2
+                "value": 4
             },
             {
                 "name": "kakao_design",
@@ -200,15 +192,19 @@
                 "value": 2
             },
             {
-                "name": "review_ko",
+                "name": "board",
                 "value": 2
             },
             {
-                "name": "tv",
+                "name": "review_ko",
                 "value": 1
             },
             {
                 "name": "today",
+                "value": 1
+            },
+            {
+                "name": "tv",
                 "value": 1
             },
             {
@@ -223,35 +219,35 @@
         "device": [
             {
                 "name": "Mobile",
-                "value": 69
+                "value": 68
             },
             {
                 "name": "PC",
-                "value": 31
+                "value": 32
             }
         ],
         "os": [
             {
                 "name": "Android",
-                "value": 69
+                "value": 68
             },
             {
                 "name": "Windows",
-                "value": 29
+                "value": 31
             },
             {
                 "name": "Linux",
-                "value": 2
+                "value": 1
             }
         ],
         "browser": [
             {
                 "name": "Chrome",
-                "value": 62
+                "value": 60
             },
             {
                 "name": "Edge",
-                "value": 24
+                "value": 26
             },
             {
                 "name": "LINE",
@@ -262,12 +258,12 @@
     "year": {
         "label": "year",
         "users": {
-            "total": "248",
+            "total": "261",
             "labels": [
                 "2025"
             ],
             "data": [
-                248
+                261
             ]
         },
         "category": {
@@ -279,9 +275,9 @@
                 "service"
             ],
             "data": [
-                152,
-                35,
-                32,
+                160,
+                38,
+                34,
                 19,
                 10
             ]
@@ -293,7 +289,7 @@
             },
             {
                 "name": "url_design",
-                "value": 11
+                "value": 12
             },
             {
                 "name": "dashboard",
@@ -301,7 +297,7 @@
             },
             {
                 "name": "news",
-                "value": 6
+                "value": 5
             },
             {
                 "name": "review",
@@ -309,11 +305,7 @@
             },
             {
                 "name": "itQuiz",
-                "value": 3
-            },
-            {
-                "name": "board",
-                "value": 2
+                "value": 4
             },
             {
                 "name": "kakao_design",
@@ -324,15 +316,19 @@
                 "value": 2
             },
             {
-                "name": "review_ko",
+                "name": "board",
                 "value": 2
             },
             {
-                "name": "tv",
+                "name": "review_ko",
                 "value": 1
             },
             {
                 "name": "today",
+                "value": 1
+            },
+            {
+                "name": "tv",
                 "value": 1
             },
             {
@@ -347,35 +343,35 @@
         "device": [
             {
                 "name": "Mobile",
-                "value": 69
+                "value": 68
             },
             {
                 "name": "PC",
-                "value": 31
+                "value": 32
             }
         ],
         "os": [
             {
                 "name": "Android",
-                "value": 69
+                "value": 68
             },
             {
                 "name": "Windows",
-                "value": 29
+                "value": 31
             },
             {
                 "name": "Linux",
-                "value": 2
+                "value": 1
             }
         ],
         "browser": [
             {
                 "name": "Chrome",
-                "value": 62
+                "value": 60
             },
             {
                 "name": "Edge",
-                "value": 24
+                "value": 26
             },
             {
                 "name": "LINE",

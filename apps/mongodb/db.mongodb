@@ -1,0 +1,53 @@
+// db
+let database = "mongoDB";
+// database = "db";
+
+// Select the database to use.
+use(database);
+
+// mongoDB 無料枠：512MB
+
+// ===== データベース全体のサイズ ===== //
+var stats = db.stats();
+var storageSize = stats.storageSize;
+var indexSize = stats.indexSize;
+
+// バイトをMBに変換し、小数点以下3桁で整形
+var storageSizeMB = (storageSize / (1024 * 1024)).toFixed(3);
+var indexSizeMB = (indexSize / (1024 * 1024)).toFixed(3);
+console.log("===== " + database + " Size =====");
+console.log("storageSize: " + storageSizeMB + "MB");
+console.log("indexSizeMB: " + indexSizeMB + "MB");
+
+// 値を文字列に変換し、数値として解析する
+var storageValue = parseFloat(storageSize.toString());
+var indexValue = parseFloat(indexSize.toString());
+var totalSize = storageValue + indexValue;
+var totalSizeMB = (totalSize / (1024 * 1024)).toFixed(3);
+console.log("totalSize: " + totalSizeMB + "MB");
+
+// ===== コレクションのサイズ ===== //
+console.log("===== Collection Size =====");
+
+// コレクションのサイズが大きい順に表示
+db.getCollectionNames().map(name => {
+    // 各コレクションの統計情報を取得
+    const stats = db.getCollection(name).stats();
+
+    // MBに変換（toFixed(3)で小数点以下3桁に）
+    // NumberLongなどBSON型に対応するため、toString().parseFloat()で数値に変換
+    const totalSize = stats.totalSize;
+    const totalSizeMB = (totalSize / (1024 * 1024)).toFixed(3);
+
+    return {
+        name: name,
+        sizeMB: totalSizeMB
+    };
+})
+    .sort((a, b) => b.sizeMB - a.sizeMB)
+    .forEach(coll => {
+        console.log(coll.name + ": " + coll.sizeMB + "MB");
+    });
+
+// delete database
+// db.dropDatabase();

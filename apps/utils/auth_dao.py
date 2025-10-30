@@ -36,6 +36,6 @@ def update_auth_token(div: str, token: str):
         mongo_const.FI_TOKEN: token,
         mongo_const.FI_UPDATE_DATE: func.get_now(),
     }
-    func_mongo.db_update_one(client, mongo_const.COLL_AUTH, cond, update_data)
+    func_mongo.db_update(client, mongo_const.COLL_AUTH, cond, update_data)
 
     func_mongo.db_close(client)

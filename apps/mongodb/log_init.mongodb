@@ -1,6 +1,6 @@
 // db, collection
 const database = "mongoDB";
-const coll = "sequence";
+const coll = "log";
 
 // Select the database to use.
 use(database);
@@ -15,19 +15,22 @@ db.createCollection(coll,
             $jsonSchema: {
                 required: [
                     "sDiv",
-                    "nSeq",
+                    "sMessage",
+                    "dTargetDate",
                     "dUpdateDate"
                 ],
                 properties: {
                     "sDiv": {
                         bsonType: "string",
-                        description: "must be a string and is required"
+                        description: "must be a string"
                     },
-                    "nSeq": {
-                        bsonType: "int",
-                        minimum: 1,
-                        maximum: 9999,
-                        description: "must be a int and is required"
+                    "sMessage": {
+                        bsonType: "string",
+                        description: "must be a string"
+                    },
+                    "dTargetDate": {
+                        bsonType: "date",
+                        description: "must be a date and is required"
                     },
                     "dUpdateDate": {
                         bsonType: "date",
@@ -40,10 +43,10 @@ db.createCollection(coll,
 
 // create index
 db.getCollection(coll).createIndex({
-    "sDiv": 1
+    "sMessage": 1
 },
     {
-        "name": "indexDiv",
+        "name": "indexMessage",
         "unique": true
     });
 

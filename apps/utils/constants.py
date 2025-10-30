@@ -67,6 +67,7 @@ LANG_CD_KO = "ko"
 ##### 日付フォーマット #####
 DATE_FORMAT_OUTPUT_FILE = "%Y%m%d%H%M%S"
 DATE_FORMAT_YYYYMMDD = "%Y%m%d"
+DATE_FORMAT_YYYYMMDD_DASH = "%Y-%m-%d"
 DATE_FORMAT_YYYYMMDD_SLASH = "%Y/%m/%d(%a)"
 DATE_FORMAT_YYYYMMDD_HHMM = "%Y/%m/%d(%a) %H:%M"
 DATE_FORMAT_YYYYMMDD_KO = "%Y년%#m월%#d일"

@@ -7,10 +7,7 @@ const database = "mongoDB";
 const coll_userInfo = "userInfo";
 
 // Select the database to use.
-use(database)
-
-// delete database
-// db.dropDatabase()
+use(database);
 
 // delete collection
 db.getCollection(coll_userInfo).drop();

@@ -71,6 +71,8 @@ def weekly_job():
 # 日次ジョブ
 def daily_job():
     line.main()
+    dashboard.backup_log()
+    dashboard.backup_log(const.STR_ERROR)
 
 
 # 日次ジョブ

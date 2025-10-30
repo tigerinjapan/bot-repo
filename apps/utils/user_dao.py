@@ -64,7 +64,7 @@ def insert_user_info(client, insert_data):
 def update_user_info(client, update_data):
     user_id = update_data[mongo_const.FI_USER_ID]
     cond = {mongo_const.FI_USER_ID: user_id}
-    func_mongo.db_update_one(client, mongo_const.COLL_USER_INFO, cond, update_data)
+    func_mongo.db_update(client, mongo_const.COLL_USER_INFO, cond, update_data)
 
 
 # ユーザー情報登録（フォーム）

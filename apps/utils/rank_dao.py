@@ -110,7 +110,7 @@ def update_rank_info_of_api(json_data):
     if count == 0:
         func_mongo.db_insert(client, coll_rank, update_data)
     else:
-        func_mongo.db_update_one(client, coll_rank, cond, update_data)
+        func_mongo.db_update(client, coll_rank, cond, update_data)
     func_mongo.db_close(client)
 
 
