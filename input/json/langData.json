@@ -2,86 +2,104 @@
       "items": {
             "tokyo": [
                   {
+                        "en": "Hello.",
                         "local": "こんにちは。",
-                        "en": "Hello."
+                        "mp3": "hello_ja.mp3"
                   },
                   {
+                        "en": "Thank you.",
                         "local": "ありがとうございます。",
-                        "en": "Thank you."
+                        "mp3": "thank_ja.mp3"
                   },
                   {
-                        "local": "おいしい。",
-                        "en": "Delicious."
+                        "en": "Delicious.",
+                        "local": "おいしいです。",
+                        "mp3": "delicious_ja.mp3"
                   }
             ],
             "seoul": [
                   {
+                        "en": "Hello.",
                         "local": "안녕하세요.",
-                        "en": "Hello."
+                        "mp3": "hello_ko.mp3"
                   },
                   {
-                        "local": "감사합니다.",
-                        "en": "Thank you."
+                        "en": "Thank you.",
+                        "local": "고마워요.",
+                        "mp3": "thank_ko.mp3"
                   },
                   {
+                        "en": "Delicious.",
                         "local": "맛있어요.",
-                        "en": "Delicious."
+                        "mp3": "delicious_ko.mp3"
                   }
             ],
             "taipei": [
                   {
+                        "en": "Hello.",
                         "local": "Nǐ hǎo.",
-                        "en": "Hello."
+                        "mp3": "hello_zh.mp3"
                   },
                   {
-                        "local": "Xièxiè.",
-                        "en": "Thank you."
+                        "en": "Thank you.",
+                        "local": "Xiè xiè.",
+                        "mp3": "thank_zh.mp3"
                   },
                   {
+                        "en": "Delicious.",
                         "local": "Hǎo chī.",
-                        "en": "Delicious."
+                        "mp3": "delicious_zh.mp3"
                   }
             ],
             "hanoi": [
                   {
+                        "en": "Hello.",
                         "local": "Xin Chào.",
-                        "en": "Hello."
+                        "mp3": "hello_vi.mp3"
                   },
                   {
+                        "en": "Thank you.",
                         "local": "Cảm ơn.",
-                        "en": "Thank you."
+                        "mp3": "thank_vi.mp3"
                   },
                   {
+                        "en": "Delicious.",
                         "local": "Ngon quá.",
-                        "en": "Delicious."
+                        "mp3": "delicious_vi.mp3"
                   }
             ],
             "bangkok": [
                   {
+                        "en": "Hello.",
                         "local": "Kopkun Khap",
-                        "en": "Hello."
+                        "mp3": "hello_th.mp3"
                   },
                   {
                         "local": "Kopkun Mak",
-                        "en": "Thank you."
+                        "en": "Thank you.",
+                        "mp3": "thank_th.mp3"
                   },
                   {
                         "local": "Aroi",
-                        "en": "Delicious."
+                        "en": "Delicious.",
+                        "mp3": "delicious_th.mp3"
                   }
             ],
             "manila": [
                   {
+                        "en": "Hello.",
                         "local": "Kumusta",
-                        "en": "Hello."
+                        "mp3": "hello_tl.mp3"
                   },
                   {
+                        "en": "Thank you.",
                         "local": "Salamat",
-                        "en": "Thank you."
+                        "mp3": "thank_tl.mp3"
                   },
                   {
+                        "en": "Delicious.",
                         "local": "Masarap",
-                        "en": "Delicious."
+                        "mp3": "delicious_tl.mp3"
                   }
             ]
       }

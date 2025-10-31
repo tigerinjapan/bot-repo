@@ -183,8 +183,11 @@ def get_generate_text_image(
                     xy=xy_size, text=msg, fill=text_color, font=font, align="left"
                 )
 
-                img = image_open.resize(img_size)
-                img.save(file_path, optimize=const.FLG_ON)
+            else:
+                img_size = (const.KAKAO_IMG_SIZE_W, const.KAKAO_IMG_SIZE_H)
+
+            img = image_open.resize(img_size)
+            img.save(file_path, optimize=const.FLG_ON)
             image_open.close()
             break
 
@@ -525,9 +528,8 @@ def test_gemini(div: str = const.STR_TEST):
 
 
 # [テスト] 生成イメージ取得
-def test_gemini_img(div: str):
-    contents = get_sample_contents(div)
-    get_gemini_image(div, contents)
+def test_gemini_img():
+    get_gemini_image()
 
 
 # [テスト] 今日のニュースイメージ取得
@@ -557,7 +559,7 @@ def test_generate_video():
 
 if __name__ == const.MAIN_FUNCTION:
     test_gemini()
-    # test_gemini_img(const.APP_MLB)
+    # test_gemini_img()
     # test_today_img()
     # test_generate_image()
     # test_generate_video()

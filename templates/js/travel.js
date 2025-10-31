@@ -97,7 +97,9 @@ function init() {
           (s) => `
           <tr>
               <th>${s.en}</th>
-              <td>${s.local}</td>
+              <td>${s.local}
+                <audio src="/templates/${s.mp3}" controls controlslist="nodownload"></audio>
+              </td>
           </tr>
       `
         )

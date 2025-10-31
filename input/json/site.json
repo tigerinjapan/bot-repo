@@ -99,6 +99,13 @@
             "url": "https://aws.amazon.com/"
         },
         {
+            "auth": "3",
+            "category": "it",
+            "title": "音読さん",
+            "description": "音声読み上げ",
+            "url": "https://ondoku3.com/ja/"
+        },
+        {
             "auth": "2",
             "category": "it",
             "title": "aguse",
