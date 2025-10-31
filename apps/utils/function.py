@@ -23,10 +23,10 @@ import apps.utils.message_constants as msg_const
 
 
 # 現在時刻の取得
-def get_now(div: int = const.DATE_NOW):
+def get_now(div: int = const.DATE_NOW, date_format: str = const.DATE_FORMAT_YYYYMMDD):
     now = datetime.now()
     if div == const.DATE_TODAY:
-        now = convert_date_to_str(now, const.DATE_FORMAT_YYYYMMDD)
+        now = convert_date_to_str(now, date_format)
     elif div == const.DATE_YEAR:
         now = now.year
     elif div == const.DATE_MONTH:

@@ -3,6 +3,7 @@
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
+import apps.utils.message_constants as msg_const
 
 # タイトル
 app_title = func.convert_upper_lower(const.APP_LCC) + const.STR_NEWS_JA
@@ -21,7 +22,7 @@ def get_item_list():
 
 
 # LCC情報取得
-def get_lcc_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
+def get_lcc_info_list(url_flg: bool = const.FLG_OFF) -> list[str]:
     lcc_info_list = []
     url = f"{const.URL_LCC}/news/"
     lcc_list = func_bs.get_elem_from_url(url, attr_val="bgtitle", list_flg=const.FLG_ON)
@@ -52,13 +53,13 @@ def get_lcc_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
 
             url_official = func_bs.get_link_from_soup(lcc_info_details)
 
-            if list_flg:
+            if url_flg:
+                lcc_data = [date, company, title, url_official]
+            else:
                 company = func.get_a_tag(url_official, company)
                 lcc_data = [date, company, title]
-                lcc_info_list.append(lcc_data)
-            else:
-                lcc_title = f"[LCC] {company}"
-                return lcc_title, url_official
+
+            lcc_info_list.append(lcc_data)
 
             if len(lcc_info_list) == const.MAX_DISPLAY_CNT:
                 break
@@ -66,8 +67,23 @@ def get_lcc_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
 
 
 # テンプレートメッセージ取得
-def get_temp_msg():
-    lbl, url = get_lcc_info_list(list_flg=const.FLG_OFF)
+def get_temp_msg(data_flg: bool = const.FLG_OFF):
+    lbl = url = const.SYM_BLANK
+    lcc_info = get_lcc_info_list(url_flg=const.FLG_ON)[0]
+    if lcc_info:
+        lbl = f"[{app_title}] {lcc_info[1]}"
+        url = lcc_info[3]
+        if data_flg:
+            lcc_data = const.SYM_BLANK
+            today = func.get_now(const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_JA)
+            if lcc_info[0] == today:
+                lcc_data_list = [lbl] + lcc_info[2:]
+                lcc_data = const.SYM_NEW_LINE.join(lcc_data_list)
+            url = lcc_data
+
+    if not url:
+        func.print_info_msg(app_title, msg_const.MSG_INFO_DATA_NOT_EXIST)
+
     return lbl, url
 
 
@@ -86,3 +102,4 @@ def get_lcc_text(lcc_div, soup):
 if __name__ == const.MAIN_FUNCTION:
     item_list = get_item_list()
     func.print_test_data(item_list)
+    # get_temp_msg()

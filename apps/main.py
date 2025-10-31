@@ -72,19 +72,18 @@ def weekly_job():
 def daily_job():
     line.main()
     dashboard.backup_log()
-    dashboard.backup_log(const.STR_ERROR)
 
 
 # 日次ジョブ
 def daily_job_2():
     line.main(data_div=const.NUM_TWO)
     line.sub(div=const.APP_MLB)
-    kakao.main()
 
 
 # 日次ジョブ
 def daily_job_3():
     kakao.main()
+    kakao.main(div=const.APP_LCC)
 
 
 # 時次ジョブ
@@ -93,6 +92,7 @@ def hourly_job():
     appl.update_news()
     appl.update_news(const.APP_NUMBER)
     dashboard.update_data()
+    dashboard.backup_log(const.STR_ERROR)
 
 
 # 随時ジョブ

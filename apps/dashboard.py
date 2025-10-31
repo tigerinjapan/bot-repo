@@ -133,7 +133,12 @@ def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
 
 # ログバックアップ
 def backup_log(log_div: str = const.APP_DASHBOARD):
+    div = f"{const.STR_BACKUP} {log_div}"
+    func.print_start(div)
+
     get_data_list(log_div, backup_flg=const.FLG_ON)
+
+    func.print_end(div)
 
 
 # ダッシュボードデータ取得
