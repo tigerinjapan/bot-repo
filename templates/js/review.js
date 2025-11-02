@@ -1,8 +1,8 @@
 // ヘッダー設定
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_2);
 
-// 文字列
-const STR_REVIEW = "Review";
+// タイトル設定
+document.title = TITLE_REVIEW;
 
 // 掲示板数
 const NUM_BOARD_CNT = 5;
@@ -17,18 +17,14 @@ const ELEM_NAME_ITEMS = "items[]";
 // ページ読み込み時にsessionStorageからデータを取得
 let userName = sessionStorage.getItem(STR_USER_NAME);
 
-// タイトル設定
-document.title = TITLE_REVIEW;
-
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", init);
 
 // 初期表示
 function init() {
-
+  // アプリ名
   setElemTextByTag(TAG_H1, TITLE_REVIEW);
 
-  // アプリ名
   const dataList = getDataList("dataList");
 
   const appTxtList = dataList[0];

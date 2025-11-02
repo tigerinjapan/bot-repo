@@ -7,6 +7,12 @@
   <script src="/templates/func.js"></script>
   {% if app_name == 'travel' %}
   <script src="/templates/travel.js"></script>
+  {% elif app_name == 'number' %}
+  <script src="/templates/number.js"></script>
+  <link rel="stylesheet" href="/templates/number.css" />
+  {% elif app_name == 'sudoku' %}
+  <link rel="stylesheet" href="/templates/sudoku.css" />
+  <script src="/templates/sudoku.js"></script>
   {% elif app_name == 'itQuiz' %}
   <link rel="stylesheet" href="/templates/itQuiz.css" />
   <script src="/templates/itQuiz.js"></script>
@@ -26,10 +32,10 @@
 
 <body>
   <p id="appName" hidden>{{ app_name }}</p>
-  <p id="langCd" hidden>{{ lang_cd }}</p>
   <p id="userName" hidden>{{ user_name }}</p>
+  <p id="langCd" hidden>{{ lang_cd }}</p>
   <p id="dataList" hidden>
-    {% if app_name == 'itQuiz' %}
+    {% if app_name == 'number' or app_name == 'itQuiz' %}
     {{ data_list | tojson }}
     {% else %}
     {{ data_list }}
@@ -57,6 +63,125 @@
       <span class="close-btn">&times;</span>
       <h3 id="dialog-title"></h3>
       <p id="dialog-text"></p>
+    </div>
+  </div>
+
+  {% elif app_name == 'number' %}
+  <div class="main">
+    <h1 id="title"></h1>
+    <div>
+      <p id="level"></p>
+      <p id="levelVal" hidden></p>
+      <p id="rank">
+        <span id="rank-user"><img src="/templates/rank1.png" alt="rank1" /></span>
+        <span id="rank-time"></span>
+      </p>
+    </div>
+    <div>
+      <p id="number-display"></p>
+      <p id="timer"></p>
+      <button type="button" id="btnRule">
+        <img src="/templates/click.png" alt="click" />
+      </button>
+    </div>
+    <div id="exprArea" class="expr-area"></div>
+    <button type="button" id="btnStart"></button>
+    <button type="button" id="btnChk"></button>
+    <button type="button" id="btnNext" onclick="setStop()"></button>
+    <div id="message"></div>
+    <div id="number-answer" hidden></div>
+  </div>
+
+  {% elif app_name == 'sudoku' %}
+  <div id="app">
+    <div id="start-screen" class="screen">
+      <h1>NEON SUDOKU</h1>
+
+      <div id="language-controls">
+        <label for="language-select">LANGUAGE:</label>
+        <select id="language-select">
+          <option value="ja" selected>日本語</option>
+          <option value="ko">한국어</option>
+          <option value="en">ENGLISH</option>
+        </select>
+      </div>
+
+      <div id="level-controls">
+        <label for="level-select">LEVEL:</label>
+        <select id="level-select">
+          <option value="easy">EASY</option>
+          <option value="medium" selected>MEDIUM</option>
+          <option value="hard">HARD</option>
+        </select>
+      </div>
+
+      <div id="user-input-container">
+        <label for="user-name-input">USER NAME:</label>
+        <input type="text" id="user-name-input" maxlength="10" placeholder="Max 10 Chars">
+      </div>
+
+      <button id="start-button" disabled>START GAME</button>
+
+      <div id="rank-container">
+        <h2>RANK TOP 5</h2>
+        <table id="rank-table">
+          <thead>
+            <tr>
+              <th>NAME</th>
+              <th>TIME</th>
+              <th>DATE</th>
+            </tr>
+          </thead>
+          <tbody id="rank-tbody">
+            <!-- ランキングデータ -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="game-screen" class="screen">
+      <div id="game-info-header">
+        <!-- sudoku.jsで挿入 (LEVEL, BEST TIME, USER) -->
+      </div>
+
+      <div id="timer-display">
+        <div id="timer-text"></div>
+        <div id="progress-bar-container">
+          <div id="progress-bar"></div>
+        </div>
+      </div>
+
+      <div id="sudoku-board">
+      </div>
+
+      <div id="input-panel">
+        <div class="input-button" data-value="1">1</div>
+        <div class="input-button" data-value="2">2</div>
+        <div class="input-button" data-value="3">3</div>
+        <div class="input-button" data-value="4">4</div>
+        <div class="input-button" data-value="5">5</div>
+        <div class="input-button" data-value="6">6</div>
+        <div class="input-button" data-value="7">7</div>
+        <div class="input-button" data-value="8">8</div>
+        <div class="input-button" data-value="9">9</div>
+        <div class="input-button" data-value="0"
+          style="grid-column: 1 / span 3; background-color: var(--color-error); color: white;">ERASE</div>
+      </div>
+
+      <div id="game-controls">
+        <button id="rule-button">GAME RULE</button>
+        <button id="hint-button">HINT</button>
+        <button id="home-button">GO HOME</button>
+      </div>
+    </div>
+
+    <div id="modal-overlay">
+      <div id="modal-content">
+        <button id="modal-close-button">X</button>
+        <h3 id="modal-title"></h3>
+        <div id="modal-body">
+        </div>
+      </div>
     </div>
   </div>
 

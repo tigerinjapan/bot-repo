@@ -1,122 +1,352 @@
 [
     {
-        "number": 1438,
-        "answer": "1+4+3=8",
-        "userName": "master",
+        "number": 1594,
+        "answer": "1+5=√9*√4;1*5-√9=√4;1*5=√9+√4;1*5=9-4",
+        "level": "medium",
+        "userName": "player",
         "rankTime": 10.0
     },
     {
-        "number": 2597,
-        "answer": "2*5-√9=7;2*5=√9+7",
-        "userName": "master",
+        "number": 2503,
+        "answer": "2=5+0-3;2=5-0-3;2+5⁰=3;2-5=0-3",
+        "level": "easy",
+        "userName": "beginner",
         "rankTime": 10.0
     },
     {
-        "number": 7076,
-        "answer": "7⁰=7-6",
-        "userName": "master",
+        "number": 3746,
+        "answer": "3=7+√4-6;3+7=4+6;3-7=√4-6;3+7-4=6",
+        "level": "easy",
+        "userName": "beginner",
         "rankTime": 10.0
     },
     {
-        "number": 4458,
-        "answer": "√4=√4*5-8",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 3257,
-        "answer": "3=2*5-7",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 9846,
-        "answer": "√9*8/4=6;√9*8=4*6",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 5532,
-        "answer": "5/5=3-2",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 1754,
-        "answer": "1*7-5=√4;1*7=5+√4",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 6252,
-        "answer": "6/2=5-2",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 2889,
-        "answer": "2+8/8=√9",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 6357,
-        "answer": "6/3+5=7",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 6307,
-        "answer": "6+3⁰=7",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 1998,
-        "answer": "1=√9*√9-8",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 2267,
-        "answer": "2/2+6=7",
-        "userName": "master",
-        "rankTime": 10.0
-    },
-    {
-        "number": 1915,
-        "answer": "1+√9+1=5",
+        "number": 9511,
+        "answer": "√9=5-1-1",
+        "level": "hard",
         "userName": "hong",
-        "rankTime": 7.08
+        "rankTime": 6.94
     },
     {
-        "number": 6805,
-        "answer": "6=8⁰+5;6-8⁰=5",
+        "number": 8347,
+        "answer": "8+3-4=7;8-3+√4=7;8=3-√4+7;8+3=4+7",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 6948,
+        "answer": "6=√9/4*8;6/√9*4=8",
+        "level": "hard",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 1178,
+        "answer": "1*1+7=8;1/1+7=8;1+1*7=8;1¹+7=8",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 6589,
+        "answer": "6=5-8+9;6+5-8=√9;6+5=8+√9;6-5+8=9",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 4599,
+        "answer": "4+5=√9*√9;4=5-9/9;√4=5-9/√9;4=5-√9/√9",
+        "level": "medium",
+        "userName": "player",
+        "rankTime": 10.0
+    },
+    {
+        "number": 6792,
+        "answer": "6-7+√9=2;6=7-√9+2",
+        "level": "hard",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 3348,
+        "answer": "3+3+√4=8",
+        "level": "hard",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 4553,
+        "answer": "√4+5/5=3;4=5/5+3;4-5/5=3",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 9954,
+        "answer": "√9*√9=5+4;√9*√9-5=4;√9/√9=5-4;9/9=5-4;9/√9=5-√4",
+        "level": "medium",
+        "userName": "player",
+        "rankTime": 10.0
+    },
+    {
+        "number": 1652,
+        "answer": "1+6-5=2;1+6=5+2",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 8507,
+        "answer": "8-5⁰=7;8=5⁰+7",
+        "level": "hard",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 9155,
+        "answer": "9+1=5+5;9+1-5=5;√9=15/5",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 3487,
+        "answer": "3=4-8+7;3-4+8=7;3-√4=8-7;3=√4+8-7",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 5300,
+        "answer": "53*0=0;5/3*0=0;5*3*0=0",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 1458,
+        "answer": "1=4+5-8;1-4=5-8;1+√4+5=8",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 7832,
+        "answer": "7-8+3=2;7=8-3+2",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 2089,
+        "answer": "2⁰+8=9",
+        "level": "hard",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 5975,
+        "answer": "5-√9=7-5;5=√9+7-5",
+        "level": "hard",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 5591,
+        "answer": "5+5-9=1;5+5=9+1",
+        "level": "easy",
         "userName": "hong",
-        "rankTime": 9.97
+        "rankTime": 7.24
     },
     {
-        "number": 9575,
-        "answer": "√9-5+7=5;√9=5-7+5",
+        "number": 1097,
+        "answer": "10-√9=7;10=√9+7",
+        "level": "hard",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 1774,
-        "answer": "1+7/7=√4",
+        "number": 8066,
+        "answer": "8*0=6-6;8⁰*6=6;8*0+6=6;8⁰=6/6",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 9716,
+        "answer": "9+7=16",
+        "level": "hard",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 5972,
-        "answer": "5+9=7*2",
+        "number": 9327,
+        "answer": "9*3=27;√9*3-2=7;√9*3=2+7",
+        "level": "medium",
+        "userName": "player",
+        "rankTime": 10.0
+    },
+    {
+        "number": 5179,
+        "answer": "5-1=7-√9;5=1+7-√9",
+        "level": "hard",
+        "userName": "hong",
+        "rankTime": 9.26
+    },
+    {
+        "number": 1024,
+        "answer": "1*0+2=√4;1-0=2/√4;1+0=2/√4;1=0+2/√4;1*0=2-√4;1⁰=2/√4;1⁰*2=√4",
+        "level": "medium",
+        "userName": "player",
+        "rankTime": 10.0
+    },
+    {
+        "number": 7750,
+        "answer": "7=7+5*0;7/7=5⁰;7-7=5*0;7=7*5⁰;7=7-5*0;7=7/5⁰",
+        "level": "easy",
+        "userName": "hong",
+        "rankTime": 8.14
+    },
+    {
+        "number": 2804,
+        "answer": "2-8*0=√4;2/8⁰=√4;2=8*0+√4;2+8*0=√4;2*8⁰=√4;2=8⁰*√4",
+        "level": "medium",
+        "userName": "player",
+        "rankTime": 10.0
+    },
+    {
+        "number": 9608,
+        "answer": "9=6⁰+8;9-6⁰=8",
+        "level": "hard",
         "userName": "master",
         "rankTime": 10.0
     },
     {
-        "number": 2773,
-        "answer": "2+7/7=3",
+        "number": 4810,
+        "answer": "√4+8=10",
+        "level": "hard",
         "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 2482,
+        "answer": "2+√4=8/2;2+4=8-2;2*√4=8/2",
+        "level": "medium",
+        "userName": "player",
+        "rankTime": 10.0
+    },
+    {
+        "number": 8045,
+        "answer": "8⁰+4=5",
+        "level": "hard",
+        "userName": "hong",
+        "rankTime": 9.92
+    },
+    {
+        "number": 7135,
+        "answer": "7+1-3=5;7+1=3+5",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 4461,
+        "answer": "√4+4=6/1;4+√4=6¹;√4+4=6*1;4+√4=6/1;√4+4=6¹;4+√4=6*1",
+        "level": "medium",
+        "userName": "player",
+        "rankTime": 10.0
+    },
+    {
+        "number": 5622,
+        "answer": "5=6/2+2;5-6/2=2;5=6-2/2",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 7208,
+        "answer": "7+2⁰=8",
+        "level": "hard",
+        "userName": "master",
+        "rankTime": 10.0
+    },
+    {
+        "number": 3917,
+        "answer": "3=9+1-7;3-9=1-7;3+√9+1=7",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 2219,
+        "answer": "2+2-1=√9;2²=1+√9;2²-1=√9;2*2=1+√9;2*2-1=√9;2+2=1+√9",
+        "level": "medium",
+        "userName": "player",
+        "rankTime": 10.0
+    },
+    {
+        "number": 7513,
+        "answer": "7=5-1+3;7-5+1=3",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 5478,
+        "answer": "5=4-7+8;5-4+7=8",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 3245,
+        "answer": "3=2*4-5;3=2-4+5;3²=4+5;3²-4=5;3-2+4=5",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 1349,
+        "answer": "13-4=9;13=4+9",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 6841,
+        "answer": "6=8-√4*1;6=8-√4¹;6=8-√4/1",
+        "level": "medium",
+        "userName": "player",
+        "rankTime": 10.0
+    },
+    {
+        "number": 4962,
+        "answer": "4*√9=6*2;4*9=6²;4*√9/6=2",
+        "level": "medium",
+        "userName": "player",
+        "rankTime": 10.0
+    },
+    {
+        "number": 2791,
+        "answer": "2+7=9*1;2+7=9¹;2+7=9/1",
+        "level": "easy",
+        "userName": "beginner",
+        "rankTime": 10.0
+    },
+    {
+        "number": 7743,
+        "answer": "7/7=4-3;7/7+√4=3",
+        "level": "medium",
+        "userName": "player",
+        "rankTime": 10.0
+    },
+    {
+        "number": 6494,
+        "answer": "6*√4/√9=4;6/4=√9/√4;6=4*√9/√4;6*√4=√9*4",
+        "level": "medium",
+        "userName": "player",
         "rankTime": 10.0
     }
 ]

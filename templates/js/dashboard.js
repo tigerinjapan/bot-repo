@@ -1,6 +1,7 @@
-// ====================
-// テキストコンテンツ定義
-// ====================
+// タイトル設定
+document.title = TITLE_DASH_BOARD;
+
+// テキストコンテンツ
 const appTexts = {
   timePeriodLabel: "Term ",
   periodOptions: [
@@ -10,9 +11,7 @@ const appTexts = {
   ]
 };
 
-// ====================
 // KPI項目定義とHTML生成 (ループ処理)
-// ====================
 const kpiItems = [
   { id: "users", title: "👤 Users", type: "line", dataKey: "users" },
   { id: "category", title: "📄 Category", type: "bar", dataKey: "category" },
@@ -28,7 +27,6 @@ const charts = new Map();
 // ページロード時の初期化処理
 function initializeApp() {
   // テキスト定義の適用
-  document.title = TITLE_DASH_BOARD;
   setElemText("header-title", TITLE_DASH_BOARD);
   setElemText('time-period-label', appTexts.timePeriodLabel);
 
@@ -48,7 +46,7 @@ function initializeApp() {
   updateDashboard('day');
 
   // プルダウン変更時のイベントリスナー
-  selectElem.addEventListener('change', (event) => {
+  selectElem.addEventListener("change", (event) => {
     updateDashboard(event.target.value);
   });
 }
@@ -65,7 +63,7 @@ function initializeKpiCards() {
           <h2>${item.title}</h2>
           ${isUsers ? `<span id="${item.id}-count" class="current-value"></span>` : ''}
           <div class="chart-container">
-              <canvas id="${item.id}Chart"></canvas>
+            <canvas id="${item.id}Chart"></canvas>
           </div>
       </div>
     `;
@@ -91,13 +89,13 @@ async function updateDashboard(period) {
     const chartId = `${item.id}Chart`;
     const itemData = data[item.dataKey];
 
-    if (item.type === 'line') {
+    if (item.type === CHART_LINE) {
       // ユーザー数
       setElemText(`${item.id}-count`, itemData.total.toLocaleString());
-      updateLineBarChart(chartId, 'line', itemData, item.title.replace(/👤\s*/, ''), 'steelblue');
-    } else if (item.type === 'bar') {
+      updateLineBarChart(chartId, CHART_LINE, itemData, item.title);
+    } else if (item.type === CHART_BAR) {
       // アクセスしたページ
-      updateLineBarChart(chartId, 'bar', itemData, item.title.replace(/📄\s*/, ''), 'forestgreen');
+      updateLineBarChart(chartId, CHART_BAR, itemData, item.title);
     } else if (item.type === 'doughnut') {
       // デバイス/OS
       updateDoughnutChart(chartId, itemData);
@@ -106,7 +104,7 @@ async function updateDashboard(period) {
 }
 
 // 棒グラフ/折れ線グラフを描画する共通関数
-function updateLineBarChart(chartId, type, dataItems, title, color) {
+function updateLineBarChart(chartId, type, dataItems, title) {
   const canvas = getElem(chartId);
   if (charts.has(chartId)) charts.get(chartId).destroy();
 
@@ -117,9 +115,9 @@ function updateLineBarChart(chartId, type, dataItems, title, color) {
       datasets: [{
         label: title,
         data: dataItems.data,
-        borderColor: (type === 'line' ? 'steelblue' : color),
-        backgroundColor: (type === 'line' ? 'lightblue' : color),
-        tension: (type === 'line' ? 0.3 : 0),
+        borderColor: (type === CHART_LINE ? 'steelblue' : 'forestgreen'),
+        backgroundColor: (type === CHART_LINE ? 'lightblue' : 'forestgreen'),
+        tension: (type === CHART_LINE ? 0.3 : 0),
         borderWidth: 1
       }]
     },

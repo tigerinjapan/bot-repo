@@ -1,0 +1,477 @@
+/*
+* CSS - デザイン定義
+* 未来的なサイバーテーマ
+*/
+:root {
+	/* カラーコード（英字名を使用） */
+	--color-bg-primary: black;
+	--color-bg-secondary: darkslategray;
+	--color-neon-light: cyan;
+	--color-neon-accent: mediumseagreen;
+	--color-text-normal: white;
+	--color-text-dim: dimgray;
+	--color-button-primary: dodgerblue;
+	--color-error: red;
+	--font-family-display: 'Consolas', 'Courier New', monospace;
+	--font-family-body: sans-serif;
+}
+
+body {
+	font-family: var(--font-family-body);
+	background-color: var(--color-bg-primary);
+	color: var(--color-text-normal);
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	text-align: center;
+}
+
+#app {
+	background-color: var(--color-bg-secondary);
+	border: 2px solid var(--color-neon-light);
+	box-shadow: 0 0 20px var(--color-neon-light);
+	border-radius: 1rem;
+	max-width: 95%;
+	width: 500px;
+	padding: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+/*
+* 共通要素
+*/
+h1 {
+	font-family: var(--font-family-display);
+	color: var(--color-neon-light);
+	text-shadow: 0 0 5px var(--color-neon-light);
+	font-size: 1.8rem;
+	margin-bottom: 1rem;
+}
+
+button {
+	background-color: var(--color-button-primary);
+	color: var(--color-bg-primary);
+	padding: 0.75rem 1.5rem;
+	border: none;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	font-family: var(--font-family-display);
+	font-weight: 700;
+	transition: all 0.2s;
+	box-shadow: 0 0 8px var(--color-button-primary);
+}
+
+button:hover:not(:disabled) {
+	opacity: 0.8;
+	transform: translateY(-2px);
+	box-shadow: 0 0 15px var(--color-neon-light);
+}
+
+button:disabled {
+	background-color: dimgray;
+	cursor: not-allowed;
+	opacity: 0.5;
+	box-shadow: none;
+}
+
+select,
+input[type="text"] {
+	background-color: var(--color-bg-primary);
+	color: var(--color-neon-accent);
+	border: 1px solid var(--color-neon-accent);
+	padding: 0.5rem;
+	border-radius: 0.3rem;
+	font-family: var(--font-family-display);
+	margin: 0 0.5rem;
+	appearance: none;
+	text-align: center;
+}
+
+input[type="text"] {
+	color: var(--color-text-normal);
+	text-align: left;
+	padding-left: 1rem;
+	flex-grow: 1;
+	max-width: 150px;
+}
+
+/* 初期画面 */
+#start-screen {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 1.5rem;
+}
+
+/*
+* ランキング表示
+*/
+#rank-container {
+	margin-top: 1rem;
+	padding: 1rem;
+	border: 1px dashed var(--color-neon-accent);
+	border-radius: 0.5rem;
+	background-color: #0d0d19;
+	/* A slight variation */
+}
+
+#rank-container h2 {
+	font-family: var(--font-family-display);
+	color: var(--color-neon-accent);
+	text-shadow: 0 0 3px var(--color-neon-accent);
+	font-size: 1.2rem;
+	margin-top: 0;
+	margin-bottom: 0.75rem;
+}
+
+#rank-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.9rem;
+}
+
+#rank-table th,
+#rank-table td {
+	padding: 0.5rem 0.25rem;
+}
+
+#rank-table th {
+	color: var(--color-neon-light);
+	border-bottom: 2px solid var(--color-neon-light);
+	text-transform: uppercase;
+	font-weight: 400;
+}
+
+#rank-table td {
+	border-bottom: 1px solid var(--color-text-dim);
+	color: var(--color-text-normal);
+}
+
+#rank-table tr:last-child td {
+	border-bottom: none;
+}
+
+/* モバイル向け調整 */
+@media (max-width: 450px) {
+
+	#rank-table th,
+	#rank-table td {
+		font-size: 0.7rem;
+	}
+
+	#user-input-container {
+		flex-direction: column;
+	}
+
+	#user-input-container label {
+		margin-top: 0.5rem;
+	}
+}
+
+
+/*
+* ゲーム画面 (Game Screen)
+*/
+#game-screen {
+	display: none;
+	align-items: center;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+/*
+* ゲーム情報ヘッダー
+*/
+#game-info-header {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem 0;
+	margin-bottom: 0.5rem;
+	border-bottom: 1px dashed var(--color-neon-accent);
+	font-family: var(--font-family-display);
+	font-size: 0.9rem;
+}
+
+#game-info-header div {
+	flex: 1;
+	text-align: center;
+}
+
+#game-info-header .info-label {
+	color: var(--color-text-dim);
+	font-size: 0.7rem;
+	display: block;
+}
+
+#game-info-header .info-value {
+	color: var(--color-neon-accent);
+	font-weight: 700;
+	display: block;
+	margin-top: 2px;
+	word-break: break-all;
+	/* 長すぎるユーザー名に対応 */
+}
+
+@media (max-width: 400px) {
+	#game-info-header {
+		font-size: 0.8rem;
+		padding: 0.5rem;
+	}
+
+	#game-info-header .info-label {
+		font-size: 0.6rem;
+	}
+}
+
+/*
+* タイマーとプログレスバー
+*/
+#timer-display {
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+#timer-text {
+	font-family: var(--font-family-display);
+	font-size: 2rem;
+	color: var(--color-neon-light);
+	text-shadow: 0 0 5px var(--color-neon-light);
+	margin-bottom: 0.5rem;
+}
+
+#progress-bar-container {
+	width: 100%;
+	height: 10px;
+	background-color: var(--color-bg-primary);
+	border-radius: 5px;
+	overflow: hidden;
+	border: 1px solid var(--color-neon-light);
+}
+
+#progress-bar {
+	height: 100%;
+	width: 100%;
+	/* 初期値 */
+	background-color: var(--color-neon-light);
+	transition: width 1s linear;
+}
+
+/*
+* ナンプレ盤面
+*/
+#sudoku-board {
+	display: grid;
+	grid-template-columns: repeat(9, 1fr);
+	border: 3px solid var(--color-neon-light);
+	border-radius: 0.5rem;
+	aspect-ratio: 1 / 1;
+	/* 正方形を維持 */
+	width: 100%;
+	max-width: 450px;
+	margin: 0 auto;
+}
+
+.sudoku-cell {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid var(--color-text-dim);
+	font-family: var(--font-family-display);
+	font-size: clamp(1rem, 4vw, 1.5rem);
+	cursor: pointer;
+	transition: background-color 0.1s;
+	user-select: none;
+}
+
+.sudoku-cell:hover {
+	background-color: #2a3a4a;
+}
+
+/* 3x3ブロックの境界線 */
+.sudoku-cell:nth-child(3n) {
+	border-right-width: 3px;
+	border-right-color: var(--color-neon-light);
+}
+
+.sudoku-cell:nth-child(9n) {
+	border-right-width: 1px;
+	border-right-color: var(--color-text-dim);
+}
+
+.sudoku-cell:nth-child(27n) {
+	border-bottom-width: 3px;
+	border-bottom-color: var(--color-neon-light);
+}
+
+.sudoku-cell:nth-child(27n + 1):nth-child(n+27) {
+	border-top-width: 3px;
+	border-top-color: var(--color-neon-light);
+}
+
+.sudoku-cell:nth-child(n) {
+	border-bottom-width: 1px;
+}
+
+/* 行の境界線（3x3ブロックの外側） */
+.sudoku-cell:nth-child(n + 19):nth-child(-n + 27),
+.sudoku-cell:nth-child(n + 46):nth-child(-n + 54) {
+	border-bottom-width: 3px;
+	border-bottom-color: var(--color-neon-light);
+}
+
+/* 固定値（最初から開いているマス） */
+.fixed-cell {
+	color: var(--color-neon-light);
+	background-color: #0f1f2f;
+	cursor: default;
+}
+
+/* ユーザー入力値 */
+.user-input {
+	color: var(--color-neon-accent);
+	font-weight: 700;
+}
+
+/* 選択中のセル */
+.selected {
+	background-color: #3f4f5f !important;
+	box-shadow: 0 0 10px var(--color-neon-light) inset;
+}
+
+/* エラーセル（間違った入力） */
+.error {
+	background-color: rgba(255, 0, 0, 0.3);
+	color: var(--color-error);
+	font-weight: 700;
+}
+
+/*
+* 入力パネル (1-9)
+*/
+#input-panel {
+	display: none;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 5px;
+	width: 100%;
+	max-width: 250px;
+	margin: 0 auto;
+	background-color: var(--color-bg-primary);
+	padding: 10px;
+	border-radius: 0.5rem;
+	box-shadow: 0 0 10px var(--color-neon-light);
+}
+
+.input-button {
+	background-color: var(--color-bg-secondary);
+	color: var(--color-neon-light);
+	font-family: var(--font-family-display);
+	border: 1px solid var(--color-neon-light);
+	padding: 0.5rem;
+	font-size: 1.2rem;
+	cursor: pointer;
+	border-radius: 0.3rem;
+	transition: all 0.1s;
+}
+
+.input-button:hover {
+	background-color: var(--color-neon-light);
+	color: var(--color-bg-primary);
+}
+
+/*
+* ゲームボタン群
+*/
+#game-controls {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+#hint-button {
+	background-color: mediumseagreen;
+	box-shadow: 0 0 8px mediumseagreen;
+}
+
+#home-button {
+	background-color: darkorange;
+	box-shadow: 0 0 8px darkorange;
+}
+
+#hint-counter {
+	color: mediumseagreen;
+	font-family: var(--font-family-display);
+	font-weight: 700;
+	margin-left: 0.5rem;
+}
+
+/*
+* モーダル（ルール、メッセージ表示）
+*/
+#modal-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 1000;
+	justify-content: center;
+	align-items: center;
+}
+
+#modal-content {
+	background-color: var(--color-bg-secondary);
+	border: 2px solid var(--color-neon-accent);
+	box-shadow: 0 0 20px var(--color-neon-accent);
+	border-radius: 1rem;
+	padding: 2rem;
+	max-width: 90%;
+	width: 400px;
+	text-align: left;
+	position: relative;
+}
+
+#modal-close-button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: transparent;
+	color: var(--color-neon-light);
+	border: none;
+	font-size: 1.5rem;
+	cursor: pointer;
+	padding: 0.5rem;
+	box-shadow: none;
+}
+
+#modal-close-button:hover {
+	color: var(--color-error);
+}
+
+#modal-title {
+	font-family: var(--font-family-display);
+	color: var(--color-neon-accent);
+	font-size: 1.5rem;
+	margin-top: 0;
+	margin-bottom: 1rem;
+	text-align: center;
+}
+
+/* ゲームオーバー/クリアメッセージ */
+#game-message {
+	font-family: var(--font-family-display);
+	color: var(--color-neon-light);
+	font-size: 1.5rem;
+	text-align: center;
+}

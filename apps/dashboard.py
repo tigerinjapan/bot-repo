@@ -70,7 +70,7 @@ def update_data():
 
 # データリスト取得
 def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
-    data_list = []
+    data_list = backup_log_list = []
 
     try:
         log_path = func.get_file_path(
@@ -83,7 +83,6 @@ def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
         if log_data_text:
             log_data_list = log_data_text.split(const.SYM_NEW_LINE)
 
-            backup_log_list = []
             if not backup_flg:
                 target_date = get_target_date(const.STR_YEAR)[0]
                 log_backup_list = log_dao.get_log_data_list(log_div, target_date)
@@ -113,7 +112,7 @@ def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
                 else:
                     data_list.append(data)
 
-            if backup_flg:
+            if backup_flg and backup_log_list:
                 # DB登録
                 log_dao.insert_log_data(backup_log_list)
 
@@ -121,9 +120,8 @@ def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
                 log_data = const.SYM_NEW_LINE.join(data_list) + const.SYM_NEW_LINE
                 func.write_file(log_path, log_data)
 
-        else:
-            if backup_flg:
-                func.print_info_msg(SCRIPT_NAME, msg_const.MSG_ERR_DATA_NOT_EXIST)
+        if not data_list:
+            func.print_info_msg(SCRIPT_NAME, msg_const.MSG_ERR_DATA_NOT_EXIST)
 
     except Exception as e:
         func.print_info_msg(SCRIPT_NAME, e)
@@ -236,7 +234,7 @@ def calculate_percentage_to_100(counts):
         # 差分（diff）を大きい順に1ずつ配分する
         for i in range(abs(diff)):
             item_to_adjust = sorted_indices[i % len(sorted_indices)]
-            if diff > 0:
+            if 0 < diff:
                 # 100未満の場合、大きい項目に1を加算
                 percentages_int[item_to_adjust] += 1
             elif diff < 0:
@@ -324,4 +322,4 @@ def get_ip_info(ip_address: str):
 
 if __name__ == const.MAIN_FUNCTION:
     update_data()
-    # backup_log()
+    backup_log()

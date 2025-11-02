@@ -2,61 +2,207 @@
     "day": {
         "label": "day",
         "users": {
-            "total": "274",
+            "total": "47",
             "labels": [
-                "10/25",
-                "10/26",
                 "10/27",
                 "10/28",
                 "10/29",
                 "10/30",
-                "10/31"
+                "11/02"
             ],
             "data": [
-                47,
-                72,
-                35,
+                16,
                 3,
-                38,
                 13,
-                66
+                7,
+                8
             ]
         },
         "category": {
             "labels": [
-                "entertainment",
                 "document",
                 "management",
+                "entertainment",
                 "news",
                 "service"
             ],
             "data": [
-                184,
-                45,
                 22,
-                14,
-                9
+                11,
+                8,
+                5,
+                1
             ]
         },
         "app": [
             {
-                "name": "number",
-                "value": 64
-            },
-            {
                 "name": "url_design",
-                "value": 15
+                "value": 39
             },
             {
                 "name": "dashboard",
+                "value": 15
+            },
+            {
+                "name": "number",
+                "value": 9
+            },
+            {
+                "name": "itQuiz",
+                "value": 7
+            },
+            {
+                "name": "kakao_design",
                 "value": 6
             },
             {
                 "name": "news",
+                "value": 6
+            },
+            {
+                "name": "review_ko",
                 "value": 4
             },
             {
+                "name": "review",
+                "value": 4
+            },
+            {
+                "name": "ranking",
+                "value": 2
+            },
+            {
+                "name": "tv",
+                "value": 2
+            },
+            {
+                "name": "today",
+                "value": 2
+            },
+            {
+                "name": "lcc",
+                "value": 2
+            },
+            {
+                "name": "itQuiz_design",
+                "value": 2
+            }
+        ],
+        "device": [
+            {
+                "name": "Mobile",
+                "value": 62
+            },
+            {
+                "name": "PC",
+                "value": 36
+            },
+            {
+                "name": "Unknown",
+                "value": 2
+            }
+        ],
+        "os": [
+            {
+                "name": "Android",
+                "value": 62
+            },
+            {
+                "name": "Windows",
+                "value": 28
+            },
+            {
+                "name": "Linux",
+                "value": 8
+            },
+            {
+                "name": "Other",
+                "value": 2
+            }
+        ],
+        "browser": [
+            {
+                "name": "Chrome",
+                "value": 60
+            },
+            {
+                "name": "Edge",
+                "value": 28
+            },
+            {
+                "name": "LINE",
+                "value": 10
+            },
+            {
+                "name": "FacebookBot",
+                "value": 2
+            }
+        ]
+    },
+    "month": {
+        "label": "month",
+        "users": {
+            "total": "119",
+            "labels": [
+                "2025/10",
+                "2025/11"
+            ],
+            "data": [
+                111,
+                8
+            ]
+        },
+        "category": {
+            "labels": [
+                "document",
+                "management",
+                "entertainment",
+                "news",
+                "service"
+            ],
+            "data": [
+                39,
+                31,
+                22,
+                19,
+                8
+            ]
+        },
+        "app": [
+            {
+                "name": "url_design",
+                "value": 27
+            },
+            {
+                "name": "dashboard",
+                "value": 14
+            },
+            {
+                "name": "news",
+                "value": 11
+            },
+            {
+                "name": "number",
+                "value": 9
+            },
+            {
                 "name": "itQuiz",
+                "value": 7
+            },
+            {
+                "name": "review",
+                "value": 7
+            },
+            {
+                "name": "board",
+                "value": 4
+            },
+            {
+                "name": "kakao_design",
+                "value": 3
+            },
+            {
+                "name": "ranking",
                 "value": 3
             },
             {
@@ -64,26 +210,42 @@
                 "value": 3
             },
             {
-                "name": "board",
+                "name": "itQuiz_design",
+                "value": 3
+            },
+            {
+                "name": "today",
+                "value": 3
+            },
+            {
+                "name": "tv",
                 "value": 2
             },
             {
-                "name": "review",
-                "value": 2
+                "name": "review_ko",
+                "value": 1
             },
             {
-                "name": "kakao_design",
+                "name": "travel_design",
+                "value": 1
+            },
+            {
+                "name": "lcc",
+                "value": 1
+            },
+            {
+                "name": "study",
                 "value": 1
             }
         ],
         "device": [
             {
                 "name": "Mobile",
-                "value": 85
+                "value": 50
             },
             {
                 "name": "PC",
-                "value": 14
+                "value": 49
             },
             {
                 "name": "Unknown",
@@ -93,15 +255,15 @@
         "os": [
             {
                 "name": "Android",
-                "value": 85
+                "value": 50
             },
             {
                 "name": "Windows",
-                "value": 13
+                "value": 45
             },
             {
                 "name": "Linux",
-                "value": 1
+                "value": 4
             },
             {
                 "name": "Other",
@@ -110,16 +272,16 @@
         ],
         "browser": [
             {
+                "name": "Edge",
+                "value": 45
+            },
+            {
                 "name": "Chrome",
-                "value": 72
+                "value": 39
             },
             {
                 "name": "LINE",
                 "value": 15
-            },
-            {
-                "name": "Edge",
-                "value": 12
             },
             {
                 "name": "FacebookBot",
@@ -127,172 +289,68 @@
             }
         ]
     },
-    "month": {
-        "label": "month",
-        "users": {
-            "total": "327",
-            "labels": [
-                "2025/10"
-            ],
-            "data": [
-                327
-            ]
-        },
-        "category": {
-            "labels": [
-                "entertainment",
-                "document",
-                "management",
-                "news",
-                "service"
-            ],
-            "data": [
-                201,
-                50,
-                41,
-                21,
-                14
-            ]
-        },
-        "app": [
-            {
-                "name": "number",
-                "value": 58
-            },
-            {
-                "name": "url_design",
-                "value": 13
-            },
-            {
-                "name": "dashboard",
-                "value": 7
-            },
-            {
-                "name": "news",
-                "value": 5
-            },
-            {
-                "name": "review",
-                "value": 3
-            },
-            {
-                "name": "itQuiz",
-                "value": 3
-            },
-            {
-                "name": "travel",
-                "value": 3
-            },
-            {
-                "name": "board",
-                "value": 3
-            },
-            {
-                "name": "kakao_design",
-                "value": 2
-            },
-            {
-                "name": "itQuiz_design",
-                "value": 1
-            },
-            {
-                "name": "review_ko",
-                "value": 1
-            },
-            {
-                "name": "today",
-                "value": 1
-            }
-        ],
-        "device": [
-            {
-                "name": "Mobile",
-                "value": 71
-            },
-            {
-                "name": "PC",
-                "value": 29
-            }
-        ],
-        "os": [
-            {
-                "name": "Android",
-                "value": 71
-            },
-            {
-                "name": "Windows",
-                "value": 27
-            },
-            {
-                "name": "Linux",
-                "value": 2
-            }
-        ],
-        "browser": [
-            {
-                "name": "Chrome",
-                "value": 64
-            },
-            {
-                "name": "Edge",
-                "value": 24
-            },
-            {
-                "name": "LINE",
-                "value": 12
-            }
-        ]
-    },
     "year": {
         "label": "year",
         "users": {
-            "total": "327",
+            "total": "119",
             "labels": [
                 "2025"
             ],
             "data": [
-                327
+                119
             ]
         },
         "category": {
             "labels": [
-                "entertainment",
                 "document",
                 "management",
+                "entertainment",
                 "news",
                 "service"
             ],
             "data": [
-                201,
-                50,
-                41,
-                21,
-                14
+                39,
+                31,
+                22,
+                19,
+                8
             ]
         },
         "app": [
             {
-                "name": "number",
-                "value": 58
-            },
-            {
                 "name": "url_design",
-                "value": 13
+                "value": 27
             },
             {
                 "name": "dashboard",
-                "value": 7
+                "value": 14
             },
             {
                 "name": "news",
-                "value": 5
+                "value": 11
             },
             {
-                "name": "review",
-                "value": 3
+                "name": "number",
+                "value": 9
             },
             {
                 "name": "itQuiz",
+                "value": 7
+            },
+            {
+                "name": "review",
+                "value": 7
+            },
+            {
+                "name": "board",
+                "value": 4
+            },
+            {
+                "name": "kakao_design",
+                "value": 3
+            },
+            {
+                "name": "ranking",
                 "value": 3
             },
             {
@@ -300,62 +358,82 @@
                 "value": 3
             },
             {
-                "name": "board",
+                "name": "itQuiz_design",
                 "value": 3
             },
             {
-                "name": "kakao_design",
-                "value": 2
+                "name": "today",
+                "value": 3
             },
             {
-                "name": "itQuiz_design",
-                "value": 1
+                "name": "tv",
+                "value": 2
             },
             {
                 "name": "review_ko",
                 "value": 1
             },
             {
-                "name": "today",
+                "name": "travel_design",
+                "value": 1
+            },
+            {
+                "name": "lcc",
+                "value": 1
+            },
+            {
+                "name": "study",
                 "value": 1
             }
         ],
         "device": [
             {
                 "name": "Mobile",
-                "value": 71
+                "value": 50
             },
             {
                 "name": "PC",
-                "value": 29
+                "value": 49
+            },
+            {
+                "name": "Unknown",
+                "value": 1
             }
         ],
         "os": [
             {
                 "name": "Android",
-                "value": 71
+                "value": 50
             },
             {
                 "name": "Windows",
-                "value": 27
+                "value": 45
             },
             {
                 "name": "Linux",
-                "value": 2
+                "value": 4
+            },
+            {
+                "name": "Other",
+                "value": 1
             }
         ],
         "browser": [
             {
-                "name": "Chrome",
-                "value": 64
+                "name": "Edge",
+                "value": 45
             },
             {
-                "name": "Edge",
-                "value": 24
+                "name": "Chrome",
+                "value": 39
             },
             {
                 "name": "LINE",
-                "value": 12
+                "value": 15
+            },
+            {
+                "name": "FacebookBot",
+                "value": 1
             }
         ]
     }

@@ -54,8 +54,13 @@ class AppExec:
         return data_list
 
 
-# 【画面】取得結果
-def exec_result(request: Request, app_name: str):
+# 【画面】データ取得
+def get_context_data(request: Request, app_name: str):
+    context = {}
+
+    if not app_name in const.LIST_APP_ALL:
+        return context
+
     if not func.check_in_list(app_name, const.LIST_APP_AUTH_OFF):
         user_info = request.session[const.STR_USER]
         user_div, user_name, app_menu = (
@@ -66,24 +71,6 @@ def exec_result(request: Request, app_name: str):
     else:
         user_div = user_name = app_menu = const.SYM_BLANK
 
-    app_title, data_list, num_flg = get_context_data(app_name, user_div)
-
-    target_html = const.HTML_RESULT
-    context = {
-        const.STR_REQUEST: request,
-        const.STR_TITLE: app_title,
-        "user_div": user_div,
-        "user_name": user_name,
-        "app_name": app_name,
-        "app_menu": app_menu,
-        "data_list": data_list,
-        "num_flg": num_flg,
-    }
-    return target_html, context
-
-
-# 【画面】パラメータ取得
-def get_context_data(app_name: str, user_div: str = const.AUTH_DEV):
     app_div_idx = const.LIST_APP_ALL.index(app_name)
     app_div = LIST_ALL_APP_DIV[app_div_idx]
 
@@ -111,46 +98,63 @@ def get_context_data(app_name: str, user_div: str = const.AUTH_DEV):
 
     app_exec.end()
 
-    return app_title, data_list, num_flg
+    context = {
+        const.STR_REQUEST: request,
+        const.STR_TITLE: app_title,
+        "user_div": user_div,
+        "user_name": user_name,
+        "app_name": app_name,
+        "app_menu": app_menu,
+        "data_list": data_list,
+        "num_flg": num_flg,
+    }
+    return context
 
 
-# 【画面】パラメータ取得
-def get_context_data2(request: Request, app_name: str):
-    lang_cd = const.LANG_CD_JA
-
-    if const.SYM_UNDER in app_name and const.STR_DESIGN not in app_name:
-        lang_cd = app_name.split(const.SYM_UNDER)[1]
-        app_name = app_name.split(const.SYM_UNDER)[0]
+# 【画面】データ取得
+def get_context_data_2(request: Request, app_name: str):
+    context = {}
 
     user_name = const.SYM_BLANK
     session_user = request.session.get(const.STR_USER)
     if session_user:
         user_name = session_user[mongo_const.FI_USER_NAME]
 
+    lang_cd = const.LANG_CD_JA
+    split_str = const.SYM_UNDER
+    if split_str in app_name and const.STR_DESIGN not in app_name:
+        lang_cd = app_name.split(split_str)[1]
+        app_name = app_name.split(split_str)[0]
+
+    if not (lang_cd in const.LIST_LANG_CD and app_name in const.LIST_APPS_ALL):
+        return context
+
     data_list = []
-    if const.APP_REVIEW in app_name:
+    if app_name == const.APP_NUMBER:
+        data_list = func.get_json_data(app_name, const.STR_OUTPUT)
+
+    elif app_name == const.APP_SUDOKU or app_name == const.APP_IT_QUIZ:
+        data_list = rank_dao.get_ranking_top(app_name)
+
+    elif app_name == const.APP_REVIEW:
         data_list.append(const.LIST_BOARD_APP)
         data_list.append(const.LIST_BOARD_CATEGORY)
         data_list.append(const.LIST_BOARD_TYPE)
 
-    elif app_name == const.APP_IT_QUIZ:
-        data_list = rank_dao.get_ranking_top(app_name)
-
     context = {
         const.STR_REQUEST: request,
         "app_name": app_name,
-        "lang_cd": lang_cd,
         "user_name": user_name,
+        "lang_cd": lang_cd,
         "data_list": data_list,
     }
 
     return context
 
 
-# 【画面】表示データ取得
-def exec_user(request: Request, app_name: str):
+# 【画面】データ取得
+def get_context_for_user(request: Request, app_name: str):
     user_info = request.session[const.STR_USER]
-    target_html = const.HTML_USER_INFO
     context = {
         const.STR_REQUEST: request,
         const.STR_TITLE: user.app_title,
@@ -158,30 +162,7 @@ def exec_user(request: Request, app_name: str):
         "user_info": user_info,
         "update_flg": const.FLG_ON,
     }
-    return target_html, context
-
-
-# 【画面】表示データ取得
-def exec_number(request: Request, app_name: str):
-    lang_cd = const.LANG_CD_JA
-    level = const.STR_HARD
-
-    if const.SYM_UNDER in app_name:
-        lang_cd = app_name.split(const.SYM_UNDER)[1]
-        app_name = app_name.split(const.SYM_UNDER)[0]
-
-    data_list = func.get_json_data(const.APP_NUMBER, const.STR_OUTPUT)
-
-    target_html = const.HTML_NUMBER_PLATE
-    context = {
-        const.STR_REQUEST: request,
-        const.STR_TITLE: number.app_title,
-        "app_name": app_name,
-        "lang_cd": lang_cd,
-        "level": level,
-        "data_list": data_list,
-    }
-    return target_html, context
+    return context
 
 
 # 【画面】データリスト取得
@@ -273,6 +254,8 @@ def no_sleep():
 
 if __name__ == const.MAIN_FUNCTION:
     # update_news()
-    app_name_list = [const.APP_TODAY_KOREA, const.APP_TODAY]
-    for app_name in app_name_list:
-        update_news(app_name)
+    # app_name_list = [const.APP_TODAY_KOREA, const.APP_TODAY]
+    # for app_name in app_name_list:
+    #     update_news(app_name)
+
+    update_news("number")

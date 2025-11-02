@@ -1,7 +1,8 @@
+// タイトル設定
+document.title = TITLE_IT_QUIZ;
+
 /**
- * =================================================================
  * 定数と初期データ定義
- * =================================================================
  */
 
 // クイズ数
@@ -20,7 +21,7 @@ const PLUS_POINT_HALF = PLUS_POINT / 2;
 const MINUS_POINT = (PLUS_POINT / 10) * -1;
 
 // ページ読み込み時にsessionStorageからデータを取得
-let userId = sessionStorage.getItem(STR_USER_NAME);
+let userName = sessionStorage.getItem(STR_USER_NAME);
 
 // グローバルなゲーム状態を保持するオブジェクト
 const gameState = {
@@ -48,7 +49,11 @@ const textMap = {
   "hint": { "ko": "힌트", "ja": "ヒント", "en": "HINT" },
   "home": { "ko": "홈", "ja": "ホームへ", "en": "HOME" },
   "check_answer": { "ko": "정답 확인", "ja": "正解確認", "en": "CHECK ANSWER" },
-  "instruction_message": { "ko": "알파벳 또는 숫자만 입력가능합니다.", "ja": "英数字のみ入力してください。", "en": "Select a character or use your keyboard." },
+  "instruction_message": {
+    "ko": "알파벳 또는 숫자만 입력가능합니다.",
+    "ja": "英数字のみ入力してください。",
+    "en": "Select a character or use your keyboard."
+  },
 };
 
 // メッセージ、エラー、ダイアログコンテンツの多言語辞書
@@ -91,7 +96,8 @@ const msgMap = {
     "en": `
         <p><strong>1. Goal:</strong> Guess the IT term based on the provided description (Total ${quizNum} questions).</p>
         <p><strong>2. Time Limit:</strong> Word length x 10 seconds.(ex) 3ch: 30s.</p>
-        <p><strong>3. Hint:</strong> The first letter is revealed. Using 'HINT' reveals one letter at a time (up to Word Length - 1).</p>
+        <p><strong>3. Hint:</strong> The first letter is revealed. <br>
+        Using 'HINT' reveals one letter at a time (up to Word Length - 1).</p>
         <p><strong>4. Scoring:</strong></p>
         <ul>
             <li>Correct within half the time limit: <b>${PLUS_POINT} points</b></li>
@@ -108,9 +114,17 @@ const msgMap = {
   "game_over": { "ko": "게임 오버! 최종 점수:", "ja": "ゲームオーバー! 最終スコア:", "en": "GAME OVER! Final Score:" },
   "correct": { "ko": "정답입니다! 다음 문제로 넘어갑니다.", "ja": "正解です！次の問題に進みます。", "en": "Correct! Moving to the next quiz." },
   "timeout": { "ko": "시간 초과! 정답은 %WORD%였습니다.", "ja": "時間切れです！正解は %WORD% でした。", "en": "Time up! The answer was %WORD%." },
-  "invalid_choice": { "ko": `X 오답입니다! (${MINUS_POINT}점)`, "ja": `X 不正解です！(${MINUS_POINT}点)`, "en": `X Incorrect choice! (${MINUS_POINT} point)` },
+  "invalid_choice": {
+    "ko": `X 오답입니다! (${MINUS_POINT}점)`,
+    "ja": `X 不正解です！(${MINUS_POINT}点)`,
+    "en": `X Incorrect choice! (${MINUS_POINT} point)`
+  },
   "wrong_answer": { "ko": "아직 정답이 아닙니다.", "ja": "まだ正解ではありません。", "en": "Not the correct answer yet." },
-  "hint_used": { "ko": `힌트를 사용했습니다! (${MINUS_POINT}점)`, "ja": `ヒントを使用しました！(${MINUS_POINT}点)`, "en": `Hint used! (${MINUS_POINT} point)` },
+  "hint_used": {
+    "ko": `힌트를 사용했습니다! (${MINUS_POINT}점)`,
+    "ja": `ヒントを使用しました！(${MINUS_POINT}点)`,
+    "en": `Hint used! (${MINUS_POINT} point)`
+  },
   "no_more_hints": { "ko": "더 이상 힌트를 사용할 수 없습니다.", "ja": "これ以上ヒントは使えません。", "en": "No more hints available." },
   "already_solved": { "ko": "이미 해결된 빈칸입니다.", "ja": "すでに解決済みの空欄です。", "en": "This blank is already solved." },
   "input_error": { "ko": "잘못된 입력입니다.", "ja": "不正な入力です。", "en": "Invalid input." }
@@ -122,11 +136,6 @@ const charPool = {
   numbers: '0123456789'
 };
 
-/**
- * =================================================================
- * ユーティリティ関数
- * =================================================================
- */
 
 // 多言語テキスト取得ヘルパー
 const getLocalizedText = (key) => {
@@ -173,17 +182,12 @@ const shuffleArray = (array) => {
 };
 
 /**
- * =================================================================
  * ゲーム画面のレンダリング
- * =================================================================
  */
 
 // 初期画面：言語選択/ランキング表示
 const renderInitialScreen = () => {
   const container = getElem('main-container');
-
-  // ユーザー名表示は英語固定
-  const userDisplay = `<p class="text-label" style="text-align: right;">User: ${userId}</p>`;
 
   // ランキングデータ
   const dataList = getElemText("dataList");
@@ -202,28 +206,30 @@ const renderInitialScreen = () => {
   `).join('');
 
   container.innerHTML = `
-      ${userDisplay}
-      <h1 class="title">IT Quiz</h1>
-      <div class="flex-center" style="margin-bottom: 30px; gap: 10px;">
-          <p class="text-value">Language</p>
-          <button class="btn btn-secondary lang-btn" data-lang="ja" onclick="onLanguageSelect('ja')">日本語</button>
-          <button class="btn btn-secondary lang-btn" data-lang="ko" onclick="onLanguageSelect('ko')">한국어</button>
-          <button class="btn btn-secondary lang-btn" data-lang="en" onclick="onLanguageSelect('en')">English</button>
+      <h1 class="title">${TITLE_IT_QUIZ}</h1>
+      <div class="flex-center" style="margin-bottom: 30px; gap: 10px; text-align: center;">
+        <button class="btn btn-secondary lang-btn" data-lang="ja" onclick="onLanguageSelect('ja')">日本語</button>
+        <button class="btn btn-secondary lang-btn" data-lang="ko" onclick="onLanguageSelect('ko')">한국어</button>
+        <button class="btn btn-secondary lang-btn" data-lang="en" onclick="onLanguageSelect('en')">English</button>
       </div>
-      <div class="flex-center" style="margin-bottom: 30px;">
-          <button class="btn" id="btnStartGame" disabled>START GAME</button>
-          <button class="btn" id="btnGameRule" disabled onclick="showRuleDialog()">GAME RULE</button>
+      <div class="flex-center" style="margin-bottom: 30px; gap: 10px; text-align: center;">
+        <label for="user-name-input">User Name: </label>
+        <input type="text" id="inputUserName" maxlength="10" placeholder="Max 10 Chars" />
       </div>
-      <h2 style="font-size: 1.4rem; color: #4682b4; border-bottom: 2px dashed #eee; padding-bottom: 5px;">Ranking</h2>
+      <div class="flex-center" style="margin-bottom: 30px; text-align: center;">
+        <button class="btn" id="btnStartGame" disabled>START GAME</button>
+        <button class="btn" id="btnGameRule" disabled onclick="showRuleDialog()">GAME RULE</button>
+      </div>
+      <h2 style="font-size: 1.4rem; color: #4682b4; border-bottom: 2px dashed #eee; padding-bottom: 5px; text-align: center;">Ranking</h2>
       <ul id="ranking-list">
-          ${rankingsHtml}
+        ${rankingsHtml}
       </ul>
   `;
 
   // START GAMEボタンにイベントを付与
   const btnStart = getElem('btnStartGame');
   if (btnStart) {
-    btnStart.addEventListener('click', () => {
+    btnStart.addEventListener("click", () => {
       startGame();
     });
   }
@@ -266,43 +272,40 @@ const renderQuizScreen = () => {
 
   // UIラベルは英語固定
   container.innerHTML = `
-      <h1 class="title">${getLocalizedText('title')}</h1>
-      
-      <!-- ユーザー情報とステータス -->
-      <div class="flex-row">
-          <div style="font-size: 0.9rem;">
-              <span class="text-label">${getLocalizedText('user_label')}</span> <span class="text-value">${userId}</span>
-          </div>
-          <div>
-              <span class="text-label">${getLocalizedText('score_label')}</span> <span class="text-value" id="current-score">${gameState.score} pts</span>
-          </div>
-          <div>
-              <span class="text-label">${getLocalizedText('quiz_status_label')}</span> <span class="text-value" id="quiz-status">1 / ${quizNum}</span>
-          </div>
+    <h1 class="title">${getLocalizedText('title')}</h1>
+    
+    <!-- ユーザー情報とステータス -->
+    <div class="flex-row" style="text-align: center;">
+      <span class="text-label">${getLocalizedText('quiz_status_label')}</span>
+      <span class="text-value" id="quiz-status">1 / ${quizNum}</span>
+      <span class="text-label">${getLocalizedText('score_label')}</span>
+      <span class="text-value" id="current-score">${gameState.score} pts</span>
+      <span class="text-label">${getLocalizedText('user_label')}</span>
+      <span class="text-value">${userName}</span>
       </div>
 
-      <!-- タイムバー -->
-      <div id="timer-bar"><div id="timer-progress"></div></div>
+    <!-- タイムバー -->
+    <div id="timer-bar"><div id="timer-progress"></div></div>
 
-      <!-- ゲームルールボタン -->
-      <div class="flex-end" style="margin-bottom: 10px;">
-          <button class="btn btn-secondary" onclick="showRuleDialog()">${getLocalizedText('game_rule')}</button>
-      </div>
+    <!-- ゲームルールボタン -->
+    <div class="flex-end" style="margin-bottom: 10px;">
+      <button class="btn btn-secondary" onclick="showRuleDialog()">${getLocalizedText('game_rule')}</button>
+    </div>
 
-      <!-- クイズ単語表示領域 -->
-      <div id="quiz-word" oncontextmenu="return false;">
-          <!-- 文字ボックスがここに挿入されます -->
-      </div>
+    <!-- クイズ単語表示領域 -->
+    <div id="quiz-word" oncontextmenu="return false;">
+      <!-- 文字ボックスがここに挿入されます -->
+    </div>
 
-      <!-- クイズ説明 -->
-      <div id="quiz-description"></div>
+    <!-- クイズ説明 -->
+    <div id="quiz-description"></div>
 
-      <!-- 操作ボタン -->
-      <div class="flex-center" style="gap: 15px; margin-top: 25px;">
-          <button class="btn btn-secondary" id="hint-button" onclick="useHint()">${getLocalizedText('hint')}</button>
-          <button class="btn btn-secondary" id="home-button" onclick="goHome()">${getLocalizedText('home')}</button>
-          <button class="btn btn-primary" id="check-button" onclick="checkAnswer()">${getLocalizedText('check_answer')}</button>
-      </div>
+    <!-- 操作ボタン -->
+    <div class="flex-center" style="gap: 15px; margin-top: 25px;">
+      <button class="btn btn-secondary" id="hint-button" onclick="useHint()">${getLocalizedText('hint')}</button>
+      <button class="btn btn-secondary" id="home-button" onclick="goHome()">${getLocalizedText('home')}</button>
+      <button class="btn btn-primary" id="check-button" onclick="checkAnswer()">${getLocalizedText('check_answer')}</button>
+    </div>
   `;
 
   renderQuizStatus();
@@ -354,9 +357,7 @@ const updateTimerDisplay = () => {
 };
 
 /**
- * =================================================================
  * ゲームロジックと状態管理
- * =================================================================
  */
 
 // ゲームの開始
@@ -396,7 +397,7 @@ const nextQuiz = () => {
   }
 
   gameState.currentQuizIndex++;
-  if (gameState.currentQuizIndex >= gameState.quizSet.length) {
+  if (gameState.quizSet.length <= gameState.currentQuizIndex) {
     // 全てのクイズが終了
     gameOver();
     return;
@@ -480,7 +481,7 @@ const useHint = () => {
     .filter(index => index !== -1);
 
   // 残りの空欄数が最大ヒント回数を超えていないかチェック
-  if (gameState.hintsUsed >= currentWord.length - 1 || blanks.length === 0) {
+  if (currentWord.length - 1 <= gameState.hintsUsed || blanks.length === 0) {
     showDialog('message-dialog', 'no_more_hints');
     return;
   }
@@ -527,7 +528,7 @@ const checkAnswer = () => {
       let segmentIndex = Math.ceil(delay / segmentTime);
 
       // 区間インデックスを最大5（5等分）に制限
-      if (segmentIndex > 5) {
+      if (5 < segmentIndex) {
         segmentIndex = 5;
       }
 
@@ -677,12 +678,8 @@ const handleGlobalKeydown = (event) => {
 };
 
 /**
- * =================================================================
  * ランキング更新処理
- * =================================================================
  */
-
-// ランキング更新が必要か判定
 function getUpdateRank() {
   // 5位以内のランキングで自分のスコアより低いランクを検索
   let updateRank = null;
@@ -703,9 +700,7 @@ function getUpdateRank() {
 }
 
 /**
- * =================================================================
  * ゲーム終了処理
- * =================================================================
  */
 const gameOver = () => {
   gameState.isGameOver = true;
@@ -719,8 +714,7 @@ const gameOver = () => {
   // ランキング更新判定・API送信
   const updateRank = getUpdateRank();
   if (updateRank !== null) {
-    // setUserName();
-    updateRanking(updateRank, gameState.score, userId);
+    updateRanking(updateRank, gameState.score, userName);
   }
 
   // 3秒後に初期画面へ
@@ -729,16 +723,16 @@ const gameOver = () => {
 
 // ユーザ名設定
 function setUserName() {
-  if (!userId || userId === SYM_BLANK) {
-    userId = prompt(MSG_INPUT_USER_EN);
-  } else {
-    userId = getElemText("userName");
+  userName = getElemText(STR_USER_NAME);
+  if (!userName || userName === SYM_BLANK) {
+    userName = prompt(MSG_INPUT_USER_EN);
+    // userName = getElemText("inputUserName"); // TODO: プロンプトではなく、入力値設定
   }
-  sessionStorage.setItem(STR_USER_NAME, userId);
+  sessionStorage.setItem(STR_USER_NAME, userName);
 }
 
 // ランキングをAPI経由で更新
-async function updateRanking(rank, score, userId) {
+async function updateRanking(rank, score, userName) {
   let rankOkMsg = MSG_OK_RANK;
   let rankNgMsg = MSG_ERR_RANK;
 
@@ -756,7 +750,7 @@ async function updateRanking(rank, score, userId) {
     url = URL_QUIZ_RANKING_LOCAL;
   }
 
-  const requestBody = { rank: rank, score: score, userId: userId };
+  const requestBody = { rank: rank, score: score, userId: userName };
 
   try {
     const data = await getFetchApiData(url, requestBody);
@@ -777,12 +771,8 @@ const showRuleDialog = () => {
 };
 
 /**
- * =================================================================
- * 初期化処理
- * =================================================================
+ * ページロード時の初期化
  */
-
-// ページロード時の初期化
 window.onload = () => {
   setUserName();
   renderInitialScreen();

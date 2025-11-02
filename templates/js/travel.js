@@ -1,6 +1,9 @@
 // ヘッダー設定
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_2);
 
+// タイトル設定
+document.title = TITLE_TRAVEL;
+
 let travelDataUrl = URL_TRAVEL_SERVER;
 let langDataUrl = URL_LANG_SERVER;
 
@@ -16,9 +19,6 @@ document.addEventListener("DOMContentLoaded", init);
 function init() {
   let travelData = null;
   let langData = null;
-
-  // タイトル設定
-  document.title = TITLE_TRAVEL;
 
   // セレクトボックス・各表示領域の取得
   const langSelect = getElem("lang-select");

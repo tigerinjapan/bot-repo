@@ -7,9 +7,6 @@ import apps.utils.function as func
 import apps.utils.mongo_constants as mongo_const
 import apps.utils.rank_dao as dao
 
-# タイトル
-app_title = "ナンバープレートゲーム"
-
 # CSVファイル
 number_file_path = func.get_file_path(const.APP_NUMBER, const.FILE_TYPE_CSV)
 
@@ -17,6 +14,7 @@ number_file_path = func.get_file_path(const.APP_NUMBER, const.FILE_TYPE_CSV)
 col_list = [
     const.STR_NUMBER,
     const.STR_ANSWER,
+    const.STR_LEVEL,
     mongo_const.ITEM_USER_NAME,
     mongo_const.ITEM_RANK_TIME,
 ]
@@ -25,15 +23,15 @@ col_list = [
 DEFAULT_RANK = {
     const.STR_EASY: {
         mongo_const.FI_USER_NAME: "beginner",
-        mongo_const.FI_RANK_TIME: 20.00,
+        mongo_const.FI_RANK_TIME: const.RANK_TIME_NUMBER,
     },
     const.STR_MEDIUM: {
-        mongo_const.FI_USER_NAME: "user",
-        mongo_const.FI_RANK_TIME: 15.00,
+        mongo_const.FI_USER_NAME: "player",
+        mongo_const.FI_RANK_TIME: const.RANK_TIME_NUMBER,
     },
     const.STR_HARD: {
         mongo_const.FI_USER_NAME: "master",
-        mongo_const.FI_RANK_TIME: 10.00,
+        mongo_const.FI_RANK_TIME: const.RANK_TIME_NUMBER,
     },
 }
 
@@ -44,10 +42,10 @@ def get_item_list():
     return item_list
 
 
-# アイテムリスト取得
-def get_game_data_list(level: str = const.STR_HARD):
+# ゲームデータ取得
+def get_game_data_list():
     game_data_list = []
-    answer_list = get_answer_list(level)
+    answer_list = get_answer_list()
     number_list = [row[0] for row in answer_list]
     rank_info_list = dao.get_rank_info_list(number_list)
 
@@ -56,6 +54,7 @@ def get_game_data_list(level: str = const.STR_HARD):
 
         num = number_data[0]
         ans = number_data[1]
+        level = number_data[2]
 
         if rank_info_list:
             for rank_info in rank_info_list:
@@ -70,20 +69,19 @@ def get_game_data_list(level: str = const.STR_HARD):
         rank_time = ranking_info[mongo_const.FI_RANK_TIME]
         rank_time = float(rank_time)
 
-        game_data = [num, ans, rank_user, rank_time]
+        game_data = [num, ans, level, rank_user, rank_time]
         game_data_list.append(game_data)
 
     return game_data_list
 
 
 # ランダムでCSVデータ取得
-def get_answer_list(level: str = const.STR_MEDIUM):
+def get_answer_list():
     df = func.get_df_from_csv(const.APP_NUMBER)[0]
-    df_level = df[df[const.STR_LEVEL] == level]
-    df_result = df_level.sample(n=const.MAX_NUMBER_DATA)
+    df_result = df.sample(n=const.MAX_NUMBER_DATA)
 
     # データの内容をリストのリスト（行のリスト）として取得
-    answer_list = df_result[[const.STR_NUMBER, const.STR_ANSWER]].values.tolist()
+    answer_list = df_result.values.tolist()
     return answer_list
 
 

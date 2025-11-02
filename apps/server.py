@@ -175,25 +175,20 @@ async def app_exec(request: Request, app_name: str):
 
     try:
         if app_name == const.APP_USER:
-            target_html, context = appl.exec_user(request, app_name)
-        elif const.APP_NUMBER in app_name:
-            target_html, context = appl.exec_number(request, app_name)
+            target_html = const.HTML_USER_INFO
+            context = appl.get_context_for_user(request, app_name)
         else:
-            if not app_name in const.LIST_APP_ALL:
-                except_http_error(curr_func_nm, request.url._url)
+            target_html = const.HTML_RESULT
+            context = appl.get_context_data(request, app_name)
 
-            target_html, context = appl.exec_result(request, app_name)
+            if not context:
+                except_http_error(curr_func_nm, request.url._url)
 
         dashboard.write_dashboard_log(request, app_name)
 
     except Exception as e:
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, app_name, e)
         target_html = const.HTML_INDEX
-        context = {
-            const.STR_REQUEST: request,
-            const.STR_PATH: const.PATH_LOGIN,
-            const.STR_MESSAGE: msg_const.MSG_INFO_SESSION_EXPIRED,
-        }
+        context = get_context_except(curr_func_nm, request, e)
 
     return templates.TemplateResponse(target_html, context)
 
@@ -201,24 +196,30 @@ async def app_exec(request: Request, app_name: str):
 # アプリケーション実行
 @app.get("/apps/{app_name}")
 async def apps(request: Request, app_name: str):
-    if not app_name in const.LIST_APPS_ALL:
-        curr_func_nm = sys._getframe().f_code.co_name
-        except_http_error(curr_func_nm, request.url._url)
+    curr_func_nm = sys._getframe().f_code.co_name
 
-    target_html = const.HTML_RESULT_2
-    context = appl.get_context_data2(request, app_name)
+    try:
+        target_html = const.HTML_RESULT_2
+        context = appl.get_context_data_2(request, app_name)
 
-    dashboard.write_dashboard_log(request, app_name)
+        if not context:
+            except_http_error(curr_func_nm, request.url._url)
+
+        dashboard.write_dashboard_log(request, app_name)
+
+    except Exception as e:
+        target_html = const.HTML_INDEX
+        context = get_context_except(curr_func_nm, request, e)
 
     return templates.TemplateResponse(target_html, context)
 
 
 # HTMLテンプレートファイルの返却
 @app.get("/apps/v1/{app_name}", response_class=FileResponse)
-async def apps_v1(app_name: str):
+async def apps_v1(request: Request, app_name: str):
     if not app_name in const.LIST_APPS_ALL_2:
         curr_func_nm = sys._getframe().f_code.co_name
-        except_http_error(curr_func_nm, app_name)
+        except_http_error(curr_func_nm, request.url._url)
 
     target_html = const.get_html(app_name)
     file_path = f"templates/{target_html}"
@@ -228,7 +229,11 @@ async def apps_v1(app_name: str):
 # JSONデータ取得（認証付き）（例：/json/today?token=token）
 @app.get("/json/{app_name}")
 # @token_required
-async def app_json(app_name: str):
+async def app_json(request: Request, app_name: str):
+    if not app_name in const.LIST_APP_SERVER_ALL:
+        curr_func_nm = sys._getframe().f_code.co_name
+        except_http_error(curr_func_nm, request.url._url)
+
     result = func.get_json_data(app_name, const.STR_OUTPUT)
     return result
 
@@ -240,7 +245,6 @@ async def app_api(request: Request):
     param = request.path_params["param"]
 
     json_data = func.get_json_data(api_name)
-
     if json_data:
         result = json_data.get(param)
         return result
@@ -252,14 +256,14 @@ async def app_api(request: Request):
 # GEMINI
 @app.post("/gemini/api")
 async def gemini_api(request: Request):
+    message = const.SYM_BLANK
     curr_func_nm = sys._getframe().f_code.co_name
 
-    json_data = await request.json()
-    mode = json_data["mode"]
-    contents = json_data["prompt"]
-    message = const.SYM_BLANK
-
     try:
+        json_data = await request.json()
+        mode = json_data["mode"]
+        contents = json_data["prompt"]
+
         if mode == const.STR_IMG:
             message = func_gemini.get_gemini_image(contents=contents)
             func.print_debug_msg(const.MSG_TYPE_IMG, func_line.URL_GEMINI_IMG)
@@ -278,12 +282,21 @@ async def gemini_api(request: Request):
 # ユーザー情報更新（フォーム）
 @app.post("/user/update")
 async def user_update(request: Request, userId: str = Form(...)):
-    form_data = await request.form()
-    dict_data = dict(form_data)
-    user_dao.update_user_info_on_form(dict_data)
-    user_info = user_dao.get_user_info(userId)
-    request.session[const.STR_USER] = user_info
-    target_html, context = appl.exec_user(request, const.APP_USER)
+    curr_func_nm = sys._getframe().f_code.co_name
+
+    try:
+        form_data = await request.form()
+        dict_data = dict(form_data)
+        user_dao.update_user_info_on_form(dict_data)
+        user_info = user_dao.get_user_info(userId)
+        request.session[const.STR_USER] = user_info
+        target_html = const.HTML_USER_INFO
+        context = appl.get_context_for_user(request, const.APP_USER)
+
+    except Exception as e:
+        target_html = const.HTML_INDEX
+        context = get_context_except(curr_func_nm, request, e)
+
     return templates.TemplateResponse(target_html, context)
 
 
@@ -302,6 +315,8 @@ async def update_ranking(request: Request, app_name: str):
 # 掲示板データ登録・更新
 @app.post("/board/{div}")
 async def board_update(request: Request, div: str):
+    curr_func_nm = sys._getframe().f_code.co_name
+
     try:
         json_data = await request.json()
         if div == const.STR_ADD:
@@ -316,7 +331,6 @@ async def board_update(request: Request, div: str):
             func_line.send_msg_for_admin(msg)  # TODO: [check] 実行されない
 
     except Exception as e:
-        curr_func_nm = sys._getframe().f_code.co_name
         message = msg_const.MSG_ERR_SERVER_PROC_FAILED
         func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
 
@@ -431,17 +445,11 @@ async def kakao_apps(request: Request, app_name: str):
         url = "/app/"
         if app_name == const.APP_TODAY:
             app_name = const.APP_TODAY_KOREA
-        elif app_name == const.APP_NUMBER:
-            app_name = const.APP_NUMBER_KO
         elif app_name == const.APP_BOARD:
             app_name = app_name
         else:
             url = url.replace("app", "apps")
-            if app_name == const.APP_TRAVEL:
-                app_name = const.APP_TRAVEL_KO
-            elif app_name == const.APP_REVIEW:
-                app_name = const.APP_REVIEW_KO
-            elif app_name == const.TYPE_LIST:
+            if app_name == const.TYPE_LIST:
                 app_name = const.APP_KAKAO_DESIGN
 
         url += app_name
@@ -511,7 +519,20 @@ def api_test():
     return {const.STR_MESSAGE: message}
 
 
-# HTTPエラー
+# [例外] データ取得
+def get_context_except(curr_func_nm: str, request, e):
+    message = msg_const.MSG_ERR_SERVER_PROC_FAILED
+    func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
+
+    context = {
+        const.STR_REQUEST: request,
+        const.STR_PATH: const.PATH_LOGIN,
+        const.STR_MESSAGE: message,
+    }
+    return context
+
+
+# [例外] HTTPエラー
 def except_http_error(func_name: str, url: str):
     http_status_code = const.STATUS_CODE_NOT_FOUND
     status_msg = msg_const.HTTP_STATUS_MESSAGES.get(http_status_code)

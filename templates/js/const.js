@@ -48,6 +48,7 @@ const STR_CONTENTS = "contents";
 const STR_USER_NAME = "userName";
 const STR_MESSAGE = "message";
 
+const STR_REVIEW = "Review";
 const STR_LINES = "Lines";
 const STR_STATIONS = "Stations";
 
@@ -75,6 +76,9 @@ const ALIGN_CENTER = "center";
 const LEVEL_EASY = "easy";
 const LEVEL_MEDIUM = "medium";
 const LEVEL_HARD = "hard";
+
+const CHART_LINE = "line";
+const CHART_BAR = "bar";
 
 // 言語名（表示用）
 const LANG_NM_JA = "日本語";
@@ -132,12 +136,14 @@ const NUM_APP_BOARD = "8";
 
 // タイトル
 const TITLE_SYSTEM = "Kobe-Dev Demo System";
-const TITLE_TRAVEL = "🌏 Travel & Life";
-const TITLE_NUMBER_PLATE = "🚙Number Plate Game";
-const TITLE_NUMBER_PLATE_KO = "자동차 번호판 게임";
+const TITLE_TRAVEL = "🌏 Travel & Life 🌏";
+const TITLE_NUMBER = "🚙 Number Plate Game";
+const TITLE_NUMBER_KO = "🚙 자동차 번호판 게임";
+const TITLE_SUDOKU = "🔢 SUDOKU";
+const TITLE_IT_QUIZ = "ℹ️ IT Quiz";
 const TITLE_REVIEW = "🌈 Review Page 🌈";
-const TITLE_DESIGN = "📄設計書";
-const TITLE_DASH_BOARD = "📊 Dash Board";
+const TITLE_DESIGN = "📄 設計書 📄";
+const TITLE_DASH_BOARD = "📊 Dash Board 📊";
 
 const TH_NO = "No.";
 

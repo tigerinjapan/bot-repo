@@ -6,10 +6,10 @@
 | :------------------------------------------------------------- | :--------------------- | ------------------ |
 | [home](https://kobe-dev.koyeb.app/)                            | ホーム                 | ログイン要         |
 | [cafe](https://kobe-dev.koyeb.app/app/cafe)                    | カフェ                 | 随時更新           |
-| [travel](https://kobe-dev.koyeb.app/app/travel)                | 台湾旅行               | 2025/10:統合予定   |
-| [travel](https://kobe-dev.koyeb.app/apps/travel)               | 海外旅行情報まとめ     | 内容は更新中       |
+| [taiwan](https://kobe-dev.koyeb.app/app/travel)                | 台湾旅行               | 台湾メトロ旅行情報 |
+| [travel](https://kobe-dev.koyeb.app/apps/travel)               | 海外旅行情報まとめ     | 内容は随時更新     |
 | [travel_design](https://kobe-dev.koyeb.app/apps/travel_design) | 海外旅行情報の設計     | 作成完了           |
-| [number](https://kobe-dev.koyeb.app/app/number)                | ナンバープレートゲーム | モバイル対応済     |
+| [number](https://kobe-dev.koyeb.app/apps/number)                | ナンバープレートゲーム | モバイル対応済     |
 | [itQuiz](https://kobe-dev.koyeb.app/apps/itQuiz)               | IT 用語クイズ          | クイズで IT 勉強   |
 | [itQuiz_design](https://kobe-dev.koyeb.app/apps/itQuiz_design) | itQuiz の設計          | 作成中             |
 | [dashboard](https://kobe-dev.koyeb.app/apps/dashboard)         | ダッシュボード         | サイト分析         |

@@ -1,6 +1,9 @@
 // ヘッダー設定
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 
+// タイトル設定
+document.title = TITLE_NUMBER;
+
 // ページ読み込み時にsessionStorageからデータを取得
 let userName = sessionStorage.getItem(STR_USER_NAME);
 
@@ -13,51 +16,19 @@ let timerId = null;
 // タイマー状態管理
 let isTimerRunning = false;
 
+// 強制停止
+let stopFlg = false;
+
 // DOM読み込み後の処理
 document.addEventListener("DOMContentLoaded", () => {
-  // ゲームデータ設定
-  setGameData();
-
   // 初期表示
   init();
 
+  // STARTボタン設定
+  setStartBtn();
+
   // 言語コード
   const langCd = getElemText("langCd");
-
-  // START/STOP処理
-  const startBtn = getElem("btnStart");
-  if (startBtn) {
-    startBtn.textContent = "START";
-    startBtn.addEventListener("click", () => {
-      const number = getElem("number-display");
-      number.style.backgroundColor = "black";
-
-      // START/STOP トグル（表示は opacity で制御）
-      let exprArea = getElem("exprArea");
-      if (!isTimerRunning) {
-        // START: 表示してタイマー開始（操作可能に）
-        if (exprArea) {
-          exprArea.style.opacity = "1";
-          exprArea.style.pointerEvents = "auto";
-        }
-        setTimer();
-        startBtn.textContent = "STOP";
-        isTimerRunning = true;
-      } else {
-        // STOP: 停止、タイマーリセット、非表示にして新番号取得
-        clearInterval(timerId);
-        setElemText("timer", "STOPPED");
-        startBtn.textContent = "START";
-        isTimerRunning = false;
-        if (exprArea) {
-          exprArea.style.opacity = "0";
-          exprArea.style.pointerEvents = "none";
-        }
-        // 新しい番号を取得（サーバ再取得により num を更新）
-        location.reload();
-      }
-    });
-  }
 
   // ゲームルール表示
   const ruleBtn = getElem("btnRule");
@@ -78,13 +49,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 初期表示
 function init() {
+  // ゲームデータ設定
+  setGameData();
+
   // レベル
   const level = getElemText("levelVal");
 
   // 言語コード
   const langCd = getElemText("langCd");
 
-  let title = TITLE_NUMBER_PLATE;
+  let title = TITLE_NUMBER;
 
   const number = getElem("number-display");
   number.style.backgroundColor = "cyan";
@@ -115,22 +89,19 @@ function init() {
   let btnNextNm = "NEXT";
 
   if (langCd === LANG_CD_KO) {
-    title = TITLE_NUMBER_PLATE_KO;
-    setElemText("title", title);
-
+    title = TITLE_NUMBER_KO;
     btnRuleNm = "게임규칙";
     btnChkNm = "정답확인";
     btnNextNm = "다음문제";
 
-    const footerElem = getElemByTag("footer");
+    const footerElem = getElemByTag(TAG_FOOTER);
     footerElem.style.visibility = 'hidden';
   }
 
+  setElemText("title", title);
   setElemText("btnRule", btnRuleNm);
   setElemText("btnChk", btnChkNm);
   setElemText("btnNext", btnNextNm);
-
-  setLevel(level);
 }
 
 // ゲームデータ設定
@@ -147,6 +118,7 @@ function setGameData() {
 
   const number = gameData.number;
   const answer = gameData.answer;
+  const level = gameData.level;
   const rankUser = gameData.userName;
   const rankTime = gameData.rankTime.toFixed(2);
 
@@ -154,17 +126,64 @@ function setGameData() {
   setElemText("number-answer", answer);
   setElemText("rank-user", rankUser);
   setElemText("rank-time", rankTime);
+  setLevel(level);
 }
 
 // レベル設定
 function setLevel(level) {
-  let levelVal = SYM_LEVEL;
+  let levelMark = SYM_LEVEL;
   if (level === LEVEL_MEDIUM) {
-    levelVal = SYM_LEVEL.repeat(2);
+    levelMark = SYM_LEVEL.repeat(2);
   } else if (level === LEVEL_HARD) {
-    levelVal = SYM_LEVEL.repeat(3);
+    levelMark = SYM_LEVEL.repeat(3);
   }
-  setElemText("level", `Level ${levelVal}`);
+  setElemText("level", `Level ${levelMark}`);
+  setElemText("levelVal", level);
+}
+
+// STARTボタン設定
+function setStartBtn() {
+  // START/STOP処理
+  const startBtn = getElem("btnStart");
+  if (startBtn) {
+    startBtn.textContent = "START";
+    startBtn.addEventListener("click", () => {
+      const number = getElem("number-display");
+      number.style.backgroundColor = "black";
+
+      // START/STOP トグル（表示は opacity で制御）
+      let exprArea = getElem("exprArea");
+      if (!isTimerRunning) {
+        // START: 表示してタイマー開始（操作可能に）
+        if (exprArea) {
+          exprArea.style.opacity = "1";
+          exprArea.style.pointerEvents = "auto";
+        }
+        setTimer();
+        startBtn.textContent = "STOP";
+        isTimerRunning = true;
+      } else {
+        // STOP: 停止、タイマーリセット、非表示にして新番号取得
+        setStop();
+      }
+    });
+  }
+}
+
+// 停止処理
+function setStop() {
+  clearInterval(timerId);
+  isTimerRunning = false;
+
+  setElemText("timer", "STOPPED");
+  setElemText("btnStart", "START");
+
+  let exprArea = getElem("exprArea");
+  if (exprArea) {
+    exprArea.style.opacity = "0";
+    exprArea.style.pointerEvents = "none";
+  }
+  init();
 }
 
 // タイマー設定
@@ -241,6 +260,7 @@ function checkAnswer(langCd) {
   const ans = getElemText("number-answer");
   const rankTime = getElemText("rank-time");
   const timeVal = getElemText("timer");
+
   // exprArea の内部トークンから現在の式文字列を組み立てる（expression id に依存しない）
   const exprArea = getElem("exprArea");
   let expr = "";
@@ -250,7 +270,6 @@ function checkAnswer(langCd) {
 
   // 入力チェック
   let chkMsg = validate(num, ans, expr, langCd);
-
   if (chkMsg) {
     showMessage(chkMsg, false);
   } else {
@@ -265,7 +284,8 @@ function checkAnswer(langCd) {
       const clearTime = limitTime - parseFloat(timeVal);
       const clearTimeVal = clearTime.toFixed(2);
       const rankTimeVal = parseFloat(rankTime);
-      if (clearTime != null && clearTimeVal < rankTimeVal) {
+      const level = getElemText("levelVal");
+      if (clearTime != null && clearTimeVal < rankTimeVal && level == LEVEL_HARD) {
         const numVal = parseInt(num);
         // ランキング送信
         sendRanking(numVal, clearTimeVal, langCd);
@@ -331,14 +351,14 @@ function renderInputButtons(numberStr) {
     // 状態判定
     const hasSqrt = String(token.val).startsWith("√");
     const hasSup = /[⁰¹²]$/.test(String(token.val));
-    const hasHistory = token._history && token._history.length > 0;
+    const hasHistory = token._history && 0 < token._history.length;
 
     // 判定: このトークンが「空箱削除で結合された2桁トークン」か
     const isMergedTwoDigit = /^\d{2}$/.test(raw) && token._history && token._history.some(h => h.type === "merge");
 
     // 左側に空箱があるか（トークン構造上、左隣が slot で val===null）
     const leftIdx = idx - 1;
-    const leftIsEmptySlot = leftIdx >= 0 && exprArea._tokens[leftIdx] && exprArea._tokens[leftIdx].type === "slot" && exprArea._tokens[leftIdx].val == null;
+    const leftIsEmptySlot = 0 <= leftIdx && exprArea._tokens[leftIdx] && exprArea._tokens[leftIdx].type === "slot" && exprArea._tokens[leftIdx].val == null;
 
     let choices = [];
 
@@ -382,7 +402,7 @@ function renderInputButtons(numberStr) {
 
         // back: 履歴があれば復元（merge の場合は split を復元）
         if (choice === "back") {
-          if (token._history && token._history.length > 0) {
+          if (token._history && 0 < token._history.length) {
             const last = token._history.pop();
             if (last.type === "modify") {
               token.val = last.prevVal;
@@ -451,7 +471,7 @@ function renderInputButtons(numberStr) {
           // スロット削除 -> 左右の数を結合（文字列連結）
           const leftIdx = idx - 1;
           const rightIdx = idx + 1;
-          if (leftIdx >= 0 && rightIdx < exprArea._tokens.length &&
+          if (0 <= leftIdx && rightIdx < exprArea._tokens.length &&
             exprArea._tokens[leftIdx].type === "num" &&
             exprArea._tokens[rightIdx].type === "num") {
             // 履歴を残してからマージ（back で復元可能にする）
@@ -516,7 +536,7 @@ function renderInputButtons(numberStr) {
     if (left < 6) left = 6;
     // 右端にはみ出すなら左を調整
     const popupEstWidth = Math.min(360, choices.length * 56 + 24);
-    if (left + popupEstWidth > winW - 6) {
+    if (winW - 6 < left + popupEstWidth) {
       left = Math.max(6, winW - popupEstWidth - 6);
     }
     popup.style.left = left + "px";

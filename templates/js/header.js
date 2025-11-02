@@ -57,7 +57,7 @@ function setTopMenu(userDiv, userNm, appNm, menuVal) {
 
   setElemContents("topMenu", topMenuList);
 
-  if (appNm == "today_korea") {
+  if (appNm === "today_korea") {
     appNm = APP_TODAY;
   }
 
