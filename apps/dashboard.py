@@ -1,4 +1,6 @@
-# 説明: ダッシュボード
+"""
+ダッシュボード
+"""
 
 import pandas as pd
 from dateutil.relativedelta import relativedelta
@@ -34,8 +36,10 @@ LIST_DATE = [const.STR_DAY, const.STR_MONTH, const.STR_YEAR]
 DEFAULT_VALUE = "Unknown"
 
 
-# データ更新
 def update_data():
+    """
+    データ更新
+    """
     func.print_start(SCRIPT_NAME)
 
     data_list = get_data_list(const.APP_DASHBOARD)
@@ -68,8 +72,10 @@ def update_data():
     func.print_end(SCRIPT_NAME)
 
 
-# データリスト取得
 def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
+    """
+    データリスト取得
+    """
     data_list = []
     backup_log_list = []
 
@@ -130,8 +136,10 @@ def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
     return data_list
 
 
-# ログバックアップ
 def backup_log(log_div: str = const.APP_DASHBOARD):
+    """
+    ログバックアップ
+    """
     div = f"{const.STR_BACKUP} {log_div}"
     func.print_start(div)
 
@@ -140,8 +148,10 @@ def backup_log(log_div: str = const.APP_DASHBOARD):
     func.print_end(div)
 
 
-# ダッシュボードデータ取得
 def get_dashboard_json(df_all, date_div: str):
+    """
+    ダッシュボードデータ取得
+    """
     target_date, date_format = get_target_date(date_div)
 
     df_all[const.STR_DATE] = pd.to_datetime(df_all[const.STR_DATE])
@@ -169,17 +179,19 @@ def get_dashboard_json(df_all, date_div: str):
             "labels": category_counts.index.tolist(),
             "data": category_counts.values.tolist(),
         },
-        const.STR_APP: calculate_percentage_to_100(app_counts),
-        const.STR_DEVICE: calculate_percentage_to_100(device_counts),
-        const.STR_OS: calculate_percentage_to_100(os_counts),
-        const.STR_BROWSER: calculate_percentage_to_100(browser_counts),
+        const.STR_APP: calc_percentage(app_counts, etc_flg=const.FLG_ON),
+        const.STR_DEVICE: calc_percentage(device_counts),
+        const.STR_OS: calc_percentage(os_counts),
+        const.STR_BROWSER: calc_percentage(browser_counts),
     }
 
     return dashboard_json
 
 
-# 処理対象日取得
 def get_target_date(date_div: str):
+    """
+    処理対象日取得
+    """
     target_date = func.get_now()
     date_format = const.DATE_FORMAT_YYYYMMDD
 
@@ -211,8 +223,10 @@ def get_target_date(date_div: str):
     return target_date, date_format
 
 
-# デバイスとOSの割合（パーセンテージ）計算
-def calculate_percentage_to_100(counts):
+def calc_percentage(counts, etc_flg: bool = const.FLG_OFF):
+    """
+    割合（パーセンテージ）計算
+    """
     total = counts.sum()
 
     # まず割合を計算し、小数点以下を切り捨てて整数に変換
@@ -243,16 +257,29 @@ def calculate_percentage_to_100(counts):
                 percentages_int[item_to_adjust] -= 1
 
     # 結果をJSON形式に変換
-    result = [
-        {"name": name, "value": value}
-        for name, value in percentages_int.items()
-        if value > 0
-    ]
+    result = []
+
+    init_percent = 2 if etc_flg else 0
+    etcVal = 0
+
+    for name, value in percentages_int.items():
+        if init_percent < value:
+            data = {"name": name, "value": value}
+            result.append(data)
+        elif 0 < value:
+            etcVal += value
+
+    if etc_flg:
+        data = {"name": "etc", "value": etcVal}
+        result.append(data)
+
     return result
 
 
-# ラベルリスト取得
 def get_date_label_list(date_div: str):
+    """
+    日付ラベルリスト取得
+    """
     date_list = []
     today = func.get_now()
     if date_div == const.STR_DAY:
@@ -270,8 +297,10 @@ def get_date_label_list(date_div: str):
     return date_list
 
 
-# ダッシュボードデータ出力
 def write_dashboard_log(request: Request, app_name: str):
+    """
+    ダッシュボードログ出力
+    """
     # ユーザーエージェントの文字列を取得
     user_agent_str = request.headers.get("user-agent")
 
@@ -300,8 +329,10 @@ def write_dashboard_log(request: Request, app_name: str):
         func.print_error_msg(app_name, message)
 
 
-# カテゴリ名取得
 def get_app_category(app_name: str) -> str:
+    """
+    カテゴリ名取得
+    """
     app_category = DEFAULT_VALUE
 
     # カテゴリ名とアプリリストを同時に処理する
@@ -314,8 +345,10 @@ def get_app_category(app_name: str) -> str:
     return app_category
 
 
-# IP情報取得
 def get_ip_info(ip_address: str):
+    """
+    IP情報取得
+    """
     url = f"{const.URL_IP_INFO}/{ip_address}/json"
     ip_info = func_api.get_response_result(url)
     return ip_info
@@ -323,4 +356,4 @@ def get_ip_info(ip_address: str):
 
 if __name__ == const.MAIN_FUNCTION:
     update_data()
-    backup_log()
+    # backup_log()

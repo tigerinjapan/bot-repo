@@ -12,10 +12,10 @@ use(database);
 
 // find documents
 cond = { sDiv: div };
-cond = {
-    sDiv: div,
-    sMessage: { $regex: "number" }
-};
+// cond = {
+//     sDiv: div,
+//     sMessage: { $regex: "number" }
+// };
 
 selectData = { _id: 0 };
 selectData = {};

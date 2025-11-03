@@ -476,8 +476,8 @@ MSG_TYPE_BUBBLE = "bubble"
 
 # タイトル
 DIV_MARK = "*----*----*----*----*----*"
-DIV_MARK_TXT = "*--- {}  ---*"
-# DIV_MARK_IMG = "=== {} ==="
+MARK_PATTERN_1 = "*---"
+MARK_PATTERN_2 = "="
 DIV_MARK_IMG = "■ {} ■"
 
 ##### ファンド #####

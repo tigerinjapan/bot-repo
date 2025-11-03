@@ -1,4 +1,6 @@
-# 説明: MLB STAT
+"""
+MLB STAT
+"""
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -10,18 +12,25 @@ import apps.utils.message_constants as msg_const
 app_title = const.APP_MLB
 
 
-# アイテムリスト取得
 def get_item_list():
+    """
+    アイテムリスト取得
+    """
     item_list = get_last_game_info()
     # item_list = get_ranking_info()
     return item_list
 
 
-# MLB Stat取得
 def get_mlb_game_data(
-    team_id: int = const.TEAM_ID_LAD,
-    all_flg: bool = const.FLG_OFF,
+    team_id: int = const.TEAM_ID_LAD, all_flg: bool = const.FLG_OFF
 ) -> list[str]:
+    """
+    MLB ゲームデータ取得
+    """
+    # シーズン中の判定
+    if not is_season_day():
+        return const.SYM_BLANK
+
     stat_data_list = []
 
     game_data, game_date, game_score, home_away_div = get_mlb_stat_of_api(team_id)
@@ -70,10 +79,12 @@ def get_mlb_game_data(
     return stat_data
 
 
-# 今日のヒーロー
 def get_player_of_game_data(
     team_id: int = const.TEAM_ID_LAD, game_data=const.NONE_CONSTANT
 ) -> str:
+    """
+    今日のヒーローデータ取得
+    """
     stat_data_list = ["[POG]"]
 
     if game_data:
@@ -113,8 +124,10 @@ def get_player_of_game_data(
     return stat_data
 
 
-# MLB Stat取得
 def get_mlb_stat_of_api(team_id: int):
+    """
+    MLB Stat取得
+    """
     game_data = const.NONE_CONSTANT
     game_date = game_score = home_away_div = const.SYM_BLANK
 
@@ -159,8 +172,10 @@ def get_mlb_stat_of_api(team_id: int):
     return game_data, game_date, game_score, home_away_div
 
 
-# ホーム&アウエー
 def get_home_away(game_data) -> str:
+    """
+    ホーム&アウエー取得
+    """
     team_data = game_data["gameData"]["teams"]
     home_team = team_data["home"]["abbreviation"]
     away_team = team_data["away"]["abbreviation"]
@@ -168,8 +183,10 @@ def get_home_away(game_data) -> str:
     return home_away
 
 
-# ゲームスタッツ取得
 def get_game_stats(player_data, all_flg: bool = const.FLG_OFF) -> list[str]:
+    """
+    ゲームスタッツ取得
+    """
     game_stats = []
     batting_data = pitching_data = {}
 
@@ -214,8 +231,10 @@ def get_game_stats(player_data, all_flg: bool = const.FLG_OFF) -> list[str]:
     return game_stats
 
 
-# ゲーム日付取得
 def get_game_date(game_date: str) -> str:
+    """
+    ゲーム日付取得
+    """
     jst_date = const.SYM_BLANK
 
     # 日付型へ変換
@@ -229,6 +248,31 @@ def get_game_date(game_date: str) -> str:
 
     jst_date = func.convert_date_to_str(calc_date, const.DATE_FORMAT_MMDD_SLASH_NO_ZERO)
     return jst_date
+
+
+def is_season_day() -> bool:
+    """
+    シーズン中の判定
+    「3月最終土曜日」から「11月最初の日曜日」までの期間判定
+    """
+    target_date = func.get_now()
+
+    # 1. 3月最終土曜日（期間の開始日）を求める
+    d = target_date.replace(month=3, day=31)
+    while d.weekday() != 5:
+        d = func.get_calc_date(-1, calc_date=d)
+    start_date = d
+
+    # 2. 11月最初の日曜日（期間の終了日）を求める
+    d = target_date.replace(month=11, day=1)
+    while d.weekday() != 6:
+        d = func.get_calc_date(1, calc_date=d)
+    end_date = d
+
+    # 3. 期間チェック
+    # 開始日 <= 対象日 <= 終了日
+    check_flg = start_date <= target_date <= end_date
+    return check_flg
 
 
 # ランキング情報取得

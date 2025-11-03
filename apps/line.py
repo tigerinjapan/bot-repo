@@ -1,4 +1,6 @@
-# 説明: LINEメッセージ
+"""
+LINEメッセージ
+"""
 
 import sys
 
@@ -31,14 +33,13 @@ def main(
     auto_flg: bool = const.FLG_ON,
 ):
     """
-    メインの処理を実行
+    メイン処理実行
 
     引数:
-        data_div  (int): 1:通常、2:テンプレート、3:フレックス
+        data_div (int): 1:通常、2:テンプレート、3:フレックス
         proc_flg (bool): 処理実行を有効にするフラグ
         auto_flg (bool): 自動処理を有効にするフラグ
     """
-
     func.print_start(SCRIPT_NAME)
 
     if func_line.LINE_CHANNEL_ID:
@@ -73,37 +74,50 @@ def main(
                 err_msg = msg_const.MSG_ERR_MSG_SEND
                 func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg, e)
 
-                if not func.is_local_env():
-                    msg = f"[{err_msg}]\n{e[:100]}"
-                    func_line.send_msg_for_admin(msg)  # TODO: [check] 実行されない
+                # LINE通知
+                msg = f"[{err_msg}]\n{e[:100]}"
+                sub(SCRIPT_NAME, msg)
 
     func.print_end(SCRIPT_NAME)
 
 
-# メッセージ送信
-def sub(div: str):
-    msg_data = const.NONE_CONSTANT
-    if div == const.APP_MLB:
-        date_today = func.convert_date_to_str(
-            func.get_now(), const.DATE_FORMAT_YYYYMMDD_SLASH
-        )
-        msg_data = mlb.get_mlb_game_data(all_flg=const.FLG_ON)
-        msg_data_list = get_msg_data_list(
-            div, const.MSG_TYPE_TXT, [msg_data], date_today
-        )
-        msg_list = func_line.get_line_messages([msg_data_list])
+def sub(div: str, data_list: list[str] = []):
+    """
+    メッセージ送信
+    """
+    msg_list = []
+    msg_data = const.SYM_BLANK
 
-    elif div == const.STR_NISA:
+    date_today = func.convert_date_to_str(
+        func.get_now(), const.DATE_FORMAT_YYYYMMDD_SLASH
+    )
+
+    if div == const.STR_NISA:
         # フレックスメッセージ取得
-        msg_data = get_flex_msg()
+        alt_text = f"[{date_today}] {div}"
+        msg_data = get_flex_msg(alt_text)
         msg_list = msg_data
 
-    if msg_data:
+    else:
+        if div == const.APP_MLB:
+            msg_data = mlb.get_mlb_game_data(all_flg=const.FLG_ON)
+        else:
+            msg_data = NEW_LINE.join(data_list)
+
+        if msg_data:
+            msg_data_list = get_msg_data_list(
+                div, const.MSG_TYPE_TXT, [msg_data], date_today
+            )
+            msg_list = func_line.get_line_messages([msg_data_list])
+
+    if msg_list:
         func_line.send_msg_for_admin(msg_list)
 
 
-# メッセージリスト取得
 def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
+    """
+    メッセージリスト取得
+    """
     if auto_flg:
         msg_data, date_today, img_url = today.get_msg_data_today()
         msg_data_list = get_msg_data_list(
@@ -126,8 +140,10 @@ def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
     return msg_list
 
 
-# テンプレートメッセージ取得
 def get_template_msg():
+    """
+    テンプレートメッセージ取得
+    """
     messages = []
 
     alt_text = "今日も一日お疲れ様でした。"
@@ -146,8 +162,10 @@ def get_template_msg():
     return messages
 
 
-# テンプレートアクション取得
 def get_template_actions():
+    """
+    テンプレートアクション取得
+    """
     actions = []
     temp_item_list = [news, tv, lcc, study]
 
@@ -165,18 +183,23 @@ def get_template_actions():
     return actions
 
 
-# フレックスメッセージ取得
-def get_flex_msg():
+def get_flex_msg(alt_text: str = const.SYM_BLANK):
+    """
+    フレックスメッセージ取得
+    """
     messages = []
-    alt_text = today.get_today_phrase()
+    if not alt_text:
+        alt_text = today.get_today_phrase()
     data_list = get_flex_data_list()
     flex_msg = func_line.get_flex_msg_json(alt_text, data_list)
     messages.append(flex_msg)
     return messages
 
 
-# フレックスメッセージ・データ取得
 def get_flex_data_list():
+    """
+    フレックスメッセージ・データ取得
+    """
     header_list = ["Check#1", "Check#2", "Check#3"]
     fund_goal_list = [30000, 50000, 50000]
 
@@ -191,7 +214,8 @@ def get_flex_data_list():
         )
         rate = (int_point / fund_goal) * 100
         str_rate = f"{int(rate)}%"
-        body_text = f"{fund_name}{const.SYM_NEW_LINE}{point}"
+        body_text = f"{fund_name}{NEW_LINE}{point}"
+
         rate_list.append(str_rate)
         body_list.append(body_text)
 
@@ -199,48 +223,117 @@ def get_flex_data_list():
     return data_list
 
 
-# メッセージ取得
 def get_msg_data_list(
     msg_div: str,
     msg_type: str,
     msg_data: list[str] | str,
     date_today: str = const.SYM_BLANK,
 ) -> list[str]:
+    """
+    メッセージデータリスト取得
+    """
     if msg_type == const.MSG_TYPE_IMG:
         msg = msg_data
     else:
         title = get_title(msg_div, msg_type, date_today)
-        msg = title + const.SYM_NEW_LINE + NEW_LINE.join(msg_data)
+        msg = title + NEW_LINE + NEW_LINE.join(msg_data)
 
     msg_data_list = [msg_type, msg]
     return msg_data_list
 
 
-# タイトル取得
 def get_title(
     div: str, msg_type: str = const.SYM_BLANK, date_today: str = const.SYM_BLANK
 ) -> str:
+    """
+    タイトル取得
+    """
     title_div = func.convert_upper_lower(div)
 
     if div == const.APP_NEWS:
         title_div = news.DIV_NEWS.format(const.SYM_BLANK)
     elif div == const.STR_AI_NEWS:
         title_div = news.DIV_AI_NEWS
-    else:
-        if date_today:
-            title_div = date_today
 
     if msg_type == const.MSG_TYPE_TXT:
-        title_txt = const.DIV_MARK_TXT.format(title_div)
+        total_length = len(const.DIV_MARK)
+        title_txt = get_title_mark(title_div, total_length)
+        if date_today:
+            date_text = get_title_mark(date_today, total_length)
+            title_txt = date_text + NEW_LINE + title_txt
+
         title_list = [const.DIV_MARK, title_txt, const.DIV_MARK]
         title = NEW_LINE.join(title_list)
+
     elif msg_type == const.MSG_TYPE_IMG:
+        if div == const.APP_TODAY and date_today:
+            title_div = date_today
+
         title_img = const.DIV_MARK_IMG.format(title_div)
         title = title_img
+
     else:
         title = title_div
 
     return title
+
+
+def get_title_mark(
+    target_str: str, total_length: int, div_mark_pattern: str = const.MARK_PATTERN_1
+) -> str:
+    """
+    タイトルマーク取得
+
+    指定された文字列を任意の長さの中央に配置し、任意のパターンで左右を埋める
+    """
+    # 1. 挿入部分の長さ (target_str + 左右の必須スペース)
+    insert_len = len(target_str) + 2
+
+    # 2. 左右のマーク部分の合計長を計算
+    mark_total_len = total_length - insert_len
+
+    # 3. 左右のマークの長さを計算（左右で長さが違う場合は、右側を長くする）
+    left_mark_len = mark_total_len // 2
+    right_mark_len = mark_total_len - left_mark_len
+
+    # 4. 左右のスペース調整 (左右のマークの長さが異なる場合、右側のスペースを1つ増やす)
+    #    mark_total_lenが奇数ならextra_spaceに" "が、偶数なら""が入る
+    extra_space = (
+        const.SYM_SPACE if left_mark_len != right_mark_len else const.SYM_BLANK
+    )
+
+    # 5. マーク文字列の作成ロジック
+    #    パターンを繰り返し、必要な長さの分だけ切り取る
+    def create_mark(length, pattern):
+        if length <= 0:
+            return const.SYM_BLANK
+
+        # パターンを繰り返し繋げ、必要な長さで切り取る
+        repeat_count = (length + len(pattern) - 1) // len(pattern)
+        full_mark = pattern * repeat_count
+        return full_mark[:length]
+
+    left_mark = create_mark(left_mark_len, div_mark_pattern)
+    right_mark = create_mark(right_mark_len, div_mark_pattern)
+
+    # 6. 全体を結合して、完成
+    # (左マーク)(スペース1)(target_str)(スペース1)(追加スペース)(右マーク)
+    result = f"{left_mark} {target_str} {extra_space}{right_mark}"
+
+    return result
+
+
+def sub_test():
+    """
+    [テスト] メッセージ送信
+    """
+    data_list = [
+        "[70] ありがとうございますありがとうございますありがとうございますありがとうございます",
+        "[71] ABCDEEGHIJABCDEEGHIJABCDEEGHIJABCDEEGHIJ",
+        "[72] 안녕하세요감사합니다안녕하세요감사합니다안녕하세요감사합니다안녕하세요감사합니다",
+        "[73] １２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０",
+    ]
+    sub(const.STR_TEST, data_list)
 
 
 if __name__ == const.MAIN_FUNCTION:
@@ -251,5 +344,4 @@ if __name__ == const.MAIN_FUNCTION:
     # main(data_div=const.NUM_TWO)
     # main(data_div=const.NUM_THREE)
     # main(auto_flg=const.FLG_OFF)
-    # sub(const.APP_MLB)
-    # sub(div=const.APP_NISA)
+    # sub_test()

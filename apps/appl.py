@@ -1,4 +1,6 @@
-# 説明: アプリケーション実行
+"""
+アプリケーション実行
+"""
 
 import sys
 
@@ -32,30 +34,43 @@ LIST_APP_DIV_KOREA = [today_korea]
 LIST_ALL_APP_DIV = LIST_APP_DIV + ([site] * 4) + LIST_APP_DIV_KOREA
 
 
-# クラスの定義
 class AppExec:
-    # 初期化メソッド（コンストラクタ）
+    """
+    アプリケーション実行クラス
+    """
+
     def __init__(self, app, name):
+        """
+        初期化メソッド（コンストラクタ）
+        """
         self.app = app
         self.name = name
 
-    # アプリケーション開始
     def start(self):
+        """
+        アプリケーション開始
+        """
         func.print_start(self.name)
 
-    # アプリケーション終了
     def end(self):
+        """
+        アプリケーション終了
+        """
         func.print_end(self.name)
 
-    # データ取得
     def data(self):
+        """
+        データ取得
+        """
         df = get_df_info(self.name)
         data_list = get_data_list(df)
         return data_list
 
 
-# 【画面】データ取得
 def get_context_data(request: Request, app_name: str):
+    """
+    【画面】データ取得
+    """
     context = {}
 
     if not app_name in const.LIST_APP_ALL:
@@ -111,8 +126,10 @@ def get_context_data(request: Request, app_name: str):
     return context
 
 
-# 【画面】データ取得
 def get_context_data_2(request: Request, app_name: str):
+    """
+    【画面】データ取得
+    """
     context = {}
 
     user_name = const.SYM_BLANK
@@ -152,8 +169,10 @@ def get_context_data_2(request: Request, app_name: str):
     return context
 
 
-# 【画面】データ取得
 def get_context_for_user(request: Request, app_name: str):
+    """
+    【画面】ユーザーデータ取得
+    """
     user_info = request.session[const.STR_USER]
     context = {
         const.STR_REQUEST: request,
@@ -165,8 +184,10 @@ def get_context_for_user(request: Request, app_name: str):
     return context
 
 
-# 【画面】データリスト取得
 def get_data_list(df) -> list[tuple[list[str], list[str]]]:
+    """
+    【画面】データリスト取得
+    """
     data_list = []
     column_list = df.columns.to_list()
     data_val_list = df.values.tolist()
@@ -176,8 +197,10 @@ def get_data_list(df) -> list[tuple[list[str], list[str]]]:
     return data_list
 
 
-# データフレーム取得
 def get_df_info(app_name: str):
+    """
+    データフレーム取得
+    """
     df, file_path = func.get_df_from_json(app_name)
     if df.empty:
         update_news(app_name)
@@ -185,8 +208,10 @@ def get_df_info(app_name: str):
     return df
 
 
-# データ更新
 def update_news(app_name: str = const.SYM_BLANK):
+    """
+    データ更新
+    """
     curr_func_nm = sys._getframe().f_code.co_name
     func.print_start(curr_func_nm, msg_const.MSG_INFO_PROC_START)
 
@@ -247,15 +272,15 @@ def update_news(app_name: str = const.SYM_BLANK):
     func.print_end(curr_func_nm, msg_const.MSG_INFO_PROC_COMPLETED)
 
 
-# スリープ状態にならないようサーバーアクセス
 def no_sleep():
+    """
+    スリープ状態にならないようサーバーアクセス
+    """
     func_api.get_result_on_app(const.APP_TODAY)
 
 
 if __name__ == const.MAIN_FUNCTION:
     # update_news()
-    # app_name_list = [const.APP_TODAY_KOREA, const.APP_TODAY]
-    # for app_name in app_name_list:
-    #     update_news(app_name)
-
-    update_news("number")
+    app_name_list = [const.APP_TODAY_KOREA, const.APP_TODAY]
+    for app_name in app_name_list:
+        update_news(app_name)

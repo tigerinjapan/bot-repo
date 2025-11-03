@@ -7,6 +7,9 @@ document.title = TITLE_REVIEW;
 // 掲示板数
 const NUM_BOARD_CNT = 5;
 
+// アプリケーション初期選択値
+let appInitVal = 3;
+
 // 要素ID
 const ELEM_ID_DIV = TAG_DIV + STR_REVIEW;
 const ELEM_ID_FORM = TAG_FORM + STR_REVIEW;
@@ -33,7 +36,6 @@ function init() {
   // 言語コード
   const langCd = getElemText("langCd");
 
-  let appInitVal = 0;
   if (langCd === LANG_CD_KO) {
     appInitVal = 2;
   }

@@ -82,12 +82,14 @@ body {
 .text-label {
 	font-size: 0.9rem;
 	color: gray;
+	margin-right: 10px;
 }
 
 .text-value {
 	font-size: 1.1rem;
 	font-weight: 700;
 	color: gray;
+	margin-right: 10px;
 }
 
 .text-error {
@@ -218,7 +220,7 @@ h2 {
 }
 
 .flex-center,
-.flex-low {
+.flex-row {
 	text-align: center;
 	gap: 15px;
 	margin-bottom: 10px;

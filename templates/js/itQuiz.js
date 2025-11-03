@@ -285,11 +285,11 @@ const renderQuizScreen = () => {
     
     <!-- ユーザー情報とステータス -->
     <div class="flex-row">
-      <span class="text-label">[${getLocalizedText('quiz_status_label')}]</span>
+      <span class="text-label">【${getLocalizedText('quiz_status_label')}】</span>
       <span class="text-value" id="quiz-status">1 / ${quizNum}</span>
-      <span class="text-label">[${getLocalizedText('score_label')}]</span>
+      <span class="text-label">【${getLocalizedText('score_label')}】</span>
       <span class="text-value" id="current-score">${gameState.score} pts</span>
-      <span class="text-label">[${getLocalizedText('user_label')}]</span>
+      <span class="text-label">【${getLocalizedText('user_label')}】</span>
       <span class="text-value">${userName}</span>
       </div>
 

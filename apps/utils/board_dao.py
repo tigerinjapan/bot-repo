@@ -1,4 +1,6 @@
-# 説明: 掲示板情報DAO
+"""
+掲示板情報DAO
+"""
 
 import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
@@ -8,8 +10,10 @@ import apps.utils.mongo_constants as mongo_const
 import apps.utils.sequence_dao as seq_dao
 
 
-# 掲示板データ取得
 def get_board_info():
+    """
+    掲示板データ取得
+    """
     board_data = []
 
     client = func_mongo.db_connect()
@@ -47,24 +51,41 @@ def get_board_info():
     return board_data
 
 
-# データ登録（API）
 def insert_board_data_of_api(json_data):
+    """
+    掲示板データ登録（API）
+    """
     client = func_mongo.db_connect()
     data_list = json_data[const.STR_DATA]
     inc_val = len(data_list)
     seq = seq_dao.get_sequence(client, const.APP_BOARD)
 
+    insert_data_list = []
+    message_data_list = []
     for idx, data in enumerate(data_list):
         seq_val = seq + idx
         update_data = board_dto.get_update_data_for_board_info(data, seq_val)
-        func_mongo.db_insert(client, mongo_const.COLL_BOARD, update_data)
+        insert_data_list.append(update_data)
+
+        if update_data[mongo_const.FI_USER_NAME] != const.AUTH_ADMIN:
+            board_data = board_dto.get_board_data(update_data)
+            message_data = f"[{board_data[mongo_const.FI_SEQ]}] {board_data[mongo_const.FI_CONTENTS]}"
+            message_data_list.append(message_data)
+
+    func_mongo.db_insert(
+        client, mongo_const.COLL_BOARD, insert_data_list, many_flg=const.FLG_ON
+    )
 
     seq = seq_dao.update_sequence(client, const.APP_BOARD, inc_val)
     func_mongo.db_close(client)
 
+    return message_data_list
 
-# ステータス更新
+
 def update_board_status(json_data):
+    """
+    ステータス更新
+    """
     seq = int(json_data[const.STR_TITLE])
     remark = json_data[const.INPUT_TYPE_TEXT]
     status = int(json_data[const.STR_STATUS])

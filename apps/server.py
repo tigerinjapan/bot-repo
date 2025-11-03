@@ -1,5 +1,9 @@
-# 説明: サーバー処理
-# FastAPIによるWebサーバー。認証・セッション管理・各種APIエンドポイントを提供
+"""
+サーバー処理
+
+FastAPIによるWebサーバー。
+認証・セッション管理・各種APIエンドポイントを提供
+"""
 
 import sys
 
@@ -43,8 +47,10 @@ templates = Jinja2Templates(directory="templates")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-# サーバー起動
 def run_server():
+    """
+    サーバー起動
+    """
     func.print_start(SCRIPT_NAME, msg_const.MSG_INFO_SERVER_START)
     host, port = func.get_host_port()
     config = Config(app, host=host, port=port)
@@ -52,15 +58,20 @@ def run_server():
     server.run()
 
 
-# サーバーを別スレッドで起動
 def start_thread():
+    """
+    サーバーを別スレッドで起動
+    """
     t = Thread(target=run_server)
     t.start()
     # t.join()
 
 
-# トークン認証
 def token_required(func_):
+    """
+    トークン認証
+    """
+
     @wraps(func_)
     async def wrapper(*args, **kwargs):
         request: Request = kwargs.get(const.STR_REQUEST)
@@ -82,9 +93,11 @@ def token_required(func_):
     return wrapper
 
 
-# トークン検証API
 @app.get("/protected-resource")
 async def protected_resource(request: Request, token: str):
+    """
+    トークン検証
+    """
     chk_msg = const.SYM_BLANK
     token_store = await issue_token(request)
     if token_store:
@@ -99,9 +112,11 @@ async def protected_resource(request: Request, token: str):
     return chk_msg
 
 
-# トークン発行API
 @app.post("/token")
 async def issue_token(request: Request):
+    """
+    トークン発行
+    """
     access_token = "token_" + func.get_now(const.DATE_TODAY)
     # expiration = func.get_calc_date(const.MAX_TOKEN_EXPIRATION_MINUTES, const.DATE_MIN)
     token_data = {
@@ -112,9 +127,11 @@ async def issue_token(request: Request):
     return token_data
 
 
-# ルートページ（ログイン状態でリダイレクト）
 @app.get(const.PATH_ROOT)
 async def root(request: Request):
+    """
+    ルートページ（ログイン状態でリダイレクト）
+    """
     user = request.session.get(const.STR_USER)
     if user:
         response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
@@ -124,9 +141,11 @@ async def root(request: Request):
     return response
 
 
-# ログイン処理
 @app.post(const.PATH_LOGIN)
 async def login(request: Request, userId: str = Form(...), userPw: str = Form(...)):
+    """
+    ログイン処理
+    """
     user_info = user_dao.get_user_info(userId)
     chk_msg = user_dao.check_login(userId, userPw, user_info)
     if chk_msg:
@@ -154,9 +173,11 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
     return response
 
 
-# ログアウト処理
 @app.get(const.PATH_LOGOUT)
 async def logout(request: Request):
+    """
+    ログアウト処理
+    """
     user_name = request.session[const.STR_USER][mongo_const.FI_USER_NAME]
     func.print_info_msg(user_name, msg_const.MSG_INFO_LOGOUT)
     request.session.clear()
@@ -168,9 +189,11 @@ async def logout(request: Request):
     return templates.TemplateResponse(const.HTML_INDEX, context)
 
 
-# アプリケーション実行
 @app.get("/app/{app_name}")
 async def app_exec(request: Request, app_name: str):
+    """
+    アプリケーション実行
+    """
     try:
         if app_name == const.APP_USER:
             target_html = const.HTML_USER_INFO
@@ -193,9 +216,11 @@ async def app_exec(request: Request, app_name: str):
     return templates.TemplateResponse(target_html, context)
 
 
-# アプリケーション実行
 @app.get("/apps/{app_name}")
 async def apps(request: Request, app_name: str):
+    """
+    アプリケーション実行
+    """
     try:
         target_html = const.HTML_RESULT_2
         context = appl.get_context_data_2(request, app_name)
@@ -214,9 +239,11 @@ async def apps(request: Request, app_name: str):
     return templates.TemplateResponse(target_html, context)
 
 
-# HTMLテンプレートファイルの返却
 @app.get("/apps/v1/{app_name}", response_class=FileResponse)
 async def apps_v1(request: Request, app_name: str):
+    """
+    アプリケーション実行
+    """
     if not app_name in const.LIST_APPS_ALL_2:
         except_http_error(app_name, request.url._url)
 
@@ -225,10 +252,12 @@ async def apps_v1(request: Request, app_name: str):
     return file_path
 
 
-# JSONデータ取得（認証付き）（例：/json/today?token=token）
 @app.get("/json/{app_name}")
 # @token_required
 async def app_json(request: Request, app_name: str):
+    """
+    JSONデータ取得（例：/json/today?token=token）
+    """
     if not app_name in const.LIST_APP_SERVER_ALL:
         except_http_error(app_name, request.url._url)
 
@@ -236,9 +265,11 @@ async def app_json(request: Request, app_name: str):
     return result
 
 
-# APIデータ取得（例：/api/zipCode/1000000）
 @app.get("/api/{api_name}/{param}")
 async def app_api(request: Request):
+    """
+    APIデータ取得（例：/api/zipCode/1000000）
+    """
     api_name = request.path_params["api_name"]
     param = request.path_params["param"]
 
@@ -250,9 +281,11 @@ async def app_api(request: Request):
         except_http_error(api_name, request.url._url)
 
 
-# GEMINI
 @app.post("/gemini/api")
 async def gemini_api(request: Request):
+    """
+    GEMINI
+    """
     message = const.SYM_BLANK
     curr_func_nm = sys._getframe().f_code.co_name
 
@@ -276,9 +309,11 @@ async def gemini_api(request: Request):
     return result
 
 
-# ユーザー情報更新（フォーム）
 @app.post("/user/update")
 async def user_update(request: Request, userId: str = Form(...)):
+    """
+    ユーザー情報更新（フォーム）
+    """
     curr_func_nm = sys._getframe().f_code.co_name
 
     try:
@@ -297,9 +332,11 @@ async def user_update(request: Request, userId: str = Form(...)):
     return templates.TemplateResponse(target_html, context)
 
 
-# ランキング情報更新
 @app.post("/{app_name}/ranking")
 async def update_ranking(request: Request, app_name: str):
+    """
+    ランキング情報更新
+    """
     json_data = await request.json()
     if app_name == const.APP_NUMBER:
         rank_dao.update_rank_info_of_api(json_data)
@@ -309,23 +346,25 @@ async def update_ranking(request: Request, app_name: str):
     return result
 
 
-# 掲示板データ登録・更新
 @app.post("/board/{div}")
 async def board_update(request: Request, div: str):
+    """
+    掲示板データ登録・更新
+    """
     curr_func_nm = sys._getframe().f_code.co_name
 
     try:
         json_data = await request.json()
         if div == const.STR_ADD:
-            board_dao.insert_board_data_of_api(json_data)
+            insert_data_list = board_dao.insert_board_data_of_api(json_data)
+
+            # LINE通知
+            line.sub(curr_func_nm, insert_data_list)
+
         else:
             board_dao.update_board_status(json_data)
 
         message = msg_const.MSG_INFO_PROC_COMPLETED
-
-        if not func.is_local_env():
-            msg = json_data
-            func_line.send_msg_for_admin(msg)  # TODO: [check] 実行されない
 
     except Exception as e:
         message = msg_const.MSG_ERR_SERVER_PROC_FAILED
@@ -337,8 +376,9 @@ async def board_update(request: Request, div: str):
 
 @app.get("/kakao", response_class=HTMLResponse)
 async def kakao_root(request: Request):
-    """認証開始"""
-
+    """
+    Kakao 認証開始
+    """
     token = func_kakao.get_token(request.session)
     content = func_kakao.get_auth_content(token)
     return content
@@ -346,8 +386,9 @@ async def kakao_root(request: Request):
 
 @app.get("/kakao/main")
 async def kakao_main(request: Request):
-    """メイン"""
-
+    """
+    Kakao メイン
+    """
     token = func_kakao.get_token(request.session)
     if token:
         response = RedirectResponse(url=const.PATH_KAKAO_TODAY, status_code=303)
@@ -360,8 +401,9 @@ async def kakao_main(request: Request):
 
 @app.post("/kakao/login")
 async def kakao_login(request: Request, userId: str = Form(...)):
-    """ログイン"""
-
+    """
+    Kakao ログイン
+    """
     user_pw = auth_dao.get_auth_token(userId, key=mongo_const.FI_USER_PW)
     if user_pw:
         user_name = userId.split(const.SYM_AT)[0]
@@ -388,8 +430,9 @@ async def kakao_login(request: Request, userId: str = Form(...)):
 
 @app.get("/kakao/logout", response_class=HTMLResponse)
 async def kakao_logout(request: Request):
-    """ログアウト"""
-
+    """
+    Kakao ログアウト
+    """
     token = func_kakao.get_token(request.session)
     content = func_kakao.get_logout_content(token)
 
@@ -401,8 +444,9 @@ async def kakao_logout(request: Request):
 
 @app.get("/kakao/auth", response_class=RedirectResponse)
 async def kakao_auth():
-    """認証"""
-
+    """
+    Kakao 認証
+    """
     auth_url = func_kakao.URL_KAKAO_AUTH
     return auth_url
 
@@ -414,7 +458,7 @@ async def kakao_oauth(request: Request, code: str):
     （初回のみ実施、リフレッシュトークンの確認にも使用）
 
     引数:
-        code(str): 認証コード
+        code (str): 認証コード
     """
 
     token, content = func_kakao.get_auth_result_content(code)
@@ -428,16 +472,19 @@ async def kakao_oauth(request: Request, code: str):
 # [MEMO] 認証時のみ使用
 @app.get("/kakao/send-test", response_class=HTMLResponse)
 async def kakao_send_test(request: Request):
-    """メッセージ送信テスト"""
-
+    """
+    Kakao メッセージ送信テスト
+    """
     token = func_kakao.get_token(request.session)
     content = func_kakao.get_test_message_content(token)
     return content
 
 
-# アプリケーション実行
 @app.get("/kakao/{app_name}")
 async def kakao_apps(request: Request, app_name: str):
+    """
+    アプリケーション実行
+    """
     if app_name in const.LIST_APP_KOREA:
         url = "/app/"
         if app_name == const.APP_TODAY:
@@ -456,17 +503,21 @@ async def kakao_apps(request: Request, app_name: str):
         except_http_error(app_name, request.url._url)
 
 
-# テンプレートファイル取得
 @app.get("/templates/{file_name}", response_class=FileResponse)
 async def templates_file(file_name: str):
+    """
+    テンプレートファイル取得
+    """
     file_ext = func.get_path_split(file_name, extension_flg=const.FLG_ON)
     file_path = f"templates/{file_ext}/{file_name}"
     return file_path
 
 
-# ファイル取得（例：/img/today、/font/meiryo、/log/error）
 @app.get("/{div}/{file_name}", response_class=FileResponse)
 async def file_response(request: Request, div: str, file_name: str):
+    """
+    ファイル取得（例：/img/today、/font/meiryo、/log/error）
+    """
     except_flg = const.FLG_OFF
 
     file_div = const.STR_OUTPUT
@@ -495,9 +546,11 @@ async def file_response(request: Request, div: str, file_name: str):
         except_http_error(file_name, request.url._url)
 
 
-# サーバーのヘルスチェック
 @app.get("/check")
 def health_check():
+    """
+    サーバーのヘルスチェック
+    """
     appl.no_sleep()
     info_msg = msg_const.MSG_INFO_SERVER_KEEP_WORKING
     func.print_info_msg(SCRIPT_NAME, info_msg)
@@ -505,17 +558,21 @@ def health_check():
     return result
 
 
-# テストAPI
 @app.get("/test")
 def api_test():
+    """
+    テストAPI
+    """
     message = test.main()
     if not message:
         message = "Server is on test."
     return {const.STR_MESSAGE: message}
 
 
-# [例外] データ取得
 def get_context_except(curr_func_nm: str, request, e):
+    """
+    [例外] データ取得
+    """
     message = msg_const.MSG_ERR_SERVER_PROC_FAILED
     func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
 
@@ -527,8 +584,10 @@ def get_context_except(curr_func_nm: str, request, e):
     return context
 
 
-# [例外] HTTPエラー
-def except_http_error(div:str, url: str):
+def except_http_error(div: str, url: str):
+    """
+    [例外] HTTPエラー
+    """
     http_status_code = const.STATUS_CODE_NOT_FOUND
     status_msg = msg_const.HTTP_STATUS_MESSAGES.get(http_status_code)
     err_msg = f"{status_msg} {url}"
@@ -536,7 +595,6 @@ def except_http_error(div:str, url: str):
     raise HTTPException(status_code=http_status_code, detail=err_msg)
 
 
-# メイン関数（サーバースレッド起動）
 if __name__ == const.MAIN_FUNCTION:
     start_thread()
     # health_check()

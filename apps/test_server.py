@@ -70,7 +70,7 @@ async def oauth(request: Request, code: str):
     （初回のみ実施、リフレッシュトークンの確認にも使用）
 
     引数:
-        code(str): 認証コード
+        code (str): 認証コード
     """
 
     token, content = func_kakao.get_auth_result_content(code)

@@ -1,4 +1,6 @@
-# 説明: LINEメッセージAPI
+"""
+LINEメッセージAPI
+"""
 
 import sys
 
@@ -26,8 +28,13 @@ LINE_CHANNEL_SECRET_2 = func.get_env_val("LINE_CHANNEL_SECRET_2")
 NEW_LINE = const.SYM_NEW_LINE
 
 
-# チャネル・アクセストークン取得
 def get_channel_access_token(admin_flg: bool = const.FLG_OFF) -> str:
+    """
+    チャネル・アクセストークン取得
+
+    引数:
+        admin_flg (bool): 管理者フラグ
+    """
     url = f"{const.URL_LINE_API}/oauth2/v3/token"
 
     client_id = LINE_CHANNEL_ID
@@ -74,8 +81,10 @@ def get_channel_access_token(admin_flg: bool = const.FLG_OFF) -> str:
     return token
 
 
-# メッセージ件数取得
 def check_message_count(access_token: str) -> int:
+    """
+    メッセージ件数チェック
+    """
     url = f"{const.URL_LINE_API}/v2/bot/message/quota/consumption"
     headers = {"Authorization": access_token}
     result = func_api.get_response_result(url, headers=headers)
@@ -89,8 +98,10 @@ def check_message_count(access_token: str) -> int:
     return total_usage
 
 
-# メッセージ送信
-def send_line_msg(access_token: str, messages):
+def send_line_msg(access_token: str, messages: list):
+    """
+    メッセージ送信
+    """
     url = f"{const.URL_LINE_API}/v2/bot/message/broadcast"
     headers = {"Authorization": access_token}
     data = {"messages": messages}
@@ -101,11 +112,15 @@ def send_line_msg(access_token: str, messages):
 
     if result:
         curr_func_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(SCRIPT_NAME, curr_func_nm, const.STR_LINE_API, result["details"])
+        func.print_error_msg(
+            SCRIPT_NAME, curr_func_nm, const.STR_LINE_API, result["details"]
+        )
 
 
-# LINE送信用のJSONデータ取得
 def get_line_messages(msg_list: list[list[str]]):
+    """
+    LINE送信用のJSONデータ取得
+    """
     messages = []
 
     for msg_data in msg_list:
@@ -117,7 +132,7 @@ def get_line_messages(msg_list: list[list[str]]):
             img_url = text_msg
             update_data = {"originalContentUrl": img_url, "previewImageUrl": img_url}
         else:
-            update_data = {"text": text_msg}
+            update_data = {const.MSG_TYPE_TXT: text_msg}
 
         json_object.update(update_data)
         messages.append(json_object)
@@ -125,17 +140,21 @@ def get_line_messages(msg_list: list[list[str]]):
     return messages
 
 
-# メッセージ送信
-def send_msg_for_admin(msg_json, admin_flg: bool = const.FLG_ON):
+def send_msg_for_admin(msg_json: list, admin_flg: bool = const.FLG_ON):
+    """
+    メッセージ送信
+    """
     token = get_channel_access_token(admin_flg)
     if token:
         send_line_msg(token, msg_json)
 
 
-# テンプレート・メッセージ取得
 def get_template_msg_json(
     alt_text: str, template_title: str, template_text: str, actions
 ):
+    """
+    テンプレート・メッセージ取得
+    """
     # base_url = URL_KOYEB_APP
     img_url = URL_REST_IMG
 
@@ -161,10 +180,12 @@ def get_template_msg_json(
     return json_object
 
 
-# フレックスメッセージ取得
 def get_flex_msg_json(
     alt_text: str, data_list, flex_type: str = const.MSG_TYPE_CAROUSEL
 ):
+    """
+    フレックス・メッセージ取得
+    """
     contents = get_bubble_contents(data_list)
     json_object = {
         "type": const.MSG_TYPE_FLEX,
@@ -174,8 +195,10 @@ def get_flex_msg_json(
     return json_object
 
 
-# バーブルコンテンツ取得
 def get_bubble_contents(data_list):
+    """
+    バーブル・コンテンツ取得
+    """
     list_header_text = data_list[0]
     list_percent = data_list[1]
     list_bg_color = [

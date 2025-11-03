@@ -1,4 +1,6 @@
-# 説明: メイン処理
+"""
+メイン処理
+"""
 
 import dotenv
 import schedule
@@ -24,6 +26,9 @@ SEC_NO_SLEEP = func.get_env_val("SEC_NO_SLEEP", div=const.STR_ENV_VAR)
 
 
 def main():
+    """
+    メイン処理
+    """
     # スレッド開始
     server.start_thread()
 
@@ -32,7 +37,12 @@ def main():
 
 
 def job_scheduler():
-    if not func.is_local_env():
+    """
+    ジョブ実行
+    """
+    if func.is_local_env():
+        func.is_network()
+    else:
         # 毎週指定された時間に実行（例：09:00）
         schedule.every().monday.at(TIME_WEEKLY_JOB).do(weekly_job)
 
@@ -62,32 +72,42 @@ def job_scheduler():
             pending_cnt = 0
 
 
-# 週次ジョブ
 def weekly_job():
+    """
+    週次ジョブ
+    """
     if func.get_now(const.DATE_WEEKDAY) == 0:
         line.sub(div=const.STR_NISA)
 
 
-# 日次ジョブ
 def daily_job():
+    """
+    日次ジョブ
+    """
     line.main()
     dashboard.backup_log()
 
 
-# 日次ジョブ
 def daily_job_2():
+    """
+    日次ジョブ
+    """
     line.main(data_div=const.NUM_TWO)
     line.sub(div=const.APP_MLB)
 
 
-# 日次ジョブ
 def daily_job_3():
+    """
+    日次ジョブ
+    """
     kakao.main()
     kakao.main(div=const.APP_LCC)
 
 
-# 時次ジョブ
 def hourly_job():
+    """
+    時次ジョブ
+    """
     appl.update_news(const.APP_TODAY_KOREA)
     appl.update_news()
     appl.update_news(const.APP_NUMBER)
@@ -95,12 +115,10 @@ def hourly_job():
     dashboard.backup_log(const.STR_ERROR)
 
 
-# 随時ジョブ
 def every_min_job():
+    # 随時ジョブ
     server.health_check()
 
 
-# プログラムのエントリーポイント
 if __name__ == const.MAIN_FUNCTION:
-    # メイン実行
     main()

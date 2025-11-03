@@ -1,18 +1,22 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUD033KK0T01C25A0000000/\" target=\"_blank\" rel=\"noopener noreferrer\">高速バス「相席ブロック」対応に苦慮2席予約し1席直前キャンセル</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUB246IW0U5A021C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">株式を24時間1円単位で取引SBIや信託銀\nデジタル証券で</a>"
     },
     {
         "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2510/31/news143.html\" target=\"_blank\" rel=\"noopener noreferrer\">「作家の尊厳を踏みにじった」――集英社、動画生成AI「Sora2」に抗議権利侵害には「厳正な対応」</a>"
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2510/20/news101.html\" target=\"_blank\" rel=\"noopener noreferrer\">NTT、独自のAIモデル「tsuzumi2」発表“国産AI開発競争”に「負けられない」と島田社長</a>"
+    },
+    {
+        "区分": "韓国",
+        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56493\" target=\"_blank\" rel=\"noopener noreferrer\">【旅行】 1カ月ぶりに運航を再開したソウル漢江バス、初日に3200人の利用</a>"
     },
     {
         "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/505966.html\" target=\"_blank\" rel=\"noopener noreferrer\">≪韓国ドラマNOW≫「テプン商事」7話\nヒット台風を起こす\n最高視聴率9.3%で同時間帯1位あらすじネタバレ</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/topic/read/148435.html\" target=\"_blank\" rel=\"noopener noreferrer\">「東方神起」チャンミン\n日本ソロツアー中の日常Vlogを公開(動画あり)</a>"
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/506012.html\" target=\"_blank\" rel=\"noopener noreferrer\">[韓流]ILLIT日本アニメのオープニングテーマ歌う</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/506075.html\" target=\"_blank\" rel=\"noopener noreferrer\">新鋭ガールズグループ「ifeye」「カラーインミュージックフェスティバル」に登場</a>"
     }
 ]
