@@ -34,8 +34,6 @@ body {
 	border: 2px solid var(--color-neon-light);
 	box-shadow: 0 0 20px var(--color-neon-light);
 	border-radius: 1rem;
-	max-width: 95%;
-	width: 500px;
 	padding: 1.5rem;
 	display: flex;
 	flex-direction: column;
@@ -97,7 +95,7 @@ input[type="text"] {
 	text-align: left;
 	padding-left: 1rem;
 	flex-grow: 1;
-	max-width: 150px;
+	max-width: 200px;
 }
 
 /* 初期画面 */
@@ -151,6 +149,10 @@ input[type="text"] {
 #rank-table td {
 	border-bottom: 1px solid var(--color-text-dim);
 	color: var(--color-text-normal);
+}
+
+#rank-table .rank-time {
+	color: var(--color-neon-accent);
 }
 
 #rank-table tr:last-child td {
@@ -220,14 +222,14 @@ input[type="text"] {
 	/* 長すぎるユーザー名に対応 */
 }
 
-@media (max-width: 400px) {
+@media (max-width: 640px) {
 	#game-info-header {
 		font-size: 0.8rem;
 		padding: 0.5rem;
 	}
 
 	#game-info-header .info-label {
-		font-size: 0.6rem;
+		font-size: 0.8rem;
 	}
 }
 
@@ -357,11 +359,10 @@ input[type="text"] {
 * 入力パネル (1-9)
 */
 #input-panel {
-	display: none;
-	grid-template-columns: repeat(3, 1fr);
+	display: flex;
+	grid-template-columns: repeat(5, 1fr);
 	gap: 5px;
 	width: 100%;
-	max-width: 250px;
 	margin: 0 auto;
 	background-color: var(--color-bg-primary);
 	padding: 10px;

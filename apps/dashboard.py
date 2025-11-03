@@ -70,7 +70,8 @@ def update_data():
 
 # データリスト取得
 def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
-    data_list = backup_log_list = []
+    data_list = []
+    backup_log_list = []
 
     try:
         log_path = func.get_file_path(

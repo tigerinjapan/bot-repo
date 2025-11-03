@@ -171,8 +171,6 @@ async def logout(request: Request):
 # アプリケーション実行
 @app.get("/app/{app_name}")
 async def app_exec(request: Request, app_name: str):
-    curr_func_nm = sys._getframe().f_code.co_name
-
     try:
         if app_name == const.APP_USER:
             target_html = const.HTML_USER_INFO
@@ -182,12 +180,14 @@ async def app_exec(request: Request, app_name: str):
             context = appl.get_context_data(request, app_name)
 
             if not context:
-                except_http_error(curr_func_nm, request.url._url)
+                except_http_error(app_name, request.url._url)
 
         dashboard.write_dashboard_log(request, app_name)
 
     except Exception as e:
         target_html = const.HTML_INDEX
+
+        curr_func_nm = sys._getframe().f_code.co_name
         context = get_context_except(curr_func_nm, request, e)
 
     return templates.TemplateResponse(target_html, context)
@@ -196,19 +196,19 @@ async def app_exec(request: Request, app_name: str):
 # アプリケーション実行
 @app.get("/apps/{app_name}")
 async def apps(request: Request, app_name: str):
-    curr_func_nm = sys._getframe().f_code.co_name
-
     try:
         target_html = const.HTML_RESULT_2
         context = appl.get_context_data_2(request, app_name)
 
         if not context:
-            except_http_error(curr_func_nm, request.url._url)
+            except_http_error(app_name, request.url._url)
 
         dashboard.write_dashboard_log(request, app_name)
 
     except Exception as e:
         target_html = const.HTML_INDEX
+
+        curr_func_nm = sys._getframe().f_code.co_name
         context = get_context_except(curr_func_nm, request, e)
 
     return templates.TemplateResponse(target_html, context)
@@ -218,8 +218,7 @@ async def apps(request: Request, app_name: str):
 @app.get("/apps/v1/{app_name}", response_class=FileResponse)
 async def apps_v1(request: Request, app_name: str):
     if not app_name in const.LIST_APPS_ALL_2:
-        curr_func_nm = sys._getframe().f_code.co_name
-        except_http_error(curr_func_nm, request.url._url)
+        except_http_error(app_name, request.url._url)
 
     target_html = const.get_html(app_name)
     file_path = f"templates/{target_html}"
@@ -231,8 +230,7 @@ async def apps_v1(request: Request, app_name: str):
 # @token_required
 async def app_json(request: Request, app_name: str):
     if not app_name in const.LIST_APP_SERVER_ALL:
-        curr_func_nm = sys._getframe().f_code.co_name
-        except_http_error(curr_func_nm, request.url._url)
+        except_http_error(app_name, request.url._url)
 
     result = func.get_json_data(app_name, const.STR_OUTPUT)
     return result
@@ -249,8 +247,7 @@ async def app_api(request: Request):
         result = json_data.get(param)
         return result
     else:
-        curr_func_nm = sys._getframe().f_code.co_name
-        except_http_error(curr_func_nm, request.url._url)
+        except_http_error(api_name, request.url._url)
 
 
 # GEMINI
@@ -456,8 +453,7 @@ async def kakao_apps(request: Request, app_name: str):
         return RedirectResponse(url)
 
     else:
-        curr_func_nm = sys._getframe().f_code.co_name
-        except_http_error(curr_func_nm, request.url._url)
+        except_http_error(app_name, request.url._url)
 
 
 # テンプレートファイル取得
@@ -496,8 +492,7 @@ async def file_response(request: Request, div: str, file_name: str):
         file_path = func.get_file_path(file_name, file_type, file_div)
         return file_path
     else:
-        curr_func_nm = sys._getframe().f_code.co_name
-        except_http_error(curr_func_nm, request.url._url)
+        except_http_error(file_name, request.url._url)
 
 
 # サーバーのヘルスチェック
@@ -533,11 +528,11 @@ def get_context_except(curr_func_nm: str, request, e):
 
 
 # [例外] HTTPエラー
-def except_http_error(func_name: str, url: str):
+def except_http_error(div:str, url: str):
     http_status_code = const.STATUS_CODE_NOT_FOUND
     status_msg = msg_const.HTTP_STATUS_MESSAGES.get(http_status_code)
     err_msg = f"{status_msg} {url}"
-    func.print_error_msg(SCRIPT_NAME, func_name, err_msg)
+    func.print_info_msg(div, err_msg)
     raise HTTPException(status_code=http_status_code, detail=err_msg)
 
 

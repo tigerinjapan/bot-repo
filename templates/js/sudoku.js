@@ -115,7 +115,7 @@ function renderRank() {
     const row = rankTbody.insertRow();
     row.innerHTML = `
       <td>${rank.name}</td>
-      <td style="color: var(--color-neon-accent);">${rank.time}</td>
+      <td class="rank-time">${rank.time}</td>
       <td>${rank.date}</td>
     `;
   });

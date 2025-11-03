@@ -36,16 +36,22 @@ body {
 }
 
 /* 共通ボタンとクリック可能な要素のスタイル */
+.inputLbl,
+.inputTxt,
 .btn,
 .quiz-char-blank {
-	padding: 10px 15px;
+	padding: 10px 10px;
 	border: none;
 	border-radius: 12px;
-	font-weight: 700;
-	cursor: pointer;
+	font-weight: 600;
 	transition: all 0.2s ease;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	margin: 5px;
+}
+
+.btn,
+.quiz-char-blank {
+	cursor: pointer;
 	text-transform: uppercase;
 }
 
@@ -113,6 +119,11 @@ body {
 	background-color: white;
 }
 
+.quiz-char-space {
+	background-color: transparent;
+	border: none;
+}
+
 .quiz-char-blank {
 	background-color: silver;
 	color: lightpink;
@@ -167,6 +178,52 @@ dialog::backdrop {
 	background: rgba(0, 0, 0, 0.5);
 }
 
+#dialog-content {
+	text-align: center;
+	font-size: 1.2rem;
+	font-weight: 700;
+	color: pink;
+}
+
+#rule-content {
+	font-size: 0.95rem;
+	line-height: 1.6;
+	color: lightslategray;
+}
+
+h3 {
+	text-align: center;
+}
+
+#rule-title {
+	color: lightblue;
+}
+
+#choice-title {
+	color: lightpink;
+}
+
+#choice-instruction {
+	text-align: center;
+	font-size: 0.9rem;
+	color: lightslategray;
+}
+
+h2 {
+	font-size: 1.4rem;
+	color: lightblue;
+	border-bottom: 2px dashed white;
+	padding-bottom: 5px;
+	text-align: center;
+}
+
+.flex-center,
+.flex-low {
+	text-align: center;
+	gap: 15px;
+	margin-bottom: 10px;
+}
+
 .choice-buttons-container {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -199,14 +256,6 @@ dialog::backdrop {
 	box-shadow: none;
 }
 
-/* 言語選択画面のスタイル */
-.language-selection {
-	display: flex;
-	flex-direction: column;
-	gap: 15px;
-	margin-top: 20px;
-}
-
 /* ランキング表示 */
 #ranking-list {
 	list-style: none;
@@ -224,6 +273,10 @@ dialog::backdrop {
 
 .ranking-item span {
 	font-weight: normal;
+}
+
+.ranking-item .rank {
+	font-weight: 700;
 }
 
 .ranking-item:nth-child(1) .rank {
@@ -246,7 +299,6 @@ dialog::backdrop {
 	}
 
 	.container {
-		width: 75%;
 		border-radius: 0;
 		padding: 8px 2vw;
 		box-shadow: none;

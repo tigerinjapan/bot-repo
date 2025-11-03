@@ -73,17 +73,16 @@ def get_collection(client, collection_name: str):
 
 # 件数取得
 def db_count(client, coll_nm: str, cond):
+    curr_func_nm = sys._getframe().f_code.co_name
     coll = get_collection(client, coll_nm)
 
     try:
         result = coll.count_documents(cond)
-    except Exception as e:
-        curr_func_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(
-            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_DB_PROC_FAILED, str(e)
-        )
+        func.print_info_msg(curr_func_nm, coll_nm)
 
-    func.print_info_msg("count", coll_nm)
+    except Exception as e:
+        except_db(coll_nm, curr_func_nm, str(e))
+
     return result
 
 
@@ -96,31 +95,42 @@ def db_find(
     sort=const.NONE_CONSTANT,
     one_flg=const.FLG_OFF,
 ):
+    curr_func_nm = sys._getframe().f_code.co_name
     coll = get_collection(client, coll_nm)
-
     coll_find = coll.find
     if one_flg:
         coll_find = coll.find_one
 
-    if cond:
-        if select_data and sort:
-            result = coll_find(filter=cond, projection=select_data, sort=sort)
+    try:
+        if cond:
+            if select_data and sort:
+                result = coll_find(filter=cond, projection=select_data, sort=sort)
+            elif select_data:
+                result = coll_find(filter=cond, projection=select_data)
+            elif sort:
+                result = coll_find(filter=cond, sort=sort)
+            else:
+                result = coll_find(filter=cond)
         elif select_data:
-            result = coll_find(filter=cond, projection=select_data)
+            if sort:
+                result = coll_find(projection=select_data, sort=sort)
+            else:
+                result = coll_find(projection=select_data)
         elif sort:
-            result = coll_find(filter=cond, sort=sort)
+            result = coll_find(sort=sort)
         else:
-            result = coll_find(filter=cond)
-    elif select_data:
-        if sort:
-            result = coll_find(projection=select_data, sort=sort)
-        else:
-            result = coll_find(projection=select_data)
-    elif sort:
-        result = coll_find(sort=sort)
-    else:
-        result = coll_find()
+            result = coll_find()
+
+    except Exception as e:
+        except_db(coll_nm, curr_func_nm, str(e))
+
     return result
+
+
+# [例外] データエラー
+def except_db(coll_nm: str, curr_func_nm: str, except_str: str):
+    div = f"{coll_nm} {msg_const.MSG_ERR_DB_PROC_FAILED}"
+    func.print_error_msg(SCRIPT_NAME, curr_func_nm, div, except_str)
 
 
 # データ検索（1件）
@@ -131,26 +141,23 @@ def db_find_one(
     select_data=const.NONE_CONSTANT,
     sort=const.NONE_CONSTANT,
 ):
-
     result = db_find(client, coll_nm, cond, select_data, sort, one_flg=const.FLG_ON)
     return result
 
 
 # データ登録
 def db_insert(client, coll_nm: str, insert_data, many_flg: bool = const.FLG_OFF):
+    curr_func_nm = sys._getframe().f_code.co_name
     coll = get_collection(client, coll_nm)
 
-    coll_insert = coll.insert_one
-    if many_flg:
-        coll_insert = coll.insert_many
-
     try:
-        coll_insert(insert_data)
+        if many_flg:
+            coll.insert_many(documents=insert_data)
+        else:
+            coll.insert_one(document=insert_data)
+
     except Exception as e:
-        curr_func_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(
-            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_DB_PROC_FAILED, str(e)
-        )
+        except_db(coll_nm, curr_func_nm, str(e))
 
 
 # データ登録（複数件）
@@ -160,6 +167,7 @@ def db_insert_many(client, coll_nm: str, insert_data):
 
 # データ更新
 def db_update(client, coll_nm: str, cond, update_data, many_flg: bool = const.FLG_OFF):
+    curr_func_nm = sys._getframe().f_code.co_name
     coll = get_collection(client, coll_nm)
 
     coll_update = coll.update_many
@@ -170,10 +178,7 @@ def db_update(client, coll_nm: str, cond, update_data, many_flg: bool = const.FL
     try:
         coll_update(filter=cond, update=update_data)
     except Exception as e:
-        curr_func_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(
-            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_DB_PROC_FAILED, str(e)
-        )
+        except_db(coll_nm, curr_func_nm, str(e))
 
 
 # データ更新（複数件）
@@ -183,17 +188,15 @@ def db_update_many(client, coll_nm: str, cond, update_data):
 
 # データ検索＆更新
 def db_find_update(client, coll_nm: str, cond, update_data):
+    curr_func_nm = sys._getframe().f_code.co_name
     coll = get_collection(client, coll_nm)
 
-    result = coll.find_one(filter=cond)
-
     try:
+        result = coll.find_one(filter=cond)
         coll.update_one(filter=cond, update=update_data)
+
     except Exception as e:
-        curr_func_nm = sys._getframe().f_code.co_name
-        func.print_error_msg(
-            SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_DB_PROC_FAILED, str(e)
-        )
+        except_db(coll_nm, curr_func_nm, str(e))
 
     return result
 

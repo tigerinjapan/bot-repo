@@ -25,6 +25,7 @@
 | [🌐main](https://kobe-dev.koyeb.app/kakao/main)             | 메인 페이지       | 로그인 필요           |
 | [✅travel](https://kobe-dev.koyeb.app/kakao/travel)         | 해외여행정보      | 내용 업데이트 중      |
 | [🚀number](https://kobe-dev.koyeb.app/kakao/number)         | 자동차번호판 게임 | 두뇌 트레이닝         |
+| [🔢sudoku](https://kobe-dev.koyeb.app/kakao/sudoku)         | 스도쿠 게임       | 두뇌 트레이닝         |
 | [ℹ️quiz](https://kobe-dev.koyeb.app/kakao/itQuiz)           | IT상식 퀴즈       | 퀴즈와 함께 상식 공부 |
 | [💾review](https://kobe-dev.koyeb.app/kakao/review)         | 리뷰 페이지       | 수정 의뢰             |
 | [🔗today image](https://kobe-dev.koyeb.app/img/today_korea) | 뉴스 이미지       | 매일 9시 갱신         |

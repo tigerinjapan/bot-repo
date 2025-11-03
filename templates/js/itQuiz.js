@@ -198,7 +198,7 @@ const renderInitialScreen = () => {
   // ランキングリストの作成
   const rankingsHtml = rankingDataJson.map(item => `
     <li class="ranking-item">
-      <span class="rank" style="font-weight: 700;">${item.rank}</span>
+      <span class="rank">${item.rank}</span>
       <span>${item.userId}</span>
       <span>${item.score} pts</span>
       <span>${item.lastLoginDate}</span>
@@ -207,30 +207,39 @@ const renderInitialScreen = () => {
 
   container.innerHTML = `
       <h1 class="title">${TITLE_IT_QUIZ}</h1>
-      <div class="flex-center" style="margin-bottom: 30px; gap: 10px; text-align: center;">
+      <div class="flex-center">
         <button class="btn btn-secondary lang-btn" data-lang="ja" onclick="onLanguageSelect('ja')">日本語</button>
         <button class="btn btn-secondary lang-btn" data-lang="ko" onclick="onLanguageSelect('ko')">한국어</button>
         <button class="btn btn-secondary lang-btn" data-lang="en" onclick="onLanguageSelect('en')">English</button>
       </div>
-      <div class="flex-center" style="margin-bottom: 30px; gap: 10px; text-align: center;">
-        <label for="user-name-input">User Name: </label>
-        <input type="text" id="inputUserName" maxlength="10" placeholder="Max 10 Chars" />
+      <div class="flex-center">
+        <label class="inputLbl" for="inputUserName">USER</label>
+        <input class="inputTxt" type="text" id="inputUserName" minlength="4" maxlength="10" placeholder="4～10 Alphabet or number.">
       </div>
-      <div class="flex-center" style="margin-bottom: 30px; text-align: center;">
+      <div class="flex-center">
         <button class="btn" id="btnStartGame" disabled>START GAME</button>
         <button class="btn" id="btnGameRule" disabled onclick="showRuleDialog()">GAME RULE</button>
       </div>
-      <h2 style="font-size: 1.4rem; color: #4682b4; border-bottom: 2px dashed #eee; padding-bottom: 5px; text-align: center;">Ranking</h2>
+      <h2>Ranking</h2>
       <ul id="ranking-list">
         ${rankingsHtml}
       </ul>
   `;
 
-  // START GAMEボタンにイベントを付与
+  // START GAMEボタンにイベント付与
   const btnStart = getElem('btnStartGame');
+  const inputUserName = getElem('inputUserName');
   if (btnStart) {
     btnStart.addEventListener("click", () => {
-      startGame();
+      userName = inputUserName.value.trim();
+
+      // ユーザー名が4文字以上10文字以下の場合のみ有効
+      if (4 <= userName.length && userName.length <= 10) {
+        sessionStorage.setItem(STR_USER_NAME, userName);
+        startGame();
+      } else {
+        alert(MSG_INPUT_USER_EN);
+      }
     });
   }
 };
@@ -256,7 +265,7 @@ function onLanguageSelect(lang) {
   // START GAMEボタンを有効化
   const btnStart = getElem('btnStartGame');
   const btnRule = getElem('btnGameRule');
-  if (btnStart) {
+  if (btnStart && btnRule) {
     btnStart.className = "btn btn-primary";
     btnStart.disabled = false;
     btnStart.classList.add('active');
@@ -275,12 +284,12 @@ const renderQuizScreen = () => {
     <h1 class="title">${getLocalizedText('title')}</h1>
     
     <!-- ユーザー情報とステータス -->
-    <div class="flex-row" style="text-align: center;">
-      <span class="text-label">${getLocalizedText('quiz_status_label')}</span>
+    <div class="flex-row">
+      <span class="text-label">[${getLocalizedText('quiz_status_label')}]</span>
       <span class="text-value" id="quiz-status">1 / ${quizNum}</span>
-      <span class="text-label">${getLocalizedText('score_label')}</span>
+      <span class="text-label">[${getLocalizedText('score_label')}]</span>
       <span class="text-value" id="current-score">${gameState.score} pts</span>
-      <span class="text-label">${getLocalizedText('user_label')}</span>
+      <span class="text-label">[${getLocalizedText('user_label')}]</span>
       <span class="text-value">${userName}</span>
       </div>
 
@@ -288,7 +297,7 @@ const renderQuizScreen = () => {
     <div id="timer-bar"><div id="timer-progress"></div></div>
 
     <!-- ゲームルールボタン -->
-    <div class="flex-end" style="margin-bottom: 10px;">
+    <div class="flex-end">
       <button class="btn btn-secondary" onclick="showRuleDialog()">${getLocalizedText('game_rule')}</button>
     </div>
 
@@ -301,7 +310,7 @@ const renderQuizScreen = () => {
     <div id="quiz-description"></div>
 
     <!-- 操作ボタン -->
-    <div class="flex-center" style="gap: 15px; margin-top: 25px;">
+    <div class="flex-center">
       <button class="btn btn-secondary" id="hint-button" onclick="useHint()">${getLocalizedText('hint')}</button>
       <button class="btn btn-secondary" id="home-button" onclick="goHome()">${getLocalizedText('home')}</button>
       <button class="btn btn-primary" id="check-button" onclick="checkAnswer()">${getLocalizedText('check_answer')}</button>
@@ -335,7 +344,7 @@ const renderQuizWord = () => {
   quizWordElem.innerHTML = gameState.currentWord.map((char, index) => {
     // スペースの場合
     if (char === ' ') {
-      return `<div class="quiz-char-box" style="background-color: transparent; border: none;">&nbsp;</div>`;
+      return `<div class="quiz-char-box quiz-char-space">&nbsp;</div>`;
     }
     // 空欄の場合
     if (char === '_') {
@@ -470,6 +479,7 @@ function goHome() {
   gameState.isGameOver = true;
   if (gameState.timerInterval) clearInterval(gameState.timerInterval);
 
+  userName = SYM_BLANK;
   renderInitialScreen();
 }
 
@@ -721,16 +731,6 @@ const gameOver = () => {
   setTimeout(renderInitialScreen, 3000);
 };
 
-// ユーザ名設定
-function setUserName() {
-  userName = getElemText(STR_USER_NAME);
-  if (!userName || userName === SYM_BLANK) {
-    userName = prompt(MSG_INPUT_USER_EN);
-    // userName = getElemText("inputUserName"); // TODO: プロンプトではなく、入力値設定
-  }
-  sessionStorage.setItem(STR_USER_NAME, userName);
-}
-
 // ランキングをAPI経由で更新
 async function updateRanking(rank, score, userName) {
   let rankOkMsg = MSG_OK_RANK;
@@ -774,6 +774,5 @@ const showRuleDialog = () => {
  * ページロード時の初期化
  */
 window.onload = () => {
-  setUserName();
   renderInitialScreen();
 };
