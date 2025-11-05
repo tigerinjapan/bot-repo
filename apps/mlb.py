@@ -275,8 +275,10 @@ def is_season_day() -> bool:
     return check_flg
 
 
-# ランキング情報取得
 def get_ranking_info():
+    """
+    ランキング情報取得
+    """
     player_list = []
 
     url = f"{const.URL_MLB}/stats/ops"
@@ -294,8 +296,10 @@ def get_ranking_info():
     return player_list
 
 
-# 直近の試合情報取得
 def get_last_game_info(player_div: int = const.NUM_ONE) -> tuple[str, str]:
+    """
+    直近の試合情報取得
+    """
     player_name = "大谷"
     url_param = "shohei-ohtani-660271#"
 
@@ -329,8 +333,10 @@ def get_last_game_info(player_div: int = const.NUM_ONE) -> tuple[str, str]:
     return last_game_info, url
 
 
-# テキスト取得
 def get_text_from_info(soup, div=const.NUM_ZERO):
+    """
+    テキスト取得
+    """
     attr_val = "col-0 row-0 td--text" if div == const.NUM_ZERO else f"col-{div} row-0"
     elem = func_bs.find_elem_by_class(soup, attr_val)
     text = func_bs.get_text_from_soup(elem)

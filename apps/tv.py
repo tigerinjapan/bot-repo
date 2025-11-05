@@ -1,4 +1,6 @@
-# 説明: TV番組検索
+"""
+TV番組検索
+"""
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -30,14 +32,18 @@ URL_PARAM = (
 )
 
 
-# アイテムリスト取得
 def get_item_list():
+    """
+    アイテムリスト取得
+    """
     item_list = get_tv_info_list()
     return item_list
 
 
-# TV番組情報取得
 def get_tv_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
+    """
+    TV番組情報取得
+    """
     tv_info_list = []
 
     url = f"{const.URL_TV}/ranking/?genre_id=5"
@@ -84,14 +90,18 @@ def get_tv_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
     return tv_info_list
 
 
-# テンプレートメッセージ取得
 def get_temp_msg():
+    """
+    テンプレートメッセージ取得
+    """
     lbl, url = get_tv_info_today()
     return lbl, url
 
 
-# TV番組情報取得
 def get_tv_info_today():
+    """
+    TV番組情報取得
+    """
     today_tv_info = link = const.SYM_BLANK
 
     tv_info_today = get_tv_info_list(list_flg=const.FLG_OFF)
@@ -104,8 +114,10 @@ def get_tv_info_today():
     return today_tv_info, link
 
 
-# TVタイトル取得
 def get_tv_title(tv_title: str):
+    """
+    TVタイトル取得
+    """
     for split_str in LIST_SPLIT:
         if split_str in tv_title:
             tv_title = tv_title.split(split_str)[0]

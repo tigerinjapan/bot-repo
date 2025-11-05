@@ -1,4 +1,6 @@
-# 説明: 為替情報
+"""
+為替情報
+"""
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -10,8 +12,10 @@ URL_PARAM = "finance/quote/JPY-{}"
 DICT_EX = dict(zip(const.EX_LIST, const.EX_LIST_JA))
 
 
-# 今日のウォン取得
 def get_today_won(ko_flg: bool = const.FLG_OFF) -> str:
+    """
+    今日のウォン取得
+    """
     url = f"{const.URL_NAVER_FINANCE}/marketindex/exchangeDetail.naver?marketindexCd=FX_JPYKRW"
     class_ = "tbl_calculator"
 
@@ -31,8 +35,10 @@ def get_today_won(ko_flg: bool = const.FLG_OFF) -> str:
     return today_won_rate
 
 
-# 今日の為替情報取得
 def get_ex_yen_list():
+    """
+    今日の為替情報取得
+    """
     col_list = [const.STR_DIV_JA]
     for jpy in const.JPY_LIST:
         col_list.append(f"{jpy}{const.STR_JPY_JA}")
@@ -45,8 +51,10 @@ def get_ex_yen_list():
     return ex_yen_list
 
 
-# 為替情報取得
 def get_ex_info(ex_div: str = const.STR_KRW):
+    """
+    為替情報取得
+    """
     url = f"{const.URL_GOOGLE}/{URL_PARAM}".format(ex_div)
     ex_str = func_bs.get_elem_from_url(url, attr_val="YMlKec fxKbKc")
 
@@ -57,13 +65,15 @@ def get_ex_info(ex_div: str = const.STR_KRW):
     return ex_info
 
 
-# 数値取得
 def get_ex_val(
     ex_text: str,
     unit_flg: bool = const.FLG_OFF,
     round_flg: bool = const.FLG_OFF,
     str_flg: bool = const.FLG_ON,
 ):
+    """
+    為替の数値取得
+    """
     ex_num = float(ex_text)
     if unit_flg:
         ex_num *= 100

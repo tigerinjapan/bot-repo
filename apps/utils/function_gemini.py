@@ -1,4 +1,6 @@
-# 説明: GEMINI関数
+"""
+GEMINI関数
+"""
 
 import sys
 import time
@@ -29,8 +31,10 @@ GEMINI_MODEL_IMG = func.get_env_val("GEMINI_MODEL_IMG")
 NEW_LINE = const.SYM_NEW_LINE
 
 
-# クライアント取得
 def get_client():
+    """
+    クライアント取得
+    """
     try:
         if not GEMINI_API_KEY:
             raise Exception
@@ -48,10 +52,12 @@ def get_client():
         )
 
 
-# GEMINI回答取得
 def get_gemini_response(
     div: str, contents: str, model: str = GEMINI_MODEL, config=const.NONE_CONSTANT
 ) -> list[str]:
+    """
+    GEMINI回答取得
+    """
     curr_func_nm = sys._getframe().f_code.co_name
 
     div_msg = f"[{app_name}] {div}"
@@ -115,20 +121,24 @@ def get_gemini_response(
     return result
 
 
-# 生成イメージ取得
 def get_gemini_image(
     div: str = const.STR_GEMINI, contents: str = const.SYM_BLANK
 ) -> str:
+    """
+    生成イメージ取得
+    """
     if not contents:
         contents = get_sample_contents(div)
     file_path = get_generate_text_image(div, contents)
     return file_path
 
 
-# 生成イメージ取得
 def get_generate_text_image(
     div: str, contents: str, model: str = GEMINI_MODEL_IMG, msg_data=const.NONE_CONSTANT
 ) -> str:
+    """
+    生成テキストイメージ取得
+    """
     file_path = const.SYM_BLANK
 
     try:
@@ -197,7 +207,6 @@ def get_generate_text_image(
     return file_path
 
 
-# ニュースイメージ取得
 def get_today_news_image(
     msg: str,
     forecast: str,
@@ -205,6 +214,9 @@ def get_today_news_image(
     div: str = const.APP_TODAY,
     img_div: str = const.STR_WOMAN_JA,
 ) -> str:
+    """
+    ニュースイメージ取得
+    """
     contents_outfit = img_woman = const.SYM_BLANK
     if today_outfit:
         if img_div == const.STR_WOMAN_JA:
@@ -262,8 +274,10 @@ def get_today_news_image(
     return file_path
 
 
-# おすすめコーデ・夕食取得
 def get_recommend_outfit_dinner(outfit_text: str, menu_text: str) -> tuple[str, str]:
+    """
+    おすすめコーデ・夕食取得
+    """
     curr_func_nm = sys._getframe().f_code.co_name
 
     condition_list = [
@@ -299,12 +313,14 @@ def get_recommend_outfit_dinner(outfit_text: str, menu_text: str) -> tuple[str, 
     return outfit, dinner
 
 
-# ニュース要約取得
 def get_news_summary(
     news_list: list[str],
     keyword: str = const.SYM_BLANK,
     max_count: int = const.MIN_DISPLAY_CNT,
 ) -> list[str]:
+    """
+    ニュース要約取得
+    """
     news_item = [str(item) for item in news_list]
     news_item_list = NEW_LINE.join(news_item[:max_count])
 
@@ -327,8 +343,10 @@ def get_news_summary(
     return news_summary
 
 
-# ニュース要約条件取得
 def get_news_conditions(add_condition_list: list[str] = []) -> str:
+    """
+    ニュース要約条件取得
+    """
     condition_list = [
         "記号と絵文字、「。」は、使用しない",
         "英数字は、全て半角に変換",
@@ -351,8 +369,10 @@ def get_news_conditions(add_condition_list: list[str] = []) -> str:
     return conditions
 
 
-# ニュース要約参考取得
 def get_news_reference(other_reference: list[str]) -> str:
+    """
+    ニュース要約参考取得
+    """
     reference = [
         "※例",
         f"[1] [Gemini] Geminiの未来{NEW_LINE}議事要約{NEW_LINE}議事要約",
@@ -368,8 +388,10 @@ def get_news_reference(other_reference: list[str]) -> str:
     return reference
 
 
-# 追加条件取得
 def get_add_condition_list(keyword: str) -> list[str]:
+    """
+    追加条件取得
+    """
     add_condition_list = [
         "韓国語を勉強している初級レベルの人が記事を学習用で使用する目的",
         "【会話】記事の内容を元に韓国人同士が会話する内容",
@@ -394,8 +416,10 @@ def get_add_condition_list(keyword: str) -> list[str]:
     return add_condition_list
 
 
-# 追加参考取得
 def get_other_reference() -> list[str]:
+    """
+    追加参考取得
+    """
     other_reference = [
         "※例",
         "유리: <b>오빠들</b>, <b>음악프로</b> 1등했데.",
@@ -419,10 +443,12 @@ def get_other_reference() -> list[str]:
     return other_reference
 
 
-# プロンプト条件取得
 def get_prompt_conditions(
     condition_list: list[str], add_condition_list: list[str] = []
 ) -> str:
+    """
+    プロンプト条件取得
+    """
     condition_title = ["※条件"]
     condition_list_all = condition_list + add_condition_list
     prompt_conditions = const.SYM_NEW_LINE.join(
@@ -432,8 +458,10 @@ def get_prompt_conditions(
     return prompt_conditions
 
 
-# サンプルコンテンツ取得
 def get_sample_contents(div: str = const.STR_GEMINI) -> str:
+    """
+    サンプルコンテンツ取得
+    """
     if div == const.STR_TEST:
         contents = "これからの未来について、100文字以内で説明お願いします。"
         # contents = (
@@ -472,8 +500,12 @@ def get_sample_contents(div: str = const.STR_GEMINI) -> str:
     return contents
 
 
-# 生成イメージ取得  # [ERROR] 無料版で利用可能なモデルない
 def get_generate_image(model: str, prompt: str, config=const.NONE_CONSTANT):
+    """
+    生成イメージ取得
+
+    [ERROR] 無料版で利用可能なモデルない
+    """
     client = get_client()
 
     # イメージ生成リクエストの送信
@@ -496,8 +528,12 @@ def get_generate_image(model: str, prompt: str, config=const.NONE_CONSTANT):
         func.print_error_msg(SCRIPT_NAME, curr_func_nm, e)
 
 
-# 生成ビデオ取得  # [ERROR] 無料版で利用可能なモデルない
 def get_generate_video(div: str, model: str, prompt: str) -> str:
+    """
+    生成ビデオ取得
+
+    [ERROR] 無料版で利用可能なモデルない
+    """
     client = get_client()
 
     operation = client.models.generate_videos(
@@ -519,36 +555,50 @@ def get_generate_video(div: str, model: str, prompt: str) -> str:
     print("Generated video saved to dialogue_example.mp4")
 
 
-# [テスト] 生成コンテンツ取得
 def test_gemini(div: str = const.STR_TEST):
+    """
+    [テスト] 生成コンテンツ取得
+    """
     contents = get_sample_contents(div)
     response = get_gemini_response(div, contents)
     result = const.SYM_NEW_LINE.join(response)
     func.print_test_data(result)
 
 
-# [テスト] 生成イメージ取得
 def test_gemini_img():
+    """
+    [テスト] 生成イメージ取得
+    """
     get_gemini_image()
 
 
-# [テスト] 今日のニュースイメージ取得
 def test_today_img():
+    """
+    [テスト] 今日のニュースイメージ取得
+    """
     msg = "[test] test"
     today_weather = "晴れのち曇り"
     today_outfit = "白いブラウス&黄色いスカート"
     get_today_news_image(msg, today_weather, today_outfit)
 
 
-#  [テスト] 生成イメージ取得 # [ERROR] 無料版で利用可能なモデルない
 def test_generate_image():
+    """
+    [テスト] 今日のニュースイメージ取得
+
+    [ERROR] 無料版で利用可能なモデルない
+    """
     model = "imagen-3.0-generate-002"
     prompt = "A serene landscape with mountains and a clear blue lake"
     get_generate_image(model, prompt)
 
 
-# [テスト] 生成ビデオ取得 # [ERROR] 無料版で利用可能なモデルない
 def test_generate_video():
+    """
+    [テスト] 生成ビデオ取得
+
+    [ERROR] 無料版で利用可能なモデルない
+    """
     div = "example"
     model = "veo-3.0-generate-preview"
     prompt = """A close up of two people staring at a cryptic drawing on a wall, torchlight flickering.

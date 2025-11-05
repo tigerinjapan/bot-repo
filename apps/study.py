@@ -1,4 +1,6 @@
-# 説明: ニュース韓国語
+"""
+ニュース韓国語
+"""
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -21,8 +23,10 @@ NEW_LINE = const.SYM_NEW_LINE
 url_search_param = "/search.naver?where=news&query={}&service_area=1&sort=1"
 
 
-# データリスト取得
 def get_item_list(keyword_list: list[str] = []) -> list[str]:
+    """
+    データリスト取得
+    """
     item_list = []
 
     # 7時に一度のみ実施
@@ -47,8 +51,10 @@ def get_item_list(keyword_list: list[str] = []) -> list[str]:
     return item_list
 
 
-# NAVERニュース取得
 def get_naver_news_summary(keyword: str) -> list[str]:
+    """
+    NAVERニュース取得
+    """
     news_summary = []
 
     url_param = url_search_param.format(keyword)
@@ -94,8 +100,10 @@ def get_naver_news_summary(keyword: str) -> list[str]:
     return news_summary
 
 
-# 今日の韓国語
 def get_today_korean():
+    """
+    今日の韓国語
+    """
     url = f"{const.URL_KONEST}/contents/todays_korean_list.html"
     attr_val = "size12 blackg"
     a_elem = func_bs.get_elem_from_url(url, attr_val=attr_val).find(const.TAG_A)
@@ -104,8 +112,10 @@ def get_today_korean():
     return today_korean, url_korean
 
 
-# テンプレートメッセージ取得
 def get_temp_msg():
+    """
+    テンプレートメッセージ取得
+    """
     lbl, url = get_today_korean()
     return lbl, url
 

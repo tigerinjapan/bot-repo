@@ -1,4 +1,6 @@
-# 説明: 定数一覧
+"""
+定数一覧
+"""
 
 ##### main関数 #####
 MAIN_FUNCTION = "__main__"
@@ -476,7 +478,7 @@ MSG_TYPE_BUBBLE = "bubble"
 
 # タイトル
 DIV_MARK = "*----*----*----*----*----*"
-MARK_PATTERN_1 = "*---"
+MARK_PATTERN_1 = "*----"
 MARK_PATTERN_2 = "="
 DIV_MARK_IMG = "■ {} ■"
 
@@ -616,12 +618,12 @@ LIST_APPS_ALL = [
     APP_SUDOKU,
     APP_IT_QUIZ,
     APP_IT_QUIZ_DESIGN,
+    STR_GEMINI,
     APP_REVIEW,
     APP_DASHBOARD,
     APP_URL_DESIGN,
     APP_KAKAO_DESIGN,
 ]
-LIST_APPS_ALL_2 = [STR_GEMINI]
 
 LIST_APP_NEWS = [APP_TODAY, APP_NEWS, APP_TV, APP_TODAY_KOREA]
 LIST_APP_ENTERTAINMENT = [
@@ -707,7 +709,6 @@ HTML_INDEX = get_html(STR_INDEX)
 HTML_RESULT = get_html(STR_RESULT)
 HTML_RESULT_2 = get_html(f"{STR_RESULT}2")
 HTML_USER_INFO = get_html(STR_USER_INFO)
-HTML_GEMINI = get_html(STR_GEMINI)
 
 if __name__ == MAIN_FUNCTION:
     data = f"[{DATE_WEEKDAY, HTML_INDEX}]"

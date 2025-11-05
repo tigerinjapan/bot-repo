@@ -1,4 +1,6 @@
-# 説明: ランキング
+"""
+ランキング
+"""
 
 import apps.news as news
 import apps.utils.constants as const
@@ -22,8 +24,10 @@ col_list = col_list_weekly + col_list_daily
 URL_X_PARAM = "/twitter_trend_daily_ranking_all/"
 
 
-# アイテムリスト取得
 def get_item_list():
+    """
+    アイテムリスト取得
+    """
     item_list = []
 
     for div_weekly in LIST_RANKING_WEEKLY:
@@ -38,8 +42,10 @@ def get_item_list():
     return item_list
 
 
-# 週間ランキング取得
 def get_weekly_ranking(div: str = const.STR_KPOP):
+    """
+    週間KPOPランキング取得
+    """
     weekly_ranking = []
 
     url = f"{const.URL_WOWKOREA}/ranking/weekly/{div}/"
@@ -76,8 +82,10 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
     return weekly_ranking
 
 
-# 日間ランキング
 def get_daily_ranking(div: str = const.STR_X_TREND_JA):
+    """
+    Xトレンド日間ランキング
+    """
     daily_ranking = []
 
     if div == const.STR_X_TREND_JA:

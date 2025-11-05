@@ -1,4 +1,6 @@
-# 説明: HTMLの定数
+"""
+HTML定数
+"""
 
 HTML_KAKAO_BUTTON = """ <a href="/kakao{}" class="button{}">{}</a> """
 

@@ -1,4 +1,6 @@
-# 説明: メニュー
+"""
+サイトメニュー
+"""
 
 import numpy as np
 
@@ -41,8 +43,10 @@ menu_travel_div = ["両替所", "観光地", "レストラン", "その他"]
 URL_SERVER = func.get_server_url()
 
 
-# データリスト取得
 def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
+    """
+    DataFrameのデータ取得
+    """
     # JSONデータ取得
     if app_div == const.APP_BOARD:
         json_data = board_dao.get_board_info()

@@ -1,5 +1,9 @@
-# 説明: サーバー処理
-# FastAPIによるWebサーバー。認証・セッション管理・各種APIエンドポイントを提供
+"""
+サーバー処理
+
+FastAPIによるWebサーバー。
+認証・セッション管理・各種APIエンドポイントを提供
+"""
 
 from fastapi import FastAPI, Query, Request
 from fastapi.responses import RedirectResponse, HTMLResponse
@@ -19,8 +23,10 @@ app = FastAPI(title="カカオトーク - メッセージ送信テスト")
 app.add_middleware(SessionMiddleware, secret_key="secret_key")
 
 
-# サーバー起動
 def run_server():
+    """
+    サーバー起動
+    """
     func.print_start(SCRIPT_NAME, msg_const.MSG_INFO_SERVER_START)
     host, port = func.get_host_port()
     config = Config(app, host=host, port=port)
@@ -30,8 +36,9 @@ def run_server():
 
 @app.get("/kakao", response_class=HTMLResponse)
 async def root(request: Request):
-    """開始ページ"""
-
+    """
+    開始ページ
+    """
     token = func_kakao.get_token(request.session)
     content = func_kakao.get_login_content(token)
     return content
@@ -39,16 +46,18 @@ async def root(request: Request):
 
 @app.get("/kakao/login")
 async def login():
-    """ログイン"""
-
+    """
+    ログイン
+    """
     auth_url = func_kakao.URL_KAKAO_AUTH
     return RedirectResponse(auth_url)
 
 
 @app.get("/kakao/logout")
 async def logout(request: Request):
-    """ログアウト"""
-
+    """
+    ログアウト
+    """
     token = func_kakao.get_token(request.session)
     if not token:
         return RedirectResponse(url="/kakao")
@@ -82,8 +91,9 @@ async def oauth(request: Request, code: str):
 
 @app.get("/kakao/unlink")
 async def unlink(request: Request):
-    """アカウント連携解除"""
-
+    """
+    アカウント連携解除
+    """
     token = func_kakao.get_token(request.session)
     if not token:
         return RedirectResponse(url="/kakao")
@@ -98,8 +108,9 @@ async def unlink(request: Request):
 
 @app.get("/kakao/send-test", response_class=HTMLResponse)
 async def send_test(request: Request):
-    """メッセージ送信テスト"""
-
+    """
+    メッセージ送信テスト
+    """
     token = func_kakao.get_token(request.session)
     if not token:
         return RedirectResponse(url="/kakao")

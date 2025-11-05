@@ -239,19 +239,6 @@ async def apps(request: Request, app_name: str):
     return templates.TemplateResponse(target_html, context)
 
 
-@app.get("/apps/v1/{app_name}", response_class=FileResponse)
-async def apps_v1(request: Request, app_name: str):
-    """
-    アプリケーション実行
-    """
-    if not app_name in const.LIST_APPS_ALL_2:
-        except_http_error(app_name, request.url._url)
-
-    target_html = const.get_html(app_name)
-    file_path = f"templates/{target_html}"
-    return file_path
-
-
 @app.get("/json/{app_name}")
 # @token_required
 async def app_json(request: Request, app_name: str):

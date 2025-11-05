@@ -1,4 +1,6 @@
-# 説明: ドラマランキング
+"""
+ドラマランキング
+"""
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -14,8 +16,10 @@ col_list = [const.STR_IMG_JA, const.STR_CONTENTS_JA]
 LIST_RANKING_WEEKLY = [const.APP_DRAMA]
 
 
-# アイテムリスト取得
 def get_item_list():
+    """
+    アイテムリスト取得
+    """
     item_list = []
 
     for div_weekly in LIST_RANKING_WEEKLY:
@@ -25,8 +29,10 @@ def get_item_list():
     return item_list
 
 
-# 週間ランキング取得
 def get_weekly_ranking(div: str):
+    """
+    週間ランキング取得
+    """
     weekly_ranking = []
 
     if div == const.APP_DRAMA:
@@ -63,8 +69,10 @@ def get_weekly_ranking(div: str):
     return weekly_ranking
 
 
-# 要素リスト取得
 def get_elem_val_list(div: str):
+    """
+    要素リスト取得
+    """
     elem_val_list = []
 
     url = f"{const.URL_WOWKOREA}/ranking/weekly/{div}/"

@@ -1,4 +1,6 @@
-# 説明: ユーザー情報DAO
+"""
+ユーザー情報DAO
+"""
 
 from pymongo import DESCENDING
 
@@ -10,8 +12,10 @@ import apps.utils.mongo_constants as mongo_const
 import apps.utils.user_dto as user_dto
 
 
-# ユーザー情報取得
 def get_user_info(userId: str):
+    """
+    ユーザー情報取得
+    """
     client = func_mongo.db_connect()
     user_id = func.get_masking_data(userId)
     user_info = find_user_info(client, user_id)
@@ -21,8 +25,10 @@ def get_user_info(userId: str):
     return user_info
 
 
-# ユーザー情報検索
 def find_user_info(client, user_id: str):
+    """
+    ユーザー情報検索
+    """
     cond = {mongo_const.FI_USER_ID: user_id}
     count = func_mongo.db_count(client, mongo_const.COLL_USER_INFO, cond)
 
@@ -41,8 +47,10 @@ def find_user_info(client, user_id: str):
     return result
 
 
-# 連番取得
 def get_user_seq():
+    """
+    連番取得
+    """
     client = func_mongo.db_connect()
     cond = {mongo_const.FI_USER_DIV: {mongo_const.OPERATOR_EQUAL: const.AUTH_GUEST}}
     select_data = {mongo_const.FI_SEQ: 1}
@@ -55,28 +63,36 @@ def get_user_seq():
     return seq
 
 
-# ユーザー情報登録
 def insert_user_info(client, insert_data):
+    """
+    ユーザー情報登録
+    """
     func_mongo.db_insert(client, mongo_const.COLL_USER_INFO, insert_data)
 
 
-# ユーザー情報更新
 def update_user_info(client, update_data):
+    """
+    ユーザー情報更新
+    """
     user_id = update_data[mongo_const.FI_USER_ID]
     cond = {mongo_const.FI_USER_ID: user_id}
     func_mongo.db_update(client, mongo_const.COLL_USER_INFO, cond, update_data)
 
 
-# ユーザー情報登録（フォーム）
 def insert_user_info_on_form(form_data):
+    """
+    ユーザー情報登録（フォーム）
+    """
     client = func_mongo.db_connect()
     insert_data = user_dto.get_json_data_for_user_info(form_data)
     insert_user_info(client, insert_data)
     func_mongo.db_close(client)
 
 
-# ユーザー情報更新（フォーム）
 def update_user_info_on_form(form_data, form_flg: bool = const.FLG_ON):
+    """
+    ユーザー情報更新（フォーム）
+    """
     client = func_mongo.db_connect()
     update_data = form_data
     if form_flg:
@@ -85,8 +101,10 @@ def update_user_info_on_form(form_data, form_flg: bool = const.FLG_ON):
     func_mongo.db_close(client)
 
 
-# ログインチェック
 def check_login(input_id: str, input_pw: str, user_info) -> str:
+    """
+    ログインチェック
+    """
     chk_msg = const.SYM_BLANK
 
     network_flg = func.is_network()

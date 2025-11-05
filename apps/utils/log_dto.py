@@ -1,4 +1,6 @@
-# 説明: ログDTO
+"""
+ログDTO
+"""
 
 from dataclasses import asdict, dataclass
 from datetime import datetime
@@ -23,8 +25,10 @@ class log:
         return asdict(self)
 
 
-# ログデータ取得
 def get_json_data_for_log(data):
+    """
+    ログデータ取得
+    """
     div = data[mongo_const.FI_DIV]
     message = data[mongo_const.FI_MESSAGE]
     target_date = data[mongo_const.FI_TARGET_DATE]
@@ -43,8 +47,10 @@ def get_json_data_for_log(data):
     return json_data
 
 
-# 登録データ取得
 def get_insert_data_for_log(data: list[str]):
+    """
+    登録データ取得
+    """
     div = data[0]
     message = data[1]
     target_date = data[2]

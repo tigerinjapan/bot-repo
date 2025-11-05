@@ -1,4 +1,6 @@
-# 説明: 今日の生活情報
+"""
+今日の生活情報
+"""
 
 import sys
 
@@ -72,8 +74,10 @@ app_title = "Today's News"
 col_list = ["구분", "오늘의 생활정보", "링크"]
 
 
-# アイテムリスト取得
 def get_item_list():
+    """
+    アイテムリスト取得
+    """
     today_info_list = get_today_info_list()
     info_list = today_info_list[0]
     link_list = today_info_list[1]
@@ -82,8 +86,10 @@ def get_item_list():
     return item_list
 
 
-# 今日の生活情報取得
 def get_today_info(object_type: str = func_kakao.OBJECT_TYPE_FEED):
+    """
+    今日の生活情報取得
+    """
     json_data = func_api.get_result_on_app(const.APP_TODAY_KOREA)
 
     date_time_text = json_data[0].get(col_list[1])
@@ -105,8 +111,10 @@ def get_today_info(object_type: str = func_kakao.OBJECT_TYPE_FEED):
     return today_info, file_path
 
 
-# ニュースイメージ取得
 def get_news_image(today_info: str) -> str:
+    """
+    ニュースイメージ取得
+    """
     forecast = get_forecast()
     outfit = get_outfit()
 
@@ -116,8 +124,10 @@ def get_news_image(today_info: str) -> str:
     return file_path
 
 
-# 今日の生活情報取得
 def get_today_info_list():
+    """
+    今日の生活情報取得
+    """
     curr_func_nm = sys._getframe().f_code.co_name
 
     # 更新日時
@@ -161,8 +171,10 @@ def get_today_info_list():
     return today_info_list, today_link_list
 
 
-# 天気ニュース取得
 def get_today_weather_news() -> str:
+    """
+    天気ニュース取得
+    """
     title = const.SYM_BLANK
 
     today = func.get_now(const.DATE_TODAY)
@@ -192,8 +204,10 @@ def get_today_weather_news() -> str:
     return title
 
 
-# 天気予報取得
 def get_forecast() -> str:
+    """
+    天気予報取得
+    """
     url = f"{const.URL_TENKI}/world/5/89/47108/"
     soup = func_bs.get_elem_from_url(
         url, attr_val="weather-image", list_flg=const.FLG_ON
@@ -202,8 +216,10 @@ def get_forecast() -> str:
     return forecast
 
 
-# S&P500
 def get_stock() -> str:
+    """
+    S&P500
+    """
     url = f"{const.URL_NAVER_FINANCE}/world/sise.naver?symbol=SPI@SPX"
     soup = func_bs.get_elem_from_url(url, attr_val="today")
     today_elem = func_bs.find_elem_by_class(soup, "no_today")
@@ -215,21 +231,27 @@ def get_stock() -> str:
     return stock_info
 
 
-# ウォン取得
 def get_won() -> str:
+    """
+    ウォン取得
+    """
     today_won = ex.get_today_won(const.FLG_ON)
     return today_won
 
 
-# コーデ取得
 def get_outfit() -> str:
+    """
+    コーデ取得
+    """
     today_outfit = today.get_today_outfit()
     outfit = today_outfit.split(const.SYM_NEW_LINE)[0].split(const.SYM_PERIOD)[:2]
     return outfit[:20]
 
 
-# 航空券セール情報取得
 def get_flight_sale() -> str:
+    """
+    航空券セール情報取得
+    """
     flight_sale = const.SYM_BLANK
 
     url = f"{URL_FLIGHT}/product/free/subIndex.do?majorCategoryCd=C003"
@@ -257,8 +279,10 @@ def get_flight_sale() -> str:
     return flight_sale
 
 
-# 日本語
 def get_japanese_study() -> str:
+    """
+    日本語取得
+    """
     japanese_study = const.SYM_BLANK
 
     url = "https://wquiz.dict.naver.com/jakodict/today/quiz.dict#tab=1"
@@ -291,15 +315,19 @@ def get_japanese_study() -> str:
     return japanese_study
 
 
-# 英会話
 def get_english_conversation() -> str:
+    """
+    英会話取得
+    """
     data = today.get_today_phrase(const.STR_ENGLISH)
     english_conversation = f"{data[1]}{const.SYM_NEW_LINE}{data[2]}"
     return english_conversation
 
 
-# 今日の一言取得
 def get_phrase() -> str:
+    """
+    今日の一言取得
+    """
     phrase = today.get_today_phrase(const.STR_PHRASE_KO)
     return phrase
 

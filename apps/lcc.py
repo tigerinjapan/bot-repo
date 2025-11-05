@@ -1,4 +1,6 @@
-# 説明: LCCニュース
+"""
+LCCニュース
+"""
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -15,14 +17,18 @@ col_list = [const.STR_DATE_JA, const.STR_COMPANY_JA, app_title]
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, const.APP_LCC)
 
 
-# アイテムリスト取得
 def get_item_list():
+    """
+    アイテムリスト取得
+    """
     item_list = get_lcc_info_list()
     return item_list
 
 
-# LCC情報取得
 def get_lcc_info_list(url_flg: bool = const.FLG_OFF) -> list[str]:
+    """
+    LCC情報取得
+    """
     lcc_info_list = []
     url = f"{const.URL_LCC}/news/"
     lcc_list = func_bs.get_elem_from_url(url, attr_val="bgtitle", list_flg=const.FLG_ON)
@@ -66,8 +72,10 @@ def get_lcc_info_list(url_flg: bool = const.FLG_OFF) -> list[str]:
     return lcc_info_list
 
 
-# テンプレートメッセージ取得
 def get_temp_msg(data_flg: bool = const.FLG_OFF):
+    """
+    テンプレートメッセージ取得
+    """
     lbl = url = const.SYM_BLANK
     lcc_info = get_lcc_info_list(url_flg=const.FLG_ON)[0]
     if lcc_info:
@@ -87,8 +95,10 @@ def get_temp_msg(data_flg: bool = const.FLG_OFF):
     return lbl, url
 
 
-# テキスト値取得
-def get_lcc_text(lcc_div, soup):
+def get_lcc_text(lcc_div, soup) -> str:
+    """
+    テキスト値取得
+    """
     lcc_item = soup
     if lcc_div == const.STR_DIV:
         lcc_item = func_bs.find_elem_by_attr(soup, tag=const.TAG_SPAN)

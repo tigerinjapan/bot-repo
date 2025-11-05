@@ -1,3 +1,7 @@
+"""
+mongoDB定数一覧
+"""
+
 import apps.utils.constants as const
 
 # コレクション名
@@ -76,8 +80,10 @@ OPERATOR_INCREMENT = "$inc"
 OPERATOR_ADD = "$add"
 
 
-# フィールド変換
 def convert_field(id: str, type_div: str = const.TYPE_STR):
+    """
+    フィールド変換
+    """
     div = "ao" if type_div == const.TYPE_LIST else type_div[0]
     # func[capitalize]:Converts the first character of a string to an uppercase letter
     id_new = id.capitalize()[0] + id[1:]

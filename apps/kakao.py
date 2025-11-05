@@ -1,4 +1,6 @@
-# 説明: LINEメッセージ
+"""
+KakaoメッセージAPI
+"""
 
 import sys
 

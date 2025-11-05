@@ -5,23 +5,34 @@
   <title data-key="title"></title>
   <script src="/templates/const.js"></script>
   <script src="/templates/func.js"></script>
+
   {% if app_name == 'travel' %}
   <script src="/templates/travel.js"></script>
+
   {% elif app_name == 'number' %}
   <script src="/templates/number.js"></script>
   <link rel="stylesheet" href="/templates/number.css" />
+
   {% elif app_name == 'sudoku' %}
   <link rel="stylesheet" href="/templates/sudoku.css" />
   <script src="/templates/sudoku.js"></script>
+
   {% elif app_name == 'itQuiz' %}
   <link rel="stylesheet" href="/templates/itQuiz.css" />
   <script src="/templates/itQuiz.js"></script>
+
+  {% elif app_name == 'gemini' %}
+  <script src="/templates/gemini.js"></script>
+  <link rel="stylesheet" href="/templates/gemini.css" />
+
   {% elif app_name == 'review' %}
   <script src="/templates/review.js"></script>
+
   {% elif app_name == 'dashboard' %}
   <link rel="stylesheet" href="/templates/dashboard.css" />
   <script src="/templates/chart.js"></script>
   <script src="/templates/dashboard.js"></script>
+
   {% elif '_design' in app_name %}
   <script src="/templates/marked.min.js"></script>
   <script src="/templates/design.js"></script>
@@ -95,42 +106,22 @@
   {% elif app_name == 'sudoku' %}
   <div id="app">
     <div id="start-screen" class="screen">
-      <h1>NEON SUDOKU</h1>
-
-      <div id="language-controls">
-        <label for="language-select">LANGUAGE:</label>
-        <select id="language-select">
-          <option value="ja" selected>日本語</option>
-          <option value="ko">한국어</option>
-          <option value="en">ENGLISH</option>
-        </select>
+      <h1 id="title"></h1>
+      <div>
+        <select id="lang-select"></select>
+        <select id="level-select"></select>
       </div>
-
-      <div id="level-controls">
-        <label for="level-select">LEVEL:</label>
-        <select id="level-select">
-          <option value="easy">EASY</option>
-          <option value="medium" selected>MEDIUM</option>
-          <option value="hard">HARD</option>
-        </select>
-      </div>
-
       <div id="user-input-container">
-        <label for="user-name-input">USER NAME:</label>
-        <input type="text" id="user-name-input" maxlength="10" placeholder="Max 10 Chars">
+        <input type="text" id="user-name-input" minlength="4" maxlength="10" placeholder="Input user name.">
       </div>
 
-      <button id="start-button" disabled>START GAME</button>
+      <div id="start-controls"></div>
 
       <div id="rank-container">
         <h2>RANK TOP 5</h2>
         <table id="rank-table">
           <thead>
-            <tr>
-              <th>NAME</th>
-              <th>TIME</th>
-              <th>DATE</th>
-            </tr>
+            <tr id="rank-thead"></tr>
           </thead>
           <tbody id="rank-tbody">
             <!-- ランキングデータ -->
@@ -140,9 +131,7 @@
     </div>
 
     <div id="game-screen" class="screen">
-      <div id="game-info-header">
-        <!-- sudoku.jsで挿入 (LEVEL, BEST TIME, USER) -->
-      </div>
+      <div id="game-info-header"></div>
 
       <div id="timer-display">
         <div id="timer-text"></div>
@@ -151,44 +140,23 @@
         </div>
       </div>
 
-      <div id="sudoku-board">
-      </div>
-
-      <div id="input-panel">
-        <div class="input-button" data-value="1">1</div>
-        <div class="input-button" data-value="2">2</div>
-        <div class="input-button" data-value="3">3</div>
-        <div class="input-button" data-value="4">4</div>
-        <div class="input-button" data-value="5">5</div>
-        <div class="input-button" data-value="6">6</div>
-        <div class="input-button" data-value="7">7</div>
-        <div class="input-button" data-value="8">8</div>
-        <div class="input-button" data-value="9">9</div>
-        <div class="input-button" data-value="0">×</div>
-      </div>
-
-      <div id="game-controls">
-        <button id="rule-button">GAME RULE</button>
-        <button id="hint-button">HINT</button>
-        <button id="home-button">GO HOME</button>
-      </div>
+      <div id="sudoku-board"></div>
+      <div id="input-panel"></div>
+      <div id="game-controls"></div>
     </div>
 
     <div id="modal-overlay">
       <div id="modal-content">
         <button id="modal-close-button">X</button>
         <h3 id="modal-title"></h3>
-        <div id="modal-body">
-        </div>
+        <div id="modal-body"></div>
       </div>
     </div>
   </div>
 
   {% elif app_name == 'itQuiz' %}
   <!-- メインのコンテナ -->
-  <div class="container" id="main-container">
-    <!-- コンテンツはJavaScriptで動的にレンダリングされます -->
-  </div>
+  <div class="container" id="main-container"></div>
 
   <!-- モーダル（ダイアログ）要素 -->
   <dialog id="message-dialog">
@@ -216,6 +184,46 @@
       <button class="btn btn-secondary" onclick="closeDialog('choice-dialog')">Close</button>
     </div>
   </dialog>
+
+  {% elif app_name == 'gemini' %}
+  <div class="container">
+    <div id="language-switcher">
+      <button type="button" onclick="changeLanguage('ja')">日本語</button>
+      <button type="button" onclick="changeLanguage('ko')">한국어</button>
+      <button type="button" onclick="changeLanguage('en')">English</button>
+    </div>
+
+    <h1>
+      <span data-key="title"></span><br />
+      <span id="subtitle" class="subtitle" data-key="subtitle"></span>
+    </h1>
+
+    <div class="mode-selection" id="modeSelection">
+      <label id="modeLabel" for="generationMode" data-key="modeLabel"></label>
+      <select id="generationMode"></select>
+    </div>
+
+    <div id="imageGenerationForm">
+      <div class="form-section" id="imageFormSection"></div>
+      <div class="form-group">
+        <label id="additionalPromptLabel" for="additionalPrompt" data-key="additionalPromptLabel"></label>
+        <textarea id="additionalPrompt" maxlength="40" data-key="additionalPromptPlaceholder"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" id="generateButton" data-key="generateButton" onclick="generateContent()"></button>
+
+    <div class="image-container" id="outputImageContainer">
+      <img id="generatedImage" src="/img/gemini" alt="gemini" />
+    </div>
+
+    <div class="text-output" id="outputTextContainer">
+      <h2 id="storyTitle" data-key="storyTitle"></h2>
+      <pre id="generatedText"></pre>
+      <button type="button" id="copyTextButton" class="copy-button" onclick="copyText()"
+        data-key="copyTextButton"></button>
+    </div>
+  </div>
 
   {% elif app_name == 'review' %}
   <div id="divBoard" class="board-container">

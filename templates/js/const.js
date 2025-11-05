@@ -73,24 +73,29 @@ const COLOR_GREEN = "green";
 
 const ALIGN_CENTER = "center";
 
+const CHART_LINE = "line";
+const CHART_BAR = "bar";
+
+// レベル
 const LEVEL_EASY = "easy";
 const LEVEL_MEDIUM = "medium";
 const LEVEL_HARD = "hard";
+const LIST_LEVEL = [LEVEL_EASY, LEVEL_MEDIUM, LEVEL_MEDIUM];
+const LIST_LEVEL_NM = LIST_LEVEL.map(level => {
+  return level.toUpperCase();
+});
 
-const CHART_LINE = "line";
-const CHART_BAR = "bar";
+// 言語コード
+const LANG_CD_JA = "ja";
+const LANG_CD_KO = "ko";
+const LANG_CD_EN = "en";
+const LIST_LANG_CD = [LANG_CD_JA, LANG_CD_KO, LANG_CD_EN];
 
 // 言語名（表示用）
 const LANG_NM_JA = "日本語";
 const LANG_NM_KO = "한국어";
 const LANG_NM_EN = "English";
 const LIST_LANG_NM = [LANG_NM_JA, LANG_NM_KO, LANG_NM_EN];
-
-// 言語コード（データ参照用）
-const LANG_CD_JA = "ja";
-const LANG_CD_KO = "ko";
-const LANG_CD_EN = "en";
-const LIST_LANG_CD = [LANG_CD_JA, LANG_CD_KO, LANG_CD_EN];
 
 // 都市コード・都市名リスト
 const LIST_CITY_VAL = ["tokyo", "seoul", "taipei", "hanoi", "bangkok", "manila"];
@@ -266,7 +271,7 @@ const MSG_ERR_DIVIDE_BY_ZERO_KO = "0으로 나눌 수 없습니다!";
 const MSG_ERR_MATCH_KO = "계산결과가 일치하지 않습니다!";
 const MSG_ERR_RANK_KO = "랭킹 등록에 실패했습니다.";
 
-const MSG_INPUT_USER_EN = "Input your nickname.";
+const MSG_INPUT_USER_EN = "Input user name.\n(4～10 Alphabet or number)";
 const MSG_OK_SEND_EN = "Send OK!";
 const MSG_ERR_SEND_EN = "Send NG!!";
 

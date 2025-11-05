@@ -1,4 +1,6 @@
-# 説明: LINEメッセージAPI
+"""
+KakaoメッセージAPI
+"""
 
 import sys
 
@@ -63,8 +65,10 @@ RESULT_CODE_OK = 0
 RESULT_CODE_NG = 1
 
 
-# アクセストークン取得（トークン発行、更新）
 def get_access_token(code: str = const.SYM_BLANK) -> str:
+    """
+    アクセストークン取得（トークン発行、更新）
+    """
     curr_func_nm = sys._getframe().f_code.co_name
 
     token = const.SYM_BLANK
@@ -135,8 +139,10 @@ def get_access_token(code: str = const.SYM_BLANK) -> str:
     return token
 
 
-# ユーザー情報取得
 def get_user_me(access_token: str = const.SYM_BLANK) -> list[str]:
+    """
+    ユーザー情報取得
+    """
     curr_func_nm = sys._getframe().f_code.co_name
 
     if not access_token:
@@ -157,8 +163,12 @@ def get_user_me(access_token: str = const.SYM_BLANK) -> list[str]:
     return result
 
 
-# 友達リスト検索 # TODO: [pending] チャネル登録必要
 def get_receiver_uuids(access_token: str = const.SYM_BLANK) -> list[str]:
+    """
+    友達リスト検索
+
+    [pending] チャネル登録必要
+    """
     receiver_uuids = []
 
     if not access_token:
@@ -175,7 +185,6 @@ def get_receiver_uuids(access_token: str = const.SYM_BLANK) -> list[str]:
     return receiver_uuids
 
 
-# メッセージ送信
 def send_kakao_msg(
     access_token: str,
     object_type: str = OBJECT_TYPE_TEXT,
@@ -185,6 +194,9 @@ def send_kakao_msg(
     link_mo: str = const.SYM_BLANK,
     receiver_uuids=[],
 ):
+    """
+    メッセージ送信
+    """
     url = URL_KAKAO_API_SEND_ME
     template_object = get_template_object(object_type, title, message, link, link_mo)
     data = {"template_object": template_object}
@@ -196,8 +208,10 @@ def send_kakao_msg(
     return result
 
 
-# API通信
 def post_kakao_api(url: str, access_token: str, data={}):
+    """
+    API送信
+    """
     headers = {"Authorization": access_token}
     result = func_api.get_response_result(
         url,
@@ -209,7 +223,6 @@ def post_kakao_api(url: str, access_token: str, data={}):
     return result
 
 
-# テンプレート取得
 def get_template_object(
     object_type: str = OBJECT_TYPE_FEED,
     title: str = const.SYM_BLANK,
@@ -218,6 +231,9 @@ def get_template_object(
     link_mo: str = const.SYM_BLANK,
     img_url: str = URL_TODAY_KOREA_IMG,
 ):
+    """
+    テンプレート取得
+    """
     if not link and not link_mo:
         link = const.URL_NAVER
         link_mo = const.URL_NAVER_MO
@@ -359,8 +375,10 @@ def get_template_object(
     return template_json
 
 
-# トークン取得
 def get_token(session):
+    """
+    トークン取得
+    """
     token = const.SYM_BLANK
     if session:
         try:
@@ -370,8 +388,10 @@ def get_token(session):
     return token
 
 
-# 認証
 def get_auth_content(token: str):
+    """
+    認証
+    """
     title = "카카오 인증"
 
     if token:
@@ -400,8 +420,10 @@ def get_auth_content(token: str):
     return content
 
 
-# ログアウト
 def get_logout_content(token: str) -> str:
+    """
+    ログアウト
+    """
     body = result = account_str = const.SYM_BLANK
 
     try:
@@ -431,8 +453,10 @@ def get_logout_content(token: str) -> str:
     return content
 
 
-# アカウント認証結果
 def get_auth_result_content(code: str) -> tuple[str, str]:
+    """
+    アカウント認証結果
+    """
     token = const.SYM_BLANK
     if code:
         token = get_access_token(code)
@@ -463,8 +487,10 @@ def get_auth_result_content(code: str) -> tuple[str, str]:
     return token, content
 
 
-# アカウント連携解除
 def get_unlink_content(token: str) -> str:
+    """
+    アカウント連携解除
+    """
     try:
         # 連携解除
         result = post_kakao_api(URL_KAKAO_API_UNLINK, token)
@@ -489,8 +515,10 @@ def get_unlink_content(token: str) -> str:
     return content
 
 
-# テストメッセージのHTML取得
 def get_test_message_content(token: str = const.SYM_BLANK) -> str:
+    """
+    テストメッセージのHTML取得
+    """
     if not token:
         token = get_access_token()
 

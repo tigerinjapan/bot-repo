@@ -1,4 +1,6 @@
-# 説明: API関数
+"""
+API関数
+"""
 
 import requests
 import sys
@@ -18,7 +20,6 @@ URL_SERVER = func.get_server_url()
 IMG_NO = func.get_env_val("LINE_IMG_DIV", div=const.STR_ENV_VAR)
 
 
-# リクエスト送信
 def get_response_result(
     url: str,
     request_type: str = const.REQUEST_TYPE_GET,
@@ -26,6 +27,9 @@ def get_response_result(
     data={},
     header_json_flg: bool = const.FLG_ON,
 ):
+    """
+    リクエスト結果取得
+    """
     result = except_ = msg = const.NONE_CONSTANT
     curr_func_nm = sys._getframe().f_code.co_name
 
@@ -69,16 +73,20 @@ def get_response_result(
     return result
 
 
-# API結果取得
 def get_result_on_app(app_name: str):
+    """
+    JSONデータ取得
+    """
     # url = f"{URL_SERVER}/{const.FILE_TYPE_JSON}/{app_name}?token=token_{func.get_now(const.DATE_TODAY)}"
     url = f"{URL_SERVER}/{const.FILE_TYPE_JSON}/{app_name}"
     result = get_response_result(url)
     return result
 
 
-# 画像に文字列挿入
 def create_msg_img(div: str, msg: str, forecast: str = const.SYM_BLANK) -> str:
+    """
+    画像に文字列挿入
+    """
     if forecast:
         if "雨" in forecast:
             img_div = "rainy"
@@ -114,7 +122,6 @@ def create_msg_img(div: str, msg: str, forecast: str = const.SYM_BLANK) -> str:
     return img_file_name
 
 
-# メッセージ画像生成
 def insert_msg_to_img(
     div: str,
     img_file_name: str,
@@ -123,6 +130,9 @@ def insert_msg_to_img(
     xy_size: tuple[int, int],
     msg: str,
 ) -> str:
+    """
+    メッセージ画像生成
+    """
     img_file_path = func.get_file_path(img_file_name, const.FILE_TYPE_JPEG)
 
     img = Image.open(img_file_path).rotate(0)
@@ -138,10 +148,12 @@ def insert_msg_to_img(
     return file_path
 
 
-# リストの中で、一つ値をキーに、対象データ取得
 def get_target_data(
     data, search_value: str, target_key: str, search_key: str = const.STR_DIV_JA
 ):
+    """
+    リストの中で、一つ値をキーに、対象データ取得
+    """
     target_info = const.SYM_BLANK
 
     # リストの要素（辞書）を一つずつ確認

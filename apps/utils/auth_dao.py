@@ -1,4 +1,6 @@
-# 説明: 権限情報DAO
+"""
+権限情報DAO
+"""
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -6,8 +8,10 @@ import apps.utils.function_mongo as func_mongo
 import apps.utils.mongo_constants as mongo_const
 
 
-# 権限情報取得
 def get_auth_info(div: str):
+    """
+    権限情報取得
+    """
     client = func_mongo.db_connect()
 
     cond = {mongo_const.FI_DIV: div}
@@ -17,8 +21,10 @@ def get_auth_info(div: str):
     return auth_info
 
 
-# 権限情報取得
 def get_auth_token(div: str, key: str = mongo_const.FI_TOKEN):
+    """
+    権限情報取得（トークン）
+    """
     auth_info = get_auth_info(div)
     if key == mongo_const.FI_TOKEN:
         token = auth_info[key]
@@ -27,8 +33,10 @@ def get_auth_token(div: str, key: str = mongo_const.FI_TOKEN):
     return token
 
 
-# 権限情報更新
 def update_auth_token(div: str, token: str):
+    """
+    権限情報更新
+    """
     client = func_mongo.db_connect()
 
     cond = {mongo_const.FI_DIV: div}

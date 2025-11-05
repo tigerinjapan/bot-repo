@@ -1,4 +1,6 @@
-# 説明: mongoDB操作
+"""
+mongoDB操作
+"""
 
 import sys
 
@@ -19,8 +21,10 @@ app_name = const.STR_MONGO
 DB_NAME = app_name + func.convert_upper_lower(const.STR_DB)
 
 
-# DB接続
 def db_connect():
+    """
+    DB接続
+    """
     try:
         func.print_start(app_name)
         client_url = get_connect_info()
@@ -37,8 +41,10 @@ def db_connect():
         )
 
 
-# 接続情報取得
 def get_connect_info(db_div: str = const.STR_MONGO) -> str:
+    """
+    接続情報取得
+    """
     client_url = const.SYM_BLANK
 
     auth_data = func.get_input_data(const.STR_AUTH, const.STR_MONGO)
@@ -55,14 +61,18 @@ def get_connect_info(db_div: str = const.STR_MONGO) -> str:
     return client_url
 
 
-# DB終了
 def db_close(client):
+    """
+    DB終了
+    """
     client.close()
     func.print_end(app_name)
 
 
-# コレクション取得
 def get_collection(client, collection_name: str):
+    """
+    コレクション取得
+    """
     # データベース指定
     db = client[DB_NAME]
 
@@ -71,8 +81,10 @@ def get_collection(client, collection_name: str):
     return collection
 
 
-# 件数取得
 def db_count(client, coll_nm: str, cond):
+    """
+    件数取得
+    """
     curr_func_nm = sys._getframe().f_code.co_name
     coll = get_collection(client, coll_nm)
 
@@ -86,7 +98,6 @@ def db_count(client, coll_nm: str, cond):
     return result
 
 
-# データ検索
 def db_find(
     client,
     coll_nm: str,
@@ -95,6 +106,9 @@ def db_find(
     sort=const.NONE_CONSTANT,
     one_flg=const.FLG_OFF,
 ):
+    """
+    データ検索
+    """
     curr_func_nm = sys._getframe().f_code.co_name
     coll = get_collection(client, coll_nm)
     coll_find = coll.find
@@ -127,13 +141,14 @@ def db_find(
     return result
 
 
-# [例外] データエラー
 def except_db(coll_nm: str, curr_func_nm: str, except_str: str):
+    """
+    [例外] データエラー
+    """
     div = f"{coll_nm} {msg_const.MSG_ERR_DB_PROC_FAILED}"
     func.print_error_msg(SCRIPT_NAME, curr_func_nm, div, except_str)
 
 
-# データ検索（1件）
 def db_find_one(
     client,
     coll_nm: str,
@@ -141,12 +156,17 @@ def db_find_one(
     select_data=const.NONE_CONSTANT,
     sort=const.NONE_CONSTANT,
 ):
+    """
+    データ検索（1件）
+    """
     result = db_find(client, coll_nm, cond, select_data, sort, one_flg=const.FLG_ON)
     return result
 
 
-# データ登録
 def db_insert(client, coll_nm: str, insert_data, many_flg: bool = const.FLG_OFF):
+    """
+    データ登録
+    """
     curr_func_nm = sys._getframe().f_code.co_name
     coll = get_collection(client, coll_nm)
 
@@ -160,13 +180,17 @@ def db_insert(client, coll_nm: str, insert_data, many_flg: bool = const.FLG_OFF)
         except_db(coll_nm, curr_func_nm, str(e))
 
 
-# データ登録（複数件）
 def db_insert_many(client, coll_nm: str, insert_data):
+    """
+    データ登録（複数件）
+    """
     db_insert(client, coll_nm, insert_data, many_flg=const.FLG_ON)
 
 
-# データ更新
 def db_update(client, coll_nm: str, cond, update_data, many_flg: bool = const.FLG_OFF):
+    """
+    データ更新
+    """
     curr_func_nm = sys._getframe().f_code.co_name
     coll = get_collection(client, coll_nm)
 
@@ -181,13 +205,17 @@ def db_update(client, coll_nm: str, cond, update_data, many_flg: bool = const.FL
         except_db(coll_nm, curr_func_nm, str(e))
 
 
-# データ更新（複数件）
 def db_update_many(client, coll_nm: str, cond, update_data):
+    """
+    データ更新（複数件）
+    """
     db_update(client, coll_nm, cond, update_data, many_flg=const.FLG_ON)
 
 
-# データ検索＆更新
 def db_find_update(client, coll_nm: str, cond, update_data):
+    """
+    データ検索＆更新
+    """
     curr_func_nm = sys._getframe().f_code.co_name
     coll = get_collection(client, coll_nm)
 

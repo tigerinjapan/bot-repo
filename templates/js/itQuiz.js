@@ -214,7 +214,7 @@ const renderInitialScreen = () => {
       </div>
       <div class="flex-center">
         <label class="inputLbl" for="inputUserName">USER</label>
-        <input class="inputTxt" type="text" id="inputUserName" minlength="4" maxlength="10" placeholder="4～10 Alphabet or number.">
+        <input class="inputTxt" type="text" id="inputUserName" minlength="4" maxlength="10" placeholder="Input user name.">
       </div>
       <div class="flex-center">
         <button class="btn" id="btnStartGame" disabled>START GAME</button>

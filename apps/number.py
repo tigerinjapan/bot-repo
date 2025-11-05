@@ -1,3 +1,7 @@
+"""
+ナンバープレートゲーム
+"""
+
 import itertools
 import math
 import builtins
@@ -36,14 +40,18 @@ DEFAULT_RANK = {
 }
 
 
-# アイテムリスト取得
 def get_item_list():
+    """
+    アイテムリスト取得
+    """
     item_list = get_game_data_list()
     return item_list
 
 
-# ゲームデータ取得
 def get_game_data_list():
+    """
+    ゲームデータ取得
+    """
     game_data_list = []
     answer_list = get_answer_list()
     number_list = [row[0] for row in answer_list]
@@ -75,8 +83,10 @@ def get_game_data_list():
     return game_data_list
 
 
-# ランダムでCSVデータ取得
 def get_answer_list():
+    """
+    CSVデータ取得（ランダム）
+    """
     df = func.get_df_from_csv(const.APP_NUMBER)[0]
     df_result = df.sample(n=const.MAX_NUMBER_DATA)
 
@@ -85,8 +95,10 @@ def get_answer_list():
     return answer_list
 
 
-# CSV出力
 def output_df_to_csv():
+    """
+    DataFrameよりCSVデータ取得（ランダム）
+    """
     csv_item_list = get_csv_item_list()
     csv_col_list = [const.STR_NUMBER, const.STR_ANSWER, const.STR_LEVEL]
     df = func.get_df(csv_item_list, csv_col_list)
@@ -101,8 +113,10 @@ def output_df_to_csv():
     )
 
 
-# アイテムリスト取得（CSV出力用）
 def get_csv_item_list():
+    """
+    アイテムリスト取得（CSV出力用）
+    """
     item_list = []
 
     for num in range(1000, 10000):
@@ -133,8 +147,11 @@ def get_csv_item_list():
     return item_list
 
 
-# 正解取得（CSV出力用）
 def find_answer(number):
+    """
+    正解取得（CSV出力用）
+    """
+
     """
     4桁の数字（順番固定）から、四則演算・累乗・平方根・括弧を使った等式を全探索し、解となる式を返す。
     桁間の「結合（空文字）」を演算子候補に追加し、隣接桁を連結して多桁数（例: 4 と 9 -> 49）を作れるようにした。
@@ -300,8 +317,10 @@ def find_answer(number):
     return list(answer)
 
 
-# ゲームレベル取得（CSV出力用）
 def get_game_level(answer_list):
+    """
+    ゲームレベル取得（CSV出力用）
+    """
     length = len(answer_list)
     if length == 0:
         return const.SYM_DASH
@@ -322,8 +341,10 @@ def get_game_level(answer_list):
     return game_level
 
 
-# テスト
 def test_number(number):
+    """
+    テスト
+    """
     answer = find_answer(number)
     level = get_game_level(answer)
     data = f"{const.STR_ANSWER}:{answer},{const.STR_LEVEL}:{level}"

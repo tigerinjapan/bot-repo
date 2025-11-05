@@ -151,6 +151,7 @@ def get_template_msg():
     template_text = today.get_today_phrase()
     actions = get_template_actions()
 
+    # TODO: 毎回同じイメージが生成される
     file_path = func_gemini.get_gemini_image(const.STR_REST)
     if file_path:
         func.print_debug_msg(const.MSG_TYPE_IMG, func_line.URL_REST_IMG)

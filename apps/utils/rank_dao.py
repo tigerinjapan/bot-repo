@@ -1,4 +1,6 @@
-# 説明: ランク情報DAO
+"""
+ランク情報DAO
+"""
 
 import apps.utils.constants as const
 import apps.utils.function_mongo as func_mongo
@@ -6,8 +8,10 @@ import apps.utils.mongo_constants as mongo_const
 import apps.utils.rank_dto as rank_dto
 
 
-# ランク情報取得
 def get_rank_info_list(number_list: list[int]):
+    """
+    ランク情報取得
+    """
     rank_info_list = []
 
     client = func_mongo.db_connect()
@@ -21,8 +25,10 @@ def get_rank_info_list(number_list: list[int]):
     return rank_info_list
 
 
-# ランキング情報取得
 def get_rank_info_top():
+    """
+    ランキング情報取得
+    """
     # 5桁で「.」が含まれている
     cond = {
         mongo_const.FI_RANK_TIME: {
@@ -48,8 +54,10 @@ def get_rank_info_top():
     return rank_top
 
 
-# ランキング情報取得
 def get_ranking_top(app_name: str = const.APP_IT_QUIZ):
+    """
+    ランキング情報取得
+    """
     cond = {mongo_const.FI_DIV: app_name}
 
     select_data = {
@@ -70,7 +78,6 @@ def get_ranking_top(app_name: str = const.APP_IT_QUIZ):
     return ranking_top
 
 
-# [共通] ランキング情報取得
 def get_rank_top(
     cond,
     select_data,
@@ -78,6 +85,9 @@ def get_rank_top(
     limit_cnt: int = 5,
     coll_name: str = mongo_const.COLL_RANKING,
 ):
+    """
+    [共通] ランキング情報取得
+    """
     client = func_mongo.db_connect()
     rank_info_list = func_mongo.db_find(
         client, coll_name, cond, select_data, sort
@@ -99,8 +109,10 @@ def get_rank_top(
     return rank_top
 
 
-# ランク情報更新（API）
 def update_rank_info_of_api(json_data):
+    """
+    ランク情報更新（API）
+    """
     coll_rank = mongo_const.COLL_RANK_INFO
     update_data = rank_dto.get_rank_info_data(json_data, update_flg=const.FLG_ON)
 
@@ -114,8 +126,10 @@ def update_rank_info_of_api(json_data):
     func_mongo.db_close(client)
 
 
-# ランキング情報更新（API）
 def update_ranking_of_api(json_data, div: str = const.APP_IT_QUIZ):
+    """
+    ランキング情報更新（API）
+    """
     coll_rank = mongo_const.COLL_RANKING
     insert_data, target_rank, target_score = rank_dto.get_update_data_for_ranking(
         div, json_data

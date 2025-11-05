@@ -199,7 +199,7 @@ def get_data_list(df) -> list[tuple[list[str], list[str]]]:
 
 def get_df_info(app_name: str):
     """
-    データフレーム取得
+    DataFrameデータ取得
     """
     df, file_path = func.get_df_from_json(app_name)
     if df.empty:

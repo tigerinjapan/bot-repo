@@ -1,4 +1,6 @@
-# 説明: Beautiful Soup関数
+"""
+Beautiful Soup関数
+"""
 
 import requests
 import sys
@@ -13,10 +15,12 @@ import apps.utils.message_constants as msg_const
 SCRIPT_NAME = func.get_app_name(__file__)
 
 
-# URLからデータ取得
 def get_data_from_url(
     url: str, headers=const.NONE_CONSTANT, sleep_flg: bool = const.FLG_ON
 ):
+    """
+    URLからデータ取得
+    """
     try:
         # func[requests.get]:Get data from web page
         response = requests.get(url, headers=headers)
@@ -30,16 +34,20 @@ def get_data_from_url(
     return response
 
 
-# soup取得(contents)
 def get_soup_from_contents(contents):
+    """
+    soup取得(contents)
+    """
     soup = const.NONE_CONSTANT
     if contents:
         soup = bs(contents, "html.parser")
     return soup
 
 
-# soup取得
 def get_soup(url: str, headers=const.NONE_CONSTANT):
+    """
+    soup取得
+    """
     soup = const.NONE_CONSTANT
 
     response = get_data_from_url(url, headers)
@@ -48,7 +56,6 @@ def get_soup(url: str, headers=const.NONE_CONSTANT):
     return soup
 
 
-# ページ要素取得
 def get_elem_from_url(
     url: str,
     tag: str = const.SYM_BLANK,
@@ -56,6 +63,9 @@ def get_elem_from_url(
     attr_val: str = const.SYM_BLANK,
     list_flg: bool = const.FLG_OFF,
 ):
+    """
+    ページ要素取得
+    """
     elem = const.NONE_CONSTANT
 
     soup = get_soup(url)
@@ -64,7 +74,6 @@ def get_elem_from_url(
     return elem
 
 
-# 要素取得
 def find_elem_by_attr(
     soup,
     tag: str = const.SYM_BLANK,
@@ -72,6 +81,9 @@ def find_elem_by_attr(
     attr_val: str = const.SYM_BLANK,
     list_flg: bool = const.FLG_OFF,
 ):
+    """
+    要素取得
+    """
     elem = const.NONE_CONSTANT
 
     try:
@@ -99,22 +111,28 @@ def find_elem_by_attr(
     return elem
 
 
-# 要素取得
 def find_elem_by_class(soup, attr_val: str, list_flg: bool = const.FLG_OFF):
+    """
+    要素取得（class）
+    """
     elem = find_elem_by_attr(
         soup, attr_div=const.ATTR_CLASS, attr_val=attr_val, list_flg=list_flg
     )
     return elem
 
 
-# 要素取得(href)
 def get_link_from_soup(soup) -> str:
+    """
+    要素取得（href）
+    """
     elem = find_elem_by_attr(soup, tag=const.TAG_A, attr_div=const.ATTR_HREF)
     link = elem if elem else const.SYM_BLANK
     return link
 
 
-# テキスト取得
 def get_text_from_soup(soup) -> str:
+    """
+    テキスト取得
+    """
     text = soup.get_text(strip=const.FLG_ON)
     return text

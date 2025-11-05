@@ -1,4 +1,6 @@
-# 説明: 今日の生活情報
+"""
+今日の生活情報
+"""
 
 import apps.ex as ex
 import apps.mlb as mlb
@@ -42,16 +44,20 @@ DIV_LIST = [
 ]
 
 
-# アイテムリスト取得
 def get_item_list():
+    """
+    アイテムリスト取得
+    """
     today_info_list = get_today_info()
     today_info = zip(DIV_LIST, today_info_list)
     item_list = [[div, info] for div, info in today_info if info]
     return item_list
 
 
-# 今日の生活情報取得
 def get_today_info():
+    """
+    今日の生活情報取得
+    """
     # 天気
     weather, date_time = get_today_weather()
 
@@ -89,8 +95,10 @@ def get_today_info():
     return today_info_list
 
 
-# メッセージデータ取得
 def get_msg_data_today():
+    """
+    メッセージデータ取得
+    """
     today_info = func_api.get_result_on_app(const.APP_TODAY)
     if today_info:
         key = app_title
@@ -131,9 +139,10 @@ def get_msg_data_today():
         return msg_data, date_today, img_url
 
 
-# 今日の天気情報取得
 def get_today_weather() -> tuple[str, str]:
-
+    """
+    今日の天気情報取得
+    """
     url = f"{const.URL_TENKI}/forecast/3/"
     # location_id = 13101 # 東京
     location_id = 12100  # 千葉
@@ -170,8 +179,10 @@ def get_today_weather() -> tuple[str, str]:
     return today_weather, date_time
 
 
-# 今日の天気情報取得
 def get_today_weather_plus() -> str:
+    """
+    今日の天気情報取得
+    """
     url = f"{const.URL_TENKI}/pollen/"
     class_ = "top-map-pollen-pref-4"
     elem_pollen = func_bs.get_elem_from_url(url, attr_val=class_)
@@ -192,10 +203,12 @@ def get_today_weather_plus() -> str:
     return today_weather_plus
 
 
-# 今日のNISA取得
 def get_today_nisa(
     fund_no: str = const.FUND_NO_SP_500, msg_flg: bool = const.FLG_ON
 ) -> str:
+    """
+    今日のNISA取得
+    """
     url = f"{const.URL_SMBC_FUND}/{fund_no}/"
     class_ = "sw-FundComparisonTable sw-FundComparisonTable_center"
     soup = func_bs.get_elem_from_url(url, attr_val=class_)
@@ -218,8 +231,10 @@ def get_today_nisa(
         return fund_name, point
 
 
-# 今日のコーデ取得
 def get_today_outfit():
+    """
+    今日のコーデ取得
+    """
     url = f"{const.URL_CANCAM}/archives/tag/今日のコーデ"
     soup_main = func_bs.get_elem_from_url(url, attr_val="site-main yellow-main")
     link_today = func_bs.get_link_from_soup(soup_main)
@@ -236,8 +251,10 @@ def get_today_outfit():
     return outfit_text
 
 
-# 今日のレシピメニュー取得
 def get_today_dinner():
+    """
+    今日のレシピメニュー取得
+    """
     url = "https://park.ajinomoto.co.jp/menu/"
     weekly_menu_list = func_bs.get_elem_from_url(
         url, attr_val="recipeTitle", list_flg=const.FLG_ON
@@ -247,8 +264,10 @@ def get_today_dinner():
     return today_menu
 
 
-# 今日のフレーズ取得
 def get_today_phrase(div: str = const.STR_PHRASE):
+    """
+    今日のフレーズ取得
+    """
     file_path = func.get_file_path(div, const.FILE_TYPE_CSV)
     dict_data = func.get_dict_from_csv(file_path)
     random_int = str(func.get_random_int(const.MAX_PHRASE_CSV))
@@ -260,8 +279,10 @@ def get_today_phrase(div: str = const.STR_PHRASE):
     return phrase
 
 
-# 要素値取得
 def get_elem_val_by_class(soup, class_: str) -> str:
+    """
+    要素値取得
+    """
     elem_val = const.SYM_BLANK
 
     elem = func_bs.find_elem_by_class(soup, class_)

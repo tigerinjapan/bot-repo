@@ -1,4 +1,6 @@
-# 説明: ニュース情報
+"""
+ニュース情報
+"""
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -45,8 +47,10 @@ DIV_KPOP_RANKING = DIV_WEEKLY_RANKING.format(const.STR_KPOP)
 LIST_KEYWORD_AI = func.get_input_data(const.STR_KEYWORD, const.STR_AI)
 
 
-# アイテムリスト取得
 def get_item_list():
+    """
+    アイテムリスト取得
+    """
     item_list = []
 
     for div, item_div in zip(DIV_NEWS_LIST, ITEM_NEWS_LIST):
@@ -60,8 +64,10 @@ def get_item_list():
     return item_list
 
 
-# ニュースメッセージリスト取得
 def get_news_msg_list(div_list: list[str]):
+    """
+    ニュースメッセージリスト取得
+    """
     news_msg_list = []
     for div in div_list:
         news_list = get_news_list(div, ai_flg=const.FLG_ON)
@@ -69,14 +75,15 @@ def get_news_msg_list(div_list: list[str]):
     return news_msg_list
 
 
-# ニュース情報取得
 def get_news_list(
     div: str,
     list_flg: bool = const.FLG_OFF,
     url_flg: bool = const.FLG_OFF,
     ai_flg: bool = const.FLG_OFF,
 ):
-
+    """
+    ニュース情報取得
+    """
     news_list = []
 
     elem_list = get_elem_list(div)
@@ -171,14 +178,18 @@ def get_news_list(
     return news_list
 
 
-# テンプレートメッセージ取得
 def get_temp_msg():
+    """
+    テンプレートメッセージ取得
+    """
     lbl, url = get_news_list(DIV_AI_NEWS, url_flg=const.FLG_ON)
     return lbl, url
 
 
-# 要素リスト取得
 def get_elem_list(div: str, url: str = const.SYM_BLANK):
+    """
+    要素リスト取得
+    """
     attr_div = const.ATTR_CLASS
     attr_val = const.SYM_BLANK
     tag = const.TAG_A

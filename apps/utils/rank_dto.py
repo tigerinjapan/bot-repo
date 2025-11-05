@@ -1,4 +1,6 @@
-# 説明: ランク情報DTO
+"""
+ランク情報DTO
+"""
 
 from dataclasses import asdict, dataclass
 from datetime import datetime
@@ -54,8 +56,10 @@ class ranking:
         return asdict(self)
 
 
-# JSONデータ取得（ランク情報の登録・更新）
 def get_rank_info_data(json_data, update_flg: bool = const.FLG_OFF):
+    """
+    JSONデータ取得（ランク情報の登録・更新）
+    """
     if update_flg:
         number = json_data[const.STR_NUMBER]
         rank_time = json_data[const.STR_TIME].zfill(5)
@@ -75,8 +79,10 @@ def get_rank_info_data(json_data, update_flg: bool = const.FLG_OFF):
     return json_data
 
 
-# JSONデータ取得（ランキング情報の取得）
 def get_ranking_data(json_data):
+    """
+    JSONデータ取得（ランキング情報の取得）
+    """
     rank = json_data[mongo_const.FI_RANK]
     userId = json_data[mongo_const.FI_USER_NAME]
     score = json_data[mongo_const.FI_SCORE]
@@ -93,8 +99,10 @@ def get_ranking_data(json_data):
     return json_data
 
 
-# JSONデータ取得（ランキング情報の登録・更新）
 def get_update_data_for_ranking(div, json_data):
+    """
+    JSONデータ取得（ランキング情報の登録・更新）
+    """
     rank = json_data[mongo_const.ITEM_RANK]
     score = json_data[mongo_const.ITEM_SCORE]
     userName = json_data[mongo_const.ITEM_USER_ID]

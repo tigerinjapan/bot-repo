@@ -1,4 +1,6 @@
-# 説明: 掲示板情報DTO
+"""
+掲示板情報DTO
+"""
 
 from dataclasses import asdict, dataclass
 from datetime import datetime
@@ -28,8 +30,10 @@ class board:
         return asdict(self)
 
 
-# JSONデータ取得（掲示板情報の登録用）
 def get_update_data_for_board_info(data, seq: int):
+    """
+    JSONデータ取得（掲示板情報の登録用）
+    """
     app = int(data[0])
     category = int(data[1])
     type = int(data[2])
@@ -44,8 +48,10 @@ def get_update_data_for_board_info(data, seq: int):
     return json_data
 
 
-# 掲示板データ取得
 def get_board_data(data):
+    """
+    掲示板データ取得
+    """
     seq = data[mongo_const.FI_SEQ]
     app = const.LIST_BOARD_APP[data[mongo_const.FI_APP]]
     category = const.LIST_BOARD_CATEGORY[data[mongo_const.FI_CATEGORY]]

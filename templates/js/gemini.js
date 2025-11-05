@@ -154,7 +154,8 @@ async function requestApi(mode, prompt) {
 
     try {
         const data = await getFetchApiData(apiUrl, requestBody);
-        console.log(data.message);
+        const msg = data.message;
+        console.log(msg);
         alert(MSG_OK_SEND);
 
         const outputImageContainer = getElem('outputImageContainer');

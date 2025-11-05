@@ -1,7 +1,7 @@
 // db
 const database = "mongoDB";
 let div = "dashboard";
-// div = "error";
+div = "error";
 const currentDate = new Date();
 
 // Select the database to use.

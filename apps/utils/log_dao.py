@@ -1,4 +1,6 @@
-# 説明: ログDAO
+"""
+ログDAO
+"""
 
 import apps.utils.constants as const
 import apps.utils.log_dto as log_dto
@@ -6,10 +8,12 @@ import apps.utils.function_mongo as func_mongo
 import apps.utils.mongo_constants as mongo_const
 
 
-# バックアップログ取得
 def get_log_data_list(
     div: str, target_date: str = const.SYM_BLANK, json_flg: bool = const.FLG_OFF
 ):
+    """
+    バックアップしたログ取得
+    """
     log_data_list = []
 
     client = func_mongo.db_connect()
@@ -37,8 +41,10 @@ def get_log_data_list(
     return log_data_list
 
 
-# ログバックアップ
 def insert_log_data(data_list):
+    """
+    バックアップログの登録
+    """
     client = func_mongo.db_connect()
     func_mongo.db_insert_many(client, mongo_const.COLL_LOG, data_list)
     func_mongo.db_close(client)

@@ -41,7 +41,7 @@ def get_csv_to_json():
     # 14:更新の表示(1 or 0)
     # 15:変更理由(1 or 0)
 
-    # CSVファイルよりデータフレーム取得
+    # CSVファイルよりDataFrame取得
     df_all = func.get_df_from_csv(div)[0]
     col_list = [div, "pref", "city", "area"]
     df = df_all[col_list]
