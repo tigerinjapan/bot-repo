@@ -1,7 +1,8 @@
 // db
 const database = "mongoDB";
 let div = "dashboard";
-div = "error";
+// div = "error";
+const targetDate = "2025-11-01";
 const currentDate = new Date();
 
 // Select the database to use.
@@ -18,8 +19,7 @@ cond = { sDiv: div };
 // };
 
 selectData = { _id: 0 };
-selectData = {};
-sortData = { sMessage: 1 };
+sortData = { sMessage: -1 };
 
 // db.log.count(cond);
 db.log.find(cond, selectData).sort(sortData).limit(20).pretty();
@@ -30,64 +30,22 @@ db.log.find(cond, selectData).sort(sortData).limit(20).pretty();
 // insert documents
 // insertData = [
 //     {
-//         "sDiv": "dashboard",
-//         "sMessage": "2025-10-25 03:39:18,331 [INFO] number entertainment Mobile Android Chrome Mobile",
-//         "dTargetDate": new Date("2025-10-25"),
+//         "sDiv": div,
+//         "sMessage": targetDate + " 09:00:00,999 [INFO] url_design document Mobile Android Chrome Mobile",
+//         "dTargetDate": new Date(targetDate),
 //         "dUpdateDate": currentDate
 //     },
 //     {
-//         "sDiv": "dashboard",
-//         "sMessage": "2025-10-25 09:33:49,378 [INFO] number entertainment Mobile Android Chrome Mobile",
-//         "dTargetDate": new Date("2025-10-25"),
+//         "sDiv": div,
+//         "sMessage": targetDate + " 09:00:00,999 [INFO] dashboard management Mobile Android Chrome Mobile",
+//         "dTargetDate": new Date(targetDate),
 //         "dUpdateDate": currentDate
 //     },
 //     {
-//         "sDiv": "dashboard",
-//         "sMessage": "2025-10-25 12:10:58,615 [INFO] number entertainment Mobile Android Chrome Mobile",
-//         "dTargetDate": new Date("2025-10-25"),
+//         "sDiv": div,
+//         "sMessage": targetDate + " 09:00:00,999 [INFO] sudoku entertainment Mobile Android Chrome Mobile",
+//         "dTargetDate": new Date(targetDate),
 //         "dUpdateDate": currentDate
 //     },
-//     {
-//         "sDiv": "dashboard",
-//         "sMessage": "2025-10-26 06:38:28,653 [INFO] number entertainment Mobile Android Chrome Mobile",
-//         "dTargetDate": new Date("2025-10-26"),
-//         "dUpdateDate": currentDate
-//     },
-//     {
-//         "sDiv": "dashboard",
-//         "sMessage": "2025-10-26 09:41:03,937 [INFO] number entertainment Mobile Android LINE",
-//         "dTargetDate": new Date("2025-10-26"),
-//         "dUpdateDate": currentDate
-//     },
-//     {
-//         "sDiv": "dashboard",
-//         "sMessage": "2025-10-26 09:56:35,477 [INFO] number entertainment PC Windows Edge",
-//         "dTargetDate": new Date("2025-10-26"),
-//         "dUpdateDate": currentDate
-//     },
-//     {
-//         "sDiv": "dashboard",
-//         "sMessage": "2025-10-30 06:56:48,199 [INFO] number entertainment PC Windows Edge",
-//         "dTargetDate": new Date("2025-10-30"),
-//         "dUpdateDate": currentDate
-//     },
-//     {
-//         "sDiv": "dashboard",
-//         "sMessage": "2025-10-27 12:53:59,024 [INFO] number entertainment Mobile Android Chrome Mobile",
-//         "dTargetDate": new Date("2025-10-27"),
-//         "dUpdateDate": currentDate
-//     },
-//     {
-//         "sDiv": "dashboard",
-//         "sMessage": "2025-10-29 08:32:57,505 [INFO] number entertainment Mobile Android Chrome Mobile",
-//         "dTargetDate": new Date("2025-10-29"),
-//         "dUpdateDate": currentDate
-//     },
-//     {
-//         "sDiv": "dashboard",
-//         "sMessage": "2025-10-29 08:32:49,049 [INFO] number entertainment PC Linux Chrome",
-//         "dTargetDate": new Date("2025-10-29"),
-//         "dUpdateDate": currentDate
-//     }
 // ];
 // db.log.insertMany(insertData);

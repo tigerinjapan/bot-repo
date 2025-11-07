@@ -167,7 +167,7 @@ def get_dashboard_json(df_all, date_div: str):
     os_counts = df[const.STR_OS].value_counts()
     browser_counts = df[const.STR_BROWSER].value_counts()
 
-    # JSON形式のデータを作成
+    # JSONデータ作成
     dashboard_json = {
         "label": date_div,
         "users": {
@@ -356,4 +356,4 @@ def get_ip_info(ip_address: str):
 
 if __name__ == const.MAIN_FUNCTION:
     update_data()
-    # backup_log()
+    backup_log()

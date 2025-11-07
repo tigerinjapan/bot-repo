@@ -4,10 +4,6 @@
         "内容": "<p>\n<b>テプン商事</b>\nジャンル：ヒューマン\nキャスト：ジュノ（2PM）\n</p>"
     },
     {
-        "イメージ": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6135/4426_640.webp\"</img>",
-        "内容": "<p>\n<b>シン社長プロジェクト</b>\nジャンル：コメディ\nキャスト：ハン・ソッキュ\n</p>"
-    },
-    {
         "イメージ": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6156/4453_640.webp\"</img>",
         "内容": "<p>\n<b>私と結婚してくれますか？</b>\nジャンル：ラブコメ\nキャスト：チェ・ウシク\n</p>"
     },
@@ -18,5 +14,9 @@
     {
         "イメージ": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6161/4458_640.webp\"</img>",
         "内容": "<p>\n<b>ソウルの家から大企業に通うキム部長の物語</b>\nジャンル：ヒューマン\nキャスト：リュ・スンリョン\n</p>"
+    },
+    {
+        "イメージ": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6157/4454_640.webp\"</img>",
+        "内容": "<p>\n<b>最後のサマー</b>\nジャンル：ラブロマンス\nキャスト：イ・ジェウク\n</p>"
     }
 ]

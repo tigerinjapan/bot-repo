@@ -163,6 +163,12 @@ function initApp() {
   renderRank();
   showScreen('start-screen');
 
+  // ヒントボタン初期状態
+  if (hintButton) {
+    hintButton.disabled = (hintsLeft <= 0);
+    if (hintsLeft <= 0) hintButton.classList.add('disabled-hint'); else hintButton.classList.remove('disabled-hint');
+  }
+
   // スタートボタン登録
   if (startButton) startButton.addEventListener("click", startGame);
 
@@ -202,6 +208,12 @@ function startGame() {
   hintsLeft = INITIAL_HINTS;
   if (hintCounter) hintCounter.textContent = hintsLeft;
 
+  // ヒントボタンを有効化（リセット時）
+  if (hintButton) {
+    hintButton.disabled = false;
+    hintButton.classList.remove('disabled-hint');
+  }
+
   // UIリセット
   if (timerText) timerText.textContent = formatTime(GAME_TIMEOUT_SECONDS);
   if (progressBar) {
@@ -223,10 +235,10 @@ function startGame() {
   startTimer();
 }
 
-// 難易度に応じてマスを空ける（固定パズルから生成）
+// 生成ロジック: 常にランダムな完成盤を使う
 function generatePuzzle(level) {
-  // 解答をコピー
-  solution = SUDOKU_SOLUTION.map(row => [...row]);
+  // 解答をシャッフルコピーで作成（毎回ランダムに）
+  solution = shuffleSolution(SUDOKU_SOLUTION).map(row => [...row]);
   let initialBoard = solution.map(row => [...row]);
 
   let holes = 0;
@@ -287,6 +299,84 @@ function renderBoard() {
   }
 }
 
+/**
+ * cloneGrid: 2D 配列を深いコピー
+ */
+function cloneGrid(grid) {
+  return grid.map(row => row.slice());
+}
+
+/**
+ * shuffleArray: 配列を破壊的にシャッフル（Fisher-Yates）
+ */
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+/**
+ * shuffleSolution(base)
+ * - 固定の完成盤 base を受け取り、行/列の入れ替え・バンド/スタック入れ替え・数字置換を行い
+ *   毎回異なる完成盤を返す（元の論理解は保持）。
+ * - これにより同一パズルでも表示がランダム化される。
+ */
+function shuffleSolution(base) {
+  // 1) コピー
+  let grid = cloneGrid(base);
+
+  // 2) 数字をランダムマップする（1..9 -> permuted 1..9）
+  const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const perm = shuffleArray(digits.slice());
+  const mapDigit = (v) => perm[v - 1];
+
+  // apply digit map
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      grid[r][c] = mapDigit(grid[r][c]);
+    }
+  }
+
+  // 3) 行内の順序をバンドごとにシャッフル
+  const newGridRows = Array(9).fill(null).map(() => Array(9).fill(0));
+  const bandOrder = shuffleArray([0, 1, 2]);
+  for (let bi = 0; bi < 3; bi++) {
+    // rows indices in original for this band
+    const srcBand = bandOrder[bi];
+    const rows = [0, 1, 2].map(x => srcBand * 3 + x);
+    shuffleArray(rows); // local shuffle inside band
+    for (let i = 0; i < 3; i++) {
+      newGridRows[bi * 3 + i] = grid[rows[i]].slice();
+    }
+  }
+  grid = newGridRows;
+
+  // 4) 列（スタック）についても同様にシャッフル
+  // transpose, operate like rows, then transpose back
+  function transpose(g) {
+    const t = Array(9).fill(null).map(() => Array(9).fill(0));
+    for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) t[c][r] = g[r][c];
+    return t;
+  }
+  let tranGrid = transpose(grid);
+  const newTRows = Array(9).fill(null).map(() => Array(9).fill(0));
+  const stackOrder = shuffleArray([0, 1, 2]);
+  for (let si = 0; si < 3; si++) {
+    const srcStack = stackOrder[si];
+    const cols = [0, 1, 2].map(x => srcStack * 3 + x);
+    shuffleArray(cols);
+    for (let i = 0; i < 3; i++) {
+      newTRows[si * 3 + i] = tgrid[cols[i]].slice();
+    }
+  }
+  tranGrid = newTRows;
+  grid = transpose(tranGrid);
+
+  return grid;
+}
+
 // ゲーム情報ヘッダーを更新
 function updateGameInfoHeader(level, currentUserName) {
   if (!gameInfoHeader) return;
@@ -334,31 +424,34 @@ function useHint() {
     return;
   }
 
-  // ランダムに一つの空マスを選択
   const target = emptyCells[Math.floor(Math.random() * emptyCells.length)];
   const correctValue = solution[target.r][target.c];
 
-  // 盤面を更新
   puzzle[target.r][target.c] = correctValue;
   hintsLeft--;
   if (hintCounter) hintCounter.textContent = hintsLeft;
 
-  // 描画を更新し、ヒントとして入力されたセルをハイライト
+  // ヒントが使い切られたらボタンを無効化
+  if (hintButton) {
+    if (hintsLeft <= 0) {
+      hintButton.disabled = true;
+      hintButton.classList.add('disabled-hint');
+    } else {
+      hintButton.disabled = false;
+      hintButton.classList.remove('disabled-hint');
+    }
+  }
+
   renderBoard();
   const cellElement = sudokuBoard ? sudokuBoard.querySelector(`[data-row="${target.r}"][data-col="${target.c}"]`) : null;
   if (cellElement) {
     cellElement.classList.add('fixed-cell');
     cellElement.textContent = correctValue;
-    // 一時的なハイライト
     cellElement.style.boxShadow = '0 0 15px magenta';
-    setTimeout(() => {
-      cellElement.style.boxShadow = '';
-    }, 1000);
+    setTimeout(() => { cellElement.style.boxShadow = ''; }, 1000);
   }
 
   showModal("HINT USED", `HINT LEFT: ${hintsLeft}`);
-
-  // ゲームクリアチェック
   checkGameCompletion();
 }
 

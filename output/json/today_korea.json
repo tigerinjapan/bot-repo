@@ -1,32 +1,32 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/11/04(Tue) 02:09",
+        "오늘의 생활정보": "2025/11/07(Fri) 12:05",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "반짝 초겨울 추위",
+        "오늘의 생활정보": "입동, 추위 대신 뿌연 하늘",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "오늘의 생활정보": "S&P500 6,856.80 (+0.24%)",
+        "오늘의 생활정보": "S&P500 6,720.32 (-1.12%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 928원",
+        "오늘의 생활정보": "100엔 = 950원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "오늘의 생활정보": "ベル\n벨; 종; 방울; 초인종.",
+        "오늘의 생활정보": "ニュース\n뉴스.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "More ice cream?\n아이스크림 좀 더 주세요",
+        "오늘의 생활정보": "Find good park where?\n좋은 공원은 어디예요?",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

@@ -399,6 +399,17 @@ input[type="text"] {
 	box-shadow: 0 0 8px mediumseagreen;
 }
 
+/* ヒントボタンが使い切られたときの見た目 */
+#hint-button:disabled,
+#hint-button.disabled-hint {
+	background: lightgray !important;
+	color: #666 !important;
+	border-color: #ccc !important;
+	cursor: default !important;
+	box-shadow: none !important;
+	opacity: 0.9;
+}
+
 #home-button {
 	background-color: darkorange;
 	box-shadow: 0 0 8px darkorange;

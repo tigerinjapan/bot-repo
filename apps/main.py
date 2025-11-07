@@ -94,6 +94,7 @@ def daily_job_2():
     """
     line.main(data_div=const.NUM_TWO)
     line.sub(div=const.APP_MLB)
+    kakao.main(div=const.APP_LCC)
 
 
 def daily_job_3():
@@ -101,7 +102,6 @@ def daily_job_3():
     日次ジョブ
     """
     kakao.main()
-    kakao.main(div=const.APP_LCC)
 
 
 def hourly_job():
