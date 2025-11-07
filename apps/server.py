@@ -476,8 +476,6 @@ async def kakao_apps(request: Request, app_name: str):
         url = "/app/"
         if app_name == const.APP_TODAY:
             app_name = const.APP_TODAY_KOREA
-        elif app_name == const.APP_BOARD:
-            app_name = app_name
         else:
             url = url.replace("app", "apps")
             if app_name == const.TYPE_LIST:

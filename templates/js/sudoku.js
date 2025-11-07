@@ -368,7 +368,7 @@ function shuffleSolution(base) {
     const cols = [0, 1, 2].map(x => srcStack * 3 + x);
     shuffleArray(cols);
     for (let i = 0; i < 3; i++) {
-      newTRows[si * 3 + i] = tgrid[cols[i]].slice();
+      newTRows[si * 3 + i] = tranGrid[cols[i]].slice();
     }
   }
   tranGrid = newTRows;

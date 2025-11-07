@@ -35,9 +35,6 @@ ITEM_MENU = "menu"
 ITEM_MODIFIED_DATE = "modifiedDate"
 ITEM_LAST_LOGIN_DATE = "lastLoginDate"
 
-# 項目ID: auth
-ITEM_DUE_DATE = "dueDate"
-
 # 項目ID: rank info
 ITEM_NUMBER = "number"
 ITEM_RANK_TIME = "rankTime"
@@ -117,7 +114,6 @@ FI_LAST_LOGIN_DATE = convert_field(ITEM_LAST_LOGIN_DATE, const.TYPE_DATE)
 
 # フィールド: auth
 FI_TOKEN = convert_field(const.STR_TOKEN)
-FI_DUE_DATE = convert_field(ITEM_DUE_DATE)
 
 # フィールド: rank info
 FI_NUMBER = convert_field(ITEM_NUMBER, const.TYPE_NUM)

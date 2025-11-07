@@ -109,8 +109,13 @@ def get_access_token(code: str = const.SYM_BLANK) -> str:
     # トークン・タイプ
     token_type = result["token_type"]
 
-    # アクセストークン（有効期限：6時間）
+    # アクセストークン
     access_token = result["access_token"]
+
+    # 有効期限（有効期限：6時間）
+    expires_in = result["expires_in"]
+    expires_min = int(expires_in / 60)
+    func.print_debug_msg(const.STR_TOKEN_JA, f"{const.STR_EXPIRE_JA}: {expires_min}分")
 
     grant_type = GRANT_TYPE_REFRESH_TOKEN
     issue_type = ISSUE_TYPE_ACCESS_TOKEN
@@ -424,13 +429,13 @@ def get_logout_content(token: str) -> str:
     """
     ログアウト
     """
-    body = result = account_str = const.SYM_BLANK
+    body = result = const.SYM_BLANK
 
     try:
-        if token:
-            # ログアウト
-            result = post_kakao_api(URL_KAKAO_API_LOGOUT, token)
-            account_str = "카카오 계정 "
+        # if token:
+        #     # ログアウト：トークン満了されるため、処理しない
+        #     result = post_kakao_api(URL_KAKAO_API_LOGOUT, token)
+        account_str = "카카오 계정 "
 
         # 結果表示
         body = f"""

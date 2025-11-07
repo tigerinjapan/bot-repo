@@ -4,7 +4,6 @@ const database = "mongoDB";
 const div = "hong";
 const userPw = "pw202510";
 const token = "xxxx9999XXXX";
-const dueDate = "20251231";
 const currentDate = new Date();
 
 // Select the database to use.
@@ -22,7 +21,6 @@ async function run() {
                 "sDiv": div,
                 "sUserPw": userPw,
                 "sToken": token,
-                "sDueDate": dueDate,
                 "dUpdateDate": currentDate
             });
             console.log('成功:', result);

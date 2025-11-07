@@ -664,7 +664,6 @@ LIST_APP_KOREA = [
     APP_SUDOKU,
     APP_IT_QUIZ,
     APP_REVIEW,
-    APP_BOARD,
     TYPE_LIST,
 ]
 

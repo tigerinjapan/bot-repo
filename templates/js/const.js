@@ -124,7 +124,7 @@ const APP_TRAVEL = "travel";
 const APP_NUMBER = "number";
 const APP_IT_QUIZ = "itQuiz";
 const APP_REVIEW = "review";
-const LIST_APP_KOREA = [APP_TODAY, APP_TRAVEL, APP_NUMBER, APP_IT_QUIZ, APP_REVIEW, APP_BOARD]
+const LIST_APP_KOREA = [APP_TODAY, APP_TRAVEL, APP_NUMBER, APP_IT_QUIZ, APP_REVIEW]
 
 const APP_KAKAO = "kakao";
 

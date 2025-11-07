@@ -80,6 +80,10 @@ def main(
                     err_msg = msg_const.MSG_ERR_MSG_SEND
                     func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg, e)
 
+        else:
+            msg = msg_const.MSG_ERR_TOKEN_NOT_EXIST
+            func.print_error_msg(SCRIPT_NAME, curr_func_nm, msg)
+
     func.print_end(SCRIPT_NAME)
 
 
