@@ -81,6 +81,9 @@ DATE_FORMAT_MMDD_SLASH = "%m/%d"
 DATE_FORMAT_MMDD_SLASH_NO_ZERO = "%#m/%#d"
 DATE_FORMAT_ISO = "iso"
 
+TIMEZONE_JST = "JST"
+JST_OFFSET_HOURS = 9
+
 ##### 正規表現 #####
 PATTERN_YYYYMMDD = "^[0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$"
 PATTERN_NUMBER = "^[0-9]$"
@@ -170,44 +173,44 @@ MAX_MSG_API_CNT = 200
 RANK_TIME_NUMBER = 10.00
 
 ##### 型 #####
-TYPE_DICT = "dict"
-TYPE_LIST = "list"
 TYPE_STR = "str"
 TYPE_NUM = "num"
 TYPE_DATE = "date"
+TYPE_DICT = "dict"
+TYPE_LIST = "list"
 
 ##### HTMLタグ #####
-TAG_FORM = "form"
-TAG_DIV = "div"
+TAG_A = "a"
+TAG_ABBR = "abbr"
+TAG_CAPTION = "caption"
+TAG_DD = "dd"
 TAG_DL = "dl"
 TAG_DT = "dt"
-TAG_DD = "dd"
-TAG_P = "p"
-TAG_UL = "ul"
-TAG_LI = "li"
-TAG_A = "a"
-TAG_TABLE = "table"
-TAG_THEAD = "thead"
-TAG_TBODY = "tbody"
-TAG_TR = "tr"
-TAG_TH = "th"
-TAG_TD = "td"
-TAG_SPAN = "span"
-TAG_META = "meta"
-TAG_CAPTION = "caption"
-TAG_ABBR = "abbr"
+TAG_DIV = "div"
+TAG_FORM = "form"
 TAG_H1 = "h1"
 TAG_H2 = "h2"
 TAG_H3 = "h3"
 TAG_H4 = "h4"
 TAG_IMG = "img"
+TAG_LI = "li"
+TAG_META = "meta"
+TAG_P = "p"
+TAG_SPAN = "span"
+TAG_TABLE = "table"
+TAG_TBODY = "tbody"
+TAG_TD = "td"
+TAG_TH = "th"
+TAG_THEAD = "thead"
+TAG_TR = "tr"
+TAG_UL = "ul"
 
 ##### HTML属性 #####
+ATTR_ALT = "alt"
 ATTR_CLASS = "class"
+ATTR_HREF = "href"
 ATTR_ID = "id"
 ATTR_PROP = "property"
-ATTR_HREF = "href"
-ATTR_ALT = "alt"
 ATTR_TITLE = "title"
 
 ##### ファイルモード #####
@@ -216,23 +219,16 @@ FILE_MODE_WRITE = "w"
 FILE_MODE_READ_BINARY = "rb"
 
 ##### ファイル拡張子 #####
-FILE_TYPE_HTML = "html"
 FILE_TYPE_CSV = "csv"
-FILE_TYPE_TXT = "txt"
-FILE_TYPE_ZIP = "zip"
-FILE_TYPE_PY = "py"
+FILE_TYPE_HTML = "html"
+FILE_TYPE_JPEG = "jpeg"
 FILE_TYPE_JSON = "json"
 FILE_TYPE_LOG = "log"
 FILE_TYPE_PNG = "png"
-FILE_TYPE_JPEG = "jpeg"
+FILE_TYPE_PY = "py"
 FILE_TYPE_TTC = "ttc"
-
-##### 入力タイプ #####
-INPUT_TYPE_TEXT = "text"
-INPUT_TYPE_RADIO = "radio"
-INPUT_TYPE_SELECT = "select"
-INPUT_TYPE_DATE = "date"
-INPUT_TYPE_BUTTON = "button"
+FILE_TYPE_TXT = "txt"
+FILE_TYPE_ZIP = "zip"
 
 ##### フォントタイプ #####
 FONT_TYPE_MEIRYO = "meiryo"
@@ -242,157 +238,156 @@ FONT_TYPE_YUSEI = "yusei"
 FONT_TYPE_NANUM = "nanum"
 
 ##### 記号、特殊文字 #####
-SYM_NEW_LINE = "\n"
-SYM_TAB = "\t"
-SYM_BLANK = ""
-SYM_SPACE = " "
-SYM_COMMA = ","
-SYM_DOT = "."
-SYM_COLON = ":"
-SYM_SEMI_COLON = ";"
-SYM_DASH = "-"
-SYM_UNDER = "_"
-SYM_EQUAL = "="
-SYM_SLASH = "/"
 SYM_AMP = "&"
 SYM_ASTA = "*"
-SYM_COMMA_JAP = "、"
-SYM_PERIOD = "。"
-SYM_OPEN = "【"
-SYM_CLOSE = "】"
 SYM_AT = "@"
+SYM_BLANK = ""
+SYM_COLON = ":"
+SYM_COMMA = ","
+SYM_COMMA_JAP = "、"
+SYM_DASH = "-"
+SYM_DOT = "."
+SYM_EQUAL = "="
+SYM_NEW_LINE = "\n"
+SYM_PERIOD = "。"
+SYM_SEMI_COLON = ";"
+SYM_SLASH = "/"
+SYM_SPACE = " "
+SYM_TAB = "\t"
+SYM_UNDER = "_"
+
+SYM_CLOSE = "】"
+SYM_OPEN = "【"
 
 ##### 文字列 #####
+STR_ACCESS = "access"
+STR_ADD = "add"
+STR_ADDR = "addr"
+STR_ANSWER = "answer"
+STR_API = "api"
+STR_APP = "app"
 STR_AUTH = "auth"
+STR_BACKUP = "backup"
+STR_BEGINNER = "beginner"
+STR_BROWSER = "browser"
+STR_CAPITALIZE = "capitalize"
+STR_CATEGORY = "category"
+STR_CLIENT = "client"
+STR_CONTENTS = "contents"
+STR_COUNTRY = "country"
+STR_DATA = "data"
+STR_DATE = "date"
+STR_DAY = "day"
+STR_DB = "db"
+STR_DEBUG = "debug"
+STR_DECODE = "decode"
+STR_DESCRIPTION = "description"
+STR_DESIGN = "design"
+STR_DEVICE = "device"
+STR_DIV = "div"
+STR_DUMMY = "dummy"
+STR_EASY = "easy"
+STR_ENGLISH = "english"
+STR_ERROR = "error"
+STR_EXPIRATION = "expiration"
+STR_FIRST = "first"
+STR_FONT = "font"
+STR_GEMINI = "gemini"
+STR_HARD = "hard"
+STR_HOLIDAY = "holiday"
+STR_HOST = "host"
+STR_ID = "id"
+STR_IMG = "img"
+STR_INDEX = "index"
+STR_INFO = "info"
 STR_INPUT = "input"
-STR_OUTPUT = "output"
+STR_IP = "ip"
+STR_ITEM = "item"
+STR_KAKAO = "kakao"
+STR_KEY = "key"
+STR_KEYWORD = "keyword"
+STR_KPOP = "kpop"
+STR_LEVEL = "level"
+STR_LINE = "line"
+STR_LOCAL = "local"
+STR_LOG = "log"
 STR_LOGIN = "login"
 STR_LOGOUT = "logout"
-STR_LOG = "log"
-STR_INFO = "info"
-STR_ERROR = "error"
-STR_DEBUG = "debug"
-STR_USER = "user"
-STR_NAME = "name"
-STR_ID = "id"
-STR_TYPE = "type"
-STR_CLIENT = "client"
-STR_TOKEN = "token"
-STR_EXPIRATION = "expiration"
-STR_REQUEST = "request"
-STR_RESPONSE = "response"
-STR_STATUS = "status"
-STR_MESSAGE = "message"
-STR_APP = "app"
-STR_URL = "url"
-STR_IP = "ip"
-STR_HOST = "host"
-STR_SERVER = "server"
-STR_INDEX = "index"
-STR_RESULT = "result"
-STR_CONTENTS = "contents"
-STR_ITEM = "item"
-STR_API = "api"
-STR_DATA = "data"
-STR_ADD = "add"
-STR_UPDATE = "update"
-STR_DIV = "div"
-STR_TIME = "time"
-STR_DATE = "date"
-STR_YEAR = "year"
-STR_MONTH = "month"
-STR_WEEK = "week"
-STR_DAY = "day"
-STR_HOLIDAY = "holiday"
-STR_KEY = "key"
-STR_TITLE = "title"
-STR_DECODE = "decode"
-STR_LINE = "line"
-STR_GEMINI = "gemini"
-STR_IMG = "img"
-STR_FONT = "font"
-STR_ADDR = "addr"
-STR_ACCESS = "access"
-STR_DESCRIPTION = "description"
-STR_KEYWORD = "keyword"
-STR_NOTIFY = "notify"
-STR_FIRST = "first"
-STR_TEST = "test"
-STR_PHRASE = "phrase"
-STR_NUMBER = "number"
-STR_ANSWER = "answer"
-STR_LEVEL = "level"
-STR_REST = "rest"
-STR_ENGLISH = "english"
-STR_UNLINK = "unlink"
-STR_PATH = "path"
-STR_DESIGN = "design"
-STR_CATEGORY = "category"
-STR_COUNTRY = "country"
-STR_DEVICE = "device"
-STR_OS = "os"
-STR_BROWSER = "browser"
-STR_DUMMY = "dummy"
-STR_BACKUP = "backup"
-
-STR_DB = "db"
-STR_MONGO = "mongo"
-STR_UPPER = "upper"
 STR_LOWER = "lower"
-STR_CAPITALIZE = "capitalize"
-
-STR_BEGINNER = "beginner"
-STR_EASY = "easy"
-STR_MEDIUM = "medium"
-STR_HARD = "hard"
 STR_MASTER = "master"
-
-STR_KAKAO = "kakao"
-STR_KPOP = "kpop"
+STR_MEDIUM = "medium"
+STR_MESSAGE = "message"
+STR_MONGO = "mongo"
+STR_MONTH = "month"
+STR_NAME = "name"
 STR_NISA = "nisa"
-
-STR_JAPAN = "Japan"
-STR_KOREA = "Korea"
+STR_NOTIFY = "notify"
+STR_NUMBER = "number"
+STR_OS = "os"
+STR_OUTPUT = "output"
+STR_PATH = "path"
+STR_PHRASE = "phrase"
+STR_PROMPT = "prompt"
+STR_REQUEST = "request"
+STR_REST = "rest"
+STR_RESPONSE = "response"
+STR_RESULT = "result"
+STR_SERVER = "server"
+STR_STATUS = "status"
+STR_TEST = "test"
+STR_TIME = "time"
+STR_TITLE = "title"
+STR_TOKEN = "token"
+STR_TYPE = "type"
+STR_UNLINK = "unlink"
+STR_UPDATE = "update"
+STR_UPPER = "upper"
+STR_URL = "url"
+STR_USER = "user"
+STR_WEEK = "week"
+STR_YEAR = "year"
 
 STR_AI = "AI"
 STR_AI_NEWS = "ai_news"
 STR_ENV_VAR = "env_var"
+STR_JAPAN = "Japan"
+STR_KOREA = "Korea"
 STR_LINE_API = "LINE API"
 STR_PHRASE_KO = "phrase_ko"
 STR_SECRET_KEY = "secret_key"
 STR_USER_INFO = "userInfo"
 STR_ZIP_CODE = "zipCode"
 
+STR_CHARSET_JA = "文字コード"
+STR_COMPANY_JA = "会社"
+STR_CONTENTS_JA = "内容"
+STR_DATE_JA = "日付"
+STR_DIV_JA = "区分"
+STR_DRAMA_JA = "ドラマ"
+STR_ENT_JA = "エンタメ"
+STR_EXPIRE_JA = "有効期限"
+STR_FILE_JA = "ファイル"
+STR_IMG_JA = "イメージ"
+STR_JAPAN_JA = "日本"
+STR_KOREA_JA = "韓国"
+STR_KOREAN_JA = "韓国語"
+STR_LINK_JA = "リンク"
 STR_LOGIN_JA = "ログイン"
 STR_LOGOUT_JA = "ログアウト"
-STR_PATH_JA = "パス"
-STR_FILE_JA = "ファイル"
-STR_MESSAGE_JA = "メッセージ"
-STR_TOKEN_JA = "トークン"
-STR_EXPIRE_JA = "有効期限"
-STR_CHARSET_JA = "文字コード"
-STR_TYPE_JA = "タイプ"
-STR_SYSTEM_JA = "システム"
-STR_DIV_JA = "区分"
-STR_CONTENTS_JA = "内容"
-STR_TITLE_JA = "タイトル"
-STR_IMG_JA = "イメージ"
-STR_LINK_JA = "リンク"
-STR_NOTIFY_JA = "通知"
-STR_COMPANY_JA = "会社"
-STR_DATE_JA = "日付"
-STR_NEWS_JA = "ニュース"
-STR_KOREA_JA = "韓国"
-STR_ENT_JA = "エンタメ"
-STR_NIKKEI_JA = "日経"
-STR_DRAMA_JA = "ドラマ"
-STR_RANKING_JA = "ランキング"
-STR_X_TREND_JA = "Xトレンド"
-STR_KOREAN_JA = "韓国語"
 STR_MAN_JA = "男性"
-STR_WOMAN_JA = "女性"
+STR_MESSAGE_JA = "メッセージ"
+STR_NEWS_JA = "ニュース"
+STR_NIKKEI_JA = "日経"
+STR_NOTIFY_JA = "通知"
+STR_PATH_JA = "パス"
+STR_RANKING_JA = "ランキング"
+STR_SYSTEM_JA = "システム"
 STR_TIME_JA = "時間"
-STR_JAPAN_JA = "日本"
+STR_TITLE_JA = "タイトル"
+STR_TOKEN_JA = "トークン"
+STR_TYPE_JA = "タイプ"
+STR_WOMAN_JA = "女性"
+STR_X_TREND_JA = "Xトレンド"
 
 STR_JPY = "JPY"
 STR_KRW = "KRW"
@@ -471,7 +466,6 @@ LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
 MSG_TYPE_TXT = "text"
 MSG_TYPE_IMG = "image"
 MSG_TYPE_TMP = "template"
-MSG_TYPE_BTN = "button"
 MSG_TYPE_FLEX = "flex"
 MSG_TYPE_CAROUSEL = "carousel"
 MSG_TYPE_BUBBLE = "bubble"
@@ -566,33 +560,32 @@ URL_KAKAO_AUTH = "https://kauth.kakao.com"
 URL_KAKAO_API = "https://kapi.kakao.com"
 
 ##### アプリケーション名 #####
-APP_TODAY = "today"
-APP_NEWS = "news"
-APP_DRAMA = "drama"
-APP_RANKING = "ranking"
-APP_LCC = "lcc"
-APP_TV = "tv"
-APP_STUDY = "study"
-APP_SITE = "site"
-APP_CAFE = "cafe"
-APP_TRAVEL = "travel"
-
-APP_USER = "user"
-APP_MLB = "mlb"
-
-APP_NUMBER = "number"
-APP_SUDOKU = "sudoku"
-APP_IT_QUIZ = "itQuiz"
-APP_REVIEW = "review"
 APP_BOARD = "board"
+APP_CAFE = "cafe"
 APP_DASHBOARD = "dashboard"
-
-APP_URL_DESIGN = f"{STR_URL}_{STR_DESIGN}"
-APP_KAKAO_DESIGN = f"{STR_KAKAO}_{STR_DESIGN}"
-APP_TRAVEL_DESIGN = f"{APP_TRAVEL}_{STR_DESIGN}"
-APP_IT_QUIZ_DESIGN = f"{APP_IT_QUIZ}_{STR_DESIGN}"
-
+APP_DRAMA = "drama"
+APP_IT_QUIZ = "itQuiz"
+APP_LCC = "lcc"
+APP_MLB = "mlb"
+APP_NEWS = "news"
+APP_NUMBER = "number"
+APP_RANKING = "ranking"
+APP_REVIEW = "review"
+APP_SITE = "site"
+APP_STUDY = "study"
+APP_SUDOKU = "sudoku"
+APP_TODAY = "today"
 APP_TODAY_KOREA = "today_korea"
+APP_TRAVEL = "travel"
+APP_TV = "tv"
+APP_USER = "user"
+
+APP_IT_QUIZ_DESIGN = f"{APP_IT_QUIZ}_{STR_DESIGN}"
+APP_IT_QUIZ_PROMPT = f"{APP_IT_QUIZ}_{STR_PROMPT}"
+APP_KAKAO_DESIGN = f"{STR_KAKAO}_{STR_DESIGN}"
+APP_LOCAL_DESIGN = f"{STR_LOCAL}_{STR_DESIGN}"
+APP_TRAVEL_DESIGN = f"{APP_TRAVEL}_{STR_DESIGN}"
+APP_URL_DESIGN = f"{STR_URL}_{STR_DESIGN}"
 
 ##### アプリケーションリスト #####
 LIST_APP_SERVER = [
@@ -618,33 +611,32 @@ LIST_APPS_ALL = [
     APP_SUDOKU,
     APP_IT_QUIZ,
     APP_IT_QUIZ_DESIGN,
+    APP_IT_QUIZ_PROMPT,
     STR_GEMINI,
     APP_REVIEW,
     APP_DASHBOARD,
     APP_URL_DESIGN,
     APP_KAKAO_DESIGN,
+    APP_LOCAL_DESIGN,
 ]
 
-LIST_APP_NEWS = [APP_TODAY, APP_NEWS, APP_TV, APP_TODAY_KOREA]
+LIST_APP_NEWS = [APP_NEWS, APP_TODAY, APP_TODAY_KOREA]
 LIST_APP_ENTERTAINMENT = [
     APP_DRAMA,
-    APP_RANKING,
+    APP_IT_QUIZ,
     APP_MLB,
     APP_NUMBER,
+    APP_RANKING,
     APP_SUDOKU,
-    APP_IT_QUIZ,
+    APP_TV,
 ]
-LIST_APP_SERVICE = [APP_LCC, APP_CAFE, APP_TRAVEL, APP_SITE, APP_STUDY]
-LIST_APP_MANAGEMENT = [
-    APP_USER,
-    APP_REVIEW,
-    APP_BOARD,
-    APP_DASHBOARD,
-]
+LIST_APP_SERVICE = [APP_CAFE, APP_LCC, APP_SITE, APP_STUDY, APP_TRAVEL]
+LIST_APP_MANAGEMENT = [APP_BOARD, APP_DASHBOARD, APP_REVIEW, APP_USER]
 LIST_APP_DOCUMENT = [
+    APP_IT_QUIZ_DESIGN,
+    APP_IT_QUIZ_PROMPT,
     APP_KAKAO_DESIGN,
     APP_TRAVEL_DESIGN,
-    APP_IT_QUIZ_DESIGN,
     APP_URL_DESIGN,
 ]
 
@@ -668,13 +660,13 @@ LIST_APP_KOREA = [
 ]
 
 LIST_APP_NUM_OFF = [
-    APP_TODAY,
-    APP_STUDY,
-    APP_SITE,
-    APP_CAFE,
-    APP_TRAVEL,
     APP_BOARD,
+    APP_CAFE,
+    APP_SITE,
+    APP_STUDY,
+    APP_TODAY,
     APP_TODAY_KOREA,
+    APP_TRAVEL,
 ]
 
 LIST_APP_AUTH_OFF = [APP_CAFE, APP_TRAVEL]

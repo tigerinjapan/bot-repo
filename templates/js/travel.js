@@ -21,6 +21,7 @@ function init() {
   let langData = null;
 
   // セレクトボックス・各表示領域の取得
+  setElemText("city-title", TITLE_CITY);
   const langSelect = getElem("lang-select");
   const regionSelect = getElem("region-select");
 
@@ -28,8 +29,8 @@ function init() {
   createCardGrid();
 
   // セレクトボックスの初期化
-  createOptionVal(langSelect, LIST_LANG_CD);
-  createOptionVal(regionSelect, LIST_CITY_VAL);
+  createOptionVal(langSelect, LIST_LANG_CD, LIST_LANG_NM);
+  createOptionVal(regionSelect, LIST_CITY_VAL, LIST_CITY_EN);
 
   // 画面内容の更新処理
   async function updateContent() {
@@ -268,21 +269,3 @@ function createCardGrid() {
 
   setElemContents("card-grid", gridHtml);
 }
-
-// セレクトボックスのオプション生成
-function createOptionVal(selectElem, optValList) {
-  selectElem.innerHTML = SYM_BLANK;
-
-  if (optValList === LIST_LANG_CD) {
-    textValList = LIST_LANG_NM;
-  } else {
-    textValList = LIST_CITY_EN;
-  }
-
-  for (let i = 0; i < optValList.length; i++) {
-    const option = createElemOnly(TAG_OPTION);
-    option.value = optValList[i];
-    option.textContent = textValList[i];
-    selectElem.appendChild(option);
-  }
-};

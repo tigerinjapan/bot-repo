@@ -82,15 +82,14 @@ def weekly_job():
 
 def daily_job():
     """
-    日次ジョブ
+    日次ジョブ（AM）
     """
     line.main()
-    dashboard.backup_log()
 
 
 def daily_job_2():
     """
-    日次ジョブ
+    日次ジョブ（PM）
     """
     line.main(data_div=const.NUM_TWO)
     line.sub(div=const.APP_MLB)
@@ -99,9 +98,10 @@ def daily_job_2():
 
 def daily_job_3():
     """
-    日次ジョブ
+    日次ジョブ（AM）
     """
     kakao.main()
+    dashboard.backup_log()
 
 
 def hourly_job():

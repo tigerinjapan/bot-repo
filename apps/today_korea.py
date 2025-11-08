@@ -131,9 +131,7 @@ def get_today_info_list():
     curr_func_nm = sys._getframe().f_code.co_name
 
     # 更新日時
-    update_time = func.convert_date_to_str(
-        func.get_now(), const.DATE_FORMAT_YYYYMMDD_HHMM
-    )
+    update_time = func.get_now(const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_HHMM)
 
     today_info_list = [update_time]
     today_link_list = [const.SYM_DASH]

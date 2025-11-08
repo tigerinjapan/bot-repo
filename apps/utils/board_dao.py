@@ -87,7 +87,7 @@ def update_board_status(json_data):
     ステータス更新
     """
     seq = int(json_data[const.STR_TITLE])
-    remark = json_data[const.INPUT_TYPE_TEXT]
+    remark = json_data[const.MSG_TYPE_TXT]
     status = int(json_data[const.STR_STATUS])
 
     client = func_mongo.db_connect()

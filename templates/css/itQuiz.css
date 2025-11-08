@@ -197,10 +197,7 @@ h3 {
 	text-align: center;
 }
 
-#rule-title {
-	color: lightblue;
-}
-
+#rule-title,
 #choice-title {
 	color: lightpink;
 }
@@ -213,7 +210,7 @@ h3 {
 
 h2 {
 	font-size: 1.4rem;
-	color: lightblue;
+	color: lightpink;
 	border-bottom: 2px dashed white;
 	padding-bottom: 5px;
 	text-align: center;

@@ -54,14 +54,14 @@ function initializeApp() {
 // KPIカードのHTMLを生成し、グリッドに追加する
 function initializeKpiCards() {
   const grid = getElem('dashboard-grid');
-  let html = '';
+  let html = SYM_BLANK;
 
   kpiItems.forEach(item => {
     const isUsers = item.id === 'users';
     html += `
       <div class="kpi-card">
           <h2>${item.title}</h2>
-          ${isUsers ? `<span id="${item.id}-count" class="current-value"></span>` : ''}
+          ${isUsers ? `<span id="${item.id}-count" class="current-value"></span>` : SYM_BLANK}
           <div class="chart-container">
             <canvas id="${item.id}Chart"></canvas>
           </div>

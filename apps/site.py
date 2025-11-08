@@ -5,7 +5,6 @@
 import numpy as np
 
 import apps.utils.board_dao as board_dao
-import apps.utils.board_dto as board_dto
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.mongo_constants as mongo_const

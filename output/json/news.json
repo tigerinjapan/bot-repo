@@ -1,11 +1,11 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOFL071P0TX01C25A1000000/\" target=\"_blank\" rel=\"noopener noreferrer\">日経平均株価1100円安味の素が最大級の下げ\n大型成長株に割高警戒</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOUC2083V0Q5A520C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">初任給競争もう古い優秀な若手は「年収1000万円の到達時期」に着目</a>"
     },
     {
         "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/news/articles/2511/06/news060.html\" target=\"_blank\" rel=\"noopener noreferrer\">GoogleマップもGeminiにナビで「コンビニの角を右折」など</a>"
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2511/06/news032.html\" target=\"_blank\" rel=\"noopener noreferrer\">「著作物を食うAIは違法か」に実証的な証拠か“著作物を学習したAI”vs.専門作家で文章生成能力を検証米国チームが発表</a>"
     },
     {
         "区分": "韓国",
@@ -13,10 +13,10 @@
     },
     {
         "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/506214.html\" target=\"_blank\" rel=\"noopener noreferrer\">「2PM」イジュノの「テプン商事」\nドラマと出演者話題性で2週連続1位</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/506389.html\" target=\"_blank\" rel=\"noopener noreferrer\">ジェジュン\n財産の誤解が明らかに\nもうすでに新社屋まである</a>"
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/506374.html\" target=\"_blank\" rel=\"noopener noreferrer\">「EXO」\n6人がEXOの「あみだで世界旅行」新シーズンで帰ってくる</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/506467.html\" target=\"_blank\" rel=\"noopener noreferrer\">ベクホ(NU'EST)\n12日にデジタルシングル「RUSH MODE」でカムバック</a>"
     }
 ]

@@ -4,7 +4,7 @@ const database = "mongoDB";
 const app_line = 0;
 const app_travel = 1;
 const app_kakao = 2;
-const app_etc = 9;
+const app_server = 3;
 const category_review = 0;
 const category_memo = 1;
 const category_error = 2;
@@ -198,7 +198,8 @@ use(database);
 // db.board.deleteMany({ nSeq: { $gte: currentSeq } });
 
 // find documents
-db.board.find({ nApp: { $eq: app_kakao } }).pretty();
+const cond = { nSeq: 70, nApp: { $eq: app_server } };
+db.board.find(cond).pretty();
 
 // db.board.find(
 //     {

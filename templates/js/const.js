@@ -4,27 +4,27 @@ const SYM_NEW_LINE = "\n";
 const SYM_LEVEL = "🌟";
 
 // タグ
-const TAG_HEAD = "head";
+const TAG_A = "a";
+const TAG_BR = "br";
+const TAG_BUTTON = "button";
 const TAG_DIV = "div";
+const TAG_FOOTER = "footer";
+const TAG_FORM = "form";
+const TAG_HEAD = "head";
 const TAG_H1 = "h1";
 const TAG_H2 = "h2";
 const TAG_H3 = "h3";
-const TAG_FORM = "form";
-const TAG_TABLE = "table";
-const TAG_TR = "tr";
-const TAG_TH = "th";
-const TAG_TD = "td";
-const TAG_UL = "ul";
-const TAG_LI = "li";
 const TAG_INPUT = "input";
-const TAG_SELECT = "select";
-const TAG_OPTION = "option";
-const TAG_BUTTON = "button";
-const TAG_TEXTAREA = "textarea";
 const TAG_LABEL = "label";
-const TAG_A = "a";
-const TAG_FOOTER = "footer";
-const TAG_BR = "br";
+const TAG_LI = "li";
+const TAG_OPTION = "option";
+const TAG_SELECT = "select";
+const TAG_TABLE = "table";
+const TAG_TD = "td";
+const TAG_TEXTAREA = "textarea";
+const TAG_TH = "th";
+const TAG_TR = "tr";
+const TAG_UL = "ul";
 
 // 属性値
 const ATTR_BLOCK = "block";
@@ -42,45 +42,73 @@ const AUTH_GUEST = "guest";
 // 文字列
 const STR_APP = "app";
 const STR_CATEGORY = "category";
-const STR_TYPE = "type";
-const STR_STATUS = "status";
 const STR_CONTENTS = "contents";
-const STR_USER_NAME = "userName";
 const STR_MESSAGE = "message";
+const STR_STATUS = "status";
+const STR_TYPE = "type";
 
-const STR_REVIEW = "Review";
 const STR_LINES = "Lines";
+const STR_REVIEW = "Review";
 const STR_STATIONS = "Stations";
+const STR_USER_NAME = "userName";
 
-const STR_SELECT_JA = "選択";
-const STR_ZIP_CD_JA = "郵便番号";
 const STR_LINE_JA = "沿線";
+const STR_SELECT_JA = "選択";
 const STR_STATION_JA = "駅";
+const STR_ZIP_CD_JA = "郵便番号";
 
 // ID
-const ID_SEX = "sex";
-const ID_ZIP_CD = "zipCd";
-const ID_PREF = "pref";
-const ID_TOWN = "town";
 const ID_LINE = "line";
+const ID_PREF = "pref";
+const ID_SEX = "sex";
 const ID_STATION = "station";
+const ID_TOWN = "town";
+const ID_ZIP_CD = "zipCd";
 
-const BUTTON_LOGIN = "Login";
-const BUTTON_LOGOUT = "Logout";
+const BUTTON_CLOSE = "CLOSE";
+const BUTTON_CHECK = "CHECK";
+const BUTTON_HINT = "HINT";
+const BUTTON_HOME = "HOME";
+const BUTTON_LOGIN = "LOGIN";
+const BUTTON_LOGOUT = "LOGOUT";
+const BUTTON_NEXT = "NEXT";
+const BUTTON_START = "START";
 
 const COLOR_RED = "red";
 const COLOR_GREEN = "green";
+const COLOR_BLUE = "blue";
+const COLOR_WHITE = "white";
+
+const FONT_BOLD = "bold";
 
 const ALIGN_CENTER = "center";
 
 const CHART_LINE = "line";
 const CHART_BAR = "bar";
 
+// タイトル
+const TITLE_SYSTEM = "Kobe-Dev Demo System";
+const TITLE_TRAVEL = "🌏 Travel & Life 🌏";
+const TITLE_NUMBER = "🚙 Number Plate Game";
+const TITLE_NUMBER_KO = "🚙 자동차 번호판 게임";
+const TITLE_SUDOKU = "🔢 SUDOKU";
+const TITLE_IT_QUIZ = "ℹ️ IT Quiz";
+const TITLE_REVIEW = "🌈 Review Page 🌈";
+const TITLE_DESIGN = "📄 設計書 📄";
+const TITLE_DASH_BOARD = "📊 Dash Board 📊";
+
+const TITLE_CITY = "City";
+const TITLE_CHOICE_CHAR = "Select a Character";
+const TITLE_GAME_RULES = "GAME RULES";
+const TITLE_RANK_TOP = "RANK TOP 5";
+
+const TH_NO = "No.";
+
 // レベル
 const LEVEL_EASY = "easy";
 const LEVEL_MEDIUM = "medium";
 const LEVEL_HARD = "hard";
-const LIST_LEVEL = [LEVEL_EASY, LEVEL_MEDIUM, LEVEL_MEDIUM];
+const LIST_LEVEL = [LEVEL_EASY, LEVEL_MEDIUM, LEVEL_HARD];
 const LIST_LEVEL_NM = LIST_LEVEL.map(level => {
   return level.toUpperCase();
 });
@@ -139,19 +167,6 @@ const NUM_APP_NEWS = "6";
 const NUM_APP_STUDY = "7";
 const NUM_APP_BOARD = "8";
 
-// タイトル
-const TITLE_SYSTEM = "Kobe-Dev Demo System";
-const TITLE_TRAVEL = "🌏 Travel & Life 🌏";
-const TITLE_NUMBER = "🚙 Number Plate Game";
-const TITLE_NUMBER_KO = "🚙 자동차 번호판 게임";
-const TITLE_SUDOKU = "🔢 SUDOKU";
-const TITLE_IT_QUIZ = "ℹ️ IT Quiz";
-const TITLE_REVIEW = "🌈 Review Page 🌈";
-const TITLE_DESIGN = "📄 設計書 📄";
-const TITLE_DASH_BOARD = "📊 Dash Board 📊";
-
-const TH_NO = "No.";
-
 // ゲームルール
 const LIST_GAME_RULE = [
   "4つの数字を使い正しい数式を作る",
@@ -182,57 +197,61 @@ const METHOD_POST = "POST";
 const URL_SERVER = "https://kobe-dev.koyeb.app";
 const URL_LOCAL = "http://127.0.0.1:5000";
 
-const URL_ZIP_API = "/api/zipCode";
-const URL_ZIP_SERVER = `${URL_SERVER}${URL_ZIP_API}`;
-const URL_ZIP_LOCAL = `${URL_LOCAL}${URL_ZIP_API}`;
+const PATH_ZIP_API = "/api/zipCode";
+const URL_ZIP_SERVER = `${URL_SERVER}${PATH_ZIP_API}`;
+const URL_ZIP_LOCAL = `${URL_LOCAL}${PATH_ZIP_API}`;
 
 const URL_ADDR_API = "https://express.heartrails.com/api/json?method=get";
 const URL_LINE_API = `${URL_ADDR_API}${STR_LINES}`;
 const URL_STATION_API = `${URL_ADDR_API}${STR_STATIONS}`;
 
-const URL_GEMINI_API = "/gemini/api";
-const URL_GEMINI_SERVER = `${URL_SERVER}${URL_GEMINI_API}`;
-const URL_GEMINI_LOCAL = `${URL_LOCAL}${URL_GEMINI_API}`;
+const PATH_GEMINI_API = "/gemini/api";
+const URL_GEMINI_SERVER = `${URL_SERVER}${PATH_GEMINI_API}`;
+const URL_GEMINI_LOCAL = `${URL_LOCAL}${PATH_GEMINI_API}`;
 
-const URL_IMG_GEMINI = "/img/gemini";
-const URL_GEMINI_IMG_SERVER = `${URL_SERVER}${URL_IMG_GEMINI}`;
-const URL_GEMINI_IMG_LOCAL = `${URL_LOCAL}${URL_IMG_GEMINI}`;
+const PATH_IMG_GEMINI = "/img/gemini";
+const URL_GEMINI_IMG_SERVER = `${URL_SERVER}${PATH_IMG_GEMINI}`;
+const URL_GEMINI_IMG_LOCAL = `${URL_LOCAL}${PATH_IMG_GEMINI}`;
 
-const URL_NUMBER_RANKING_API = "/number/ranking";
-const URL_NUMBER_RANKING_SERVER = `${URL_SERVER}${URL_NUMBER_RANKING_API}`;
-const URL_NUMBER_RANKING_LOCAL = `${URL_LOCAL}${URL_NUMBER_RANKING_API}`;
+const PATH_RANKING_NUMBER = "/ranking/number";
+const URL_NUMBER_RANKING_SERVER = `${URL_SERVER}${PATH_RANKING_NUMBER}`;
+const URL_NUMBER_RANKING_LOCAL = `${URL_LOCAL}${PATH_RANKING_NUMBER}`;
 
-const URL_QUIZ_RANKING_API = "/quiz/ranking";
-const URL_QUIZ_RANKING_SERVER = `${URL_SERVER}${URL_QUIZ_RANKING_API}`;
-const URL_QUIZ_RANKING_LOCAL = `${URL_LOCAL}${URL_QUIZ_RANKING_API}`;
+const PATH_RANKING_SUDOKU = "/ranking/sudoku";
+const URL_SUDOKU_RANKING_SERVER = `${URL_SERVER}${PATH_RANKING_SUDOKU}`;
+const URL_SUDOKU_RANKING_LOCAL = `${URL_LOCAL}${PATH_RANKING_SUDOKU}`;
 
-const URL_BOARD_ADD_API = "/board/add";
-const URL_BOARD_ADD_SERVER = `${URL_SERVER}${URL_BOARD_ADD_API}`;
-const URL_BOARD_ADD_LOCAL = `${URL_LOCAL}${URL_BOARD_ADD_API}`;
+const PATH_RANKING_QUIZ = "/ranking/quiz";
+const URL_QUIZ_RANKING_SERVER = `${URL_SERVER}${PATH_RANKING_QUIZ}`;
+const URL_QUIZ_RANKING_LOCAL = `${URL_LOCAL}${PATH_RANKING_QUIZ}`;
 
-const URL_BOARD_UPDATE_API = "/board/update";
-const URL_BOARD_UPDATE_SERVER = `${URL_SERVER}${URL_BOARD_UPDATE_API}`;
-const URL_BOARD_UPDATE_LOCAL = `${URL_LOCAL}${URL_BOARD_UPDATE_API}`;
+const PATH_BOARD_ADD = "/board/add";
+const URL_BOARD_ADD_SERVER = `${URL_SERVER}${PATH_BOARD_ADD}`;
+const URL_BOARD_ADD_LOCAL = `${URL_LOCAL}${PATH_BOARD_ADD}`;
 
-const URL_GEMINI_ITEMS_API = "/api/geminiData/items";
-const URL_GEMINI_ITEMS_SERVER = `${URL_SERVER}${URL_GEMINI_ITEMS_API}`;
-const URL_GEMINI_ITEMS_LOCAL = `${URL_LOCAL}${URL_GEMINI_ITEMS_API}`;
+const PATH_BOARD_UPDATE = "/board/update";
+const URL_BOARD_UPDATE_SERVER = `${URL_SERVER}${PATH_BOARD_UPDATE}`;
+const URL_BOARD_UPDATE_LOCAL = `${URL_LOCAL}${PATH_BOARD_UPDATE}`;
 
-const URL_TRAVEL_API = "/api/travelData/items";
-const URL_TRAVEL_SERVER = `${URL_SERVER}${URL_TRAVEL_API}`;
-const URL_TRAVEL_LOCAL = `${URL_LOCAL}${URL_TRAVEL_API}`;
+const PATH_GEMINI_ITEMS = "/api/geminiData/items";
+const URL_GEMINI_ITEMS_SERVER = `${URL_SERVER}${PATH_GEMINI_ITEMS}`;
+const URL_GEMINI_ITEMS_LOCAL = `${URL_LOCAL}${PATH_GEMINI_ITEMS}`;
 
-const URL_LANG_API = "/api/langData/items";
-const URL_LANG_SERVER = `${URL_SERVER}${URL_LANG_API}`;
-const URL_LANG_LOCAL = `${URL_LOCAL}${URL_LANG_API}`;
+const PATH_TRAVEL_ITEMS = "/api/travelData/items";
+const URL_TRAVEL_SERVER = `${URL_SERVER}${PATH_TRAVEL_ITEMS}`;
+const URL_TRAVEL_LOCAL = `${URL_LOCAL}${PATH_TRAVEL_ITEMS}`;
 
-const URL_IT_QUIZ_API = "/api/itQuizData/items";
-const URL_IT_QUIZ_SERVER = `${URL_SERVER}${URL_IT_QUIZ_API}`;
-const URL_IT_QUIZ_LOCAL = `${URL_LOCAL}${URL_IT_QUIZ_API}`;
+const PATH_LANG_ITEMS = "/api/langData/items";
+const URL_LANG_SERVER = `${URL_SERVER}${PATH_LANG_ITEMS}`;
+const URL_LANG_LOCAL = `${URL_LOCAL}${PATH_LANG_ITEMS}`;
 
-const URL_DASHBOARD_API = "/json/dashboard";
-const URL_DASHBOARD_SERVER = `${URL_SERVER}${URL_DASHBOARD_API}`;
-const URL_DASHBOARD_LOCAL = `${URL_LOCAL}${URL_DASHBOARD_API}`;
+const PATH_IT_QUIZ_ITEMS = "/api/itQuizData/items";
+const URL_IT_QUIZ_SERVER = `${URL_SERVER}${PATH_IT_QUIZ_ITEMS}`;
+const URL_IT_QUIZ_LOCAL = `${URL_LOCAL}${PATH_IT_QUIZ_ITEMS}`;
+
+const PATH_JSON_DASHBOARD = "/json/dashboard";
+const URL_DASHBOARD_SERVER = `${URL_SERVER}${PATH_JSON_DASHBOARD}`;
+const URL_DASHBOARD_LOCAL = `${URL_LOCAL}${PATH_JSON_DASHBOARD}`;
 
 // メッセージ
 const MSG_VAL_NOT_EXIST = "が存在しません";

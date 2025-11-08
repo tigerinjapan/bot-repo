@@ -3,11 +3,11 @@ function setYear(yearVal) {
   const startYear = 1970;
   const endYear = 2020;
   const valList = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i);
-  createOptionVal("year", valList, STR_SELECT_JA, yearVal);
+  createOptVal("year", valList, STR_SELECT_JA, yearVal);
 };
 
 // オプション値生成
-function createOptionVal(elemId, valList, defaultVal, selectVal) {
+function createOptVal(elemId, valList, defaultVal, selectVal) {
   const selectElem = getElem(elemId);
   selectElem.innerHTML = SYM_BLANK;
 
@@ -74,7 +74,7 @@ function setAddress(selectLineVal, selectStationVal) {
           if (selectLineVal === SYM_BLANK) {
             selectLineVal = valList[0];
           }
-          createOptionVal(ID_LINE, valList, STR_LINE_JA, selectLineVal);
+          createOptVal(ID_LINE, valList, STR_LINE_JA, selectLineVal);
 
           // 駅設定
           setStation(selectLineVal, selectStationVal);
@@ -104,7 +104,7 @@ function setStation(selectedLine, selectStationVal) {
       if (selectStationVal === SYM_BLANK) {
         selectStationVal = valList[0];
       }
-      createOptionVal(ID_STATION, valList, STR_STATION_JA, selectStationVal);
+      createOptVal(ID_STATION, valList, STR_STATION_JA, selectStationVal);
     })
     .catch(error => {
       alert(STR_STATION_JA + MSG_VAL_NOT_EXIST);

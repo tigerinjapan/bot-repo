@@ -2,8 +2,13 @@
 const database = "mongoDB";
 let div = "dashboard";
 // div = "error";
-const targetDate = "2025-11-01";
-const currentDate = new Date();
+const targetDate = "2025-11-08";
+const now = new Date();
+const jst = now.setUTCHours(now.getUTCHours() + 9);
+
+// console.log(new Date(jst));
+// console.log(new Date(jst).toLocaleDateString());
+// console.log(new Date(jst).toLocaleString());
 
 // Select the database to use.
 use(database);
@@ -12,7 +17,7 @@ use(database);
 // db.sequence.getIndexes();
 
 // find documents
-cond = { sDiv: div };
+cond = { sDiv: div, dUpdateDate: { $lte: new Date(jst) } };
 // cond = {
 //     sDiv: div,
 //     sMessage: { $regex: "number" }
@@ -33,19 +38,19 @@ db.log.find(cond, selectData).sort(sortData).limit(20).pretty();
 //         "sDiv": div,
 //         "sMessage": targetDate + " 09:00:00,999 [INFO] url_design document Mobile Android Chrome Mobile",
 //         "dTargetDate": new Date(targetDate),
-//         "dUpdateDate": currentDate
+//         "dUpdateDate": jst
 //     },
 //     {
 //         "sDiv": div,
 //         "sMessage": targetDate + " 09:00:00,999 [INFO] dashboard management Mobile Android Chrome Mobile",
 //         "dTargetDate": new Date(targetDate),
-//         "dUpdateDate": currentDate
+//         "dUpdateDate": jst
 //     },
 //     {
 //         "sDiv": div,
 //         "sMessage": targetDate + " 09:00:00,999 [INFO] sudoku entertainment Mobile Android Chrome Mobile",
 //         "dTargetDate": new Date(targetDate),
-//         "dUpdateDate": currentDate
+//         "dUpdateDate": jst
 //     },
 // ];
 // db.log.insertMany(insertData);

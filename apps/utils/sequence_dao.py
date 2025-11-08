@@ -2,9 +2,9 @@
 シーケンスDAO
 """
 
+import apps.utils.function as func
 import apps.utils.function_mongo as func_mongo
 import apps.utils.mongo_constants as mongo_const
-from apps.utils.function import get_now
 
 
 def get_sequence(client, div: str) -> int:
@@ -27,6 +27,6 @@ def update_sequence(client, div: str, seq_val: int):
     cond = {mongo_const.FI_DIV: div}
     update_data = {
         mongo_const.OPERATOR_INCREMENT: {mongo_const.FI_SEQ: seq_val},
-        mongo_const.OPERATOR_SET: {mongo_const.FI_UPDATE_DATE: get_now()},
+        mongo_const.OPERATOR_SET: {mongo_const.FI_UPDATE_DATE: func.get_now()},
     }
     func_mongo.db_find_update(client, mongo_const.COLL_SEQUENCE, cond, update_data)

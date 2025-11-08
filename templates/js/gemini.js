@@ -1,6 +1,9 @@
 // ヘッダー設定
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 
+// イメージ生成の待機時間（秒）
+const SLEEP_SEC = 5;
+
 // プロンプトに追加する共通の条件
 const commonConditions_image = "高品質、詳細、フォトリアル、明るい色調、楽しい雰囲気";
 const commonConditions_text = "明確、簡潔、丁寧、ポジティブ、想像力をかきたてる";
@@ -19,6 +22,17 @@ document.addEventListener('DOMContentLoaded', init);
 
 // 初期表示
 function init() {
+
+    const langSelectElem = getElem("language-switcher");
+
+    LIST_LANG_CD.forEach((lang_cd, idx) => {
+        const button = createElemOnly(TAG_BUTTON);
+        const langNm = LIST_LANG_NM[idx];
+        button.textContent = langNm;
+        button.onclick = () => changeLanguage(lang_cd);
+        langSelectElem.appendChild(button);
+    });
+
     changeLanguage('ja');
 
     const mode = getElem('generationMode').value;
@@ -39,8 +53,8 @@ function init() {
         generatedText.style.display = ATTR_BLOCK;
     }
 
-    generatedImage.src = '';
-    generatedText.textContent = '';
+    generatedImage.src = SYM_BLANK;
+    generatedText.textContent = SYM_BLANK;
 
     const copyButtons = document.querySelectorAll('.copy-button');
     copyButtons.forEach(button => button.style.display = ATTR_NONE);
@@ -70,7 +84,7 @@ async function changeLanguage(lang) {
     createSelect(modeSelect, texts.modeOptions);
 
     const imageFormSection = getElem('imageFormSection');
-    imageFormSection.innerHTML = '';
+    imageFormSection.innerHTML = SYM_BLANK;
 
     SELECT_DATA.forEach(item => {
         const formGroup = createElemOnly(TAG_DIV);
@@ -107,7 +121,7 @@ const SELECT_DATA = [
 
 // Selectタグ生成
 function createSelect(selectElement, options) {
-    selectElement.innerHTML = '';
+    selectElement.innerHTML = SYM_BLANK;
     options.forEach(optionData => {
         const option = createElemOnly(TAG_OPTION);
         option.value = optionData.value;
@@ -155,8 +169,6 @@ async function requestApi(mode, prompt) {
     try {
         const data = await getFetchApiData(apiUrl, requestBody);
         const msg = data.message;
-        console.log(msg);
-        alert(MSG_OK_SEND);
 
         const outputImageContainer = getElem('outputImageContainer');
         const generatedImage = getElem('generatedImage');
@@ -169,6 +181,7 @@ async function requestApi(mode, prompt) {
             generatedImage.style.display = ATTR_BLOCK;
             outputImageContainer.style.display = ATTR_BLOCK;
             outputTextContainer.style.display = ATTR_NONE;
+            await sleep(SLEEP_SEC);
 
         } else {
             generatedText.textContent = msg;
@@ -177,6 +190,9 @@ async function requestApi(mode, prompt) {
             outputTextContainer.style.display = ATTR_BLOCK;
             outputImageContainer.style.display = ATTR_NONE;
         }
+
+        console.log(msg);
+        alert(MSG_OK_SEND);
 
     } catch (error) {
         console.error('エラー:', error);

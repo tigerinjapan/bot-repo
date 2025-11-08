@@ -243,7 +243,9 @@ async def apps(request: Request, app_name: str):
 # @token_required
 async def app_json(request: Request, app_name: str):
     """
-    JSONデータ取得（例：/json/today?token=token）
+    JSONデータ取得
+        （例）
+        /json/today?token=token
     """
     if not app_name in const.LIST_APP_SERVER_ALL:
         except_http_error(app_name, request.url._url)
@@ -255,7 +257,10 @@ async def app_json(request: Request, app_name: str):
 @app.get("/api/{api_name}/{param}")
 async def app_api(request: Request):
     """
-    APIデータ取得（例：/api/zipCode/1000000）
+    APIデータ取得
+        （例）
+        /api/zipCode/1000000
+        /api/zipCode/1000000
     """
     api_name = request.path_params["api_name"]
     param = request.path_params["param"]
@@ -319,7 +324,7 @@ async def user_update(request: Request, userId: str = Form(...)):
     return templates.TemplateResponse(target_html, context)
 
 
-@app.post("/{app_name}/ranking")
+@app.post("/ranking/{app_name}")
 async def update_ranking(request: Request, app_name: str):
     """
     ランキング情報更新
@@ -501,7 +506,11 @@ async def templates_file(file_name: str):
 @app.get("/{div}/{file_name}", response_class=FileResponse)
 async def file_response(request: Request, div: str, file_name: str):
     """
-    ファイル取得（例：/img/today、/font/meiryo、/log/error）
+    ファイル取得
+        （例）
+        /img/today
+        /font/meiryo
+        /log/error
     """
     except_flg = const.FLG_OFF
 

@@ -124,6 +124,18 @@ function createOption(elemId, elemName, txtList, parentElemId, selectValIdx) {
   parentElem.appendChild(selectElem);
 }
 
+// セレクトボックスのオプション生成
+function createOptionVal(selectElem, optValList, textValList) {
+  selectElem.innerHTML = SYM_BLANK;
+
+  for (let i = 0; i < optValList.length; i++) {
+    const option = createElemOnly(TAG_OPTION);
+    option.value = optValList[i];
+    option.textContent = textValList[i];
+    selectElem.appendChild(option);
+  }
+};
+
 // fetch API関数
 async function getFetchApiData(url, requestBody) {
   let method = METHOD_GET;
@@ -188,6 +200,13 @@ function getDataList(elemId) {
     dataList = [];
   }
   return dataList;
+}
+
+// ms（ミリ秒）だけ待つ関数
+function sleep(sec) {
+  // 待つ時間が終わったら、処理を進める約束（Promise）を作る
+  const ms = sec * 1000;
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // ローカル環境判定

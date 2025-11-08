@@ -215,7 +215,7 @@ def find_answer(number):
                         bad = True
                         break
                 # 追加: 空文字（結合）は両側が純粋数字であることを要求
-                if op == "":
+                if op == const.SYM_BLANK:
                     left_eval = eval_digits[i]
                     right_eval = eval_digits[i + 1]
                     # 片側でも math.sqrt や非数字が来たら結合不可
@@ -257,7 +257,7 @@ def find_answer(number):
                         out.append(t)
                         i2 += 1
                 # tokens に空文字 '' が含まれている場合、join でそのまま文字連結される（期待挙動）
-                return "".join(out)
+                return const.SYM_BLANK.join(out)
 
             # k = 左辺の数トークン数（1～3） — ここでは元の桁単位で分割を試行
             for k in range(1, 4):
@@ -272,8 +272,8 @@ def find_answer(number):
                     right_parts.append(ops[i_num])
                     right_parts.append(eval_digits[i_num + 1])
 
-                left_eval = "".join(left_parts)
-                right_eval = "".join(right_parts)
+                left_eval = const.SYM_BLANK.join(left_parts)
+                right_eval = const.SYM_BLANK.join(right_parts)
 
                 # 明示的に "/0" を含む式は除外
                 if "/0" in left_eval or "/0" in right_eval:

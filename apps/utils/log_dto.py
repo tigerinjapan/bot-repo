@@ -6,8 +6,8 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 
 import apps.utils.constants as const
+import apps.utils.function as func
 import apps.utils.mongo_constants as mongo_const
-from apps.utils.function import convert_date_to_str, get_now
 
 
 @dataclass
@@ -19,7 +19,7 @@ class log:
     sDiv: str
     sMessage: str
     dTargetDate: str
-    dUpdateDate: datetime = get_now()
+    dUpdateDate: datetime = func.get_now()
 
     def get_data(self):
         return asdict(self)
@@ -32,7 +32,7 @@ def get_json_data_for_log(data):
     div = data[mongo_const.FI_DIV]
     message = data[mongo_const.FI_MESSAGE]
     target_date = data[mongo_const.FI_TARGET_DATE]
-    updateDate = convert_date_to_str(
+    updateDate = func.convert_date_to_str(
         data[mongo_const.FI_UPDATE_DATE], const.DATE_FORMAT_YYYYMMDD_SLASH
     )
 

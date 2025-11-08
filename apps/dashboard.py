@@ -284,9 +284,8 @@ def get_date_label_list(date_div: str):
     today = func.get_now()
     if date_div == const.STR_DAY:
         for i in range(const.NUM_TARGET_DAYS):
-            target_date = func.get_calc_date(-i)
-            formatted_date = f"{target_date.month}/{target_date.day}"
-            date_list.append(formatted_date)
+            target_date = func.get_calc_date(-i, const.DATE_FORMAT_MMDD_SLASH)
+            date_list.append(target_date)
     else:
         target_date, date_format = get_target_date(date_div)
         last_date = func.convert_date_to_str(target_date, date_format)
@@ -356,4 +355,3 @@ def get_ip_info(ip_address: str):
 
 if __name__ == const.MAIN_FUNCTION:
     update_data()
-    backup_log()

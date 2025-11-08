@@ -126,5 +126,6 @@ def get_tv_title(tv_title: str):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    tv_info_today = get_tv_info_today()
-    func.print_test_data(tv_info_today)
+    # tv_info = get_tv_info_list()
+    tv_info = get_tv_info_today()
+    func.print_test_data(tv_info)

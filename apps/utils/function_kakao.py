@@ -360,8 +360,8 @@ def get_template_object(
             object_type = OBJECT_TYPE_TEXT
             title = "자세히 보기 x 자세히 보기"
 
-            current_time = func.convert_date_to_str(
-                func.get_now(), const.DATE_FORMAT_YYYYMMDD_HHMM
+            current_time = func.get_now(
+                const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_HHMM
             )
             message = f"📢 메시지 보내기 테스트 📢\n\n테스트 중입니다.\n전송 시간: {current_time}"
 

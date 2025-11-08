@@ -112,18 +112,16 @@ document.addEventListener('DOMContentLoaded', initApp);
 function initApp() {
   let btnParentElemId = "start-controls";
   startButton = createElem(TAG_BUTTON, "start-button", btnParentElemId);
-  startButton.textContent = "START GAME";
+  startButton.textContent = BUTTON_START;
   startButton.disabled = true;
-  const ruleBtn = createElem(TAG_BUTTON, "rule-button", btnParentElemId);
-  ruleBtn.textContent = "GAME RULE";
 
   btnParentElemId = "game-controls";
   ruleButton = createElem(TAG_BUTTON, "rule-button", btnParentElemId);
   hintButton = createElem(TAG_BUTTON, "hint-button", btnParentElemId);
   homeButton = createElem(TAG_BUTTON, "home-button", btnParentElemId);
-  ruleButton.textContent = 'GAME RULE';
-  hintButton.textContent = 'HINT';
-  homeButton.textContent = 'GO HOME';
+  ruleButton.textContent = TITLE_GAME_RULES;
+  hintButton.textContent = BUTTON_HINT;
+  homeButton.textContent = BUTTON_HOME;
 
   startScreen = getElem('start-screen');
   gameScreen = getElem('game-screen');
@@ -142,11 +140,12 @@ function initApp() {
   modalTitle = getElem('modal-title');
   modalBody = getElem('modal-body');
   modalCloseButton = getElem('modal-close-button');
+  setElemText("modal-close-button", "X");
 
   setElemText("title", TITLE_SUDOKU);
 
-  createOptionVal(langSelect, LIST_LANG_CD);
-  createOptionVal(levelSelect, LIST_LEVEL);
+  createOptionVal(langSelect, LIST_LANG_CD, LIST_LANG_NM);
+  createOptionVal(levelSelect, LIST_LEVEL, LIST_LEVEL_NM);
 
   for (let i = 1; i <= 10; i++) {
     const elem = createElemNoVal(TAG_DIV, "input-panel");
@@ -268,7 +267,7 @@ function generatePuzzle(level) {
 function renderBoard() {
   if (!sudokuBoard) return;
 
-  sudokuBoard.innerHTML = '';
+  sudokuBoard.innerHTML = SYM_BLANK;
   for (let r = 0; r < 9; r++) {
     for (let c = 0; c < 9; c++) {
       const cell = document.createElement('div');
@@ -448,7 +447,7 @@ function useHint() {
     cellElement.classList.add('fixed-cell');
     cellElement.textContent = correctValue;
     cellElement.style.boxShadow = '0 0 15px magenta';
-    setTimeout(() => { cellElement.style.boxShadow = ''; }, 1000);
+    setTimeout(() => { cellElement.style.boxShadow = SYM_BLANK; }, 1000);
   }
 
   showModal("HINT USED", `HINT LEFT: ${hintsLeft}`);
@@ -467,7 +466,7 @@ function handleInput(value) {
   puzzle[r][c] = num;
 
   // 表示の更新
-  selectedCell.textContent = num === 0 ? '' : num;
+  selectedCell.textContent = num === 0 ? SYM_BLANK : num;
   selectedCell.classList.remove('user-input', 'error');
 
   if (num !== 0) {
@@ -520,12 +519,14 @@ function checkGameCompletion() {
 function renderRank() {
   if (!rankTbody) return;
 
-  rankThead.innerHTML = '';
+  setElemText("rank-title", TITLE_RANK_TOP);
+
+  rankThead.innerHTML = SYM_BLANK;
   RANKING_HEAD.forEach(rankHead => {
     createElem(TAG_TH, rankHead, "rank-thead");
   });
 
-  rankTbody.innerHTML = '';
+  rankTbody.innerHTML = SYM_BLANK;
   RANKING_DATA.forEach(rank => {
     const row = rankTbody.insertRow();
     row.innerHTML = `
@@ -628,8 +629,8 @@ function updateTimer() {
 
   // 時間残りわずかで警告色
   if (timeRemaining <= 60) {
-    timerText.style.color = 'red';
-    progressBar.style.backgroundColor = 'red';
+    timerText.style.color = COLOR_RED;
+    progressBar.style.backgroundColor = COLOR_RED;
   } else {
     timerText.style.color = 'cyan';
     progressBar.style.backgroundColor = 'cyan';
@@ -652,7 +653,7 @@ function showScreen(screenId) {
   const targetScreen = getElem(screenId);
   if (targetScreen) {
     targetScreen.style.display = 'flex';
-    currentScreen = screenId.replace('-screen', '');
+    currentScreen = screenId.replace('-screen', SYM_BLANK);
     if (currentScreen === 'start') {
       clearInterval(timer);
     }
@@ -672,21 +673,3 @@ function showModal(title, body) {
 function hideModal() {
   if (modalOverlay) modalOverlay.style.display = 'none';
 }
-
-// セレクトボックスのオプション生成
-function createOptionVal(selectElem, optValList) {
-  selectElem.innerHTML = SYM_BLANK;
-
-  if (optValList === LIST_LANG_CD) {
-    textValList = LIST_LANG_NM;
-  } else {
-    textValList = LIST_LEVEL_NM;
-  }
-
-  for (let i = 0; i < optValList.length; i++) {
-    const option = createElemOnly(TAG_OPTION);
-    option.value = optValList[i];
-    option.textContent = textValList[i];
-    selectElem.appendChild(option);
-  }
-};

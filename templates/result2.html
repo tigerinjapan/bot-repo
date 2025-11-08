@@ -33,7 +33,7 @@
   <script src="/templates/chart.js"></script>
   <script src="/templates/dashboard.js"></script>
 
-  {% elif '_design' in app_name %}
+  {% elif '_design' in app_name or '_prompt' in app_name %}
   <script src="/templates/marked.min.js"></script>
   <script src="/templates/design.js"></script>
   {% endif %}
@@ -62,7 +62,7 @@
 
     <div class="controls">
       <select id="lang-select" hidden></select><br />
-      <p>City</p>
+      <p id="city-title"></p>
       <select id="region-select"></select>
     </div>
 
@@ -118,7 +118,7 @@
       <div id="start-controls"></div>
 
       <div id="rank-container">
-        <h2>RANK TOP 5</h2>
+        <h2 id="rank-title"></h2>
         <table id="rank-table">
           <thead>
             <tr id="rank-thead"></tr>
@@ -147,7 +147,7 @@
 
     <div id="modal-overlay">
       <div id="modal-content">
-        <button id="modal-close-button">X</button>
+        <button id="modal-close-button"></button>
         <h3 id="modal-title"></h3>
         <div id="modal-body"></div>
       </div>
@@ -162,35 +162,32 @@
   <dialog id="message-dialog">
     <p id="dialog-content"></p>
     <div class="flex-center">
-      <button class="btn btn-primary" id="dialog-close-btn" onclick="closeDialog('message-dialog')">Close</button>
+      <button id="message-close-btn"></button>
     </div>
   </dialog>
 
   <dialog id="rule-dialog">
-    <h3 id="rule-title">Game Rules</h3>
+    <h3 id="rule-title"></h3>
     <div id="rule-content"></div>
     <div class="flex-center">
-      <button class="btn btn-secondary" onclick="closeDialog('rule-dialog')">Close</button>
+      <button id="rule-close-btn"></button>
     </div>
   </dialog>
 
   <dialog id="choice-dialog">
-    <h3 id="choice-title">Select a Character</h3>
+    <h3 id="choice-title"></h3>
     <p id="choice-instruction"></p>
     <div id="choice-buttons-container" class="choice-buttons-container">
       <!-- 選択肢ボタンはここに動的に挿入されます -->
     </div>
     <div class="flex-center">
-      <button class="btn btn-secondary" onclick="closeDialog('choice-dialog')">Close</button>
+      <button id="choice-close-btn"></button>
     </div>
   </dialog>
 
   {% elif app_name == 'gemini' %}
   <div class="container">
     <div id="language-switcher">
-      <button type="button" onclick="changeLanguage('ja')">日本語</button>
-      <button type="button" onclick="changeLanguage('ko')">한국어</button>
-      <button type="button" onclick="changeLanguage('en')">English</button>
     </div>
 
     <h1>
@@ -251,7 +248,7 @@
     <div class="dashboard-grid" id="dashboard-grid"></div>
   </div>
 
-  {% elif '_design' in app_name %}
+  {% elif '_design' in app_name or '_prompt' in app_name %}
   <div id="markdown-container" class="container"></div>
 
   {% else %}

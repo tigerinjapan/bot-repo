@@ -13,7 +13,7 @@ import sys
 import time
 import urllib
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import logging
 from pprint import pprint
 from translate import Translator
@@ -22,38 +22,6 @@ import pandas as pd
 
 import apps.utils.constants as const
 import apps.utils.message_constants as msg_const
-
-
-def get_now(div: int = const.DATE_NOW, date_format: str = const.DATE_FORMAT_YYYYMMDD):
-    """
-    現在時刻の取得
-    """
-    now = datetime.now()
-    if div == const.DATE_TODAY:
-        now = convert_date_to_str(now, date_format)
-    elif div == const.DATE_YEAR:
-        now = now.year
-    elif div == const.DATE_MONTH:
-        now = now.month
-    elif div == const.DATE_HOUR:
-        now = now.hour
-    elif div == const.DATE_WEEKDAY:
-        now = now.weekday()
-    return now
-
-
-def get_calc_date(val: int, div: int = const.DATE_DAY, calc_date: datetime = get_now()):
-    """
-    対象時刻より、計算された時刻の取得
-    """
-    if div == const.DATE_DAY:
-        calc_date += timedelta(days=val)
-    elif div == const.DATE_HOUR:
-        calc_date += timedelta(hours=val)
-    elif div == const.DATE_MIN:
-        calc_date += timedelta(minutes=val)
-
-    return calc_date
 
 
 def get_path_split(file_name: str, extension_flg: bool = const.FLG_OFF) -> str:
@@ -100,6 +68,72 @@ def check_path_exists(file_path: str) -> bool:
     return check_flg
 
 
+def is_local_env() -> bool:
+    """
+    ローカルIPチェック
+    """
+    local_flg = const.FLG_OFF
+
+    try:
+        host = socket.gethostname()
+        ip = socket.gethostbyname(host)
+
+        if host == const.HOST_LOCAL and (
+            const.IP_PRIVATE in ip or const.IP_LOCAL in ip
+        ):
+            local_flg = const.FLG_ON
+
+    except socket.gaierror as sge:
+        curr_func_nm = sys._getframe().f_code.co_name
+        print_error_msg(SCRIPT_NAME, curr_func_nm, const.STR_IP, str(sge))
+
+    return local_flg
+
+
+def get_now(div: int = const.DATE_NOW, date_format: str = const.DATE_FORMAT_YYYYMMDD):
+    """
+    現在時刻の取得
+    """
+    now = datetime.now()
+    if not is_local_env() and (div == const.DATE_NOW or div == const.DATE_WEEKDAY):
+        # タイムゾーン設定
+        JST = timezone(timedelta(hours=const.JST_OFFSET_HOURS), const.TIMEZONE_JST)
+
+        # UTCの現在時刻を取得
+        dt_utc = datetime.now(timezone.utc)
+
+        # JSTに変換（時刻が9時間進む）
+        now = dt_utc.astimezone(JST).replace(tzinfo=None)
+
+    if div == const.DATE_TODAY:
+        now = convert_date_to_str(now, date_format)
+    elif div == const.DATE_YEAR:
+        now = now.year
+    elif div == const.DATE_MONTH:
+        now = now.month
+    elif div == const.DATE_HOUR:
+        now = now.hour
+    elif div == const.DATE_WEEKDAY:
+        now = now.weekday()
+    return now
+
+
+def get_calc_date(val: int, div: int = const.DATE_DAY, calc_date: datetime = get_now()):
+    """
+    対象時刻より、計算された時刻の取得
+    """
+    if not is_local_env():
+        calc_date += timedelta(hours=val)
+    if div == const.DATE_DAY:
+        calc_date += timedelta(days=val)
+    elif div == const.DATE_HOUR:
+        calc_date += timedelta(hours=val)
+    elif div == const.DATE_MIN:
+        calc_date += timedelta(minutes=val)
+
+    return calc_date
+
+
 def get_env_val(var_name: str, div: str = const.STR_SECRET_KEY) -> str:
     """
     環境変数取得
@@ -137,42 +171,10 @@ def is_network() -> bool:
     try:
         response = urllib.request.urlopen(const.URL_GOOGLE)
         network_flg = const.FLG_ON
-        # print_debug_msg(curr_func_nm, response)
+        # print_debug_msg(curr_func_nm, response.status)
     except Exception as e:
         print_error_msg(SCRIPT_NAME, curr_func_nm, const.STR_REQUEST, str(e))
     return network_flg
-
-
-def get_server_url() -> str:
-    """
-    サーバーURL取得
-    """
-    server_url = "https://" + get_env_val("URL_KOYEB")
-    if is_local_env():
-        server_url = get_local_url()
-    return server_url
-
-
-def is_local_env() -> bool:
-    """
-    ローカルIPチェック
-    """
-    local_flg = const.FLG_OFF
-
-    try:
-        host = socket.gethostname()
-        ip = socket.gethostbyname(host)
-
-        if host == const.HOST_LOCAL and (
-            const.IP_PRIVATE in ip or const.IP_LOCAL in ip
-        ):
-            local_flg = const.FLG_ON
-
-    except socket.gaierror as sge:
-        curr_func_nm = sys._getframe().f_code.co_name
-        print_error_msg(SCRIPT_NAME, curr_func_nm, const.STR_IP, str(sge))
-
-    return local_flg
 
 
 def get_host_port() -> tuple[str, int]:
@@ -196,6 +198,16 @@ def get_local_url() -> str:
     host, port = get_host_port()
     local_url = f"http://{host}:{port}"
     return local_url
+
+
+def get_server_url() -> str:
+    """
+    サーバーURL取得
+    """
+    server_url = "https://" + get_env_val("URL_KOYEB")
+    if is_local_env():
+        server_url = get_local_url()
+    return server_url
 
 
 def is_holiday(weekend_flg: bool = const.FLG_ON) -> bool:
@@ -499,8 +511,10 @@ def get_dict_from_csv(file_path: str, search_key: str = const.SYM_BLANK):
     # データを格納する辞書
     data_dict = {}
 
-    with open(file_path, newline="", encoding=const.CHARSET_UTF_8) as csvfile:
-        reader = csv.reader(csvfile)
+    with open(
+        file_path, newline=const.SYM_BLANK, encoding=const.CHARSET_UTF_8
+    ) as csv_file:
+        reader = csv.reader(csv_file)
         for row in reader:
             if search_key:
                 for row_data in row:

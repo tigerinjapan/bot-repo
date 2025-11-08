@@ -139,7 +139,11 @@ def get_context_data_2(request: Request, app_name: str):
 
     lang_cd = const.LANG_CD_JA
     split_str = const.SYM_UNDER
-    if split_str in app_name and const.STR_DESIGN not in app_name:
+    if (
+        split_str in app_name
+        and const.STR_DESIGN not in app_name
+        and const.STR_PROMPT not in app_name
+    ):
         lang_cd = app_name.split(split_str)[1]
         app_name = app_name.split(split_str)[0]
 

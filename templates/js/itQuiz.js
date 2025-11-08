@@ -44,10 +44,10 @@ const textMap = {
   "user_label": { "ko": "유저 ", "ja": "ユーザー ", "en": "User " },
   "score_label": { "ko": "점수 ", "ja": "スコア ", "en": "Score " },
   "quiz_status_label": { "ko": "문제 ", "ja": "問題 ", "en": "Quiz " },
-  // "start_game": { "ko": "게임 시작", "ja": "ゲームスタート", "en": "START GAME" },
-  "game_rule": { "ko": "게임 규칙", "ja": "ゲームルール", "en": "GAME RULE" },
-  "hint": { "ko": "힌트", "ja": "ヒント", "en": "HINT" },
-  "home": { "ko": "홈", "ja": "ホームへ", "en": "HOME" },
+  "start_game": { "ko": "게임 시작", "ja": "ゲームスタート", "en": BUTTON_START },
+  "game_rule": { "ko": "게임 규칙", "ja": "ゲームルール", "en": TITLE_GAME_RULES },
+  "hint": { "ko": "힌트", "ja": "ヒント", "en": BUTTON_HINT },
+  "home": { "ko": "홈", "ja": "ホームへ", "en": BUTTON_HOME },
   "check_answer": { "ko": "정답 확인", "ja": "正解確認", "en": "CHECK ANSWER" },
   "instruction_message": {
     "ko": "알파벳 또는 숫자만 입력가능합니다.",
@@ -203,7 +203,7 @@ const renderInitialScreen = () => {
       <span>${item.score} pts</span>
       <span>${item.lastLoginDate}</span>
     </li>
-  `).join('');
+  `).join(SYM_BLANK);
 
   container.innerHTML = `
       <h1 class="title">${TITLE_IT_QUIZ}</h1>
@@ -217,14 +217,23 @@ const renderInitialScreen = () => {
         <input class="inputTxt" type="text" id="inputUserName" minlength="4" maxlength="10" placeholder="Input user name.">
       </div>
       <div class="flex-center">
-        <button class="btn" id="btnStartGame" disabled>START GAME</button>
-        <button class="btn" id="btnGameRule" disabled onclick="showRuleDialog()">GAME RULE</button>
+        <button class="btn" id="btnStartGame" disabled>${BUTTON_START}</button>
+        <button class="btn" id="btnGameRule" disabled onclick="showRuleDialog()">${TITLE_GAME_RULES}</button>
       </div>
       <h2>Ranking</h2>
       <ul id="ranking-list">
         ${rankingsHtml}
       </ul>
   `;
+
+  // ボタンのループ処理
+  const divList = ["message", "rule", "choice"];
+  divList.forEach(div => {
+    const btnElem = getElem(`${div}-close-btn`);
+    btnElem.className = "btn btn-secondary";
+    btnElem.textContent = BUTTON_CLOSE;
+    btnElem.onclick = () => closeDialog(`${div}-dialog`);
+  });
 
   // START GAMEボタンにイベント付与
   const btnStart = getElem('btnStartGame');
@@ -252,13 +261,13 @@ function onLanguageSelect(lang) {
   const langBtns = document.querySelectorAll('.lang-btn');
   langBtns.forEach(btn => {
     if (btn.dataset.lang === lang) {
-      btn.style.backgroundColor = 'blue';
-      btn.style.color = 'white';
-      btn.style.fontWeight = 'bold';
+      btn.style.backgroundColor = COLOR_BLUE;
+      btn.style.color = COLOR_WHITE;
+      btn.style.fontWeight = FONT_BOLD;
     } else {
-      btn.style.backgroundColor = '';
-      btn.style.color = '';
-      btn.style.fontWeight = '';
+      btn.style.backgroundColor = SYM_BLANK;
+      btn.style.color = SYM_BLANK;
+      btn.style.fontWeight = SYM_BLANK;
     }
   });
 
@@ -352,7 +361,7 @@ const renderQuizWord = () => {
     }
     // 公開されている文字の場合
     return `<div class="quiz-char-box">${char}</div>`;
-  }).join('');
+  }).join(SYM_BLANK);
 };
 
 // タイマー表示の更新
@@ -384,7 +393,7 @@ async function startGame() {
 
   // クイズデータ (IT関連用語、単語は全て大文字) - シャッフルし、選択
   const quizDataList = await getFetchApiData(quizDataUrl, null);
-  const filteredList = quizDataList.filter(q => q.word.replace(/\s/g, '').length <= MAX_WORD_LENGTH);
+  const filteredList = quizDataList.filter(q => q.word.replace(/\s/g, SYM_BLANK).length <= MAX_WORD_LENGTH);
   const randomTenList = shuffleArray([...filteredList]).slice(0, quizNum);
   gameState.quizSet = randomTenList;
 
@@ -438,7 +447,7 @@ const nextQuiz = () => {
   }
 
   // 新しい時間制限を設定
-  const wordWithoutSpaces = word.replace(/\s/g, '');
+  const wordWithoutSpaces = word.replace(/\s/g, SYM_BLANK);
   gameState.initialTime = wordWithoutSpaces.length * 10;
   gameState.timeRemaining = gameState.initialTime;
 
@@ -514,7 +523,7 @@ const useHint = () => {
 // 正解チェック
 const checkAnswer = () => {
   const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
-  const currentWordString = gameState.currentWord.join(''); // 配列を文字列に変換
+  const currentWordString = gameState.currentWord.join(SYM_BLANK); // 配列を文字列に変換
 
   // 2単語の場合に対応するため、全てのスペース('_'になっていないことを確認)を含めた完全一致をチェック
   if (currentWordString === currentQuiz.word) {
@@ -569,6 +578,8 @@ const openChoiceDialog = (index) => {
 
   gameState.selectedCharIndex = index;
 
+  setElemText("choice-title", TITLE_CHOICE_CHAR);
+
   const targetWord = gameState.quizSet[gameState.currentQuizIndex].word;
   const correctChar = targetWord[index];
   const isLetter = charPool.letters.includes(correctChar);
@@ -576,9 +587,9 @@ const openChoiceDialog = (index) => {
 
   let availablePool = [];
   if (isLetter) {
-    availablePool = charPool.letters.split('');
+    availablePool = charPool.letters.split(SYM_BLANK);
   } else if (isNumber) {
-    availablePool = charPool.numbers.split('');
+    availablePool = charPool.numbers.split(SYM_BLANK);
   } else {
     // 文字でも数字でもない場合（通常はスペースのはずだが、_として残っている場合はエラー回避）
     return;
@@ -598,7 +609,7 @@ const openChoiceDialog = (index) => {
 
   // ダイアログの中身をレンダリング
   const container = getElem('choice-buttons-container');
-  container.innerHTML = '';
+  container.innerHTML = SYM_BLANK;
 
   const instruction = getElem('choice-instruction');
 
@@ -632,7 +643,7 @@ const handleChoice = (char) => {
     renderQuizWord();
 
     // 正解をチェックし、クリアしていれば次の問題へ
-    if (gameState.currentWord.join('') === targetWord) {
+    if (gameState.currentWord.join(SYM_BLANK) === targetWord) {
       checkAnswer();
     }
   } else {
@@ -766,6 +777,7 @@ async function updateRanking(rank, score, userName) {
 
 // ルールダイアログ表示
 const showRuleDialog = () => {
+  setElemText("rule-title", TITLE_GAME_RULES)
   setElemContents('rule-content', getLocalizedMessage('rule_content'));
   getElem('rule-dialog').showModal();
 };

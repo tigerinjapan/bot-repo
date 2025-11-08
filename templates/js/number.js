@@ -73,7 +73,7 @@ function init() {
     else document.body.appendChild(exprArea);
   }
   // 内部保持用プロパティ初期化（expression id に依存しない）
-  exprArea.dataset.expr = exprArea.dataset.expr || "";
+  exprArea.dataset.expr = exprArea.dataset.expr || SYM_BLANK;
   exprArea._tokens = exprArea._tokens || [];
   // 初期は非表示にしておく（START 押下で表示）
   exprArea.style.opacity = "0";
@@ -84,9 +84,9 @@ function init() {
   const num = getElemText("number-display");
   renderInputButtons(num);
 
-  let btnRuleNm = "GAME RULE";
-  let btnChkNm = "CHECK";
-  let btnNextNm = "NEXT";
+  let btnRuleNm = TITLE_GAME_RULES;
+  let btnChkNm = BUTTON_CHECK;
+  let btnNextNm = BUTTON_NEXT;
 
   if (langCd === LANG_CD_KO) {
     title = TITLE_NUMBER_KO;
@@ -146,7 +146,7 @@ function setStartBtn() {
   // START/STOP処理
   const startBtn = getElem("btnStart");
   if (startBtn) {
-    startBtn.textContent = "START";
+    startBtn.textContent = BUTTON_START;
     startBtn.addEventListener("click", () => {
       const number = getElem("number-display");
       number.style.backgroundColor = "black";
@@ -176,7 +176,7 @@ function setStop() {
   isTimerRunning = false;
 
   setElemText("timer", "STOPPED");
-  setElemText("btnStart", "START");
+  setElemText("btnStart", BUTTON_START);
 
   let exprArea = getElem("exprArea");
   if (exprArea) {
@@ -232,9 +232,9 @@ function showDialog(langCd) {
   dialog = createElemOnly(TAG_DIV);
   dialog.id = "gameRuleDialog";
   dialog.innerHTML = `
-    <h3>Game Rule</h3>
+    <h3>${TITLE_GAME_RULES}</h3>
     <ul id="gameRule"></ul><br><br>
-    <button type="button" id="closeGameRuleDialog">Close</button>
+    <button type="button" id="closeGameRuleDialog">${BUTTON_CLOSE}</button>
   `;
   document.body.appendChild(dialog);
 
@@ -263,9 +263,9 @@ function checkAnswer(langCd) {
 
   // exprArea の内部トークンから現在の式文字列を組み立てる（expression id に依存しない）
   const exprArea = getElem("exprArea");
-  let expr = "";
+  let expr = SYM_BLANK;
   if (exprArea && Array.isArray(exprArea._tokens)) {
-    expr = exprArea._tokens.map(tok => (tok.type === "num" ? tok.val : (tok.val ? tok.val : ""))).join("").trim();
+    expr = exprArea._tokens.map(tok => (tok.type === "num" ? tok.val : (tok.val ? tok.val : ""))).join(SYM_BLANK).trim();
   }
 
   // 入力チェック
@@ -304,7 +304,7 @@ function checkAnswer(langCd) {
 function renderInputButtons(numberStr) {
   const exprArea = getElem("exprArea");
   if (!exprArea) return;
-  exprArea.innerHTML = "";
+  exprArea.innerHTML = SYM_BLANK;
 
   // tokens 初期化（num と slot）
   const digits = String(numberStr).split("");
@@ -317,7 +317,7 @@ function renderInputButtons(numberStr) {
 
   // 再描画
   function refresh() {
-    exprArea.innerHTML = "";
+    exprArea.innerHTML = SYM_BLANK;
     const t = exprArea._tokens;
     for (let i = 0; i < t.length; i++) {
       const token = t[i];

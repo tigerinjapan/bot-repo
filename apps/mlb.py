@@ -244,7 +244,9 @@ def get_game_date(game_date: str) -> str:
     game_date_naive = game_date.replace(tzinfo=const.NONE_CONSTANT)
 
     # 日本時間に計算
-    calc_date = func.get_calc_date(9, const.DATE_HOUR, game_date_naive)
+    calc_date = func.get_calc_date(
+        const.JST_OFFSET_HOURS, const.DATE_HOUR, game_date_naive
+    )
 
     jst_date = func.convert_date_to_str(calc_date, const.DATE_FORMAT_MMDD_SLASH_NO_ZERO)
     return jst_date

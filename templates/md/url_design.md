@@ -12,7 +12,8 @@
 | [number](https://kobe-dev.koyeb.app/apps/number)               | ナンバープレートゲーム | 脳トレーニング     |
 | [sudoku](https://kobe-dev.koyeb.app/apps/sudoku)               | 数独ゲーム             | 脳トレーニング     |
 | [itQuiz](https://kobe-dev.koyeb.app/apps/itQuiz)               | IT 用語クイズ          | クイズで IT 勉強   |
-| [itQuiz_design](https://kobe-dev.koyeb.app/apps/itQuiz_design) | itQuiz の設計          | 作成中             |
+| [itQuiz_design](https://kobe-dev.koyeb.app/apps/itQuiz_design) | IT クイズ の設計       | 作成済             |
+| [itQuiz_prompt](https://kobe-dev.koyeb.app/apps/itQuiz_prompt) | IT クイズ のプロンプト | 随時更新           |
 | [dashboard](https://kobe-dev.koyeb.app/apps/dashboard)         | ダッシュボード         | サイト分析         |
 | [review](https://kobe-dev.koyeb.app/apps/review)               | レビューページ         | 掲示板で内容確認   |
 | [gemini](https://kobe-dev.koyeb.app/apps/gemini)               | Gemini コンテンツ生成  | 画像、テキスト対応 |

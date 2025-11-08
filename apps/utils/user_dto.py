@@ -6,8 +6,8 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 
 import apps.utils.constants as const
+import apps.utils.function as func
 import apps.utils.mongo_constants as mongo_const
-from apps.utils.function import get_masking_data, get_now
 
 
 class Document:
@@ -47,8 +47,8 @@ class userInfo:
     sTel: str
     sMenu: str
     nSeq: int
-    dModifiedDate: datetime = get_now()
-    dLastLoginDate: datetime = get_now()
+    dModifiedDate: datetime = func.get_now()
+    dLastLoginDate: datetime = func.get_now()
 
     def get_data(self):
         return asdict(self)
@@ -82,10 +82,10 @@ def get_json_data_for_user_info(form_data):
 
     json_data = asdict(
         userInfo(
-            get_masking_data(user_id),
+            func.get_masking_data(user_id),
             user_name,
             user_div,
-            get_masking_data(user_pw),
+            func.get_masking_data(user_pw),
             int(year),
             int(sex),
             zip_cd,
