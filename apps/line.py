@@ -96,19 +96,18 @@ def sub(div: str, data_list: list[str] = []):
     else:
         if div == const.APP_MLB:
             msg_data = mlb.get_mlb_game_data(all_flg=const.FLG_ON)
-            msg_list.append(msg_data)
-
-        elif div == const.STR_AI_NEWS:
-            news_list = news.get_news_list(news.DIV_AI_NEWS, url_flg=const.FLG_ON)
-            news_msg_list = [
-                f"{news_data[0]} {news_data[1]}" for news_data in news_list
-            ]
-            msg_data = const.SYM_SPACE.join(news_msg_list)
-            msg_list.append(msg_data)
 
         else:
+            if div == const.STR_AI_NEWS:
+                news_list = news.get_news_list(news.DIV_AI_NEWS, url_flg=const.FLG_ON)
+                data_list = [
+                    f"{news_data[0]}{NEW_LINE}{news_data[1]}"
+                    for news_data in news_list[:3]
+                ]
+
             msg_data = NEW_LINE.join(data_list)
-            msg_list.append(msg_data)
+
+        msg_list.append(msg_data)
 
         if msg_data:
             msg_data_list = get_msg_data_list(
@@ -153,9 +152,9 @@ def get_template_msg():
     actions = get_template_actions()
 
     # TODO: 毎回同じイメージが生成される
-    file_path = func_gemini.get_gemini_image(const.STR_REST)
-    if file_path:
-        func.print_debug_msg(const.MSG_TYPE_IMG, func_line.URL_REST_IMG)
+    # file_path = func_gemini.get_gemini_image(const.STR_REST)
+    # if file_path:
+    #     func.print_debug_msg(const.MSG_TYPE_IMG, func_line.URL_REST_IMG)
 
     template_msg = func_line.get_template_msg_json(
         alt_text, template_title, template_text, actions
@@ -332,10 +331,9 @@ def sub_test():
 if __name__ == const.MAIN_FUNCTION:
     # get_template_actions()
     # get_flex_data_list()
-    # main()
+    main()
     # main(proc_flg=const.FLG_OFF)
     # main(data_div=const.NUM_TWO)
     # main(data_div=const.NUM_THREE)
     # main(auto_flg=const.FLG_OFF)
     # sub_test()
-    sub(div=const.STR_AI_NEWS)

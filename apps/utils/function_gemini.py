@@ -41,6 +41,7 @@ def get_client():
 
         client = genai.Client(api_key=GEMINI_API_KEY)
         return client
+
     except Exception as e:
         curr_func_nm = sys._getframe().f_code.co_name
         func.print_error_msg(
@@ -149,10 +150,13 @@ def get_generate_text_image(
         func.print_error_msg(SCRIPT_NAME, model, div, e)
         response = const.NONE_CONSTANT
 
-    response_content = response.candidates[0].content
-    if not response or not response_content:
+    if not response:
         return file_path
 
+    if response_content:
+        return file_path
+
+    response_content = response.candidates[0].content
     for part in response_content.parts:
         if part.text:
             continue

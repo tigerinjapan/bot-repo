@@ -19,7 +19,7 @@
 2025-11-07 13:54:12,334 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-07 13:54:20,014 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-07 13:54:52,313 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-07 14:15:10,387 [INFO] gemini Unknown Mobile Android Chrome Mobile
+2025-11-07 14:15:10,387 [INFO] gemini entertainment Mobile Android Chrome Mobile
 2025-11-07 14:16:34,937 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-07 14:18:08,848 [INFO] today_korea news Mobile Android Chrome Mobile
 2025-11-07 14:18:13,315 [INFO] travel service Mobile Android Chrome Mobile
@@ -33,7 +33,7 @@
 2025-11-07 20:36:09,327 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
 2025-11-07 20:45:14,984 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-07 20:45:20,203 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-025-11-08 02:47:30,940 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-08 02:47:30,940 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-08 02:47:37,966 [INFO] sudoku entertainment Mobile Android Chrome Mobile
 2025-11-08 02:57:08,441 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-08 02:58:57,746 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
@@ -41,9 +41,9 @@
 2025-11-08 08:06:28,133 [INFO] url_design document PC Windows Edge
 2025-11-08 08:06:32,957 [INFO] itQuiz entertainment PC Windows Edge
 2025-11-08 08:33:56,338 [INFO] url_design document PC Windows Edge
-2025-11-08 08:34:03,435 [INFO] gemini Unknown PC Windows Edge
-2025-11-08 08:34:52,643 [INFO] gemini Unknown PC Windows Edge
-2025-11-08 08:35:55,147 [INFO] gemini Unknown PC Windows Edge
+2025-11-08 08:34:03,435 [INFO] gemini entertainment PC Windows Edge
+2025-11-08 08:34:52,643 [INFO] gemini entertainment PC Windows Edge
+2025-11-08 08:35:55,147 [INFO] gemini entertainment PC Windows Edge
 2025-11-08 08:47:18,453 [INFO] url_design document PC Windows Edge
 2025-11-08 09:30:34,333 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-08 10:04:23,594 [INFO] kakao_design document Mobile Android Chrome Mobile
@@ -60,11 +60,11 @@
 2025-11-08 14:24:24,910 [INFO] itQuiz_prompt document Mobile Android Chrome Mobile
 2025-11-08 14:27:22,716 [INFO] sudoku entertainment Mobile Android Chrome Mobile
 2025-11-08 15:57:14,461 [INFO] url_design document PC Windows Edge
-2025-11-08 15:57:46,843 [INFO] gemini Unknown PC Windows Edge
-2025-11-08 15:59:59,091 [INFO] gemini Unknown PC Windows Edge
+2025-11-08 15:57:46,843 [INFO] gemini entertainment PC Windows Edge
+2025-11-08 15:59:59,091 [INFO] gemini entertainment PC Windows Edge
 2025-11-08 18:04:01,424 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-08 18:04:39,205 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-08 18:24:41,873 [INFO] gemini Unknown Mobile Android Chrome Mobile
+2025-11-08 18:24:41,873 [INFO] gemini entertainment Mobile Android Chrome Mobile
 2025-11-09 01:17:10,309 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-09 01:17:51,560 [INFO] sudoku entertainment Mobile Android Chrome Mobile
 2025-11-09 15:02:48,131 [INFO] url_design document Unknown Other FacebookBot
@@ -90,5 +90,8 @@
 2025-11-10 01:54:04,260 [INFO] sudoku entertainment Mobile Android Chrome Mobile
 2025-11-10 01:54:07,152 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
 2025-11-10 01:54:12,499 [INFO] review management Mobile Android Chrome Mobile
-2025-11-10 01:54:21,956 [INFO] gemini Unknown Mobile Android Chrome Mobile
+2025-11-10 01:54:21,956 [INFO] gemini entertainment Mobile Android Chrome Mobile
 2025-11-10 12:12:20,974 [INFO] url_design document PC Windows Edge
+2025-11-11 05:38:40,448 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-11 05:38:52,096 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-11 05:49:39,486 [INFO] dashboard management PC Windows Edge

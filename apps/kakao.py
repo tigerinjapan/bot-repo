@@ -28,6 +28,7 @@ def main(
         div (str): today, lcc
         list_flg (bool): 一括送信フラグ # TODO: [pending] チャネル登録必要
     """
+    curr_func_nm = sys._getframe().f_code.co_name
 
     func.print_start(SCRIPT_NAME)
 
@@ -43,14 +44,17 @@ def main(
                     link = today_korea.URL_LINK
                     link_mo = today_korea.URL_LINK_MO
 
+                    img_file_path = func_kakao.URL_TODAY_KOREA_IMG
                     if file_path:
-                        msg = func_kakao.URL_TODAY_KOREA_IMG
-                        func.print_debug_msg(const.STR_IMG, msg)
+                        func.print_debug_msg(const.STR_IMG, img_file_path)
 
                         title = "【오늘의 한마디】"
                         message = today_korea.get_phrase()
 
                     else:
+                        func.print_info_msg(
+                            img_file_path, msg_const.MSG_ERR_SERVER_PROC_FAILED
+                        )
                         object_type = func_kakao.OBJECT_TYPE_TEXT
 
                     receiver_uuids = []
@@ -76,7 +80,6 @@ def main(
 
             except Exception as e:
                 if e.args[0] != "details":
-                    curr_func_nm = sys._getframe().f_code.co_name
                     err_msg = msg_const.MSG_ERR_MSG_SEND
                     func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg, e)
 

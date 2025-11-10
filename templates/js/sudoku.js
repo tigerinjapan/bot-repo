@@ -1,3 +1,6 @@
+// ヘッダー設定
+setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
+
 // タイトル設定
 document.title = TITLE_SUDOKU;
 

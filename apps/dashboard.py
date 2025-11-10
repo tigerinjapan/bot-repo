@@ -3,6 +3,8 @@
 """
 
 import pandas as pd
+import sys
+
 from dateutil.relativedelta import relativedelta
 from fastapi import Request
 from user_agents import parse
@@ -51,6 +53,9 @@ def update_data():
         for date_div in LIST_DATE:
             dashboard_json = get_dashboard_json(df, date_div)
 
+            if not dashboard_json:
+                break
+
             if date_div == const.STR_DAY:
                 dummy_json = dummy_data[date_div]
                 if dashboard_json == dummy_json:
@@ -77,7 +82,8 @@ def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
     データリスト取得
     """
     data_list = []
-    backup_log_list = []
+    backup_data_list = []
+    new_log_list = []
 
     try:
         log_path = func.get_file_path(
@@ -93,46 +99,48 @@ def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
             target_date = get_target_date(const.STR_YEAR)[0]
             log_backup_list = log_dao.get_log_data_list(log_div, target_date)
 
-            if not backup_flg:
-                log_data_list.extend(log_backup_list)
-
             for log_data in log_data_list:
-                if log_data in log_backup_list:
-                    continue
+                if log_data and log_data not in log_backup_list:
+                    new_log_list.append(log_data)
 
+            if new_log_list:
+                log_backup_list.extend(new_log_list)
+
+            for log_data in log_backup_list:
                 data = log_data.split(const.SYM_SPACE)
                 if log_div == const.APP_DASHBOARD:
                     data = data[: len(COL_LIST_DASHBOARD)]
 
-                if not data[0]:
-                    continue
+                data_list.append(data)
 
-                if backup_flg:
+                if backup_flg and log_data in new_log_list:
+                    log_date = data[0]
                     cutoff_date = func.get_calc_date(-1)
                     log_datetime = func.convert_str_to_date(
-                        data[0], const.DATE_FORMAT_YYYYMMDD_DASH
+                        log_date, const.DATE_FORMAT_YYYYMMDD_DASH
                     )
                     # 1日以前のログか判定
                     if log_datetime <= cutoff_date:
                         log_backup = [log_div, log_data, log_datetime]
                         json_data = log_dto.get_insert_data_for_log(log_backup)
-                        backup_log_list.append(json_data)
-                    else:
-                        data_list.append(log_data)
+                        backup_data_list.append(json_data)
 
-                else:
-                    data_list.append(data)
-
-            if backup_flg and backup_log_list:
+            if backup_data_list:
                 # DB登録
-                log_dao.insert_log_data(backup_log_list)
+                log_dao.insert_log_data(backup_data_list)
 
                 # ログファイル：本日分以外削除
-                log_data = const.SYM_NEW_LINE.join(data_list) + const.SYM_NEW_LINE
-                func.write_file(log_path, log_data)
+                backup_log_data = (
+                    const.SYM_NEW_LINE.join(new_log_list) + const.SYM_NEW_LINE
+                )
+                func.write_file(log_path, backup_log_data)
 
-        if not data_list:
-            func.print_info_msg(SCRIPT_NAME, msg_const.MSG_ERR_DATA_NOT_EXIST)
+                msg_div = f"{len(backup_data_list)}件, {const.STR_BACKUP_JA}"
+                func.print_info_msg(msg_div, msg_const.MSG_INFO_PROC_COMPLETED)
+
+            else:
+                if backup_flg:
+                    func.print_info_msg(SCRIPT_NAME, msg_const.MSG_INFO_DATA_NOT_EXIST)
 
     except Exception as e:
         func.print_info_msg(SCRIPT_NAME, e)
@@ -156,38 +164,45 @@ def get_dashboard_json(df_all, date_div: str):
     """
     ダッシュボードデータ取得
     """
-    target_date, date_format = get_target_date(date_div)
+    try:
+        target_date, date_format = get_target_date(date_div)
 
-    df_all[const.STR_DATE] = pd.to_datetime(df_all[const.STR_DATE])
-    df = df_all[target_date <= df_all[const.STR_DATE]]
+        df_all[const.STR_DATE] = pd.to_datetime(df_all[const.STR_DATE])
+        df = df_all[target_date <= df_all[const.STR_DATE]]
 
-    df[const.STR_DATE] = df[const.STR_DATE].dt.strftime(date_format)
+        df[const.STR_DATE] = df[const.STR_DATE].dt.strftime(date_format)
 
-    term_access = df[const.STR_DATE].value_counts().sort_index()
-    total_access = term_access.sum()
-    category_counts = df[const.STR_CATEGORY].value_counts()
-    app_counts = df[const.STR_APP].value_counts()
-    device_counts = df[const.STR_DEVICE].value_counts()
-    os_counts = df[const.STR_OS].value_counts()
-    browser_counts = df[const.STR_BROWSER].value_counts()
+        term_access = df[const.STR_DATE].value_counts().sort_index()
+        total_access = term_access.sum()
+        category_counts = df[const.STR_CATEGORY].value_counts()
+        app_counts = df[const.STR_APP].value_counts()
+        device_counts = df[const.STR_DEVICE].value_counts()
+        os_counts = df[const.STR_OS].value_counts()
+        browser_counts = df[const.STR_BROWSER].value_counts()
 
-    # JSONデータ作成
-    dashboard_json = {
-        "label": date_div,
-        "users": {
-            "total": f"{total_access:,}",
-            "labels": term_access.index.tolist(),
-            "data": term_access.values.tolist(),
-        },
-        const.STR_CATEGORY: {
-            "labels": category_counts.index.tolist(),
-            "data": category_counts.values.tolist(),
-        },
-        const.STR_APP: calc_percentage(app_counts, etc_flg=const.FLG_ON),
-        const.STR_DEVICE: calc_percentage(device_counts),
-        const.STR_OS: calc_percentage(os_counts),
-        const.STR_BROWSER: calc_percentage(browser_counts),
-    }
+        # JSONデータ作成
+        dashboard_json = {
+            "label": date_div,
+            "users": {
+                "total": f"{total_access:,}",
+                "labels": term_access.index.tolist(),
+                "data": term_access.values.tolist(),
+            },
+            const.STR_CATEGORY: {
+                "labels": category_counts.index.tolist(),
+                "data": category_counts.values.tolist(),
+            },
+            const.STR_APP: calc_percentage(app_counts, etc_flg=const.FLG_ON),
+            const.STR_DEVICE: calc_percentage(device_counts),
+            const.STR_OS: calc_percentage(os_counts),
+            const.STR_BROWSER: calc_percentage(browser_counts),
+        }
+
+    except Exception as e:
+        curr_func_nm = sys._getframe().f_code.co_name
+        div = msg_const.MSG_ERR_SERVER_PROC_FAILED
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, div, e)
+        dashboard_json = {}
 
     return dashboard_json
 
