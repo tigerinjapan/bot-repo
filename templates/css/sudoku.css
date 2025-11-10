@@ -17,85 +17,84 @@
 }
 
 body {
-	font-family: var(--font-family-body);
-	background-color: var(--color-bg-primary);
-	color: var(--color-text-normal);
-	margin: 0;
-	padding: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+	font-family: var(--font-family-body);
 	text-align: center;
+	background-color: var(--color-bg-primary);
+	color: var(--color-text-normal);
 }
 
 #app {
-	background-color: var(--color-bg-secondary);
-	border: 2px solid var(--color-neon-light);
-	box-shadow: 0 0 20px var(--color-neon-light);
-	border-radius: 1rem;
-	padding: 1.5rem;
 	display: flex;
 	flex-direction: column;
+	padding: 1.5rem;
 	gap: 1rem;
+	background-color: var(--color-bg-secondary);
+	border: 2px solid var(--color-neon-light);
+	border-radius: 1rem;
+	box-shadow: 0 0 20px var(--color-neon-light);
 }
 
 /*
 * 共通要素
 */
 h1 {
-	font-family: var(--font-family-display);
-	color: var(--color-neon-light);
-	text-shadow: 0 0 5px var(--color-neon-light);
-	font-size: 1.8rem;
 	margin-bottom: 1rem;
+	font-family: var(--font-family-display);
+	font-size: 1.8rem;
+	text-shadow: 0 0 5px var(--color-neon-light);
+	color: var(--color-neon-light);
 }
 
 button {
-	background-color: var(--color-button-primary);
-	color: var(--color-bg-primary);
 	padding: 0.75rem 1.5rem;
-	border: none;
-	border-radius: 0.5rem;
-	cursor: pointer;
 	font-family: var(--font-family-display);
 	font-weight: 700;
-	transition: all 0.2s;
+	background-color: var(--color-button-primary);
+	color: var(--color-bg-primary);
+	border: none;
+	border-radius: 0.5rem;
 	box-shadow: 0 0 8px var(--color-button-primary);
+	transition: all 0.2s;
+	cursor: pointer;
 }
 
 button:hover:not(:disabled) {
-	opacity: 0.8;
-	transform: translateY(-2px);
 	box-shadow: 0 0 15px var(--color-neon-light);
+	transform: translateY(-2px);
+	opacity: 0.8;
 }
 
 button:disabled {
 	background-color: dimgray;
+	box-shadow: none;
 	cursor: not-allowed;
 	opacity: 0.5;
-	box-shadow: none;
 }
 
 select,
 input[type="text"] {
+	appearance: none;
+	margin: 0 0.5rem;
+	padding: 0.5rem;
+	font-family: var(--font-family-display);
+	text-align: center;
 	background-color: var(--color-bg-primary);
 	color: var(--color-neon-accent);
 	border: 1px solid var(--color-neon-accent);
-	padding: 0.5rem;
 	border-radius: 0.3rem;
-	font-family: var(--font-family-display);
-	margin: 0 0.5rem;
-	appearance: none;
-	text-align: center;
 }
 
 input[type="text"] {
-	color: var(--color-text-normal);
-	text-align: left;
-	padding-left: 1rem;
 	flex-grow: 1;
 	max-width: 200px;
+	padding-left: 1rem;
+	text-align: left;
+	color: var(--color-text-normal);
 }
 
 /* 初期画面 */
@@ -103,8 +102,8 @@ input[type="text"] {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 0.5rem;
 	margin-bottom: 1.5rem;
+	gap: 0.5rem;
 }
 
 /*
@@ -113,25 +112,24 @@ input[type="text"] {
 #rank-container {
 	margin-top: 1rem;
 	padding: 1rem;
+	background-color: #0d0d19;
 	border: 1px dashed var(--color-neon-accent);
 	border-radius: 0.5rem;
-	background-color: #0d0d19;
-	/* A slight variation */
 }
 
 #rank-container h2 {
-	font-family: var(--font-family-display);
-	color: var(--color-neon-accent);
-	text-shadow: 0 0 3px var(--color-neon-accent);
-	font-size: 1.2rem;
 	margin-top: 0;
 	margin-bottom: 0.75rem;
+	font-family: var(--font-family-display);
+	font-size: 1.2rem;
+	text-shadow: 0 0 3px var(--color-neon-accent);
+	color: var(--color-neon-accent);
 }
 
 #rank-table {
 	width: 100%;
-	border-collapse: collapse;
 	font-size: 0.9rem;
+	border-collapse: collapse;
 }
 
 #rank-table th,
@@ -140,15 +138,15 @@ input[type="text"] {
 }
 
 #rank-table th {
+	font-weight: 400;
+	text-transform: uppercase;
 	color: var(--color-neon-light);
 	border-bottom: 2px solid var(--color-neon-light);
-	text-transform: uppercase;
-	font-weight: 400;
 }
 
 #rank-table td {
-	border-bottom: 1px solid var(--color-text-dim);
 	color: var(--color-text-normal);
+	border-bottom: 1px solid var(--color-text-dim);
 }
 
 #rank-table .rank-time {
@@ -178,8 +176,8 @@ input[type="text"] {
 */
 #game-screen {
 	display: none;
-	align-items: center;
 	flex-direction: column;
+	align-items: center;
 	gap: 1.5rem;
 }
 
@@ -187,15 +185,15 @@ input[type="text"] {
 * ゲーム情報ヘッダー
 */
 #game-info-header {
-	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0.5rem 0;
+	width: 100%;
 	margin-bottom: 0.5rem;
-	border-bottom: 1px dashed var(--color-neon-accent);
+	padding: 0.5rem 0;
 	font-family: var(--font-family-display);
 	font-size: 0.9rem;
+	border-bottom: 1px dashed var(--color-neon-accent);
 }
 
 #game-info-header div {
@@ -204,24 +202,23 @@ input[type="text"] {
 }
 
 #game-info-header .info-label {
-	color: var(--color-text-dim);
-	font-size: 0.7rem;
 	display: block;
+	font-size: 0.7rem;
+	color: var(--color-text-dim);
 }
 
 #game-info-header .info-value {
-	color: var(--color-neon-accent);
-	font-weight: 700;
 	display: block;
 	margin-top: 2px;
+	font-weight: 700;
 	word-break: break-all;
-	/* 長すぎるユーザー名に対応 */
+	color: var(--color-neon-accent);
 }
 
 @media (max-width: 640px) {
 	#game-info-header {
-		font-size: 0.8rem;
 		padding: 0.5rem;
+		font-size: 0.8rem;
 	}
 
 	#game-info-header .info-label {
@@ -238,26 +235,25 @@ input[type="text"] {
 }
 
 #timer-text {
+	margin-bottom: 0.5rem;
 	font-family: var(--font-family-display);
 	font-size: 2rem;
-	color: var(--color-neon-light);
 	text-shadow: 0 0 5px var(--color-neon-light);
-	margin-bottom: 0.5rem;
+	color: var(--color-neon-light);
 }
 
 #progress-bar-container {
 	width: 100%;
 	height: 10px;
-	background-color: var(--color-bg-primary);
-	border-radius: 5px;
 	overflow: hidden;
+	background-color: var(--color-bg-primary);
 	border: 1px solid var(--color-neon-light);
+	border-radius: 5px;
 }
 
 #progress-bar {
-	height: 100%;
 	width: 100%;
-	/* 初期値 */
+	height: 100%;
 	background-color: var(--color-neon-light);
 	transition: width 1s linear;
 }
@@ -268,24 +264,23 @@ input[type="text"] {
 #sudoku-board {
 	display: grid;
 	grid-template-columns: repeat(9, 1fr);
-	border: 3px solid var(--color-neon-light);
-	border-radius: 0.5rem;
-	aspect-ratio: 1 / 1;
-	/* 正方形を維持 */
 	width: 100%;
 	max-width: 450px;
 	margin: 0 auto;
+	border: 3px solid var(--color-neon-light);
+	border-radius: 0.5rem;
+	aspect-ratio: 1 / 1;
 }
 
 .sudoku-cell {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 1px solid var(--color-text-dim);
 	font-family: var(--font-family-display);
 	font-size: clamp(1rem, 4vw, 1.5rem);
-	cursor: pointer;
+	border: 1px solid var(--color-text-dim);
 	transition: background-color 0.1s;
+	cursor: pointer;
 	user-select: none;
 }
 
@@ -327,15 +322,15 @@ input[type="text"] {
 
 /* 固定値（最初から開いているマス） */
 .fixed-cell {
-	color: var(--color-neon-light);
 	background-color: #0f1f2f;
+	color: var(--color-neon-light);
 	cursor: default;
 }
 
 /* ユーザー入力値 */
 .user-input {
-	color: var(--color-neon-accent);
 	font-weight: 700;
+	color: var(--color-neon-accent);
 }
 
 /* 選択中のセル */
@@ -346,9 +341,9 @@ input[type="text"] {
 
 /* エラーセル（間違った入力） */
 .error {
+	font-weight: 700;
 	background-color: rgba(255, 0, 0, 0.3);
 	color: var(--color-error);
-	font-weight: 700;
 }
 
 /*
@@ -357,25 +352,25 @@ input[type="text"] {
 #input-panel {
 	display: flex;
 	grid-template-columns: repeat(5, 1fr);
-	gap: 5px;
 	width: 100%;
 	margin: 0 auto;
-	background-color: var(--color-bg-primary);
 	padding: 10px;
+	gap: 5px;
+	background-color: var(--color-bg-primary);
 	border-radius: 0.5rem;
 	box-shadow: 0 0 10px var(--color-neon-light);
 }
 
 .input-button {
+	padding: 0.5rem;
+	font-family: var(--font-family-display);
+	font-size: 1.2rem;
 	background-color: var(--color-bg-secondary);
 	color: var(--color-neon-light);
-	font-family: var(--font-family-display);
 	border: 1px solid var(--color-neon-light);
-	padding: 0.5rem;
-	font-size: 1.2rem;
-	cursor: pointer;
 	border-radius: 0.3rem;
 	transition: all 0.1s;
+	cursor: pointer;
 }
 
 .input-button:hover {
@@ -388,10 +383,10 @@ input[type="text"] {
 */
 #game-controls {
 	display: flex;
-	justify-content: center;
 	flex-wrap: wrap;
-	gap: 1rem;
+	justify-content: center;
 	margin-top: 1rem;
+	gap: 1rem;
 }
 
 #hint-button {
@@ -405,8 +400,8 @@ input[type="text"] {
 	background: lightgray !important;
 	color: #666 !important;
 	border-color: #ccc !important;
-	cursor: default !important;
 	box-shadow: none !important;
+	cursor: default !important;
 	opacity: 0.9;
 }
 
@@ -416,51 +411,51 @@ input[type="text"] {
 }
 
 #hint-counter {
-	color: mediumseagreen;
+	margin-left: 0.5rem;
 	font-family: var(--font-family-display);
 	font-weight: 700;
-	margin-left: 0.5rem;
+	color: mediumseagreen;
 }
 
 /*
 * モーダル（ルール、メッセージ表示）
 */
 #modal-overlay {
-	display: none;
 	position: fixed;
+	display: none;
+	justify-content: center;
+	align-items: center;
 	top: 0;
 	left: 0;
+	z-index: 1000;
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.7);
-	z-index: 1000;
-	justify-content: center;
-	align-items: center;
 }
 
 #modal-content {
+	position: relative;
+	width: 400px;
+	max-width: 90%;
+	padding: 2rem;
+	text-align: left;
 	background-color: var(--color-bg-secondary);
 	border: 2px solid var(--color-neon-accent);
-	box-shadow: 0 0 20px var(--color-neon-accent);
 	border-radius: 1rem;
-	padding: 2rem;
-	max-width: 90%;
-	width: 400px;
-	text-align: left;
-	position: relative;
+	box-shadow: 0 0 20px var(--color-neon-accent);
 }
 
 #modal-close-button {
 	position: absolute;
 	top: 10px;
 	right: 10px;
+	padding: 0.5rem;
+	font-size: 1.5rem;
 	background: transparent;
 	color: var(--color-neon-light);
 	border: none;
-	font-size: 1.5rem;
-	cursor: pointer;
-	padding: 0.5rem;
 	box-shadow: none;
+	cursor: pointer;
 }
 
 #modal-close-button:hover {
@@ -468,18 +463,18 @@ input[type="text"] {
 }
 
 #modal-title {
-	font-family: var(--font-family-display);
-	color: var(--color-neon-accent);
-	font-size: 1.5rem;
 	margin-top: 0;
 	margin-bottom: 1rem;
+	font-family: var(--font-family-display);
+	font-size: 1.5rem;
 	text-align: center;
+	color: var(--color-neon-accent);
 }
 
 /* ゲームオーバー/クリアメッセージ */
 #game-message {
 	font-family: var(--font-family-display);
-	color: var(--color-neon-light);
 	font-size: 1.5rem;
 	text-align: center;
+	color: var(--color-neon-light);
 }

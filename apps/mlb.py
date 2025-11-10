@@ -23,7 +23,7 @@ def get_item_list():
 
 def get_mlb_game_data(
     team_id: int = const.TEAM_ID_LAD, all_flg: bool = const.FLG_OFF
-) -> list[str]:
+) -> str:
     """
     MLB ゲームデータ取得
     """

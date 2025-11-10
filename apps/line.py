@@ -23,9 +23,6 @@ SCRIPT_NAME = func.get_app_name(__file__)
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
 
-# 曜日
-WEEKLY_DIV_FRI = "Fri"
-
 
 def main(
     data_div: int = const.NUM_ONE,
@@ -85,58 +82,62 @@ def sub(div: str, data_list: list[str] = []):
     """
     メッセージ送信
     """
+    msg_json_list = []
     msg_list = []
     msg_data = const.SYM_BLANK
 
-    date_today = func.convert_date_to_str(
-        func.get_now(), const.DATE_FORMAT_YYYYMMDD_SLASH
-    )
+    date_today = func.get_now(const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_SLASH)
 
     if div == const.STR_NISA:
         # フレックスメッセージ取得
         alt_text = f"[{date_today}] {div}"
-        msg_data = get_flex_msg(alt_text)
-        msg_list = msg_data
+        msg_json_list = get_flex_msg(alt_text)
 
     else:
         if div == const.APP_MLB:
             msg_data = mlb.get_mlb_game_data(all_flg=const.FLG_ON)
+            msg_list.append(msg_data)
+
+        elif div == const.STR_AI_NEWS:
+            news_list = news.get_news_list(news.DIV_AI_NEWS, url_flg=const.FLG_ON)
+            news_msg_list = [
+                f"{news_data[0]} {news_data[1]}" for news_data in news_list
+            ]
+            msg_data = const.SYM_SPACE.join(news_msg_list)
+            msg_list.append(msg_data)
+
         else:
             msg_data = NEW_LINE.join(data_list)
+            msg_list.append(msg_data)
 
         if msg_data:
             msg_data_list = get_msg_data_list(
-                div, const.MSG_TYPE_TXT, [msg_data], date_today
+                div, const.MSG_TYPE_TXT, msg_list, date_today
             )
-            msg_list = func_line.get_line_messages([msg_data_list])
+            msg_json_list = func_line.get_line_messages([msg_data_list])
 
-    if msg_list:
-        func_line.send_msg_for_admin(msg_list)
+    if msg_json_list:
+        func_line.send_msg_for_admin(msg_json_list)
 
 
 def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
     """
     メッセージリスト取得
     """
+    msg_list = []
     if auto_flg:
         msg_data, date_today, img_url = today.get_msg_data_today()
         msg_data_list = get_msg_data_list(
             const.APP_TODAY, const.MSG_TYPE_IMG, img_url, date_today
         )
-
-        if WEEKLY_DIV_FRI in date_today:
-            ai_news_msg = news.get_news_msg_list(news.DIV_AI_NEWS_LIST)
-            msg_data = get_msg_data_list(
-                const.STR_AI_NEWS, const.MSG_TYPE_TXT, ai_news_msg, date_today
-            )
-            msg_data_list.append(msg_data)
+        msg_list.append(msg_data_list)
 
     else:
         msg_div = const.STR_NOTIFY
         msg_data = func.get_input_data(const.STR_MESSAGE, msg_div)
         msg_data_list = get_msg_data_list(msg_div, const.MSG_TYPE_TXT, msg_data)
+        msg_list.append(msg_data_list)
 
-    msg_list = [msg_data_list]
     return msg_list
 
 
@@ -251,16 +252,11 @@ def get_title(
     """
     title_div = func.convert_upper_lower(div)
 
-    if div == const.APP_NEWS:
-        title_div = news.DIV_NEWS.format(const.SYM_BLANK)
-    elif div == const.STR_AI_NEWS:
-        title_div = news.DIV_AI_NEWS
-
     if msg_type == const.MSG_TYPE_TXT:
         total_length = len(const.DIV_MARK)
-        title_txt = get_title_mark(title_div, total_length)
+        title_txt = get_title_mark(title_div, const.MARK_PATTERN_1, total_length)
         if date_today:
-            date_text = get_title_mark(date_today, total_length)
+            date_text = get_title_mark(date_today, const.MARK_PATTERN_1, total_length)
             title_txt = date_text + NEW_LINE + title_txt
 
         title_list = [const.DIV_MARK, title_txt, const.DIV_MARK]
@@ -270,7 +266,7 @@ def get_title(
         if div == const.APP_TODAY and date_today:
             title_div = date_today
 
-        title_img = const.DIV_MARK_IMG.format(title_div)
+        title_img = get_title_mark(title_div, const.MARK_PATTERN_2)
         title = title_img
 
     else:
@@ -280,47 +276,43 @@ def get_title(
 
 
 def get_title_mark(
-    target_str: str, total_length: int, div_mark_pattern: str = const.MARK_PATTERN_1
+    target_str: str, div_mark_pattern: str, total_length: int = const.NUM_ZERO
 ) -> str:
     """
     タイトルマーク取得
 
     指定された文字列を任意の長さの中央に配置し、任意のパターンで左右を埋める
     """
-    # 1. 挿入部分の長さ (target_str + 左右の必須スペース)
-    insert_len = len(target_str) + 2
+    left_mark = right_mark = div_mark_pattern
+    if total_length != const.NUM_ZERO:
+        # 1. 挿入部分の長さ (target_str + 左右の必須スペース)
+        insert_len = len(target_str) + 2
 
-    # 2. 左右のマーク部分の合計長を計算
-    mark_total_len = total_length - insert_len
+        # 2. 左右のマーク部分の合計長を計算
+        mark_total_len = total_length - insert_len
 
-    # 3. 左右のマークの長さを計算（左右で長さが違う場合は、右側を長くする）
-    left_mark_len = mark_total_len // 2
-    right_mark_len = mark_total_len - left_mark_len
+        # 3. 左右のマークの長さを計算（左右で長さが違う場合は、右側を長くする）
+        left_mark_len = mark_total_len // 2
+        right_mark_len = mark_total_len - left_mark_len
 
-    # 4. 左右のスペース調整 (左右のマークの長さが異なる場合、右側のスペースを1つ増やす)
-    #    mark_total_lenが奇数ならextra_spaceに" "が、偶数なら""が入る
-    extra_space = (
-        const.SYM_SPACE if left_mark_len != right_mark_len else const.SYM_BLANK
-    )
+        # 4. マーク文字列の作成ロジック
+        #    パターンを繰り返し、必要な長さの分だけ切り取る
+        def create_mark(length, pattern):
+            if length <= 0:
+                return const.SYM_BLANK
 
-    # 5. マーク文字列の作成ロジック
-    #    パターンを繰り返し、必要な長さの分だけ切り取る
-    def create_mark(length, pattern):
-        if length <= 0:
-            return const.SYM_BLANK
+            # パターンを繰り返し繋げ、必要な長さで切り取る
+            repeat_count = (length + len(pattern) - 1) // len(pattern)
+            full_mark = pattern * repeat_count
+            return full_mark[:length]
 
-        # パターンを繰り返し繋げ、必要な長さで切り取る
-        repeat_count = (length + len(pattern) - 1) // len(pattern)
-        full_mark = pattern * repeat_count
-        return full_mark[:length]
-
-    left_mark = create_mark(left_mark_len, div_mark_pattern)
-    right_mark = create_mark(right_mark_len, div_mark_pattern)
+        # 5. 左右のマーク取得
+        left_mark = create_mark(left_mark_len, div_mark_pattern)
+        right_mark = create_mark(right_mark_len, div_mark_pattern)
 
     # 6. 全体を結合して、完成
     # (左マーク)(スペース1)(target_str)(スペース1)(追加スペース)(右マーク)
-    result = f"{left_mark} {target_str} {extra_space}{right_mark}"
-
+    result = f"{left_mark} {target_str} {right_mark}"
     return result
 
 
@@ -340,9 +332,10 @@ def sub_test():
 if __name__ == const.MAIN_FUNCTION:
     # get_template_actions()
     # get_flex_data_list()
-    main()
+    # main()
     # main(proc_flg=const.FLG_OFF)
     # main(data_div=const.NUM_TWO)
     # main(data_div=const.NUM_THREE)
     # main(auto_flg=const.FLG_OFF)
     # sub_test()
+    sub(div=const.STR_AI_NEWS)

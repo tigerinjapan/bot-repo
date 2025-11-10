@@ -26,15 +26,15 @@ col_list = [
 # ランク情報（デフォルト値）
 DEFAULT_RANK = {
     const.STR_EASY: {
-        mongo_const.FI_USER_NAME: "beginner",
+        mongo_const.FI_USER_NAME: const.STR_BEGINNER,
         mongo_const.FI_RANK_TIME: const.RANK_TIME_NUMBER,
     },
     const.STR_MEDIUM: {
-        mongo_const.FI_USER_NAME: "player",
+        mongo_const.FI_USER_NAME: const.STR_MEDIUM,
         mongo_const.FI_RANK_TIME: const.RANK_TIME_NUMBER,
     },
     const.STR_HARD: {
-        mongo_const.FI_USER_NAME: "master",
+        mongo_const.FI_USER_NAME: const.STR_MASTER,
         mongo_const.FI_RANK_TIME: const.RANK_TIME_NUMBER,
     },
 }

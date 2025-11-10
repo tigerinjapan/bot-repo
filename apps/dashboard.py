@@ -90,12 +90,16 @@ def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
         if log_data_text:
             log_data_list = log_data_text.split(const.SYM_NEW_LINE)
 
+            target_date = get_target_date(const.STR_YEAR)[0]
+            log_backup_list = log_dao.get_log_data_list(log_div, target_date)
+
             if not backup_flg:
-                target_date = get_target_date(const.STR_YEAR)[0]
-                log_backup_list = log_dao.get_log_data_list(log_div, target_date)
                 log_data_list.extend(log_backup_list)
 
             for log_data in log_data_list:
+                if log_data in log_backup_list:
+                    continue
+
                 data = log_data.split(const.SYM_SPACE)
                 if log_div == const.APP_DASHBOARD:
                     data = data[: len(COL_LIST_DASHBOARD)]

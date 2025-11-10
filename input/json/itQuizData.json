@@ -188,9 +188,9 @@
             },
             {
                   "word": "BLOCKCHAIN",
-                  "description_ko": "거래 기록을 분산된 곳에 안전하게 저장하는 기술🔗",
-                  "description_ja": "取引の記録を分散された場所に安全に保存する技術🔗",
-                  "description_en": "A technology that securely stores transaction records🔗"
+                  "description_ko": "🔗거래 기록을 분산된 곳에 안전하게 저장하는 기술",
+                  "description_ja": "🔗取引の記録を分散された場所に安全に保存する技術",
+                  "description_en": "🔗A technology that securely stores transaction records"
             },
             {
                   "word": "BLOG",
@@ -200,21 +200,21 @@
             },
             {
                   "word": "BLUETOOTH",
-                  "description_ko": "가까운 거리에서 기기끼리 데이터를 무선으로 연결하는 기술📱",
-                  "description_ja": "近い距離で機器同士を線なしでつなぐ技術📱",
-                  "description_en": "A technology for wirelessly connecting devices over a short distance📱"
+                  "description_ko": "📱가까운 거리에서 기기끼리 데이터를 무선으로 연결하는 기술",
+                  "description_ja": "📱近い距離で機器同士を線なしでつなぐ技術",
+                  "description_en": "📱A technology for wirelessly connecting devices over a short distance"
             },
             {
                   "word": "BOOT",
-                  "description_ko": "컴퓨터를 켜서 시작하는 과정🔋",
-                  "description_ja": "パソコンを起動すること🔋",
-                  "description_en": "The process of starting up a computer🔋"
+                  "description_ko": "🔋컴퓨터를 켜서 시작하는 과정",
+                  "description_ja": "🔋パソコンを起動すること",
+                  "description_en": "🔋The process of starting up a computer"
             },
             {
                   "word": "BOT",
-                  "description_ko": "인터넷에서 자동으로 어떤 일을 하는 프로그램🤖",
-                  "description_ja": "インターネットで人間の代わりに自動で何かをするプログラム🤖",
-                  "description_en": "A program that automatically performs tasks on the internet🤖"
+                  "description_ko": "🤖인터넷에서 자동으로 어떤 일을 하는 프로그램",
+                  "description_ja": "🤖インターネットで人間の代わりに自動で何かをするプログラム",
+                  "description_en": "🤖A program that automatically performs tasks on the internet"
             },
             {
                   "word": "BROWSER",
@@ -224,9 +224,9 @@
             },
             {
                   "word": "BUFFER",
-                  "description_ko": "데이터를 잠시 저장해 두었다가 천천히 처리하는 임시 저장 공간🗄️",
-                  "description_ja": "データを一時的に保存しておき、ゆっくり処理する仮の保存場所🗄️",
-                  "description_en": "A temporary storage space that holds data🗄️"
+                  "description_ko": "🗄️데이터를 잠시 저장해 두었다가 천천히 처리하는 임시 저장 공간",
+                  "description_ja": "🗄️データを一時的に保存しておき、ゆっくり処理する仮の保存場所",
+                  "description_en": "🗄️A temporary storage space that holds data"
             },
             {
                   "word": "BUG",
@@ -248,501 +248,501 @@
             },
             {
                   "word": "CABLE",
-                  "description_ko": "데이터나 전기를 전달하기 위해 여러 가닥의 선을 묶은 것⚡",
-                  "description_ja": "データや電気を伝えるために、何本もの線をまとめたもの⚡",
-                  "description_en": "A bundle of wires used to transmit data or electrical power⚡"
+                  "description_ko": "⚡데이터나 전기를 전달하기 위해 여러 가닥의 선을 묶은 것",
+                  "description_ja": "⚡データや電気を伝えるために、何本もの線をまとめたもの",
+                  "description_en": "⚡A bundle of wires used to transmit data or electrical power"
             },
             {
                   "word": "CACHE",
-                  "description_ko": "자주 쓰는 정보를 빠르게 다시 꺼내기 위해 임시로 저장하는 공간🗄️",
-                  "description_ja": "よく使う情報を速く取り出すために一時的に保存する場所🗄️",
-                  "description_en": "A temporary storage for frequently used information🗄️"
+                  "description_ko": "🗄️자주 쓰는 정보를 빠르게 다시 꺼내기 위해 임시로 저장하는 공간",
+                  "description_ja": "🗄️よく使う情報を速く取り出すために一時的に保存する場所",
+                  "description_en": "🗄️A temporary storage for frequently used information"
             },
             {
                   "word": "CAPTCHA",
-                  "description_ko": "로그인할 때 찌그러진 글자를 보여주며 사람이 맞는지 확인하는 시스템🤖",
-                  "description_ja": "ログイン時に歪んだ文字を見せて、人間かどうかを確認するシステム🤖",
-                  "description_en": "A system to verify that the user is human during login🤖"
+                  "description_ko": "🤖로그인할 때 찌그러진 글자를 보여주며 사람이 맞는지 확인하는 시스템",
+                  "description_ja": "🤖ログイン時に歪んだ文字を見せて、人間かどうかを確認するシステム",
+                  "description_en": "🤖A system to verify that the user is human during login"
             },
             {
                   "word": "CASH",
-                  "description_ko": "온라인 결제나 게임에서 쓰는 가상 화폐🪙",
-                  "description_ja": "ネット決済やゲームで使う仮想通貨🪙",
-                  "description_en": "Virtual money used in online payments or games🪙"
+                  "description_ko": "🪙온라인 결제나 게임에서 쓰는 가상 화폐",
+                  "description_ja": "🪙ネット決済やゲームで使う仮想通貨",
+                  "description_en": "🪙Virtual money used in online payments or games"
             },
             {
                   "word": "CELL",
-                  "description_ko": "표 형태 데이터에서 한 칸을 이루는 가장 작은 단위📊",
-                  "description_ja": "表の形式のデータで、一マスを構成する一番小さな単位📊",
-                  "description_en": "The smallest unit forming a single box in tabular data📊"
+                  "description_ko": "📊표 형태 데이터에서 한 칸을 이루는 가장 작은 단위",
+                  "description_ja": "📊表の形式のデータで、一マスを構成する一番小さな単位",
+                  "description_en": "📊The smallest unit forming a single box in tabular data"
             },
             {
                   "word": "CHART",
-                  "description_ko": "데이터를 그림으로 보여주는 표📊",
-                  "description_ja": "データをグラフで見せる表📊",
-                  "description_en": "A chart that shows data as a picture📊"
+                  "description_ko": "📊데이터를 그림으로 보여주는 표",
+                  "description_ja": "📊データをグラフで見せる表",
+                  "description_en": "📊A chart that shows data as a picture"
             },
             {
                   "word": "CHATBOT",
-                  "description_ko": "AI가 사람의 말을 알아듣고, 대화하듯이 응답하는 프로그램💬",
-                  "description_ja": "AIが人の言葉を理解し、会話するように返事をするプログラム💬",
-                  "description_en": "A program where AI understands human language and responds"
+                  "description_ko": "💬AI가 사람의 말을 알아듣고, 대화하듯이 응답하는 프로그램",
+                  "description_ja": "💬AIが人の言葉を理解し、会話するように返事をするプログラム",
+                  "description_en": "💬A program where AI understands human language and responds"
             },
             {
                   "word": "CHIP",
-                  "description_ko": "컴퓨터의 기능을 수행하는, 아주 작은 실리콘 조각💻",
-                  "description_ja": "コンピューターの働きをする、とても小さなシリコンの破片💻",
-                  "description_en": "A very small piece of silicon that performs computer functions💻"
+                  "description_ko": "💻컴퓨터의 기능을 수행하는, 아주 작은 실리콘 조각",
+                  "description_ja": "💻コンピューターの働きをする、とても小さなシリコンの破片",
+                  "description_en": "💻A very small piece of silicon that performs computer functions"
             },
             {
                   "word": "CHROME",
-                  "description_ko": "구글에서 만든 인기 웹 브라우저🌐",
-                  "description_ja": "Googleが開発した人気のウェブブラウザ🌐",
-                  "description_en": "A popular web browser developed by Google🌐"
+                  "description_ko": "🌐구글에서 만든 인기 웹 브라우저",
+                  "description_ja": "🌐Googleが開発した人気のウェブブラウザ",
+                  "description_en": "🌐A popular web browser developed by Google"
             },
             {
                   "word": "CLICK",
-                  "description_ko": "마우스를 눌러 컴퓨터에 명령을 내리는 행위🖱️",
-                  "description_ja": "マウスを押してコンピューターに命令を出す行為🖱️",
-                  "description_en": "The act of pressing a mouse button to command computer🖱️"
+                  "description_ko": "🖱️마우스를 눌러 컴퓨터에 명령을 내리는 행위",
+                  "description_ja": "🖱️マウスを押してコンピューターに命令を出す行為",
+                  "description_en": "🖱️The act of pressing a mouse button to command computer"
             },
             {
                   "word": "CLIP",
-                  "description_ko": "짧은 동영상이나 오디오 파일🎬",
-                  "description_ja": "短い動画や音声ファイル🎬",
-                  "description_en": "A short video or audio file🎬"
+                  "description_ko": "🎬짧은 동영상이나 오디오 파일",
+                  "description_ja": "🎬短い動画や音声ファイル",
+                  "description_en": "🎬A short video or audio file"
             },
             {
                   "word": "CLONE",
-                  "description_ko": "원본과 똑같은 복사본을 만드는 일💾",
-                  "description_ja": "元と同じ全く同じコピーを作る作業💾",
-                  "description_en": "The act of creating an exact copy of an original💾"
+                  "description_ko": "💾원본과 똑같은 복사본을 만드는 일",
+                  "description_ja": "💾元と同じ全く同じコピーを作る作業",
+                  "description_en": "💾The act of creating an exact copy of an original"
             },
             {
                   "word": "CLOUD",
-                  "description_ko": "인터넷을 통해 컴퓨터의 서버(저장 공간)이나 프로그램을 제공하는 서비스☁️",
-                  "description_ja": "インターネット経由で、コンピューターの場所やプログラムを借りるサービス☁️",
-                  "description_en": "A service that rents out computer storage space over the internet☁️"
+                  "description_ko": "☁️인터넷을 통해 저장 공간이나 프로그램을 제공하는 서비스",
+                  "description_ja": "☁️インターネット経由で、場所やプログラムを借りるサービス",
+                  "description_en": "☁️A service that rents out storage space over the internet"
             },
             {
                   "word": "CODE",
-                  "description_ko": "컴퓨터에게 '무엇을 하라'고 지시하는 명령어의 묶음💻",
-                  "description_ja": "コンピューターに「何をしろ」と命令する指示のまとまり💻",
-                  "description_en": "A set of instructions that tell a computer 'what to do'💻"
+                  "description_ko": "💻컴퓨터에게 '무엇을 하라'고 지시하는 명령어의 묶음",
+                  "description_ja": "💻コンピューターに「何をしろ」と命令する指示のまとまり",
+                  "description_en": "💻A set of instructions that tell a computer 'what to do'"
             },
             {
                   "word": "CODING",
-                  "description_ko": "컴퓨터에게 시킬 일을 프로그램 언어로 쓰는 작업💻",
-                  "description_ja": "コンピューターにさせる仕事をプログラムの言葉で書く作業💻",
-                  "description_en": "The process of writing a programming language💻"
+                  "description_ko": "💻프로그램 언어로 쓰는 작업",
+                  "description_ja": "💻プログラムの言葉で書く作業",
+                  "description_en": "💻The process of writing a programming language"
             },
             {
                   "word": "COMPILER",
-                  "description_ko": "사람이 쓴 프로그램 언어를 컴퓨터가 이해하는 언어로 한 번에 바꾸는 프로그램🤖",
-                  "description_ja": "人が書いたプログラムの言葉を、コンピューターがわかる言葉に一気に変えるプログラム🤖",
-                  "description_en": "A program that converts programming language into computer language🤖"
+                  "description_ko": "🤖컴퓨터가 이해하는 언어로 바꾸는 프로그램",
+                  "description_ja": "🤖コンピューターがわかる言葉に変えるプログラム",
+                  "description_en": "🤖A program that converts programming language into computer language"
             },
             {
                   "word": "COMPRESS",
-                  "description_ko": "파일의 크기를 작게 줄여서 저장하거나 전송하기 쉽게 만드는 것📦",
-                  "description_ja": "ファイルのサイズを小さく減らして、保存や送信をしやすくすること📦",
-                  "description_en": "The act of reducing the size of a file📦"
+                  "description_ko": "📦파일의 크기를 작게 줄여서 저장하거나 전송하기 쉽게 만드는 것",
+                  "description_ja": "📦ファイルのサイズを小さく減らして、保存や送信をしやすくすること",
+                  "description_en": "📦The act of reducing the size of a file"
             },
             {
                   "word": "CONFIG",
-                  "description_ko": "소프트웨어나 하드웨어의 작동 방식을 정해주는 설정⚙️",
-                  "description_ja": "ソフトやハードの動き方を決める設定⚙️",
-                  "description_en": "Settings that define how software or hardware operates⚙️"
+                  "description_ko": "⚙️소프트웨어나 하드웨어의 작동 방식을 정해주는 설정",
+                  "description_ja": "⚙️ソフトやハードの動き方を決める設定",
+                  "description_en": "⚙️Settings that define how software or hardware operates"
             },
             {
                   "word": "CONSOLE",
-                  "description_ko": "프로그램의 명령을 직접 입력하거나 결과를 확인할 수 있는 화면🖥️",
-                  "description_ja": "プログラムの命令を直接入力したり、結果を確認したりできる画面🖥️",
-                  "description_en": "A screen where can enter program commands or view results🖥️"
+                  "description_ko": "🖥️프로그램의 명령을 직접 입력하거나 결과를 확인할 수 있는 화면",
+                  "description_ja": "🖥️プログラムの命令を直接入力したり、結果を確認したりできる画面",
+                  "description_en": "🖥️A screen where can enter program commands or view results"
             },
             {
                   "word": "CONTAINER",
-                  "description_ko": "프로그램과 필요한 모든 것을 한 번에 묶어 어디서든 똑같이 실행되게 하는 기술📦",
-                  "description_ja": "プログラムと必要な全てをまとめて、どこでも同じように動かせるようにする技術📦",
-                  "description_en": "A technology that bundles a program and it needs to run anywhere📦"
+                  "description_ko": "📦프로그램과 필요한 모든 것을 한 번에 묶어 어디서든 똑같이 실행되게 하는 기술",
+                  "description_ja": "📦プログラムと必要な全てをまとめて、どこでも同じように動かせるようにする技術",
+                  "description_en": "📦A technology that bundles a program and it needs to run anywhere"
             },
             {
                   "word": "COOKIE",
-                  "description_ko": "웹사이트가 사용자 정보를 기억하기 위해 컴퓨터에 저장하는 작은 파일🍪",
-                  "description_ja": "ウェブサイトが利用者の情報を覚えるためにコンピューターに保存する小さなファイル🍪",
-                  "description_en": "A small file that a website stores to remember user information🍪"
+                  "description_ko": "🍪웹사이트가 사용자 정보를 기억하기 위해 컴퓨터에 저장하는 작은 파일",
+                  "description_ja": "🍪ウェブサイトが利用者の情報を覚えるためにコンピューターに保存する小さなファイル",
+                  "description_en": "🍪A small file that a website stores to remember user information"
             },
             {
                   "word": "CPU",
-                  "description_ko": "컴퓨터의 두뇌 역할로, 모든 명령을 처리하고 실행하는 장치🧠",
-                  "description_ja": "コンピューターの頭脳の役割を果たし、全ての命令を処理・実行する装置🧠",
-                  "description_en": "The brain of a computer, which processes all instructions🧠"
+                  "description_ko": "🧠컴퓨터의 두뇌 역할로, 모든 명령을 처리하고 실행하는 장치",
+                  "description_ja": "🧠コンピューターの頭脳の役割を果たし、全ての命令を処理・実行する装置",
+                  "description_en": "🧠The brain of a computer, which processes all instructions"
             },
             {
                   "word": "CRACKING",
-                  "description_ko": "보안 시스템을 뚫고 무단으로 들어가는 불법적인 행위🔓",
-                  "description_ja": "セキュリティシステムを破って無断で侵入する違法な行為🔓",
-                  "description_en": "The illegal act of breaking into a security system🔓"
+                  "description_ko": "🔓보안 시스템을 뚫고 무단으로 들어가는 불법적인 행위",
+                  "description_ja": "🔓セキュリティシステムを破って無断で侵入する違法な行為",
+                  "description_en": "🔓The illegal act of breaking into a security system"
             },
             {
                   "word": "CROP",
-                  "description_ko": "사진이나 이미지를 원하는 부분만 잘라내는 것✂️",
-                  "description_ja": "写真や画像の一部だけを切り取ること✂️",
-                  "description_en": "Cutting out only the desired part of a photo or image✂️"
+                  "description_ko": "✂️사진이나 이미지를 원하는 부분만 잘라내는 것",
+                  "description_ja": "✂️写真や画像の一部だけを切り取ること",
+                  "description_en": "✂️Cutting out only the desired part of a photo or image"
             },
             {
                   "word": "CSS",
-                  "description_ko": "웹페이지의 색깔, 글자 모양 등 예쁜 디자인을 꾸미는 역할🎨",
-                  "description_ja": "ウェブページの色、文字の形など、きれいなデザインを飾る役割🎨",
-                  "description_en": "The role of styling the design such as colors and fonts🎨"
+                  "description_ko": "🎨웹페이지의 색깔, 글자 모양 등 예쁜 디자인을 꾸미는 역할",
+                  "description_ja": "🎨ウェブページの色、文字の形など、きれいなデザインを飾る役割",
+                  "description_en": "🎨The role of styling the design such as colors and fonts"
             },
             {
                   "word": "CURSOR",
-                  "description_ko": "컴퓨터 화면에서 지금 입력할 위치를 알려주는 깜빡이는 표시🖱️",
-                  "description_ja": "コンピューターの画面で、今入力する場所を示す点滅する印🖱️",
-                  "description_en": "A blinking indicator on the computer screen🖱️"
+                  "description_ko": "🖱️컴퓨터 화면에서 지금 입력할 위치를 알려주는 깜빡이는 표시",
+                  "description_ja": "🖱️コンピューターの画面で、今入力する場所を示す点滅する印",
+                  "description_en": "🖱️A blinking indicator on the computer screen"
             },
             {
                   "word": "CUT",
-                  "description_ko": "선택한 내용을 잘라내는 기능✂️",
-                  "description_ja": "選択した内容を切り取る機能✂️",
-                  "description_en": "A function to cut selected content✂️"
+                  "description_ko": "✂️선택한 내용을 잘라내는 기능",
+                  "description_ja": "✂️選択した内容を切り取る機能",
+                  "description_en": "✂️A function to cut selected content"
             },
             {
                   "word": "CYBER",
-                  "description_ko": "컴퓨터와 인터넷 공간에서 일어나는 모든 일에 관한 것🌐",
-                  "description_ja": "コンピューターとインターネットの空間で起こる全ての事に関すること🌐",
-                  "description_en": "Relating to everything that happens in the internet space🌐"
+                  "description_ko": "🌐컴퓨터와 인터넷 공간에서 일어나는 모든 일에 관한 것",
+                  "description_ja": "🌐コンピューターとインターネットの空間で起こる全ての事に関すること",
+                  "description_en": "🌐Relating to everything that happens in the internet space"
             },
             {
                   "word": "DASHBOARD",
-                  "description_ko": "컴퓨터나 웹사이트에서 중요한 정보를 한눈에 볼 수 있도록 모아둔 화면📊",
-                  "description_ja": "コンピューターやウェブサイトで大事な情報が一目でわかるように集めた画面📊",
-                  "description_en": "A screen that gathers information for quick viewing on website📊"
+                  "description_ko": "📊컴퓨터나 웹사이트에서 중요한 정보를 한눈에 볼 수 있도록 모아둔 화면",
+                  "description_ja": "📊コンピューターやウェブサイトで大事な情報が一目でわかるように集めた画面",
+                  "description_en": "📊A screen that gathers information for quick viewing on website"
             },
             {
                   "word": "DATA",
-                  "description_ko": "처리, 저장, 전송할 수 있는 형태로 표현된 사실이나 정보📚",
-                  "description_ja": "処理、保存、送信できる形で表現された事実や情報📚",
-                  "description_en": "Information suitable for processing, storage, and transmission📚"
+                  "description_ko": "📚처리, 저장, 전송할 수 있는 형태로 표현된 사실이나 정보",
+                  "description_ja": "📚処理、保存、送信できる形で表現された事実や情報",
+                  "description_en": "📚Information suitable for processing, storage, and transmission"
             },
             {
                   "word": "DATABASE",
-                  "description_ko": "체계적으로 수집해 저장해 둔 데이터의 집합🗄️",
-                  "description_ja": "体系的に収集・保存されたデータの集合体🗄️",
-                  "description_en": "A systematically collected and stored set of data🗄️"
+                  "description_ko": "🗄️체계적으로 수집해 저장해 둔 데이터의 집합",
+                  "description_ja": "🗄️体系的に収集・保存されたデータの集合体",
+                  "description_en": "🗄️A systematically collected and stored set of data"
             },
             {
                   "word": "DB",
-                  "description_ko": "체계적으로 모으고 잘 정리해서 저장해 둔 정보의 묶음🗄️",
-                  "description_ja": "きちんと集めて整理し、保存しておいた情報のまとまり🗄️",
-                  "description_en": "A systematically stored set of organized information🗄️"
+                  "description_ko": "🗄️체계적으로 모으고 잘 정리해서 저장해 둔 정보의 묶음",
+                  "description_ja": "🗄️きちんと集めて整理し、保存しておいた情報のまとまり",
+                  "description_en": "🗄️A systematically stored set of organized information"
             },
             {
                   "word": "DEBUG",
-                  "description_ko": "프로그램의 오류를 찾고 고치는 과정🐞",
-                  "description_ja": "プログラムのエラーを見つけて直す作業🐞",
-                  "description_en": "The process of finding and fixing program errors🐞"
+                  "description_ko": "🐞프로그램의 오류를 찾고 고치는 과정",
+                  "description_ja": "🐞プログラムのエラーを見つけて直す作業",
+                  "description_en": "🐞The process of finding and fixing program errors"
             },
             {
                   "word": "DELAY",
-                  "description_ko": "데이터를 처리하기 위한 예상 외의 대기시간⏳",
-                  "description_ja": "データを処理するための予期せぬ待ち時間⏳",
-                  "description_en": "An unexpected wait time for processing data⏳"
+                  "description_ko": "⏳데이터를 처리하기 위한 예상 외의 대기시간",
+                  "description_ja": "⏳データを処理するための予期せぬ待ち時間",
+                  "description_en": "⏳An unexpected wait time for processing data"
             },
             {
                   "word": "DESIGN",
-                  "description_ko": "앱이나 웹의 모양과 꾸밈을 만드는 것🎨",
-                  "description_ja": "アプリやウェブの見た目を作ること🎨",
-                  "description_en": "Creating the look of websites🎨"
+                  "description_ko": "🎨앱이나 웹의 모양과 꾸밈을 만드는 것",
+                  "description_ja": "🎨アプリやウェブの見た目を作ること",
+                  "description_en": "🎨Creating the look of websites"
             },
             {
                   "word": "DEVICE",
-                  "description_ko": "컴퓨터와 연결되어 정보를 처리하거나 주고받는 모든 기계📱",
-                  "description_ja": "コンピューターにつながり、情報を処理する全ての機械📱",
-                  "description_en": "A small machine for a specific task📱"
+                  "description_ko": "📱컴퓨터와 연결되어 정보를 처리하거나 주고받는 모든 기계",
+                  "description_ja": "📱コンピューターにつながり、情報を処理する全ての機械",
+                  "description_en": "📱A small machine for a specific task"
             },
             {
                   "word": "DISK",
-                  "description_ko": "컴퓨터 데이터 저장 장치💽",
-                  "description_ja": "コンピューターの記憶装置💽",
-                  "description_en": "Computer data storage device💽"
+                  "description_ko": "💽컴퓨터 데이터 저장 장치",
+                  "description_ja": "💽コンピューターの記憶装置",
+                  "description_en": "💽Computer data storage device"
             },
             {
                   "word": "DOC",
-                  "description_ko": "문서 파일의 확장자나 약칭📄",
-                  "description_ja": "文書ファイルの拡張子や略称📄",
-                  "description_en": "Abbreviation or extension for document files📄"
+                  "description_ko": "📄문서 파일의 확장자나 약칭",
+                  "description_ja": "📄文書ファイルの拡張子や略称",
+                  "description_en": "📄Abbreviation or extension for document files"
             },
             {
                   "word": "DOMAIN",
-                  "description_ko": "인터넷 상에서 특정 웹사이트를 식별하는 고유한 이름🏷️",
-                  "description_ja": "インターネット上で特定のウェブサイトを識別する固有の名前🏷️",
-                  "description_en": "A unique name used to easily find a specific website🏷️"
+                  "description_ko": "🏷️인터넷 상에서 특정 웹사이트를 식별하는 고유한 이름",
+                  "description_ja": "🏷️インターネット上で特定のウェブサイトを識別する固有の名前",
+                  "description_en": "🏷️A unique name used to easily find a specific website"
             },
             {
                   "word": "DOWNLOAD",
-                  "description_ko": "인터넷에 있는 파일을 내 컴퓨터로 가져오는 일⬇️",
-                  "description_ja": "インターネットにあるファイルを自分のコンピューターに取り込むこと⬇️",
-                  "description_en": "The act of bringing a file from the internet⬇️"
+                  "description_ko": "⬇️인터넷에 있는 파일을 내 컴퓨터로 가져오는 일",
+                  "description_ja": "⬇️インターネットにあるファイルを自分のコンピューターに取り込むこと",
+                  "description_en": "⬇️The act of bringing a file from the internet"
             },
             {
                   "word": "DRAG",
-                  "description_ko": "마우스로 끌어서 이동하는 동작🖱️",
-                  "description_ja": "マウスで引っ張って動かす操作🖱️",
-                  "description_en": "The action of dragging with a mouse🖱️"
+                  "description_ko": "🖱️마우스로 끌어서 이동하는 동작",
+                  "description_ja": "🖱️マウスで引っ張って動かす操作",
+                  "description_en": "🖱️The action of dragging with a mouse"
             },
             {
                   "word": "DRIVE",
-                  "description_ko": "컴퓨터가 데이터를 읽거나 쓰는 저장 장치💿",
-                  "description_ja": "コンピューターがデータを読み書きするための保存装置💿",
-                  "description_en": "A storage device that a computer uses to read or write data💿"
+                  "description_ko": "💿컴퓨터가 데이터를 읽거나 쓰는 저장 장치",
+                  "description_ja": "💿コンピューターがデータを読み書きするための保存装置",
+                  "description_en": "💿A storage device that a computer uses to read or write data"
             },
             {
                   "word": "DRIVER",
-                  "description_ko": "기기를 컴퓨터에 연결해주는 소프트웨어💽",
-                  "description_ja": "機器をパソコンにつなぐソフトウェア💽",
-                  "description_en": "Software that connects devices to a computer💽"
+                  "description_ko": "💽기기를 컴퓨터에 연결해주는 소프트웨어",
+                  "description_ja": "💽機器をパソコンにつなぐソフトウェア",
+                  "description_en": "💽Software that connects devices to a computer"
             },
             {
                   "word": "DROP",
-                  "description_ko": "파일을 끌어다 놓는 동작⬇️",
-                  "description_ja": "ファイルをドラッグ＆ドロップする動作⬇️",
-                  "description_en": "The action of dragging and dropping files⬇️"
+                  "description_ko": "⬇️파일을 끌어다 놓는 동작",
+                  "description_ja": "⬇️ファイルをドラッグ＆ドロップする動作",
+                  "description_en": "⬇️The action of dragging and dropping files"
             },
             {
                   "word": "EBOOK",
-                  "description_ko": "종이가 아닌 컴퓨터나 태블릿으로 읽는 디지털 책📖",
-                  "description_ja": "紙ではなく、コンピューターやタブレットで読むデジタルの本📖",
-                  "description_en": "A digital book read on a computer or tablet instead of paper📖"
+                  "description_ko": "📖종이가 아닌 컴퓨터나 태블릿으로 읽는 디지털 책",
+                  "description_ja": "📖紙ではなく、コンピューターやタブレットで読むデジタルの本",
+                  "description_en": "📖A digital book read on a computer or tablet instead of paper"
             },
             {
                   "word": "EDGE",
-                  "description_ko": "마이크로소프트의 웹 브라우저🌐",
-                  "description_ja": "マイクロソフトのウェブブラウザ🌐",
-                  "description_en": "Microsoft's web browser🌐"
+                  "description_ko": "🌐마이크로소프트의 웹 브라우저",
+                  "description_ja": "🌐マイクロソフトのウェブブラウザ",
+                  "description_en": "🌐Microsoft's web browser"
             },
             {
                   "word": "EDITOR",
-                  "description_ko": "문서나 사진을 수정하는 프로그램🖌️",
-                  "description_ja": "文書や写真を編集するソフト🖌️",
-                  "description_en": "A program for editing documents or photos🖌️"
+                  "description_ko": "🖌️문서나 사진을 수정하는 프로그램",
+                  "description_ja": "🖌️文書や写真を編集するソフト",
+                  "description_en": "🖌️A program for editing documents or photos"
             },
             {
                   "word": "EGG",
-                  "description_ko": "개발자가 숨겨놓은 재미있는 기능이나 그림🥚",
-                  "description_ja": "開発者が隠しておいた面白い機能や絵🥚",
-                  "description_en": "A fun hidden feature or image left by a developer🥚"
+                  "description_ko": "🥚개발자가 숨겨놓은 재미있는 기능이나 그림",
+                  "description_ja": "🥚開発者が隠しておいた面白い機能や絵",
+                  "description_en": "🥚A fun hidden feature or image left by a developer"
             },
             {
                   "word": "EMAIL",
-                  "description_ko": "인터넷을 통해 컴퓨터끼리 주고받는 편지📧",
-                  "description_ja": "インターネットを通じてコンピューター同士でやり取りする手紙📧",
-                  "description_en": "A letter exchanged between computers over the internet📧"
+                  "description_ko": "📧인터넷을 통해 주고받는 편지",
+                  "description_ja": "📧インターネットを通じてやり取りする手紙",
+                  "description_en": "📧A letter exchanged over the internet"
             },
             {
                   "word": "EMBED",
-                  "description_ko": "다른 웹사이트의 영상이나 지도 등을 내 웹페이지에 넣는 것🧩",
-                  "description_ja": "他のウェブサイトの動画や地図などを自分のウェブページに入れること🧩",
-                  "description_en": "The act of inserting a video or map from another website🧩"
+                  "description_ko": "🧩다른 웹사이트의 영상이나 지도 등을 내 웹페이지에 넣는 것",
+                  "description_ja": "🧩他のウェブサイトの動画や地図などを自分のウェブページに入れること",
+                  "description_en": "🧩The act of inserting a video or map from another website"
             },
             {
                   "word": "ENCRYPTION",
-                  "description_ko": "데이터를 읽을 수 없는 형태로 변환하여 보안을 강화하는 과정🔐",
-                  "description_ja": "データを安全のために読み取れないようにすること🔐",
-                  "description_en": "Making data unreadable for security🔐"
+                  "description_ko": "🔐데이터를 읽을 수 없는 형태로 변환하여 보안을 강화하는 과정",
+                  "description_ja": "🔐データを安全のために読み取れないようにすること",
+                  "description_en": "🔐Making data unreadable for security"
             },
             {
                   "word": "EXE",
-                  "description_ko": "컴퓨터에서 바로 실행할 수 있는 프로그램 파일의 형식⚙️",
-                  "description_ja": "コンピューターで直接実行できるプログラムファイルの形式⚙️",
-                  "description_en": "A file format for a program that can be run directly on a computer⚙️"
+                  "description_ko": "⚙️컴퓨터에서 바로 실행할 수 있는 프로그램 파일의 형식",
+                  "description_ja": "⚙️コンピューターで直接実行できるプログラムファイルの形式",
+                  "description_en": "⚙️A file format for a program that can be run directly on a computer"
             },
             {
                   "word": "EXPORT",
-                  "description_ko": "파일이나 데이터를 다른 곳으로 내보내는 것📤",
-                  "description_ja": "ファイルやデータを外部に出すこと📤",
-                  "description_en": "Sending files or data to another location📤"
+                  "description_ko": "📤파일이나 데이터를 다른 곳으로 내보내는 것",
+                  "description_ja": "📤ファイルやデータを外部に出すこと",
+                  "description_en": "📤Sending files or data to another location"
             },
             {
                   "word": "EXTRACT",
-                  "description_ko": "압축된 파일에서 원래의 데이터만 꺼내는 작업✂️",
-                  "description_ja": "圧縮されたファイルから、元のデータだけを取り出す作業✂️",
-                  "description_en": "The process of taking out the original data from a compressed file✂️"
+                  "description_ko": "✂️압축된 파일에서 데이터를 꺼내는 작업",
+                  "description_ja": "✂️圧縮されたファイルから、データを取り出す作業",
+                  "description_en": "✂️The process of taking out the data from a compressed file"
             },
             {
                   "word": "FEED",
-                  "description_ko": "SNS에서 최신 소식을 보여주는 화면📱",
-                  "description_ja": "SNSで最新情報を見せる画面📱",
-                  "description_en": "A screen showing the latest news on SNS📱"
+                  "description_ko": "📱SNS에서 최신 소식을 보여주는 화면",
+                  "description_ja": "📱SNSで最新情報を見せる画面",
+                  "description_en": "📱A screen showing the latest news on SNS"
             },
             {
                   "word": "FILE",
-                  "description_ko": "컴퓨터에 저장되는, 정보를 담는 기본 단위📄",
-                  "description_ja": "コンピューターに保存される、情報を入れる基本単位📄",
-                  "description_en": "The basic unit for holding information stored on a computer📄"
+                  "description_ko": "📄컴퓨터에 저장되는 정보를 담는 단위",
+                  "description_ja": "📄コンピューターに保存される情報を入れる基本単位",
+                  "description_en": "📄The unit for holding information stored on a computer"
             },
             {
                   "word": "FILTER",
-                  "description_ko": "원하는 정보만 걸러내고 불필요한 것을 막는 기능✂️",
-                  "description_ja": "欲しい情報だけを選び出し、不要なものを遮る機能✂️",
-                  "description_en": "A function that selects desired information✂️"
+                  "description_ko": "✂️원하는 정보만 걸러내고 불필요한 것을 막는 기능",
+                  "description_ja": "✂️欲しい情報だけを選び出し、不要なものを遮る機能",
+                  "description_en": "✂️A function that selects desired information"
             },
             {
                   "word": "FIREWALL",
-                  "description_ko": "외부 네트워크의 침입으로부터 내부 네트워크를 보호하는 보안 시스템🧱",
-                  "description_ja": "外部ネットワークの侵入から内部ネットワークを保護するセキュリティシステム🧱",
-                  "description_en": "A security system that protects a network from external🧱"
+                  "description_ko": "🧱외부로부터 내부 네트워크를 보호하는 시스템",
+                  "description_ja": "🧱外部から内部ネットワークを保護するシステム",
+                  "description_en": "🧱A system that protects a inner network from external"
             },
             {
                   "word": "FIRM",
-                  "description_ko": "펌웨어의 줄임말, 기기 내장 소프트웨어💾",
-                  "description_ja": "ファームウェアの略、機器内蔵ソフト💾",
-                  "description_en": "Short for firmware, built-in software in devices💾"
+                  "description_ko": "💾펌웨어의 줄임말, 기기 내장 소프트웨어",
+                  "description_ja": "💾ファームウェアの略、機器内蔵ソフト",
+                  "description_en": "💾Short for firmware, built-in software in devices"
             },
             {
                   "word": "FLOAT",
-                  "description_ko": "프로그램에서 소수점이 있는 숫자를 다루는 방식🔢",
-                  "description_ja": "プログラムで小数点のついた数字を扱うやり方🔢",
-                  "description_en": "A way to handle numbers with decimal points in a program🔢"
+                  "description_ko": "🔢프로그램에서 소수점이 있는 숫자를 다루는 방식",
+                  "description_ja": "🔢プログラムで小数点のついた数字を扱うやり方",
+                  "description_en": "🔢A way to handle numbers with decimal points in a program"
             },
             {
                   "word": "FOLDER",
-                  "description_ko": "컴퓨터에서 파일을 정리하여 보관하는 가상의 장소📂",
-                  "description_ja": "コンピューターでファイルを整理して保管する仮想の場所📂",
-                  "description_en": "A virtual location on a computer used to organize and store files📂"
+                  "description_ko": "📂컴퓨터에서 파일을 정리하여 보관하는 장소",
+                  "description_ja": "📂コンピューターでファイルを整理して保管する場所",
+                  "description_en": "📂A location on a computer used to organize and store files"
             },
             {
                   "word": "FRAME",
-                  "description_ko": "영상이나 애니메이션을 만들 때 한 순간의 정지된 그림🎬",
-                  "description_ja": "動画やアニメーションを作るときの一瞬の静止した絵🎬",
-                  "description_en": "A single still image in a video or animation🎬"
+                  "description_ko": "🎬영상이나 애니메이션을 만들 때 한 순간의 정지된 그림",
+                  "description_ja": "🎬動画やアニメーションを作るときの一瞬の静止した絵",
+                  "description_en": "🎬A single still image in a video or animation"
             },
             {
                   "word": "GATEWAY",
-                  "description_ko": "서로 다른 네트워크를 연결하여 데이터가 통과할 수 있게 하는 장치🌐",
-                  "description_ja": "異なるネットワークをつなげて、データが通れるようにする装置🌐",
-                  "description_en": "A device that connects different networks to allow data to pass through🌐"
+                  "description_ko": "🌐서로 다른 네트워크를 연결하여 데이터가 통과할 수 있게 하는 장치",
+                  "description_ja": "🌐異なるネットワークをつなげて、データが通れるようにする装置",
+                  "description_en": "🌐A device that connects different networks to pass data"
             },
             {
                   "word": "GEMINI",
-                  "description_ko": "구글에서 만든 AI모델로, 텍스트 뿐 아니라 이미지 생성도 가능하다",
-                  "description_ja": "Googleが開発したAIモデルテキストだけでなく、画像生成も可能",
+                  "description_ko": "텍스트 뿐 아니라 이미지 생성도 가능한, 구글에서 만든 AI모델",
+                  "description_ja": "テキストだけでなく画像生成も可能なGoogleが開発したAIモデル",
                   "description_en": "AI model created by Google that can generate both text and images"
             },
             {
                   "word": "GIF",
-                  "description_ko": "움직이는 짧은 그림이나 애니메이션 파일을 만드는 형식🖼️",
-                  "description_ja": "動く短い絵やアニメーションファイルを作る形式🖼️",
-                  "description_en": "A format for creating short moving pictures or animation files🖼️"
+                  "description_ko": "🖼️움직이는 짧은 그림이나 애니메이션 파일을 만드는 형식",
+                  "description_ja": "🖼️動く短い絵やアニメーションファイルを作る形式",
+                  "description_en": "🖼️A format for creating short moving pictures or animation files"
             },
             {
                   "word": "GMAIL",
-                  "description_ko": "구글에서 제공하는 이메일 서비스📧",
-                  "description_ja": "Googleが提供するメールサービス📧",
-                  "description_en": "An email service provided by Google📧"
+                  "description_ko": "📧구글에서 제공하는 이메일 서비스",
+                  "description_ja": "📧Googleが提供するメールサービス",
+                  "description_en": "📧An email service provided by Google"
             },
             {
                   "word": "GPS",
-                  "description_ko": "위성 신호를 받아 내 위치를 정확히 알려주는 시스템🛰️",
-                  "description_ja": "衛星の信号を受け取り、自分の位置を正確に教えてくれるシステム🛰️",
-                  "description_en": "A system that receives satellite signals to pinpoint your location accurately🛰️"
+                  "description_ko": "🛰️위성 신호를 받아 위치를 알려주는 시스템",
+                  "description_ja": "🛰️衛星の信号を受け取り、位置を教えてくれるシステム",
+                  "description_en": "🛰️A system that receives satellite signals for location"
             },
             {
                   "word": "GPU",
-                  "description_ko": "주로 게임이나 영상처럼 그림을 빠르게 처리하는 위해 설계된 전용 프로세서🎮",
-                  "description_ja": "主にゲームや動画など、絵を速く処理するために設計された専用プロセッサ🎮",
-                  "description_en": "A specialized processor designed to process graphics like games or videos🎮"
+                  "description_ko": "🎮게임과 같은 그래픽을 빠르게 처리하기 위한 전용 프로세서",
+                  "description_ja": "🎮主にゲームや動画など、グラフィックを速く処理するための専用プロセッサ",
+                  "description_en": "🎮A specialized processor that process graphics like games"
             },
             {
                   "word": "GRID",
-                  "description_ko": "줄과 칸이 있는 표 형태의 구조🗒️",
-                  "description_ja": "線とマスでできた表の構造🗒️",
-                  "description_en": "A table structure with rows and columns🗒️"
+                  "description_ko": "🗒️줄과 칸이 있는 표 형태의 구조",
+                  "description_ja": "🗒️線とマスでできた表の構造",
+                  "description_en": "🗒️A table structure with rows and columns"
             },
             {
                   "word": "GUEST",
-                  "description_ko": "회원 가입 없이 임시로 이용하는 사용자🙋‍♂️",
-                  "description_ja": "会員登録せず一時的に使う利用者🙋‍♂️",
-                  "description_en": "A user who uses a service temporarily without registering🙋‍♂️"
+                  "description_ko": "🙋임시로 이용하는 사용자",
+                  "description_ja": "🙋一時的に使う利用者",
+                  "description_en": "🙋A user who uses a service temporarily"
             },
             {
                   "word": "GUI",
-                  "description_ko": "그림과 아이콘을 눌러서 컴퓨터를 쉽게 사용할 수 있게 하는 방식🖼️",
-                  "description_ja": "絵やアイコンを押してコンピューターを簡単に使えるようにする方法🖼️",
-                  "description_en": "A method that makes computers easy to use by clicking on pictures and icons🖼️"
+                  "description_ko": "🖼️그림과 아이콘을 눌러서 컴퓨터를 사용하는 방식",
+                  "description_ja": "🖼️絵やアイコンを押してコンピューターを使える方法",
+                  "description_en": "🖼️A method that uses computers by clicking on pictures and icons"
             },
             {
                   "word": "HACKING",
-                  "description_ko": "컴퓨터 시스템의 보안 취약점을 이용해 침입하거나 조작하는 행위🔒",
-                  "description_ja": "コンピュータシステムのセキュリティ脆弱性を利用して侵入または操作する行為🔒",
-                  "description_en": "The act of intruding or manipulating a computer system using weak security🔒"
+                  "description_ko": "🔒시스템의 보안 취약점을 이용해 침입하는 행위",
+                  "description_ja": "🔒システムのセキュリティ脆弱性を利用して侵入する行為",
+                  "description_en": "🔒The act of intruding a system using weak security"
             },
             {
                   "word": "HARDWARE",
-                  "description_ko": "컴퓨터를 이루는 눈으로 보고 만질 수 있는 모든 기계 부품🔧",
-                  "description_ja": "コンピューターを構成する、目で見たり触ったりできる全ての機械部品🔧",
-                  "description_en": "All the physical machine parts that make up a computer🔧"
+                  "description_ko": "🔧컴퓨터를 이루는 모든 기계 부품",
+                  "description_ja": "🔧コンピューターを構成する全ての機械部品",
+                  "description_en": "🔧All the physical machine parts that make up a computer"
             },
             {
                   "word": "HASH",
-                  "description_ko": "긴 데이터를 짧고 고유한 값으로 바꿔서 정보를 보호하는 기술🔒",
-                  "description_ja": "長いデータを短く固有の値に変えて、情報を守る技術🔒",
-                  "description_en": "A technique to protect by converting long data into a short, unique value🔒"
+                  "description_ko": "🔒데이터를 짧고 고유한 값으로 바꿔서 정보를 보호하는 기술",
+                  "description_ja": "🔒データを短く固有の値に変えて、情報を守る技術",
+                  "description_en": "🔒A technique to protect by converting data into a short, unique value"
             },
             {
                   "word": "HDMI",
-                  "description_ko": "영상과 소리를 한 번에 전송하는 케이블🔌",
-                  "description_ja": "映像と音声を一度に送るケーブル🔌",
-                  "description_en": "A cable that transmits video and audio together🔌"
+                  "description_ko": "🔌영상과 소리를 한 번에 전송하는 케이블",
+                  "description_ja": "🔌映像と音声を一度に送るケーブル",
+                  "description_en": "🔌A cable that transmits video and audio together"
             },
             {
                   "word": "HD",
-                  "description_ko": "고화질을 뜻하는 약자📺",
-                  "description_ja": "高画質（ハイビジョン）の略📺",
-                  "description_en": "Abbreviation for High Definition📺"
+                  "description_ko": "📺고화질을 뜻하는 약자",
+                  "description_ja": "📺高画質の略",
+                  "description_en": "📺Abbreviation for High Definition"
             },
             {
                   "word": "HOST",
-                  "description_ko": "인터넷에 연결되어 서비스나 정보를 제공하는 주요 컴퓨터🌐",
-                  "description_ja": "インターネットにつながり、サービスや情報を提供する主要なコンピューター🌐",
-                  "description_en": "A main computer connected to the internet that provides services🌐"
+                  "description_ko": "🌐서비스를 제공하는 주요 컴퓨터",
+                  "description_ja": "🌐サービスを提供する主要なコンピューター",
+                  "description_en": "🌐A main computer that provides services"
             },
             {
                   "word": "HTML",
-                  "description_ko": "웹페이지의 모양과 뼈대를 만드는 데 사용하는 언어📄",
-                  "description_ja": "ウェブページの見た目や骨組みを作るために使う言葉📄",
-                  "description_en": "A language used to create the structure and framework of a web page📄"
+                  "description_ko": "📄웹페이지의 모양을 만드는 데 사용하는 언어",
+                  "description_ja": "📄ウェブページの見た目を作るために使う言葉",
+                  "description_en": "📄A language used to create the structure of a web page"
             },
             {
                   "word": "HTTPS",
-                  "description_ko": "정보를 암호화하여 안전하게 웹사이트에 접속하는 규칙🌐",
-                  "description_ja": "情報を暗号化して安全にウェブサイトに接続するルール🌐",
-                  "description_en": "A rule for securely accessing websites by encrypting information🌐"
+                  "description_ko": "🌐정보를 암호화하여 안전하게 웹사이트에 접속하는 규칙",
+                  "description_ja": "🌐情報を暗号化して安全にウェブサイトに接続するルール",
+                  "description_en": "🌐A rule for securely accessing websites by encrypting information"
             },
             {
                   "word": "HUB",
-                  "description_ko": "여러 대의 컴퓨터나 장치를 한데 묶어 네트워크를 만드는 장치🔗",
-                  "description_ja": "複数のコンピューターや機器を一つにまとめてネットワークを作る装置🔗",
-                  "description_en": "A device that connects multiple computers or devices to form a network🔗"
+                  "description_ko": "🔗여러 대의 컴퓨터나 장치를 한데 묶어 네트워크를 만드는 장치",
+                  "description_ja": "🔗複数のコンピューターや機器を一つにまとめてネットワークを作る装置",
+                  "description_en": "🔗A device that connects multiple computers or devices to form a network"
             },
             {
                   "word": "ICON",
-                  "description_ko": "컴퓨터 화면에서 프로그램이나 파일을 나타내는 작은 그림🖼️",
-                  "description_ja": "コンピューターの画面でプログラムやファイルを示す小さな絵🖼️",
-                  "description_en": "A small picture on a computer screen that represents a program or file🖼️"
+                  "description_ko": "🖼️컴퓨터 화면에서 프로그램이나 파일을 나타내는 작은 그림",
+                  "description_ja": "🖼️コンピューターの画面でプログラムやファイルを示す小さな絵",
+                  "description_en": "🖼️A small picture on a computer screen that represents a program or file"
             },
             {
                   "word": "IMPORT",
-                  "description_ko": "외부에서 파일이나 데이터를 불러오는 것📥",
-                  "description_ja": "外部からファイルやデータを取り込むこと📥",
-                  "description_en": "Bringing in files or data from outside📥"
+                  "description_ko": "📥외부에서 파일이나 데이터를 불러오는 것",
+                  "description_ja": "📥外部からファイルやデータを取り込むこと",
+                  "description_en": "📥Bringing in files or data from outside"
             },
             {
                   "word": "INDEX",
-                  "description_ko": "책이나 웹사이트의 목차, 목록🔖",
-                  "description_ja": "本やウェブサイトの目次やリスト🔖",
-                  "description_en": "A table of contents or list in a book or website🔖"
+                  "description_ko": "🔖책이나 웹사이트의 목차",
+                  "description_ja": "🔖本やウェブサイトの目次",
+                  "description_en": "🔖A table of contents in a book or website"
             },
             {
                   "word": "INPUT",
@@ -752,63 +752,63 @@
             },
             {
                   "word": "INSTA",
-                  "description_ko": "인스타그램의 줄임말, SNS 서비스📸",
-                  "description_ja": "インスタグラムの略、SNSサービス📸",
-                  "description_en": "Short for Instagram, a social network service📸"
+                  "description_ko": "📸SNS 서비스, 인스타그램의 줄임말",
+                  "description_ja": "📸SNSサービス、インスタグラムの略",
+                  "description_en": "📸Short for Instagram, a social network service📸"
             },
             {
                   "word": "INTERFACE",
-                  "description_ko": "두 시스템이나 사람 사이에서 서로 만나는 지점🔌",
-                  "description_ja": "二つのシステムや、人とシステムが接する場所🔌",
-                  "description_en": "A point of interaction between two systems🔌"
+                  "description_ko": "🔌두 시스템이나 사람 사이에서 서로 만나는 지점",
+                  "description_ja": "🔌二つのシステムや、人とシステムが接する場所",
+                  "description_en": "🔌A point of interaction between two systems"
             },
             {
                   "word": "IOS",
-                  "description_ko": "애플에서 만든 아이폰 등에 쓰이는 운영 시스템🍎",
-                  "description_ja": "Appleが作った、iPhoneなどに使われる操作システム🍎",
-                  "description_en": "An operating system created by Apple for devices like the iPhone🍎"
+                  "description_ko": "🍎애플에서 만든 아이폰 등에 쓰이는 운영 시스템",
+                  "description_ja": "🍎Appleが作った、iPhoneなどに使われる操作システム",
+                  "description_en": "🍎An operating system created by Apple device like the iPhone"
             },
             {
                   "word": "IOT",
-                  "description_ko": "집 안의 가전제품 등 모든 물건을 인터넷으로 연결하는 기술💡",
-                  "description_ja": "家の中の家電など、あらゆる物をインターネットにつなぐ技術💡",
-                  "description_en": "A technology that connects all objects, like home appliances, to the internet💡"
+                  "description_ko": "💡집 안의 가전제품 등을 인터넷으로 연결하는 기술",
+                  "description_ja": "💡家の中の家電などをインターネットにつなぐ技術",
+                  "description_en": "💡A technology that connects objects, like home appliances, to the internet"
             },
             {
-                  "word": "IP ADDRESS",
-                  "description_ko": "네트워크 상에서 장치들을 식별하고 통신하기 위해 부여되는 고유 주소🏠",
-                  "description_ja": "ネットワーク上でデバイスを識別し通信するために割り当てられる一意のアドレス🏠",
-                  "description_en": "A unique address assigned to devices for identification on a network🏠"
+                  "word": "IP",
+                  "description_ko": "🏠네트워크 상에서 장치들을 식별하기 위한 고유 주소",
+                  "description_ja": "🏠ネットワーク上でデバイスを識別するために割り当てられる一意のアドレス",
+                  "description_en": "🏠A unique address assigned to devices for identification on a network"
             },
             {
                   "word": "JAVA",
-                  "description_ko": "인터넷 환경에서 많이 쓰이는 프로그래밍 언어의 한 종류☕",
-                  "description_ja": "インターネット環境でよく使われるプログラミング言語の一種☕",
-                  "description_en": "A type of programming language widely used in internet environments☕"
+                  "description_ko": "☕가장 많이 쓰이는 프로그래밍 언어",
+                  "description_ja": "☕よく使われるプログラミング言語",
+                  "description_en": "☕A type of programming language widely"
             },
             {
                   "word": "JAVASCRIPT",
-                  "description_ko": "웹 페이지에 동적 기능을 추가하는 데 주로 사용되는 프로그래밍 언어🌐",
-                  "description_ja": "ウェブページに動的な機能を追加するために主に使用されるプログラミング言語🌐",
-                  "description_en": "A programming language used to add dynamic functionality to web pages🌐"
+                  "description_ko": "🌐웹 페이지에 동적 기능을 위해 사용되는 프로그래밍 언어",
+                  "description_ja": "🌐ウェブページに動的な機能のために主に使用されるプログラミング言語",
+                  "description_en": "🌐A programming language used for dynamic function to web pages"
             },
             {
                   "word": "KAKAO",
-                  "description_ko": "한국에서 인기 있는 메신저 앱💬",
-                  "description_ja": "韓国で人気のメッセンジャーアプリ💬",
-                  "description_en": "A popular messenger app in Korea💬"
+                  "description_ko": "💬한국에서 인기 있는 메신저 앱",
+                  "description_ja": "💬韓国で人気のメッセンジャーアプリ",
+                  "description_en": "💬A popular messenger app in Korea"
             },
             {
                   "word": "KEYWORD",
-                  "description_ko": "검색할 때 사용하는, 가장 핵심이 되는 단어🔑",
-                  "description_ja": "検索するときに使う、一番中心になる言葉🔑",
-                  "description_en": "The most essential word used when searching🔑"
+                  "description_ko": "🔑검색할 때 사용하는, 가장 핵심이 되는 단어",
+                  "description_ja": "🔑検索するときに使う、一番中心になる言葉",
+                  "description_en": "🔑The most essential word used when searching"
             },
             {
                   "word": "KINDLE",
-                  "description_ko": "아마존에서 만든 전자책 단말기📚",
-                  "description_ja": "Amazonが作った電子書籍リーダー📚",
-                  "description_en": "An e-book reader made by Amazon📚"
+                  "description_ko": "📚아마존에서 만든 전자책 단말기",
+                  "description_ja": "📚Amazonが作った電子書籍リーダー",
+                  "description_en": "📚An e-book reader made by Amazon"
             },
             {
                   "word": "LABEL",
@@ -1544,8 +1544,8 @@
             },
             {
                   "word": "TWEET",
-                  "description_ko": "짧은 글로 자신의 생각을 인터넷에 빠르게 공유하는 행위🐦💬",
-                  "description_ja": "短い文章で自分の考えをインターネットに素早く共有する行為🐦💬",
+                  "description_ko": "짧은 글로 자신의 생각을 인터넷에 빠르게 공유하는 행위💬",
+                  "description_ja": "短い文章で自分の考えをインターネットに素早く共有する行為💬",
                   "description_en": "The act of quickly sharing thoughts on the internet with a short message"
             },
             {
@@ -1556,57 +1556,57 @@
             },
             {
                   "word": "UNLOCK",
-                  "description_ko": "잠긴 기기나 앱을 여는 것🔓📱",
-                  "description_ja": "ロックされた機器やアプリを開くこと🔓📱",
+                  "description_ko": "잠긴 기기나 앱을 여는 것🔓",
+                  "description_ja": "ロックされた機器やアプリを開くこと🔓",
                   "description_en": "Unlocking a locked device or app"
             },
             {
                   "word": "UPDATE",
-                  "description_ko": "프로그램의 성능을 개선하거나 보안 문제를 해결하기 위해 새롭게 고치는 것🔄✅",
-                  "description_ja": "プログラムの性能を良くしたり、問題を直したりするために新しく改善すること🔄✅",
+                  "description_ko": "프로그램의 성능을 개선하거나 보안 문제를 해결하기 위해 새롭게 고치는 것🔄",
+                  "description_ja": "プログラムの性能を良くしたり、問題を直したりするために新しく改善すること🔄",
                   "description_en": "The act of newly modifying a program to improve its performance or fix security issues"
             },
             {
                   "word": "UPLOAD",
-                  "description_ko": "내 컴퓨터에 있는 파일을 인터넷의 다른 곳으로 보내는 일⬆️☁️",
-                  "description_ja": "自分のコンピューターにあるファイルをインターネットの別の場所に送ること⬆️☁️",
-                  "description_en": "The act of sending a file from your computer to another place on the internet"
+                  "description_ko": "내 컴퓨터에 있는 파일을 인터넷의 다른 곳으로 보내는 일⬆️",
+                  "description_ja": "自分のコンピューターにあるファイルをインターネットの別の場所に送ること⬆️",
+                  "description_en": "The act of sending a file from computer to another place on the internet"
             },
             {
                   "word": "URL",
-                  "description_ko": "인터넷상의 웹사이트 주소를 지정하는 표준 방법🗺️🌐",
-                  "description_ja": "インターネット上にあるウェブサイトの住所を示す一般的な方法🗺️🌐",
-                  "description_en": "A standard method for specifying the address of resources on the internet"
+                  "description_ko": "🌐인터넷상의 웹사이트 주소를 지정하는 표준 방법",
+                  "description_ja": "🌐インターネット上にあるウェブサイトの住所を示す一般的な方法",
+                  "description_en": "🌐A standard method for specifying the ip address"
             },
             {
                   "word": "USB",
-                  "description_ko": "컴퓨터와 다른 기기들을 연결해 데이터를 주고받는 표준 통로🔌🔄",
-                  "description_ja": "コンピューターと他の機器をつなぎ、データをやり取りする標準的な通り道🔌🔄",
-                  "description_en": "A standard channel for connecting computers and other devices to exchange data"
+                  "description_ko": "🔌컴퓨터와 다른 기기들을 연결해 데이터를 주고받는 표준 통로",
+                  "description_ja": "🔌コンピューターと他の機器をつなぎ、データをやり取りする標準的な通り道",
+                  "description_en": "🔌A standard channel for connecting computers and other devices to exchange data"
             },
             {
                   "word": "USER",
-                  "description_ko": "컴퓨터나 소프트웨어, 서비스를 이용하는 사람🧑‍💻👤",
-                  "description_ja": "コンピューターやソフト、サービスを利用する人🧑‍💻👤",
-                  "description_en": "A person who uses a computer, software, or service"
+                  "description_ko": "🧑서비스를 이용하는 사람",
+                  "description_ja": "🧑サービスを利用する人",
+                  "description_en": "🧑A person who uses a service"
             },
             {
                   "word": "VIEW",
-                  "description_ko": "사진이나 영상을 보는 기능👁️📷",
-                  "description_ja": "写真や動画を見る機能👁️📷",
-                  "description_en": "A function to view photos or videos"
+                  "description_ko": "👁️사진이나 영상을 보는 기능",
+                  "description_ja": "👁️写真や動画を見る機能",
+                  "description_en": "👁️A function to view photos or videos"
             },
             {
                   "word": "VIRTUAL",
-                  "description_ko": "실제로는 존재하지 않지만 컴퓨터 소프트웨어로 생성된 환경 또는 개체🕶️🏞️",
-                  "description_ja": "実際には存在しないが、コンピュータソフトウェアで生成された環境またはオブジェクト🕶️🏞️",
-                  "description_en": "An environment or object that does not physically exist but is created by computer software"
+                  "description_ko": "🕶️실제로는 존재하지 않지만 가상으로 생성된 환경",
+                  "description_ja": "🕶️実際には存在しないが、仮想で生成された環境",
+                  "description_en": "🕶️An environment that does not physically exist but is created by computer software"
             },
             {
                   "word": "VIRUS",
-                  "description_ko": "자신을 복제하여 다른 프로그램에 몰래 들어가는 악성 코드🦠🚨",
-                  "description_ja": "自分をコピーして他のプログラムにこっそり入り込む悪いコード🦠🚨",
-                  "description_en": "Malicious code that copies itself and inserts itself into other programs"
+                  "description_ko": "🦠자신을 복제하여 다른 프로그램에 몰래 들어가는 악성 코드",
+                  "description_ja": "🦠自分をコピーして他のプログラムにこっそり入り込む悪いコード",
+                  "description_en": "🦠Malicious code that copies itself and inserts into other programs"
             },
             {
                   "word": "VPN",

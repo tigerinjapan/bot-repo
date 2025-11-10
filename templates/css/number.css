@@ -15,99 +15,53 @@ button,
 
 /* --- 90年代アーケード風 --- */
 body {
+	margin: auto;
 	font-family: 'Arial Black', 'Impact', 'Meiryo', sans-serif;
+	letter-spacing: 0.08em;
 	background: linear-gradient(135deg, navy 0%, black 100%);
 	color: lime;
-	margin: auto;
-	letter-spacing: 0.08em;
 }
 
 .main {
-	background: black;
-	border-radius: 12px;
-	box-shadow: 0 0 12px cyan, 0 0 8px magenta inset;
-	padding: 2em;
 	min-width: 320px;
 	max-width: 640px;
 	margin: 1em auto;
+	padding: 2em;
+	background: black;
 	border: 2px solid magenta;
+	border-radius: 12px;
+	box-shadow: 0 0 12px cyan, 0 0 8px magenta inset;
 }
 
 h1 {
-	font-size: 2.2em;
-	margin-bottom: 0.5em;
 	color: yellow;
-	text-shadow: 2px 2px 0 magenta, 0 0 12px cyan;
+	margin-bottom: 0.5em;
+	font-size: 2.2em;
 	letter-spacing: 0.15em;
+	text-shadow: 2px 2px 0 magenta, 0 0 12px cyan;
 }
 
 img {
+	display: inline-block;
+	vertical-align: middle;
 	width: 2em;
 	height: auto;
-	vertical-align: middle;
-	display: inline-block;
 	filter: drop-shadow(0 0 4px cyan);
-}
-
-/* 数字・タイマー・レコード 共通 */
-#number-display,
-#level,
-#timer,
-#rank {
-	display: inline-block;
-	border-radius: 16px;
-	padding: 0.3em 1em;
-	font-size: 1.3em;
-	font-weight: bold;
-	margin-bottom: 0.5em;
-	box-shadow: 0 0 8px magenta, 0 0 4px cyan inset;
-	letter-spacing: 0.08em;
-	transition: background 0.3s, color 0.3s;
-	text-align: center;
-	border: 2px solid cyan;
-}
-
-#number-display {
-	color: cyan;
-	background: black;
-	text-shadow: 1px 1px 0;
-}
-
-#level {
-	color: magenta;
-	background: black;
-	text-shadow: 1px 1px 0 yellow;
-}
-
-#timer,
-#rank {
-	color: yellow;
-	background: navy;
-	box-shadow: 0 0 8px cyan;
-	margin-left: 0.5em;
-	border: 2px solid magenta;
-}
-
-#timer.red {
-	color: red;
-	background: black;
-	border: 2px solid red;
-	text-shadow: 1px 1px 0 yellow;
 }
 
 /* 入力・ボタン 共通 */
 input,
 button {
-	font-size: 1.2em;
-	padding: 0.5em;
-	border-radius: 8px;
-	border: 2px solid cyan;
 	margin: 0.5em 0;
-	box-sizing: border-box;
+	padding: 0.5em;
+	font-family: 'Arial Black', 'Impact', 'Meiryo', sans-serif;
+	font-size: 1.2em;
+	text-shadow: 1px 1px 0 magenta;
 	background: black;
 	color: lime;
-	font-family: 'Arial Black', 'Impact', 'Meiryo', sans-serif;
-	text-shadow: 1px 1px 0 magenta;
+	border: 2px solid cyan;
+	border-radius: 8px;
+	box-sizing: border-box;
 }
 
 input[type="text"] {
@@ -117,15 +71,15 @@ input[type="text"] {
 }
 
 button {
-	background: linear-gradient(90deg, magenta 0%, cyan 100%);
-	color: yellow;
-	border: 2px solid yellow;
-	cursor: pointer;
 	font-weight: bold;
 	letter-spacing: 0.1em;
 	text-shadow: 1px 1px 0 black;
+	background: linear-gradient(90deg, magenta 0%, cyan 100%);
+	color: yellow;
+	border: 2px solid yellow;
 	box-shadow: 0 0 8px cyan;
 	transition: background 0.2s, color 0.2s;
+	cursor: pointer;
 }
 
 button:hover {
@@ -135,207 +89,189 @@ button:hover {
 	box-shadow: 0 0 16px magenta;
 }
 
+/* フッター */
+footer {
+	padding: 1em 0;
+	font-size: 1em;
+	text-align: center;
+	letter-spacing: 0.08em;
+	background: black;
+	color: cyan;
+	border-top: 2px solid magenta;
+}
+
+/* 数字・タイマー・レコード 共通 */
+#number-display,
+#level,
+#timer,
+#rank {
+	display: inline-block;
+	margin-bottom: 0.5em;
+	padding: 0.3em 1em;
+	font-size: 1.3em;
+	font-weight: bold;
+	text-align: center;
+	letter-spacing: 0.08em;
+	border: 2px solid cyan;
+	border-radius: 16px;
+	box-shadow: 0 0 8px magenta, 0 0 4px cyan inset;
+	transition: background 0.3s, color 0.3s;
+}
+
+#number-display {
+	text-shadow: 1px 1px 0;
+	background: black;
+	color: cyan;
+}
+
+#level {
+	text-shadow: 1px 1px 0 yellow;
+	background: black;
+	color: magenta;
+}
+
+#timer,
+#rank {
+	margin-left: 0.5em;
+	background: navy;
+	color: yellow;
+	border: 2px solid magenta;
+	box-shadow: 0 0 8px cyan;
+}
+
+#timer.red {
+	text-shadow: 1px 1px 0 yellow;
+	background: black;
+	color: red;
+	border: 2px solid red;
+}
+
 /* ダイヤログ */
 #gameRuleDialog {
 	position: fixed;
-	z-index: 2000;
-	left: 50%;
 	top: 50%;
+	left: 50%;
+	z-index: 2000;
 	min-width: 280px;
+	padding: 32px 24px;
 	overflow: auto;
 	background-color: black;
-	backdrop-filter: blur(5px);
-	-webkit-backdrop-filter: blur(5px);
-	transform: translate(-50%, -50%);
 	border: 2px solid skyblue;
 	border-radius: 12px;
 	box-shadow: 0 4px 24px skyblue;
-	padding: 32px 24px;
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
+	transform: translate(-50%, -50%);
 }
 
 /* メッセージ共通 */
 #message,
 #number-answer {
-	margin-top: 1em;
 	min-height: 2em;
-	color: lime;
+	margin-top: 1em;
 	font-size: 1.1em;
 	text-shadow: 1px 1px 0 magenta;
-}
-
-/* フッター */
-footer {
-	text-align: center;
-	color: cyan;
-	background: black;
-	border-top: 2px solid magenta;
-	padding: 1em 0;
-	font-size: 1em;
-	letter-spacing: 0.08em;
+	color: lime;
 }
 
 /* 入力ボタン領域 */
 .expr-area {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 8px;
-	/* ボタン間の横間隔 */
-	row-gap: 12px;
-	/* ボタン行の上下間隔 */
 	align-items: center;
-	padding: 12px 8px;
-	/* 領域内余白（上下左右） */
-	margin: 12px 0;
+
 	/* 領域の上下余白（ページとの余白） */
+	margin-top: 10px;
+	margin-bottom: 80px;
+
+	/* ボタン間の横間隔 */
+	gap: 8px;
+
+	/* ボタン行の上下間隔 */
+	row-gap: 12px;
+
 	transition: opacity 0.15s ease;
 }
 
-/* 数字ボタン */
-.digit-btn {
-	background: #f2f8ff;
-	border: 1px solid #c7daff;
-	color: #042a5a;
-	padding: 10px 14px;
-	margin: 0;
-	/* gap で管理するため */
-	border-radius: 6px;
-	min-width: 44px;
-	height: 44px;
-	font-size: 1rem;
-	cursor: pointer;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
-}
-
-/* 演算子スロットボタン（空箱／演算子で同じクラス） */
+.digit-btn,
 .slot-btn {
-	background: #fff7e6;
-	border: 1px solid #f0d7a8;
-	color: #6a4a10;
+	min-width: 48px;
+	height: 48px;
 	padding: 8px 12px;
-	margin: 0;
+	font-size: 1.4rem;
 	border-radius: 6px;
-	min-width: 40px;
-	height: 40px;
-	font-size: 0.95rem;
 	cursor: pointer;
 }
 
-/* 空箱表示をもう少し控えめに（テキストが ▢ のとき） */
-.slot-btn:empty,
-.slot-btn[data-empty="true"] {
-	background: transparent;
-	border: 1px dashed #ccc;
-	color: #999;
+/* 数字ボタン：ページの主要ボタンと同じグラデーションに */
+.digit-btn {
+	text-shadow: 1px 1px 0 black;
+	background: linear-gradient(90deg, magenta 0%, cyan 100%);
+	color: yellow;
+	border: 2px solid yellow;
+	box-shadow: 0 4px 12px rgba(255, 0, 255, 0.12), 0 2px 6px rgba(0, 255, 255, 0.06);
 }
 
-/* 隠し input を div にしても id=expression を利用するので見た目整備 */
-/* #expression {
-	display: block;
-	min-height: 1.6em;
-	margin-top: 5px;
+/* 演算子スロットボタン */
+.slot-btn {
 	font-size: 0.95rem;
-	color: inherit;
-} */
+	background: linear-gradient(180deg, #070707 0%, #0b1220 100%);
+	color: lime;
+	border: 2px solid cyan;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
 
-/* ポップアップ（ルーレット風選択） */
+/* 空箱表示 */
+.slot-btn[data-empty="true"],
+.slot-btn:empty {
+	background: transparent;
+	color: #aaa;
+	border: 1px dashed rgba(255, 255, 255, 0.12);
+}
+
+/* --- 演算子ポップアップボタン --- */
 .small-popup {
+	display: flex;
+	flex-wrap: wrap;
 	position: absolute;
 	z-index: 1200;
-	background: #ffffff;
-	border: 1px solid #ddd;
-	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-	padding: 8px;
-	border-radius: 8px;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px;
-}
-
-/* ポップアップ内のボタン（演算子／delete 等） */
-.popup-btn {
-	background: #f6f8fa;
-	border: 1px solid #e1e6eb;
-	padding: 6px 10px;
-	border-radius: 6px;
-	cursor: pointer;
-	font-size: 0.95rem;
-	margin: 2px;
-}
-
-/* delete（削除）と Cancel を赤太字に（Cancel 削除済なら不要だが保険） */
-.popup-btn[data-choice="delete"],
-.popup-btn[data-choice="Cancel"] {
-	color: #c00;
-	font-weight: 700;
-	background: #fff0f0;
-	border-color: #f5c2c2;
-}
-
-/* back は太字で強調 */
-.popup-btn[data-choice="back"] {
-	font-weight: 700;
-	background: #fffef7;
-	border-color: #f0e5b8;
-}
-
-/* 演算子ボタンの表示位置微調整（アンカー直下に余白） */
-.small-popup {
-	margin-top: 6px;
-}
-
-/* ボタン入力領域の上下マージン（上下余白を明確に） */
-.expr-area {
 	margin-top: 10px;
-	margin-bottom: 60px;
-	/* 下部の演算子ポップアップとの距離確保を強める */
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px;
-	row-gap: 12px;
-	align-items: center;
-	padding: 12px 8px;
-	transition: opacity 0.15s ease;
-}
-
-/* ポップアップ（ルーレット風）の余白強化（下側の演算子を見やすく） */
-.small-popup {
 	padding: 12px;
 	gap: 10px;
-	margin-top: 10px;
-	/* アンカーとの距離を広めに */
+	background: rgba(12, 12, 12, 0.94);
+	border-radius: 8px;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.14);
 }
 
-/* ポップアップ内のボタンに余白・色分け */
+/* ポップアップ内のボタン（演算子） */
 .popup-btn {
-	padding: 8px 12px;
 	min-width: 44px;
+	height: 44px;
+	margin: 4px;
+	padding: 8px 12px;
+	font-size: 0.95rem;
+	font-weight: 700;
+	text-shadow: 1px 1px 0 black;
+	background: linear-gradient(90deg, magenta 0%, cyan 100%);
+	color: yellow;
+	border: 2px solid yellow;
 	border-radius: 6px;
-	font-weight: 600;
-	margin: 2px;
+	box-shadow: 0 4px 12px rgba(255, 0, 255, 0.08);
+	cursor: pointer;
 }
 
-/* 演算子は別色にする */
-.popup-btn:not([data-choice="delete"]):not([data-choice="back"]) {
-	background: #f4f9f5;
-	border: 1px solid #d7eadf;
-	color: #0b5a34;
-}
-
-/* delete は赤・太字 */
-.popup-btn[data-choice="delete"] {
+/* del は赤・太字で明示 */
+.popup-btn[data-choice="del"] {
 	background: #fff0f0;
-	border: 1px solid #f5c2c2;
-	color: #c00;
-	font-weight: 800;
+	color: red;
+	border: 2px solid #f5c2c2;
 }
 
-/* back は太字で目立たせる */
+/* back は強調表示 */
 .popup-btn[data-choice="back"] {
-	background: #fffef7;
-	border: 1px solid #efe6b8;
-	color: #6a4a10;
-	font-weight: 800;
+	background: linear-gradient(90deg, #fffef7 0%, #fff9eb 100%);
+	color: greenyellow;
+	border: 2px solid #efe6b8;
 }
 
 /* expression は内部保持用の div なので目に見えたくなければ非表示に */
@@ -343,54 +279,22 @@ footer {
 	display: none;
 }
 
-/* レスポンシブ：小さい画面ならボタンを縮める */
-@media (max-width: 640px) {
-	.expr-area {
-		gap: 6px;
-		row-gap: 8px;
-		padding: 8px;
-	}
-
-	.digit-btn,
-	.slot-btn {
-		min-width: 38px;
-		height: 38px;
-		padding: 8px 10px;
-		font-size: 0.92rem;
-	}
-
-	.small-popup {
-		gap: 6px;
-		padding: 6px;
-	}
-}
-
 /* モバイル対応 */
 @media (max-width: 480px) {
-
 	body {
 		font-size: 14px;
 	}
 
 	.main {
 		max-width: 95%;
-		padding: 1.5em;
 		margin: 1em auto;
+		padding: 1.5em;
 		border-radius: 12px;
 		box-shadow: 0 0 12px cyan, 0 0 8px magenta inset;
 	}
 
 	h1 {
 		font-size: 1.4em;
-	}
-
-	#number-display,
-	#level,
-	#timer,
-	#rank {
-		font-size: 1em;
-		padding: 0.5em 0.8em;
-		margin-bottom: 0.8em;
 	}
 
 	input,
@@ -403,244 +307,35 @@ footer {
 		padding: 1em 0.5em;
 	}
 
-}
+	#number-display,
+	#level,
+	#timer,
+	#rank {
+		margin-bottom: 0.8em;
+		padding: 0.5em 0.8em;
+		font-size: 1em;
+	}
 
-/* 最終上書き：ボタン外観をページ全体のテーマに合わせる（余白は維持） */
-.expr-area {
-	margin-top: 20px;
-	margin-bottom: 28px;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px;
-	row-gap: 12px;
-	align-items: center;
-	padding: 12px 8px;
-	transition: opacity 0.15s ease;
-}
+	.expr-area {
+		gap: 5px;
+	}
 
-/* デジットボタン：ページの主要ボタンと同じグラデーションに */
-.digit-btn {
-	background: linear-gradient(90deg, magenta 0%, cyan 100%);
-	color: yellow;
-	border: 2px solid yellow;
-	padding: 10px 14px;
-	margin: 0;
-	border-radius: 6px;
-	min-width: 44px;
-	height: 44px;
-	font-size: 1rem;
-	cursor: pointer;
-	box-shadow: 0 4px 12px rgba(255, 0, 255, 0.12), 0 2px 6px rgba(0, 255, 255, 0.06);
-	text-shadow: 1px 1px 0 black;
-}
-
-/* スロットボタン：区別されつつテーマに合う配色 */
-.slot-btn {
-	background: linear-gradient(180deg, #070707 0%, #0b1220 100%);
-	color: lime;
-	border: 2px solid cyan;
-	padding: 8px 12px;
-	margin: 0;
-	border-radius: 6px;
-	min-width: 40px;
-	height: 40px;
-	font-size: 0.95rem;
-	cursor: pointer;
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
-}
-
-/* 空箱見え方の調整（控えめ） */
-.slot-btn[data-empty="true"],
-.slot-btn:empty {
-	background: transparent;
-	border: 1px dashed rgba(255, 255, 255, 0.12);
-	color: #aaa;
-}
-
-/* ポップアップ本体は視認性維持（余白強め） */
-.small-popup {
-	position: absolute;
-	z-index: 1200;
-	background: rgba(0, 0, 0, 0.92);
-	border: 1px solid rgba(255, 255, 255, 0.06);
-	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-	padding: 10px;
-	border-radius: 8px;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px;
-	margin-top: 10px;
-}
-
-/* ポップアップ内ボタン：ページ標準の強いボタン見た目 */
-.popup-btn {
-	background: linear-gradient(90deg, magenta 0%, cyan 100%);
-	color: yellow;
-	border: 2px solid yellow;
-	padding: 8px 12px;
-	min-width: 44px;
-	border-radius: 6px;
-	cursor: pointer;
-	font-weight: 700;
-	text-shadow: 1px 1px 0 black;
-	box-shadow: 0 4px 12px rgba(255, 0, 255, 0.08);
-	margin: 2px;
-}
-
-/* 演算子系は少し別色でも良い（選びやすさ向上） */
-.popup-btn:not([data-choice="delete"]):not([data-choice="back"]) {
-	background: linear-gradient(90deg, #eafff1 0%, #dff7ec 100%);
-	color: #0b5a34;
-	border: 1px solid #cfeee0;
-	font-weight: 700;
-	box-shadow: none;
-}
-
-/* delete は赤・太字で明示 */
-.popup-btn[data-choice="delete"] {
-	background: #fff0f0;
-	border: 2px solid #f5c2c2;
-	color: #c00;
-	font-weight: 900;
-}
-
-/* back は強調表示 */
-.popup-btn[data-choice="back"] {
-	background: linear-gradient(90deg, #fffef7 0%, #fff9eb 100%);
-	border: 2px solid #efe6b8;
-	color: #6a4a10;
-	font-weight: 900;
-}
-
-/* expression は内部保持用の div のまま非表示（維持） */
-#expression {
-	display: none;
-}
-
-/* ---------- 最終調整：演算子ポップアップを既存テーマに合わせる ---------- */
-/* ポップアップ内の全ボタンをメインボタン風に統一（既存スタイルと同系統） */
-.popup-btn {
-	background: linear-gradient(90deg, magenta 0%, cyan 100%);
-	color: yellow;
-	border: 2px solid yellow;
-	padding: 8px 12px;
-	min-width: 44px;
-	border-radius: 6px;
-	cursor: pointer;
-	font-weight: 700;
-	text-shadow: 1px 1px 0 black;
-	box-shadow: 0 4px 12px rgba(255, 0, 255, 0.08);
-	margin: 4px;
-}
-
-/* 個別の演算子は読みやすさのため明度を下げた別色（演算子群） */
-.popup-btn[data-choice="+"],
-.popup-btn[data-choice="-"],
-.popup-btn[data-choice="*"],
-.popup-btn[data-choice="/"],
-.popup-btn[data-choice="="] {
-	background: linear-gradient(90deg, #eafff1 0%, #dff7ec 100%);
-	color: #084a2f;
-	border: 1px solid #cfeee0;
-	box-shadow: none;
-	font-weight: 700;
-}
-
-/* delete / back は強調スタイルを再定義（赤・太字 / 強調） */
-.popup-btn[data-choice="delete"] {
-	background: #fff0f0;
-	border: 2px solid #f5c2c2;
-	color: #c00;
-	font-weight: 900;
-	box-shadow: none;
-}
-
-.popup-btn[data-choice="back"] {
-	background: linear-gradient(90deg, #fffef7 0%, #fff9eb 100%);
-	border: 2px solid #efe6b8;
-	color: #6a4a10;
-	font-weight: 900;
-	box-shadow: none;
-}
-
-/* ポップアップ本体の余白（アンカーとの距離確保）を確実に */
-.small-popup {
-	margin-top: 10px;
-	padding: 10px;
-	gap: 8px;
-}
-
-/* --- 演算子ポップアップボタンを既存メインボタン風に合わせる（最小変更） --- */
-
-.small-popup {
-	margin-top: 10px;
-	/* アンカーとの余白確保 */
-	padding: 8px;
-	gap: 8px;
-	display: flex;
-	flex-wrap: wrap;
-	border-radius: 8px;
-	/* 背景は暗めでボタンを際立たせる */
-	background: rgba(12, 12, 12, 0.94);
-	border: 1px solid rgba(255, 255, 255, 0.06);
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-	z-index: 3000;
-}
-
-/* popup の各ボタンを既存の主要ボタン（digit-btn に近い見た目）に合わせる */
-.popup-btn {
-	padding: 8px 12px;
-	min-width: 44px;
-	border-radius: 6px;
-	font-weight: 700;
-	cursor: pointer;
-	margin: 4px;
-	/* メインボタン系と統一感を出す */
-	background: linear-gradient(90deg, #ff4fb0 0%, #21d4ff 100%);
-	color: #fff9a6;
-	border: 2px solid #fff58a;
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
-	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
-}
-
-/* 演算子本体は読みやすい別色に */
-.popup-btn[data-choice="+"],
-.popup-btn[data-choice="-"],
-.popup-btn[data-choice="*"],
-.popup-btn[data-choice="/"],
-.popup-btn[data-choice="="] {
-	background: linear-gradient(90deg, #f0fff5 0%, #e6fbf0 100%);
-	color: #084a2f;
-	border: 1px solid #cfeee0;
-	box-shadow: none;
-}
-
-/* delete / back は強調 */
-.popup-btn[data-choice="delete"] {
-	background: #fff0f0;
-	border: 2px solid #f5c2c2;
-	color: #c00;
-	font-weight: 900;
-	box-shadow: none;
-}
-
-.popup-btn[data-choice="back"] {
-	background: linear-gradient(90deg, #fffef7 0%, #fff9eb 100%);
-	border: 2px solid #efe6b8;
-	color: #6a4a10;
-	font-weight: 900;
-	box-shadow: none;
-}
-
-/* 小画面対応は既存ルールに合わせる（あれば上書き） */
-@media (max-width: 640px) {
-	.popup-btn {
-		min-width: 36px;
-		padding: 6px 8px;
+	.digit-btn,
+	.slot-btn {
+		min-width: 38px;
+		height: 38px;
+		padding: 8px 8px;
+		font-size: 0.9rem;
 	}
 
 	.small-popup {
-		padding: 6px;
-		gap: 6px;
+		padding: 8px;
+		gap: 3px;
+	}
+
+	.popup-btn {
+		min-width: 36px;
+		height: 36px;
+		padding: 6px 8px;
 	}
 }

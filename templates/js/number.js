@@ -137,7 +137,7 @@ function setLevel(level) {
   } else if (level === LEVEL_HARD) {
     levelMark = SYM_LEVEL.repeat(3);
   }
-  setElemText("level", `Level ${levelMark}`);
+  setElemText("level", `LEVEL ${levelMark}`);
   setElemText("levelVal", level);
 }
 
@@ -460,14 +460,14 @@ function renderInputButtons(numberStr) {
     const idx = Number(e.currentTarget.dataset.idx);
     const token = exprArea._tokens[idx];
     // options: back は表示しない（slot が空のとき）
-    const options = ["+", "-", "*", "/", "=", "delete"];
+    const options = ["+", "-", "*", "/", "=", "del"];
     if (token.val) options.push("back");
     const popup = createSmallPopup(options, e.currentTarget);
     popup.querySelectorAll("button").forEach(b => {
       b.addEventListener("click", () => {
         const choice = b.dataset.choice;
         popup.remove();
-        if (choice === "delete") {
+        if (choice === "del") {
           // スロット削除 -> 左右の数を結合（文字列連結）
           const leftIdx = idx - 1;
           const rightIdx = idx + 1;

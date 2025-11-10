@@ -72,9 +72,9 @@
 .dialog {
 	display: none;
 	position: fixed;
-	z-index: 1000;
 	left: 0;
 	top: 0;
+	z-index: 1000;
 	width: 100%;
 	height: 100%;
 	overflow: auto;
@@ -84,24 +84,24 @@
 }
 
 .dialog-content {
-	background-color: #fff;
-	margin: 20% auto;
-	padding: 20px;
-	border-radius: 12px;
+	position: relative;
 	width: 90%;
 	max-width: 350px;
-	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+	margin: 20% auto;
+	padding: 20px;
 	text-align: center;
-	position: relative;
+	background-color: #fff;
+	border-radius: 12px;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
 .close-btn {
-	color: #aaa;
 	position: absolute;
 	top: 10px;
 	right: 15px;
 	font-size: 28px;
 	font-weight: bold;
+	color: #aaa;
 	cursor: pointer;
 }
 
@@ -112,17 +112,17 @@
 
 .save-btn {
 	display: block;
-	width: 50%;
 	align-content: center;
-	background-color: var(--section-title-color);
-	color: whitesmoke;
-	border: none;
-	border-radius: 6px;
-	font-size: 1.1em;
-	padding: 12px 0;
+	width: 50%;
 	margin: 0 auto;
 	margin-top: 18px;
+	padding: 12px 0;
+	font-size: 1.1em;
+	background-color: var(--section-title-color);
+	color: whitesmoke;
 	cursor: pointer;
+	border: none;
+	border-radius: 6px;
 	transition: background 0.2s;
 }
 

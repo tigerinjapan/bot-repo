@@ -1,12 +1,12 @@
 /* グローバルリセットとフォント設定 */
 body {
-	font-family: 'Noto Sans JP', 'Noto Sans KR', 'Inter', sans-serif;
-	background-color: lightgray;
-	margin: 0;
-	padding: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin: 0;
+	padding: 0;
+	font-family: 'Noto Sans JP', 'Noto Sans KR', 'Inter', sans-serif;
+	background-color: lightgray;
 	color: darkslategray;
 	transition: background-color 0.3s;
 }
@@ -16,22 +16,22 @@ body {
 	width: 95%;
 	max-width: 800px;
 	max-height: 640px;
+	padding: 20px;
 	background-color: white;
 	border-radius: 20px;
-	box-shadow: 0 10px 30px rgba(255, 192, 203, 0.4);
-	padding: 20px;
 	box-sizing: border-box;
+	box-shadow: 0 10px 30px rgba(255, 192, 203, 0.4);
 	transition: all 0.3s ease-in-out;
 }
 
 /* タイトルスタイル */
 .title {
-	text-align: center;
-	font-size: 1.8rem;
-	font-weight: 700;
-	color: lightpink;
 	margin-bottom: 20px;
 	padding-bottom: 10px;
+	font-size: 1.8rem;
+	font-weight: 700;
+	text-align: center;
+	color: lightpink;
 	border-bottom: 3px solid white;
 }
 
@@ -40,19 +40,19 @@ body {
 .inputTxt,
 .btn,
 .quiz-char-blank {
+	margin: 5px;
 	padding: 10px 10px;
+	font-weight: 600;
 	border: none;
 	border-radius: 12px;
-	font-weight: 600;
-	transition: all 0.2s ease;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	margin: 5px;
+	transition: all 0.2s ease;
 }
 
 .btn,
 .quiz-char-blank {
-	cursor: pointer;
 	text-transform: uppercase;
+	cursor: pointer;
 }
 
 /* プライマリボタン (ゲーム開始、確認) */
@@ -80,30 +80,30 @@ body {
 }
 
 .text-label {
+	margin-right: 10px;
 	font-size: 0.9rem;
 	color: gray;
-	margin-right: 10px;
 }
 
 .text-value {
+	margin-right: 10px;
 	font-size: 1.1rem;
 	font-weight: 700;
 	color: gray;
-	margin-right: 10px;
 }
 
 .text-error {
-	color: orangered;
 	font-weight: 700;
+	color: orangered;
 }
 
 /* クイズ単語領域 */
 #quiz-word {
 	display: flex;
-	justify-content: center;
 	flex-wrap: wrap;
-	margin: 25px 0;
+	justify-content: center;
 	min-height: 40px;
+	margin: 25px 0;
 }
 
 .quiz-char-box {
@@ -115,10 +115,10 @@ body {
 	margin: 5px;
 	font-size: 1.5rem;
 	font-weight: 700;
+	background-color: white;
+	color: darkslategray;
 	border: 2px solid silver;
 	border-radius: 8px;
-	color: darkslategray;
-	background-color: white;
 }
 
 .quiz-char-space {
@@ -139,24 +139,24 @@ body {
 
 /* クイズ説明領域 */
 #quiz-description {
-	background-color: mintcream;
-	border: 1px solid white;
-	padding: 15px;
-	border-radius: 12px;
-	text-align: center;
 	margin-bottom: 20px;
+	padding: 15px;
 	font-size: 1rem;
+	text-align: center;
 	line-height: 1.5;
+	background-color: mintcream;
 	color: purple;
+	border: 1px solid white;
+	border-radius: 12px;
 }
 
 /* タイムバー */
 #timer-bar {
 	height: 10px;
+	margin-bottom: 15px;
 	background-color: white;
 	border-radius: 5px;
 	overflow: hidden;
-	margin-bottom: 15px;
 }
 
 #timer-progress {
@@ -168,12 +168,12 @@ body {
 
 /* モーダル（ダイアログ）の基本スタイル */
 dialog {
-	border: none;
+	max-width: 90%;
 	padding: 20px;
+	background-color: white;
+	border: none;
 	border-radius: 15px;
 	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-	max-width: 90%;
-	background-color: white;
 }
 
 dialog::backdrop {
@@ -181,9 +181,9 @@ dialog::backdrop {
 }
 
 #dialog-content {
-	text-align: center;
 	font-size: 1.2rem;
 	font-weight: 700;
+	text-align: center;
 	color: pink;
 }
 
@@ -203,32 +203,31 @@ h3 {
 }
 
 #choice-instruction {
-	text-align: center;
 	font-size: 0.9rem;
+	text-align: center;
 	color: lightslategray;
 }
 
 h2 {
+	padding-bottom: 5px;
 	font-size: 1.4rem;
+	text-align: center;
 	color: lightpink;
 	border-bottom: 2px dashed white;
-	padding-bottom: 5px;
-	text-align: center;
 }
 
 .flex-center,
 .flex-row {
-	text-align: center;
-	gap: 15px;
 	margin-bottom: 10px;
+	gap: 15px;
+	text-align: center;
 }
 
 .choice-buttons-container {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	/* 3列 */
-	gap: 10px;
 	margin-top: 15px;
+	gap: 10px;
 }
 
 .choice-btn {
@@ -250,16 +249,16 @@ h2 {
 .choice-btn:disabled {
 	background-color: whitesmoke;
 	color: lightgray;
-	cursor: not-allowed;
 	border-color: whitesmoke;
 	box-shadow: none;
+	cursor: not-allowed;
 }
 
 /* ランキング表示 */
 #ranking-list {
 	list-style: none;
-	padding: 0;
 	margin-top: 20px;
+	padding: 0;
 	border-top: 1px solid white;
 }
 
@@ -279,8 +278,8 @@ h2 {
 }
 
 .ranking-item:nth-child(1) .rank {
-	color: gold;
 	font-size: 1.2rem;
+	color: gold;
 }
 
 .ranking-item:nth-child(2) .rank {
@@ -298,21 +297,21 @@ h2 {
 	}
 
 	.container {
-		border-radius: 0;
 		padding: 8px 2vw;
+		border-radius: 0;
 		box-shadow: none;
 	}
 
 	.title {
-		font-size: 1.2rem;
 		padding-bottom: 6px;
+		font-size: 1.2rem;
 	}
 
 	.btn,
 	.quiz-char-blank {
+		margin: 3px;
 		padding: 8px 8px;
 		font-size: 0.9rem;
-		margin: 3px;
 		border-radius: 8px;
 	}
 
@@ -322,22 +321,22 @@ h2 {
 	}
 
 	#quiz-word {
-		margin: 12px 0;
 		min-height: 32px;
+		margin: 12px 0;
 	}
 
 	.quiz-char-box {
 		width: 28px;
 		height: 28px;
-		font-size: 1.1rem;
 		margin: 2px;
+		font-size: 1.1rem;
 		border-radius: 6px;
 	}
 
 	#quiz-description {
-		font-size: 0.9rem;
-		padding: 10px;
 		margin-bottom: 12px;
+		padding: 10px;
+		font-size: 0.9rem;
 	}
 
 	#timer-bar {
@@ -347,8 +346,8 @@ h2 {
 
 	.choice-buttons-container {
 		grid-template-columns: 1fr;
-		gap: 6px;
 		margin-top: 10px;
+		gap: 6px;
 	}
 
 	.choice-btn {
@@ -367,9 +366,9 @@ h2 {
 	}
 
 	dialog {
-		padding: 10px;
-		border-radius: 10px;
 		max-width: 95vw;
+		padding: 10px;
 		font-size: 0.9rem;
+		border-radius: 10px;
 	}
 }

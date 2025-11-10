@@ -11,12 +11,12 @@
 }
 
 body {
-	font-family: 'Arial', sans-serif;
 	margin: 0;
 	padding: 0;
+	font-family: 'Arial', sans-serif;
+	line-height: 1.6;
 	background-color: var(--background-color);
 	color: var(--text-color);
-	line-height: 1.6;
 }
 
 /* 画面中央のコンテンツコンテナ */
@@ -31,17 +31,17 @@ body {
 	ヘッダー
 	==================== */
 .header {
-	background-color: var(--card-background);
-	padding: 15px 0;
-	border-bottom: 3px solid var(--main-color);
 	margin-bottom: 10px;
+	padding: 15px 0;
+	background-color: var(--card-background);
+	border-bottom: 3px solid var(--main-color);
 }
 
 .header h1 {
-	color: var(--main-color);
 	margin: 0;
 	padding: 0 10px;
 	font-size: 1.8em;
+	color: var(--main-color);
 }
 
 /* ====================
@@ -54,11 +54,11 @@ body {
 }
 
 #time-period {
+	margin-left: 5px;
 	padding: 8px 12px;
+	font-size: 1em;
 	border: 1px solid var(--border-color);
 	border-radius: 4px;
-	font-size: 1em;
-	margin-left: 5px;
 	appearance: none;
 }
 
@@ -73,15 +73,15 @@ body {
 /* モバイルでは1列に切り替え */
 @media (max-width: 480px) {
 	.dashboard-grid {
-		grid-template-columns: 1fr;
 		gap: 10px;
+		grid-template-columns: 1fr;
 	}
 }
 
 @media (min-width: 960px) {
 	.dashboard-grid {
-		grid-template-columns: repeat(2, 1fr);
 		gap: 20px;
+		grid-template-columns: repeat(2, 1fr);
 	}
 }
 
@@ -89,38 +89,38 @@ body {
 	KPIカード
 	==================== */
 .kpi-card {
+	display: flex;
+	height: 480px;
+	padding: 15px;
+	flex-direction: column;
 	background-color: var(--card-background);
 	border: 1px solid var(--border-color);
 	border-radius: 8px;
-	padding: 15px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	display: flex;
-	flex-direction: column;
-	height: 480px;
 }
 
 .kpi-card h2 {
-	color: black;
-	border-bottom: 2px solid lightgray;
-	padding-bottom: 10px;
 	margin-top: 0;
 	margin-bottom: 15px;
+	padding-bottom: 10px;
 	font-size: 1.4em;
 	font-weight: bold;
+	color: black;
+	border-bottom: 2px solid lightgray;
 }
 
 /* ユーザー数の合計値 */
 .current-value {
+	display: block;
+	margin-bottom: 15px;
 	font-size: 2.2em;
 	font-weight: bold;
 	color: var(--highlight-color);
-	margin-bottom: 15px;
-	display: block;
 }
 
 /* グラフコンテナ */
 .chart-container {
+	position: relative;
 	width: 100%;
 	flex-grow: 1;
-	position: relative;
 }

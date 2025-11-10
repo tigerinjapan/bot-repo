@@ -472,9 +472,9 @@ MSG_TYPE_BUBBLE = "bubble"
 
 # タイトル
 DIV_MARK = "*----*----*----*----*----*"
-MARK_PATTERN_1 = "*----"
-MARK_PATTERN_2 = "="
-DIV_MARK_IMG = "■ {} ■"
+MARK_PATTERN_1 = "-"
+MARK_PATTERN_2 = "■"
+MARK_PATTERN_3 = "="
 
 ##### ファンド #####
 FUND_NO_SP_500 = "182809"

@@ -1,26 +1,26 @@
 /* --- 全体設定 --- */
 body {
-	font-family: "Meiryo UI", sans-serif;
-	font-size: 16px;
-	line-height: 1.8;
-	color: var(--main-color);
-	background: var(--main-bg);
 	margin: 0;
 	padding: 0;
+	font-family: "Meiryo UI", sans-serif;
+	font-size: 16px;
 	-webkit-text-size-adjust: none;
+	line-height: 1.8;
+	background: var(--main-bg);
+	color: var(--main-color);
 }
 
 input,
 button,
 select,
 textarea {
+	padding: 8px;
 	font-family: inherit;
 	font-size: 1em;
-	border-radius: 6px;
-	border: 1px solid var(--input-border);
 	background: var(--input-bg);
 	color: var(--main-color);
-	padding: 8px;
+	border: 1px solid var(--input-border);
+	border-radius: 6px;
 	box-sizing: border-box;
 	outline: none;
 	transition: border-color .2s;
@@ -33,12 +33,12 @@ textarea:focus {
 }
 
 button {
+	font-weight: bold;
 	background: var(--button-bg);
 	color: var(--button-text);
 	border: none;
-	cursor: pointer;
-	font-weight: bold;
 	transition: background .2s;
+	cursor: pointer;
 }
 
 button:hover {
@@ -46,19 +46,19 @@ button:hover {
 }
 
 img {
-	border: none;
-	margin: auto;
-	width: auto;
-	height: 160px;
 	display: block;
+	height: 160px;
+	width: auto;
+	margin: auto;
+	border: none;
 }
 
 /* --- タイトル・見出し --- */
 h1,
 h2,
 h3 {
-	color: var(--accent);
 	margin-top: 0;
+	color: var(--accent);
 }
 
 h1 {
@@ -75,25 +75,25 @@ h2 {
 /* --- テーブル --- */
 table {
 	width: 100%;
-	border-collapse: collapse;
 	margin: 16px 0;
-	background: var(--table-row);
-	border-radius: 8px;
 	overflow: hidden;
+	background: var(--table-row);
+	border-collapse: collapse;
+	border-radius: 8px;
 	box-shadow: 0 2px 8px rgba(0, 120, 212, 0.06);
 }
 
 th,
 td {
-	border: 1px solid var(--border-color);
 	padding: 10px;
 	text-align: left;
+	border: 1px solid var(--border-color);
 }
 
 th {
+	font-weight: bold;
 	background: var(--table-header);
 	color: var(--accent);
-	font-weight: bold;
 }
 
 tr:nth-child(even) td {
@@ -115,16 +115,16 @@ tr:nth-child(even) td {
 }
 
 .topMenu li:last-child {
-	border-right: none;
 	margin-left: auto;
+	border-right: none;
 }
 
 .topMenu li a {
 	display: block;
-	color: var(--menu-text);
-	text-align: center;
 	padding: 12px 16px;
+	text-align: center;
 	text-decoration: none;
+	color: var(--menu-text);
 	transition: background .2s;
 }
 
@@ -134,10 +134,10 @@ tr:nth-child(even) td {
 
 /* --- 検索・フォーム --- */
 .searchTitle {
-	color: var(--accent);
-	background: var(--accent-light);
-	font-weight: bold;
 	padding: 8px;
+	font-weight: bold;
+	background: var(--accent-light);
+	color: var(--accent);
 	border-radius: 6px 6px 0 0;
 }
 
@@ -147,21 +147,21 @@ tr:nth-child(even) td {
 }
 
 .searchForm {
-	border: 1px solid var(--border-color);
-	padding: 10px;
 	width: 50%;
+	padding: 10px;
 	background: var(--table-row);
+	border: 1px solid var(--border-color);
 	border-radius: 8px;
 }
 
 .searchResult {
-	border: 1px solid var(--border-color);
-	padding: 10px;
-	width: auto;
-	background: var(--table-row);
-	border-radius: 8px;
-	margin-inline: auto;
 	display: flex;
+	width: auto;
+	margin-inline: auto;
+	padding: 10px;
+	background: var(--table-row);
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
 }
 
 .searchResult th {
@@ -175,8 +175,8 @@ tr:nth-child(even) td {
 
 .searchResult th,
 .searchResult td {
-	border: 1px solid var(--border-color);
 	margin-inline: auto;
+	border: 1px solid var(--border-color);
 }
 
 .searchButton {
@@ -206,8 +206,8 @@ tr:nth-child(even) td {
 	width: auto;
 	min-width: 320px;
 	margin: auto;
-	font-size: 16px;
 	font-family: "Meiryo UI", sans-serif;
+	font-size: 16px;
 	background-color: var(--table-row);
 	border: 2px solid var(--accent);
 	border-collapse: collapse;
@@ -226,11 +226,11 @@ tr:nth-child(even) td {
 
 /* --- フッター --- */
 footer {
-	text-align: center;
-	color: var(--main-color);
-	background: var(--accent-light);
 	padding: 10px 0;
 	font-size: 0.95em;
+	text-align: center;
+	background: var(--accent-light);
+	color: var(--main-color);
 	border-top: 1px solid var(--border-color);
 }
 
@@ -263,7 +263,7 @@ footer {
 	}
 
 	.topMenu li:last-child {
-		border-bottom: none;
 		margin-left: 0;
+		border-bottom: none;
 	}
 }

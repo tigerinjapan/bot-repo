@@ -9,34 +9,34 @@
 }
 
 body {
-	font-family: 'Arial Black', 'Impact', 'Meiryo', sans-serif;
 	padding: 20px 10px;
+	overflow-x: hidden;
+	font-family: 'Arial Black', 'Impact', 'Meiryo', sans-serif;
+	line-height: 1.6;
 	background: linear-gradient(135deg, darkblue, darkslateblue, indigo);
 	color: var(--text-color);
-	line-height: 1.6;
-	overflow-x: hidden;
 }
 
 .container {
 	max-width: 850px;
 	margin: 0 15px;
-	background-color: var(--background-color);
 	padding: 20px;
+	background-color: var(--background-color);
+	border: 2px solid var(--main-color);
 	border-radius: 20px;
 	box-shadow: 0 0 30px cyan, 0 0 10px magenta;
-	border: 2px solid var(--main-color);
 }
 
 h1 {
-	text-align: center;
-	color: var(--main-color);
-	text-shadow: var(--neon-shadow);
 	margin-bottom: 20px;
 	font-size: 2em;
+	text-align: center;
+	text-shadow: var(--neon-shadow);
+	color: var(--main-color);
 }
 
 .subtitle {
-	font-size: 0.8em;
+	font-size: .8em;
 	color: gray;
 }
 
@@ -60,23 +60,23 @@ h1 {
 label {
 	display: block;
 	margin-bottom: 8px;
-	font-weight: bold;
-	color: yellow;
 	font-size: 1.1em;
+	font-weight: bold;
 	text-shadow: 0 0 5px yellow;
+	color: yellow;
 }
 
 select,
 textarea {
 	width: 100%;
 	padding: 10px;
-	border-radius: 8px;
-	border: 1px solid var(--main-color);
+	font-size: 0.95em;
 	background-color: var(--background-color);
 	color: var(--text-color);
+	border: 1px solid var(--main-color);
+	border-radius: 8px;
 	box-sizing: border-box;
 	transition: all 0.3s ease;
-	font-size: 0.95em;
 }
 
 select:focus,
@@ -87,21 +87,21 @@ textarea:focus {
 }
 
 button {
+	max-width: 100%;
+	margin-top: 15px;
 	padding: 12px 25px;
-	border: none;
-	border-radius: 30px;
-	background: linear-gradient(45deg, var(--main-color), var(--accent-color));
-	color: var(--dark-text-color);
-	cursor: pointer;
 	font-size: 1em;
 	font-weight: bold;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	transition: all 0.4s ease;
-	box-shadow: 0 5px 20px aquamarine;
-	margin-top: 15px;
-	max-width: 100%;
+	background: linear-gradient(45deg, var(--main-color), var(--accent-color));
+	color: var(--dark-text-color);
+	border: none;
+	border-radius: 30px;
 	box-sizing: border-box;
+	box-shadow: 0 5px 20px aquamarine;
+	transition: all 0.4s ease;
+	cursor: pointer;
 }
 
 button:hover {
@@ -118,31 +118,31 @@ button:hover {
 .text-output {
 	position: relative;
 	margin-top: 30px;
+	padding-top: 20px;
 	text-align: center;
 	border-top: var(--dashed-border);
-	padding-top: 20px;
 }
 
 .image-container img {
 	max-width: 100%;
 	height: auto;
+	border: 2px solid var(--main-color);
 	border-radius: 15px;
 	box-shadow: 0 0 25px white, 0 0 10px white;
-	border: 2px solid var(--main-color);
 }
 
 .copy-button {
+	display: none;
 	top: 30px;
 	right: 5px;
+	padding: 8px 12px;
+	font-size: 0.8em;
 	background-color: aquamarine;
 	color: var(--text-color);
 	border: 1px solid var(--main-color);
-	padding: 8px 12px;
 	border-radius: 6px;
-	cursor: pointer;
-	display: none;
 	transition: all 0.3s ease;
-	font-size: 0.8em;
+	cursor: pointer;
 }
 
 .copy-button:hover {
@@ -152,15 +152,15 @@ button:hover {
 }
 
 .text-output pre {
+	padding: 15px;
+	font-size: 0.9em;
+	text-align: left;
 	white-space: pre-wrap;
 	word-break: break-word;
-	text-align: left;
 	background-color: var(--background-color);
-	padding: 15px;
+	color: var(--text-color);
 	border-radius: 10px;
 	border: 1px solid var(--accent-color);
-	color: var(--text-color);
-	font-size: 0.9em;
 	box-shadow: 0 0 15px magenta;
 }
 

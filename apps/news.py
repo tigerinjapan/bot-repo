@@ -132,7 +132,7 @@ def get_news_list(
 
                 if url_flg:
                     news_title = f"[{const.STR_NIKKEI_JA}] {news_text}"
-                    return news_title, url_news
+                    news_contents = [news_title, url_news]
 
                 if list_flg:
                     news_contents = [news_contents]
@@ -155,7 +155,7 @@ def get_news_list(
 
                 if url_flg:
                     news_title = f"[{const.STR_AI}] {news_text}"
-                    return news_title, a_href
+                    news_contents = [news_title, a_href]
 
                 if ai_flg:
                     p_list = get_elem_list(div, a_href)
@@ -170,20 +170,21 @@ def get_news_list(
 
     if ai_flg:
         news_summary = func_gemini.get_news_summary(news_list)[0]
-        news_list = [news_summary]
-
-    if not list_flg:
-        news_list = NEW_LINE.join(news_list)
+        news_list = news_summary
 
     return news_list
 
 
-def get_temp_msg():
+def get_temp_msg(list_flg: bool = const.FLG_OFF):
     """
     テンプレートメッセージ取得
     """
-    lbl, url = get_news_list(DIV_AI_NEWS, url_flg=const.FLG_ON)
-    return lbl, url
+    news_list = get_news_list(DIV_AI_NEWS, url_flg=const.FLG_ON)
+    if not list_flg:
+        news_data = news_list[0]
+        return news_data[0], news_data[1]
+
+    return news_list
 
 
 def get_elem_list(div: str, url: str = const.SYM_BLANK):
@@ -247,4 +248,5 @@ def get_elem_list(div: str, url: str = const.SYM_BLANK):
 
 if __name__ == const.MAIN_FUNCTION:
     item_list = get_item_list()
+    # item_list = get_news_msg_list(DIV_AI_NEWS_LIST)
     func.print_test_data(item_list)

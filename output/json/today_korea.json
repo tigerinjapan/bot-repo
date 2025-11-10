@@ -1,12 +1,12 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/11/08(Sat) 13:05",
+        "오늘의 생활정보": "2025/11/10(Mon) 12:19",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "주말, 밤부터 차츰 비",
+        "오늘의 생활정보": "찬공기 유입에 반짝 추위",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
@@ -16,17 +16,17 @@
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 950원",
+        "오늘의 생활정보": "100엔 = 945원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "오늘의 생활정보": "とちゅう\n도중.",
+        "오늘의 생활정보": "しまる\n(그날의 영업이나 업무가) 끝나다",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "Hot sauce please?\n핫소스 좀 주시겠어요?",
+        "오늘의 생활정보": "I want some tea.\n차를 좀 사고 싶어요",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

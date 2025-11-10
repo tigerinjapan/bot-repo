@@ -77,7 +77,8 @@ def weekly_job():
     週次ジョブ
     """
     if func.get_now(const.DATE_WEEKDAY) == 0:
-        line.sub(div=const.STR_NISA)
+        line.sub(const.STR_NISA)
+        line.sub(const.STR_AI_NEWS)
 
 
 def daily_job():
@@ -92,7 +93,7 @@ def daily_job_2():
     日次ジョブ（PM）
     """
     line.main(data_div=const.NUM_TWO)
-    line.sub(div=const.APP_MLB)
+    line.sub(const.APP_MLB)
     kakao.main(div=const.APP_LCC)
 
 
