@@ -14,7 +14,7 @@ const GAME_TIMEOUT_SECONDS = 1200;
 const PENALTY_SECONDS = 30;
 
 // ヒント数
-const INITIAL_HINTS = 5;
+const INITIAL_HINTS = 3;
 
 // 空けるマス数（レベル）
 const HOLES_MEDIUM = 50;
@@ -122,7 +122,7 @@ function initApp() {
   ruleButton = createElem(TAG_BUTTON, "rule-button", btnParentElemId);
   hintButton = createElem(TAG_BUTTON, "hint-button", btnParentElemId);
   homeButton = createElem(TAG_BUTTON, "home-button", btnParentElemId);
-  ruleButton.textContent = TITLE_GAME_RULES;
+  ruleButton.textContent = BUTTON_RULE;
   hintButton.textContent = BUTTON_HINT;
   homeButton.textContent = BUTTON_HOME;
 
@@ -143,12 +143,13 @@ function initApp() {
   modalTitle = getElem('modal-title');
   modalBody = getElem('modal-body');
   modalCloseButton = getElem('modal-close-button');
-  setElemText("modal-close-button", "X");
+  setElemText("modal-close-button", BUTTON_X);
 
   setElemText("title", TITLE_SUDOKU);
 
   createOptionVal(langSelect, LIST_LANG_CD, LIST_LANG_NM);
   createOptionVal(levelSelect, LIST_LEVEL, LIST_LEVEL_NM);
+  levelSelect.value = LEVEL_MEDIUM;
 
   for (let i = 1; i <= 10; i++) {
     const elem = createElemNoVal(TAG_DIV, "input-panel");
@@ -157,7 +158,7 @@ function initApp() {
     elem.textContent = i;
     if (i === 10) {
       elem.dataset.value = 0;
-      elem.textContent = "x";
+      elem.textContent = BUTTON_X;
     }
   }
 
@@ -172,26 +173,26 @@ function initApp() {
   }
 
   // スタートボタン登録
-  if (startButton) startButton.addEventListener("click", startGame);
+  if (startButton) startButton.addEventListener(EVENT_CLICK, startGame);
 
   // その他イベント登録
-  if (userNameInput) userNameInput.addEventListener("input", checkStartButtonState);
+  if (userNameInput) userNameInput.addEventListener(EVENT_INPUT, checkStartButtonState);
   checkStartButtonState();
 
-  if (ruleButton) ruleButton.addEventListener("click", () => {
-    const lang = langSelect ? langSelect.value : 'en';
+  if (ruleButton) ruleButton.addEventListener(EVENT_CLICK, () => {
+    const lang = langSelect ? langSelect.value : LANG_CD_EN;
     const rule = GAME_RULES[lang];
     showModal(rule.title, rule.body);
   });
-  if (hintButton) hintButton.addEventListener("click", useHint);
-  if (homeButton) homeButton.addEventListener("click", () => showScreen('start-screen'));
+  if (hintButton) hintButton.addEventListener(EVENT_CLICK, useHint);
+  if (homeButton) homeButton.addEventListener(EVENT_CLICK, () => showScreen('start-screen'));
 
   document.querySelectorAll('.input-button').forEach(button => {
-    button.addEventListener("click", (e) => handleInput(e.target.dataset.value));
+    button.addEventListener(EVENT_CLICK, (e) => handleInput(e.target.dataset.value));
   });
 
-  if (modalCloseButton) modalCloseButton.addEventListener("click", hideModal);
-  if (modalOverlay) modalOverlay.addEventListener("click", (e) => {
+  if (modalCloseButton) modalCloseButton.addEventListener(EVENT_CLICK, hideModal);
+  if (modalOverlay) modalOverlay.addEventListener(EVENT_CLICK, (e) => {
     if (e.target.id === 'modal-overlay') hideModal();
   });
 }
@@ -223,7 +224,7 @@ function startGame() {
     progressBar.style.backgroundColor = 'cyan';
   }
   if (timerText) timerText.style.color = 'cyan';
-  if (inputPanel) inputPanel.style.display = 'none';
+  if (inputPanel) inputPanel.style.display = ATTR_NONE;
 
   // パズル生成
   generatePuzzle(level);
@@ -295,7 +296,7 @@ function renderBoard() {
       }
 
       // クリックイベントリスナー
-      cell.addEventListener("click", () => handleCellClick(cell));
+      cell.addEventListener(EVENT_CLICK, () => handleCellClick(cell));
       sudokuBoard.appendChild(cell);
     }
   }
@@ -491,7 +492,7 @@ function handleInput(value) {
   // 選択状態を解除し、入力パネルを非表示
   selectedCell.classList.remove('selected');
   selectedCell = null;
-  if (inputPanel) inputPanel.style.display = 'none';
+  if (inputPanel) inputPanel.style.display = ATTR_NONE;
 
   // エラー状態をリセット/確認
   renderBoard();
@@ -522,7 +523,7 @@ function checkGameCompletion() {
 function renderRank() {
   if (!rankTbody) return;
 
-  setElemText("rank-title", TITLE_RANK_TOP);
+  setElemText("rank-title", TITLE_TOP_RANK);
 
   rankThead.innerHTML = SYM_BLANK;
   RANKING_HEAD.forEach(rankHead => {
@@ -585,7 +586,7 @@ function handleCellClick(cell) {
 
   // 固定マスは操作不可
   if (initialPuzzle[r][c] !== 0) {
-    if (inputPanel) inputPanel.style.display = 'none';
+    if (inputPanel) inputPanel.style.display = ATTR_NONE;
     return;
   }
 
@@ -650,8 +651,8 @@ function formatTime(seconds) {
 
 // 画面切り替え関数
 function showScreen(screenId) {
-  if (startScreen) startScreen.style.display = 'none';
-  if (gameScreen) gameScreen.style.display = 'none';
+  if (startScreen) startScreen.style.display = ATTR_NONE;
+  if (gameScreen) gameScreen.style.display = ATTR_NONE;
   // flexに設定することで中央揃えを維持
   const targetScreen = getElem(screenId);
   if (targetScreen) {
@@ -674,5 +675,5 @@ function showModal(title, body) {
 
 // モーダル非表示
 function hideModal() {
-  if (modalOverlay) modalOverlay.style.display = 'none';
+  if (modalOverlay) modalOverlay.style.display = ATTR_NONE;
 }

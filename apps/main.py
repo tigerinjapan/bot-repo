@@ -9,6 +9,7 @@ import apps.appl as appl
 import apps.dashboard as dashboard
 import apps.kakao as kakao
 import apps.line as line
+import apps.log as log
 import apps.server as server
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -102,7 +103,8 @@ def daily_job_3():
     日次ジョブ（AM）
     """
     kakao.main()
-    dashboard.backup_log()
+    log.backup_log()
+    log.backup_log(const.STR_ERROR)
 
 
 def hourly_job():
@@ -113,7 +115,6 @@ def hourly_job():
     appl.update_news()
     appl.update_news(const.APP_NUMBER)
     dashboard.update_data()
-    dashboard.backup_log(const.STR_ERROR)
 
 
 def every_min_job():

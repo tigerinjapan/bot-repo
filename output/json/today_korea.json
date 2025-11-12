@@ -1,32 +1,32 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/11/11(Tue) 08:48",
+        "오늘의 생활정보": "2025/11/12(Wed) 11:48",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "출근길 더 춥다",
+        "오늘의 생활정보": "늦가을 정취 가득",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "오늘의 생활정보": "S&P500 6,832.43 (+1.54%)",
+        "오늘의 생활정보": "S&P500 6,846.61 (+0.21%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 945원",
+        "오늘의 생활정보": "100엔 = 950원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "오늘의 생활정보": "ぼうえき\n무역.",
+        "오늘의 생활정보": "どくしん\n독신; 단신.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "Need bigger locker.\n더 큰 사물함이 필요해요",
+        "오늘의 생활정보": "New towel please.\n새 수건 좀 주실까요?",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

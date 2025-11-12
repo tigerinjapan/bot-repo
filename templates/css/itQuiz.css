@@ -291,7 +291,7 @@ h2 {
 }
 
 /* --- モバイル最適化 --- */
-@media (max-width: 640px) {
+@media (max-width: 480px) {
 	body {
 		padding: 0;
 	}
@@ -302,9 +302,14 @@ h2 {
 		box-shadow: none;
 	}
 
-	.title {
+	.title,
+	h2 {
 		padding-bottom: 6px;
 		font-size: 1.2rem;
+	}
+
+	.text-label {
+		display: none;
 	}
 
 	.btn,
@@ -317,7 +322,7 @@ h2 {
 
 	.btn-primary,
 	.btn-secondary {
-		font-size: 1rem;
+		font-size: 0.9rem;
 	}
 
 	#quiz-word {

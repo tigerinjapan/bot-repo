@@ -9,9 +9,8 @@ from dateutil.relativedelta import relativedelta
 from fastapi import Request
 from user_agents import parse
 
+import apps.log as log
 import apps.utils.constants as const
-import apps.utils.log_dao as log_dao
-import apps.utils.log_dto as log_dto
 import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
@@ -44,7 +43,9 @@ def update_data():
     """
     func.print_start(SCRIPT_NAME)
 
-    data_list = get_data_list(const.APP_DASHBOARD)
+    data_list = log.get_log_data_list(
+        const.APP_DASHBOARD, col_len=len(COL_LIST_DASHBOARD)
+    )
     if data_list:
         df = func.get_df(data_list, COL_LIST_DASHBOARD)
         dummy_data = func.get_json_data(const.APP_DASHBOARD, const.STR_OUTPUT)
@@ -77,89 +78,6 @@ def update_data():
     func.print_end(SCRIPT_NAME)
 
 
-def get_data_list(log_div: str, backup_flg: bool = const.FLG_OFF):
-    """
-    データリスト取得
-    """
-    data_list = []
-    backup_data_list = []
-    new_log_list = []
-
-    try:
-        log_path = func.get_file_path(
-            log_div,
-            file_type=const.FILE_TYPE_LOG,
-            file_div=const.STR_OUTPUT,
-        )
-
-        log_data_text = func.read_file(log_path)
-        if log_data_text:
-            log_data_list = log_data_text.split(const.SYM_NEW_LINE)
-
-            target_date = get_target_date(const.STR_YEAR)[0]
-            log_backup_list = log_dao.get_log_data_list(log_div, target_date)
-
-            for log_data in log_data_list:
-                if log_data and log_data not in log_backup_list:
-                    new_log_list.append(log_data)
-
-            if new_log_list:
-                log_backup_list.extend(new_log_list)
-
-            for log_data in log_backup_list:
-                data = log_data.split(const.SYM_SPACE)
-                if log_div == const.APP_DASHBOARD:
-                    data = data[: len(COL_LIST_DASHBOARD)]
-
-                data_list.append(data)
-
-                if backup_flg and log_data in new_log_list:
-                    log_date = data[0]
-                    cutoff_date = func.get_calc_date(-1)
-                    log_datetime = func.convert_str_to_date(
-                        log_date, const.DATE_FORMAT_YYYYMMDD_DASH
-                    )
-                    # 1日以前のログか判定
-                    if log_datetime <= cutoff_date:
-                        log_backup = [log_div, log_data, log_datetime]
-                        json_data = log_dto.get_insert_data_for_log(log_backup)
-                        backup_data_list.append(json_data)
-
-            if backup_data_list:
-                # DB登録
-                log_dao.insert_log_data(backup_data_list)
-
-                # ログファイル：本日分以外削除
-                backup_log_data = (
-                    const.SYM_NEW_LINE.join(new_log_list) + const.SYM_NEW_LINE
-                )
-                func.write_file(log_path, backup_log_data)
-
-                msg_div = f"{len(backup_data_list)}件, {const.STR_BACKUP_JA}"
-                func.print_info_msg(msg_div, msg_const.MSG_INFO_PROC_COMPLETED)
-
-            else:
-                if backup_flg:
-                    func.print_info_msg(SCRIPT_NAME, msg_const.MSG_INFO_DATA_NOT_EXIST)
-
-    except Exception as e:
-        func.print_info_msg(SCRIPT_NAME, e)
-
-    return data_list
-
-
-def backup_log(log_div: str = const.APP_DASHBOARD):
-    """
-    ログバックアップ
-    """
-    div = f"{const.STR_BACKUP} {log_div}"
-    func.print_start(div)
-
-    get_data_list(log_div, backup_flg=const.FLG_ON)
-
-    func.print_end(div)
-
-
 def get_dashboard_json(df_all, date_div: str):
     """
     ダッシュボードデータ取得
@@ -168,7 +86,9 @@ def get_dashboard_json(df_all, date_div: str):
         target_date, date_format = get_target_date(date_div)
 
         df_all[const.STR_DATE] = pd.to_datetime(df_all[const.STR_DATE])
-        df = df_all[target_date <= df_all[const.STR_DATE]]
+
+        # SettingWithCopyWarning 対応：copy()を使って新しいデータフレームを作る
+        df = df_all[target_date <= df_all[const.STR_DATE]].copy()
 
         df[const.STR_DATE] = df[const.STR_DATE].dt.strftime(date_format)
 
@@ -182,15 +102,15 @@ def get_dashboard_json(df_all, date_div: str):
 
         # JSONデータ作成
         dashboard_json = {
-            "label": date_div,
-            "users": {
-                "total": f"{total_access:,}",
-                "labels": term_access.index.tolist(),
-                "data": term_access.values.tolist(),
+            const.STR_LABEL: date_div,
+            const.STR_USER: {
+                const.STR_TOTAL: f"{total_access:,}",
+                const.STR_LABELS: term_access.index.tolist(),
+                const.STR_DATA: term_access.values.tolist(),
             },
             const.STR_CATEGORY: {
-                "labels": category_counts.index.tolist(),
-                "data": category_counts.values.tolist(),
+                const.STR_LABELS: category_counts.index.tolist(),
+                const.STR_DATA: category_counts.values.tolist(),
             },
             const.STR_APP: calc_percentage(app_counts, etc_flg=const.FLG_ON),
             const.STR_DEVICE: calc_percentage(device_counts),
@@ -232,11 +152,12 @@ def get_target_date(date_div: str):
 
         elif date_div == const.STR_YEAR:
             # 今年1月1日取得
-            this_year_start = today.replace(month=1, day=1)
+            # this_year_start = today.replace(month=1, day=1)
 
             # 去年1月1日取得
-            last_year_start = this_year_start - relativedelta(years=1)
-            target_date = last_year_start
+            # last_year_start = this_year_start - relativedelta(years=1)
+            # target_date = last_year_start
+            target_date = log.get_last_year_first()
             date_format = const.DATE_FORMAT_YYYY
 
     return target_date, date_format

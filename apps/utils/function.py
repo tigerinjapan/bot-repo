@@ -584,9 +584,8 @@ def init_df():
 
 def df_to_json(div: str, df, file_div: str = const.STR_OUTPUT):
     """
-    DataFrameからJSON出力
+    DataFrameをJSONファイルに出力
     """
-    # DataFrameをJSONファイルに出力
     file_path = get_file_path(div, const.FILE_TYPE_JSON, file_div)
 
     data = df.to_dict(orient="records")
@@ -761,6 +760,15 @@ def get_decoding_masking_data(target: str, encode_flg: bool = const.FLG_OFF):
     for before_str, after_str in zip(masking_list, decoding_list):
         target = target.replace(before_str, after_str)
     return target
+
+
+def get_auth_num(user_div: str) -> int:
+    """
+    ユーザー権限インデックス取得
+    """
+    auth_idx = const.LIST_AUTH.index(user_div)
+    user_auth_num = const.LIST_AUTH_NUM[auth_idx]
+    return user_auth_num
 
 
 def re_search(pattern: str, target: str) -> str:

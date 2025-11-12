@@ -87,7 +87,6 @@ function getAppList(userDiv, menuVal) {
         }
       }
     }
-
   } else {
     if (userDiv === AUTH_GUEST) {
       appList = LIST_APP_GUEST;
@@ -97,21 +96,23 @@ function getAppList(userDiv, menuVal) {
   return appList;
 }
 
+// スマホ判定
 function isMobile() {
-  // スマホ判定用の変数
+  // デスクトップまたはその他のデバイス
   let isMobileDevice = false;
 
   // ユーザーエージェントを利用した判定
   const userAgent = navigator.userAgent;
 
-  // 一般的なスマホデバイスのユーザーエージェントに基づいて判定
   if (/android/i.test(userAgent)) {
-    isMobileDevice = true; // Androidデバイス
+    // Androidデバイス
+    isMobileDevice = true;
   } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
-    isMobileDevice = true; // iOSデバイス
+    // iOSデバイス
+    isMobileDevice = true;
   }
 
-  return isMobileDevice; // デスクトップまたはその他のデバイス
+  return isMobileDevice;
 }
 
 // チェックメッセージ表示
@@ -164,7 +165,7 @@ function openDialog(title, text) {
   setElemText("dialog-text", text);
 
   const closeBtn = createElem(TAG_BUTTON, "close-btn", parentElemId);
-  setElemText("close-btn", "×");
+  setElemText("close-btn", BUTTON_X);
   closeBtn.onclick = () => closeDialog();
 
   const saveBtn = createElem(TAG_BUTTON, "save-btn", parentElemId);

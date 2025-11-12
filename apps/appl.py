@@ -8,6 +8,7 @@ from fastapi import Request
 
 import apps.drama as drama
 import apps.lcc as lcc
+import apps.log as log
 import apps.number as number
 import apps.news as news
 import apps.ranking as ranking
@@ -30,8 +31,9 @@ SCRIPT_NAME = func.get_app_name(__file__)
 
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
+LIST_APP_DIV_SITE = ([site] * 4) + [log]
 LIST_APP_DIV_KOREA = [today_korea]
-LIST_ALL_APP_DIV = LIST_APP_DIV + ([site] * 4) + LIST_APP_DIV_KOREA
+LIST_ALL_APP_DIV = LIST_APP_DIV + LIST_APP_DIV_SITE + LIST_APP_DIV_KOREA
 
 
 class AppExec:
@@ -106,7 +108,10 @@ def get_context_data(request: Request, app_name: str):
     app_exec.start()
 
     if app_name in const.LIST_APP_SITE:
-        df = site.get_df_data(app_name, user_div)
+        if app_name == const.STR_LOG:
+            df = log.get_df_data(user_div=user_div)
+        else:
+            df = site.get_df_data(app_name, user_div)
         data_list = get_data_list(df)
     else:
         data_list = app_exec.data()

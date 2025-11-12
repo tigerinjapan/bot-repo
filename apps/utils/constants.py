@@ -31,10 +31,12 @@ SESSION_TIMEOUT_SEC = 600
 AUTH_ADMIN = "admin"
 AUTH_DEV = "dev"
 AUTH_GUEST = "guest"
+LIST_AUTH = [AUTH_ADMIN, AUTH_DEV, AUTH_GUEST]
 
 NUM_AUTH_ADMIN = 3
 NUM_AUTH_DEV = 2
 NUM_AUTH_GUEST = 1
+LIST_AUTH_NUM = [NUM_AUTH_ADMIN, NUM_AUTH_DEV, NUM_AUTH_GUEST]
 
 ##### ユーザーエージェント #####
 UA_PC = {"User-Agent": "Chrome/74.0.3729.169"}
@@ -289,9 +291,11 @@ STR_DUMMY = "dummy"
 STR_EASY = "easy"
 STR_ENGLISH = "english"
 STR_ERROR = "error"
+STR_ETC = "etc"
 STR_EXPIRATION = "expiration"
 STR_FIRST = "first"
 STR_FONT = "font"
+STR_FUNCTION = "function"
 STR_GEMINI = "gemini"
 STR_HARD = "hard"
 STR_HOLIDAY = "holiday"
@@ -307,6 +311,8 @@ STR_KAKAO = "kakao"
 STR_KEY = "key"
 STR_KEYWORD = "keyword"
 STR_KPOP = "kpop"
+STR_LABEL = "label"
+STR_LABELS = "labels"
 STR_LEVEL = "level"
 STR_LINE = "line"
 STR_LOCAL = "local"
@@ -334,10 +340,12 @@ STR_RESPONSE = "response"
 STR_RESULT = "result"
 STR_SERVER = "server"
 STR_STATUS = "status"
+STR_TERM = "term"
 STR_TEST = "test"
 STR_TIME = "time"
 STR_TITLE = "title"
 STR_TOKEN = "token"
+STR_TOTAL = "total"
 STR_TYPE = "type"
 STR_UNLINK = "unlink"
 STR_UPDATE = "update"
@@ -382,6 +390,7 @@ STR_NIKKEI_JA = "日経"
 STR_NOTIFY_JA = "通知"
 STR_PATH_JA = "パス"
 STR_RANKING_JA = "ランキング"
+STR_STATUS_JA = "状態"
 STR_SYSTEM_JA = "システム"
 STR_TIME_JA = "時間"
 STR_TITLE_JA = "タイトル"
@@ -456,8 +465,12 @@ LIST_REPLACE = [
 ]
 
 ##### ログ出力対象外文字 #####
-LIST_LOG_MASKING = ["kobe-", "koyeb", "token", "kapi.", "kauth", "oauth", "line."]
 LOG_MASKING = "XXXXX"
+LIST_LOG_MASKING = ["kobe-", "koyeb", "token", "kapi.", "kauth", "oauth", "line."]
+
+##### ログカテゴリ #####
+LIST_LOG_CATEGORY = [STR_API, STR_DB]
+LIST_LOG_CATEGORY_2 = [STR_FUNCTION]
 
 ##### 曜日リスト #####
 LIST_WEEKDAY = ["月", "火", "水", "木", "金", "土", "日"]
@@ -598,7 +611,7 @@ LIST_APP_SERVER = [
     APP_TV,
     APP_STUDY,
 ]
-LIST_APP_SITE = [APP_SITE, APP_CAFE, APP_TRAVEL, APP_BOARD]
+LIST_APP_SITE = [APP_SITE, APP_CAFE, APP_TRAVEL, APP_BOARD, STR_LOG]
 LIST_APP_SERVER_KOREA = [APP_TODAY_KOREA]
 LIST_APP_ALL = LIST_APP_SERVER + LIST_APP_SITE + LIST_APP_SERVER_KOREA
 
@@ -613,27 +626,27 @@ LIST_APPS_ALL = [
     APP_IT_QUIZ,
     APP_IT_QUIZ_DESIGN,
     APP_IT_QUIZ_PROMPT,
-    STR_GEMINI,
     APP_REVIEW,
     APP_DASHBOARD,
     APP_URL_DESIGN,
     APP_KAKAO_DESIGN,
     APP_LOCAL_DESIGN,
+    STR_GEMINI,
 ]
 
 LIST_APP_NEWS = [APP_NEWS, APP_TODAY, APP_TODAY_KOREA]
 LIST_APP_ENTERTAINMENT = [
     APP_DRAMA,
-    STR_GEMINI,
     APP_IT_QUIZ,
     APP_MLB,
     APP_NUMBER,
     APP_RANKING,
     APP_SUDOKU,
     APP_TV,
+    STR_GEMINI,
 ]
 LIST_APP_SERVICE = [APP_CAFE, APP_LCC, APP_SITE, APP_STUDY, APP_TRAVEL]
-LIST_APP_MANAGEMENT = [APP_BOARD, APP_DASHBOARD, APP_REVIEW, APP_USER]
+LIST_APP_MANAGEMENT = [APP_BOARD, APP_DASHBOARD, APP_REVIEW, APP_USER, STR_LOG]
 LIST_APP_DOCUMENT = [
     APP_IT_QUIZ_DESIGN,
     APP_IT_QUIZ_PROMPT,

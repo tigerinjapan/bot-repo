@@ -1,7 +1,7 @@
 // db
 const database = "mongoDB";
 let div = "dashboard";
-// div = "error";
+div = "error";
 const targetDate = "2025-11-08";
 const now = new Date();
 const jst = now.setUTCHours(now.getUTCHours() + 9);

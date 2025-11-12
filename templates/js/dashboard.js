@@ -13,7 +13,7 @@ const appTexts = {
 
 // KPI項目定義とHTML生成 (ループ処理)
 const kpiItems = [
-  { id: "users", title: "👤 Users", type: "line", dataKey: "users" },
+  { id: "user", title: "👤 Users", type: "line", dataKey: "user" },
   { id: "category", title: "📄 Category", type: "bar", dataKey: "category" },
   { id: "app", title: "🌐 App", type: "doughnut", dataKey: "app" },
   { id: "device", title: "📱 Device", type: "doughnut", dataKey: "device" },
@@ -46,7 +46,7 @@ function initializeApp() {
   updateDashboard('day');
 
   // プルダウン変更時のイベントリスナー
-  selectElem.addEventListener("change", (event) => {
+  selectElem.addEventListener(EVENT_CHANGE, (event) => {
     updateDashboard(event.target.value);
   });
 }
@@ -57,7 +57,7 @@ function initializeKpiCards() {
   let html = SYM_BLANK;
 
   kpiItems.forEach(item => {
-    const isUsers = item.id === 'users';
+    const isUsers = item.id === 'user';
     html += `
       <div class="kpi-card">
           <h2>${item.title}</h2>

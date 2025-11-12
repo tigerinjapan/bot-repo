@@ -62,7 +62,7 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
         # データ型を int から str に変換
         df[mongo_const.FI_SEQ] = df[mongo_const.FI_SEQ].astype(str)
 
-        user_auth = get_user_auth_num(user_div)
+        user_auth = func.get_auth_num(user_div)
         if user_auth == const.NUM_AUTH_ADMIN:
             # numpy.where()を使って新しい列を作成
             df[const.STR_URL] = func.get_dialog_button(
@@ -81,7 +81,7 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
         df.columns = col_list_
 
     elif app_div == const.APP_SITE:
-        user_auth = get_user_auth_num(user_div)
+        user_auth = func.get_auth_num(user_div)
         search_query = f'auth <= "{user_auth}"'
         df_query = df_all.query(search_query)
 
@@ -116,16 +116,6 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
             df.columns = col_list_travel
 
     return df
-
-
-# ユーザー権限取得
-def get_user_auth_num(user_div):
-    user_auth_num = const.NUM_AUTH_GUEST
-    if user_div == const.AUTH_ADMIN:
-        user_auth_num = const.NUM_AUTH_ADMIN
-    elif user_div == const.AUTH_DEV:
-        user_auth_num = const.NUM_AUTH_DEV
-    return user_auth_num
 
 
 if __name__ == const.MAIN_FUNCTION:

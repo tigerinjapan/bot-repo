@@ -34,6 +34,12 @@ const ATTR_NONE = "none";
 const MODE_IMG = "img";
 const MODE_TXT = "txt";
 
+// イベント
+const EVENT_CHANGE = "change";
+const EVENT_CLICK = "click";
+const EVENT_INPUT = "input";
+const EVENT_SUBMIT = "submit";
+
 // ユーザ
 const AUTH_ADMIN = "admin";
 const AUTH_DEV = "dev";
@@ -47,6 +53,7 @@ const STR_MESSAGE = "message";
 const STR_STATUS = "status";
 const STR_TYPE = "type";
 
+const STR_ERROR = "ERROR";
 const STR_LINES = "Lines";
 const STR_REVIEW = "Review";
 const STR_STATIONS = "Stations";
@@ -72,7 +79,9 @@ const BUTTON_HOME = "HOME";
 const BUTTON_LOGIN = "LOGIN";
 const BUTTON_LOGOUT = "LOGOUT";
 const BUTTON_NEXT = "NEXT";
+const BUTTON_RULE = "RULE";
 const BUTTON_START = "START";
+const BUTTON_X = "×";
 
 const COLOR_RED = "red";
 const COLOR_GREEN = "green";
@@ -100,7 +109,7 @@ const TITLE_DASH_BOARD = "📊 Dash Board 📊";
 const TITLE_CITY = "City";
 const TITLE_CHOICE_CHAR = "Select a Character";
 const TITLE_GAME_RULES = "GAME RULES";
-const TITLE_RANK_TOP = "RANK TOP 5";
+const TITLE_TOP_RANK = "TOP_RANK";
 
 const TH_NO = "No.";
 
@@ -141,11 +150,12 @@ const APP_TV = "tv";
 const APP_NEWS = "news";
 const APP_STUDY = "study";
 const APP_BOARD = "board";
+const APP_LOG = "log";
 const APP_USER = "user";
 
 const LIST_APP_GUEST_MO = [APP_DRAMA, APP_RANKING, APP_LCC, APP_TV];
 const LIST_APP_GUEST = [APP_TODAY, APP_SITE].concat(LIST_APP_GUEST_MO);
-const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_BOARD, APP_USER];
+const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_BOARD, APP_LOG, APP_USER];
 const LIST_APP = LIST_APP_GUEST.concat(LIST_APP_NOT_GUEST);
 
 const APP_TRAVEL = "travel";

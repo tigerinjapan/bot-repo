@@ -172,7 +172,7 @@ function checkUserInfo() {
   }
 
   if (!checkFlg) {
-    document.querySelector("form").addEventListener("submit", function (event) {
+    document.querySelector("form").addEventListener(EVENT_SUBMIT, function (event) {
       event.preventDefault();
       msgElem.value = errMsg;
       alert(errMsg);

@@ -1,39 +1,39 @@
 {
     "day": {
         "label": "day",
-        "users": {
-            "total": "115",
+        "user": {
+            "total": "133",
             "labels": [
-                "11/05",
                 "11/06",
                 "11/07",
                 "11/08",
                 "11/09",
                 "11/10",
-                "11/11"
+                "11/11",
+                "11/12"
             ],
             "data": [
-                3,
                 22,
                 28,
                 32,
                 14,
                 13,
-                3
+                20,
+                4
             ]
         },
         "category": {
             "labels": [
-                "entertainment",
                 "document",
+                "entertainment",
                 "management",
                 "news",
                 "service"
             ],
             "data": [
-                42,
-                41,
-                17,
+                50,
+                47,
+                21,
                 9,
                 6
             ]
@@ -41,15 +41,15 @@
         "app": [
             {
                 "name": "url_design",
-                "value": 34
+                "value": 36
             },
             {
                 "name": "sudoku",
-                "value": 14
+                "value": 15
             },
             {
                 "name": "dashboard",
-                "value": 11
+                "value": 13
             },
             {
                 "name": "itQuiz",
@@ -61,11 +61,11 @@
             },
             {
                 "name": "news",
-                "value": 5
+                "value": 4
             },
             {
                 "name": "number",
-                "value": 5
+                "value": 4
             },
             {
                 "name": "travel",
@@ -73,55 +73,55 @@
             },
             {
                 "name": "etc",
-                "value": 12
+                "value": 9
             }
         ],
         "device": [
             {
                 "name": "Mobile",
-                "value": 75
+                "value": 70
             },
             {
                 "name": "PC",
-                "value": 25
+                "value": 30
             }
         ],
         "os": [
             {
                 "name": "Android",
-                "value": 75
+                "value": 70
             },
             {
                 "name": "Windows",
-                "value": 25
+                "value": 30
             }
         ],
         "browser": [
             {
                 "name": "Chrome",
-                "value": 56
+                "value": 54
             },
             {
                 "name": "Edge",
-                "value": 25
+                "value": 30
             },
             {
                 "name": "LINE",
-                "value": 19
+                "value": 16
             }
         ]
     },
     "month": {
         "label": "month",
-        "users": {
-            "total": "317",
+        "user": {
+            "total": "338",
             "labels": [
                 "2025/10",
                 "2025/11"
             ],
             "data": [
                 136,
-                181
+                202
             ]
         },
         "category": {
@@ -133,9 +133,9 @@
                 "service"
             ],
             "data": [
-                110,
-                82,
-                72,
+                120,
+                88,
+                77,
                 32,
                 21
             ]
@@ -143,11 +143,11 @@
         "app": [
             {
                 "name": "url_design",
-                "value": 32
+                "value": 33
             },
             {
                 "name": "dashboard",
-                "value": 13
+                "value": 14
             },
             {
                 "name": "itQuiz",
@@ -155,19 +155,19 @@
             },
             {
                 "name": "number",
-                "value": 8
+                "value": 7
+            },
+            {
+                "name": "sudoku",
+                "value": 7
             },
             {
                 "name": "news",
                 "value": 7
             },
             {
-                "name": "sudoku",
-                "value": 6
-            },
-            {
                 "name": "board",
-                "value": 6
+                "value": 5
             },
             {
                 "name": "travel",
@@ -183,17 +183,17 @@
             },
             {
                 "name": "etc",
-                "value": 9
+                "value": 8
             }
         ],
         "device": [
             {
                 "name": "Mobile",
-                "value": 59
+                "value": 58
             },
             {
                 "name": "PC",
-                "value": 40
+                "value": 41
             },
             {
                 "name": "Unknown",
@@ -203,11 +203,11 @@
         "os": [
             {
                 "name": "Android",
-                "value": 59
+                "value": 58
             },
             {
                 "name": "Windows",
-                "value": 39
+                "value": 40
             },
             {
                 "name": "Other",
@@ -225,11 +225,11 @@
             },
             {
                 "name": "Edge",
-                "value": 36
+                "value": 37
             },
             {
                 "name": "LINE",
-                "value": 15
+                "value": 14
             },
             {
                 "name": "FacebookBot",
@@ -239,13 +239,13 @@
     },
     "year": {
         "label": "year",
-        "users": {
-            "total": "317",
+        "user": {
+            "total": "338",
             "labels": [
                 "2025"
             ],
             "data": [
-                317
+                338
             ]
         },
         "category": {
@@ -257,9 +257,9 @@
                 "service"
             ],
             "data": [
-                110,
-                82,
-                72,
+                120,
+                88,
+                77,
                 32,
                 21
             ]
@@ -267,11 +267,11 @@
         "app": [
             {
                 "name": "url_design",
-                "value": 32
+                "value": 33
             },
             {
                 "name": "dashboard",
-                "value": 13
+                "value": 14
             },
             {
                 "name": "itQuiz",
@@ -279,19 +279,19 @@
             },
             {
                 "name": "number",
-                "value": 8
+                "value": 7
+            },
+            {
+                "name": "sudoku",
+                "value": 7
             },
             {
                 "name": "news",
                 "value": 7
             },
             {
-                "name": "sudoku",
-                "value": 6
-            },
-            {
                 "name": "board",
-                "value": 6
+                "value": 5
             },
             {
                 "name": "travel",
@@ -307,17 +307,17 @@
             },
             {
                 "name": "etc",
-                "value": 9
+                "value": 8
             }
         ],
         "device": [
             {
                 "name": "Mobile",
-                "value": 59
+                "value": 58
             },
             {
                 "name": "PC",
-                "value": 40
+                "value": 41
             },
             {
                 "name": "Unknown",
@@ -327,11 +327,11 @@
         "os": [
             {
                 "name": "Android",
-                "value": 59
+                "value": 58
             },
             {
                 "name": "Windows",
-                "value": 39
+                "value": 40
             },
             {
                 "name": "Other",
@@ -349,11 +349,11 @@
             },
             {
                 "name": "Edge",
-                "value": 36
+                "value": 37
             },
             {
                 "name": "LINE",
-                "value": 15
+                "value": 14
             },
             {
                 "name": "FacebookBot",

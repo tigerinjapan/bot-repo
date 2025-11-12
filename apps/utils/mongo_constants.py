@@ -2,7 +2,13 @@
 mongoDB定数一覧
 """
 
+from pymongo import ASCENDING, DESCENDING
+
 import apps.utils.constants as const
+
+# ソート
+SORT_ASCENDING = ASCENDING
+SORT_DESCENDING = DESCENDING
 
 # コレクション名
 COLL_USER_INFO = "userInfo"
@@ -52,8 +58,8 @@ ITEM_REMARK = "remark"
 ITEM_STATUS = "status"
 
 # 項目ID: log
-ITEM_TARGET_DATE = "targetDate"
 ITEM_MESSAGE = "message"
+ITEM_TARGET_DATE = "targetDate"
 
 # 演算子
 OPERATOR_EQUAL = "$eq"

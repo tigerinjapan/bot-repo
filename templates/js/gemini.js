@@ -33,7 +33,7 @@ function init() {
         langSelectElem.appendChild(button);
     });
 
-    changeLanguage('ja');
+    changeLanguage(LANG_CD_JA);
 
     const mode = getElem('generationMode').value;
     let outputImage = getElem('outputImageContainer');

@@ -222,7 +222,7 @@ function init() {
   // 観光スポットリンクのクリックイベントなどを設定
   function addEventListeners() {
     document.querySelectorAll(".spot-link").forEach((link) => {
-      link.addEventListener("click", (e) => {
+      link.addEventListener(EVENT_CLICK, (e) => {
         e.preventDefault();
 
         setElemText("dialog-title", e.target.textContent);
@@ -233,18 +233,18 @@ function init() {
   }
 
   // ダイアログの閉じる処理
-  closeBtn.addEventListener("click", () => {
+  closeBtn.addEventListener(EVENT_CLICK, () => {
     dialog.style.display = ATTR_NONE;
   });
-  window.addEventListener("click", (event) => {
+  window.addEventListener(EVENT_CLICK, (event) => {
     if (event.target === dialog) {
       dialog.style.display = ATTR_NONE;
     }
   });
 
   // 言語・都市選択時の内容更新
-  langSelect.addEventListener("change", updateContent);
-  regionSelect.addEventListener("change", updateContent);
+  langSelect.addEventListener(EVENT_CHANGE, updateContent);
+  regionSelect.addEventListener(EVENT_CHANGE, updateContent);
 
   // 初期表示（東京・日本語）
   updateContent();

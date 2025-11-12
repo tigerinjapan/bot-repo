@@ -46,7 +46,10 @@ def get_rank_info_top():
             "$dateToString": {"format": "%Y/%m/%d %H:%M", "date": "$dUpdateDate"}
         },
     }
-    sort = {mongo_const.FI_RANK_TIME: 1, mongo_const.FI_UPDATE_DATE: -1}
+    sort = {
+        mongo_const.FI_RANK_TIME: mongo_const.SORT_ASCENDING,
+        mongo_const.FI_UPDATE_DATE: mongo_const.SORT_DESCENDING,
+    }
 
     rank_top = get_rank_top(
         cond, select_data, sort, coll_name=mongo_const.COLL_RANK_INFO
@@ -72,7 +75,10 @@ def get_ranking_top(app_name: str = const.APP_IT_QUIZ):
             }
         },
     }
-    sort = {mongo_const.FI_RANK: 1, mongo_const.FI_UPDATE_DATE: -1}
+    sort = {
+        mongo_const.FI_RANK: mongo_const.SORT_ASCENDING,
+        mongo_const.FI_UPDATE_DATE: mongo_const.SORT_DESCENDING,
+    }
 
     ranking_top = get_rank_top(cond, select_data, sort)
     return ranking_top

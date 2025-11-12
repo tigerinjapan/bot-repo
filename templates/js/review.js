@@ -100,7 +100,7 @@ function sendReview() {
   const form = getElem(ELEM_ID_FORM);
   if (!form) return;
 
-  form.addEventListener("submit", async function (e) {
+  form.addEventListener(EVENT_SUBMIT, async function (e) {
     e.preventDefault();
 
     setUserName();

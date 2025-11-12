@@ -8,7 +8,7 @@ import apps.utils.function_mongo as func_mongo
 import apps.utils.mongo_constants as mongo_const
 
 
-def get_log_data_list(
+def get_log_data(
     div: str, target_date: str = const.SYM_BLANK, json_flg: bool = const.FLG_OFF
 ):
     """
@@ -28,7 +28,14 @@ def get_log_data_list(
         cond_and_list.append(cond_target_date)
 
     cond = {mongo_const.OPERATOR_AND: cond_and_list}
-    result = func_mongo.db_find(client, mongo_const.COLL_LOG, cond)
+
+    sort = {}
+    if div != const.APP_DASHBOARD:
+        sort = {
+            mongo_const.FI_TARGET_DATE: mongo_const.SORT_DESCENDING,
+        }
+
+    result = func_mongo.db_find(client, mongo_const.COLL_LOG, cond, sort=sort)
     if result:
         for log_info in result:
             if json_flg:
@@ -51,5 +58,5 @@ def insert_log_data(data_list):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    log_data = get_log_data_list()
+    log_data = get_log_data()
     print(log_data)

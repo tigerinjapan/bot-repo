@@ -1,5 +1,11 @@
+// ヘッダー設定
+setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
+
 // タイトル設定
 document.title = TITLE_IT_QUIZ;
+
+// ページ読み込み時にsessionStorageからデータを取得
+let userName = sessionStorage.getItem(STR_USER_NAME);
 
 /**
  * 定数と初期データ定義
@@ -20,12 +26,14 @@ const PLUS_POINT_HALF = PLUS_POINT / 2;
 // 減点
 const MINUS_POINT = (PLUS_POINT / 10) * -1;
 
-// ページ読み込み時にsessionStorageからデータを取得
-let userName = sessionStorage.getItem(STR_USER_NAME);
+// id
+const ID_MESSAGE_DIALOG = "message-dialog";
+const ID_CHOICE_DIALOG = "choice-dialog";
+const ID_RULE_DIALOG = "rule-dialog";
 
 // グローバルなゲーム状態を保持するオブジェクト
 const gameState = {
-  selectedLanguage: 'ko', // 初期言語設定は韓国語
+  selectedLanguage: LANG_CD_KO, // 初期言語設定は韓国語
   currentQuizIndex: 0,
   score: 0,
   currentWord: [], // 現在の単語の状態（例: ['G', '_', 'M', '_', 'N', 'I']）
@@ -140,13 +148,13 @@ const charPool = {
 // 多言語テキスト取得ヘルパー
 const getLocalizedText = (key) => {
   const lang = gameState.selectedLanguage;
-  return textMap[key] ? (textMap[key][lang] || textMap[key]['en']) : key;
+  return textMap[key] ? (textMap[key][lang] || textMap[key][LANG_CD_EN]) : key;
 };
 
 // 多言語メッセージ取得ヘルパー
 const getLocalizedMessage = (key, placeholder = {}) => {
   const lang = gameState.selectedLanguage;
-  let msg = msgMap[key] ? (msgMap[key][lang] || msgMap[key]['en']) : key;
+  let msg = msgMap[key] ? (msgMap[key][lang] || msgMap[key][LANG_CD_EN]) : key;
   for (const p in placeholder) {
     msg = msg.replace(`%${p}%`, placeholder[p]);
   }
@@ -208,9 +216,9 @@ const renderInitialScreen = () => {
   container.innerHTML = `
       <h1 class="title">${TITLE_IT_QUIZ}</h1>
       <div class="flex-center">
-        <button class="btn btn-secondary lang-btn" data-lang="ja" onclick="onLanguageSelect('ja')">日本語</button>
-        <button class="btn btn-secondary lang-btn" data-lang="ko" onclick="onLanguageSelect('ko')">한국어</button>
-        <button class="btn btn-secondary lang-btn" data-lang="en" onclick="onLanguageSelect('en')">English</button>
+        <button class="btn btn-secondary lang-btn" data-lang=${LANG_CD_JA} onclick="onLanguageSelect('${LANG_CD_JA}')">日本語</button>
+        <button class="btn btn-secondary lang-btn" data-lang=${LANG_CD_KO} onclick="onLanguageSelect('${LANG_CD_KO}')">한국어</button>
+        <button class="btn btn-secondary lang-btn" data-lang=${LANG_CD_EN} onclick="onLanguageSelect('${LANG_CD_EN}')">English</button>
       </div>
       <div class="flex-center">
         <label class="inputLbl" for="inputUserName">USER</label>
@@ -218,7 +226,7 @@ const renderInitialScreen = () => {
       </div>
       <div class="flex-center">
         <button class="btn" id="btnStartGame" disabled>${BUTTON_START}</button>
-        <button class="btn" id="btnGameRule" disabled onclick="showRuleDialog()">${TITLE_GAME_RULES}</button>
+        <button class="btn" id="btnGameRule" disabled onclick="showRuleDialog()">${BUTTON_RULE}</button>
       </div>
       <h2>Ranking</h2>
       <ul id="ranking-list">
@@ -239,7 +247,7 @@ const renderInitialScreen = () => {
   const btnStart = getElem('btnStartGame');
   const inputUserName = getElem('inputUserName');
   if (btnStart) {
-    btnStart.addEventListener("click", () => {
+    btnStart.addEventListener(EVENT_CLICK, () => {
       userName = inputUserName.value.trim();
 
       // ユーザー名が4文字以上10文字以下の場合のみ有効
@@ -477,7 +485,7 @@ const handleTimeout = () => {
   if (gameState.isGameOver) return; // 二重処理防止
 
   const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
-  showDialog('message-dialog', 'timeout', { 'WORD': currentQuiz.word });
+  showDialog(ID_MESSAGE_DIALOG, 'timeout', { 'WORD': currentQuiz.word });
 
   // 3秒後に次の問題へ
   setTimeout(nextQuiz, 3000);
@@ -501,7 +509,7 @@ const useHint = () => {
 
   // 残りの空欄数が最大ヒント回数を超えていないかチェック
   if (currentWord.length - 1 <= gameState.hintsUsed || blanks.length === 0) {
-    showDialog('message-dialog', 'no_more_hints');
+    showDialog(ID_MESSAGE_DIALOG, 'no_more_hints');
     return;
   }
 
@@ -515,7 +523,7 @@ const useHint = () => {
   // 減点処理
   gameState.score = Math.max(0, gameState.score + MINUS_POINT);
 
-  showDialog('message-dialog', 'hint_used');
+  showDialog(ID_MESSAGE_DIALOG, 'hint_used');
   renderQuizStatus();
   renderQuizWord();
 };
@@ -560,19 +568,19 @@ const checkAnswer = () => {
 
     gameState.score += points;
 
-    showDialog('message-dialog', 'correct');
+    showDialog(ID_MESSAGE_DIALOG, 'correct');
 
     // 3秒後に次の問題へ
     setTimeout(nextQuiz, 3000);
   } else {
-    showDialog('message-dialog', 'wrong_answer');
+    showDialog(ID_MESSAGE_DIALOG, 'wrong_answer');
   }
 };
 
 // 文字選択ダイアログを開く
 const openChoiceDialog = (index) => {
   if (gameState.currentWord[index] !== '_') {
-    showDialog('message-dialog', 'already_solved');
+    showDialog(ID_MESSAGE_DIALOG, 'already_solved');
     return;
   }
 
@@ -626,7 +634,7 @@ const openChoiceDialog = (index) => {
   });
 
   // ダイアログを表示
-  getElem('choice-dialog').showModal();
+  getElem(ID_CHOICE_DIALOG).showModal();
 };
 
 // 文字選択処理
@@ -634,12 +642,12 @@ const handleChoice = (char) => {
   const index = gameState.selectedCharIndex;
   const targetWord = gameState.quizSet[gameState.currentQuizIndex].word;
   const correctChar = targetWord[index];
-  const choiceDialog = getElem('choice-dialog');
+  const choiceDialog = getElem(ID_CHOICE_DIALOG);
 
   if (char === correctChar) {
     // 正解の場合
     gameState.currentWord[index] = char;
-    closeDialog('choice-dialog');
+    closeDialog(ID_CHOICE_DIALOG);
     renderQuizWord();
 
     // 正解をチェックし、クリアしていれば次の問題へ
@@ -659,7 +667,7 @@ const handleChoice = (char) => {
     }
 
     // 誤答メッセージを可愛く表示
-    showDialog('message-dialog', 'invalid_choice');
+    showDialog(ID_MESSAGE_DIALOG, 'invalid_choice');
   }
 };
 
@@ -673,7 +681,7 @@ const setupKeyboardListener = () => {
 // グローバルなキーボードイベントハンドラ
 const handleGlobalKeydown = (event) => {
   const key = event.key.toUpperCase();
-  const choiceDialog = getElem('choice-dialog');
+  const choiceDialog = getElem(ID_CHOICE_DIALOG);
 
   // 文字選択ダイアログが開いている場合のみ処理
   if (choiceDialog.open && gameState.selectedCharIndex !== -1) {
@@ -687,14 +695,14 @@ const handleGlobalKeydown = (event) => {
         handleChoice(key);
       } else if (charPool.letters.includes(key) || charPool.numbers.includes(key)) {
         // 候補にない文字や無効なボタンを押した場合もエラー表示
-        showDialog('message-dialog', 'input_error');
+        showDialog(ID_MESSAGE_DIALOG, 'input_error');
       }
     }
   } else if (key === 'ESCAPE') {
     // Escapeキーで開いているダイアログを閉じる
-    if (choiceDialog.open) closeDialog('choice-dialog');
-    if (getElem('message-dialog').open) closeDialog('message-dialog');
-    if (getElem('rule-dialog').open) closeDialog('rule-dialog');
+    if (choiceDialog.open) closeDialog(ID_CHOICE_DIALOG);
+    if (getElem(ID_MESSAGE_DIALOG).open) closeDialog(ID_MESSAGE_DIALOG);
+    if (getElem(ID_RULE_DIALOG).open) closeDialog(ID_RULE_DIALOG);
   }
 };
 
@@ -730,7 +738,7 @@ const gameOver = () => {
   // スコアを明示的に表示
   const msg = `${getLocalizedMessage('game_over')} ${gameState.score} pts`;
   setElemText('dialog-content', msg);
-  getElem('message-dialog').showModal();
+  getElem(ID_MESSAGE_DIALOG).showModal();
 
   // ランキング更新判定・API送信
   const updateRank = getUpdateRank();
@@ -779,7 +787,7 @@ async function updateRanking(rank, score, userName) {
 const showRuleDialog = () => {
   setElemText("rule-title", TITLE_GAME_RULES)
   setElemContents('rule-content', getLocalizedMessage('rule_content'));
-  getElem('rule-dialog').showModal();
+  getElem(ID_RULE_DIALOG).showModal();
 };
 
 /**

@@ -1,15 +1,15 @@
 [
     {
         "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGKKZO92506930R11C25A1EA1000/\" target=\"_blank\" rel=\"noopener noreferrer\">(迫真)病院淘汰の時代1「ある日突然なくなる」</a>"
+        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGKKZO92533470S5A111C2MM8000/\" target=\"_blank\" rel=\"noopener noreferrer\">ソフトバンクG最高益\n2.9兆円4~9月最終AI投資好調\nエヌビディア株全て売却</a>"
     },
     {
         "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2511/10/news029.html\" target=\"_blank\" rel=\"noopener noreferrer\">arXiv、コンピュータサイエンスの「レビュー論文」「ポジションペーパー」が査読なしで掲載不可に原因は“AI生成論文の急増”</a>"
+        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/pcuser/articles/2511/11/news046.html\" target=\"_blank\" rel=\"noopener noreferrer\">「Windows11バージョン26H1」がターゲットとする2つのArmプロセッサとは</a>"
     },
     {
         "区分": "韓国",
-        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56537\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 aespa 来年4月に初の日本ドームツアー開催</a>"
+        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56550\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 韓国歌手MCモン、自宅にヒトラーの肖像画を掛けた写真を公開し物議</a>"
     },
     {
         "区分": "エンタメ",
@@ -17,6 +17,6 @@
     },
     {
         "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/506618.html\" target=\"_blank\" rel=\"noopener noreferrer\">”「ボイプラ2」のカンミンが合流”「VERIVERY」\n12月1日のカムバックを確定</a>"
+        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/506696.html\" target=\"_blank\" rel=\"noopener noreferrer\">[韓流]13日の大学入試IVEイソら受験せず進学は少数派に</a>"
     }
 ]

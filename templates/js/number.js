@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ゲームルール表示
   const ruleBtn = getElem("btnRule");
   if (ruleBtn) {
-    ruleBtn.addEventListener("click", () => {
+    ruleBtn.addEventListener(EVENT_CLICK, () => {
       showDialog(langCd);
     });
   }
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 回答確認
   const chkBtn = getElem("btnChk");
   if (chkBtn) {
-    chkBtn.addEventListener("click", () => {
+    chkBtn.addEventListener(EVENT_CLICK, () => {
       checkAnswer(langCd);
     });
   }
@@ -77,14 +77,14 @@ function init() {
   exprArea._tokens = exprArea._tokens || [];
   // 初期は非表示にしておく（START 押下で表示）
   exprArea.style.opacity = "0";
-  exprArea.style.pointerEvents = "none";
+  exprArea.style.pointerEvents = ATTR_NONE;
   exprArea.style.transition = "opacity 0.15s ease";
 
   // Number 表示をボタン化して初期描画
   const num = getElemText("number-display");
   renderInputButtons(num);
 
-  let btnRuleNm = TITLE_GAME_RULES;
+  let btnRuleNm = BUTTON_RULE;
   let btnChkNm = BUTTON_CHECK;
   let btnNextNm = BUTTON_NEXT;
 
@@ -147,7 +147,7 @@ function setStartBtn() {
   const startBtn = getElem("btnStart");
   if (startBtn) {
     startBtn.textContent = BUTTON_START;
-    startBtn.addEventListener("click", () => {
+    startBtn.addEventListener(EVENT_CLICK, () => {
       const number = getElem("number-display");
       number.style.backgroundColor = "black";
 
@@ -181,7 +181,7 @@ function setStop() {
   let exprArea = getElem("exprArea");
   if (exprArea) {
     exprArea.style.opacity = "0";
-    exprArea.style.pointerEvents = "none";
+    exprArea.style.pointerEvents = ATTR_NONE;
   }
   init();
 }
@@ -327,7 +327,7 @@ function renderInputButtons(numberStr) {
         btn.className = "digit-btn";
         btn.textContent = token.val;
         btn.dataset.idx = i;
-        btn.addEventListener("click", onDigitClick);
+        btn.addEventListener(EVENT_CLICK, onDigitClick);
         exprArea.appendChild(btn);
       } else { // slot
         const btn = document.createElement("button");
@@ -335,7 +335,7 @@ function renderInputButtons(numberStr) {
         btn.className = "slot-btn";
         btn.textContent = token.val ? token.val : "▢";
         btn.dataset.idx = i;
-        btn.addEventListener("click", onSlotClick);
+        btn.addEventListener(EVENT_CLICK, onSlotClick);
         exprArea.appendChild(btn);
       }
     }
@@ -395,7 +395,7 @@ function renderInputButtons(numberStr) {
 
     const popup = createSmallPopup(choices, e.currentTarget);
     popup.querySelectorAll("button").forEach(b => {
-      b.addEventListener("click", () => {
+      b.addEventListener(EVENT_CLICK, () => {
         const choice = b.dataset.choice;
         popup.remove();
         if (!choice) return;
@@ -464,7 +464,7 @@ function renderInputButtons(numberStr) {
     if (token.val) options.push("back");
     const popup = createSmallPopup(options, e.currentTarget);
     popup.querySelectorAll("button").forEach(b => {
-      b.addEventListener("click", () => {
+      b.addEventListener(EVENT_CLICK, () => {
         const choice = b.dataset.choice;
         popup.remove();
         if (choice === "del") {
@@ -547,10 +547,10 @@ function renderInputButtons(numberStr) {
       const onDoc = (ev) => {
         if (!popup.contains(ev.target) && ev.target !== anchorElem) {
           popup.remove();
-          document.removeEventListener("click", onDoc);
+          document.removeEventListener(EVENT_CLICK, onDoc);
         }
       };
-      document.addEventListener("click", onDoc);
+      document.addEventListener(EVENT_CLICK, onDoc);
     }, 0);
     return popup;
   }

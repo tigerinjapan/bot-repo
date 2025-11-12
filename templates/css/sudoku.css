@@ -157,20 +157,6 @@ input[type="text"] {
 	border-bottom: none;
 }
 
-/* モバイル向け調整 */
-@media (max-width: 450px) {
-
-	#rank-table th,
-	#rank-table td {
-		font-size: 0.7rem;
-	}
-
-	#user-input-container {
-		flex-direction: column;
-	}
-
-}
-
 /*
 * ゲーム画面 (Game Screen)
 */
@@ -213,17 +199,6 @@ input[type="text"] {
 	font-weight: 700;
 	word-break: break-all;
 	color: var(--color-neon-accent);
-}
-
-@media (max-width: 640px) {
-	#game-info-header {
-		padding: 0.5rem;
-		font-size: 0.8rem;
-	}
-
-	#game-info-header .info-label {
-		font-size: 0.8rem;
-	}
 }
 
 /*
@@ -476,4 +451,26 @@ input[type="text"] {
 	font-size: 1.5rem;
 	text-align: center;
 	color: var(--color-neon-light);
+}
+
+/* モバイル向け調整 */
+@media (max-width: 480px) {
+
+	#rank-table th,
+	#rank-table td {
+		font-size: 0.7rem;
+	}
+
+	#user-input-container {
+		flex-direction: column;
+	}
+
+	#game-info-header {
+		padding: 0.5rem;
+		font-size: 0.8rem;
+	}
+
+	#game-info-header .info-label {
+		font-size: 0.8rem;
+	}
 }

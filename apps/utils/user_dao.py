@@ -2,8 +2,6 @@
 ユーザー情報DAO
 """
 
-from pymongo import DESCENDING
-
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_mongo as func_mongo
@@ -54,7 +52,7 @@ def get_user_seq():
     client = func_mongo.db_connect()
     cond = {mongo_const.FI_USER_DIV: {mongo_const.OPERATOR_EQUAL: const.AUTH_GUEST}}
     select_data = {mongo_const.FI_SEQ: 1}
-    sort = [(mongo_const.FI_SEQ, DESCENDING)]
+    sort = [(mongo_const.FI_SEQ, mongo_const.SORT_DESCENDING)]
     result = func_mongo.db_find(
         client, mongo_const.COLL_USER_INFO, cond, select_data, sort
     )

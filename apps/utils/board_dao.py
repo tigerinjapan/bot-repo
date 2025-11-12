@@ -36,9 +36,9 @@ def get_board_info():
         ]
     }
     sort = {
-        mongo_const.FI_STATUS: 1,
-        mongo_const.FI_UPDATE_DATE: -1,
-        mongo_const.FI_USER_NAME: -1,
+        mongo_const.FI_STATUS: mongo_const.SORT_ASCENDING,
+        mongo_const.FI_UPDATE_DATE: mongo_const.SORT_DESCENDING,
+        mongo_const.FI_USER_NAME: mongo_const.SORT_DESCENDING,
     }
 
     result = func_mongo.db_find(client, mongo_const.COLL_BOARD, cond, sort=sort)
