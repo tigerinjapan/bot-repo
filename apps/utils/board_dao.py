@@ -10,11 +10,11 @@ import apps.utils.mongo_constants as mongo_const
 import apps.utils.sequence_dao as seq_dao
 
 
-def get_board_info():
+def get_board_info(json_flg: bool = const.FLG_ON):
     """
     掲示板データ取得
     """
-    board_data = []
+    board_data_list = []
 
     client = func_mongo.db_connect()
 
@@ -44,11 +44,14 @@ def get_board_info():
     result = func_mongo.db_find(client, mongo_const.COLL_BOARD, cond, sort=sort)
     if result:
         for board_info in result:
-            json_data = board_dto.get_board_data(board_info)
-            board_data.append(json_data)
+            if json_flg:
+                board_data = board_dto.get_board_data(board_info)
+            else:
+                board_data = board_info[mongo_const.FI_CONTENTS]
+            board_data_list.append(board_data)
 
     func_mongo.db_close(client)
-    return board_data
+    return board_data_list
 
 
 def insert_board_data_of_api(json_data):

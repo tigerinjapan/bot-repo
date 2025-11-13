@@ -99,7 +99,7 @@ def get_msg_data_today():
     """
     メッセージデータ取得
     """
-    today_info = func_api.get_result_on_app(const.APP_TODAY)
+    today_info = func_api.get_json_data_on_app(const.APP_TODAY)
     if today_info:
         key = app_title
         date_today = func_api.get_target_data(today_info, DIV_DATE, key)

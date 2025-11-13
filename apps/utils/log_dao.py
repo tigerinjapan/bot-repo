@@ -58,5 +58,5 @@ def insert_log_data(data_list):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    log_data = get_log_data()
+    log_data = get_log_data(const.STR_ERROR)
     print(log_data)

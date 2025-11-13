@@ -39,152 +39,9 @@ use(database);
 //     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
 // };
 
-// boardData_002 = {
-//     "nSeq": 2,
-//     "nApp": app_etc,
-//     "nCategory": category_review,
-//     "nType": type_add,
-//     "sContents": "レビュー：項目（ユーザ名）",
-//     "sRemark": "プルダウン追加",
-//     "nStatus": status_pend,
-//     "sUserName": user_name,
-//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
-// };
-
-// boardData_003 = {
-//     "nSeq": 3,
-//     "nApp": app_etc,
-//     "nCategory": category_review,
-//     "nType": type_add,
-//     "sContents": "掲示板の追加",
-//     "sRemark": "新規ページ",
-//     "nStatus": status_done,
-//     "sUserName": user_name,
-//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
-// };
-
-// boardData_004 = {
-//     "nSeq": 4,
-//     "nApp": app_etc,
-//     "nCategory": category_memo,
-//     "nType": type_modify,
-//     "sContents": "html、jsの共通化",
-//     "sRemark": "const.js",
-//     "nStatus": status_done,
-//     "sUserName": user_name,
-//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
-// };
-
-// boardData_005 = {
-//     "nSeq": 5,
-//     "nApp": app_travel,
-//     "nCategory": category_review,
-//     "nType": type_add,
-//     "sContents": "現在地から、対象国までの飛行時間が欲しい",
-//     "sRemark": "-",
-//     "nStatus": status_new,
-//     "sUserName": user_name_2,
-//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
-// };
-
-// boardData_006 = {
-//     "nSeq": 6,
-//     "nApp": app_travel,
-//     "nCategory": category_review,
-//     "nType": type_add,
-//     "sContents": "時差があると嬉しい",
-//     "sRemark": "-",
-//     "nStatus": status_new,
-//     "sUserName": user_name_2,
-//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
-// };
-
-// boardData_007 = {
-//     "nSeq": 7,
-//     "nApp": app_travel,
-//     "nCategory": category_review,
-//     "nType": type_add,
-//     "sContents": "言語名があると嬉しい",
-//     "sRemark": "-",
-//     "nStatus": status_new,
-//     "sUserName": user_name_2,
-//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
-// };
-
-// boardData_008 = {
-//     "nSeq": 8,
-//     "nApp": app_travel,
-//     "nCategory": category_review,
-//     "nType": type_add,
-//     "sContents": "挨拶の対象言語での音声（読み方）",
-//     "sRemark": "音声AIの追加",
-//     "nStatus": status_new,
-//     "sUserName": user_name_2,
-//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
-// };
-
-// boardData_009 = {
-//     "nSeq": 9,
-//     "nApp": app_travel,
-//     "nCategory": category_review,
-//     "nType": type_add,
-//     "sContents": "オススメデザートや、屋台フードもあると良い",
-//     "sRemark": "-",
-//     "nStatus": status_new,
-//     "sUserName": user_name_2,
-//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
-// };
-
-// boardData_010 = {
-//     "nSeq": 10,
-//     "nApp": app_line,
-//     "nCategory": category_review,
-//     "nType": type_modify,
-//     "sContents": "ホームをクリックして、ホームページに飛びたい",
-//     "sRemark": "-",
-//     "nStatus": status_new,
-//     "sUserName": user_name_2,
-//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
-// };
-
-// boardData_011 = {
-//     "nSeq": 11,
-//     "nApp": app_line,
-//     "nCategory": category_review,
-//     "nType": type_add,
-//     "sContents": "テキストに加工（白フチ）して写真に文字がかかっても読めると嬉しい",
-//     "sRemark": "追加説明要",
-//     "nStatus": status_pend,
-//     "sUserName": user_name_2,
-//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
-// };
-
-// boardData_012 = {
-//     "nSeq": 99,
-//     "nApp": app_kakao,
-//     "nCategory": category_review,
-//     "nType": type_add,
-//     "sContents": "ゲームスタート、ストップ機能があると嬉しい",
-//     "sRemark": "スタート押下前には、番号は非表示",
-//     "nStatus": status_done,
-//     "sUserName": user_name_2,
-//     "dUpdateDate": new Date("2025-09-09T03:04:26.870Z")
-// };
-
 // // insert documents
 // const bulkData = [];
 // bulkData.push(boardData_001);
-// bulkData.push(boardData_002);
-// bulkData.push(boardData_003);
-// bulkData.push(boardData_004);
-// bulkData.push(boardData_005);
-// bulkData.push(boardData_006);
-// bulkData.push(boardData_007);
-// bulkData.push(boardData_008);
-// bulkData.push(boardData_009);
-// bulkData.push(boardData_010);
-// bulkData.push(boardData_011);
-// bulkData.push(boardData_012);
 // db.board.insertMany(bulkData);
 
 // delete documents
@@ -198,8 +55,8 @@ use(database);
 // db.board.deleteMany({ nSeq: { $gte: currentSeq } });
 
 // find documents
-const cond = { nSeq: 70, nApp: { $eq: app_server } };
-db.board.find(cond).pretty();
+// const cond = { nSeq: 70, nApp: { $eq: app_server } };
+// db.board.find(cond).pretty();
 
 // db.board.find(
 //     {

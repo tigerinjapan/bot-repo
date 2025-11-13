@@ -73,13 +73,25 @@ def get_response_result(
     return result
 
 
-def get_result_on_app(app_name: str):
+def get_json_data_on_app(app_name: str, token_flg: bool = const.FLG_OFF):
     """
     JSONデータ取得
     """
-    # url = f"{URL_SERVER}/{const.FILE_TYPE_JSON}/{app_name}?token=token_{func.get_now(const.DATE_TODAY)}"
     url = f"{URL_SERVER}/{const.FILE_TYPE_JSON}/{app_name}"
+    if token_flg:
+        url += f"?token=token_{func.get_now(const.DATE_TODAY)}"
     result = get_response_result(url)
+    return result
+
+
+def post_api_on_server(path: str, json_data):
+    """
+    API送信
+    """
+    url = f"{URL_SERVER}{path}"
+    result = get_response_result(
+        url, request_type=const.REQUEST_TYPE_POST, data=json_data
+    )
     return result
 
 
@@ -165,5 +177,5 @@ def get_target_data(
 
 
 if __name__ == const.MAIN_FUNCTION:
-    result = get_result_on_app(const.APP_TODAY)
+    result = get_json_data_on_app(const.APP_TODAY)
     func.print_test_data(result, type_flg=const.FLG_ON)

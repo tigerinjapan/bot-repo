@@ -12,7 +12,7 @@ import apps.utils.function_api as func_api
 SCRIPT_NAME = func.get_app_name(__file__)
 
 # URL
-URL_KOYEB_APP = "https://" + func.get_env_val("URL_KOYEB")
+URL_KOYEB_APP = func.get_server_url(local_flg=const.FLG_OFF)
 URL_KOYEB_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}"
 URL_TODAY_IMG = f"{URL_KOYEB_IMG}/{const.APP_TODAY}"
 URL_GEMINI_IMG = f"{URL_KOYEB_IMG}/{const.STR_GEMINI}"

@@ -42,9 +42,9 @@ def get_update_data_for_board_info(data, seq: int):
     status = const.STATUS_NEW
     userName = data[4]
 
-    json_data = asdict(
-        board(seq, app, category, type, contents, remark, status, userName)
-    )
+    json_data = board(
+        seq, app, category, type, contents, remark, status, userName
+    ).get_data()
     return json_data
 
 
@@ -64,7 +64,7 @@ def get_board_data(data):
         data[mongo_const.FI_UPDATE_DATE], const.DATE_FORMAT_YYYYMMDD_SLASH
     )
 
-    json_data = asdict(
-        board(seq, app, category, type, contents, remark, status, userName, updateDate)
-    )
+    json_data = board(
+        seq, app, category, type, contents, remark, status, userName, updateDate
+    ).get_data()
     return json_data

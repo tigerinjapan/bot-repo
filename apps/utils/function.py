@@ -200,12 +200,12 @@ def get_local_url() -> str:
     return local_url
 
 
-def get_server_url() -> str:
+def get_server_url(local_flg: bool = const.FLG_ON) -> str:
     """
     サーバーURL取得
     """
     server_url = "https://" + get_env_val("URL_KOYEB")
-    if is_local_env():
+    if local_flg and is_local_env():
         server_url = get_local_url()
     return server_url
 

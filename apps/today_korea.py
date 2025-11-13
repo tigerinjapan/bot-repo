@@ -90,7 +90,7 @@ def get_today_info(object_type: str = func_kakao.OBJECT_TYPE_FEED):
     """
     今日の生活情報取得
     """
-    json_data = func_api.get_result_on_app(const.APP_TODAY_KOREA)
+    json_data = func_api.get_json_data_on_app(const.APP_TODAY_KOREA)
 
     date_time_text = json_data[0].get(col_list[1])
     today_date = func.convert_date_format(

@@ -31,7 +31,7 @@ SCRIPT_NAME = func.get_app_name(__file__)
 
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
-LIST_APP_DIV_SITE = ([site] * 4) + [log]
+LIST_APP_DIV_SITE = ([site] * 4)
 LIST_APP_DIV_KOREA = [today_korea]
 LIST_ALL_APP_DIV = LIST_APP_DIV + LIST_APP_DIV_SITE + LIST_APP_DIV_KOREA
 
@@ -108,10 +108,7 @@ def get_context_data(request: Request, app_name: str):
     app_exec.start()
 
     if app_name in const.LIST_APP_SITE:
-        if app_name == const.STR_LOG:
-            df = log.get_df_data(user_div=user_div)
-        else:
-            df = site.get_df_data(app_name, user_div)
+        df = site.get_df_data(app_name, user_div)
         data_list = get_data_list(df)
     else:
         data_list = app_exec.data()
@@ -285,7 +282,7 @@ def no_sleep():
     """
     スリープ状態にならないようサーバーアクセス
     """
-    func_api.get_result_on_app(const.APP_TODAY)
+    func_api.get_json_data_on_app(const.APP_TODAY)
 
 
 if __name__ == const.MAIN_FUNCTION:

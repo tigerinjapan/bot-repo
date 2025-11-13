@@ -80,22 +80,20 @@ def get_json_data_for_user_info(form_data):
         except:
             continue
 
-    json_data = asdict(
-        userInfo(
-            func.get_masking_data(user_id),
-            user_name,
-            user_div,
-            func.get_masking_data(user_pw),
-            int(year),
-            int(sex),
-            zip_cd,
-            pref,
-            town,
-            line,
-            station,
-            tel,
-            const.SYM_BLANK.join(menu_val_list),
-            int(seq),
-        )
-    )
+    json_data = userInfo(
+        func.get_masking_data(user_id),
+        user_name,
+        user_div,
+        func.get_masking_data(user_pw),
+        int(year),
+        int(sex),
+        zip_cd,
+        pref,
+        town,
+        line,
+        station,
+        tel,
+        const.SYM_BLANK.join(menu_val_list),
+        int(seq),
+    ).get_data()
     return json_data

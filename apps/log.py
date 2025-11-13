@@ -8,6 +8,7 @@ import apps.utils.constants as const
 import apps.utils.log_dao as log_dao
 import apps.utils.log_dto as log_dto
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
 
 # スクリプト名
@@ -19,6 +20,74 @@ app_title = "ログ管理"
 # カラムリスト
 col_list = [const.STR_DATE_JA, const.STR_DIV_JA, const.STR_CONTENTS_JA]
 col_list_admin = col_list + [const.STR_STATUS_JA]
+
+
+def get_log_data_list(
+    log_div: str,
+    col_len: int = const.NUM_THREE,
+    backup_flg: bool = const.FLG_OFF,
+):
+    """
+    ログデータリスト取得
+    """
+    data_list = []
+    log_backup_list = []
+    backup_data_list = []
+    new_log_list = []
+    rewrite_data_list = []
+
+    # 重複データ削除
+    existed_data_list = []
+
+    try:
+        log_path = func.get_file_path(
+            log_div,
+            file_type=const.FILE_TYPE_LOG,
+            file_div=const.STR_OUTPUT,
+        )
+
+        log_data_text = func.read_file(log_path)
+        if log_data_text:
+            log_data_list = log_data_text.split(const.SYM_NEW_LINE)
+
+            if log_div != const.STR_ERROR:
+                target_date = get_last_year_first()
+                log_backup_list = log_dao.get_log_data(log_div, target_date)
+
+            for log_data in log_data_list:
+                if log_data and log_data not in log_backup_list:
+                    if log_div == const.STR_ERROR:
+                        message = log_data[24:]
+                        if message in existed_data_list:
+                            continue
+                        existed_data_list.append(message)
+
+                    new_log_list.append(log_data)
+
+            if new_log_list:
+                log_backup_list.extend(new_log_list)
+
+            for log_data in log_backup_list:
+                data = log_data.split(const.SYM_SPACE)[:col_len]
+                data_list.append(data)
+
+                if backup_flg and log_data in new_log_list:
+                    insert_data = get_insert_data(log_div, log_data, data[0])
+                    if insert_data:
+                        backup_data_list.append(insert_data)
+                    else:
+                        rewrite_data_list.append(log_data)
+
+            if backup_data_list:
+                backup_data(log_div, backup_data_list, rewrite_data_list, log_path)
+            else:
+                if not new_log_list:
+                    func.print_info_msg(SCRIPT_NAME, msg_const.MSG_INFO_DATA_NOT_EXIST)
+
+    except Exception as e:
+        func.print_info_msg(SCRIPT_NAME, e)
+
+    return data_list
 
 
 def backup_log(log_div: str = const.APP_DASHBOARD):
@@ -33,138 +102,67 @@ def backup_log(log_div: str = const.APP_DASHBOARD):
     func.print_end(div)
 
 
-def get_log_data_list(
-    log_div: str, col_len: int = const.NUM_THREE, backup_flg: bool = const.FLG_OFF
-):
+def backup_data(log_div: str, backup_data_list, rewrite_data_list: list[str], log_path: str):
     """
-    ログデータリスト取得
+    データバックアップ
     """
-    data_list = []
-    backup_data_list = []
-    new_log_list = []
-
     try:
-        log_path = func.get_file_path(
-            log_div,
-            file_type=const.FILE_TYPE_LOG,
-            file_div=const.STR_OUTPUT,
-        )
+        if log_div == const.STR_ERROR:
+            api_path = f"/{const.APP_BOARD}/{const.STR_ADD}"
+            json_data = {const.STR_DATA: backup_data_list}
+            json_data = func.get_dumps_json(json_data)
 
-        log_data_text = func.read_file(log_path)
-        if log_data_text:
-            log_data_list = log_data_text.split(const.SYM_NEW_LINE)
+            # DB登録（掲示板情報）
+            result = func_api.post_api_on_server(api_path, json_data)
+            if result:
+                message = result[const.STR_MESSAGE]
 
-            target_date = get_last_year_first()
-            log_backup_list = log_dao.get_log_data(log_div, target_date)
+        else:
+            # DB登録（ログ）
+            log_dao.insert_log_data(backup_data_list)
+            message = msg_const.MSG_INFO_PROC_COMPLETED
 
-            for log_data in log_data_list:
-                if log_data and log_data not in log_backup_list:
-                    new_log_list.append(log_data)
+        if message == msg_const.MSG_INFO_PROC_COMPLETED:
+            # ログファイル再作成
+            backup_log_data = const.SYM_NEW_LINE.join(rewrite_data_list) + const.SYM_NEW_LINE
+            func.write_file(log_path, backup_log_data)
 
-            if new_log_list:
-                log_backup_list.extend(new_log_list)
-
-            for log_data in log_backup_list:
-                data = log_data.split(const.SYM_SPACE)[:col_len]
-                data_list.append(data)
-
-                if backup_flg and log_data in new_log_list:
-                    log_date = data[0]
-                    cutoff_date = func.get_calc_date(-1)
-                    log_datetime = func.convert_str_to_date(
-                        log_date, const.DATE_FORMAT_YYYYMMDD_DASH
-                    )
-                    # 1日以前のログか判定
-                    if log_datetime <= cutoff_date:
-                        log_backup = [log_div, log_data, log_datetime]
-                        json_data = log_dto.get_insert_data_for_log(log_backup)
-                        backup_data_list.append(json_data)
-
-            if backup_data_list:
-                # DB登録
-                log_dao.insert_log_data(backup_data_list)
-
-                # ログファイル：本日分以外削除
-                backup_log_data = (
-                    const.SYM_NEW_LINE.join(new_log_list) + const.SYM_NEW_LINE
-                )
-                func.write_file(log_path, backup_log_data)
-
-                msg_div = f"{len(backup_data_list)}件, {const.STR_BACKUP_JA}"
-                func.print_info_msg(msg_div, msg_const.MSG_INFO_PROC_COMPLETED)
-
-            else:
-                if not new_log_list:
-                    func.print_info_msg(SCRIPT_NAME, msg_const.MSG_INFO_DATA_NOT_EXIST)
+            msg_div = f"{log_div} {len(backup_data_list)}件 {const.STR_BACKUP_JA}"
+            func.print_info_msg(msg_div, msg_const.MSG_INFO_PROC_COMPLETED)
 
     except Exception as e:
         func.print_info_msg(SCRIPT_NAME, e)
 
-    return data_list
 
-
-# TODO: エラー対応すると、log_divをdummyへ更新？
-def get_df_data(log_div: str = const.STR_ERROR, user_div: str = const.AUTH_DEV):
+def get_insert_data(log_div:str, log_data:str, log_date:str):
     """
-    DataFrameのデータ取得
+    バックアップ登録データ取得
     """
-    data_list = []
+    insert_data = const.SYM_BLANK
 
-    # JSONデータ取得
-    target_date = get_last_year_first()
-    log_data_list = log_dao.get_log_data(log_div, target_date)
-
-    for log_data in log_data_list:
-        log_data_split = log_data.split(const.SYM_SPACE)
-        date = log_data_split[0]
-        div = get_log_category(log_data_split[3])
-        message = const.SYM_SPACE.join(log_data_split[3:])
-        data = [date, div, message]
-        data_list.append(data)
-
-    # DataFrame変換
-    df = func.get_df(data_list, col_list)
-
-    user_auth = func.get_auth_num(user_div)
-    if user_auth == const.NUM_AUTH_ADMIN:
-        df[const.STR_STATUS_JA] = func.get_dialog_button(
-            func.convert_upper_lower(log_div),
-            df[const.STR_DIV_JA],
-            "▶️",
-        )
-        df.columns = col_list_admin
-
-    return df
-
-
-def get_log_category(log_data: str) -> str:
-    """
-    ログカテゴリ取得
-    """
-    log_category = const.SYM_BLANK
-    func_name = log_data.replace("[", const.SYM_BLANK).replace("]", const.SYM_BLANK)
-
-    for category in const.LIST_LOG_CATEGORY:
-        if category in func_name:
-            log_category = category
-            break
-
-    if not log_category:
-        log_category = const.STR_ETC
-        if const.STR_RESPONSE in func_name or const.STR_REQUEST in func_name:
-            log_category = const.STR_API
-        elif const.STR_MONGO in func_name:
-            log_category = const.STR_DB
-        else:
-            app_category_list = [
-                item for sub_list in const.LIST_APP_CATEGORY for item in sub_list
+    cutoff_date = func.get_calc_date(-1)
+    log_datetime = func.convert_str_to_date(
+        log_date, const.DATE_FORMAT_YYYYMMDD_DASH
+    )
+    # 1日以前のログか判定
+    if log_datetime <= cutoff_date:
+        if log_div == const.STR_ERROR:
+            idx_app = const.LIST_BOARD_APP.index("Server")
+            idx_category = const.LIST_BOARD_CATEGORY.index("Error")
+            idx_type = const.LIST_BOARD_TYPE.index("Modify")
+            message = log_data.replace("http", const.SYM_BLANK)
+            insert_data = [
+                idx_app,
+                idx_category,
+                idx_type,
+                message,
+                const.AUTH_ADMIN,
             ]
-            for app_category in app_category_list:
-                if app_category in func_name:
-                    log_category = const.STR_APP
-                    break
+        else:
+            log_backup = [log_div, log_data, log_datetime]
+            insert_data = log_dto.get_insert_data_for_log(log_backup)
 
-    return log_category
+    return insert_data
 
 
 def get_last_year_first() -> datetime:
@@ -183,4 +181,5 @@ def get_last_year_first() -> datetime:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    get_log_data_list(const.APP_DASHBOARD)
+    # get_log_data_list(const.APP_DASHBOARD)
+    backup_log(const.STR_ERROR)

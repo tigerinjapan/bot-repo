@@ -36,14 +36,7 @@ def get_json_data_for_log(data):
         data[mongo_const.FI_UPDATE_DATE], const.DATE_FORMAT_YYYYMMDD_SLASH
     )
 
-    json_data = asdict(
-        log(
-            div,
-            message,
-            target_date,
-            updateDate,
-        )
-    )
+    json_data = log(div, message, target_date, updateDate).get_data()
     return json_data
 
 
@@ -55,5 +48,5 @@ def get_insert_data_for_log(data: list[str]):
     message = data[1]
     target_date = data[2]
 
-    json_data = asdict(log(div, message, target_date))
+    json_data = log(div, message, target_date).get_data()
     return json_data

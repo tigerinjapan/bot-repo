@@ -150,12 +150,11 @@ const APP_TV = "tv";
 const APP_NEWS = "news";
 const APP_STUDY = "study";
 const APP_BOARD = "board";
-const APP_LOG = "log";
 const APP_USER = "user";
 
 const LIST_APP_GUEST_MO = [APP_DRAMA, APP_RANKING, APP_LCC, APP_TV];
 const LIST_APP_GUEST = [APP_TODAY, APP_SITE].concat(LIST_APP_GUEST_MO);
-const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_BOARD, APP_LOG, APP_USER];
+const LIST_APP_NOT_GUEST = [APP_NEWS, APP_STUDY, APP_BOARD, APP_USER];
 const LIST_APP = LIST_APP_GUEST.concat(LIST_APP_NOT_GUEST);
 
 const APP_TRAVEL = "travel";

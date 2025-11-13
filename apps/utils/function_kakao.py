@@ -39,8 +39,6 @@ URL_KAKAO_API_SEND_FRIENDS = f"{const.URL_KAKAO_API}/message/default/send"
 URL_TODAY_KOREA_IMG = f"{func_line.URL_KOYEB_IMG}/{const.APP_TODAY_KOREA}"
 
 # リダイレクトURI
-# URL_SERVER = func.get_server_url()
-# REDIRECT_URI = f"{URL_SERVER}/kakao/oauth"
 REDIRECT_URI = f"{func_line.URL_KOYEB_APP}/kakao/oauth"
 
 auth_url = (
