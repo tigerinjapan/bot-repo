@@ -488,11 +488,14 @@ def write_file(file_path: str, data, file_encode: str = const.CHARSET_UTF_8):
 
     try:
         with open(file_path, mode=const.FILE_MODE_WRITE, encoding=file_encode) as f:
-            if file_ext == const.FILE_TYPE_JSON:
-                json.dump(data, f, ensure_ascii=const.FLG_OFF, indent=4)
+            if data:
+                if file_ext == const.FILE_TYPE_JSON:
+                    json.dump(data, f, ensure_ascii=const.FLG_OFF, indent=4)
+                else:
+                    # func[write]:Writing file
+                    f.write(data)
             else:
-                # func[write]:Writing file
-                f.write(data)
+                pass
 
             # func[close]:Close file
             f.close()

@@ -120,8 +120,8 @@ def get_csv_item_list():
     item_list = []
 
     for num in range(1000, 10000):
-        str_num = str(num)
-        answer_list = find_answer(str_num)
+        num_str = str(num)
+        answer_list = find_answer(num_str)
         if not answer_list or 8 <= len(answer_list):
             continue
 
@@ -141,7 +141,7 @@ def get_csv_item_list():
         if level == const.SYM_DASH:
             continue
 
-        item = [str_num, answer, level]
+        item = [num_str, answer, level]
         item_list.append(item)
 
     return item_list

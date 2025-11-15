@@ -65,11 +65,12 @@ def get_gemini_response(
     func.print_start(div_msg)
 
     gemini_model_info = func.get_input_data(const.STR_GEMINI, model)
-    end_date = gemini_model_info[const.STR_DATE]
-    today = func.get_now(const.DATE_TODAY)
-    if model == GEMINI_MODEL_IMG and end_date < today:
-        func.print_debug_msg(model, msg_const.MSG_ERR_API_SUPPORT_ENDED)
-        return const.NONE_CONSTANT
+    if gemini_model_info:
+        end_date = gemini_model_info[const.STR_DATE]
+        today = func.get_now(const.DATE_TODAY)
+        if model == GEMINI_MODEL_IMG and end_date < today:
+            func.print_debug_msg(model, msg_const.MSG_ERR_API_SUPPORT_ENDED)
+            return const.NONE_CONSTANT
 
     if model == GEMINI_MODEL:
         add_condition = get_sample_contents(const.FILE_TYPE_TXT)
@@ -87,7 +88,7 @@ def get_gemini_response(
         usage = response.usage_metadata
         token_count = usage.total_token_count
         tpm = gemini_model_info["tpm"]
-        if tpm < token_count:
+        if tpm and tpm < token_count:
             func.print_debug_msg("トークン数", f"上限:{tpm}、合計: {token_count}")
 
         if response:
@@ -521,7 +522,7 @@ def get_generate_image(model: str, prompt: str, config=const.NONE_CONSTANT):
     """
     生成イメージ取得
 
-    [ERROR] 無料版で利用可能なモデルない
+    [CHECK] 無料版で利用可能なモデルない
     """
     client = get_client()
 
@@ -549,7 +550,7 @@ def get_generate_video(div: str, model: str, prompt: str) -> str:
     """
     生成ビデオ取得
 
-    [ERROR] 無料版で利用可能なモデルない
+    [CHECK] 無料版で利用可能なモデルない
     """
     client = get_client()
 
@@ -603,7 +604,7 @@ def test_generate_image():
     """
     [テスト] 今日のニュースイメージ取得
 
-    [ERROR] 無料版で利用可能なモデルない
+    [CHECK] 無料版で利用可能なモデルない
     """
     model = "imagen-3.0-generate-002"
     prompt = "A serene landscape with mountains and a clear blue lake"
@@ -614,7 +615,7 @@ def test_generate_video():
     """
     [テスト] 生成ビデオ取得
 
-    [ERROR] 無料版で利用可能なモデルない
+    [CHECK] 無料版で利用可能なモデルない
     """
     div = "example"
     model = "veo-3.0-generate-preview"
@@ -625,8 +626,6 @@ def test_generate_video():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # test_gemini()
-    test_gemini_img()
+    test_gemini()
+    # test_gemini_img()
     # test_today_img()
-    # test_generate_image()
-    # test_generate_video()

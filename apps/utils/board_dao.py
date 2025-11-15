@@ -38,7 +38,7 @@ def get_board_info(json_flg: bool = const.FLG_ON):
     sort = {
         mongo_const.FI_STATUS: mongo_const.SORT_ASCENDING,
         mongo_const.FI_UPDATE_DATE: mongo_const.SORT_DESCENDING,
-        mongo_const.FI_USER_NAME: mongo_const.SORT_DESCENDING,
+        mongo_const.FI_SEQ: mongo_const.SORT_DESCENDING,
     }
 
     result = func_mongo.db_find(client, mongo_const.COLL_BOARD, cond, sort=sort)
@@ -61,7 +61,7 @@ def insert_board_data_of_api(json_data):
     client = func_mongo.db_connect()
     data_list = json_data[const.STR_DATA]
     inc_val = len(data_list)
-    seq = seq_dao.get_sequence(client, const.APP_BOARD)
+    seq = get_board_seq(client)
 
     insert_data_list = []
     message_data_list = []
@@ -85,6 +85,43 @@ def insert_board_data_of_api(json_data):
     return message_data_list
 
 
+def get_board_seq(client, coll: str = mongo_const.COLL_BOARD) -> int:
+    """
+    掲示板連番取得（データ登録用）
+    """
+    # すべての連番を取得し、ソート
+    select_data = {mongo_const.FI_SEQ: 1, mongo_const.FI_ID: 0}
+    sort = {mongo_const.FI_SEQ, mongo_const.ASCENDING}
+    cursor = func_mongo.db_find(client, coll, select_data, sort=sort)
+    current_seqs = [doc[mongo_const.FI_SEQ] for doc in cursor]
+
+    updates_to_perform = {}
+    new_seq = current_seqs[0]
+
+    for old_seq in current_seqs:
+        if old_seq != new_seq:
+            updates_to_perform[old_seq] = new_seq
+
+        new_seq += 1
+
+    # 大きい連番から順に操作をリストに追加
+    sorted_updates = sorted(
+        updates_to_perform.items(), key=lambda item: item[0], reverse=const.FLG_ON
+    )
+
+    bulk_operations = []
+
+    for old_seq, new_seq in sorted_updates:
+        # UpdateOne(検索条件, 更新内容) を使って操作オブジェクトを作成
+        cond = {mongo_const.FI_SEQ: old_seq}
+        update_data = {mongo_const.FI_SEQ: new_seq}
+        operation = func_mongo.get_update_one(cond, update_data)
+        bulk_operations.append(operation)
+
+    func_mongo.bulk_write(client, coll, bulk_operations)
+    return new_seq
+
+
 def update_board_status(json_data):
     """
     ステータス更新
@@ -95,12 +132,17 @@ def update_board_status(json_data):
 
     client = func_mongo.db_connect()
     cond = {mongo_const.FI_SEQ: seq}
-    update_data = {
-        mongo_const.FI_REMARK: remark,
-        mongo_const.FI_STATUS: status,
-        mongo_const.FI_UPDATE_DATE: func.get_now(),
-    }
-    func_mongo.db_update(client, mongo_const.COLL_BOARD, cond, update_data)
+
+    if status == const.STATUS_DELETE:
+        func_mongo.db_delete(client, mongo_const.COLL_BOARD, cond)
+    else:
+        update_data = {
+            mongo_const.FI_REMARK: remark,
+            mongo_const.FI_STATUS: status,
+            mongo_const.FI_UPDATE_DATE: func.get_now(),
+        }
+        func_mongo.db_update(client, mongo_const.COLL_BOARD, cond, update_data)
+
     func_mongo.db_close(client)
 
 

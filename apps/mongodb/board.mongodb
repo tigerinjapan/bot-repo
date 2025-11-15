@@ -55,8 +55,9 @@ use(database);
 // db.board.deleteMany({ nSeq: { $gte: currentSeq } });
 
 // find documents
-// const cond = { nSeq: 70, nApp: { $eq: app_server } };
-// db.board.find(cond).pretty();
+const cond = { nApp: { $eq: app_server } };
+const sort = { dUpdateDate: -1, nSeq: -1 }
+db.board.find(cond).sort(sort).limit(10).pretty();
 
 // db.board.find(
 //     {

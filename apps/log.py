@@ -34,7 +34,6 @@ def get_log_data_list(
     log_backup_list = []
     backup_data_list = []
     new_log_list = []
-    rewrite_log_list = []
 
     # 重複データ削除
     existed_data_list = []
@@ -57,8 +56,6 @@ def get_log_data_list(
                 if backup_flg:
                     target_date = get_last_year_first()
                     log_backup_list = log_dao.get_log_data(log_div, target_date)
-                    dummy_data = const.SYM_NEW_LINE.join(log_backup_list)
-                    func.write_file(dummy_log_path, dummy_data)
                 else:
                     dummy_log_text = func.read_file(dummy_log_path)
                     log_backup_list = dummy_log_text.split(const.SYM_NEW_LINE)
@@ -82,13 +79,13 @@ def get_log_data_list(
 
                 if backup_flg and log_data in new_log_list:
                     insert_data = get_insert_data(log_div, log_data, data[0])
-                    if insert_data:
-                        backup_data_list.append(insert_data)
-                    else:
-                        rewrite_log_list.append(log_data)
+                    backup_data_list.append(insert_data)
 
             if backup_data_list:
-                backup_data(log_div, backup_data_list, rewrite_log_list, log_path)
+                dummy_data = const.SYM_NEW_LINE.join(log_backup_list)
+                func.write_file(dummy_log_path, dummy_data)
+
+                backup_data(log_div, backup_data_list, log_path)
             else:
                 if not new_log_list:
                     func.print_info_msg(SCRIPT_NAME, msg_const.MSG_INFO_DATA_NOT_EXIST)
@@ -111,9 +108,7 @@ def backup_log(log_div: str = const.APP_DASHBOARD):
     func.print_end(div)
 
 
-def backup_data(
-    log_div: str, backup_data_list, rewrite_log_list: list[str], log_path: str
-):
+def backup_data(log_div: str, backup_data_list, log_path: str):
     """
     データバックアップ
     """
@@ -134,14 +129,8 @@ def backup_data(
             message = msg_const.MSG_INFO_PROC_COMPLETED
 
         if message == msg_const.MSG_INFO_PROC_COMPLETED:
-            # ログファイル再作成
-            rewrite_log = (
-                const.SYM_NEW_LINE.join(rewrite_log_list)
-                if rewrite_log_list
-                else const.SYM_BLANK
-            )
-            rewrite_log_data = rewrite_log + const.SYM_NEW_LINE
-            func.write_file(log_path, rewrite_log_data)
+            # 空ファイル作成
+            func.write_file(log_path, const.SYM_BLANK)
 
             msg_div = f"{log_div} {len(backup_data_list)}件 {const.STR_BACKUP_JA}"
             func.print_info_msg(msg_div, msg_const.MSG_INFO_PROC_COMPLETED)

@@ -199,19 +199,19 @@ def get_bubble_contents(data_list):
     """
     バーブル・コンテンツ取得
     """
-    list_header_text = data_list[0]
-    list_percent = data_list[1]
-    list_bg_color = [
+    header_text_list = data_list[0]
+    percent_list = data_list[1]
+    bg_color_list = [
         ["#0D8186", "#9FD8E36E", "#27ACB2"],
         ["#DE5658", "#FAD2A76E", "#FF6B6E"],
         ["#7D51E4", "#9FD8E36E", "#A17DF5"],
     ]
-    list_body_text = data_list[2]
+    body_text_list = data_list[2]
 
     bubble_contents = []
 
     for header_text, percent, bg_color, body_text in zip(
-        list_header_text, list_percent, list_bg_color, list_body_text
+        header_text_list, percent_list, bg_color_list, body_text_list
     ):
         contents = {
             "type": "bubble",

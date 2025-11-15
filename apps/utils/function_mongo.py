@@ -4,7 +4,7 @@ mongoDB操作
 
 import sys
 
-from pymongo import MongoClient
+from pymongo import MongoClient, UpdateOne
 
 import apps.utils.constants as const
 import apps.utils.function as func
@@ -212,6 +212,32 @@ def db_update_many(client, coll_nm: str, cond, update_data):
     db_update(client, coll_nm, cond, update_data, many_flg=const.FLG_ON)
 
 
+def get_update_one(cond, update_data):
+    """
+    データ更新条件取得
+    """
+    update_data = {mongo_const.OPERATOR_SET: update_data}
+    operation = UpdateOne(filter=cond, update=update_data)
+    return operation
+
+
+def db_delete(client, coll_nm: str, cond, many_flg: bool = const.FLG_OFF):
+    """
+    データ削除
+    """
+    curr_func_nm = sys._getframe().f_code.co_name
+    coll = get_collection(client, coll_nm)
+
+    coll_delete = coll.delete_many
+    if not many_flg:
+        coll_delete = coll.delete_one
+
+    try:
+        coll_delete(filter=cond)
+    except Exception as e:
+        except_db(coll_nm, curr_func_nm, str(e))
+
+
 def db_find_update(client, coll_nm: str, cond, update_data):
     """
     データ検索＆更新
@@ -227,6 +253,22 @@ def db_find_update(client, coll_nm: str, cond, update_data):
         except_db(coll_nm, curr_func_nm, str(e))
 
     return result
+
+
+def bulk_write(client, coll_nm: str, bulk_operations: list):
+    """
+    複数の書き込み操作（挿入、更新、削除など）
+    """
+    curr_func_nm = sys._getframe().f_code.co_name
+    coll = get_collection(client, coll_nm)
+
+    try:
+        result = coll.bulk_write(bulk_operations)
+        func.print_debug_msg(
+            coll_nm, f"{result.modified_count} 件のドキュメントを更新しました。"
+        )
+    except Exception as e:
+        except_db(coll_nm, curr_func_nm, str(e))
 
 
 if __name__ == const.MAIN_FUNCTION:

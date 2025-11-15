@@ -1,5 +1,21 @@
 # 開発サーバーの URL 一覧
 
+## お知らせ
+
+### レビュー
+
+- より良いサービス提供の為、レビューに積極的に参加をお願いします。
+
+### 新規アプリケーション公開
+
+**IT クイズ** (2025/10/01)
+
+- クイズで IT 知識を共有
+
+**Sudoku** (2025/11/01)
+
+- ゲームで脳トレーニング
+
 ---
 
 | リンク                                                         | 説明                   | 備考               |
@@ -17,7 +33,6 @@
 | [dashboard](https://kobe-dev.koyeb.app/apps/dashboard)         | ダッシュボード         | サイト分析         |
 | [review](https://kobe-dev.koyeb.app/apps/review)               | レビューページ         | 掲示板で内容確認   |
 | [gemini](https://kobe-dev.koyeb.app/apps/gemini)               | Gemini コンテンツ生成  | 画像、テキスト対応 |
-| [gemini image](https://kobe-dev.koyeb.app/img/gemini)          | Gemini 生成イメージ    | リクエスト毎更新   |
 | [today image](https://kobe-dev.koyeb.app/img/today)            | Today's News イメージ  | 毎日 07:10 更新    |
 | [debug log](https://kobe-dev.koyeb.app/log/debug)              | デバックログ           | 処理確認           |
 | [info log](https://kobe-dev.koyeb.app/log/info)                | インフォメーションログ | 処理確認           |

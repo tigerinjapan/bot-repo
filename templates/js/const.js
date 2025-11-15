@@ -197,7 +197,7 @@ const LIST_GAME_RULE_KO = [
 const LIST_REVIEW_APP = ["LINE", "Travel", "Kakao", "Server"]
 const LIST_REVIEW_CATEGORY = ["Review", "Memo", "Error", "Etc."]
 const LIST_REVIEW_TYPE = ["Add", "Modify", "Design", "Etc."];
-const LIST_REVIEW_STATUS = ["New", "Progress", "Pend", "Done"]
+const LIST_REVIEW_STATUS = ["New", "Progress", "Pend", "Done", "Delete"]
 
 // API
 const METHOD_GET = "GET";

@@ -15,6 +15,14 @@
         "rpd": 250,
         "date": "20260531"
     },
+    "gemini-2.5-flash-image-preview": {
+        "input": "text",
+        "output": "image",
+        "tpm": 0,
+        "rpm": 0,
+        "rpd": 0,
+        "date": "20260531"
+    },
     "gemini-2.5-flash-preview-tts": {
         "input": "text",
         "output": "audio",
