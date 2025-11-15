@@ -137,7 +137,7 @@ function setLevel(level) {
   } else if (level === LEVEL_HARD) {
     levelMark = SYM_LEVEL.repeat(3);
   }
-  setElemText("level", `LEVEL ${levelMark}`);
+  setElemText("level", `${STR_LEVEL.toUpperCase()} ${levelMark}`);
   setElemText("levelVal", level);
 }
 

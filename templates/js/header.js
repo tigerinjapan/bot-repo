@@ -170,7 +170,7 @@ function openDialog(title, text) {
 
   const saveBtn = createElem(TAG_BUTTON, "save-btn", parentElemId);
   setElemText("save-btn", "Send");
-  saveBtn.onclick = () => requestApi();
+  saveBtn.onclick = () => requestApiForDialog();
 
   // CSSで非表示にしていたものを表示
   dialog.style.display = "block";
@@ -179,7 +179,7 @@ function openDialog(title, text) {
 /**
  * APIリクエスト関数
  */
-async function requestApi() {
+async function requestApiForDialog() {
   const dialog_title = getElemText("dialog-title");
   const dialog_text = getElem("dialog-text").value;
   const status = getElem(STR_STATUS).value;

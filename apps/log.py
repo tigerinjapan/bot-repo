@@ -34,7 +34,7 @@ def get_log_data_list(
     log_backup_list = []
     backup_data_list = []
     new_log_list = []
-    rewrite_data_list = []
+    rewrite_log_list = []
 
     # 重複データ削除
     existed_data_list = []
@@ -51,8 +51,17 @@ def get_log_data_list(
             log_data_list = log_data_text.split(const.SYM_NEW_LINE)
 
             if log_div != const.STR_ERROR:
-                target_date = get_last_year_first()
-                log_backup_list = log_dao.get_log_data(log_div, target_date)
+                dummy_log_path = log_path.replace(
+                    log_div, f"{log_div}_{const.STR_DUMMY}"
+                )
+                if backup_flg:
+                    target_date = get_last_year_first()
+                    log_backup_list = log_dao.get_log_data(log_div, target_date)
+                    dummy_data = const.SYM_NEW_LINE.join(log_backup_list)
+                    func.write_file(dummy_log_path, dummy_data)
+                else:
+                    dummy_log_text = func.read_file(dummy_log_path)
+                    log_backup_list = dummy_log_text.split(const.SYM_NEW_LINE)
 
             for log_data in log_data_list:
                 if log_data and log_data not in log_backup_list:
@@ -76,10 +85,10 @@ def get_log_data_list(
                     if insert_data:
                         backup_data_list.append(insert_data)
                     else:
-                        rewrite_data_list.append(log_data)
+                        rewrite_log_list.append(log_data)
 
             if backup_data_list:
-                backup_data(log_div, backup_data_list, rewrite_data_list, log_path)
+                backup_data(log_div, backup_data_list, rewrite_log_list, log_path)
             else:
                 if not new_log_list:
                     func.print_info_msg(SCRIPT_NAME, msg_const.MSG_INFO_DATA_NOT_EXIST)
@@ -102,7 +111,9 @@ def backup_log(log_div: str = const.APP_DASHBOARD):
     func.print_end(div)
 
 
-def backup_data(log_div: str, backup_data_list, rewrite_data_list: list[str], log_path: str):
+def backup_data(
+    log_div: str, backup_data_list, rewrite_log_list: list[str], log_path: str
+):
     """
     データバックアップ
     """
@@ -124,8 +135,13 @@ def backup_data(log_div: str, backup_data_list, rewrite_data_list: list[str], lo
 
         if message == msg_const.MSG_INFO_PROC_COMPLETED:
             # ログファイル再作成
-            backup_log_data = const.SYM_NEW_LINE.join(rewrite_data_list) + const.SYM_NEW_LINE
-            func.write_file(log_path, backup_log_data)
+            rewrite_log = (
+                const.SYM_NEW_LINE.join(rewrite_log_list)
+                if rewrite_log_list
+                else const.SYM_BLANK
+            )
+            rewrite_log_data = rewrite_log + const.SYM_NEW_LINE
+            func.write_file(log_path, rewrite_log_data)
 
             msg_div = f"{log_div} {len(backup_data_list)}件 {const.STR_BACKUP_JA}"
             func.print_info_msg(msg_div, msg_const.MSG_INFO_PROC_COMPLETED)
@@ -134,18 +150,17 @@ def backup_data(log_div: str, backup_data_list, rewrite_data_list: list[str], lo
         func.print_info_msg(SCRIPT_NAME, e)
 
 
-def get_insert_data(log_div:str, log_data:str, log_date:str):
+def get_insert_data(log_div: str, log_data: str, log_date: str):
     """
     バックアップ登録データ取得
     """
     insert_data = const.SYM_BLANK
 
-    cutoff_date = func.get_calc_date(-1)
-    log_datetime = func.convert_str_to_date(
-        log_date, const.DATE_FORMAT_YYYYMMDD_DASH
-    )
+    cutoff_date = func.get_now()
+    log_datetime = func.convert_str_to_date(log_date, const.DATE_FORMAT_YYYYMMDD_DASH)
+
     # 1日以前のログか判定
-    if log_datetime <= cutoff_date:
+    if log_datetime < cutoff_date:
         if log_div == const.STR_ERROR:
             idx_app = const.LIST_BOARD_APP.index("Server")
             idx_category = const.LIST_BOARD_CATEGORY.index("Error")
@@ -182,4 +197,4 @@ def get_last_year_first() -> datetime:
 
 if __name__ == const.MAIN_FUNCTION:
     # get_log_data_list(const.APP_DASHBOARD)
-    backup_log(const.STR_ERROR)
+    backup_log(const.APP_DASHBOARD)

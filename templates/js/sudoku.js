@@ -391,15 +391,15 @@ function updateGameInfoHeader(level, currentUserName) {
 
   gameInfoHeader.innerHTML = `
     <div>
-      <span class="info-label">LEVEL:</span>
+      <span class="info-label">${STR_LEVEL.toUpperCase()}</span>
       <span class="info-value">${displayLevel}</span>
     </div>
     <div>
-      <span class="info-label">BEST TIME:</span>
+      <span class="info-label">BEST TIME</span>
       <span class="info-value">${bestTime}</span>
     </div>
     <div>
-      <span class="info-label">USER:</span>
+      <span class="info-label">${STR_USER.toUpperCase()}</span>
       <span class="info-value">${currentUserName}</span>
     </div>
   `;

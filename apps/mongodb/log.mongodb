@@ -1,13 +1,28 @@
 // db
 const database = "mongoDB";
 let div = "dashboard";
-const targetDate = "2025-11-08";
-const now = new Date();
-const jst = now.setUTCHours(now.getUTCHours() + 9);
 
-// console.log(new Date(jst));
-// console.log(new Date(jst).toLocaleDateString());
-// console.log(new Date(jst).toLocaleString());
+const now = new Date();
+// now.setHours(0, 0, 0, 0);
+// console.log(now);
+const targetDate = new Date();
+targetDate.setUTCHours(0, 0, 0, 0);
+// console.log(targetDate);
+
+let localeDate = new Date().toLocaleDateString();
+// console.log(localeDate);
+// localeDate = new Date(localeDate);
+// localeDate.setUTCHours(0, 0, 0, 0);
+// console.log(localeDate);
+
+// JSTの日時を読みやすい文字列で取得
+// const jstString = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }); 
+// console.log(jstString);
+// const today = new Date(jstString);
+// console.log(today);
+
+// const jst = new Date().setUTCHours(now.getUTCHours() + 9);
+// console.log(jst);
 
 // Select the database to use.
 use(database);
@@ -16,7 +31,7 @@ use(database);
 // db.sequence.getIndexes();
 
 // find documents
-cond = { sDiv: div, dUpdateDate: { $lte: new Date(jst) } };
+cond = { sDiv: div, dUpdateDate: { $lte: now } };
 // cond = {
 //     sDiv: div,
 //     sMessage: { $regex: "number" }
@@ -35,21 +50,15 @@ db.log.find(cond, selectData).sort(sortData).limit(20).pretty();
 // insertData = [
 //     {
 //         "sDiv": div,
-//         "sMessage": targetDate + " 09:00:00,999 [INFO] url_design document Mobile Android Chrome Mobile",
-//         "dTargetDate": new Date(targetDate),
-//         "dUpdateDate": jst
+//         "sMessage": localeDate + " 09:00:00,999 [INFO] url_design document Mobile Android Chrome Mobile",
+//         "dTargetDate": targetDate,
+//         "dUpdateDate": now
 //     },
 //     {
 //         "sDiv": div,
-//         "sMessage": targetDate + " 09:00:00,999 [INFO] dashboard management Mobile Android Chrome Mobile",
-//         "dTargetDate": new Date(targetDate),
-//         "dUpdateDate": jst
-//     },
-//     {
-//         "sDiv": div,
-//         "sMessage": targetDate + " 09:00:00,999 [INFO] sudoku entertainment Mobile Android Chrome Mobile",
-//         "dTargetDate": new Date(targetDate),
-//         "dUpdateDate": jst
+//         "sMessage": localeDate + " 09:00:00,999 [INFO] dashboard management Mobile Android Chrome Mobile",
+//         "dTargetDate": targetDate,
+//         "dUpdateDate": now
 //     },
 // ];
 // db.log.insertMany(insertData);

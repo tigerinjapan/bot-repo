@@ -122,8 +122,6 @@ def get_calc_date(val: int, div: int = const.DATE_DAY, calc_date: datetime = get
     """
     対象時刻より、計算された時刻の取得
     """
-    if not is_local_env():
-        calc_date += timedelta(hours=val)
     if div == const.DATE_DAY:
         calc_date += timedelta(days=val)
     elif div == const.DATE_HOUR:

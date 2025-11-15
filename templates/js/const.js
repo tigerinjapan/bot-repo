@@ -49,11 +49,12 @@ const AUTH_GUEST = "guest";
 const STR_APP = "app";
 const STR_CATEGORY = "category";
 const STR_CONTENTS = "contents";
+const STR_LEVEL = "level";
 const STR_MESSAGE = "message";
 const STR_STATUS = "status";
 const STR_TYPE = "type";
+const STR_USER = "user";
 
-const STR_ERROR = "ERROR";
 const STR_LINES = "Lines";
 const STR_REVIEW = "Review";
 const STR_STATIONS = "Stations";
@@ -109,7 +110,7 @@ const TITLE_DASH_BOARD = "📊 Dash Board 📊";
 const TITLE_CITY = "City";
 const TITLE_CHOICE_CHAR = "Select a Character";
 const TITLE_GAME_RULES = "GAME RULES";
-const TITLE_TOP_RANK = "TOP_RANK";
+const TITLE_TOP_RANK = "TOP RANK";
 
 const TH_NO = "No.";
 

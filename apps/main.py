@@ -48,6 +48,7 @@ def job_scheduler():
         schedule.every().monday.at(TIME_WEEKLY_JOB).do(weekly_job)
 
         # 毎日指定された時間に実行（例：07:00）
+        schedule.every().day.at("00:00").do(daily_job_4)
         schedule.every().day.at(TIME_DAILY_JOB).do(daily_job)
         schedule.every().day.at(TIME_DAILY_JOB_2).do(daily_job_2)
         schedule.every().day.at(TIME_DAILY_JOB_3).do(daily_job_3)
@@ -84,14 +85,14 @@ def weekly_job():
 
 def daily_job():
     """
-    日次ジョブ（AM）
+    日次ジョブ（07:10）
     """
     line.main()
 
 
 def daily_job_2():
     """
-    日次ジョブ（PM）
+    日次ジョブ（18:30）
     """
     line.main(data_div=const.NUM_TWO)
     line.sub(const.APP_MLB)
@@ -100,9 +101,15 @@ def daily_job_2():
 
 def daily_job_3():
     """
-    日次ジョブ（AM）
+    日次ジョブ（09:00）
     """
     kakao.main()
+
+
+def daily_job_4():
+    """
+    日次ジョブ（00:00）
+    """
     log.backup_log()
     log.backup_log(const.STR_ERROR)
 

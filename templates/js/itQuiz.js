@@ -221,7 +221,7 @@ const renderInitialScreen = () => {
         <button class="btn btn-secondary lang-btn" data-lang=${LANG_CD_EN} onclick="onLanguageSelect('${LANG_CD_EN}')">English</button>
       </div>
       <div class="flex-center">
-        <label class="inputLbl" for="inputUserName">USER</label>
+        <label class="inputLbl" for="inputUserName">${STR_USER.toUpperCase()}</label>
         <input class="inputTxt" type="text" id="inputUserName" minlength="4" maxlength="10" placeholder="Input user name.">
       </div>
       <div class="flex-center">
