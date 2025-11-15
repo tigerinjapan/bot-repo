@@ -1,9 +1,12 @@
 {
     "LINE_IMG_DIV": "1",
     "TIME_WEEKLY_JOB": "09:00",
-    "TIME_DAILY_JOB": "07:10",
-    "TIME_DAILY_JOB_2": "18:30",
+    "TIME_DAILY_JOB_1": "00:00",
+    "TIME_DAILY_JOB_2": "07:10",
     "TIME_DAILY_JOB_3": "09:00",
+    "TIME_DAILY_JOB_4": "18:30",
     "MIN_HOURLY_JOB": ":05",
-    "SEC_NO_SLEEP": "600"
+    "SEC_NO_SLEEP": "600",
+    "GEMINI_MODEL": "gemini-2.5-flash-lite",
+    "GEMINI_MODEL_IMG": "gemini-2.0-flash-preview-image-generation"
 }

@@ -139,7 +139,7 @@ def get_env_val(var_name: str, div: str = const.STR_SECRET_KEY) -> str:
     env_val = os.environ.get(var_name)
     if not env_val:
         env_val = const.SYM_BLANK
-        if is_local_env():
+        if is_local_env() or div == const.STR_ENV_VAR:
             json_data = get_json_data(div)
             env_val = json_data[var_name]
 

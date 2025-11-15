@@ -24,8 +24,8 @@ app_name = const.STR_GEMINI
 
 # GEMINI API情報
 GEMINI_API_KEY = func.get_env_val("GEMINI_API_KEY")
-GEMINI_MODEL = func.get_env_val("GEMINI_MODEL")
-GEMINI_MODEL_IMG = func.get_env_val("GEMINI_MODEL_IMG")
+GEMINI_MODEL = func.get_env_val("GEMINI_MODEL", div=const.STR_ENV_VAR)
+GEMINI_MODEL_IMG = func.get_env_val("GEMINI_MODEL_IMG", div=const.STR_ENV_VAR)
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -64,6 +64,13 @@ def get_gemini_response(
     div_msg = f"[{app_name}] {div}"
     func.print_start(div_msg)
 
+    gemini_model_info = func.get_input_data(const.STR_GEMINI, model)
+    end_date = gemini_model_info[const.STR_DATE]
+    today = func.get_now(const.DATE_TODAY)
+    if model == GEMINI_MODEL_IMG and end_date < today:
+        func.print_debug_msg(model, msg_const.MSG_ERR_API_SUPPORT_ENDED)
+        return const.NONE_CONSTANT
+
     if model == GEMINI_MODEL:
         add_condition = get_sample_contents(const.FILE_TYPE_TXT)
         contents += add_condition
@@ -76,6 +83,12 @@ def get_gemini_response(
         response = client.models.generate_content(
             model=model, contents=contents, config=config
         )
+
+        usage = response.usage_metadata
+        token_count = usage.total_token_count
+        tpm = gemini_model_info["tpm"]
+        if tpm < token_count:
+            func.print_debug_msg("トークン数", f"上限:{tpm}、合計: {token_count}")
 
         if response:
             if model == GEMINI_MODEL_IMG:
@@ -612,8 +625,8 @@ def test_generate_video():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    test_gemini()
-    # test_gemini_img()
+    # test_gemini()
+    test_gemini_img()
     # test_today_img()
     # test_generate_image()
     # test_generate_video()

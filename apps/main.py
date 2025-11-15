@@ -19,9 +19,10 @@ dotenv.load_dotenv()
 
 # ジョブ実行時間を環境変数から取得
 TIME_WEEKLY_JOB = func.get_env_val("TIME_WEEKLY_JOB", div=const.STR_ENV_VAR)
-TIME_DAILY_JOB = func.get_env_val("TIME_DAILY_JOB", div=const.STR_ENV_VAR)
+TIME_DAILY_JOB_1 = func.get_env_val("TIME_DAILY_JOB_1", div=const.STR_ENV_VAR)
 TIME_DAILY_JOB_2 = func.get_env_val("TIME_DAILY_JOB_2", div=const.STR_ENV_VAR)
 TIME_DAILY_JOB_3 = func.get_env_val("TIME_DAILY_JOB_3", div=const.STR_ENV_VAR)
+TIME_DAILY_JOB_4 = func.get_env_val("TIME_DAILY_JOB_4", div=const.STR_ENV_VAR)
 MIN_HOURLY_JOB = func.get_env_val("MIN_HOURLY_JOB", div=const.STR_ENV_VAR)
 SEC_NO_SLEEP = func.get_env_val("SEC_NO_SLEEP", div=const.STR_ENV_VAR)
 
@@ -48,10 +49,10 @@ def job_scheduler():
         schedule.every().monday.at(TIME_WEEKLY_JOB).do(weekly_job)
 
         # 毎日指定された時間に実行（例：07:00）
-        schedule.every().day.at("00:00").do(daily_job_4)
-        schedule.every().day.at(TIME_DAILY_JOB).do(daily_job)
+        schedule.every().day.at(TIME_DAILY_JOB_1).do(daily_job_1)
         schedule.every().day.at(TIME_DAILY_JOB_2).do(daily_job_2)
         schedule.every().day.at(TIME_DAILY_JOB_3).do(daily_job_3)
+        schedule.every().day.at(TIME_DAILY_JOB_4).do(daily_job_4)
 
     # 1時間毎に実行（例：:30）
     schedule.every().hour.at(MIN_HOURLY_JOB).do(hourly_job)
@@ -83,20 +84,19 @@ def weekly_job():
         line.sub(const.STR_AI_NEWS)
 
 
-def daily_job():
+def daily_job_1():
     """
-    日次ジョブ（07:10）
+    日次ジョブ（00:00）
     """
-    line.main()
+    log.backup_log()
+    log.backup_log(const.STR_ERROR)
 
 
 def daily_job_2():
     """
-    日次ジョブ（18:30）
+    日次ジョブ（07:10）
     """
-    line.main(data_div=const.NUM_TWO)
-    line.sub(const.APP_MLB)
-    kakao.main(div=const.APP_LCC)
+    line.main()
 
 
 def daily_job_3():
@@ -108,10 +108,11 @@ def daily_job_3():
 
 def daily_job_4():
     """
-    日次ジョブ（00:00）
+    日次ジョブ（18:30）
     """
-    log.backup_log()
-    log.backup_log(const.STR_ERROR)
+    line.main(data_div=const.NUM_TWO)
+    line.sub(const.APP_MLB)
+    kakao.main(div=const.APP_LCC)
 
 
 def hourly_job():

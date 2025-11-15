@@ -3,6 +3,13 @@
         {
             "auth": "3",
             "category": "it",
+            "title": "Gemini API",
+            "description": "Gemini API ドキュメント",
+            "url": "https://ai.google.dev/gemini-api/docs/"
+        },
+        {
+            "auth": "3",
+            "category": "it",
             "title": "Github",
             "description": "ソース管理",
             "url": "https://github.com/login/"

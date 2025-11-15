@@ -1,0 +1,42 @@
+{
+    "gemini-2.5-pro": {
+        "input": "text,images,video,audio,pdf",
+        "output": "text",
+        "tpm": 125000,
+        "rpm": 2,
+        "rpd": 50,
+        "date": "20260531"
+    },
+    "gemini-2.5-flash": {
+        "input": "text,images,video,audio",
+        "output": "text",
+        "tpm": 250000,
+        "rpm": 10,
+        "rpd": 250,
+        "date": "20260531"
+    },
+    "gemini-2.5-flash-preview-tts": {
+        "input": "text",
+        "output": "audio",
+        "tpm": 10000,
+        "rpm": 3,
+        "rpd": 15,
+        "date": "20260531"
+    },
+    "gemini-2.5-flash-lite": {
+        "input": "text,images,video,audio,pdf",
+        "output": "text",
+        "tpm": 250000,
+        "rpm": 15,
+        "rpd": 1000,
+        "date": "20260630"
+    },
+    "gemini-2.0-flash-preview-image-generation": {
+        "input": "text",
+        "output": "image",
+        "tpm": 200000,
+        "rpm": 10,
+        "rpd": 100,
+        "date": "20251112"
+    }
+}

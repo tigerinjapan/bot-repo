@@ -1,22 +1,22 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/11/13(Thu) 10:05",
+        "오늘의 생활정보": "2025/11/15(Sat) 16:37",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "수능일 날씨는?",
+        "오늘의 생활정보": "주말, 어제만큼 온화해",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "오늘의 생활정보": "S&P500 6,850.92 (+0.06%)",
+        "오늘의 생활정보": "S&P500 6,734.11 (-0.05%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 949원",
+        "오늘의 생활정보": "100엔 = 941원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
@@ -26,7 +26,7 @@
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "Try that dessert.\n저 디저트를 먹고 싶어요",
+        "오늘의 생활정보": "Just a moment.\n잠깐만요.",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]
