@@ -26,6 +26,7 @@ def get_response_result(
     headers={},
     data={},
     header_json_flg: bool = const.FLG_ON,
+    log_flg: bool = const.FLG_ON,
 ):
     """
     リクエスト結果取得
@@ -33,7 +34,9 @@ def get_response_result(
     result = except_ = msg = const.NONE_CONSTANT
     curr_func_nm = sys._getframe().f_code.co_name
 
-    func.print_debug_msg(const.STR_API, url)
+    if log_flg:
+        div = f"{const.STR_API} {curr_func_nm}"
+        func.print_debug_msg(div, url)
 
     if header_json_flg:
         api_headers = const.API_HEADERS_JSON
@@ -80,7 +83,7 @@ def get_json_data_on_app(app_name: str, token_flg: bool = const.FLG_OFF):
     url = f"{URL_SERVER}/{const.FILE_TYPE_JSON}/{app_name}"
     if token_flg:
         url += f"?token=token_{func.get_now(const.DATE_TODAY)}"
-    result = get_response_result(url)
+    result = get_response_result(url, log_flg=const.FLG_OFF)
     return result
 
 

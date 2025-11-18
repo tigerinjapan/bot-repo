@@ -333,7 +333,7 @@ async def update_ranking(request: Request, app_name: str):
     if app_name == const.APP_NUMBER:
         rank_dao.update_rank_info_of_api(json_data)
     else:
-        rank_dao.update_ranking_of_api(json_data)
+        rank_dao.update_ranking_of_api(app_name, json_data)
     result = {const.STR_MESSAGE: msg_const.MSG_INFO_PROC_COMPLETED}
     return result
 

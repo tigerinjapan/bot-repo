@@ -13,7 +13,7 @@ import apps.utils.mongo_constants as mongo_const
 @dataclass
 class rankInfo:
     """
-    ランク情報のデータクラス
+    ランク情報のデータクラス: number
     """
 
     nNumber: int
@@ -26,15 +26,15 @@ class rankInfo:
 
 
 @dataclass
-class quizRanking:
+class rankingInfo:
     """
-    ランキング情報のデータクラス
+    ランキング情報のデータクラス: sudoku, itQuiz
     """
 
     rank: int
-    userId: str
     score: int
-    lastLoginDate: str
+    userName: str
+    updateDate: str
 
     def get_data(self):
         return asdict(self)
@@ -58,7 +58,7 @@ class ranking:
 
 def get_rank_info_data(json_data, update_flg: bool = const.FLG_OFF):
     """
-    JSONデータ取得（ランク情報の登録・更新）
+    JSONデータ取得（ランク情報の登録・更新）: number
     """
     if update_flg:
         number = json_data[const.STR_NUMBER]
@@ -75,14 +75,14 @@ def get_rank_info_data(json_data, update_flg: bool = const.FLG_OFF):
 
 def get_ranking_data(json_data):
     """
-    JSONデータ取得（ランキング情報の取得）
+    JSONデータ取得（ランキング情報の取得）: itQuiz
     """
     rank = json_data[mongo_const.FI_RANK]
-    userId = json_data[mongo_const.FI_USER_NAME]
     score = json_data[mongo_const.FI_SCORE]
-    lastLoginDate = json_data[mongo_const.FI_UPDATE_DATE]
+    userName = json_data[mongo_const.FI_USER_NAME]
+    updateDate = json_data[mongo_const.FI_UPDATE_DATE]
 
-    json_data = quizRanking(rank, userId, score, lastLoginDate).get_data()
+    json_data = rankingInfo(rank, userName, score, updateDate).get_data()
     return json_data
 
 

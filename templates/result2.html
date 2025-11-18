@@ -46,7 +46,7 @@
   <p id="userName" hidden>{{ user_name }}</p>
   <p id="langCd" hidden>{{ lang_cd }}</p>
   <p id="dataList" hidden>
-    {% if app_name == 'number' or app_name == 'itQuiz' %}
+    {% if app_name == 'number' or app_name == 'sudoku' or app_name == 'itQuiz' %}
     {{ data_list | tojson }}
     {% else %}
     {{ data_list }}

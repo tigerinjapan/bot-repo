@@ -90,7 +90,9 @@ def db_count(client, coll_nm: str, cond):
 
     try:
         result = coll.count_documents(cond)
-        func.print_info_msg(curr_func_nm, coll_nm)
+
+        div = f"{curr_func_nm} {coll_nm}"
+        func.print_debug_msg(div, cond)
 
     except Exception as e:
         except_db(coll_nm, curr_func_nm, str(e))
@@ -110,6 +112,7 @@ def db_find(
     データ検索
     """
     curr_func_nm = sys._getframe().f_code.co_name
+
     coll = get_collection(client, coll_nm)
     coll_find = coll.find
     if one_flg:
@@ -134,6 +137,9 @@ def db_find(
             result = coll_find(sort=sort)
         else:
             result = coll_find()
+
+        div = f"{curr_func_nm} {coll_nm}"
+        func.print_debug_msg(div, cond)
 
     except Exception as e:
         except_db(coll_nm, curr_func_nm, str(e))
@@ -176,6 +182,10 @@ def db_insert(client, coll_nm: str, insert_data, many_flg: bool = const.FLG_OFF)
         else:
             coll.insert_one(document=insert_data)
 
+        div = f"{curr_func_nm} {coll_nm}"
+        msg = f"{len(insert_data)}件、登録しました。"
+        func.print_debug_msg(div, msg)
+
     except Exception as e:
         except_db(coll_nm, curr_func_nm, str(e))
 
@@ -201,6 +211,11 @@ def db_update(client, coll_nm: str, cond, update_data, many_flg: bool = const.FL
 
     try:
         coll_update(filter=cond, update=update_data)
+
+        div = f"{curr_func_nm} {coll_nm}"
+        msg = f"{cond} {update_data}"
+        func.print_debug_msg(div, msg)
+
     except Exception as e:
         except_db(coll_nm, curr_func_nm, str(e))
 
@@ -234,6 +249,10 @@ def db_delete(client, coll_nm: str, cond, many_flg: bool = const.FLG_OFF):
 
     try:
         coll_delete(filter=cond)
+
+        div = f"{curr_func_nm} {coll_nm}"
+        func.print_debug_msg(div, cond)
+
     except Exception as e:
         except_db(coll_nm, curr_func_nm, str(e))
 
@@ -248,6 +267,10 @@ def db_find_update(client, coll_nm: str, cond, update_data):
     try:
         result = coll.find_one(filter=cond)
         coll.update_one(filter=cond, update=update_data)
+
+        div = f"{curr_func_nm} {coll_nm}"
+        msg = f"{cond} {update_data}"
+        func.print_debug_msg(div, msg)
 
     except Exception as e:
         except_db(coll_nm, curr_func_nm, str(e))
@@ -264,9 +287,12 @@ def bulk_write(client, coll_nm: str, bulk_operations: list):
 
     try:
         result = coll.bulk_write(bulk_operations)
+
+        div = f"{curr_func_nm} {coll_nm}"
         func.print_debug_msg(
-            coll_nm, f"{result.modified_count} 件のドキュメントを更新しました。"
+            div, f"{result.modified_count}件のドキュメントを更新しました。"
         )
+
     except Exception as e:
         except_db(coll_nm, curr_func_nm, str(e))
 

@@ -31,6 +31,9 @@ const ID_MESSAGE_DIALOG = "message-dialog";
 const ID_CHOICE_DIALOG = "choice-dialog";
 const ID_RULE_DIALOG = "rule-dialog";
 
+// 変数
+let dataList, rankingDataJson;
+
 // グローバルなゲーム状態を保持するオブジェクト
 const gameState = {
   selectedLanguage: LANG_CD_KO, // 初期言語設定は韓国語
@@ -198,18 +201,18 @@ const renderInitialScreen = () => {
   const container = getElem('main-container');
 
   // ランキングデータ
-  const dataList = getElemText("dataList");
+  dataList = getElemText("dataList");
 
   // JSON形式の文字列に変換する
-  const rankingDataJson = JSON.parse(dataList);
+  rankingDataJson = JSON.parse(dataList);
 
   // ランキングリストの作成
   const rankingsHtml = rankingDataJson.map(item => `
     <li class="ranking-item">
       <span class="rank">${item.rank}</span>
-      <span>${item.userId}</span>
       <span>${item.score} pts</span>
-      <span>${item.lastLoginDate}</span>
+      <span>${item.userName}</span>
+      <span>${item.updateDate}</span>
     </li>
   `).join(SYM_BLANK);
 
@@ -713,12 +716,6 @@ function getUpdateRank() {
   // 5位以内のランキングで自分のスコアより低いランクを検索
   let updateRank = null;
 
-  // ランキングデータ
-  const dataList = getElemText("dataList");
-
-  // JSON形式の文字列に変換する
-  const rankingDataJson = JSON.parse(dataList);
-
   for (let i = 0; i < Math.min(5, rankingDataJson.length); i++) {
     if (rankingDataJson[i].score <= gameState.score) {
       updateRank = rankingDataJson[i].rank;
@@ -769,7 +766,7 @@ async function updateRanking(rank, score, userName) {
     url = URL_QUIZ_RANKING_LOCAL;
   }
 
-  const requestBody = { rank: rank, score: score, userId: userName };
+  const requestBody = { rank: rank, score: score, userName: userName };
 
   try {
     const data = await getFetchApiData(url, requestBody);

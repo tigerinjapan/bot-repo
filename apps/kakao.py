@@ -52,7 +52,7 @@ def main(
                         message = today_korea.get_phrase()
 
                     else:
-                        func.print_info_msg(
+                        func.print_debug_msg(
                             img_file_path, msg_const.MSG_ERR_SERVER_PROC_FAILED
                         )
                         object_type = func_kakao.OBJECT_TYPE_TEXT

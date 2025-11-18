@@ -2,6 +2,8 @@
 ログ管理
 """
 
+import sys
+
 from datetime import datetime
 
 import apps.utils.constants as const
@@ -30,6 +32,8 @@ def get_log_data_list(
     """
     ログデータリスト取得
     """
+    curr_func_nm = sys._getframe().f_code.co_name
+
     data_list = []
     log_backup_list = []
     backup_data_list = []
@@ -44,15 +48,13 @@ def get_log_data_list(
             file_type=const.FILE_TYPE_LOG,
             file_div=const.STR_OUTPUT,
         )
+        dummy_log_path = log_path.replace(log_div, f"{log_div}_{const.STR_DUMMY}")
 
         log_data_text = func.read_file(log_path)
         if log_data_text:
             log_data_list = log_data_text.split(const.SYM_NEW_LINE)
 
             if log_div != const.STR_ERROR:
-                dummy_log_path = log_path.replace(
-                    log_div, f"{log_div}_{const.STR_DUMMY}"
-                )
                 if backup_flg:
                     target_date = get_last_year_first()
                     log_backup_list = log_dao.get_log_data(log_div, target_date)
@@ -82,16 +84,19 @@ def get_log_data_list(
                     backup_data_list.append(insert_data)
 
             if backup_data_list:
-                dummy_data = const.SYM_NEW_LINE.join(log_backup_list)
-                func.write_file(dummy_log_path, dummy_data)
+                if log_div != const.STR_ERROR:
+                    dummy_data = const.SYM_NEW_LINE.join(log_backup_list)
+                    func.write_file(dummy_log_path, dummy_data)
 
                 backup_data(log_div, backup_data_list, log_path)
             else:
                 if not new_log_list:
-                    func.print_info_msg(SCRIPT_NAME, msg_const.MSG_INFO_DATA_NOT_EXIST)
+                    func.print_debug_msg(
+                        curr_func_nm, msg_const.MSG_INFO_DATA_NOT_EXIST
+                    )
 
     except Exception as e:
-        func.print_info_msg(SCRIPT_NAME, e)
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, log_div, e)
 
     return data_list
 
@@ -112,6 +117,8 @@ def backup_data(log_div: str, backup_data_list, log_path: str):
     """
     データバックアップ
     """
+    curr_func_nm = sys._getframe().f_code.co_name
+
     try:
         if log_div == const.STR_ERROR:
             api_path = f"/{const.APP_BOARD}/{const.STR_ADD}"
@@ -132,11 +139,13 @@ def backup_data(log_div: str, backup_data_list, log_path: str):
             # 空ファイル作成
             func.write_file(log_path, const.SYM_BLANK)
 
-            msg_div = f"{log_div} {len(backup_data_list)}件 {const.STR_BACKUP_JA}"
-            func.print_info_msg(msg_div, msg_const.MSG_INFO_PROC_COMPLETED)
+            message = f"{len(backup_data_list)}件 {const.STR_BACKUP_JA}{message}"
+
+        msg_div = f"{SCRIPT_NAME} {curr_func_nm} {log_div}"
+        func.print_debug_msg(msg_div, message)
 
     except Exception as e:
-        func.print_info_msg(SCRIPT_NAME, e)
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, log_div, e)
 
 
 def get_insert_data(log_div: str, log_data: str, log_date: str):
@@ -185,5 +194,7 @@ def get_last_year_first() -> datetime:
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # get_log_data_list(const.APP_DASHBOARD)
-    backup_log(const.APP_DASHBOARD)
+    log_div = const.APP_DASHBOARD
+    log_div = const.STR_ERROR
+    # get_log_data_list(log_div)
+    backup_log(log_div)

@@ -129,12 +129,12 @@ def get_access_token(code: str = const.SYM_BLANK) -> str:
         refresh_token = result["refresh_token"]
         auth_token = func.get_masking_data(refresh_token)
         auth_dao.update_auth_token(app_name, auth_token)
-        func.print_info_msg(app_name, msg_const.MSG_INFO_TOKEN_UPDATE_SUCCESS)
+        func.print_debug_msg(app_name, msg_const.MSG_INFO_TOKEN_UPDATE_SUCCESS)
 
     msg_div = f"{grant_type}で{issue_type}の発行、"
     if token:
         msg = msg_const.MSG_INFO_TOKEN_ISSUED_SUCCESS
-        func.print_info_msg(msg_div, msg)
+        func.print_debug_msg(msg_div, msg)
     else:
         msg = msg_const.MSG_ERR_TOKEN_NOT_EXIST
         func.print_error_msg(msg_div, msg)

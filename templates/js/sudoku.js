@@ -41,15 +41,22 @@ let initialPuzzle = [];
 let userName = SYM_BLANK;
 
 const RANKING_HEAD = ["NAME", "TIME", "DATE"];
+// TODO: score, time
+// 15分から、100点から5秒過ぎる度に1点マイナス
+// 時間の右に、点数を同時表示
+// ゲームが完了すると、時間と点数を通知
 
-// ランキングデータ // TODO: data_listにする
+// ランキングデータ（ダミーデータ）
 const RANKING_DATA = [
-  { name: "Sun", time: "08:00", date: "2025/11/01" },
-  { name: "Earth", time: "08:30", date: "2025/11/02" },
-  { name: "Moon", time: "09:00", date: "2025/11/03" },
-  { name: "Mars", time: "09:30", date: "2025/11/04" },
-  { name: "Neptune", time: "10:00", date: "2025/11/05" },
+  { rank: 1, score: 90, userName: "suns", updateDate: "2025/11/01 09:00" },
+  { rank: 2, score: 80, userName: "moon", updateDate: "2025/11/02 09:00" },
+  { rank: 3, score: 70, userName: "mars", updateDate: "2025/11/03 09:00" },
+  { rank: 4, score: 60, userName: "hong", updateDate: "2025/11/04 09:00" },
+  { rank: 5, score: 50, userName: "hong", updateDate: "2025/11/05 09:00" },
 ];
+
+// 変数
+let dataList, rankingDataJson;
 
 // 言語別ルールテキスト
 const GAME_RULES = {
@@ -385,7 +392,7 @@ function updateGameInfoHeader(level, currentUserName) {
   if (!gameInfoHeader) return;
 
   // ランキングデータの更新タイム
-  const bestTime = RANKING_DATA[0].time;
+  const bestTime = rankingDataJson[0].time;
 
   const displayLevel = level.toUpperCase();
 
@@ -530,13 +537,23 @@ function renderRank() {
     createElem(TAG_TH, rankHead, "rank-thead");
   });
 
+  dataList = getElemText("dataList");
+
+  // JSON形式の文字列に変換する
+  rankingDataJson = JSON.parse(dataList);
+
+  if (rankingDataJson.length === 0) {
+    rankingDataJson = RANKING_DATA;
+  }
+
   rankTbody.innerHTML = SYM_BLANK;
-  RANKING_DATA.forEach(rank => {
+  rankingDataJson.forEach(item => {
     const row = rankTbody.insertRow();
     row.innerHTML = `
-      <td>${rank.name}</td>
-      <td class="rank-time">${rank.time}</td>
-      <td>${rank.date}</td>
+      <td>${item.rank}</td>
+      <td class="rank-score">${item.score}</td>
+      <td>${item.userName}</td>
+      <td>${item.updateDate}</td>
     `;
   });
 }
@@ -640,6 +657,23 @@ function updateTimer() {
     progressBar.style.backgroundColor = 'cyan';
   }
 }
+
+/**
+ * ランキング更新処理
+ */
+// function getUpdateRank() {
+//   // 5位以内のランキングで自分のスコアより低いランクを検索
+//   let updateRank = null;
+
+// TODO: スコアがランク内の場合、更新
+//   for (let i = 0; i < Math.min(5, rankingDataJson.length); i++) {
+//     if (rankingDataJson[i].score <= gameState.score) {
+//       updateRank = rankingDataJson[i].rank;
+//       break;
+//     }
+//   }
+//   return updateRank;
+// }
 
 // 時間表示をMM:SS形式に変換
 function formatTime(seconds) {

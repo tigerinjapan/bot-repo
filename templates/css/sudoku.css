@@ -149,7 +149,7 @@ input[type="text"] {
 	border-bottom: 1px solid var(--color-text-dim);
 }
 
-#rank-table .rank-time {
+#rank-table .rank-score {
 	color: var(--color-neon-accent);
 }
 

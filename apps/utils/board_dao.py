@@ -91,8 +91,8 @@ def get_board_seq(client, coll: str = mongo_const.COLL_BOARD) -> int:
     """
     # すべての連番を取得し、ソート
     select_data = {mongo_const.FI_SEQ: 1, mongo_const.FI_ID: 0}
-    sort = {mongo_const.FI_SEQ, mongo_const.ASCENDING}
-    cursor = func_mongo.db_find(client, coll, select_data, sort=sort)
+    sort = {mongo_const.FI_SEQ: mongo_const.ASCENDING}
+    cursor = func_mongo.db_find(client, coll, select_data=select_data, sort=sort)
     current_seqs = [doc[mongo_const.FI_SEQ] for doc in cursor]
 
     updates_to_perform = {}

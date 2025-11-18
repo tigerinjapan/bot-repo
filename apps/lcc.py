@@ -90,7 +90,7 @@ def get_temp_msg(data_flg: bool = const.FLG_OFF):
             url = lcc_data
 
     if not url:
-        func.print_info_msg(app_title, msg_const.MSG_INFO_DATA_NOT_EXIST)
+        func.print_debug_msg(app_title, msg_const.MSG_INFO_DATA_NOT_EXIST)
 
     return lbl, url
 

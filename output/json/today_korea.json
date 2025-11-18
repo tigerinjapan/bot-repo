@@ -1,32 +1,32 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/11/16(Sun) 02:33",
+        "오늘의 생활정보": "2025/11/18(Tue) 09:33",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "휴일, 중부·전북 비",
+        "오늘의 생활정보": "오늘 추위 절정",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "오늘의 생활정보": "S&P500 6,734.11 (-0.05%)",
+        "오늘의 생활정보": "S&P500 6,672.41 (-0.92%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 941원",
+        "오늘의 생활정보": "100엔 = 943원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "오늘의 생활정보": "きたない\n더럽다.",
+        "오늘의 생활정보": "くうこう\n공항; 비행장.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "I want Korean.\n한국어를 배우고 싶어요",
+        "오늘의 생활정보": "Try something sweet.\n달콤한 것을 먹고 싶어요",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

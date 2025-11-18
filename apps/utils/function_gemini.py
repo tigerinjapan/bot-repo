@@ -220,7 +220,7 @@ def get_generate_text_image(
             break
 
     if not file_path:
-        func.print_info_msg(model, msg_const.MSG_ERR_API_RESPONSE_NONE)
+        func.print_debug_msg(model, msg_const.MSG_ERR_API_RESPONSE_NONE)
 
     return file_path
 

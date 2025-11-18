@@ -70,10 +70,10 @@ def update_data():
             )
             func.write_file(file_path, json_data)
         else:
-            func.print_info_msg(SCRIPT_NAME, msg_const.MSG_INFO_DATA_NOT_EXIST)
+            func.print_debug_msg(SCRIPT_NAME, msg_const.MSG_INFO_DATA_NOT_EXIST)
 
     else:
-        func.print_info_msg(SCRIPT_NAME, msg_const.MSG_ERR_DATA_NOT_EXIST)
+        func.print_debug_msg(SCRIPT_NAME, msg_const.MSG_ERR_DATA_NOT_EXIST)
 
     func.print_end(SCRIPT_NAME)
 

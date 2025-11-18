@@ -123,7 +123,7 @@ def check_login(input_id: str, input_pw: str, user_info) -> str:
         chk_msg = msg_const.MSG_ERR_CONNECTION_FAILED
 
     if chk_msg:
-        func.print_info_msg(const.STR_LOGIN, chk_msg)
+        func.print_debug_msg(const.STR_LOGIN, chk_msg)
 
     return chk_msg
 
