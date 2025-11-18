@@ -40,19 +40,15 @@ let initialPuzzle = [];
 // ユーザー名
 let userName = SYM_BLANK;
 
-const RANKING_HEAD = ["NAME", "TIME", "DATE"];
-// TODO: score, time
-// 15分から、100点から5秒過ぎる度に1点マイナス
-// 時間の右に、点数を同時表示
-// ゲームが完了すると、時間と点数を通知
+const RANKING_HEAD = ["RANK", "SCORE", "USER", "DATE"];
 
 // ランキングデータ（ダミーデータ）
 const RANKING_DATA = [
-  { rank: 1, score: 90, userName: "suns", updateDate: "2025/11/01 09:00" },
-  { rank: 2, score: 80, userName: "moon", updateDate: "2025/11/02 09:00" },
-  { rank: 3, score: 70, userName: "mars", updateDate: "2025/11/03 09:00" },
-  { rank: 4, score: 60, userName: "hong", updateDate: "2025/11/04 09:00" },
-  { rank: 5, score: 50, userName: "hong", updateDate: "2025/11/05 09:00" },
+  { rank: 1, score: 60, userName: "suns", updateDate: "2025/11/01 09:00" },
+  { rank: 2, score: 50, userName: "hong", updateDate: "2025/11/02 10:00" },
+  { rank: 3, score: 40, userName: "hong", updateDate: "2025/11/03 11:00" },
+  { rank: 4, score: 30, userName: "hong", updateDate: "2025/11/04 12:00" },
+  { rank: 5, score: 20, userName: "hong", updateDate: "2025/11/05 13:00" },
 ];
 
 // 変数
@@ -110,7 +106,7 @@ const SUDOKU_SOLUTION = [
 ];
 
 // DOM要素の取得
-let startScreen, gameScreen, levelSelect, langSelect, userNameInput, startButton;
+let startScreen, gameScreen, levelSelect, levelVal, langSelect, langCd, userNameInput, startButton;
 let rankThead, rankTbody, gameInfoHeader, timerText, progressBar, sudokuBoard, inputPanel;
 let ruleButton, hintButton, homeButton, hintCounter, modalOverlay, modalTitle, modalBody, modalCloseButton;
 
@@ -187,8 +183,8 @@ function initApp() {
   checkStartButtonState();
 
   if (ruleButton) ruleButton.addEventListener(EVENT_CLICK, () => {
-    const lang = langSelect ? langSelect.value : LANG_CD_EN;
-    const rule = GAME_RULES[lang];
+    langCd = langSelect ? langSelect.value : LANG_CD_EN;
+    const rule = GAME_RULES[langCd];
     showModal(rule.title, rule.body);
   });
   if (hintButton) hintButton.addEventListener(EVENT_CLICK, useHint);
@@ -208,7 +204,7 @@ function initApp() {
 function startGame() {
   if (!levelSelect || !langSelect || !userNameInput) return;
 
-  const level = levelSelect.value;
+  levelVal = levelSelect.value;
 
   // ユーザー名保存
   userName = userNameInput.value.trim();
@@ -234,11 +230,11 @@ function startGame() {
   if (inputPanel) inputPanel.style.display = ATTR_NONE;
 
   // パズル生成
-  generatePuzzle(level);
+  generatePuzzle();
   renderBoard();
 
-  // ゲーム情報ヘッダーを更新
-  updateGameInfoHeader(level, userName);
+  // ゲーム情報ヘッダー更新
+  updateGameInfoHeader();
 
   // 画面遷移とタイマー開始
   showScreen('game-screen');
@@ -246,13 +242,13 @@ function startGame() {
 }
 
 // 生成ロジック: 常にランダムな完成盤を使う
-function generatePuzzle(level) {
+function generatePuzzle() {
   // 解答をシャッフルコピーで作成（毎回ランダムに）
   solution = shuffleSolution(SUDOKU_SOLUTION).map(row => [...row]);
   let initialBoard = solution.map(row => [...row]);
 
   let holes = 0;
-  switch (level) {
+  switch (levelVal) {
     case LEVEL_EASY: holes = HOLES_MEDIUM - 10; break;
     case LEVEL_MEDIUM: holes = HOLES_MEDIUM; break;
     case LEVEL_HARD: holes = HOLES_MEDIUM + 10; break;
@@ -388,26 +384,21 @@ function shuffleSolution(base) {
 }
 
 // ゲーム情報ヘッダーを更新
-function updateGameInfoHeader(level, currentUserName) {
+function updateGameInfoHeader() {
   if (!gameInfoHeader) return;
-
-  // ランキングデータの更新タイム
-  const bestTime = rankingDataJson[0].time;
-
-  const displayLevel = level.toUpperCase();
 
   gameInfoHeader.innerHTML = `
     <div>
       <span class="info-label">${STR_LEVEL.toUpperCase()}</span>
-      <span class="info-value">${displayLevel}</span>
+      <span class="info-value">${levelVal.toUpperCase()}</span>
     </div>
     <div>
-      <span class="info-label">BEST TIME</span>
-      <span class="info-value">${bestTime}</span>
+      <span class="info-label">BEST SCORE</span>
+      <span class="info-value">${getUserBestScore()}</span>
     </div>
     <div>
       <span class="info-label">${STR_USER.toUpperCase()}</span>
-      <span class="info-value">${currentUserName}</span>
+      <span class="info-value">${userName}</span>
     </div>
   `;
 }
@@ -521,8 +512,16 @@ function checkGameCompletion() {
   }
   // 全てのマスが埋まり、全て解と一致した場合
   clearInterval(timer);
-  const clearTime = "CLEAR TIME: \n" + formatTime(GAME_TIMEOUT_SECONDS - timeRemaining);
+  const remainingTime = formatTime(GAME_TIMEOUT_SECONDS - timeRemaining);
+  const currentScore = calculateScore();
+  const clearTime = "TIME: " + remainingTime + "\nSCORE: " + currentScore;
   showModal("COMPLETED！", clearTime);
+
+  // ランキング更新判定・API送信
+  const updateRank = getUpdateRank(currentScore);
+  if (updateRank !== null) {
+    updateRanking(updateRank, currentScore);
+  }
   return true;
 }
 
@@ -551,7 +550,7 @@ function renderRank() {
     const row = rankTbody.insertRow();
     row.innerHTML = `
       <td>${item.rank}</td>
-      <td class="rank-score">${item.score}</td>
+      <td class="rank-score">${item.score} pts</td>
       <td>${item.userName}</td>
       <td>${item.updateDate}</td>
     `;
@@ -661,19 +660,111 @@ function updateTimer() {
 /**
  * ランキング更新処理
  */
-// function getUpdateRank() {
-//   // 5位以内のランキングで自分のスコアより低いランクを検索
-//   let updateRank = null;
+function getUpdateRank(currentScore) {
+  // 5位以内のランキングで自分のスコアより低いランクを検索
+  let updateRank = null;
 
-// TODO: スコアがランク内の場合、更新
-//   for (let i = 0; i < Math.min(5, rankingDataJson.length); i++) {
-//     if (rankingDataJson[i].score <= gameState.score) {
-//       updateRank = rankingDataJson[i].rank;
-//       break;
-//     }
-//   }
-//   return updateRank;
-// }
+  if (currentScore == 0) {
+    return updateRank;
+  }
+
+  for (let i = 0; i < Math.min(5, rankingDataJson.length); i++) {
+    if (rankingDataJson[i].score <= currentScore) {
+      updateRank = rankingDataJson[i].rank;
+      break;
+    }
+  }
+  return updateRank;
+}
+
+/**
+ * ランキングをAPI経由で更新
+ * @param {string} rank - ランク
+ * @param {string} score - スコア
+*/
+async function updateRanking(rank, score) {
+  let rankOkMsg = MSG_OK_RANK;
+  let rankNgMsg = MSG_ERR_RANK;
+
+  if (langCd === LANG_CD_KO) {
+    rankOkMsg = MSG_OK_RANK_KO;
+    rankNgMsg = MSG_ERR_RANK_KO;
+  } else if (langCd === LANG_CD_EN) {
+    rankOkMsg = MSG_OK_RANK_EN;
+    rankNgMsg = MSG_ERR_RANK_EN;
+  }
+
+  let url = URL_SUDOKU_RANKING_SERVER;
+  if (isLocal()) {
+    url = URL_SUDOKU_RANKING_LOCAL;
+  }
+
+  const requestBody = { rank: rank, score: score, userName: userName };
+
+  try {
+    const data = await getFetchApiData(url, requestBody);
+    console.log(data.message);
+    alert(rankOkMsg);
+  } catch (e) {
+    alert(rankNgMsg);
+  }
+}
+
+/**
+ * 残り時間から現在のスコア計算
+ * @returns {number} スコア (0〜100)
+ */
+function calculateScore() {
+  let score = 0;
+
+  // 5分未満 = 0点
+  const INITIAL_TIME_SECONDS = 300;
+
+  // 1点あたり秒数（6秒/点）
+  const TIME_PER_POINT = 6;
+
+  // スコア対象秒数
+  let scoreTime = timeRemaining - INITIAL_TIME_SECONDS;
+
+  switch (levelVal) {
+    case LEVEL_EASY: scoreTime = scoreTime - 60; break;
+    case LEVEL_MEDIUM: scoreTime = scoreTime; break;
+    case LEVEL_HARD: scoreTime = scoreTime + 60; break;
+  }
+
+  if (scoreTime <= 0) {
+    return score;
+  }
+
+  // スコア
+  score = Math.floor(scoreTime / TIME_PER_POINT);
+  return score;
+}
+
+/**
+ * ランキングデータから指定ユーザーの最もランクが高いスコアを取得
+ * @param {Array<Object>} data - ランキングデータ
+ * @param {string} targetUserName - 取得したいユーザー名
+ * @returns {number|string} ベストスコア（数値）またはデータがない場合は "-"
+ */
+function getUserBestScore() {
+  // 1. 指定ユーザーのデータのみをフィルタリング
+  const userEntries = rankingDataJson.filter(item => item.userName === userName);
+
+  // 2. ユーザーのデータが存在するかチェック
+  if (userEntries.length === 0) {
+    // データがない場合、"-" を返す
+    return "-";
+  }
+
+  // 3. フィルタリングされたデータから最も高いスコアを見つける
+  // (データがrank順に入っているため、最初の要素がベストスコアだが、念のためMath.maxで確認)
+  const bestScore = userEntries.reduce((maxScore, currentEntry) => {
+    return Math.max(maxScore, currentEntry.score);
+  }, -1); // 初期値を-1に設定 (スコアが0点以上の場合を想定)
+
+  return bestScore;
+}
 
 // 時間表示をMM:SS形式に変換
 function formatTime(seconds) {

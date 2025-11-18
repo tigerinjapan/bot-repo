@@ -73,9 +73,15 @@ def main(
                     )
 
                 else:
-                    # メッセージ送信
-                    lbl, data = lcc.get_temp_msg(data_flg=const.FLG_ON)
+                    lbl = data = const.SYM_BLANK
+                    if div == const.APP_LCC:
+                        lbl, data = lcc.get_temp_msg(data_flg=const.FLG_ON)
+                    elif div == const.APP_NEWS:
+                        lbl = div
+                        data = today_korea.get_it_news()
+
                     if lbl and data:
+                        # メッセージ送信
                         func_kakao.send_kakao_msg(token, title=lbl, message=data)
 
             except Exception as e:

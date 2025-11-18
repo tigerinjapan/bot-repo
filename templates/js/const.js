@@ -87,6 +87,7 @@ const BUTTON_X = "×";
 const COLOR_RED = "red";
 const COLOR_GREEN = "green";
 const COLOR_BLUE = "blue";
+const COLOR_BLACK = "black";
 const COLOR_WHITE = "white";
 
 const FONT_BOLD = "bold";
@@ -98,14 +99,14 @@ const CHART_BAR = "bar";
 
 // タイトル
 const TITLE_SYSTEM = "Kobe-Dev Demo System";
-const TITLE_TRAVEL = "🌏 Travel & Life 🌏";
-const TITLE_NUMBER = "🚙 Number Plate Game";
+const TITLE_TRAVEL = "🌏 TRAVEL & LIFE 🌏";
+const TITLE_NUMBER = "🚙 NUMBER PLAGE GAME";
 const TITLE_NUMBER_KO = "🚙 자동차 번호판 게임";
 const TITLE_SUDOKU = "🔢 SUDOKU";
-const TITLE_IT_QUIZ = "ℹ️ IT Quiz";
-const TITLE_REVIEW = "🌈 Review Page 🌈";
+const TITLE_IT_QUIZ = "ℹ️ IT QUIZ";
+const TITLE_REVIEW = "🌈 REVIEW PAGE 🌈";
 const TITLE_DESIGN = "📄 設計書 📄";
-const TITLE_DASH_BOARD = "📊 Dash Board 📊";
+const TITLE_DASH_BOARD = "📊 DASH BOARD 📊";
 
 const TITLE_CITY = "City";
 const TITLE_CHOICE_CHAR = "Select a Character";

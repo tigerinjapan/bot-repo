@@ -149,7 +149,7 @@ function setStartBtn() {
     startBtn.textContent = BUTTON_START;
     startBtn.addEventListener(EVENT_CLICK, () => {
       const number = getElem("number-display");
-      number.style.backgroundColor = "black";
+      number.style.backgroundColor = COLOR_BLACK;
 
       // START/STOP トグル（表示は opacity で制御）
       let exprArea = getElem("exprArea");

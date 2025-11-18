@@ -40,6 +40,9 @@ DIV_LIST = [
 LIST_CITY_KOR = ["서울", "인천", "대구"]
 LIST_CITY_JPN = ["도쿄", "후쿠오카", "오사카", "나고야", "오키나와"]
 
+# キーワードリスト
+LIST_KEYWORD_AI = func.get_input_data(const.STR_KEYWORD, const.STR_AI)
+
 # URL
 URL_FLIGHT = "https://www.ttang.com"
 URL_FLIGHT_MO = "https://mm.ttang.com"
@@ -330,6 +333,33 @@ def get_phrase() -> str:
     return phrase
 
 
+def get_it_news() -> str:
+    """
+    ITニュース取得
+    """
+    news_list = []
+
+    URL_ET_NEWS = "https://m.etnews.com"
+    url = f"{URL_ET_NEWS}/news/section.html?id1=03"
+    contents_list = func_bs.get_elem_from_url(
+        url, const.TAG_DIV, attr_val="text", list_flg=const.FLG_ON
+    )
+    if contents_list:
+        for contents in contents_list:
+            a_elem = func_bs.find_elem_by_attr(contents, tag=const.TAG_A)
+            a_text = a_elem.text
+            a_href = a_elem.get(const.ATTR_HREF)
+            if func.check_in_list(a_text, LIST_KEYWORD_AI):
+                news_list.append(a_text)
+                news_list.append(f"{URL_ET_NEWS}{a_href}")
+                if 6 <= len(news_list):
+                    break
+
+    it_news = const.SYM_NEW_LINE.join(news_list)
+    return it_news
+
+
 if __name__ == const.MAIN_FUNCTION:
     # get_today_info_list()
-    get_today_info()
+    # get_today_info()
+    get_it_news()

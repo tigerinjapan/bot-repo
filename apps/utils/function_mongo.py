@@ -107,6 +107,7 @@ def db_find(
     select_data=const.NONE_CONSTANT,
     sort=const.NONE_CONSTANT,
     one_flg=const.FLG_OFF,
+    debug_flg=const.FLG_ON,
 ):
     """
     データ検索
@@ -138,8 +139,12 @@ def db_find(
         else:
             result = coll_find()
 
-        div = f"{curr_func_nm} {coll_nm}"
-        func.print_debug_msg(div, cond)
+        div = curr_func_nm
+        msg = coll_nm
+        if debug_flg:
+            div += f" {coll_nm}"
+            msg = cond
+        func.print_debug_msg(div, msg)
 
     except Exception as e:
         except_db(coll_nm, curr_func_nm, str(e))

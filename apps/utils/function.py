@@ -5,7 +5,9 @@
 import csv
 import glob
 import json
+import logging
 import os
+import pandas as pd
 import random
 import re
 import socket
@@ -14,11 +16,8 @@ import time
 import urllib
 
 from datetime import datetime, timedelta, timezone
-import logging
 from pprint import pprint
 from translate import Translator
-
-import pandas as pd
 
 import apps.utils.constants as const
 import apps.utils.message_constants as msg_const
@@ -273,6 +272,9 @@ def print_error_msg(
     """
     エラーメッセージ出力
     """
+    if const.MAX_TEXT_LENGTH < len(div):
+        div = f"{div[:const.MAX_TEXT_LENGTH]}..."
+
     log_msg = f"[{script_name}.{func_name}] {div}"
 
     if exception:

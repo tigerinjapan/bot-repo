@@ -20,8 +20,8 @@
 
 **イメージ生成** (2025/11/14)
 
-- 既存イメージ生成 AI（プレビュー版）のサポートが終了しました。
-- 新しいモデルがリリースされたら、またイメージ生成を利用できます。
+- Google のイメージ生成 AI（Nano Banana プレビュー版）のサポートが終了しました。
+- 新しいモデルがリリースされたら、イメージ生成を再開します。
 
 ---
 
@@ -44,5 +44,4 @@
 | [debug log](https://kobe-dev.koyeb.app/log/debug)              | デバックログ           | 処理確認           |
 | [info log](https://kobe-dev.koyeb.app/log/info)                | インフォメーションログ | 処理確認           |
 | [error log](https://kobe-dev.koyeb.app/log/error)              | エラーログ             | エラー確認         |
-| [dashboard log](https://kobe-dev.koyeb.app/log/dashboard)      | ダッシュボードログ     | サイト分析         |
 | url                                                            | 開発サーバー URL 一覧  | 随時更新           |

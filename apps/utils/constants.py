@@ -215,6 +215,22 @@ ATTR_ID = "id"
 ATTR_PROP = "property"
 ATTR_TITLE = "title"
 
+ALIGN_CENTER = "center"
+ALIGN_LEFT = "left"
+ALIGN_RIGHT = "right"
+
+COLOR_RED = "red"
+COLOR_GREEN = "green"
+COLOR_BLUE = "blue"
+COLOR_BLACK = "black"
+COLOR_WHITE = "white"
+
+COLOR_CD_BLACK = "#000000"
+COLOR_CD_BLUE = "#0000ff"
+COLOR_CD_GRAY = "#808080"
+COLOR_CD_RED = "#ff0000"
+COLOR_CD_WHITE = "#ffffff"
+
 ##### ファイルモード #####
 FILE_MODE_READ = "r"
 FILE_MODE_WRITE = "w"

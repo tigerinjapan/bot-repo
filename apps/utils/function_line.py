@@ -166,7 +166,7 @@ def get_template_msg_json(
             "thumbnailImageUrl": img_url,
             "imageAspectRatio": "rectangle",
             "imageSize": "cover",
-            "imageBackgroundColor": "#FFFFFF",
+            "imageBackgroundColor": const.COLOR_CD_WHITE,
             "title": template_title,
             "text": template_text,
             # "defaultAction": {
@@ -223,18 +223,18 @@ def get_bubble_contents(data_list):
                     {
                         "type": "text",
                         "text": header_text,
-                        "color": "#ffffff",
+                        "color": const.COLOR_CD_WHITE,
                         "align": "start",
                         "size": "md",
-                        "gravity": "center",
+                        "gravity": const.ALIGN_CENTER,
                     },
                     {
                         "type": "text",
                         "text": percent,
-                        "color": "#ffffff",
+                        "color": const.COLOR_CD_WHITE,
                         "align": "start",
                         "size": "xs",
-                        "gravity": "center",
+                        "gravity": const.ALIGN_CENTER,
                         "margin": "lg",
                     },
                     {

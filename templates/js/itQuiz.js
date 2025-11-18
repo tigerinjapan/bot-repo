@@ -231,7 +231,7 @@ const renderInitialScreen = () => {
         <button class="btn" id="btnStartGame" disabled>${BUTTON_START}</button>
         <button class="btn" id="btnGameRule" disabled onclick="showRuleDialog()">${BUTTON_RULE}</button>
       </div>
-      <h2>Ranking</h2>
+      <h2>${TITLE_TOP_RANK}</h2>
       <ul id="ranking-list">
         ${rankingsHtml}
       </ul>

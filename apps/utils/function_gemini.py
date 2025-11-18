@@ -191,8 +191,8 @@ def get_generate_text_image(
 
                 # 【レビュー対応#11】文字の外枠を、whiteになる #
                 # 外枠の色と文字の色
-                outline_color = "white"
-                text_color = "black"
+                outline_color = const.COLOR_WHITE
+                text_color = const.COLOR_BLACK
 
                 # 外枠を描画
                 x_size = xy_size[0]
@@ -208,7 +208,11 @@ def get_generate_text_image(
                             )
 
                 draw.text(
-                    xy=xy_size, text=msg, fill=text_color, font=font, align="left"
+                    xy=xy_size,
+                    text=msg,
+                    fill=text_color,
+                    font=font,
+                    align=const.ALIGN_LEFT,
                 )
 
             else:

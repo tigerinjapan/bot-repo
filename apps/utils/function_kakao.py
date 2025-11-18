@@ -356,7 +356,7 @@ def get_template_object(
     else:
         if not message:
             object_type = OBJECT_TYPE_TEXT
-            title = "자세히 보기 x 자세히 보기"
+            title = "자세히 보기"
 
             current_time = func.get_now(
                 const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_HHMM

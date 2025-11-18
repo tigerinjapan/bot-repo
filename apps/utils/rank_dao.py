@@ -16,7 +16,9 @@ def get_rank_info_list(number_list: list[int]):
 
     client = func_mongo.db_connect()
     cond = {mongo_const.FI_NUMBER: {mongo_const.OPERATOR_IN: number_list}}
-    result = func_mongo.db_find(client, mongo_const.COLL_RANK_INFO, cond)
+    result = func_mongo.db_find(
+        client, mongo_const.COLL_RANK_INFO, cond, debug_flg=const.FLG_OFF
+    )
     for rank_info in result:
         rank_info_data = rank_dto.get_rank_info_data(rank_info)
         rank_info_list.append(rank_info_data)

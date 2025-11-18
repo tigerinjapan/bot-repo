@@ -26,7 +26,7 @@ def get_response_result(
     headers={},
     data={},
     header_json_flg: bool = const.FLG_ON,
-    log_flg: bool = const.FLG_ON,
+    debug_flg: bool = const.FLG_ON,
 ):
     """
     リクエスト結果取得
@@ -34,7 +34,7 @@ def get_response_result(
     result = except_ = msg = const.NONE_CONSTANT
     curr_func_nm = sys._getframe().f_code.co_name
 
-    if log_flg:
+    if debug_flg:
         div = f"{const.STR_API} {curr_func_nm}"
         func.print_debug_msg(div, url)
 
@@ -83,7 +83,7 @@ def get_json_data_on_app(app_name: str, token_flg: bool = const.FLG_OFF):
     url = f"{URL_SERVER}/{const.FILE_TYPE_JSON}/{app_name}"
     if token_flg:
         url += f"?token=token_{func.get_now(const.DATE_TODAY)}"
-    result = get_response_result(url, log_flg=const.FLG_OFF)
+    result = get_response_result(url, debug_flg=const.FLG_OFF)
     return result
 
 
@@ -156,7 +156,9 @@ def insert_msg_to_img(
     font_path = func.get_file_path(font_type, const.FILE_TYPE_TTC)
     font = ImageFont.truetype(font=font_path, size=font_size)
 
-    draw.text(xy=xy_size, text=msg, fill="black", font=font, align="left")
+    draw.text(
+        xy=xy_size, text=msg, fill=const.COLOR_BLACK, font=font, align=const.ALIGN_LEFT
+    )
 
     file_path = func.get_file_path(div, const.FILE_TYPE_JPEG, const.STR_OUTPUT)
     img.save(file_path, optimize=const.FLG_ON)

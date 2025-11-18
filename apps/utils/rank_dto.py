@@ -82,7 +82,7 @@ def get_ranking_data(json_data):
     userName = json_data[mongo_const.FI_USER_NAME]
     updateDate = json_data[mongo_const.FI_UPDATE_DATE]
 
-    json_data = rankingInfo(rank, userName, score, updateDate).get_data()
+    json_data = rankingInfo(rank, score, userName, updateDate).get_data()
     return json_data
 
 
@@ -92,7 +92,7 @@ def get_update_data_for_ranking(div, json_data):
     """
     rank = json_data[mongo_const.ITEM_RANK]
     score = json_data[mongo_const.ITEM_SCORE]
-    userName = json_data[mongo_const.ITEM_USER_ID]
+    userName = json_data[mongo_const.ITEM_USER_NAME]
 
     json_data = ranking(div, rank, score, userName).get_data()
     return json_data, rank, score
