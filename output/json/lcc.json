@@ -1,17 +1,22 @@
 [
     {
+        "日付": "2025年11月19日",
+        "会社": "<a href=\"https://www.eastarjet.com/newstar/PGWTA00002?eventNo=2308&gubun=I\" target=\"_blank\" rel=\"noopener noreferrer\">イースター航空</a>",
+        "LCCニュース": "「1月～2月 早割特価」\nセール開催中！ソウル/釜山線 片道5,500円から"
+    },
+    {
+        "日付": "2025年11月19日",
+        "会社": "<a href=\"https://www.jejuair.net/ja/event/eventDetail.do?eventNo=0000003507\" target=\"_blank\" rel=\"noopener noreferrer\">チェジュ航空</a>",
+        "LCCニュース": "「今安セール」\n開催中！ソウル/釜山線 片道1,600円から"
+    },
+    {
+        "日付": "2025年11月19日",
+        "会社": "<a href=\"https://www.jetstar.com/jp/ja/deals/sale\" target=\"_blank\" rel=\"noopener noreferrer\">ジェットスター</a>",
+        "LCCニュース": "「ブラックフライデーセール」\n11月26日12時から開催！国内線＆国際線 片道2,960円から"
+    },
+    {
         "日付": "2025年11月13日",
         "会社": "<a href=\"https://www.jetstar.com/jp/ja/deals/gk-int\" target=\"_blank\" rel=\"noopener noreferrer\">ジェットスター・ジャパン</a>",
         "LCCニュース": "「香港路線再開記念セール」\n11月14日12時から開催！成田－香港線 来年2月再開"
-    },
-    {
-        "日付": "2025年11月12日",
-        "会社": "<a href=\"https://www.jejuair.net/ja/event/eventDetail.do?eventNo=0000003489\" target=\"_blank\" rel=\"noopener noreferrer\">チェジュ航空</a>",
-        "LCCニュース": "「関東ウィーク」\nセール開催中！ソウル/釜山線 片道6,460円から"
-    },
-    {
-        "日付": "2025年11月10日",
-        "会社": "<a href=\"https://www.vietjetair.com/ja\" target=\"_blank\" rel=\"noopener noreferrer\">ベトジェットエア</a>",
-        "LCCニュース": "「11.11 ダブルデーキャンペーン」\n11月11日深夜2時から開催！ベトナム国際線 片道11,690円から"
     }
 ]

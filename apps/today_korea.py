@@ -264,7 +264,9 @@ def get_flight_sale() -> str:
     for item in item_list:
         info_list = func_bs.find_elem_by_class(item, "shortCut", list_flg=const.FLG_ON)
         price_info = func_bs.find_elem_by_class(item, "js_tooltip_btn").text
-        price = price_info.replace("원", const.SYM_BLANK).replace(",", const.SYM_BLANK)
+        target_list = [const.SYM_COMMA, "원"]
+        price = func.get_replace_data(price_info, target_list)
+
         from_ = info_list[0].text
         to = info_list[2].text.split(const.SYM_SLASH)[0]
         airline = info_list[3].text.replace("항공", const.SYM_BLANK)

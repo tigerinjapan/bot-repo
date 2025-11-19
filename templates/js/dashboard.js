@@ -24,7 +24,9 @@ const kpiItems = [
 // グラフオブジェクトを保持するMap
 const charts = new Map();
 
-// ページロード時の初期化処理
+/**
+ * ページロード時の初期化処理
+ */
 function initializeApp() {
   // テキスト定義の適用
   setElemText("header-title", TITLE_DASH_BOARD);
@@ -51,7 +53,9 @@ function initializeApp() {
   });
 }
 
-// KPIカードのHTMLを生成し、グリッドに追加する
+/**
+ * KPIカードのHTMLを生成し、グリッドに追加
+ */
 function initializeKpiCards() {
   const grid = getElem('dashboard-grid');
   let html = SYM_BLANK;
@@ -72,7 +76,11 @@ function initializeKpiCards() {
   grid.innerHTML = html;
 }
 
-// データをHTMLとグラフに反映させるメイン関数
+/**
+ * データをHTMLとグラフに反映させるメイン関数
+ * 
+ * @param {string} period - 期間区分
+ */
 async function updateDashboard(period) {
   let dashboardDataUrl = URL_DASHBOARD_SERVER;
   if (isLocal()) {
@@ -103,7 +111,14 @@ async function updateDashboard(period) {
   });
 }
 
-// 棒グラフ/折れ線グラフを描画する共通関数
+/**
+ * 棒グラフ/折れ線グラフを描画
+ * 
+ * @param {string} chartId - チャートID
+ * @param {string} type - チャート種類
+ * @param {string} dataItems - データ
+ * @param {string} title - タイトル
+ */
 function updateLineBarChart(chartId, type, dataItems, title) {
   const canvas = getElem(chartId);
   if (charts.has(chartId)) charts.get(chartId).destroy();
@@ -131,7 +146,12 @@ function updateLineBarChart(chartId, type, dataItems, title) {
   charts.set(chartId, newChart);
 }
 
-// 円グラフ（ドーナツ型）を描画する共通関数
+/**
+ * 円グラフ（ドーナツ型）を描画する共通関数
+ * 
+ * @param {string} chartId - チャートID
+ * @param {string} dataItems - データ
+ */
 function updateDoughnutChart(chartId, dataItems) {
   const canvas = getElem(chartId);
   if (charts.has(chartId)) charts.get(chartId).destroy();
@@ -161,7 +181,9 @@ function updateDoughnutChart(chartId, dataItems) {
   charts.set(chartId, newChart);
 }
 
-// ページロード時の初期化
+/**
+ * ページロード時の初期化
+ */
 window.onload = () => {
   initializeApp();
 };

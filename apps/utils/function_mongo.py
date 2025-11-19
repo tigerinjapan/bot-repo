@@ -202,7 +202,14 @@ def db_insert_many(client, coll_nm: str, insert_data):
     db_insert(client, coll_nm, insert_data, many_flg=const.FLG_ON)
 
 
-def db_update(client, coll_nm: str, cond, update_data, many_flg: bool = const.FLG_OFF):
+def db_update(
+    client,
+    coll_nm: str,
+    cond,
+    update_data,
+    many_flg: bool = const.FLG_OFF,
+    debug_flg=const.FLG_ON,
+):
     """
     データ更新
     """
@@ -218,7 +225,9 @@ def db_update(client, coll_nm: str, cond, update_data, many_flg: bool = const.FL
         coll_update(filter=cond, update=update_data)
 
         div = f"{curr_func_nm} {coll_nm}"
-        msg = f"{cond} {update_data}"
+        msg = cond
+        if debug_flg:
+            msg += f" {update_data}"
         func.print_debug_msg(div, msg)
 
     except Exception as e:

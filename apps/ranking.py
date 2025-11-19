@@ -59,24 +59,27 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
         if not elem:
             break
 
-        ranking_info = const.SYM_BLANK
-
         if div == const.STR_KPOP:
             text_data = elem.text
-            if "] " in text_data:
-                text_list = text_data.split("] ")
-            else:
-                text_list = text_data.split("」")
+            if not text_data:
+                continue
 
-            singer = text_list[1]
-            song = (
-                text_list[0]
-                .replace("「 ", const.SYM_BLANK)
-                .replace("「", const.SYM_BLANK)
-            )
-            ranking_info = f"{singer} - {song}"
+            ranking_info = text_data
+            text_list = []
 
-        if ranking_info:
+            split_str_list = ["」 ", "」", "] ", "\u3000"]
+            for split_str in split_str_list:
+                if split_str in text_data:
+                    text_list = text_data.split(split_str)
+                    break
+
+            if text_list:
+                singer = text_list[1]
+
+                target_list = ["「 ", "「", "["]
+                song = func.get_replace_data(text_list[0], target_list)
+                ranking_info = f"{singer} - {song}"
+
             weekly_ranking.append(ranking_info)
 
     return weekly_ranking

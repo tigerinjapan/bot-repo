@@ -1,4 +1,8 @@
-// 生年設定
+/**
+ * 生年設定
+ * 
+ * @param {string} yearVal - 年度
+ */
 function setYear(yearVal) {
   const startYear = 1970;
   const endYear = 2020;
@@ -6,7 +10,14 @@ function setYear(yearVal) {
   createOptVal("year", valList, STR_SELECT_JA, yearVal);
 };
 
-// オプション値生成
+/**
+ * オプション要素生成
+ * 
+ * @param {string} elemId - 要素id
+ * @param {string[]} valList - 要素値リスト
+ * @param {string} defaultVal - デフォルト値
+ * @param {string} selectVal - 選択値
+ */
 function createOptVal(elemId, valList, defaultVal, selectVal) {
   const selectElem = getElem(elemId);
   selectElem.innerHTML = SYM_BLANK;
@@ -26,7 +37,11 @@ function createOptVal(elemId, valList, defaultVal, selectVal) {
   selectElem.value = selectVal;
 };
 
-// 性別設定
+/**
+ * 性別設定
+ * 
+ * @param {string} sexVal - 性別
+ */
 function setSex(sexVal) {
   const sexRadioButton = document.querySelector('input[name="sex"][value="' + sexVal + '"]');
   if (sexRadioButton) {
@@ -34,12 +49,19 @@ function setSex(sexVal) {
   }
 }
 
-// 住所取得
+/**
+ * 住所取得
+ */
 function getAddress() {
   setAddress(SYM_BLANK, SYM_BLANK);
 }
 
-// 住所設定
+/**
+ * 住所設定
+ * 
+ * @param {string} selectLineVal - 選択した沿線
+ * @param {string} selectStationVal - 選択した駅
+ */
 function setAddress(selectLineVal, selectStationVal) {
   // 郵便番号より、住所取得
   let zipUrl = URL_ZIP_SERVER;
@@ -90,7 +112,12 @@ function setAddress(selectLineVal, selectStationVal) {
     });
 };
 
-// 駅設定
+/**
+ * 駅設定
+ * 
+ * @param {string} selectedLine - 沿線
+ * @param {string} selectStationVal - 駅
+ */
 function setStation(selectedLine, selectStationVal) {
   const stationUrl = `${URL_STATION_API}&line=${selectedLine}`;
   fetch(stationUrl)
@@ -112,13 +139,21 @@ function setStation(selectedLine, selectStationVal) {
     });
 };
 
-// 沿線変更時
+/**
+ * 沿線変更時
+ * 
+ * @param {HTMLElement} elem - 要素
+ */
 function changeLine(elem) {
   const lineVal = elem.value;
   setStation(lineVal, SYM_BLANK);
 }
 
-// メニュー設定
+/**
+ * メニュー設定
+ * 
+ * @param {string} menuVal - メニュー値
+ */
 function setMenu(menuVal) {
   const container = getElem('checkBoxMenu');
   const labels = LIST_APP;
@@ -136,7 +171,8 @@ function setMenu(menuVal) {
     label.appendChild(document.createTextNode(labels[i]));
     container.appendChild(label);
     if ((i + 1) % 3 === 0) {
-      container.appendChild(createElemOnly(TAG_BR)); // 改行追加
+      // 改行追加
+      container.appendChild(createElemOnly(TAG_BR));
     }
   }
 
@@ -144,11 +180,15 @@ function setMenu(menuVal) {
     const val = menuVal[i];
     const menuId = `menu${val}`
     const checkbox = getElem(menuId);
-    checkbox.checked = true; // 指定された状態に設定
+
+    // 指定された状態に設定
+    checkbox.checked = true;
   }
 }
 
-// ユーザー情報チェック
+/**
+ * ユーザー情報チェック
+ */
 function checkUserInfo() {
   let checkFlg = true;
   let errMsg = SYM_BLANK;

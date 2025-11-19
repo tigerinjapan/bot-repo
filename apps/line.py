@@ -208,12 +208,10 @@ def get_flex_data_list():
     body_list = []
     for fund_no, fund_goal in zip(const.LIST_FUND_NO, fund_goal_list):
         fund_name, point = today.get_today_nisa(fund_no, msg_flg=const.FLG_OFF)
-        point_int = int(
-            point.replace(const.SYM_COMMA, const.SYM_BLANK).replace(
-                const.STR_JPY_JA, const.SYM_BLANK
-            )
-        )
-        rate = (point_int / fund_goal) * 100
+
+        target_list = [const.SYM_COMMA, const.STR_JPY_JA]
+        point_str = func.get_replace_data(point, target_list)
+        rate = (int(point_str) / fund_goal) * 100
         rate_str = f"{int(rate)}%"
         body_text = f"{fund_name}{NEW_LINE}{point}"
 

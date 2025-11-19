@@ -7,7 +7,9 @@ document.title = TITLE_DESIGN;
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", init);
 
-// 初期表示
+/**
+ * 初期表示
+ */
 function init() {
   // アプリ名
   const appName = getElemText("appName");

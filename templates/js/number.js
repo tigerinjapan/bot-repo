@@ -19,7 +19,9 @@ let isTimerRunning = false;
 // 強制停止
 let stopFlg = false;
 
-// DOM読み込み後の処理
+/**
+ * DOM読み込み後の処理
+ */
 document.addEventListener("DOMContentLoaded", () => {
   // 初期表示
   init();
@@ -47,7 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// 初期表示
+/**
+ * 初期表示
+ */
 function init() {
   // ゲームデータ設定
   setGameData();
@@ -104,7 +108,9 @@ function init() {
   setElemText("btnNext", btnNextNm);
 }
 
-// ゲームデータ設定
+/**
+ * ゲームデータ設定
+ */
 function setGameData() {
   setElemText("timer", limitTime.toFixed(2));
 
@@ -129,7 +135,11 @@ function setGameData() {
   setLevel(level);
 }
 
-// レベル設定
+/**
+ * レベル設定
+ * 
+ * @param {string} level - レベル
+ */
 function setLevel(level) {
   let levelMark = SYM_LEVEL;
   if (level === LEVEL_MEDIUM) {
@@ -141,7 +151,9 @@ function setLevel(level) {
   setElemText("levelVal", level);
 }
 
-// STARTボタン設定
+/**
+ * STARTボタン設定
+ */
 function setStartBtn() {
   // START/STOP処理
   const startBtn = getElem("btnStart");
@@ -170,7 +182,9 @@ function setStartBtn() {
   }
 }
 
-// 停止処理
+/**
+ * 停止処理
+ */
 function setStop() {
   clearInterval(timerId);
   isTimerRunning = false;
@@ -186,7 +200,9 @@ function setStop() {
   init();
 }
 
-// タイマー設定
+/**
+ * タイマー設定
+ */
 function setTimer() {
   let sec = limitTime;
   const timerElem = getElem("timer");
@@ -207,7 +223,11 @@ function setTimer() {
   }, 10);
 }
 
-// ユーザ名設定
+/**
+ * ユーザー名設定
+ * 
+ * @param {string} inputMsg - 入力メッセージ
+ */
 function setUserName(inputMsg) {
   if (!userName || userName === SYM_BLANK) {
     userName = prompt(inputMsg);
@@ -215,7 +235,11 @@ function setUserName(inputMsg) {
   }
 }
 
-// ゲームルール生成
+/**
+ * ゲームルール生成
+ * 
+ * @param {string} langCd - 言語コード
+ */
 function setGameRule(langCd) {
   let ruleList = LIST_GAME_RULE;
   if (langCd === LANG_CD_KO) {
@@ -227,7 +251,11 @@ function setGameRule(langCd) {
   }
 }
 
-// ダイアログ表示用関数
+/**
+ * ダイアログ表示
+ * 
+ * @param {string} langCd - 言語コード
+ */
 function showDialog(langCd) {
   dialog = createElemOnly(TAG_DIV);
   dialog.id = "gameRuleDialog";
@@ -245,7 +273,11 @@ function showDialog(langCd) {
   };
 }
 
-// 正解判定
+/**
+ * 正解判定
+ * 
+ * @param {string} langCd - 言語コード
+ */
 function checkAnswer(langCd) {
   let okAnswerMsg = MSG_OK_ANSWER;
   let noAnswerMsg = MSG_ERR_NO_ANSWER;
@@ -271,7 +303,7 @@ function checkAnswer(langCd) {
   // 入力チェック
   let chkMsg = validate(num, ans, expr, langCd);
   if (chkMsg) {
-    showMessage(chkMsg, false);
+    showMessage(chkMsg);
   } else {
     if (ans) {
       let ansList = ans;
@@ -292,14 +324,16 @@ function checkAnswer(langCd) {
       }
       clearInterval(timerId);
     } else {
-      showMessage(noAnswerMsg, false);
+      showMessage(noAnswerMsg);
     }
   }
 };
 
 /**
- * 現在のトークン配列をレンダリング。
- * トークンは [num, slot, num, slot, num, slot, num] の形を想定。
+ * トークン配列をレンダリング
+ * トークンは [num, slot, num, slot, num, slot, num] の形
+ * 
+ * @param {string} numberStr - ナンバー
  */
 function renderInputButtons(numberStr) {
   const exprArea = getElem("exprArea");
@@ -315,7 +349,9 @@ function renderInputButtons(numberStr) {
   }
   exprArea._tokens = tokens;
 
-  // 再描画
+  /**
+   * 再描画
+   */
   function refresh() {
     exprArea.innerHTML = SYM_BLANK;
     const t = exprArea._tokens;
@@ -342,7 +378,9 @@ function renderInputButtons(numberStr) {
     updateHiddenExpression();
   }
 
-  // 数字ボタン押下: 選択肢の表示（√ と 上付き / back 対応）
+  /**
+   * 数字ボタン押下: 選択肢の表示（√ と 上付き / back 対応）
+   */
   function onDigitClick(e) {
     const idx = Number(e.currentTarget.dataset.idx);
     const token = exprArea._tokens[idx];
@@ -455,7 +493,9 @@ function renderInputButtons(numberStr) {
     });
   }
 
-  // スロット押下: 演算子選択 or 削除
+  /**
+   * スロット押下: 演算子選択 or 削除
+   */
   function onSlotClick(e) {
     const idx = Number(e.currentTarget.dataset.idx);
     const token = exprArea._tokens[idx];
@@ -504,10 +544,10 @@ function renderInputButtons(numberStr) {
   }
 
   /**
-   * createSmallPopup(choices, anchorElem)
-   * - choices 配列からボタンを生成してアンカー要素の下に表示する
-   * - ウィンドウ端にかからないように簡易補正を行う
-   * - クリック外で自動的に閉じる
+   * ボタンのポップアップ生成
+   * 
+   * @param {string[]} choices - 選択肢配列
+   * @param anchorElem - アンカー要素
    */
   function createSmallPopup(choices, anchorElem) {
     const popup = document.createElement("div");
@@ -555,7 +595,12 @@ function renderInputButtons(numberStr) {
     return popup;
   }
 
-  // √の適用可否（要求仕様: 4..81 の完全平方数で sqrt が 2..9 の整数）
+  /**
+   * √の適用可否（要求仕様: 4..81 の完全平方数で sqrt が 2..9 の整数）
+   * 
+   * @param {string} valStr - 対象文字
+   * @return {boolean} true : √適用, false : √適用しない
+   */
   function isSqrtEligible(valStr) {
     if (!/^\d+$/.test(valStr)) return false;
     const v = parseInt(valStr, 10);
@@ -570,10 +615,7 @@ function renderInputButtons(numberStr) {
   }
 
   /**
-   * updateHiddenExpression
-   * - exprArea 内のトークン配列から現在の式文字列を作成して
-   *   exprArea.dataset.expr に保存します（内部保持、DOM input に依存しない）
-   * - 保守性向上のため expression 要素参照は使わない
+   * 数式の保持
    */
   function updateHiddenExpression() {
     const ea = getElem("exprArea");
@@ -586,7 +628,15 @@ function renderInputButtons(numberStr) {
   refresh();
 }
 
-// 入力チェック
+/**
+ * 入力チェック
+ * 
+ * @param {string} num - ナンバー
+ * @param {string} ans - 回答
+ * @param {string} expr - 数式
+ * @param {string} langCd - 言語コード
+ * @return {string} チェックメッセージ 
+*/
 function validate(num, ans, expr, langCd) {
   let chkMsg = SYM_BLANK;
 
@@ -654,7 +704,13 @@ function validate(num, ans, expr, langCd) {
   return chkMsg;
 }
 
-// ランキング送信
+/**
+ * ランキング送信
+ * 
+ * @param {string} number - ナンバー
+ * @param {string} time - 時間
+ * @param {string} langCd - 言語コード
+ */
 async function sendRanking(number, time, langCd) {
   let inputMsg = MSG_INPUT_USER;
   let rankOkMsg = MSG_OK_RANK;

@@ -1,7 +1,9 @@
 // ヘッダー情報読込
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD);
 
-// 初期表示
+/**
+ * 初期表示
+ */
 function initDisplay() {
   const sysNmElem = getElem("sysNm");
   const thNoElem = getElem("thNo");
@@ -16,7 +18,14 @@ function initDisplay() {
   }
 }
 
-// トップメニュー設定
+/**
+ * トップメニュー設定
+ * 
+ * @param {string} userDiv - ユーザー権限
+ * @param {string} userNm - ユーザー名
+ * @param {string} appNm - アプリケーション名
+ * @param {number} menuVal - メニュー値
+ */
 function setTopMenu(userDiv, userNm, appNm, menuVal) {
   if (userDiv === SYM_BLANK) {
     return;
@@ -66,7 +75,13 @@ function setTopMenu(userDiv, userNm, appNm, menuVal) {
   screenId.setAttribute("style", "background-color: peru;");
 }
 
-// アプリケーションリスト取得
+/**
+ * アプリケーションリスト取得
+ * 
+ * @param {string} userDiv - ユーザー権限
+ * @param {number} menuVal - メニュー値
+ * @returns {string[]} アプリケーションリスト
+ */
 function getAppList(userDiv, menuVal) {
   if (userDiv === APP_KAKAO) {
     return LIST_APP_KOREA;
@@ -96,7 +111,11 @@ function getAppList(userDiv, menuVal) {
   return appList;
 }
 
-// スマホ判定
+/**
+ * モバイルデバイス判定
+ * 
+ * @return {boolean} true : モバイルデバイス, false : モバイルデバイスではない
+ */
 function isMobile() {
   // デスクトップまたはその他のデバイス
   let isMobileDevice = false;
@@ -115,7 +134,9 @@ function isMobile() {
   return isMobileDevice;
 }
 
-// チェックメッセージ表示
+/**
+ * チェックメッセージ表示
+ */
 function displayChkMsg() {
   const chkMsgElem = getElem("chkMsg");
 
@@ -133,7 +154,8 @@ function displayChkMsg() {
 }
 
 /**
- * ダイアログを表示する関数
+ * ダイアログ表示
+ * 
  * @param {string} title - ダイアログのタイトル
  * @param {string} text - ダイアログの本文
  */
@@ -177,7 +199,7 @@ function openDialog(title, text) {
 }
 
 /**
- * APIリクエスト関数
+ * APIリクエスト（ダイヤログ）
  */
 async function requestApiForDialog() {
   const dialog_title = getElemText("dialog-title");
@@ -211,7 +233,7 @@ async function requestApiForDialog() {
 }
 
 /**
- * ダイアログを非表示にする関数
+ * ダイアログ非表示
  */
 function closeDialog() {
   const dialog = getElem("dialog");

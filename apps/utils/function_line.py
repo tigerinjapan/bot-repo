@@ -94,7 +94,7 @@ def check_message_count(access_token: str) -> int:
         total_usage = const.MAX_MSG_API_CNT
 
     message_count = f"{total_usage} / {const.MAX_MSG_API_CNT}"
-    func.print_info_msg(const.STR_MESSAGE_JA, message_count)
+    func.print_debug_msg(const.STR_MESSAGE_JA, message_count)
     return total_usage
 
 

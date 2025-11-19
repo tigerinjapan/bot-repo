@@ -1,3 +1,8 @@
+/**
+ * フッター作成
+ * 
+ * @param {'admin' | 'dev' | 'guest'} userDiv - ユーザー権限
+ */
 function writeFooter(userDiv) {
 
   if (userDiv === SYM_BLANK) {

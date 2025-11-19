@@ -27,7 +27,7 @@ PORT_NUM = 5000
 SESSION_KEY = "admindevguest"
 SESSION_TIMEOUT_SEC = 600
 
-##### ユーザ権限 #####
+##### ユーザー権限 #####
 AUTH_ADMIN = "admin"
 AUTH_DEV = "dev"
 AUTH_GUEST = "guest"

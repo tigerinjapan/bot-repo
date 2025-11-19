@@ -7,10 +7,6 @@ document.title = TITLE_IT_QUIZ;
 // ページ読み込み時にsessionStorageからデータを取得
 let userName = sessionStorage.getItem(STR_USER_NAME);
 
-/**
- * 定数と初期データ定義
- */
-
 // クイズ数
 const quizNum = 5;
 
@@ -34,7 +30,9 @@ const ID_RULE_DIALOG = "rule-dialog";
 // 変数
 let dataList, rankingDataJson;
 
-// グローバルなゲーム状態を保持するオブジェクト
+/**
+ * グローバルなゲーム状態を保持するオブジェクト
+ */
 const gameState = {
   selectedLanguage: LANG_CD_KO, // 初期言語設定は韓国語
   currentQuizIndex: 0,
@@ -49,7 +47,9 @@ const gameState = {
   isGameOver: false,
 };
 
-// UI要素の多言語テキスト辞書（ボタン名やラベルなど）
+/**
+ * UI要素の多言語テキスト辞書（ボタン名やラベルなど）
+ */
 const textMap = {
   "title": { "ko": "IT 상식 퀴즈", "ja": "IT クイズ", "en": "IT Quiz" },
   "user_label": { "ko": "유저 ", "ja": "ユーザー ", "en": "User " },
@@ -67,7 +67,9 @@ const textMap = {
   },
 };
 
-// メッセージ、エラー、ダイアログコンテンツの多言語辞書
+/**
+ * メッセージ、エラー、ダイアログコンテンツの多言語辞書
+ */
 const msgMap = {
   "rule_content": {
     "ko": `
@@ -141,20 +143,25 @@ const msgMap = {
   "input_error": { "ko": "잘못된 입력입니다.", "ja": "不正な入力です。", "en": "Invalid input." }
 };
 
-// 英語の文字と数字のプール
+/**
+ * 英語の文字と数字のプール
+ */
 const charPool = {
   letters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   numbers: '0123456789'
 };
 
-
-// 多言語テキスト取得ヘルパー
+/**
+ * 多言語テキスト取得ヘルパー
+ */
 const getLocalizedText = (key) => {
   const lang = gameState.selectedLanguage;
   return textMap[key] ? (textMap[key][lang] || textMap[key][LANG_CD_EN]) : key;
 };
 
-// 多言語メッセージ取得ヘルパー
+/**
+ * 多言語メッセージ取得ヘルパー
+ */
 const getLocalizedMessage = (key, placeholder = {}) => {
   const lang = gameState.selectedLanguage;
   let msg = msgMap[key] ? (msgMap[key][lang] || msgMap[key][LANG_CD_EN]) : key;
@@ -164,7 +171,9 @@ const getLocalizedMessage = (key, placeholder = {}) => {
   return msg;
 };
 
-// モーダル表示
+/**
+ * モーダル表示
+ */
 const showDialog = (id, contentKey = null, placeholder = {}) => {
   const dialog = getElem(id);
   if (contentKey) {
@@ -175,7 +184,9 @@ const showDialog = (id, contentKey = null, placeholder = {}) => {
   }
 };
 
-// モーダル非表示
+/**
+ * モーダル非表示
+ */
 const closeDialog = (id) => {
   const dialog = getElem(id);
   if (dialog) {
@@ -183,7 +194,9 @@ const closeDialog = (id) => {
   }
 };
 
-// 配列シャッフル（フィッシャー・イェーツ）
+/**
+ * 配列シャッフル（フィッシャー・イェーツ）
+ */
 const shuffleArray = (array) => {
   for (let i = array.length - 1; 0 < i; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -193,10 +206,8 @@ const shuffleArray = (array) => {
 };
 
 /**
- * ゲーム画面のレンダリング
+ * 初期画面：言語選択/ランキング表示
  */
-
-// 初期画面：言語選択/ランキング表示
 const renderInitialScreen = () => {
   const container = getElem('main-container');
 
@@ -264,7 +275,11 @@ const renderInitialScreen = () => {
   }
 };
 
-// 言語選択ボタン押下時の処理（背景色変更＆START GAME活性化）
+/**
+ * 言語選択ボタン押下時の処理（背景色変更＆START GAME活性化）
+ * 
+ * @param {string} lang - 言語コード
+ */
 function onLanguageSelect(lang) {
   gameState.selectedLanguage = lang;
 
@@ -295,7 +310,9 @@ function onLanguageSelect(lang) {
   }
 }
 
-// ゲームプレイ画面をレンダリングする
+/**
+ * ゲームプレイ画面をレンダリング
+ */
 const renderQuizScreen = () => {
   const container = getElem('main-container');
 
@@ -341,7 +358,9 @@ const renderQuizScreen = () => {
   renderQuizWord();
 };
 
-// スコア、ステータス、説明を更新する
+/**
+ * スコア、ステータス、説明を更新
+ */
 const renderQuizStatus = () => {
   const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
   if (!currentQuiz) return;
@@ -356,7 +375,9 @@ const renderQuizStatus = () => {
   updateTimerDisplay();
 };
 
-// クイズ単語の状態を画面に反映する
+/**
+ * クイズ単語の状態を画面に反映
+ */
 const renderQuizWord = () => {
   const quizWordElem = getElem('quiz-word');
   if (!quizWordElem) return;
@@ -375,26 +396,30 @@ const renderQuizWord = () => {
   }).join(SYM_BLANK);
 };
 
-// タイマー表示の更新
+/**
+ * タイマー表示の更新
+ */
 const updateTimerDisplay = () => {
   const progress = getElem('timer-progress');
   if (!progress || gameState.initialTime === 0) return;
 
   const percentage = (gameState.timeRemaining / gameState.initialTime) * 100;
   progress.style.width = `${Math.max(0, percentage)}%`;
-  progress.style.backgroundColor = 25 < percentage ? (50 < percentage ? '#ff69b4' : '#ffc0cb') : '#ff4500'; // 色変化
+
+  // 色変化
+  progress.style.backgroundColor = 25 < percentage ? (50 < percentage ? '#ff69b4' : '#ffc0cb') : '#ff4500';
 };
 
 /**
- * ゲームロジックと状態管理
+ * ゲームの開始
  */
-
-// ゲームの開始
 async function startGame() {
   if (gameState.timerInterval) clearInterval(gameState.timerInterval);
 
   gameState.score = 0;
-  gameState.currentQuizIndex = -1; // nextQuizで0から開始するため
+
+  // nextQuizで0から開始するため
+  gameState.currentQuizIndex = -1;
   gameState.isGameOver = false;
 
   let quizDataUrl = URL_IT_QUIZ_SERVER;
@@ -418,7 +443,9 @@ async function startGame() {
   setupKeyboardListener();
 };
 
-// 次のクイズへ
+/**
+ * 次のクイズへ
+ */
 const nextQuiz = () => {
   // タイマーを停止
   if (gameState.timerInterval) {
@@ -468,7 +495,9 @@ const nextQuiz = () => {
   startTimer();
 };
 
-// タイマー開始
+/**
+ * タイマー開始
+ */
 const startTimer = () => {
   if (gameState.timerInterval) clearInterval(gameState.timerInterval);
 
@@ -483,9 +512,12 @@ const startTimer = () => {
   }, 1000);
 };
 
-// タイムアウト処理
+/**
+ * タイムアウト処理
+ */
 const handleTimeout = () => {
-  if (gameState.isGameOver) return; // 二重処理防止
+  // 二重処理防止
+  if (gameState.isGameOver) return;
 
   const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
   showDialog(ID_MESSAGE_DIALOG, 'timeout', { 'WORD': currentQuiz.word });
@@ -494,7 +526,9 @@ const handleTimeout = () => {
   setTimeout(nextQuiz, 3000);
 };
 
-// ホーム画面へ
+/**
+ * ホーム画面へ
+ */
 function goHome() {
   gameState.isGameOver = true;
   if (gameState.timerInterval) clearInterval(gameState.timerInterval);
@@ -503,7 +537,9 @@ function goHome() {
   renderInitialScreen();
 }
 
-// ヒント使用
+/**
+ * ヒント使用
+ */
 const useHint = () => {
   const currentWord = gameState.quizSet[gameState.currentQuizIndex].word;
   const blanks = gameState.currentWord
@@ -531,10 +567,14 @@ const useHint = () => {
   renderQuizWord();
 };
 
-// 正解チェック
+/**
+ * 正解チェック
+ */
 const checkAnswer = () => {
   const currentQuiz = gameState.quizSet[gameState.currentQuizIndex];
-  const currentWordString = gameState.currentWord.join(SYM_BLANK); // 配列を文字列に変換
+
+  // 配列を文字列に変換
+  const currentWordString = gameState.currentWord.join(SYM_BLANK);
 
   // 2単語の場合に対応するため、全てのスペース('_'になっていないことを確認)を含めた完全一致をチェック
   if (currentWordString === currentQuiz.word) {
@@ -580,7 +620,9 @@ const checkAnswer = () => {
   }
 };
 
-// 文字選択ダイアログを開く
+/**
+ * 文字選択ダイアログを開く
+ */
 const openChoiceDialog = (index) => {
   if (gameState.currentWord[index] !== '_') {
     showDialog(ID_MESSAGE_DIALOG, 'already_solved');
@@ -616,7 +658,8 @@ const openChoiceDialog = (index) => {
     choices.push(filteredPool.splice(randomIndex, 1)[0]);
   }
 
-  shuffleArray(choices); // 候補をシャッフル
+  // 候補をシャッフル
+  shuffleArray(choices);
 
   // ダイアログの中身をレンダリング
   const container = getElem('choice-buttons-container');
@@ -640,7 +683,9 @@ const openChoiceDialog = (index) => {
   getElem(ID_CHOICE_DIALOG).showModal();
 };
 
-// 文字選択処理
+/**
+ * 文字選択処理
+ */
 const handleChoice = (char) => {
   const index = gameState.selectedCharIndex;
   const targetWord = gameState.quizSet[gameState.currentQuizIndex].word;
@@ -674,14 +719,18 @@ const handleChoice = (char) => {
   }
 };
 
-// キーボード入力のセットアップ
+/**
+ * キーボード入力のセットアップ
+ */
 const setupKeyboardListener = () => {
   // 既存のリスナーがあれば一度削除（二重登録防止）
   document.removeEventListener('keydown', handleGlobalKeydown);
   document.addEventListener('keydown', handleGlobalKeydown);
 };
 
-// グローバルなキーボードイベントハンドラ
+/**
+ * キーボードイベントハンドラ
+ */
 const handleGlobalKeydown = (event) => {
   const key = event.key.toUpperCase();
   const choiceDialog = getElem(ID_CHOICE_DIALOG);
@@ -694,7 +743,8 @@ const handleGlobalKeydown = (event) => {
 
       // 候補ボタンが存在し、かつ無効化されていない場合のみ処理を実行
       if (choiceButton && !choiceButton.disabled) {
-        event.preventDefault(); // 予期せぬブラウザ動作を防止
+        // 予期せぬブラウザ動作を防止
+        event.preventDefault();
         handleChoice(key);
       } else if (charPool.letters.includes(key) || charPool.numbers.includes(key)) {
         // 候補にない文字や無効なボタンを押した場合もエラー表示
@@ -710,7 +760,7 @@ const handleGlobalKeydown = (event) => {
 };
 
 /**
- * ランキング更新処理
+ * ランキング更新
  */
 function getUpdateRank() {
   // 5位以内のランキングで自分のスコアより低いランクを検索
@@ -726,7 +776,7 @@ function getUpdateRank() {
 }
 
 /**
- * ゲーム終了処理
+ * ゲーム終了
  */
 const gameOver = () => {
   gameState.isGameOver = true;
@@ -747,7 +797,13 @@ const gameOver = () => {
   setTimeout(renderInitialScreen, 3000);
 };
 
-// ランキングをAPI経由で更新
+/**
+ * ランキング更新
+ * 
+ * @param {string} rank - ランク
+ * @param {string} score - スコア
+ * @param {string} userName - ユーザー名
+ */
 async function updateRanking(rank, score, userName) {
   let rankOkMsg = MSG_OK_RANK;
   let rankNgMsg = MSG_ERR_RANK;
@@ -780,7 +836,9 @@ async function updateRanking(rank, score, userName) {
   location.reload();
 }
 
-// ルールダイアログ表示
+/**
+ * ルールダイアログ表示
+ */
 const showRuleDialog = () => {
   setElemText("rule-title", TITLE_GAME_RULES)
   setElemContents('rule-content', getLocalizedMessage('rule_content'));

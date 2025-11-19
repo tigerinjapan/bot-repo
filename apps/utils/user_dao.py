@@ -74,7 +74,9 @@ def update_user_info(client, update_data):
     """
     user_id = update_data[mongo_const.FI_USER_ID]
     cond = {mongo_const.FI_USER_ID: user_id}
-    func_mongo.db_update(client, mongo_const.COLL_USER_INFO, cond, update_data)
+    func_mongo.db_update(
+        client, mongo_const.COLL_USER_INFO, cond, update_data, debug_flg=const.FLG_OFF
+    )
 
 
 def insert_user_info_on_form(form_data):

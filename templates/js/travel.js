@@ -15,7 +15,9 @@ if (isLocal()) {
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", init);
 
-// 初期表示
+/**
+ * 初期表示
+ */
 function init() {
   let travelData = null;
   let langData = null;
@@ -32,7 +34,9 @@ function init() {
   createOptionVal(langSelect, LIST_LANG_CD, LIST_LANG_NM);
   createOptionVal(regionSelect, LIST_CITY_VAL, LIST_CITY_EN);
 
-  // 画面内容の更新処理
+  /**
+   * 画面内容更新
+   */
   async function updateContent() {
     // アプリ名
     const appName = getElemText("appName");
@@ -183,7 +187,15 @@ function init() {
     addEventListeners();
   }
 
-  // 為替レート表示用の計算関数
+  /**
+   * 為替レート計算
+   * 
+   * @param {object} 為替データ
+   * @param {object} 通貨データ
+   * @param {string} baseCountryCode - 国コード
+   * @param {string} region - 地域コード
+   * @return {string} 為替レート
+   */
   function getExchangeRate(exchangeRateData, currencyData, baseCountryCode, region) {
     const targetCurrencyCode =
       region === "seoul"
@@ -219,7 +231,9 @@ function init() {
   const dialog = getElem("dialog");
   const closeBtn = document.querySelector(".close-btn");
 
-  // 観光スポットリンクのクリックイベントなどを設定
+  /**
+   * クリックイベント設定（観光スポットリンクなど）
+   */
   function addEventListeners() {
     document.querySelectorAll(".spot-link").forEach((link) => {
       link.addEventListener(EVENT_CLICK, (e) => {
@@ -232,10 +246,13 @@ function init() {
     });
   }
 
-  // ダイアログの閉じる処理
+  /**
+   * ダイアログの閉じる処理
+   */
   closeBtn.addEventListener(EVENT_CLICK, () => {
     dialog.style.display = ATTR_NONE;
   });
+
   window.addEventListener(EVENT_CLICK, (event) => {
     if (event.target === dialog) {
       dialog.style.display = ATTR_NONE;
@@ -250,7 +267,9 @@ function init() {
   updateContent();
 }
 
-// カードグリッド作成
+/**
+ * カードグリッド作成
+ */
 function createCardGrid() {
   let gridHtml = SYM_BLANK;
 

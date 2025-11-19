@@ -42,15 +42,6 @@ let userName = SYM_BLANK;
 
 const RANKING_HEAD = ["RANK", "SCORE", "USER", "DATE"];
 
-// ランキングデータ（ダミーデータ）
-const RANKING_DATA = [
-  { rank: 1, score: 60, userName: "suns", updateDate: "2025/11/01 09:00" },
-  { rank: 2, score: 50, userName: "hong", updateDate: "2025/11/02 10:00" },
-  { rank: 3, score: 40, userName: "hong", updateDate: "2025/11/03 11:00" },
-  { rank: 4, score: 30, userName: "hong", updateDate: "2025/11/04 12:00" },
-  { rank: 5, score: 20, userName: "hong", updateDate: "2025/11/05 13:00" },
-];
-
 // 変数
 let dataList, rankingDataJson;
 
@@ -113,8 +104,9 @@ let ruleButton, hintButton, homeButton, hintCounter, modalOverlay, modalTitle, m
 // ページ読み込み時に初期化
 document.addEventListener('DOMContentLoaded', initApp);
 
-
-// 初期化（DOM 要素の取得）
+/**
+ * 初期化（DOM 要素の取得）
+ */
 function initApp() {
   let btnParentElemId = "start-controls";
   startButton = createElem(TAG_BUTTON, "start-button", btnParentElemId);
@@ -200,7 +192,9 @@ function initApp() {
   });
 }
 
-// ゲーム開始
+/**
+ * ゲーム開始
+ */
 function startGame() {
   if (!levelSelect || !langSelect || !userNameInput) return;
 
@@ -241,7 +235,9 @@ function startGame() {
   startTimer();
 }
 
-// 生成ロジック: 常にランダムな完成盤を使う
+/**
+ * ランダムロジック生成
+ */
 function generatePuzzle() {
   // 解答をシャッフルコピーで作成（毎回ランダムに）
   solution = shuffleSolution(SUDOKU_SOLUTION).map(row => [...row]);
@@ -270,7 +266,9 @@ function generatePuzzle() {
   initialPuzzle = initialBoard.map(row => [...row]);
 }
 
-// HTMLに描画
+/**
+ * HTMLに描画
+ */
 function renderBoard() {
   if (!sudokuBoard) return;
 
@@ -306,14 +304,14 @@ function renderBoard() {
 }
 
 /**
- * cloneGrid: 2D 配列を深いコピー
+ * 2D 配列を深いコピー
  */
 function cloneGrid(grid) {
   return grid.map(row => row.slice());
 }
 
 /**
- * shuffleArray: 配列を破壊的にシャッフル（Fisher-Yates）
+ * 配列を破壊的にシャッフル（Fisher-Yates）
  */
 function shuffleArray(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -324,10 +322,11 @@ function shuffleArray(arr) {
 }
 
 /**
- * shuffleSolution(base)
- * - 固定の完成盤 base を受け取り、行/列の入れ替え・バンド/スタック入れ替え・数字置換を行い
- *   毎回異なる完成盤を返す（元の論理解は保持）。
- * - これにより同一パズルでも表示がランダム化される。
+ * 表示のランダム化
+ * （行/列の入れ替え・バンド/スタック入れ替え・数字置換）
+ * 
+ * @param {string} base - 固定の完成盤
+ * @returns グリッド
  */
 function shuffleSolution(base) {
   // 1) コピー
@@ -352,7 +351,7 @@ function shuffleSolution(base) {
     // rows indices in original for this band
     const srcBand = bandOrder[bi];
     const rows = [0, 1, 2].map(x => srcBand * 3 + x);
-    shuffleArray(rows); // local shuffle inside band
+    shuffleArray(rows);
     for (let i = 0; i < 3; i++) {
       newGridRows[bi * 3 + i] = grid[rows[i]].slice();
     }
@@ -383,7 +382,9 @@ function shuffleSolution(base) {
   return grid;
 }
 
-// ゲーム情報ヘッダーを更新
+/**
+ * ゲーム情報ヘッダーを更新
+ */
 function updateGameInfoHeader() {
   if (!gameInfoHeader) return;
 
@@ -403,7 +404,9 @@ function updateGameInfoHeader() {
   `;
 }
 
-// ヒント処理
+/**
+ * ヒント処理
+ */
 function useHint() {
   if (hintsLeft <= 0) {
     showModal("HINT FAILED", "NO HINT!!");
@@ -456,7 +459,11 @@ function useHint() {
   checkGameCompletion();
 }
 
-// 入力パネルのボタンが押された時の処理
+/**
+ * 入力パネルのボタンが押された時の処理
+ * 
+ * @param {string} value - 入力パネル
+ */
 function handleInput(value) {
   if (!selectedCell) return;
 
@@ -499,7 +506,9 @@ function handleInput(value) {
   checkGameCompletion();
 }
 
-// 全てのマスが正しく埋まっているかチェック
+/**
+ * 全てのマスが正しく埋まっているかチェック
+ */
 function checkGameCompletion() {
   for (let r = 0; r < 9; r++) {
     for (let c = 0; c < 9; c++) {
@@ -525,7 +534,9 @@ function checkGameCompletion() {
   return true;
 }
 
-// ランキングデータを表示
+/**
+ * ランキングデータを表示
+ */
 function renderRank() {
   if (!rankTbody) return;
 
@@ -541,10 +552,6 @@ function renderRank() {
   // JSON形式の文字列に変換する
   rankingDataJson = JSON.parse(dataList);
 
-  if (rankingDataJson.length === 0) {
-    rankingDataJson = RANKING_DATA;
-  }
-
   rankTbody.innerHTML = SYM_BLANK;
   rankingDataJson.forEach(item => {
     const row = rankTbody.insertRow();
@@ -557,7 +564,9 @@ function renderRank() {
   });
 }
 
-// スタートボタンの有効/無効をチェック
+/**
+ * スタートボタンの有効/無効をチェック
+ */
 function checkStartButtonState() {
   if (!userNameInput || !startButton) return;
 
@@ -571,7 +580,14 @@ function checkStartButtonState() {
   }
 }
 
-// 特定のマスへの入力が有効かチェック (行、列、3x3ブロック)
+/**
+ * 特定のマスへの入力が有効かチェック
+ * 
+ * @param {number} row - 行
+ * @param {number} col - 列
+ * @param {string} value - 3x3ブロック
+ * @return {boolean} true : 有効、false : 無効
+ */
 function isValidInput(row, col, value) {
   // 行チェック
   for (let c = 0; c < 9; c++) {
@@ -595,7 +611,11 @@ function isValidInput(row, col, value) {
   return true;
 }
 
-// セルがクリックされた時の処理
+/**
+ * セルがクリックされた時の処理
+ * 
+ * @param {object} cell - セル
+ */
 function handleCellClick(cell) {
   const r = parseInt(cell.dataset.row);
   const c = parseInt(cell.dataset.col);
@@ -617,14 +637,18 @@ function handleCellClick(cell) {
   if (inputPanel) inputPanel.style.display = 'grid';
 }
 
-// タイマーの開始
+/**
+ * タイマー開始
+ */
 function startTimer() {
   // 既存のタイマーをクリア
   clearInterval(timer);
   timer = setInterval(updateTimer, 1000);
 }
 
-// タイマーを毎秒更新
+/**
+ * タイマーを毎秒更新
+ */
 function updateTimer() {
   if (!timerText || !progressBar) return;
 
@@ -658,7 +682,10 @@ function updateTimer() {
 }
 
 /**
- * ランキング更新処理
+ * 更新対象ランク取得
+ * 
+ * @param {string} currentScore - スコア
+ * @return {string} ランク
  */
 function getUpdateRank(currentScore) {
   // 5位以内のランキングで自分のスコアより低いランクを検索
@@ -678,7 +705,8 @@ function getUpdateRank(currentScore) {
 }
 
 /**
- * ランキングをAPI経由で更新
+ * ランキング更新
+ * 
  * @param {string} rank - ランク
  * @param {string} score - スコア
 */
@@ -712,7 +740,8 @@ async function updateRanking(rank, score) {
 
 /**
  * 残り時間から現在のスコア計算
- * @returns {number} スコア (0〜100)
+ * 
+ * @return {number} スコア (0〜100)
  */
 function calculateScore() {
   let score = 0;
@@ -743,9 +772,10 @@ function calculateScore() {
 
 /**
  * ランキングデータから指定ユーザーの最もランクが高いスコアを取得
+ * 
  * @param {Array<Object>} data - ランキングデータ
  * @param {string} targetUserName - 取得したいユーザー名
- * @returns {number|string} ベストスコア（数値）またはデータがない場合は "-"
+ * @return {number|string} ベストスコア（数値）またはデータがない場合は "-"
  */
 function getUserBestScore() {
   // 1. 指定ユーザーのデータのみをフィルタリング
@@ -759,14 +789,20 @@ function getUserBestScore() {
 
   // 3. フィルタリングされたデータから最も高いスコアを見つける
   // (データがrank順に入っているため、最初の要素がベストスコアだが、念のためMath.maxで確認)
+  // 初期値を-1に設定 (スコアが0点以上の場合を想定)
   const bestScore = userEntries.reduce((maxScore, currentEntry) => {
     return Math.max(maxScore, currentEntry.score);
-  }, -1); // 初期値を-1に設定 (スコアが0点以上の場合を想定)
+  }, -1);
 
   return bestScore;
 }
 
-// 時間表示をMM:SS形式に変換
+/**
+ * 時間表示をMM:SS形式に変換
+ * 
+ * @param {number} seconds - 秒
+ * @return {string} 時間（MM:SS形式）
+ */
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   const secs = seconds % 60;
@@ -774,7 +810,11 @@ function formatTime(seconds) {
   return timeDisplay;
 }
 
-// 画面切り替え関数
+/**
+ * 画面切り替え
+ * 
+ * @param {string} screenId - 画面id
+ */
 function showScreen(screenId) {
   if (startScreen) startScreen.style.display = ATTR_NONE;
   if (gameScreen) gameScreen.style.display = ATTR_NONE;
@@ -789,7 +829,12 @@ function showScreen(screenId) {
   }
 }
 
-// モーダル表示
+/**
+ * モーダル表示
+ * 
+ * @param {string} title - タイトル
+ * @param {string} body - ボディ
+ */
 function showModal(title, body) {
   if (!modalOverlay || !modalTitle || !modalBody) return;
 
@@ -798,7 +843,9 @@ function showModal(title, body) {
   modalOverlay.style.display = 'flex';
 }
 
-// モーダル非表示
+/**
+ * モーダル非表示
+ */
 function hideModal() {
   if (modalOverlay) modalOverlay.style.display = ATTR_NONE;
 }

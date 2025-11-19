@@ -20,9 +20,10 @@ if (isLocal()) {
 // DOM読み込み後の処理
 document.addEventListener('DOMContentLoaded', init);
 
-// 初期表示
+/**
+ * 初期表示
+ */
 function init() {
-
     const langSelectElem = getElem("language-switcher");
 
     LIST_LANG_CD.forEach((lang_cd, idx) => {
@@ -60,7 +61,11 @@ function init() {
     copyButtons.forEach(button => button.style.display = ATTR_NONE);
 }
 
-// 言語設定
+/**
+ * 言語選択時の処理
+ * 
+ * @param {string} lang - 言語コード
+ */
 async function changeLanguage(lang) {
     document.documentElement.lang = lang;
 
@@ -119,7 +124,12 @@ const SELECT_DATA = [
     { labelId: 'seasonLabel', selectId: 'season', options: 'seasonOptions' }
 ];
 
-// Selectタグ生成
+/**
+ * Selectタグ生成
+ * 
+ * @param {string} selectElem - セレクト要素
+ * @param {string[]} options - 要素値リスト
+ */
 function createSelect(selectElement, options) {
     selectElement.innerHTML = SYM_BLANK;
     options.forEach(optionData => {
@@ -130,7 +140,9 @@ function createSelect(selectElement, options) {
     });
 }
 
-// コンテンツ生成
+/**
+ * コンテンツ生成
+ */
 function generateContent() {
     const mode = getElem('generationMode').value;
     const subject = getElem('subject').value;
@@ -162,7 +174,13 @@ function generateContent() {
     requestApi(mode, prompt);
 }
 
-// APIリクエスト
+/**
+ * [fetch API] データを非同期で取得
+ *
+ * @param {'img' | 'txt'} mode - モード
+ * @param {string} prompt - プロンプト
+ * @returns {Promise<object>} JSONデータ
+ */
 async function requestApi(mode, prompt) {
     const requestBody = { mode: mode, prompt: prompt };
 
@@ -200,7 +218,9 @@ async function requestApi(mode, prompt) {
     }
 }
 
-// テキストコピー
+/**
+ * テキストコピー
+ */
 async function copyText() {
     const textElem = getElem('generatedText');
     if (!textElem.textContent) {

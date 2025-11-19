@@ -23,7 +23,9 @@ let userName = sessionStorage.getItem(STR_USER_NAME);
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", init);
 
-// 初期表示
+/**
+ * 初期表示
+ */
 function init() {
   // アプリ名
   setElemTextByTag(TAG_H1, TITLE_REVIEW);
@@ -85,7 +87,9 @@ function init() {
   setElemTextByTag(TAG_BUTTON, "Send");
 }
 
-// ユーザ名設定
+/**
+ * ユーザー名設定
+ */
 function setUserName() {
   if (!userName || userName === SYM_BLANK) {
     userName = prompt(MSG_INPUT_USER_EN);
@@ -95,7 +99,9 @@ function setUserName() {
   sessionStorage.setItem(STR_USER_NAME, userName);
 }
 
-// レビュー送信
+/**
+ * レビュー送信
+ */
 function sendReview() {
   const form = getElem(ELEM_ID_FORM);
   if (!form) return;

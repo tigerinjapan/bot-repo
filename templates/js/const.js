@@ -40,7 +40,7 @@ const EVENT_CLICK = "click";
 const EVENT_INPUT = "input";
 const EVENT_SUBMIT = "submit";
 
-// ユーザ
+// ユーザー権限
 const AUTH_ADMIN = "admin";
 const AUTH_DEV = "dev";
 const AUTH_GUEST = "guest";
