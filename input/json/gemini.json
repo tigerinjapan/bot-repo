@@ -15,13 +15,13 @@
         "rpd": 250,
         "date": "20260531"
     },
-    "gemini-2.5-flash-image-preview": {
-        "input": "text",
-        "output": "image",
-        "tpm": 0,
-        "rpm": 0,
-        "rpd": 0,
-        "date": "20260531"
+    "gemini-2.5-flash-lite": {
+        "input": "text,images,video,audio,pdf",
+        "output": "text",
+        "tpm": 250000,
+        "rpm": 15,
+        "rpd": 1000,
+        "date": "20260630"
     },
     "gemini-2.5-flash-preview-tts": {
         "input": "text",
@@ -31,20 +31,12 @@
         "rpd": 15,
         "date": "20260531"
     },
-    "gemini-2.5-flash-lite": {
-        "input": "text,images,video,audio,pdf",
-        "output": "text",
-        "tpm": 250000,
-        "rpm": 15,
-        "rpd": 1000,
-        "date": "20260630"
-    },
-    "gemini-2.0-flash-preview-image-generation": {
+    "gemini-2.5-flash-image": {
         "input": "text",
         "output": "image",
-        "tpm": 200000,
-        "rpm": 10,
-        "rpd": 100,
-        "date": "20251112"
+        "tpm": 0,
+        "rpm": 0,
+        "rpd": 0,
+        "date": "20260531"
     }
 }

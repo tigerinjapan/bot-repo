@@ -85,6 +85,7 @@ def sub(div: str, data_list: list[str] = []):
     msg_json_list = []
     msg_list = []
     msg_data = const.SYM_BLANK
+    data_list = []
 
     date_today = func.get_now(const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_SLASH)
 
@@ -105,11 +106,11 @@ def sub(div: str, data_list: list[str] = []):
                     for news_data in news_list[:3]
                 ]
 
-            msg_data = NEW_LINE.join(data_list)
-
-        msg_list.append(msg_data)
+            if data_list:
+                msg_data = NEW_LINE.join(data_list)
 
         if msg_data:
+            msg_list.append(msg_data)
             msg_data_list = get_msg_data_list(
                 div, const.MSG_TYPE_TXT, msg_list, date_today
             )

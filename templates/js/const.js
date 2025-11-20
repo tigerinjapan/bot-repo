@@ -100,8 +100,7 @@ const CHART_BAR = "bar";
 // タイトル
 const TITLE_SYSTEM = "Kobe-Dev Demo System";
 const TITLE_TRAVEL = "🌏 TRAVEL & LIFE 🌏";
-const TITLE_NUMBER = "🚙 NUMBER PLAGE GAME";
-const TITLE_NUMBER_KO = "🚙 자동차 번호판 게임";
+const TITLE_NUMBER = "🚙 NUMBER PLATE GAME";
 const TITLE_SUDOKU = "🔢 SUDOKU";
 const TITLE_IT_QUIZ = "ℹ️ IT QUIZ";
 const TITLE_REVIEW = "🌈 REVIEW PAGE 🌈";

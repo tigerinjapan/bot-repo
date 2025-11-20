@@ -67,9 +67,11 @@ def get_gemini_response(
     gemini_model_info = func.get_input_data(const.STR_GEMINI, model)
     if gemini_model_info:
         end_date = gemini_model_info[const.STR_DATE]
+        tpm = gemini_model_info["tpm"]
         today = func.get_now(const.DATE_TODAY)
-        if model == GEMINI_MODEL_IMG and end_date < today:
-            func.print_debug_msg(model, msg_const.MSG_ERR_API_SUPPORT_ENDED)
+        if end_date < today or tpm == const.NUM_ZERO:
+            func.print_debug_msg(model, msg_const.MSG_ERR_API_NOT_SUPPORT)
+            func.print_end(div_msg)
             return const.NONE_CONSTANT
 
     if model == GEMINI_MODEL:
@@ -87,7 +89,6 @@ def get_gemini_response(
 
         usage = response.usage_metadata
         token_count = usage.total_token_count
-        tpm = gemini_model_info["tpm"]
         if tpm and tpm < token_count:
             func.print_debug_msg("トークン数", f"上限:{tpm}、合計: {token_count}")
 
@@ -307,7 +308,7 @@ def get_recommend_outfit_dinner(outfit_text: str, menu_text: str) -> tuple[str, 
         "夕食は、1番目が主食、2番目がおかずまたはスープ。",
         "各アイテムは、&で繋げる。",
         "各アイテムは、ちゃんとした単語として成立する。",
-        f"各アイテムは、{const.MAX_WRAP_WIDTH / 2}バイト未満。",
+        f"各アイテムは、{const.MAX_WRAP_WIDTH / 4}文字未満。",
         "解説と他の文言、記号は不要。",
         "コーデと夕食は、出力例のように「改行」で区切る。",
     ]
@@ -372,7 +373,7 @@ def get_news_conditions(add_condition_list: list[str] = []) -> str:
     condition_list = [
         "記号と絵文字、「。」は、使用しない",
         "英数字は、全て半角に変換",
-        f"1行で、最大{const.MAX_WRAP_WIDTH}バイト以内",
+        f"1行で、最大{const.MAX_WRAP_WIDTH}文字以内",
         "1行ずつ、文章として、完結",
     ]
 
@@ -380,7 +381,7 @@ def get_news_conditions(add_condition_list: list[str] = []) -> str:
         add_condition_list = [
             f"ニュースは、{const.MIN_DISPLAY_CNT}トピックまで",
             f"ニュース内容と関係ない内容は不要",
-            f"各ニュースは、最大{const.MAX_WRAP_WIDTH * 3}バイト以内",
+            f"各ニュースは、最大{const.MAX_WRAP_WIDTH * 3}文字以内",
             "各ニュースの1行目: [ニュースの連番] [キーワード] タイトル",
             "各ニュースの2～3行目: 記事",
             "各ニュースの4行目: 要約した内容の中で、略語とかIT用語があった場合、その意味を記載",
@@ -428,7 +429,7 @@ def get_add_condition_list(keyword: str) -> list[str]:
         "【熟語】日本語で直訳すると、同じ意味の韓国語は、対象外",
         "【熟語】韓国語熟語の説明は、日本語と同じ表現を使用",
         "【熟語】韓国語熟語の説明は、日本語以外の言語は、不要",
-        f"1行に、{const.MAX_WRAP_WIDTH}バイト未満",
+        f"1行に、{const.MAX_WRAP_WIDTH}文字未満",
         "使用しない: *、コンマ、【会話】、【熟語】、대화、숙어",
         "小数点、4桁以上などの数値の内容は、不要",
         "日本語、韓国語、英語以外の言語は、不要",
@@ -509,7 +510,7 @@ def get_sample_contents(div: str = const.STR_GEMINI) -> str:
             "記号と絵文字は、使用しない。"
             "英数字は、全て半角に変換する。"
             "適切なところで、改行する。"
-            f"1行で、最大{const.MAX_WRAP_WIDTH * 4}バイト以内。"
+            f"1行で、最大{const.MAX_WRAP_WIDTH * 4}文字以内。"
             "1行ずつ、文章として、完結する。"
         )
 
@@ -632,4 +633,3 @@ def test_generate_video():
 if __name__ == const.MAIN_FUNCTION:
     test_gemini()
     # test_gemini_img()
-    # test_today_img()

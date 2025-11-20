@@ -93,7 +93,6 @@ function init() {
   let btnNextNm = BUTTON_NEXT;
 
   if (langCd === LANG_CD_KO) {
-    title = TITLE_NUMBER_KO;
     btnRuleNm = "게임규칙";
     btnChkNm = "정답확인";
     btnNextNm = "다음문제";

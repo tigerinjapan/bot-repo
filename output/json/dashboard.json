@@ -2,9 +2,8 @@
     "day": {
         "label": "day",
         "user": {
-            "total": "193",
+            "total": "176",
             "labels": [
-                "11/14",
                 "11/15",
                 "11/16",
                 "11/17",
@@ -12,7 +11,6 @@
                 "11/19"
             ],
             "data": [
-                17,
                 22,
                 94,
                 22,
@@ -29,21 +27,21 @@
                 "service"
             ],
             "data": [
-                55,
-                51,
-                42,
-                39,
+                49,
+                45,
+                41,
+                35,
                 6
             ]
         },
         "app": [
             {
                 "name": "url_design",
-                "value": 26
+                "value": 25
             },
             {
                 "name": "news",
-                "value": 21
+                "value": 23
             },
             {
                 "name": "dashboard",
@@ -51,15 +49,15 @@
             },
             {
                 "name": "board",
-                "value": 10
+                "value": 9
             },
             {
                 "name": "sudoku",
-                "value": 10
+                "value": 9
             },
             {
                 "name": "user",
-                "value": 7
+                "value": 8
             },
             {
                 "name": "ranking",
@@ -77,39 +75,39 @@
         "device": [
             {
                 "name": "Mobile",
-                "value": 70
+                "value": 72
             },
             {
                 "name": "PC",
-                "value": 30
+                "value": 28
             }
         ],
         "os": [
             {
                 "name": "Android",
-                "value": 70
+                "value": 72
             },
             {
                 "name": "Linux",
-                "value": 17
+                "value": 18
             },
             {
                 "name": "Windows",
-                "value": 13
+                "value": 10
             }
         ],
         "browser": [
             {
                 "name": "Chrome",
-                "value": 67
+                "value": 68
             },
             {
                 "name": "LINE",
-                "value": 20
+                "value": 22
             },
             {
                 "name": "Edge",
-                "value": 13
+                "value": 10
             }
         ]
     },

@@ -81,7 +81,6 @@ def weekly_job():
     """
     if func.get_now(const.DATE_WEEKDAY) == 0:
         line.sub(const.STR_NISA)
-        line.sub(const.STR_AI_NEWS)
 
 
 def daily_job_1():
@@ -97,6 +96,7 @@ def daily_job_2():
     日次ジョブ（07:10）
     """
     line.main()
+    line.sub(const.STR_AI_NEWS)
 
 
 def daily_job_3():

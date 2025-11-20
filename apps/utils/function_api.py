@@ -116,7 +116,7 @@ def create_msg_img(div: str, msg: str, forecast: str = const.SYM_BLANK) -> str:
 
     # 任意の数値取得
     img_seq = str(func.get_random_int(const.MAX_RANDOM_IMG, const.NUM_ONE))
-    img_no = str(IMG_NO) + img_seq.zfill(2)
+    img_no = IMG_NO + img_seq.zfill(2)
 
     img_file_base = f"{img_div}_{img_no}"
 
@@ -125,7 +125,7 @@ def create_msg_img(div: str, msg: str, forecast: str = const.SYM_BLANK) -> str:
     xy_size = (45, 90)
     if div == const.APP_TODAY:
         xy_size = (60, 200)
-        if IMG_NO == const.NUM_ONE:
+        if int(IMG_NO) == const.NUM_ONE:
             font_size = 16
             xy_size = (20, 140)
 
