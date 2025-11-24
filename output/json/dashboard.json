@@ -2,112 +2,102 @@
     "day": {
         "label": "day",
         "user": {
-            "total": "176",
+            "total": "38",
             "labels": [
-                "11/15",
-                "11/16",
-                "11/17",
                 "11/18",
                 "11/19"
             ],
             "data": [
-                22,
-                94,
-                22,
                 12,
                 26
             ]
         },
         "category": {
             "labels": [
-                "management",
                 "document",
-                "news",
                 "entertainment",
+                "management",
+                "news",
                 "service"
             ],
             "data": [
-                49,
-                45,
-                41,
-                35,
-                6
+                12,
+                12,
+                9,
+                3,
+                2
             ]
         },
         "app": [
             {
                 "name": "url_design",
-                "value": 25
-            },
-            {
-                "name": "news",
-                "value": 23
-            },
-            {
-                "name": "dashboard",
-                "value": 11
-            },
-            {
-                "name": "board",
-                "value": 9
+                "value": 32
             },
             {
                 "name": "sudoku",
-                "value": 9
+                "value": 19
             },
             {
-                "name": "user",
+                "name": "board",
+                "value": 16
+            },
+            {
+                "name": "news",
                 "value": 8
+            },
+            {
+                "name": "dashboard",
+                "value": 8
+            },
+            {
+                "name": "drama",
+                "value": 5
             },
             {
                 "name": "ranking",
-                "value": 4
+                "value": 5
             },
             {
                 "name": "study",
-                "value": 3
+                "value": 5
             },
             {
                 "name": "etc",
-                "value": 8
+                "value": 2
             }
         ],
         "device": [
             {
                 "name": "Mobile",
-                "value": 72
+                "value": 93
             },
             {
                 "name": "PC",
-                "value": 28
+                "value": 7
             }
         ],
         "os": [
             {
                 "name": "Android",
-                "value": 72
-            },
-            {
-                "name": "Linux",
-                "value": 18
+                "value": 93
             },
             {
                 "name": "Windows",
-                "value": 10
+                "value": 7
             }
         ],
         "browser": [
             {
                 "name": "Chrome",
-                "value": 68
+                "value": 72
             },
             {
                 "name": "LINE",
-                "value": 22
+                "value": 21
             },
             {
                 "name": "Edge",
-                "value": 10
+                "value": 7
             }
         ]
     },

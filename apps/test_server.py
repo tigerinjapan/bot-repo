@@ -5,7 +5,7 @@ FastAPIによるWebサーバー。
 認証・セッション管理・各種APIエンドポイントを提供
 """
 
-from fastapi import FastAPI, Query, Request
+from fastapi import FastAPI, Request
 from fastapi.responses import RedirectResponse, HTMLResponse
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn import Config, Server

@@ -5,12 +5,12 @@ uvicorn
 pandas
 bs4
 jinja2
+schedule
+pymongo
+python-dotenv
+python-multipart
 Pillow
 itsdangerous
-python-dotenv
-pymongo
-schedule
 google-genai
-python-multipart
 translate
 user_agents

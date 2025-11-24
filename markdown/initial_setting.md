@@ -24,7 +24,6 @@ pip install -r requirements.txt
 ```
 pip install -U pip
 pip install -U google-genai
-pip install -U google-generativeai
 pip-review --auto
 ```
 

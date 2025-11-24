@@ -1,32 +1,32 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/11/21(Fri) 07:05",
+        "오늘의 생활정보": "2025/11/24(Mon) 13:14",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "서풍 불며 추위 누그러져",
+        "오늘의 생활정보": "초미세먼지 주의",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "오늘의 생활정보": "S&P500 6,538.76 (-1.56%)",
+        "오늘의 생활정보": "S&P500 6,602.99 (+0.98%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 935원",
+        "오늘의 생활정보": "100엔 = 942원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "오늘의 생활정보": "ひくい\n작다; 짧다; 얕다",
+        "오늘의 생활정보": "とけい\n시계.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "Nearest gym?\n가장 가까운 체육관은요?",
+        "오늘의 생활정보": "It's very good.\n이거 아주 좋아요",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

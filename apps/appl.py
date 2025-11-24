@@ -219,7 +219,7 @@ def update_news(app_name: str = const.SYM_BLANK):
     データ更新
     """
     curr_func_nm = sys._getframe().f_code.co_name
-    func.print_start(curr_func_nm, msg_const.MSG_INFO_PROC_START)
+    func.print_start(curr_func_nm)
 
     app_div_list = LIST_APP_DIV
     app_name_list = const.LIST_APP_SERVER
@@ -275,7 +275,7 @@ def update_news(app_name: str = const.SYM_BLANK):
 
         app_exec.end()
 
-    func.print_end(curr_func_nm, msg_const.MSG_INFO_PROC_COMPLETED)
+    func.print_end(curr_func_nm)
 
 
 def no_sleep():
