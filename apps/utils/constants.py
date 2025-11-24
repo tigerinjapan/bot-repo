@@ -162,7 +162,7 @@ MAX_PHRASE_CSV = 999
 
 MAX_TOKEN_EXPIRATION_MINUTES = 10
 
-MAX_RANDOM_IMG = 4 # TODO: 10つまで生成する
+MAX_RANDOM_IMG = 4  # TODO: 10つまで生成する
 MAX_USER_MENU = 10
 
 NUM_TARGET_DAYS = 7
@@ -291,6 +291,7 @@ STR_BROWSER = "browser"
 STR_CAPITALIZE = "capitalize"
 STR_CATEGORY = "category"
 STR_CLIENT = "client"
+STR_COMPANY = "company"
 STR_CONTENTS = "contents"
 STR_COUNTRY = "country"
 STR_DATA = "data"
@@ -382,36 +383,11 @@ STR_SECRET_KEY = "secret_key"
 STR_USER_INFO = "userInfo"
 STR_ZIP_CODE = "zipCode"
 
-STR_BACKUP_JA = "バックアップ"
-STR_CHARSET_JA = "文字コード"
-STR_COMPANY_JA = "会社"
-STR_CONTENTS_JA = "内容"
-STR_DATE_JA = "日付"
-STR_DIV_JA = "区分"
-STR_DRAMA_JA = "ドラマ"
 STR_ENT_JA = "エンタメ"
-STR_EXPIRE_JA = "有効期限"
-STR_FILE_JA = "ファイル"
-STR_IMG_JA = "イメージ"
-STR_JAPAN_JA = "日本"
 STR_KOREA_JA = "韓国"
-STR_KOREAN_JA = "韓国語"
-STR_LINK_JA = "リンク"
-STR_LOGIN_JA = "ログイン"
-STR_LOGOUT_JA = "ログアウト"
-STR_MAN_JA = "男性"
-STR_MESSAGE_JA = "メッセージ"
 STR_NEWS_JA = "ニュース"
 STR_NIKKEI_JA = "日経"
-STR_NOTIFY_JA = "通知"
-STR_PATH_JA = "パス"
 STR_RANKING_JA = "ランキング"
-STR_STATUS_JA = "状態"
-STR_SYSTEM_JA = "システム"
-STR_TIME_JA = "時間"
-STR_TITLE_JA = "タイトル"
-STR_TOKEN_JA = "トークン"
-STR_TYPE_JA = "タイプ"
 STR_WOMAN_JA = "女性"
 STR_X_TREND_JA = "Xトレンド"
 
@@ -433,6 +409,9 @@ STR_PHP_JA = "ペソ"
 
 STR_JPY_KO = "엔"
 STR_KRW_KO = "원"
+
+##### タイトル #####
+TITLE_TODAY_NEWS = "Today's News"
 
 ##### マスキング #####
 MASKING_COMPANY = "zzzzzz"
@@ -610,7 +589,7 @@ APP_USER = "user"
 APP_IT_QUIZ_DESIGN = f"{APP_IT_QUIZ}_{STR_DESIGN}"
 APP_IT_QUIZ_PROMPT = f"{APP_IT_QUIZ}_{STR_PROMPT}"
 APP_KAKAO_DESIGN = f"{STR_KAKAO}_{STR_DESIGN}"
-APP_LOCAL_DESIGN = f"{STR_LOCAL}_{STR_DESIGN}"
+APP_ADMIN_DESIGN = f"{AUTH_ADMIN}_{STR_DESIGN}"
 APP_TRAVEL_DESIGN = f"{APP_TRAVEL}_{STR_DESIGN}"
 APP_URL_DESIGN = f"{STR_URL}_{STR_DESIGN}"
 
@@ -643,7 +622,7 @@ LIST_APPS_ALL = [
     APP_DASHBOARD,
     APP_URL_DESIGN,
     APP_KAKAO_DESIGN,
-    APP_LOCAL_DESIGN,
+    APP_ADMIN_DESIGN,
     STR_GEMINI,
 ]
 
@@ -661,6 +640,7 @@ LIST_APP_ENTERTAINMENT = [
 LIST_APP_SERVICE = [APP_CAFE, APP_LCC, APP_SITE, APP_STUDY, APP_TRAVEL]
 LIST_APP_MANAGEMENT = [APP_BOARD, APP_DASHBOARD, APP_REVIEW, APP_USER]
 LIST_APP_DOCUMENT = [
+    APP_ADMIN_DESIGN,
     APP_IT_QUIZ_DESIGN,
     APP_IT_QUIZ_PROMPT,
     APP_KAKAO_DESIGN,
@@ -732,5 +712,5 @@ HTML_USER_INFO = get_html(STR_USER_INFO)
 if __name__ == MAIN_FUNCTION:
     data = f"[{DATE_WEEKDAY, HTML_INDEX}]"
     type_name = type(data).__name__
-    print(STR_TYPE_JA, type_name)
+    print(STR_TYPE, type_name)
     print(data)

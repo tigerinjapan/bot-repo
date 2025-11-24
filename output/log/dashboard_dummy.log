@@ -27,6 +27,7 @@
 2025-10-24 21:42:00,027 [INFO] board management PC Windows Edge
 2025-10-25 03:37:00,954 [INFO] url_design document Mobile Android Chrome Mobile
 2025-10-25 03:37:46,150 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-10-25 03:39:18,331 [INFO] number entertainment Mobile Android Chrome Mobile
 2025-10-25 04:04:44,496 [INFO] review management Mobile Android Chrome Mobile
 2025-10-25 04:04:52,160 [INFO] board management PC Windows Edge
 2025-10-25 05:41:18,299 [INFO] url_design document PC Windows Edge
@@ -34,10 +35,13 @@
 2025-10-25 06:54:36,971 [INFO] dashboard management PC Windows Edge
 2025-10-25 09:33:05,313 [INFO] url_design document Mobile Android Chrome Mobile
 2025-10-25 09:33:09,934 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-10-25 09:33:49,378 [INFO] number entertainment Mobile Android Chrome Mobile
 2025-10-25 09:34:05,839 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
 2025-10-25 09:34:15,335 [INFO] review management Mobile Android Chrome Mobile
 2025-10-25 12:10:53,914 [INFO] url_design document Mobile Android Chrome Mobile
+2025-10-25 12:10:58,615 [INFO] number entertainment Mobile Android Chrome Mobile
 2025-10-26 06:38:19,408 [INFO] url_design document Mobile Android Chrome Mobile
+2025-10-26 06:38:28,653 [INFO] number entertainment Mobile Android Chrome Mobile
 2025-10-26 09:22:21,784 [INFO] url_design document Unknown Other FacebookBot
 2025-10-26 09:22:24,840 [INFO] url_design document Mobile Android LINE
 2025-10-26 09:22:58,601 [INFO] url_design document Mobile Android LINE
@@ -48,11 +52,13 @@
 2025-10-26 09:35:25,747 [INFO] news news Mobile Android LINE
 2025-10-26 09:40:43,576 [INFO] news news Mobile Android LINE
 2025-10-26 09:40:59,308 [INFO] url_design document Mobile Android LINE
+2025-10-26 09:41:03,937 [INFO] number entertainment Mobile Android LINE
 2025-10-26 09:51:51,040 [INFO] itQuiz_design document PC Windows Edge
 2025-10-26 09:52:45,361 [INFO] travel_design document PC Windows Edge
 2025-10-26 09:52:53,721 [INFO] travel service PC Windows Edge
 2025-10-26 09:53:21,617 [INFO] travel service PC Windows Edge
 2025-10-26 09:54:50,214 [INFO] itQuiz entertainment PC Windows Edge
+2025-10-26 09:56:35,477 [INFO] number entertainment PC Windows Edge
 2025-10-26 09:57:47,126 [INFO] travel service PC Windows Edge
 2025-10-26 14:34:05,413 [INFO] url_design document Mobile Android LINE
 2025-10-26 14:34:08,647 [INFO] news news Mobile Android LINE
@@ -74,6 +80,7 @@
 2025-10-27 12:52:53,503 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-10-27 12:53:37,659 [INFO] url_design document Mobile Android Chrome Mobile
 2025-10-27 12:53:43,353 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
+2025-10-27 12:53:59,024 [INFO] number entertainment Mobile Android Chrome Mobile
 2025-10-27 14:57:10,466 [INFO] url_design document Mobile Android LINE
 2025-10-27 14:57:13,317 [INFO] news news Mobile Android LINE
 2025-10-27 14:57:34,102 [INFO] ranking entertainment Mobile Android LINE
@@ -89,6 +96,8 @@
 2025-10-29 08:30:34,359 [INFO] news news PC Linux Chrome
 2025-10-29 08:30:42,266 [INFO] lcc service PC Linux Chrome
 2025-10-29 08:32:03,003 [INFO] itQuiz entertainment PC Linux Chrome
+2025-10-29 08:32:49,049 [INFO] number entertainment PC Linux Chrome
+2025-10-29 08:32:57,505 [INFO] number entertainment Mobile Android Chrome Mobile
 2025-10-29 08:41:16,038 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-10-29 08:41:51,027 [INFO] itQuiz_design document Mobile Android Chrome Mobile
 2025-10-29 15:20:24,150 [INFO] url_design document Mobile Android Chrome Mobile
@@ -98,17 +107,8 @@
 2025-10-30 04:22:17,314 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
 2025-10-30 04:22:37,620 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-10-30 06:56:32,797 [INFO] url_design document PC Windows Edge
-2025-10-30 15:01:30,746 [INFO] url_design document PC Windows Edge
-2025-10-25 03:39:18,331 [INFO] number entertainment Mobile Android Chrome Mobile
-2025-10-25 09:33:49,378 [INFO] number entertainment Mobile Android Chrome Mobile
-2025-10-25 12:10:58,615 [INFO] number entertainment Mobile Android Chrome Mobile
-2025-10-26 06:38:28,653 [INFO] number entertainment Mobile Android Chrome Mobile
-2025-10-26 09:41:03,937 [INFO] number entertainment Mobile Android LINE
-2025-10-26 09:56:35,477 [INFO] number entertainment PC Windows Edge
 2025-10-30 06:56:48,199 [INFO] number entertainment PC Windows Edge
-2025-10-27 12:53:59,024 [INFO] number entertainment Mobile Android Chrome Mobile
-2025-10-29 08:32:57,505 [INFO] number entertainment Mobile Android Chrome Mobile
-2025-10-29 08:32:49,049 [INFO] number entertainment PC Linux Chrome
+2025-10-30 15:01:30,746 [INFO] url_design document PC Windows Edge
 2025-10-31 08:15:16,568 [INFO] url_design document Mobile Android Chrome Mobile
 2025-10-31 09:01:55,747 [INFO] url_design document Mobile Android Chrome Mobile
 2025-10-31 09:02:30,499 [INFO] dashboard management Mobile Android Chrome Mobile
@@ -134,14 +134,14 @@
 2025-10-31 21:30:47,811 [INFO] travel service Mobile Android LINE
 2025-10-31 21:31:09,411 [INFO] cafe service Mobile Android LINE
 2025-10-31 21:52:23,588 [INFO] url_design document PC Windows Edge
-2025-11-01 14:00:00,999 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-01 14:00:00,999 [INFO] number entertainment Mobile Android Chrome Mobile
 2025-11-01 14:00:00,999 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
-2025-11-01 14:00:00,999 [INFO] travel service Mobile Android Chrome Mobile
-2025-11-01 14:00:00,999 [INFO] url_design document Mobile Android LINE
-2025-11-01 14:00:00,999 [INFO] number entertainment Mobile Android LINE
 2025-11-01 14:00:00,999 [INFO] itQuiz entertainment Mobile Android LINE
+2025-11-01 14:00:00,999 [INFO] number entertainment Mobile Android Chrome Mobile
+2025-11-01 14:00:00,999 [INFO] number entertainment Mobile Android LINE
+2025-11-01 14:00:00,999 [INFO] travel service Mobile Android Chrome Mobile
 2025-11-01 14:00:00,999 [INFO] travel service Mobile Android LINE
+2025-11-01 14:00:00,999 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-01 14:00:00,999 [INFO] url_design document Mobile Android LINE
 2025-11-02 12:02:05,895 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-02 13:35:53,808 [INFO] url_design document PC Windows Edge
 2025-11-02 13:36:00,040 [INFO] review management PC Windows Edge
@@ -158,355 +158,355 @@
 2025-11-02 21:29:03,680 [INFO] number entertainment PC Windows Chrome
 2025-11-02 21:29:25,545 [INFO] url_design document PC Windows Chrome
 2025-11-02 21:30:05,131 [INFO] dashboard management PC Windows Chrome
+2025-11-03 08:14:15,156 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-03 08:14:21,118 [INFO] number entertainment Mobile Android Chrome Mobile
 2025-11-03 08:14:30,436 [INFO] sudoku entertainment Mobile Android Chrome Mobile
 2025-11-03 08:15:26,596 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-03 09:47:16,064 [INFO] itQuiz entertainment PC Windows Edge
-2025-11-03 10:26:43,587 [INFO] news news PC Windows Edge
-2025-11-03 10:35:42,278 [INFO] board management PC Windows Edge
-2025-11-03 10:38:01,874 [INFO] board management PC Windows Edge
-2025-11-03 10:47:26,816 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
-2025-11-03 11:53:27,762 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-03 12:21:22,483 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-03 12:22:13,734 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-03 08:14:15,156 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-03 08:15:35,746 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
 2025-11-03 09:47:11,489 [INFO] url_design document PC Windows Edge
-2025-11-03 10:28:51,319 [INFO] review management PC Windows Edge
-2025-11-03 10:36:40,361 [INFO] board management PC Windows Edge
-2025-11-03 10:39:07,310 [INFO] url_design document PC Windows Edge
-2025-11-03 10:57:13,339 [INFO] url_design document PC Windows Edge
-2025-11-03 12:21:25,617 [INFO] number entertainment Mobile Android Chrome Mobile
-2025-11-03 12:25:18,625 [INFO] travel service Mobile Android Chrome Mobile
-2025-11-03 16:35:29,526 [INFO] url_design document PC Windows Edge
-2025-11-03 10:05:21,752 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-03 10:38:59,174 [INFO] url_design document PC Windows Edge
-2025-11-03 10:39:16,277 [INFO] url_design document PC Windows Chrome
-2025-11-03 13:39:55,156 [INFO] dashboard management Unknown Other FacebookBot
+2025-11-03 09:47:16,064 [INFO] itQuiz entertainment PC Windows Edge
 2025-11-03 10:04:07,284 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-03 10:05:21,752 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-03 10:26:43,587 [INFO] news news PC Windows Edge
 2025-11-03 10:26:51,223 [INFO] board management PC Windows Edge
+2025-11-03 10:28:51,319 [INFO] review management PC Windows Edge
 2025-11-03 10:34:37,957 [INFO] review management PC Windows Edge
 2025-11-03 10:34:45,735 [INFO] board management PC Windows Edge
+2025-11-03 10:35:42,278 [INFO] board management PC Windows Edge
 2025-11-03 10:36:06,955 [INFO] board management PC Windows Edge
+2025-11-03 10:36:40,361 [INFO] board management PC Windows Edge
 2025-11-03 10:37:15,487 [INFO] board management PC Windows Edge
+2025-11-03 10:38:01,874 [INFO] board management PC Windows Edge
 2025-11-03 10:38:35,251 [INFO] user management PC Windows Edge
 2025-11-03 10:38:51,479 [INFO] news news PC Windows Edge
+2025-11-03 10:38:59,174 [INFO] url_design document PC Windows Edge
+2025-11-03 10:39:07,310 [INFO] url_design document PC Windows Edge
+2025-11-03 10:39:16,277 [INFO] url_design document PC Windows Chrome
 2025-11-03 10:39:24,293 [INFO] number entertainment PC Windows Chrome
 2025-11-03 10:39:31,843 [INFO] itQuiz entertainment PC Windows Chrome
+2025-11-03 10:47:26,816 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
 2025-11-03 10:50:39,548 [INFO] url_design document PC Windows Edge
+2025-11-03 10:57:13,339 [INFO] url_design document PC Windows Edge
 2025-11-03 10:57:16,490 [INFO] dashboard management PC Windows Edge
+2025-11-03 11:53:27,762 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-03 11:53:35,358 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
 2025-11-03 11:54:03,731 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-04 10:00:00,999 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-06 01:05:27,562 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-06 19:22:23,766 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-06 19:55:14,723 [INFO] news news Mobile Android LINE
-2025-11-06 19:56:33,382 [INFO] url_design document Mobile Android LINE
-2025-11-06 20:01:39,184 [INFO] number entertainment Mobile Android LINE
+2025-11-03 12:21:22,483 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-03 12:21:25,617 [INFO] number entertainment Mobile Android Chrome Mobile
+2025-11-03 12:22:13,734 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-03 12:25:18,625 [INFO] travel service Mobile Android Chrome Mobile
+2025-11-03 13:39:55,156 [INFO] dashboard management Unknown Other FacebookBot
+2025-11-03 16:35:29,526 [INFO] url_design document PC Windows Edge
 2025-11-04 10:00:00,999 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-04 10:00:00,999 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-05 10:00:00,999 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-06 01:07:01,749 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-06 14:59:24,710 [INFO] ranking entertainment Mobile Android LINE
-2025-11-06 14:59:56,086 [INFO] study service Mobile Android LINE
-2025-11-06 15:00:43,658 [INFO] sudoku entertainment Mobile Android LINE
-2025-11-06 19:22:15,772 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-05 10:00:00,999 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-04 10:00:00,999 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-05 10:00:00,999 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-05 10:00:00,999 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-05 10:00:00,999 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-06 01:05:27,562 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-06 01:06:06,373 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-06 01:07:01,749 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-06 07:54:19,502 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-06 08:01:20,061 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-06 14:58:48,885 [INFO] url_design document Mobile Android LINE
 2025-11-06 14:58:54,835 [INFO] news news Mobile Android LINE
 2025-11-06 14:59:17,364 [INFO] tv news Mobile Android LINE
+2025-11-06 14:59:24,710 [INFO] ranking entertainment Mobile Android LINE
 2025-11-06 14:59:42,340 [INFO] today news Mobile Android LINE
+2025-11-06 14:59:56,086 [INFO] study service Mobile Android LINE
 2025-11-06 15:00:27,867 [INFO] url_design document Mobile Android LINE
-2025-11-06 19:24:18,956 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-06 19:56:39,234 [INFO] itQuiz entertainment Mobile Android LINE
-2025-11-06 01:06:06,373 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-06 07:54:19,502 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-06 15:00:43,658 [INFO] sudoku entertainment Mobile Android LINE
 2025-11-06 15:01:13,770 [INFO] number entertainment Mobile Android LINE
+2025-11-06 19:22:15,772 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-06 19:22:23,766 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-06 19:24:18,956 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-06 19:55:10,230 [INFO] url_design document Mobile Android LINE
+2025-11-06 19:55:14,723 [INFO] news news Mobile Android LINE
+2025-11-06 19:56:33,382 [INFO] url_design document Mobile Android LINE
+2025-11-06 19:56:39,234 [INFO] itQuiz entertainment Mobile Android LINE
+2025-11-06 20:01:39,184 [INFO] number entertainment Mobile Android LINE
 2025-11-07 03:38:06,420 [INFO] url_design document PC Windows Edge
+2025-11-07 04:04:29,495 [INFO] dashboard management PC Windows Edge
+2025-11-07 04:04:36,595 [INFO] sudoku entertainment PC Windows Edge
 2025-11-07 08:25:34,971 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-07 08:25:40,691 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
 2025-11-07 12:03:06,721 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-07 12:39:45,041 [INFO] itQuiz entertainment PC Windows Edge
-2025-11-07 04:04:36,595 [INFO] sudoku entertainment PC Windows Edge
-2025-11-07 12:40:59,471 [INFO] sudoku entertainment PC Windows Edge
-2025-11-07 04:04:29,495 [INFO] dashboard management PC Windows Edge
 2025-11-07 12:06:02,057 [INFO] url_design document PC Windows Edge
 2025-11-07 12:39:37,433 [INFO] url_design document PC Windows Edge
+2025-11-07 12:39:45,041 [INFO] itQuiz entertainment PC Windows Edge
+2025-11-07 12:40:59,471 [INFO] sudoku entertainment PC Windows Edge
 2025-11-07 13:22:38,407 [INFO] url_design document PC Windows Edge
-2025-11-07 14:18:23,823 [INFO] number entertainment Mobile Android Chrome Mobile
-2025-11-07 20:35:17,516 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-07 20:45:14,984 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-08 02:47:30,940 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-08 08:33:56,338 [INFO] url_design document PC Windows Edge
-2025-11-08 10:04:23,594 [INFO] kakao_design document Mobile Android Chrome Mobile
-2025-11-08 11:46:04,986 [INFO] news news PC Windows Edge
-2025-11-08 12:00:04,331 [INFO] board management PC Windows Edge
-2025-11-08 14:21:26,510 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-09 17:53:29,526 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-09 17:53:41,368 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-09 21:34:24,175 [INFO] url_design document PC Windows Edge
-2025-11-10 01:54:07,152 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
-2025-11-10 01:54:12,499 [INFO] review management Mobile Android Chrome Mobile
+2025-11-07 13:54:12,334 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-07 13:54:20,014 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-07 13:54:52,313 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-07 14:15:10,387 [INFO] gemini entertainment Mobile Android Chrome Mobile
+2025-11-07 14:16:34,937 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-07 14:18:08,848 [INFO] today_korea news Mobile Android Chrome Mobile
 2025-11-07 14:18:13,315 [INFO] travel service Mobile Android Chrome Mobile
+2025-11-07 14:18:23,823 [INFO] number entertainment Mobile Android Chrome Mobile
+2025-11-07 14:18:29,464 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
+2025-11-07 14:19:25,539 [INFO] travel service Mobile Android Chrome Mobile
 2025-11-07 14:38:52,941 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-07 14:38:59,408 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-07 20:35:17,516 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-07 20:35:32,885 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-07 20:36:09,327 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
+2025-11-07 20:45:14,984 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-07 20:45:20,203 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-08 02:47:30,940 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-08 02:47:37,966 [INFO] sudoku entertainment Mobile Android Chrome Mobile
 2025-11-08 02:57:08,441 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-08 02:58:57,746 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
+2025-11-08 06:29:31,996 [INFO] url_design document PC Windows Edge
 2025-11-08 08:06:28,133 [INFO] url_design document PC Windows Edge
+2025-11-08 08:06:32,957 [INFO] itQuiz entertainment PC Windows Edge
+2025-11-08 08:33:56,338 [INFO] url_design document PC Windows Edge
+2025-11-08 08:34:03,435 [INFO] gemini entertainment PC Windows Edge
+2025-11-08 08:34:52,643 [INFO] gemini entertainment PC Windows Edge
+2025-11-08 08:35:55,147 [INFO] gemini entertainment PC Windows Edge
+2025-11-08 08:47:18,453 [INFO] url_design document PC Windows Edge
+2025-11-08 09:30:34,333 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-08 10:04:23,594 [INFO] kakao_design document Mobile Android Chrome Mobile
+2025-11-08 11:13:24,793 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-08 11:46:04,986 [INFO] news news PC Windows Edge
+2025-11-08 11:46:06,666 [INFO] user management PC Windows Edge
+2025-11-08 12:00:00,102 [INFO] news news PC Windows Edge
+2025-11-08 12:00:04,331 [INFO] board management PC Windows Edge
+2025-11-08 12:00:29,241 [INFO] board management PC Windows Edge
+2025-11-08 12:34:47,849 [INFO] url_design document PC Windows Edge
+2025-11-08 14:21:26,510 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-08 14:23:25,038 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-08 14:24:01,408 [INFO] review management Mobile Android Chrome Mobile
+2025-11-08 14:24:24,910 [INFO] itQuiz_prompt document Mobile Android Chrome Mobile
+2025-11-08 14:27:22,716 [INFO] sudoku entertainment Mobile Android Chrome Mobile
 2025-11-08 15:57:14,461 [INFO] url_design document PC Windows Edge
+2025-11-08 15:57:46,843 [INFO] gemini entertainment PC Windows Edge
+2025-11-08 15:59:59,091 [INFO] gemini entertainment PC Windows Edge
+2025-11-08 18:04:01,424 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-08 18:04:39,205 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-08 18:24:41,873 [INFO] gemini entertainment Mobile Android Chrome Mobile
 2025-11-09 01:17:10,309 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-09 01:17:51,560 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-09 15:02:48,131 [INFO] url_design document Unknown Other FacebookBot
+2025-11-09 15:02:51,820 [INFO] url_design document Mobile Android LINE
+2025-11-09 15:02:56,124 [INFO] news news Mobile Android LINE
 2025-11-09 15:03:08,280 [INFO] ranking entertainment Mobile Android LINE
 2025-11-09 15:03:19,101 [INFO] study service Mobile Android LINE
 2025-11-09 15:05:01,269 [INFO] tv entertainment Mobile Android LINE
 2025-11-09 15:05:05,446 [INFO] today news Mobile Android LINE
-2025-11-09 17:09:59,235 [INFO] number entertainment Mobile Android LINE
-2025-11-10 01:52:39,290 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-10 01:53:36,796 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
-2025-11-10 01:54:04,260 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-07 13:54:12,334 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-07 14:15:10,387 [INFO] gemini entertainment Mobile Android Chrome Mobile
-2025-11-07 14:18:08,848 [INFO] today_korea news Mobile Android Chrome Mobile
-2025-11-07 14:18:29,464 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
-2025-11-07 20:45:20,203 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-08 02:58:57,746 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
-2025-11-08 06:29:31,996 [INFO] url_design document PC Windows Edge
-2025-11-08 08:34:03,435 [INFO] gemini entertainment PC Windows Edge
-2025-11-08 08:34:52,643 [INFO] gemini entertainment PC Windows Edge
-2025-11-08 08:35:55,147 [INFO] gemini entertainment PC Windows Edge
-2025-11-08 09:30:34,333 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-08 11:46:06,666 [INFO] user management PC Windows Edge
-2025-11-08 14:23:25,038 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-08 14:24:01,408 [INFO] review management Mobile Android Chrome Mobile
-2025-11-08 14:27:22,716 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-08 18:04:01,424 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-08 18:04:39,205 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-09 15:02:51,820 [INFO] url_design document Mobile Android LINE
-2025-11-09 15:02:56,124 [INFO] news news Mobile Android LINE
 2025-11-09 17:09:55,689 [INFO] url_design document Mobile Android LINE
+2025-11-09 17:09:59,235 [INFO] number entertainment Mobile Android LINE
+2025-11-09 17:53:29,526 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-09 17:53:41,368 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-09 21:34:24,175 [INFO] url_design document PC Windows Edge
+2025-11-10 01:52:39,290 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-10 01:52:45,201 [INFO] cafe service Mobile Android Chrome Mobile
-2025-11-10 01:53:09,381 [INFO] travel_design document Mobile Android Chrome Mobile
-2025-11-10 01:54:21,956 [INFO] gemini entertainment Mobile Android Chrome Mobile
-2025-11-07 14:16:34,937 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-07 14:19:25,539 [INFO] travel service Mobile Android Chrome Mobile
-2025-11-07 14:38:59,408 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-07 20:35:32,885 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-07 20:36:09,327 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
-2025-11-08 02:47:37,966 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-08 08:06:32,957 [INFO] itQuiz entertainment PC Windows Edge
-2025-11-08 08:47:18,453 [INFO] url_design document PC Windows Edge
-2025-11-08 11:13:24,793 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-08 12:00:00,102 [INFO] news news PC Windows Edge
-2025-11-08 12:00:29,241 [INFO] board management PC Windows Edge
-2025-11-08 12:34:47,849 [INFO] url_design document PC Windows Edge
-2025-11-08 14:24:24,910 [INFO] itQuiz_prompt document Mobile Android Chrome Mobile
-2025-11-08 15:57:46,843 [INFO] gemini entertainment PC Windows Edge
-2025-11-08 15:59:59,091 [INFO] gemini entertainment PC Windows Edge
-2025-11-08 18:24:41,873 [INFO] gemini entertainment Mobile Android Chrome Mobile
-2025-11-09 15:02:48,131 [INFO] url_design document Unknown Other FacebookBot
 2025-11-10 01:53:01,128 [INFO] travel service Mobile Android Chrome Mobile
+2025-11-10 01:53:09,381 [INFO] travel_design document Mobile Android Chrome Mobile
 2025-11-10 01:53:18,460 [INFO] number entertainment Mobile Android Chrome Mobile
 2025-11-10 01:53:29,201 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-10 01:53:36,796 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
 2025-11-10 01:53:46,041 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
+2025-11-10 01:54:04,260 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-10 01:54:07,152 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
+2025-11-10 01:54:12,499 [INFO] review management Mobile Android Chrome Mobile
+2025-11-10 01:54:21,956 [INFO] gemini entertainment Mobile Android Chrome Mobile
 2025-11-10 12:12:20,974 [INFO] url_design document PC Windows Edge
+2025-11-11 05:38:40,448 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-11 05:38:52,096 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-11 05:49:39,486 [INFO] dashboard management PC Windows Edge
+2025-11-11 10:21:14,151 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-11 10:21:53,710 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-11 10:23:06,115 [INFO] sudoku entertainment Mobile Android Chrome Mobile
 2025-11-11 14:58:33,464 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-11 19:47:12,751 [INFO] dashboard management PC Windows Edge
-2025-11-11 22:21:37,303 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
-2025-11-11 22:22:21,839 [INFO] gemini entertainment Mobile Android Chrome Mobile
-2025-11-11 05:49:39,486 [INFO] dashboard management PC Windows Edge
-2025-11-11 10:21:53,710 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-11 14:59:07,035 [INFO] sudoku entertainment Mobile Android Chrome Mobile
 2025-11-11 19:41:47,833 [INFO] url_design document PC Windows Edge
+2025-11-11 19:42:15,392 [INFO] url_design document PC Windows Edge
 2025-11-11 19:43:27,568 [INFO] url_design document PC Windows Edge
 2025-11-11 19:43:36,140 [INFO] dashboard management PC Windows Edge
 2025-11-11 19:47:07,208 [INFO] url_design document PC Windows Edge
-2025-11-11 21:31:08,061 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-11 10:21:14,151 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-11 19:47:12,751 [INFO] dashboard management PC Windows Edge
 2025-11-11 20:50:48,744 [INFO] url_design document PC Windows Edge
+2025-11-11 21:31:08,061 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-11 21:31:23,006 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-11 05:38:40,448 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-11 05:38:52,096 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-11 14:59:07,035 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-11 19:42:15,392 [INFO] url_design document PC Windows Edge
 2025-11-11 21:50:29,073 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-11 22:21:37,303 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
+2025-11-11 22:22:21,839 [INFO] gemini entertainment Mobile Android Chrome Mobile
+2025-11-12 02:50:40,795 [INFO] url_design document PC Windows Edge
+2025-11-12 02:56:04,085 [INFO] dashboard management PC Windows Edge
+2025-11-12 08:47:05,232 [INFO] url_design document PC Windows Edge
+2025-11-12 12:42:09,717 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-12 12:42:16,022 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-12 12:43:07,279 [INFO] review management Mobile Android Chrome Mobile
 2025-11-12 12:43:14,234 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
 2025-11-12 12:43:56,161 [INFO] number entertainment Mobile Android Chrome Mobile
+2025-11-12 12:44:57,581 [INFO] gemini entertainment Mobile Android Chrome Mobile
 2025-11-12 12:45:15,745 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
 2025-11-12 12:45:24,985 [INFO] itQuiz entertainment PC Linux Chrome
 2025-11-12 14:46:09,745 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-12 02:50:40,795 [INFO] url_design document PC Windows Edge
-2025-11-12 12:42:09,717 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-12 14:46:26,337 [INFO] sudoku entertainment Mobile Android Chrome Mobile
 2025-11-12 19:13:43,291 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-12 19:14:01,101 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-13 05:27:23,657 [INFO] url_design document PC Windows Edge
 2025-11-13 09:54:05,112 [INFO] url_design document PC Windows Edge
-2025-11-12 02:56:04,085 [INFO] dashboard management PC Windows Edge
-2025-11-12 08:47:05,232 [INFO] url_design document PC Windows Edge
-2025-11-12 12:42:16,022 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-12 12:44:57,581 [INFO] gemini entertainment Mobile Android Chrome Mobile
-2025-11-12 14:46:26,337 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-12 19:14:01,101 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-12 12:43:07,279 [INFO] review management Mobile Android Chrome Mobile
-2025-11-13 14:50:43,179 [INFO] number entertainment Mobile Android Chrome Mobile
-2025-11-14 02:39:54,274 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-14 05:33:31,832 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-14 08:20:22,242 [INFO] sudoku entertainment PC Windows Edge
-2025-11-14 10:51:02,290 [INFO] board management Mobile Android Chrome Mobile
-2025-11-14 20:27:12,722 [INFO] sudoku entertainment PC Windows Edge
-2025-11-15 12:25:58,100 [INFO] url_design document PC Windows Edge
-2025-11-15 16:42:34,503 [INFO] dashboard management PC Windows Edge
-2025-11-15 16:55:05,555 [INFO] dashboard management PC Windows Edge
-2025-11-15 17:06:27,114 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-15 17:10:10,577 [INFO] board management Mobile Android Chrome Mobile
-2025-11-15 22:06:55,128 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-13 14:22:36,916 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-13 14:23:20,306 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-14 10:45:12,625 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-14 10:49:31,923 [INFO] board management Mobile Android Chrome Mobile
-2025-11-15 04:36:47,859 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-15 12:26:31,500 [INFO] board management PC Windows Edge
-2025-11-15 16:40:38,936 [INFO] url_design document PC Windows Edge
-2025-11-15 16:40:54,833 [INFO] gemini entertainment PC Windows Edge
-2025-11-15 22:06:37,745 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-13 14:50:43,179 [INFO] number entertainment Mobile Android Chrome Mobile
+2025-11-14 02:39:54,274 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-14 02:40:02,812 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-14 05:33:31,832 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-14 08:04:52,962 [INFO] url_design document PC Windows Edge
+2025-11-14 08:15:20,052 [INFO] dashboard management PC Windows Edge
+2025-11-14 08:19:29,656 [INFO] gemini entertainment PC Windows Edge
+2025-11-14 08:20:22,242 [INFO] sudoku entertainment PC Windows Edge
+2025-11-14 08:48:22,293 [INFO] url_design document PC Windows Edge
+2025-11-14 10:45:12,625 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-14 10:46:08,135 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-14 10:47:04,911 [INFO] news news Mobile Android Chrome Mobile
 2025-11-14 10:47:08,737 [INFO] board management Mobile Android Chrome Mobile
 2025-11-14 10:48:19,815 [INFO] board management Mobile Android Chrome Mobile
+2025-11-14 10:49:31,923 [INFO] board management Mobile Android Chrome Mobile
+2025-11-14 10:51:02,290 [INFO] board management Mobile Android Chrome Mobile
 2025-11-14 20:26:43,378 [INFO] url_design document PC Windows Edge
+2025-11-14 20:27:12,722 [INFO] sudoku entertainment PC Windows Edge
+2025-11-15 04:36:47,859 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-15 04:36:55,127 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-15 05:29:59,928 [INFO] sudoku entertainment Mobile Android Chrome Mobile
 2025-11-15 09:08:50,834 [INFO] url_design document PC Windows Edge
 2025-11-15 09:09:56,506 [INFO] dashboard management PC Windows Edge
 2025-11-15 10:52:17,271 [INFO] url_design document PC Windows Edge
+2025-11-15 12:25:58,100 [INFO] url_design document PC Windows Edge
+2025-11-15 12:26:27,416 [INFO] news news PC Windows Edge
+2025-11-15 12:26:31,500 [INFO] board management PC Windows Edge
+2025-11-15 16:40:38,936 [INFO] url_design document PC Windows Edge
+2025-11-15 16:40:54,833 [INFO] gemini entertainment PC Windows Edge
+2025-11-15 16:42:34,503 [INFO] dashboard management PC Windows Edge
+2025-11-15 16:55:05,555 [INFO] dashboard management PC Windows Edge
+2025-11-15 17:05:20,429 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-15 17:06:27,114 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-15 17:07:16,205 [INFO] news news Mobile Android Chrome Mobile
+2025-11-15 17:07:20,695 [INFO] board management Mobile Android Chrome Mobile
+2025-11-15 17:10:10,577 [INFO] board management Mobile Android Chrome Mobile
+2025-11-15 22:06:37,745 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-15 22:06:55,128 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-15 23:35:32,837 [INFO] url_design document PC Windows Edge
 2025-11-15 23:35:49,765 [INFO] dashboard management PC Windows Edge
-2025-11-14 02:40:02,812 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-14 08:15:20,052 [INFO] dashboard management PC Windows Edge
-2025-11-14 08:19:29,656 [INFO] gemini entertainment PC Windows Edge
-2025-11-14 08:48:22,293 [INFO] url_design document PC Windows Edge
-2025-11-15 04:36:55,127 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-15 05:29:59,928 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-15 12:26:27,416 [INFO] news news PC Windows Edge
-2025-11-15 17:05:20,429 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-15 17:07:20,695 [INFO] board management Mobile Android Chrome Mobile
 2025-11-16 01:42:53,038 [INFO] url_design document PC Windows Edge
-2025-11-16 02:56:20,766 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-16 06:54:04,237 [INFO] number entertainment Mobile Android Chrome Mobile
-2025-11-16 08:33:44,460 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-16 08:35:15,814 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
-2025-11-16 14:07:36,004 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-16 16:57:38,532 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
-2025-11-16 18:20:32,501 [INFO] user management PC Linux Chrome
-2025-11-16 18:22:36,870 [INFO] user management PC Linux Chrome
-2025-11-16 18:23:03,031 [INFO] url_design document Mobile Android LINE
-2025-11-16 18:25:52,031 [INFO] url_design document Mobile Android LINE
-2025-11-16 18:29:21,433 [INFO] ranking entertainment Mobile Android LINE
-2025-11-16 18:30:30,746 [INFO] news news Mobile Android LINE
-2025-11-16 18:31:25,275 [INFO] user management PC Linux Chrome
-2025-11-16 18:31:57,018 [INFO] news news Mobile Android LINE
-2025-11-16 18:32:01,064 [INFO] news news Mobile Android LINE
-2025-11-16 18:32:07,873 [INFO] url_design document Mobile Android LINE
-2025-11-16 18:32:10,844 [INFO] news news Mobile Android LINE
-2025-11-16 18:34:07,782 [INFO] news news PC Linux Chrome
-2025-11-16 18:35:08,827 [INFO] news news Mobile Android LINE
 2025-11-16 01:43:09,717 [INFO] dashboard management PC Windows Edge
-2025-11-16 03:00:37,848 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-16 06:53:30,759 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-16 07:18:01,333 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-16 08:36:51,537 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
-2025-11-16 14:01:59,681 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-16 18:17:59,717 [INFO] study service PC Linux Chrome
-2025-11-16 18:18:07,492 [INFO] ranking entertainment PC Linux Chrome
-2025-11-16 18:19:09,578 [INFO] today news PC Linux Chrome
-2025-11-16 18:19:25,278 [INFO] study service PC Linux Chrome
-2025-11-16 18:20:11,865 [INFO] today news PC Linux Chrome
-2025-11-16 18:20:54,763 [INFO] user management PC Linux Chrome
-2025-11-16 18:21:25,358 [INFO] news news Mobile Android LINE
-2025-11-16 18:22:32,946 [INFO] news news PC Linux Chrome
-2025-11-16 18:26:08,453 [INFO] url_design document Mobile Android LINE
-2025-11-16 18:28:21,769 [INFO] news news PC Linux Chrome
-2025-11-16 18:29:41,919 [INFO] user management PC Linux Chrome
-2025-11-16 18:30:08,345 [INFO] news news PC Linux Chrome
-2025-11-16 18:31:58,890 [INFO] news news Mobile Android LINE
-2025-11-16 18:34:03,518 [INFO] url_design document PC Linux Chrome
-2025-11-16 18:34:15,372 [INFO] user management PC Linux Chrome
-2025-11-16 18:38:24,113 [INFO] news news Mobile Android LINE
-2025-11-16 18:38:28,543 [INFO] news news Mobile Android Chrome Mobile
-2025-11-16 18:38:36,055 [INFO] user management PC Linux Chrome
-2025-11-16 18:39:12,247 [INFO] news news Mobile Android Chrome Mobile
+2025-11-16 02:56:20,766 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-16 02:57:06,165 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-16 02:58:30,420 [INFO] news news Mobile Android Chrome Mobile
 2025-11-16 02:58:34,022 [INFO] board management Mobile Android Chrome Mobile
+2025-11-16 03:00:37,848 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-16 06:52:33,911 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-16 06:53:30,759 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-16 06:54:04,237 [INFO] number entertainment Mobile Android Chrome Mobile
 2025-11-16 06:54:13,408 [INFO] number entertainment Mobile Android Chrome Mobile
+2025-11-16 07:18:01,333 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-16 07:20:48,020 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-16 08:33:44,460 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-16 08:34:13,623 [INFO] gemini entertainment Mobile Android Chrome Mobile
+2025-11-16 08:34:40,008 [INFO] travel_design document Mobile Android Chrome Mobile
+2025-11-16 08:34:48,382 [INFO] itQuiz_design document Mobile Android Chrome Mobile
+2025-11-16 08:35:15,814 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
+2025-11-16 08:36:51,537 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
+2025-11-16 14:01:59,681 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-16 14:03:53,113 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-16 14:06:09,201 [INFO] gemini entertainment Mobile Android Chrome Mobile
+2025-11-16 14:07:36,004 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-16 16:41:25,260 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-16 16:56:41,516 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-16 16:56:59,953 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-16 16:57:38,532 [INFO] itQuiz entertainment Mobile Android Chrome Mobile
+2025-11-16 18:14:50,188 [INFO] url_design document Unknown Other FacebookBot
 2025-11-16 18:14:54,229 [INFO] url_design document Mobile Android LINE
 2025-11-16 18:15:59,706 [INFO] news news Mobile Android LINE
+2025-11-16 18:17:47,894 [INFO] news news PC Linux Chrome
 2025-11-16 18:17:57,920 [INFO] study service PC Linux Chrome
+2025-11-16 18:17:59,717 [INFO] study service PC Linux Chrome
+2025-11-16 18:18:05,980 [INFO] ranking entertainment PC Linux Chrome
+2025-11-16 18:18:07,492 [INFO] ranking entertainment PC Linux Chrome
 2025-11-16 18:18:19,174 [INFO] drama entertainment PC Linux Chrome
+2025-11-16 18:19:09,578 [INFO] today news PC Linux Chrome
+2025-11-16 18:19:25,278 [INFO] study service PC Linux Chrome
 2025-11-16 18:19:57,387 [INFO] board management PC Linux Chrome
+2025-11-16 18:20:11,865 [INFO] today news PC Linux Chrome
+2025-11-16 18:20:32,501 [INFO] user management PC Linux Chrome
+2025-11-16 18:20:54,763 [INFO] user management PC Linux Chrome
+2025-11-16 18:21:25,358 [INFO] news news Mobile Android LINE
 2025-11-16 18:21:56,851 [INFO] news news Mobile Android LINE
+2025-11-16 18:22:32,946 [INFO] news news PC Linux Chrome
+2025-11-16 18:22:36,870 [INFO] user management PC Linux Chrome
+2025-11-16 18:23:03,031 [INFO] url_design document Mobile Android LINE
+2025-11-16 18:23:07,924 [INFO] news news Mobile Android LINE
+2025-11-16 18:23:56,536 [INFO] news news PC Linux Chrome
 2025-11-16 18:23:59,488 [INFO] user management PC Linux Chrome
+2025-11-16 18:24:15,996 [INFO] url_design document Mobile Android LINE
+2025-11-16 18:24:21,056 [INFO] news news Mobile Android LINE
+2025-11-16 18:25:52,031 [INFO] url_design document Mobile Android LINE
+2025-11-16 18:26:08,453 [INFO] url_design document Mobile Android LINE
 2025-11-16 18:26:15,953 [INFO] news news Mobile Android LINE
+2025-11-16 18:28:21,769 [INFO] news news PC Linux Chrome
 2025-11-16 18:28:40,715 [INFO] user management PC Linux Chrome
+2025-11-16 18:29:21,433 [INFO] ranking entertainment Mobile Android LINE
 2025-11-16 18:29:37,138 [INFO] ranking entertainment PC Linux Chrome
+2025-11-16 18:29:41,919 [INFO] user management PC Linux Chrome
+2025-11-16 18:30:08,345 [INFO] news news PC Linux Chrome
+2025-11-16 18:30:26,202 [INFO] url_design document Mobile Android LINE
+2025-11-16 18:30:30,746 [INFO] news news Mobile Android LINE
+2025-11-16 18:31:12,025 [INFO] news news PC Linux Chrome
+2025-11-16 18:31:17,308 [INFO] news news PC Linux Chrome
+2025-11-16 18:31:25,275 [INFO] user management PC Linux Chrome
+2025-11-16 18:31:44,901 [INFO] news news PC Linux Chrome
+2025-11-16 18:31:57,018 [INFO] news news Mobile Android LINE
+2025-11-16 18:31:58,890 [INFO] news news Mobile Android LINE
+2025-11-16 18:32:01,064 [INFO] news news Mobile Android LINE
+2025-11-16 18:32:01,902 [INFO] news news Mobile Android LINE
+2025-11-16 18:32:07,873 [INFO] url_design document Mobile Android LINE
+2025-11-16 18:32:10,844 [INFO] news news Mobile Android LINE
 2025-11-16 18:33:09,626 [INFO] url_design document Mobile Android LINE
 2025-11-16 18:33:13,964 [INFO] news news Mobile Android LINE
+2025-11-16 18:33:29,330 [INFO] url_design document Mobile Android LINE
+2025-11-16 18:33:58,748 [INFO] url_design document Mobile Android LINE
+2025-11-16 18:34:03,518 [INFO] url_design document PC Linux Chrome
+2025-11-16 18:34:07,782 [INFO] news news PC Linux Chrome
+2025-11-16 18:34:15,372 [INFO] user management PC Linux Chrome
+2025-11-16 18:34:20,370 [INFO] user management Mobile Android Chrome Mobile
 2025-11-16 18:34:23,752 [INFO] news news Mobile Android Chrome Mobile
+2025-11-16 18:35:08,827 [INFO] news news Mobile Android LINE
 2025-11-16 18:35:19,878 [INFO] news news Mobile Android LINE
+2025-11-16 18:38:24,113 [INFO] news news Mobile Android LINE
+2025-11-16 18:38:28,543 [INFO] news news Mobile Android Chrome Mobile
+2025-11-16 18:38:32,406 [INFO] news news PC Linux Chrome
+2025-11-16 18:38:36,055 [INFO] user management PC Linux Chrome
 2025-11-16 18:38:48,182 [INFO] user management PC Linux Chrome
 2025-11-16 18:39:08,735 [INFO] news news PC Linux Chrome
+2025-11-16 18:39:12,247 [INFO] news news Mobile Android Chrome Mobile
 2025-11-16 18:39:25,893 [INFO] drama entertainment Mobile Android Chrome Mobile
 2025-11-16 21:25:23,242 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-16 21:25:33,127 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-16 06:52:33,911 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-16 08:34:40,008 [INFO] travel_design document Mobile Android Chrome Mobile
-2025-11-16 08:34:48,382 [INFO] itQuiz_design document Mobile Android Chrome Mobile
-2025-11-16 14:06:09,201 [INFO] gemini entertainment Mobile Android Chrome Mobile
-2025-11-16 16:41:25,260 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-16 16:56:59,953 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-16 18:14:50,188 [INFO] url_design document Unknown Other FacebookBot
-2025-11-16 18:17:47,894 [INFO] news news PC Linux Chrome
-2025-11-16 18:18:05,980 [INFO] ranking entertainment PC Linux Chrome
-2025-11-16 18:23:07,924 [INFO] news news Mobile Android LINE
-2025-11-16 18:23:56,536 [INFO] news news PC Linux Chrome
-2025-11-16 18:24:15,996 [INFO] url_design document Mobile Android LINE
-2025-11-16 18:24:21,056 [INFO] news news Mobile Android LINE
-2025-11-16 18:30:26,202 [INFO] url_design document Mobile Android LINE
-2025-11-16 18:31:12,025 [INFO] news news PC Linux Chrome
-2025-11-16 18:31:17,308 [INFO] news news PC Linux Chrome
-2025-11-16 18:31:44,901 [INFO] news news PC Linux Chrome
-2025-11-16 18:32:01,902 [INFO] news news Mobile Android LINE
-2025-11-16 18:33:29,330 [INFO] url_design document Mobile Android LINE
-2025-11-16 18:33:58,748 [INFO] url_design document Mobile Android LINE
-2025-11-16 18:34:20,370 [INFO] user management Mobile Android Chrome Mobile
-2025-11-16 18:38:32,406 [INFO] news news PC Linux Chrome
-2025-11-17 12:43:48,852 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-17 12:57:32,702 [INFO] board management Mobile Android Chrome Mobile
-2025-11-17 15:16:02,738 [INFO] study service Mobile Android LINE
+2025-11-17 07:36:03,458 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-17 07:36:11,470 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-17 07:50:16,523 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-17 07:55:03,330 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-17 12:43:48,852 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-17 12:44:49,536 [INFO] review management Mobile Android Chrome Mobile
 2025-11-17 12:57:04,335 [INFO] review management Mobile Android Chrome Mobile
+2025-11-17 12:57:27,825 [INFO] news news Mobile Android Chrome Mobile
+2025-11-17 12:57:32,702 [INFO] board management Mobile Android Chrome Mobile
 2025-11-17 12:57:35,870 [INFO] user management Mobile Android Chrome Mobile
+2025-11-17 13:05:40,113 [INFO] user management Mobile Android Chrome Mobile
 2025-11-17 13:05:54,523 [INFO] news news Mobile Android Chrome Mobile
 2025-11-17 13:06:07,973 [INFO] board management Mobile Android Chrome Mobile
 2025-11-17 13:06:22,063 [INFO] board management Mobile Android Chrome Mobile
+2025-11-17 13:06:36,368 [INFO] board management Mobile Android Chrome Mobile
+2025-11-17 13:30:24,820 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-17 13:32:32,375 [INFO] dashboard management Mobile Android Chrome Mobile
 2025-11-17 13:33:29,783 [INFO] sudoku entertainment Mobile Android Chrome Mobile
-2025-11-17 13:06:36,368 [INFO] board management Mobile Android Chrome Mobile
 2025-11-17 15:14:50,722 [INFO] news news Mobile Android LINE
 2025-11-17 15:15:38,874 [INFO] drama entertainment Mobile Android LINE
+2025-11-17 15:16:02,738 [INFO] study service Mobile Android LINE
 2025-11-17 23:35:22,839 [INFO] url_design document PC Windows Edge
-2025-11-17 07:36:03,458 [INFO] url_design document Mobile Android Chrome Mobile
-2025-11-17 07:50:16,523 [INFO] dashboard management Mobile Android Chrome Mobile
-2025-11-17 12:57:27,825 [INFO] news news Mobile Android Chrome Mobile
-2025-11-17 13:05:40,113 [INFO] user management Mobile Android Chrome Mobile
-2025-11-17 13:30:24,820 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-18 08:43:15,233 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-18 10:39:38,408 [INFO] url_design document Mobile Android Chrome Mobile
 2025-11-18 10:40:01,619 [INFO] url_design document Mobile Android Chrome Mobile
@@ -545,3 +545,88 @@
 2025-11-19 23:39:57,606 [INFO] board management Mobile Android Chrome Mobile
 2025-11-19 23:40:19,364 [INFO] board management Mobile Android Chrome Mobile
 2025-11-19 23:41:16,864 [INFO] board management Mobile Android Chrome Mobile
+2025-11-20 03:52:50,833 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-20 03:53:40,293 [INFO] news news Mobile Android Chrome Mobile
+2025-11-20 03:53:44,584 [INFO] board management Mobile Android Chrome Mobile
+2025-11-20 03:58:53,834 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-20 03:59:00,997 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-20 12:33:04,869 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-20 14:15:45,585 [INFO] news news Mobile Android LINE
+2025-11-20 14:16:58,471 [INFO] study service Mobile Android LINE
+2025-11-20 14:17:20,172 [INFO] drama entertainment Mobile Android LINE
+2025-11-20 14:17:28,109 [INFO] ranking entertainment Mobile Android LINE
+2025-11-20 14:26:06,979 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-20 14:26:22,622 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-20 21:15:09,797 [INFO] url_design document PC Windows Edge
+2025-11-20 21:16:58,290 [INFO] gemini entertainment PC Windows Edge
+2025-11-20 21:17:02,613 [INFO] review management PC Windows Edge
+2025-11-20 21:18:36,005 [INFO] url_design document PC Windows Edge
+2025-11-20 21:18:45,996 [INFO] number entertainment PC Windows Edge
+2025-11-20 22:23:58,576 [INFO] number entertainment PC Windows Edge
+2025-11-20 22:24:21,428 [INFO] number_ko Unknown PC Windows Edge
+2025-11-20 22:25:00,217 [INFO] number_ko Unknown PC Windows Edge
+2025-11-20 22:29:55,405 [INFO] itQuiz entertainment PC Windows Edge
+2025-11-20 22:32:42,040 [INFO] url_design document PC Windows Edge
+2025-11-20 22:34:01,349 [INFO] news news PC Windows Edge
+2025-11-20 22:35:07,169 [INFO] board management PC Windows Edge
+2025-11-20 22:36:40,006 [INFO] review management PC Windows Edge
+2025-11-21 20:04:30,932 [INFO] url_design document PC Windows Edge
+2025-11-21 20:07:47,385 [INFO] dashboard management PC Windows Edge
+2025-11-21 20:08:34,588 [INFO] sudoku entertainment PC Windows Edge
+2025-11-21 20:35:43,842 [INFO] sudoku entertainment PC Windows Edge
+2025-11-21 20:49:12,311 [INFO] sudoku entertainment PC Windows Edge
+2025-11-22 06:50:13,813 [INFO] url_design document PC Windows Edge
+2025-11-22 12:11:35,313 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-22 12:12:05,326 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-22 13:38:07,653 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-22 13:40:23,864 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-22 19:55:28,353 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-22 19:55:56,982 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-22 20:02:13,447 [INFO] url_design document Unknown Other FacebookBot
+2025-11-22 20:02:16,670 [INFO] url_design document Mobile Android LINE
+2025-11-22 20:02:21,541 [INFO] news news Mobile Android LINE
+2025-11-22 20:02:36,188 [INFO] number entertainment Mobile Android LINE
+2025-11-22 20:02:54,835 [INFO] sudoku entertainment Mobile Android LINE
+2025-11-22 20:03:57,638 [INFO] sudoku entertainment Mobile Android LINE
+2025-11-22 20:06:54,178 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-22 20:08:59,552 [INFO] news news Mobile Android Chrome Mobile
+2025-11-22 20:10:01,382 [INFO] board management Mobile Android Chrome Mobile
+2025-11-22 20:12:06,668 [INFO] news news Mobile Android Chrome Mobile
+2025-11-22 20:12:12,734 [INFO] site service Mobile Android Chrome Mobile
+2025-11-22 20:22:10,301 [INFO] url_design document Mobile Android LINE
+2025-11-22 20:22:13,982 [INFO] news news Mobile Android LINE
+2025-11-22 20:22:39,003 [INFO] itQuiz entertainment Mobile Android LINE
+2025-11-22 20:26:03,391 [INFO] itQuiz_prompt document Mobile Android LINE
+2025-11-22 20:27:08,125 [INFO] news news Mobile Android LINE
+2025-11-22 20:27:18,645 [INFO] news news Mobile Android LINE
+2025-11-23 00:02:38,007 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-23 00:02:45,966 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-23 09:29:05,133 [INFO] url_design document PC Windows Edge
+2025-11-23 16:09:56,212 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-23 16:10:38,302 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-23 16:18:05,784 [INFO] gemini entertainment Mobile Android Chrome Mobile
+2025-11-24 17:38:32,708 [INFO] url_design document Mobile Android Chrome Mobile
+2025-11-24 17:40:51,861 [INFO] dashboard management Mobile Android Chrome Mobile
+2025-11-24 17:41:54,911 [INFO] number entertainment Mobile Android Chrome Mobile
+2025-11-24 17:42:00,617 [INFO] sudoku entertainment Mobile Android Chrome Mobile
+2025-11-24 21:52:41,726 [INFO] url_design document Unknown Other FacebookBot
+2025-11-24 21:52:47,761 [INFO] news news Mobile Android LINE
+2025-11-24 21:52:57,837 [INFO] study service Mobile Android LINE
+2025-11-24 21:53:33,265 [INFO] ranking entertainment Mobile Android LINE
+2025-11-24 21:54:33,866 [INFO] news news Mobile Android LINE
+2025-11-24 21:54:38,182 [INFO] news news Mobile Android LINE
+2025-11-24 21:54:40,224 [INFO] news news Mobile Android LINE
+2025-11-24 21:54:43,600 [INFO] drama entertainment Mobile Android LINE
+2025-11-24 22:28:44,850 [INFO] news news PC Windows Edge
+2025-11-24 22:28:51,500 [INFO] board management PC Windows Edge
+2025-11-24 22:29:25,871 [INFO] board management PC Windows Edge
+2025-11-24 22:42:47,504 [INFO] board management PC Windows Edge
+2025-11-24 22:43:03,831 [INFO] study service PC Windows Edge
+2025-11-24 22:43:12,560 [INFO] news news PC Windows Edge
+2025-11-24 22:43:21,989 [INFO] tv entertainment PC Windows Edge
+2025-11-24 22:43:40,422 [INFO] lcc service PC Windows Edge
+2025-11-24 22:43:44,492 [INFO] ranking entertainment PC Windows Edge
+2025-11-24 22:44:19,601 [INFO] drama entertainment PC Windows Edge
+2025-11-24 22:45:43,108 [INFO] site service PC Windows Edge
+2025-11-24 22:45:47,488 [INFO] today news PC Windows Edge
+2025-11-24 22:46:41,179 [INFO] site service PC Windows Edge

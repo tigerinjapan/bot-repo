@@ -9,9 +9,9 @@ import apps.utils.function as func
 
 # カラムリスト
 col_list = [
-    const.STR_DIV_JA,
-    const.STR_TITLE_JA,
-    const.STR_CONTENTS_JA,
+    const.STR_DIV,
+    const.STR_TITLE,
+    const.STR_CONTENTS,
 ]
 
 

@@ -1,22 +1,22 @@
 [
     {
-        "イメージ": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6155/4452_640.webp\"</img>",
-        "内容": "<p>\n<b>テプン商事</b>\nジャンル：ヒューマン\nキャスト：ジュノ（2PM）\n</p>"
+        "img": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6155/4452_640.webp\"</img>",
+        "contents": "<p>\n<b>テプン商事</b>\nジャンル：ヒューマン\nキャスト：ジュノ（2PM）\n</p>"
     },
     {
-        "イメージ": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6156/4453_640.webp\"</img>",
-        "内容": "<p>\n<b>私と結婚してくれますか？</b>\nジャンル：ラブコメ\nキャスト：チェ・ウシク\n</p>"
+        "img": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6156/4453_640.webp\"</img>",
+        "contents": "<p>\n<b>私と結婚してくれますか？</b>\nジャンル：ラブコメ\nキャスト：チェ・ウシク\n</p>"
     },
     {
-        "イメージ": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6161/4458_640.webp\"</img>",
-        "内容": "<p>\n<b>ソウルの家から大企業に通うキム部長の物語</b>\nジャンル：ヒューマン\nキャスト：リュ・スンリョン\n</p>"
+        "img": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6161/4458_640.webp\"</img>",
+        "contents": "<p>\n<b>ソウルの家から大企業に通うキム部長の物語</b>\nジャンル：ヒューマン\nキャスト：リュ・スンリョン\n</p>"
     },
     {
-        "イメージ": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6160/4457_640.webp\"</img>",
-        "内容": "<p>\n<b>憎たらしい愛</b>\nジャンル：ラブコメ\nキャスト：イ・ジョンジェ\n</p>"
+        "img": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6160/4457_640.webp\"</img>",
+        "contents": "<p>\n<b>憎たらしい愛</b>\nジャンル：ラブコメ\nキャスト：イ・ジョンジェ\n</p>"
     },
     {
-        "イメージ": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6159/4456_640.webp\"</img>",
-        "内容": "<p>\n<b>この川には月が流れる</b>\nジャンル：歴史・時代劇\nキャスト：カン・テオ（5urprise）\n</p>"
+        "img": "<img src=\"https://www.wowkorea.jp/img/Profile/Movie/1/6159/4456_640.webp\"</img>",
+        "contents": "<p>\n<b>この川には月が流れる</b>\nジャンル：歴史・時代劇\nキャスト：カン・テオ（5urprise）\n</p>"
     }
 ]

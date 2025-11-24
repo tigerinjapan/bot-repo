@@ -1,9 +1,6 @@
 // ヘッダー設定
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 
-// タイトル設定
-document.title = TITLE_IT_QUIZ;
-
 // ページ読み込み時にsessionStorageからデータを取得
 let userName = sessionStorage.getItem(STR_USER_NAME);
 
@@ -422,13 +419,8 @@ async function startGame() {
   gameState.currentQuizIndex = -1;
   gameState.isGameOver = false;
 
-  let quizDataUrl = URL_IT_QUIZ_SERVER;
-  if (isLocal()) {
-    quizDataUrl = URL_IT_QUIZ_LOCAL;
-  }
-
   // クイズデータ (IT関連用語、単語は全て大文字) - シャッフルし、選択
-  const quizDataList = await getFetchApiData(quizDataUrl, null);
+  const quizDataList = await getFetchApiData(ENDPOINT_IT_QUIZ_ITEMS, null);
   const filteredList = quizDataList.filter(q => q.word.replace(/\s/g, SYM_BLANK).length <= MAX_WORD_LENGTH);
   const randomTenList = shuffleArray([...filteredList]).slice(0, quizNum);
   gameState.quizSet = randomTenList;
@@ -817,15 +809,10 @@ async function updateRanking(rank, score, userName) {
     rankNgMsg = MSG_ERR_RANK_EN;
   }
 
-  let url = URL_QUIZ_RANKING_SERVER;
-  if (isLocal()) {
-    url = URL_QUIZ_RANKING_LOCAL;
-  }
-
   const requestBody = { rank: rank, score: score, userName: userName };
 
   try {
-    const data = await getFetchApiData(url, requestBody);
+    const data = await getFetchApiData(ENDPOINT_RANKING_QUIZ, requestBody);
     console.log(data.message);
     alert(rankOkMsg);
   } catch (e) {

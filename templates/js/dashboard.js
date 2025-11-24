@@ -82,13 +82,8 @@ function initializeKpiCards() {
  * @param {string} period - 期間区分
  */
 async function updateDashboard(period) {
-  let dashboardDataUrl = URL_DASHBOARD_SERVER;
-  if (isLocal()) {
-    dashboardDataUrl = URL_DASHBOARD_LOCAL;
-  }
-
   // 期間ごとのデータ
-  const dashboardData = await getFetchApiData(dashboardDataUrl, null);
+  const dashboardData = await getFetchApiData(ENDPOINT_JSON_DASHBOARD, null);
 
   const data = dashboardData[period];
   if (!data) return;

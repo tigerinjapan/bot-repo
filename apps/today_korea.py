@@ -70,11 +70,8 @@ english_link = "https://learn.dict.naver.com/conversation#/"
 # 航空券セール
 flight_sale_link = URL_LINK_MO
 
-# タイトル
-app_title = "Today's News"
-
 # カラムリスト
-col_list = ["구분", "오늘의 생활정보", "링크"]
+col_list = ["구분", "뉴스", "링크"]
 
 
 def get_item_list():

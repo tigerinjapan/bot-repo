@@ -71,7 +71,7 @@ def get_channel_access_token(admin_flg: bool = const.FLG_OFF) -> str:
     token = f"{token_type} {access_token}"
 
     expires_min = int(expires_in // 60)
-    func.print_debug_msg(const.STR_TOKEN_JA, f"{const.STR_EXPIRE_JA}: {expires_min}分")
+    func.print_debug_msg(const.STR_TOKEN, f"{const.STR_EXPIRATION}: {expires_min} min")
 
     # メッセージ数チェック
     total_usage = check_message_count(token)
@@ -94,7 +94,7 @@ def check_message_count(access_token: str) -> int:
         total_usage = const.MAX_MSG_API_CNT
 
     message_count = f"{total_usage} / {const.MAX_MSG_API_CNT}"
-    func.print_debug_msg(const.STR_MESSAGE_JA, message_count)
+    func.print_debug_msg(const.STR_MESSAGE, message_count)
     return total_usage
 
 

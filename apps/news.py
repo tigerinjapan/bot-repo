@@ -7,11 +7,8 @@ import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
 
-# タイトル
-app_title = "今日の" + const.STR_NEWS_JA
-
 # カラムリスト
-col_list = [const.STR_DIV_JA, app_title]
+col_list = [const.STR_DIV, const.APP_NEWS]
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE

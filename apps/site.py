@@ -9,17 +9,11 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.mongo_constants as mongo_const
 
-# タイトル
-app_title = "お気に入りサイト"
-app_title_cafe = "おしゃれカフェ"
-app_title_travel = "旅行"
-app_title_board = "掲示板"
-
 # カラムリスト
 col_list = [
-    const.STR_DIV_JA,
-    const.STR_TITLE_JA,
-    const.STR_CONTENTS_JA,
+    const.STR_DIV,
+    const.STR_TITLE,
+    const.STR_CONTENTS,
 ]
 col_list_cafe = ["店名", "住所", "メニュー", "内観"]
 col_list_travel = ["区分", "内容", "アクセス", "画像"]

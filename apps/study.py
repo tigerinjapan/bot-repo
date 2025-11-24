@@ -7,11 +7,8 @@ import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
 
-# タイトル
-app_title = const.STR_NEWS_JA + const.STR_KOREAN_JA
-
 # カラムリスト
-col_list = ["会話", const.STR_KOREAN_JA]
+col_list = ["회화", "한국어"]
 
 # キーワードリスト
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, const.APP_STUDY)

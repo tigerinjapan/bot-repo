@@ -94,7 +94,7 @@ def get_html_context(title: str, body: str, style: str = HTML_KAKAO_STYLE) -> st
     <title>{title}</title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/templates/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/templates/kakao.ico" type="image/x-icon">
     {style}
 </head>
 <body>

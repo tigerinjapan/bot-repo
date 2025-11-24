@@ -136,7 +136,11 @@ async def root(request: Request):
     if user:
         response = RedirectResponse(url=const.PATH_APP_NEWS, status_code=303)
     else:
-        context = {const.STR_REQUEST: request, const.STR_PATH: const.PATH_LOGIN}
+        context = {
+            const.STR_REQUEST: request,
+            const.STR_TITLE: const.STR_LOGIN,
+            const.STR_PATH: const.PATH_LOGIN,
+        }
         response = templates.TemplateResponse(const.HTML_INDEX, context)
     return response
 
@@ -152,6 +156,7 @@ async def login(request: Request, userId: str = Form(...), userPw: str = Form(..
         request.session.clear()
         context = {
             const.STR_REQUEST: request,
+            const.STR_TITLE: const.STR_LOGIN,
             const.STR_PATH: const.PATH_LOGIN,
             const.STR_MESSAGE: chk_msg,
         }
@@ -183,6 +188,7 @@ async def logout(request: Request):
     request.session.clear()
     context = {
         const.STR_REQUEST: request,
+        const.STR_TITLE: const.STR_LOGOUT,
         const.STR_PATH: const.PATH_LOGIN,
         const.STR_MESSAGE: msg_const.MSG_INFO_LOGOUT_EN,
     }
@@ -260,7 +266,7 @@ async def app_api(request: Request):
     APIデータ取得
         （例）
         /api/zipCode/1000000
-        /api/zipCode/1000000
+        /api/travelData/items
     """
     api_name = request.path_params["api_name"]
     param = request.path_params["param"]
@@ -385,7 +391,11 @@ async def kakao_main(request: Request):
     if token:
         response = RedirectResponse(url=const.PATH_KAKAO_TODAY, status_code=303)
     else:
-        context = {const.STR_REQUEST: request, const.STR_PATH: const.PATH_KAKAO_LOGIN}
+        context = {
+            const.STR_REQUEST: request,
+            const.STR_TITLE: const.STR_LOGIN,
+            const.STR_PATH: const.PATH_KAKAO_LOGIN,
+        }
         response = templates.TemplateResponse(const.HTML_INDEX, context)
 
     return response
@@ -412,6 +422,7 @@ async def kakao_login(request: Request, userId: str = Form(...)):
         request.session.clear()
         context = {
             const.STR_REQUEST: request,
+            const.STR_TITLE: const.STR_LOGIN,
             const.STR_PATH: const.PATH_KAKAO_LOGIN,
             const.STR_MESSAGE: msg_const.MSG_ERR_INCORRECT_ACCESS_EN,
         }

@@ -1,17 +1,6 @@
 // ヘッダー設定
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_2);
 
-// タイトル設定
-document.title = TITLE_TRAVEL;
-
-let travelDataUrl = URL_TRAVEL_SERVER;
-let langDataUrl = URL_LANG_SERVER;
-
-if (isLocal()) {
-  travelDataUrl = URL_TRAVEL_LOCAL;
-  langDataUrl = URL_LANG_LOCAL;
-}
-
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", init);
 
@@ -51,8 +40,8 @@ function init() {
 
     const region = regionSelect.value;
 
-    travelData = await getFetchApiData(travelDataUrl, null);
-    langData = await getFetchApiData(langDataUrl, null);
+    travelData = await getFetchApiData(ENDPOINT_TRAVEL_ITEMS, null);
+    langData = await getFetchApiData(ENDPOINT_LANG_ITEMS, null);
 
     travelData = travelData[lang];
 

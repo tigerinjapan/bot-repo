@@ -7,9 +7,6 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 
-# タイトル
-app_title = news.DIV_WEEKLY_RANKING.format(const.SYM_BLANK)
-
 # ランキング区分リスト
 LIST_RANKING_WEEKLY = [const.STR_KPOP]
 LIST_RANKING_DAILY = [const.STR_X_TREND_JA]

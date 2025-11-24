@@ -1,9 +1,6 @@
 // ヘッダー設定
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_2);
 
-// タイトル設定
-document.title = TITLE_DESIGN;
-
 // DOM読み込み後の初期化処理
 document.addEventListener("DOMContentLoaded", init);
 

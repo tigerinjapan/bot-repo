@@ -6,11 +6,8 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 
-# タイトル
-app_title = const.STR_DRAMA_JA + const.STR_RANKING_JA
-
 # カラムリスト
-col_list = [const.STR_IMG_JA, const.STR_CONTENTS_JA]
+col_list = [const.STR_IMG, const.STR_CONTENTS]
 
 # ランキング区分
 LIST_RANKING_WEEKLY = [const.APP_DRAMA]

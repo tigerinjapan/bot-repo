@@ -1,9 +1,6 @@
 // ヘッダー設定
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_2);
 
-// タイトル設定
-document.title = TITLE_REVIEW;
-
 // 掲示板数
 const NUM_BOARD_CNT = 5;
 
@@ -133,16 +130,11 @@ function sendReview() {
       return;
     }
 
-    let url = URL_BOARD_ADD_SERVER;
-    if (isLocal()) {
-      url = URL_BOARD_ADD_LOCAL;
-    }
-
     const requestBody = { data: reviewList };
 
     // MongoDB保存API呼び出し
     try {
-      const data = await getFetchApiData(url, requestBody);
+      const data = await getFetchApiData(ENDPOINT_BOARD_ADD, requestBody);
       const msg = data[STR_MESSAGE];
 
       // getElem(STR_MESSAGE).textContent = msg;

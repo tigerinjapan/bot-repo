@@ -1,9 +1,6 @@
 // ヘッダー設定
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 
-// タイトル設定
-document.title = TITLE_SUDOKU;
-
 /**
  * ゲーム設定定数
  */
@@ -722,15 +719,10 @@ async function updateRanking(rank, score) {
     rankNgMsg = MSG_ERR_RANK_EN;
   }
 
-  let url = URL_SUDOKU_RANKING_SERVER;
-  if (isLocal()) {
-    url = URL_SUDOKU_RANKING_LOCAL;
-  }
-
   const requestBody = { rank: rank, score: score, userName: userName };
 
   try {
-    const data = await getFetchApiData(url, requestBody);
+    const data = await getFetchApiData(ENDPOINT_RANKING_SUDOKU, requestBody);
     console.log(data.message);
     alert(rankOkMsg);
   } catch (e) {

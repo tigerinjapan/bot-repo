@@ -8,9 +8,6 @@ import apps.utils.function_api as func_api
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.message_constants as msg_const
 
-# タイトル
-app_title = const.APP_MLB
-
 
 def get_item_list():
     """

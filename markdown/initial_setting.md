@@ -13,6 +13,18 @@ git
 
 # pip コマンド
 
+## 全てのライブラリのリスト化
+
+```
+pip freeze > packages_to_delete.txt
+```
+
+## ライブラリ・アンインストール
+
+```
+pip uninstall -y -r packages_to_delete.txt
+```
+
 ## ライブラリ・インストール
 
 ```

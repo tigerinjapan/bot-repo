@@ -16,12 +16,9 @@ import apps.utils.message_constants as msg_const
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
 
-# タイトル
-app_title = "ログ管理"
-
 # カラムリスト
-col_list = [const.STR_DATE_JA, const.STR_DIV_JA, const.STR_CONTENTS_JA]
-col_list_admin = col_list + [const.STR_STATUS_JA]
+col_list = [const.STR_DATE, const.STR_DIV, const.STR_CONTENTS]
+col_list_admin = col_list + [const.STR_STATUS]
 
 
 def get_log_data_list(
@@ -139,7 +136,7 @@ def backup_data(log_div: str, backup_data_list, log_path: str):
             # 空ファイル作成
             func.write_file(log_path, const.SYM_BLANK)
 
-            message = f"{len(backup_data_list)}件 {const.STR_BACKUP_JA}{message}"
+            message = f"{len(backup_data_list)}件 {message}"
 
         msg_div = f"{SCRIPT_NAME} {curr_func_nm} {log_div}"
         func.print_debug_msg(msg_div, message)
@@ -195,6 +192,6 @@ def get_last_year_first() -> datetime:
 
 if __name__ == const.MAIN_FUNCTION:
     log_div = const.APP_DASHBOARD
-    log_div = const.STR_ERROR
+    # log_div = const.STR_ERROR
     # get_log_data_list(log_div)
     backup_log(log_div)

@@ -64,13 +64,8 @@ function getAddress() {
  */
 function setAddress(selectLineVal, selectStationVal) {
   // 郵便番号より、住所取得
-  let zipUrl = URL_ZIP_SERVER;
-  if (isLocal()) {
-    zipUrl = URL_ZIP_LOCAL;
-  }
-
   const zipCd = getElem(ID_ZIP_CD);
-  const zipCdUrl = `${zipUrl}/${zipCd.value}`;
+  const zipCdUrl = `${ENDPOINT_ZIP_CD}/${zipCd.value}`;
   const api_header = {
     method: "GET",
     headers: {

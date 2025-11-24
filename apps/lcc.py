@@ -7,11 +7,8 @@ import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.message_constants as msg_const
 
-# タイトル
-app_title = func.convert_upper_lower(const.APP_LCC) + const.STR_NEWS_JA
-
 # カラムリスト
-col_list = [const.STR_DATE_JA, const.STR_COMPANY_JA, app_title]
+col_list = [const.STR_DATE, const.STR_COMPANY, const.APP_NEWS]
 
 # キーワードリスト
 LIST_KEYWORD = func.get_input_data(const.STR_KEYWORD, const.APP_LCC)
@@ -79,7 +76,7 @@ def get_temp_msg(data_flg: bool = const.FLG_OFF):
     lbl = url = const.SYM_BLANK
     lcc_info = get_lcc_info_list(url_flg=const.FLG_ON)[0]
     if lcc_info:
-        lbl = f"[{app_title}] {lcc_info[1]}"
+        lbl = f"[{const.APP_LCC}] {lcc_info[1]}"
         url = lcc_info[3]
         if data_flg:
             lcc_data = const.SYM_BLANK
@@ -90,7 +87,7 @@ def get_temp_msg(data_flg: bool = const.FLG_OFF):
             url = lcc_data
 
     if not url:
-        func.print_debug_msg(app_title, msg_const.MSG_INFO_DATA_NOT_EXIST)
+        func.print_debug_msg(const.APP_LCC, msg_const.MSG_INFO_DATA_NOT_EXIST)
 
     return lbl, url
 

@@ -2,7 +2,6 @@
 <html lang="ja">
 
 <head>
-  <title data-key="title"></title>
   <script src="/templates/const.js"></script>
   <script src="/templates/func.js"></script>
 
@@ -24,6 +23,7 @@
   {% elif app_name == 'gemini' %}
   <script src="/templates/gemini.js"></script>
   <link rel="stylesheet" href="/templates/gemini.css" />
+  <!-- <link rel="icon" href="/templates/gemini.ico" type="image/x-icon"> -->
 
   {% elif app_name == 'review' %}
   <script src="/templates/review.js"></script>
@@ -39,6 +39,8 @@
   {% endif %}
 
   <link rel="icon" href="/templates/favicon.ico" type="image/x-icon">
+
+  <title>{{ title }}</title>
 </head>
 
 <body>

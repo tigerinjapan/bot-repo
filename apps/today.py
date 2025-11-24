@@ -11,11 +11,8 @@ import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
 import apps.utils.function_line as func_line
 
-# タイトル
-app_title = "今日の生活情報"
-
 # カラムリスト
-col_list = [const.STR_DIV_JA, app_title]
+col_list = [const.STR_DIV, const.APP_NEWS]
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -101,7 +98,7 @@ def get_msg_data_today():
     """
     today_info = func_api.get_json_data_on_app(const.APP_TODAY)
     if today_info:
-        key = app_title
+        key = col_list[1]
         date_today = func_api.get_target_data(today_info, DIV_DATE, key)
         forecast = func_api.get_target_data(today_info, DIV_WEATHER, key)
         forecast = forecast.split("・")[0]
@@ -133,7 +130,7 @@ def get_msg_data_today():
 
         file_path = func_gemini.get_today_news_image(text_msg, forecast, outfit)
         if file_path:
-            func.print_debug_msg(const.STR_IMG_JA, img_url)
+            func.print_debug_msg(const.STR_IMG, img_url)
         else:
             func_api.create_msg_img(const.APP_TODAY, text_msg, forecast)
         return msg_data, date_today, img_url

@@ -39,7 +39,7 @@ def get_ex_yen_list():
     """
     今日の為替情報取得
     """
-    col_list = [const.STR_DIV_JA]
+    col_list = [const.STR_DIV]
     for jpy in const.JPY_LIST:
         col_list.append(f"{jpy}{const.STR_JPY_JA}")
 

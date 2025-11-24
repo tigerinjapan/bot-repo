@@ -91,14 +91,9 @@ def get_context_data(request: Request, app_name: str):
     app_div_idx = const.LIST_APP_ALL.index(app_name)
     app_div = LIST_ALL_APP_DIV[app_div_idx]
 
-    app_title = app_div.app_title
-
-    if app_name == const.APP_CAFE:
-        app_title = site.app_title_cafe
-    elif app_name == const.APP_TRAVEL:
-        app_title = site.app_title_travel
-    elif app_name == const.APP_BOARD:
-        app_title = site.app_title_board
+    app_title = app_name
+    if const.APP_TODAY in app_name:
+        app_title = const.TITLE_TODAY_NEWS
 
     num_flg = const.FLG_ON
     if func.check_in_list(app_name, const.LIST_APP_NUM_OFF):
@@ -166,6 +161,7 @@ def get_context_data_2(request: Request, app_name: str):
 
     context = {
         const.STR_REQUEST: request,
+        const.STR_TITLE: app_name,
         "app_name": app_name,
         "user_name": user_name,
         "lang_cd": lang_cd,
@@ -182,7 +178,7 @@ def get_context_for_user(request: Request, app_name: str):
     user_info = request.session[const.STR_USER]
     context = {
         const.STR_REQUEST: request,
-        const.STR_TITLE: user.app_title,
+        const.STR_TITLE: app_name,
         "app_name": app_name,
         "user_info": user_info,
         "update_flg": const.FLG_ON,

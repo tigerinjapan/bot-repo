@@ -1,22 +1,18 @@
 [
     {
-        "区分": "日経",
-        "今日のニュース": "<a href=\"https://www.nikkei.com/article/DGXZQOFL210070R21C25A1000000/\" target=\"_blank\" rel=\"noopener noreferrer\">米テック株一転急落\n乱高下で7カ月ぶり値幅NVIDIAでAI懐疑拭えず</a>"
+        "div": "日経",
+        "news": "<a href=\"https://www.nikkei.com/article/DGKKZO92785820V21C25A1MM8000/\" target=\"_blank\" rel=\"noopener noreferrer\">「国家戦略技術」を創設AI核融合など6分野政府\n税予算を重点支援</a>"
     },
     {
-        "区分": "AI",
-        "今日のニュース": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2511/19/news067.html\" target=\"_blank\" rel=\"noopener noreferrer\">GoogleからもVSCode派生AIエディタ「Antigravity」Gemini3ProやClaudeSonnet4.5が無料</a>"
+        "div": "AI",
+        "news": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2510/20/news101.html\" target=\"_blank\" rel=\"noopener noreferrer\">NTT、独自のAIモデル「tsuzumi2」発表“国産AI開発競争”に「負けられない」と島田社長</a>"
     },
     {
-        "区分": "韓国",
-        "今日のニュース": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56625\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 俳優キムウビン、手書きのメッセージでシンミナとの結婚を発表「僕、結婚します」</a>"
+        "div": "エンタメ",
+        "news": "<a href=\"https://www.wowkorea.jp/news/read/508611.html\" target=\"_blank\" rel=\"noopener noreferrer\">≪韓国ドラマNOW≫「テプン商事」14話イジュノ(2PM)×キムミンハ好演も\n描写不足の指摘続き視聴率伸び悩み視聴率9.5%\nあらすじネタバレ</a>"
     },
     {
-        "区分": "エンタメ",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/read/507248.html\" target=\"_blank\" rel=\"noopener noreferrer\">ヒョンビン&ソンイェジンが揃って主演賞候補に\n「第46回青龍映画賞」本日開催</a>"
-    },
-    {
-        "区分": "kpop",
-        "今日のニュース": "<a href=\"https://www.wowkorea.jp/news/pickup/508412.html\" target=\"_blank\" rel=\"noopener noreferrer\">“ソロデビュー10周年”「少女時代」テヨン\nコンピレーションアルバム「Panorama」のムードを込めたティージングコンテンツ</a>"
+        "div": "kpop",
+        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/508678.html\" target=\"_blank\" rel=\"noopener noreferrer\">「AHOF」\n音楽番組3冠王で新曲の活動を盛況のうちに終了\n活発な活動続く</a>"
     }
 ]

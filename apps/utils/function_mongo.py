@@ -227,7 +227,7 @@ def db_update(
         div = f"{curr_func_nm} {coll_nm}"
         msg = cond
         if debug_flg:
-            msg += f" {update_data}"
+            msg = f"{cond} {update_data}"
         func.print_debug_msg(div, msg)
 
     except Exception as e:

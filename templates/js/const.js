@@ -98,14 +98,15 @@ const CHART_LINE = "line";
 const CHART_BAR = "bar";
 
 // タイトル
-const TITLE_SYSTEM = "Kobe-Dev Demo System";
+const TITLE_SYSTEM = "🌐 DEMO SYSTEM 🌐";
 const TITLE_TRAVEL = "🌏 TRAVEL & LIFE 🌏";
-const TITLE_NUMBER = "🚙 NUMBER PLATE GAME";
-const TITLE_SUDOKU = "🔢 SUDOKU";
-const TITLE_IT_QUIZ = "ℹ️ IT QUIZ";
-const TITLE_REVIEW = "🌈 REVIEW PAGE 🌈";
-const TITLE_DESIGN = "📄 設計書 📄";
+const TITLE_NUMBER = "🚙 NUMBER PLATE 🚙";
+const TITLE_SUDOKU = "🔢 SUDOKU 🔢";
+const TITLE_IT_QUIZ = "ℹ️ IT QUIZ ℹ️";
+const TITLE_GEMINI = "🚀 GEMINI 🚀";
 const TITLE_DASH_BOARD = "📊 DASH BOARD 📊";
+const TITLE_DESIGN = "📄 DESIGN 📄";
+const TITLE_REVIEW = "🌈 REVIEW PAGE 🌈";
 
 const TITLE_CITY = "City";
 const TITLE_CHOICE_CHAR = "Select a Character";
@@ -204,64 +205,23 @@ const METHOD_GET = "GET";
 const METHOD_POST = "POST";
 
 // URL
-const URL_SERVER = "https://kobe-dev.koyeb.app";
-const URL_LOCAL = "http://127.0.0.1:5000";
-
-const PATH_ZIP_API = "/api/zipCode";
-const URL_ZIP_SERVER = `${URL_SERVER}${PATH_ZIP_API}`;
-const URL_ZIP_LOCAL = `${URL_LOCAL}${PATH_ZIP_API}`;
-
 const URL_ADDR_API = "https://express.heartrails.com/api/json?method=get";
 const URL_LINE_API = `${URL_ADDR_API}${STR_LINES}`;
 const URL_STATION_API = `${URL_ADDR_API}${STR_STATIONS}`;
 
-const PATH_GEMINI_API = "/gemini/api";
-const URL_GEMINI_SERVER = `${URL_SERVER}${PATH_GEMINI_API}`;
-const URL_GEMINI_LOCAL = `${URL_LOCAL}${PATH_GEMINI_API}`;
-
-const PATH_IMG_GEMINI = "/img/gemini";
-const URL_GEMINI_IMG_SERVER = `${URL_SERVER}${PATH_IMG_GEMINI}`;
-const URL_GEMINI_IMG_LOCAL = `${URL_LOCAL}${PATH_IMG_GEMINI}`;
-
-const PATH_RANKING_NUMBER = "/ranking/number";
-const URL_NUMBER_RANKING_SERVER = `${URL_SERVER}${PATH_RANKING_NUMBER}`;
-const URL_NUMBER_RANKING_LOCAL = `${URL_LOCAL}${PATH_RANKING_NUMBER}`;
-
-const PATH_RANKING_SUDOKU = "/ranking/sudoku";
-const URL_SUDOKU_RANKING_SERVER = `${URL_SERVER}${PATH_RANKING_SUDOKU}`;
-const URL_SUDOKU_RANKING_LOCAL = `${URL_LOCAL}${PATH_RANKING_SUDOKU}`;
-
-const PATH_RANKING_QUIZ = "/ranking/quiz";
-const URL_QUIZ_RANKING_SERVER = `${URL_SERVER}${PATH_RANKING_QUIZ}`;
-const URL_QUIZ_RANKING_LOCAL = `${URL_LOCAL}${PATH_RANKING_QUIZ}`;
-
-const PATH_BOARD_ADD = "/board/add";
-const URL_BOARD_ADD_SERVER = `${URL_SERVER}${PATH_BOARD_ADD}`;
-const URL_BOARD_ADD_LOCAL = `${URL_LOCAL}${PATH_BOARD_ADD}`;
-
-const PATH_BOARD_UPDATE = "/board/update";
-const URL_BOARD_UPDATE_SERVER = `${URL_SERVER}${PATH_BOARD_UPDATE}`;
-const URL_BOARD_UPDATE_LOCAL = `${URL_LOCAL}${PATH_BOARD_UPDATE}`;
-
-const PATH_GEMINI_ITEMS = "/api/geminiData/items";
-const URL_GEMINI_ITEMS_SERVER = `${URL_SERVER}${PATH_GEMINI_ITEMS}`;
-const URL_GEMINI_ITEMS_LOCAL = `${URL_LOCAL}${PATH_GEMINI_ITEMS}`;
-
-const PATH_TRAVEL_ITEMS = "/api/travelData/items";
-const URL_TRAVEL_SERVER = `${URL_SERVER}${PATH_TRAVEL_ITEMS}`;
-const URL_TRAVEL_LOCAL = `${URL_LOCAL}${PATH_TRAVEL_ITEMS}`;
-
-const PATH_LANG_ITEMS = "/api/langData/items";
-const URL_LANG_SERVER = `${URL_SERVER}${PATH_LANG_ITEMS}`;
-const URL_LANG_LOCAL = `${URL_LOCAL}${PATH_LANG_ITEMS}`;
-
-const PATH_IT_QUIZ_ITEMS = "/api/itQuizData/items";
-const URL_IT_QUIZ_SERVER = `${URL_SERVER}${PATH_IT_QUIZ_ITEMS}`;
-const URL_IT_QUIZ_LOCAL = `${URL_LOCAL}${PATH_IT_QUIZ_ITEMS}`;
-
-const PATH_JSON_DASHBOARD = "/json/dashboard";
-const URL_DASHBOARD_SERVER = `${URL_SERVER}${PATH_JSON_DASHBOARD}`;
-const URL_DASHBOARD_LOCAL = `${URL_LOCAL}${PATH_JSON_DASHBOARD}`;
+const ENDPOINT_ZIP_CD = "/api/zipCode";
+const ENDPOINT_GEMINI_API = "/gemini/api";
+const ENDPOINT_IMG_GEMINI = "/img/gemini";
+const ENDPOINT_RANKING_NUMBER = "/ranking/number";
+const ENDPOINT_RANKING_SUDOKU = "/ranking/sudoku";
+const ENDPOINT_RANKING_QUIZ = "/ranking/quiz";
+const ENDPOINT_BOARD_ADD = "/board/add";
+const ENDPOINT_BOARD_UPDATE = "/board/update";
+const ENDPOINT_GEMINI_ITEMS = "/api/geminiData/items";
+const ENDPOINT_TRAVEL_ITEMS = "/api/travelData/items";
+const ENDPOINT_LANG_ITEMS = "/api/langData/items";
+const ENDPOINT_IT_QUIZ_ITEMS = "/api/itQuizData/items";
+const ENDPOINT_JSON_DASHBOARD = "/json/dashboard";
 
 // メッセージ
 const MSG_VAL_NOT_EXIST = "が存在しません";

@@ -845,7 +845,7 @@ def print_test_data(data, type_flg: bool = const.FLG_OFF):
     """
     if type_flg:
         type_name = type(data).__name__
-        print_info_msg(const.STR_TYPE_JA, type_name)
+        print_info_msg(const.STR_TYPE, type_name)
     pprint(data)
 
 

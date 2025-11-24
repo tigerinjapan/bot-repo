@@ -6,9 +6,6 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_beautiful_soup as func_bs
 
-# タイトル
-app_title = "TV番組"
-
 # ソートリスト
 sort_list = ["放送時間", "チャンネル"]
 ascending_div = [const.FLG_ON, const.FLG_ON]

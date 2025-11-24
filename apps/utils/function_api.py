@@ -166,7 +166,7 @@ def insert_msg_to_img(
 
 
 def get_target_data(
-    data, search_value: str, target_key: str, search_key: str = const.STR_DIV_JA
+    data, search_value: str, target_key: str, search_key: str = const.STR_DIV
 ):
     """
     リストの中で、一つ値をキーに、対象データ取得

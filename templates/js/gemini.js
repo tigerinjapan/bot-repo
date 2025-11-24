@@ -8,15 +8,6 @@ const SLEEP_SEC = 5;
 const commonConditions_image = "高品質、詳細、フォトリアル、明るい色調、楽しい雰囲気";
 const commonConditions_text = "明確、簡潔、丁寧、ポジティブ、想像力をかきたてる";
 
-let geminiDataUrl = URL_GEMINI_ITEMS_SERVER;
-let apiUrl = URL_GEMINI_SERVER;
-let imgUrl = URL_GEMINI_IMG_SERVER;
-if (isLocal()) {
-    geminiDataUrl = URL_GEMINI_ITEMS_LOCAL;
-    apiUrl = URL_GEMINI_LOCAL;
-    // imgUrl = URL_GEMINI_IMG_LOCAL;
-}
-
 // DOM読み込み後の処理
 document.addEventListener('DOMContentLoaded', init);
 
@@ -69,7 +60,7 @@ function init() {
 async function changeLanguage(lang) {
     document.documentElement.lang = lang;
 
-    const geminiData = await getFetchApiData(geminiDataUrl, null);
+    const geminiData = await getFetchApiData(ENDPOINT_GEMINI_ITEMS, null);
     const texts = geminiData[lang];
 
     // data-keyを持つすべての要素のテキストを更新
@@ -185,7 +176,7 @@ async function requestApi(mode, prompt) {
     const requestBody = { mode: mode, prompt: prompt };
 
     try {
-        const data = await getFetchApiData(apiUrl, requestBody);
+        const data = await getFetchApiData(ENDPOINT_GEMINI_API, requestBody);
         const msg = data.message;
 
         const outputImageContainer = getElem('outputImageContainer');
@@ -195,7 +186,7 @@ async function requestApi(mode, prompt) {
         const copyTextButton = getElem('copyTextButton');
 
         if (mode === MODE_IMG) {
-            generatedImage.src = imgUrl;
+            generatedImage.src = ENDPOINT_IMG_GEMINI;
             generatedImage.style.display = ATTR_BLOCK;
             outputImageContainer.style.display = ATTR_BLOCK;
             outputTextContainer.style.display = ATTR_NONE;

@@ -1,9 +1,6 @@
 // ヘッダー設定
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 
-// タイトル設定
-document.title = TITLE_NUMBER;
-
 // ページ読み込み時にsessionStorageからデータを取得
 let userName = sessionStorage.getItem(STR_USER_NAME);
 
@@ -723,15 +720,10 @@ async function sendRanking(number, time, langCd) {
 
   setUserName(inputMsg);
 
-  let url = URL_NUMBER_RANKING_SERVER;
-  if (isLocal()) {
-    url = URL_NUMBER_RANKING_LOCAL;
-  }
-
   const requestBody = { number: number, user: userName, time: time, date: new Date() };
 
   try {
-    const data = await getFetchApiData(url, requestBody);
+    const data = await getFetchApiData(ENDPOINT_RANKING_NUMBER, requestBody);
     console.log(data.message);
     showMessage(rankOkMsg, true);
 

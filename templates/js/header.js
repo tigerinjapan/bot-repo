@@ -9,7 +9,6 @@ function initDisplay() {
   const thNoElem = getElem("thNo");
 
   if (sysNmElem) {
-    document.title = TITLE_SYSTEM;
     sysNmElem.textContent = TITLE_SYSTEM;
   }
 
@@ -206,15 +205,10 @@ async function requestApiForDialog() {
   const dialog_text = getElem("dialog-text").value;
   const status = getElem(STR_STATUS).value;
 
-  let url = URL_BOARD_UPDATE_SERVER;
-  if (isLocal()) {
-    url = URL_BOARD_UPDATE_LOCAL;
-  }
-
   const requestBody = { title: dialog_title, text: dialog_text, status: status };
 
   try {
-    const data = await getFetchApiData(url, requestBody);
+    const data = await getFetchApiData(ENDPOINT_BOARD_UPDATE, requestBody);
     if (data) {
       const msg = data[STR_MESSAGE];
       console.log(msg);

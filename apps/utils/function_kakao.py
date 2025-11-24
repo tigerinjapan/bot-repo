@@ -113,7 +113,7 @@ def get_access_token(code: str = const.SYM_BLANK) -> str:
     # 有効期限（有効期限：6時間）
     expires_in = result["expires_in"]
     expires_min = int(expires_in // 60)
-    func.print_debug_msg(const.STR_TOKEN_JA, f"{const.STR_EXPIRE_JA}: {expires_min}分")
+    func.print_debug_msg(const.STR_TOKEN, f"{const.STR_EXPIRATION}: {expires_min} min")
 
     grant_type = GRANT_TYPE_REFRESH_TOKEN
     issue_type = ISSUE_TYPE_ACCESS_TOKEN

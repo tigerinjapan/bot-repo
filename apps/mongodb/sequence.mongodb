@@ -1,6 +1,5 @@
 // db
 const database = "mongoDB";
-const userName = "hong";
 const currentDate = new Date();
 
 // Select the database to use.

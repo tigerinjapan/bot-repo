@@ -36,5 +36,8 @@
         "steelblue",
         "uvicorn",
         "venv"
-    ]
+    ],
+    "python.analysis.autoImportCompletions": true,
+    "python-envs.defaultEnvManager": "ms-python.python:venv",
+    "python-envs.pythonProjects": []
 }

@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 
 input/json/secret_key.json
+packages_to_delete.txt

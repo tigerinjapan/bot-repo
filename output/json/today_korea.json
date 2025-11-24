@@ -1,32 +1,32 @@
 [
     {
         "구분": "업데이트일시",
-        "오늘의 생활정보": "2025/11/24(Mon) 13:14",
+        "뉴스": "2025/11/25(Tue) 08:05",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "오늘의 생활정보": "초미세먼지 주의",
+        "뉴스": "밤사이 올가을 첫 황사",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "오늘의 생활정보": "S&P500 6,602.99 (+0.98%)",
+        "뉴스": "S&P500 6,705.12 (+1.55%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "오늘의 생활정보": "100엔 = 942원",
+        "뉴스": "100엔 = 940원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "오늘의 생활정보": "とけい\n시계.",
+        "뉴스": "とる\n(사진을) 찍다.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "오늘의 생활정보": "It's very good.\n이거 아주 좋아요",
+        "뉴스": "Included in tour?\n이게 투어에 포함되나요?",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]
