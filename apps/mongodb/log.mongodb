@@ -31,13 +31,14 @@ use(database);
 // db.sequence.getIndexes();
 
 // find documents
-cond = { sDiv: div, dUpdateDate: { $lte: now } };
-// cond = {
-//     sDiv: div,
-//     sMessage: { $regex: "number" }
-// };
+// cond = { sDiv: div, dUpdateDate: { $lte: now } };
+cond = {
+    sDiv: div,
+    sMessage: { $regex: "number_ko" }
+};
 
 selectData = { _id: 0 };
+selectData = {};
 sortData = { sMessage: -1 };
 
 // db.log.count(cond);

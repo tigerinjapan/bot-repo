@@ -812,7 +812,7 @@ async function updateRanking(rank, score, userName) {
   const requestBody = { rank: rank, score: score, userName: userName };
 
   try {
-    const data = await getFetchApiData(ENDPOINT_RANKING_QUIZ, requestBody);
+    const data = await getFetchApiData(ENDPOINT_RANKING_IT_QUIZ, requestBody);
     console.log(data.message);
     alert(rankOkMsg);
   } catch (e) {

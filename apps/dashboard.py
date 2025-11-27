@@ -277,7 +277,7 @@ def get_app_category(app_name: str) -> str:
     # カテゴリ名とアプリリストを同時に処理する
     for category, apps in zip(const.LIST_CATEGORY, const.LIST_APP_CATEGORY):
         for app in apps:
-            if app == app_name:
+            if app in app_name:
                 app_category = category
                 break
 
