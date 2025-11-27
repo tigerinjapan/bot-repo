@@ -87,13 +87,22 @@ def get_json_data_on_app(app_name: str, token_flg: bool = const.FLG_OFF):
     return result
 
 
-def post_api_on_server(path: str, json_data):
+def api_post_data(url: str, data={}, access_token: str = const.SYM_BLANK):
     """
     API送信
     """
-    url = f"{URL_SERVER}{path}"
+    headers = {}
+    header_json_flg = const.FLG_ON
+    if access_token:
+        headers = {"Authorization": access_token}
+        header_json_flg = const.FLG_OFF
+
     result = get_response_result(
-        url, request_type=const.REQUEST_TYPE_POST, data=json_data
+        url,
+        request_type=const.REQUEST_TYPE_POST,
+        headers=headers,
+        data=data,
+        header_json_flg=header_json_flg,
     )
     return result
 

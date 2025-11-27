@@ -51,6 +51,7 @@ URL_LINK = f"{URL_FLIGHT}{URL_FLIGHT_PARAM}"
 URL_LINK_MO = f"{URL_FLIGHT_MO}{URL_FLIGHT_PARAM}"
 URL_NAVER_RANKING_NEWS = "https://news.naver.com/main/ranking/popularDay.naver"
 URL_NAVER_RANKING_NEWS_MO = "https://m.news.naver.com/rankingList"
+URL_ET_NEWS = "https://m.etnews.com"
 
 # 天気
 weather_news_link = "https://www.weather.go.kr/w/weather/forecast/short-term.do"
@@ -97,21 +98,18 @@ def get_today_info(object_type: str = func_kakao.OBJECT_TYPE_FEED):
         date_time_text, const.DATE_FORMAT_YYYYMMDD_KO, const.DATE_FORMAT_YYYYMMDD_HHMM
     )
     title = DIV_TITLE.format(today_date)
-    if object_type == func_kakao.OBJECT_TYPE_FEED:
-        title = title.replace("📢", "■")
+    title = title.replace("📢", "■")
 
     data_list = [list(info.values()) for info in json_data[1:]]
     today_info_list = [f"[{data[0]}] {data[1]}" for data in data_list if data[1]]
     today_info_list.insert(0, title)
     today_info = const.SYM_NEW_LINE.join(today_info_list)
 
-    file_path = const.SYM_BLANK
-    if object_type == func_kakao.OBJECT_TYPE_FEED:
-        file_path = get_news_image(today_info)
+    file_path = create_news_image(today_info)
     return today_info, file_path
 
 
-def get_news_image(today_info: str) -> str:
+def create_news_image(text_msg: str) -> str:
     """
     ニュースイメージ取得
     """
@@ -119,7 +117,7 @@ def get_news_image(today_info: str) -> str:
     outfit = get_outfit()
 
     file_path = func_gemini.get_today_news_image(
-        today_info, forecast, outfit, const.APP_TODAY_KOREA
+        text_msg, forecast, outfit, const.APP_TODAY_KOREA
     )
     return file_path
 
@@ -332,13 +330,12 @@ def get_phrase() -> str:
     return phrase
 
 
-def get_it_news() -> str:
+def get_it_news_list() -> list:
     """
     ITニュース取得
     """
     news_list = []
 
-    URL_ET_NEWS = "https://m.etnews.com"
     url = f"{URL_ET_NEWS}/news/section.html?id1=03"
     contents_list = func_bs.get_elem_from_url(
         url, const.TAG_DIV, attr_val="text", list_flg=const.FLG_ON
@@ -346,19 +343,19 @@ def get_it_news() -> str:
     if contents_list:
         for contents in contents_list:
             a_elem = func_bs.find_elem_by_attr(contents, tag=const.TAG_A)
-            a_text = a_elem.text
+            title = a_elem.text
             a_href = a_elem.get(const.ATTR_HREF)
-            if func.check_in_list(a_text, LIST_KEYWORD_AI):
-                news_list.append(a_text)
-                news_list.append(f"{URL_ET_NEWS}{a_href}")
-                if 6 <= len(news_list):
+            link_url = f"{URL_ET_NEWS}{a_href}"
+
+            if func.check_in_list(title, LIST_KEYWORD_AI):
+                news_info = [title, link_url]
+                news_list.append(news_info)
+                if 3 <= len(news_list):
                     break
 
-    it_news = const.SYM_NEW_LINE.join(news_list)
-    return it_news
+    return news_list
 
 
 if __name__ == const.MAIN_FUNCTION:
     # get_today_info_list()
-    # get_today_info()
-    get_it_news()
+    get_today_info()

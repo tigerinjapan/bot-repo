@@ -203,33 +203,19 @@ def send_kakao_msg(
     url = URL_KAKAO_API_SEND_ME
     template_object = get_template_object(object_type, title, message, link, link_mo)
     data = {"template_object": template_object}
+
     if receiver_uuids:
         url = URL_KAKAO_API_SEND_FRIENDS
         data.update({"receiver_uuids": receiver_uuids})
 
-    result = post_kakao_api(url, access_token, data)
-    return result
-
-
-def post_kakao_api(url: str, access_token: str, data={}):
-    """
-    API送信
-    """
-    headers = {"Authorization": access_token}
-    result = func_api.get_response_result(
-        url,
-        request_type=const.REQUEST_TYPE_POST,
-        headers=headers,
-        data=data,
-        header_json_flg=const.FLG_OFF,
-    )
+    result = func_api.api_post_data(url, data, access_token)
     return result
 
 
 def get_template_object(
-    object_type: str = OBJECT_TYPE_FEED,
-    title: str = const.SYM_BLANK,
-    message: str = const.SYM_BLANK,
+    object_type: str,
+    title: str,
+    message: str,
     link: str = const.SYM_BLANK,
     link_mo: str = const.SYM_BLANK,
     img_url: str = URL_TODAY_KOREA_IMG,
@@ -240,6 +226,64 @@ def get_template_object(
     if not link and not link_mo:
         link = const.URL_NAVER
         link_mo = const.URL_NAVER_MO
+
+    if title == const.STR_TEST:
+        contents = get_template_contents(object_type, title)
+    else:
+        if object_type == OBJECT_TYPE_FEED:
+            func.print_debug_msg(const.STR_IMG, img_url)
+            content = {
+                "title": title,
+                "description": message,
+                "image_url": img_url,
+                "link": {"mobile_web_url": link_mo},
+            }
+
+            contents = {
+                "content": content,
+            }
+
+        elif object_type == OBJECT_TYPE_LIST:
+            param_list = message
+
+            content_list = []
+            for param in param_list:
+                content = {
+                    "title": param[0],
+                    "link": {"mobile_web_url": param[1]},
+                }
+                content_list.append(content)
+
+            contents = {
+                "header_title": title,
+                "header_link": {
+                    "mobile_web_url": link_mo,
+                },
+                "contents": content_list,
+            }
+
+        else:
+            contents = {
+                "text": message,
+                "link": {
+                    "web_url": link,
+                    "mobile_web_url": link_mo,
+                },
+                "button_title": title,
+            }
+
+    return contents
+
+
+def get_template_contents(
+    object_type: str = OBJECT_TYPE_TEXT, title: str = const.SYM_BLANK
+):
+    """
+    テンプレートコンテンツ取得
+    """
+    link = const.URL_NAVER
+    link_mo = const.URL_NAVER_MO
+    img_url: str = URL_TODAY_KOREA_IMG
 
     content_list = []
     param_list = [
@@ -307,10 +351,6 @@ def get_template_object(
 
     if object_type == OBJECT_TYPE_FEED:
         content = content_list[0]
-        if message:
-            content["title"] = title
-            content["description"] = message
-
         item_list = [
             {"item": "CakeTe", "item_op": "1,000,000원"},
             {"item": "ケーキテスト", "item_op": "2,000,000원"},
@@ -342,7 +382,7 @@ def get_template_object(
 
     elif object_type == OBJECT_TYPE_LIST:
         contents = {
-            "header_title": "WEEKLY NEWS",
+            "header_title": title,
             "header_link": {
                 "web_url": link,
                 "mobile_web_url": link_mo,
@@ -354,14 +394,10 @@ def get_template_object(
         }
 
     else:
-        if not message:
-            object_type = OBJECT_TYPE_TEXT
-            title = "자세히 보기"
-
-            current_time = func.get_now(
-                const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_HHMM
-            )
-            message = f"📢 메시지 보내기 테스트 📢\n\n테스트 중입니다.\n전송 시간: {current_time}"
+        current_time = func.get_now(const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_HHMM)
+        message = (
+            f"📢 메시지 보내기 테스트 📢\n\n테스트 중입니다.\n전송 시간: {current_time}"
+        )
 
         contents = {
             "text": message,
@@ -372,10 +408,7 @@ def get_template_object(
             "button_title": title,
         }
 
-    template_object = {"object_type": object_type}
-    template_object.update(contents)
-    template_json = func.get_dumps_json(template_object)
-    return template_json
+    return contents
 
 
 def get_token(session):
@@ -432,7 +465,7 @@ def get_logout_content(token: str) -> str:
     try:
         # if token:
         #     # ログアウト：トークン満了されるため、処理しない
-        #     result = post_kakao_api(URL_KAKAO_API_LOGOUT, token)
+        # result = func_api.api_post_data(URL_KAKAO_API_LOGOUT, access_token=token)
         account_str = "카카오 계정 "
 
         # 結果表示
@@ -496,7 +529,7 @@ def get_unlink_content(token: str) -> str:
     """
     try:
         # 連携解除
-        result = post_kakao_api(URL_KAKAO_API_UNLINK, token)
+        result = func_api.api_post_data(URL_KAKAO_API_UNLINK, access_token=token)
 
         # 結果表示
         body = f"""

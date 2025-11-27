@@ -16,16 +16,16 @@ SCRIPT_NAME = func.get_app_name(__file__)
 
 
 def main(
-    object_type: str = func_kakao.OBJECT_TYPE_FEED,
     div: str = const.APP_TODAY,
+    object_type=func_kakao.OBJECT_TYPE_TEXT,
     list_flg: bool = const.FLG_OFF,
 ):
     """
     メインの処理を実行
 
     引数:
-        object_type (str): feed, text, list, test
-        div (str): today, lcc
+        div (str): today, news, lcc, test
+        object_type (str): feed, list, text
         list_flg (bool): 一括送信フラグ # TODO: [pending] チャネル登録必要
     """
     curr_func_nm = sys._getframe().f_code.co_name
@@ -37,30 +37,39 @@ def main(
         token = func_kakao.get_access_token()
         if token:
             try:
+
+                receiver_uuids = []
+                if list_flg:
+                    receiver_uuids = func_kakao.get_receiver_uuids(token)
+
+                title = div
+
                 if div == const.APP_TODAY:
                     # 今日のニュース取得
-                    message, file_path = today_korea.get_today_info(object_type)
-                    title = today_korea.TITLE_LINK
+                    message, file_path = today_korea.get_today_info()
+                    if file_path:
+                        object_type = func_kakao.OBJECT_TYPE_FEED
+                        title = "【오늘의 한마디】"
+                        message = today_korea.get_phrase()
+                    else:
+                        title = today_korea.TITLE_LINK
+
                     link = today_korea.URL_LINK
                     link_mo = today_korea.URL_LINK_MO
 
-                    img_file_path = func_kakao.URL_TODAY_KOREA_IMG
-                    if file_path:
-                        func.print_debug_msg(const.STR_IMG, img_file_path)
+                elif div == const.APP_LCC:
+                    title, message = lcc.get_temp_msg(data_flg=const.FLG_ON)
+                    link = link_mo = const.URL_LCC
 
-                        title = "【오늘의 한마디】"
-                        message = today_korea.get_phrase()
+                elif div == const.APP_NEWS:
+                    object_type = func_kakao.OBJECT_TYPE_LIST
+                    message = today_korea.get_it_news_list()
+                    link = link_mo = today_korea.URL_ET_NEWS
 
-                    else:
-                        func.print_debug_msg(
-                            img_file_path, msg_const.MSG_ERR_SERVER_PROC_FAILED
-                        )
-                        object_type = func_kakao.OBJECT_TYPE_TEXT
+                else:
+                    message = div
 
-                    receiver_uuids = []
-                    if list_flg:
-                        receiver_uuids = func_kakao.get_receiver_uuids(token)
-
+                if title and message:
                     # メッセージ送信
                     func_kakao.send_kakao_msg(
                         token,
@@ -71,18 +80,6 @@ def main(
                         link_mo,
                         receiver_uuids,
                     )
-
-                else:
-                    lbl = data = const.SYM_BLANK
-                    if div == const.APP_LCC:
-                        lbl, data = lcc.get_temp_msg(data_flg=const.FLG_ON)
-                    elif div == const.APP_NEWS:
-                        lbl = div
-                        data = today_korea.get_it_news()
-
-                    if lbl and data:
-                        # メッセージ送信
-                        func_kakao.send_kakao_msg(token, title=lbl, message=data)
 
             except Exception as e:
                 if e.args[0] != "details":
@@ -97,4 +94,7 @@ def main(
 
 
 if __name__ == const.MAIN_FUNCTION:
-    main()
+    div = const.APP_TODAY
+    # div = const.APP_LCC
+    # div = const.APP_NEWS
+    main(div)

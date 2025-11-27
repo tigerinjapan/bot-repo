@@ -101,8 +101,8 @@ def get_now(div: int = const.DATE_NOW, date_format: str = const.DATE_FORMAT_YYYY
         # UTCの現在時刻を取得
         dt_utc = datetime.now(timezone.utc)
 
-        # JSTに変換（時刻が9時間進む）
-        now = dt_utc.astimezone(JST).replace(tzinfo=None)
+        # JSTに変換（時刻が9時間進む） # TODO: 実際の時間と異なる
+        # now = dt_utc.astimezone(JST).replace(tzinfo=None)
 
     if div == const.DATE_TODAY:
         now = convert_date_to_str(now, date_format)

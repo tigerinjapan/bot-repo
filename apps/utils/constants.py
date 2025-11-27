@@ -210,10 +210,10 @@ TAG_UL = "ul"
 ##### HTML属性 #####
 ATTR_ALT = "alt"
 ATTR_CLASS = "class"
-ATTR_HREF = "href"
 ATTR_ID = "id"
-ATTR_PROP = "property"
 ATTR_TITLE = "title"
+ATTR_HREF = "href"
+ATTR_SRC = "src"
 
 ALIGN_CENTER = "center"
 ALIGN_LEFT = "left"

@@ -1,32 +1,32 @@
 [
     {
         "구분": "업데이트일시",
-        "뉴스": "2025/11/25(Tue) 08:05",
+        "뉴스": "2025/11/27(Thu) 11:05",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "뉴스": "밤사이 올가을 첫 황사",
+        "뉴스": "전국 또 비, 강원 산지 대설",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "뉴스": "S&P500 6,705.12 (+1.55%)",
+        "뉴스": "S&P500 6,812.61 (+0.69%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "뉴스": "100엔 = 940원",
+        "뉴스": "100엔 = 939원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "뉴스": "とる\n(사진을) 찍다.",
+        "뉴스": "ふくしゅう\n복습.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "뉴스": "Included in tour?\n이게 투어에 포함되나요?",
+        "뉴스": "Cold beer please.\n시원한 맥주 주세요",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

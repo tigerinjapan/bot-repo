@@ -118,12 +118,13 @@ def backup_data(log_div: str, backup_data_list, log_path: str):
 
     try:
         if log_div == const.STR_ERROR:
-            api_path = f"/{const.APP_BOARD}/{const.STR_ADD}"
+            endpoint = f"/{const.APP_BOARD}/{const.STR_ADD}"
             json_data = {const.STR_DATA: backup_data_list}
             json_data = func.get_dumps_json(json_data)
 
             # DB登録（掲示板情報）
-            result = func_api.post_api_on_server(api_path, json_data)
+            url = f"{func_api.URL_SERVER}{endpoint}"
+            result = func_api.api_post_data(url, json_data)
             if result:
                 message = result[const.STR_MESSAGE]
 
