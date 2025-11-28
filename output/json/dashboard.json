@@ -2,24 +2,24 @@
     "day": {
         "label": "day",
         "user": {
-            "total": "133",
+            "total": "147",
             "labels": [
-                "11/21",
                 "11/22",
                 "11/23",
                 "11/24",
                 "11/25",
                 "11/26",
-                "11/27"
+                "11/27",
+                "11/28"
             ],
             "data": [
-                5,
                 24,
                 6,
                 25,
                 42,
                 29,
-                2
+                8,
+                13
             ]
         },
         "category": {
@@ -31,9 +31,9 @@
                 "service"
             ],
             "data": [
-                51,
-                33,
-                21,
+                61,
+                36,
+                22,
                 19,
                 9
             ]
@@ -45,38 +45,42 @@
             },
             {
                 "name": "news",
-                "value": 16
-            },
-            {
-                "name": "sudoku",
                 "value": 14
             },
             {
+                "name": "sudoku",
+                "value": 13
+            },
+            {
                 "name": "admin_design",
-                "value": 10
+                "value": 13
             },
             {
                 "name": "board",
-                "value": 8
+                "value": 7
             },
             {
                 "name": "dashboard",
                 "value": 5
             },
             {
-                "name": "drama",
-                "value": 4
+                "name": "number",
+                "value": 3
+            },
+            {
+                "name": "itQuiz",
+                "value": 3
             },
             {
                 "name": "site",
-                "value": 4
+                "value": 3
+            },
+            {
+                "name": "drama",
+                "value": 3
             },
             {
                 "name": "study",
-                "value": 4
-            },
-            {
-                "name": "number",
                 "value": 3
             },
             {
@@ -85,17 +89,17 @@
             },
             {
                 "name": "etc",
-                "value": 3
+                "value": 4
             }
         ],
         "device": [
             {
                 "name": "Mobile",
-                "value": 77
+                "value": 81
             },
             {
                 "name": "PC",
-                "value": 22
+                "value": 18
             },
             {
                 "name": "Unknown",
@@ -105,11 +109,11 @@
         "os": [
             {
                 "name": "Android",
-                "value": 77
+                "value": 81
             },
             {
                 "name": "Windows",
-                "value": 22
+                "value": 18
             },
             {
                 "name": "Other",
@@ -119,15 +123,15 @@
         "browser": [
             {
                 "name": "Chrome",
-                "value": 58
+                "value": 64
             },
             {
                 "name": "Edge",
-                "value": 22
+                "value": 18
             },
             {
                 "name": "LINE",
-                "value": 19
+                "value": 17
             },
             {
                 "name": "FacebookBot",
@@ -138,14 +142,14 @@
     "month": {
         "label": "month",
         "user": {
-            "total": "705",
+            "total": "724",
             "labels": [
                 "2025/10",
                 "2025/11"
             ],
             "data": [
                 136,
-                569
+                588
             ]
         },
         "category": {
@@ -154,16 +158,14 @@
                 "entertainment",
                 "management",
                 "news",
-                "service",
-                "Unknown"
+                "service"
             ],
             "data": [
-                235,
-                176,
-                157,
-                98,
-                37,
-                2
+                246,
+                184,
+                158,
+                99,
+                37
             ]
         },
         "app": [
@@ -173,7 +175,7 @@
             },
             {
                 "name": "news",
-                "value": 13
+                "value": 12
             },
             {
                 "name": "dashboard",
@@ -181,7 +183,7 @@
             },
             {
                 "name": "sudoku",
-                "value": 9
+                "value": 10
             },
             {
                 "name": "board",
@@ -189,7 +191,7 @@
             },
             {
                 "name": "itQuiz",
-                "value": 5
+                "value": 6
             },
             {
                 "name": "number",
@@ -197,6 +199,10 @@
             },
             {
                 "name": "user",
+                "value": 3
+            },
+            {
+                "name": "admin_design",
                 "value": 3
             },
             {
@@ -208,16 +214,8 @@
                 "value": 3
             },
             {
-                "name": "ranking",
-                "value": 3
-            },
-            {
-                "name": "study",
-                "value": 3
-            },
-            {
                 "name": "etc",
-                "value": 5
+                "value": 7
             }
         ],
         "device": [
@@ -274,12 +272,12 @@
     "year": {
         "label": "year",
         "user": {
-            "total": "705",
+            "total": "724",
             "labels": [
                 "2025"
             ],
             "data": [
-                705
+                724
             ]
         },
         "category": {
@@ -288,16 +286,14 @@
                 "entertainment",
                 "management",
                 "news",
-                "service",
-                "Unknown"
+                "service"
             ],
             "data": [
-                235,
-                176,
-                157,
-                98,
-                37,
-                2
+                246,
+                184,
+                158,
+                99,
+                37
             ]
         },
         "app": [
@@ -307,7 +303,7 @@
             },
             {
                 "name": "news",
-                "value": 13
+                "value": 12
             },
             {
                 "name": "dashboard",
@@ -315,7 +311,7 @@
             },
             {
                 "name": "sudoku",
-                "value": 9
+                "value": 10
             },
             {
                 "name": "board",
@@ -323,7 +319,7 @@
             },
             {
                 "name": "itQuiz",
-                "value": 5
+                "value": 6
             },
             {
                 "name": "number",
@@ -331,6 +327,10 @@
             },
             {
                 "name": "user",
+                "value": 3
+            },
+            {
+                "name": "admin_design",
                 "value": 3
             },
             {
@@ -342,16 +342,8 @@
                 "value": 3
             },
             {
-                "name": "ranking",
-                "value": 3
-            },
-            {
-                "name": "study",
-                "value": 3
-            },
-            {
                 "name": "etc",
-                "value": 5
+                "value": 7
             }
         ],
         "device": [

@@ -1,18 +1,22 @@
 [
     {
         "div": "日経",
-        "news": "<a href=\"https://www.nikkei.com/article/DGKKZO92837790X21C25A1MM8000/\" target=\"_blank\" rel=\"noopener noreferrer\">マンション投資節税に歯止め相続直前購入なら負担上げ</a>"
+        "news": "<a href=\"https://www.nikkei.com/article/DGXZQOUA287A10Y5A121C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">介護保険料40〜120億円圧縮2割負担拡大巡り厚労省4案</a>"
     },
     {
         "div": "AI",
-        "news": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2510/20/news101.html\" target=\"_blank\" rel=\"noopener noreferrer\">NTT、独自のAIモデル「tsuzumi2」発表“国産AI開発競争”に「負けられない」と島田社長</a>"
+        "news": "<a href=\"https://www.itmedia.co.jp/enterprise/articles/2511/26/news006.html\" target=\"_blank\" rel=\"noopener noreferrer\">AIが奪うのは「仕事を持つ権利」アクセンチュア2.2万人削減とアサヒ400人転籍から読み解く</a>"
+    },
+    {
+        "div": "韓国",
+        "news": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56697\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 東京国立競技場で初のKPOP公演 IVEウォニョンらMC</a>"
     },
     {
         "div": "エンタメ",
-        "news": "<a href=\"https://www.wowkorea.jp/news/read/508715.html\" target=\"_blank\" rel=\"noopener noreferrer\">「CNBLUE」\n日本ツアー盛況⋯「A Sleepless Night」日本語バージョンの約束を守った</a>"
+        "news": "<a href=\"https://www.wowkorea.jp/news/read/509015.html\" target=\"_blank\" rel=\"noopener noreferrer\">故イスンジェさん\n失明直前にもドラマ撮影\n闘病生活を初公開</a>"
     },
     {
         "div": "kpop",
-        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/508880.html\" target=\"_blank\" rel=\"noopener noreferrer\">韓国俳優イスンジェさんの告別式しめやかに最高齢役者と涙の別れ</a>"
+        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/509027.html\" target=\"_blank\" rel=\"noopener noreferrer\">「EXOCBX」\n香港火災被害に50万香港ドルを寄付\n「心からお見舞い申し上げます」</a>"
     }
 ]

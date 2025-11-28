@@ -157,7 +157,7 @@ def get_template_msg_json(
     """
     # base_url = URL_KOYEB_APP
 
-    # TODO: 毎回同じイメージが生成される
+    # TODO: [check] 毎回同じイメージが生成される
     # img_url = func_gemini.get_gemini_image(const.STR_REST)
     # if img_url:
     #     func.print_debug_msg(const.MSG_TYPE_IMG, URL_REST_IMG)

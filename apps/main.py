@@ -104,7 +104,7 @@ def daily_job_3():
     日次ジョブ（09:00）
     """
     kakao.main()
-    kakao.main(const.APP_NEWS)
+    kakao.main(const.STR_AI_NEWS)
 
 
 def daily_job_4():

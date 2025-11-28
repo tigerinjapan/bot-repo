@@ -24,7 +24,7 @@ def main(
     メインの処理を実行
 
     引数:
-        div (str): today, news, lcc, test
+        div (str): today, ai_news, lcc, test
         object_type (str): feed, list, text
         list_flg (bool): 一括送信フラグ # TODO: [pending] チャネル登録必要
     """
@@ -61,7 +61,7 @@ def main(
                     title, message = lcc.get_temp_msg(data_flg=const.FLG_ON)
                     link = link_mo = const.URL_LCC
 
-                elif div == const.APP_NEWS:
+                elif div == const.STR_AI_NEWS:
                     object_type = func_kakao.OBJECT_TYPE_LIST
                     message = today_korea.get_it_news_list()
                     link = link_mo = today_korea.URL_ET_NEWS

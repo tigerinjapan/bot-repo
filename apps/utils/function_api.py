@@ -98,11 +98,7 @@ def api_post_data(url: str, data={}, access_token: str = const.SYM_BLANK):
         header_json_flg = const.FLG_OFF
 
     result = get_response_result(
-        url,
-        request_type=const.REQUEST_TYPE_POST,
-        headers=headers,
-        data=data,
-        header_json_flg=header_json_flg,
+        url, const.REQUEST_TYPE_POST, headers, data, header_json_flg
     )
     return result
 

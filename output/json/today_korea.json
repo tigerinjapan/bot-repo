@@ -1,12 +1,12 @@
 [
     {
         "구분": "업데이트일시",
-        "뉴스": "2025/11/27(Thu) 11:05",
+        "뉴스": "2025/11/28(Fri) 22:05",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "뉴스": "전국 또 비, 강원 산지 대설",
+        "뉴스": "아침 영하권 추위",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
@@ -16,17 +16,17 @@
     },
     {
         "구분": "환율",
-        "뉴스": "100엔 = 939원",
+        "뉴스": "100엔 = 941원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "뉴스": "ふくしゅう\n복습.",
+        "뉴스": "じしん\n지진.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "뉴스": "Cold beer please.\n시원한 맥주 주세요",
+        "뉴스": "Find public phone.\n공중전화를 찾아야 해요",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

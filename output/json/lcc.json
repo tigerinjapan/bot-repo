@@ -1,5 +1,10 @@
 [
     {
+        "date": "2025年11月28日",
+        "company": "<a href=\"https://www.china-airlines.com/ja-jp/jpn_blackfriday\" target=\"_blank\" rel=\"noopener noreferrer\">チャイナエアライン</a>",
+        "news": "「ブラックフライデーセール」\n開催中！羽田/成田－台北線 最大15%割引"
+    },
+    {
         "date": "2025年11月26日",
         "company": "<a href=\"https://www.jejuair.net/ja/event/eventDetail.do?eventNo=0000003522\" target=\"_blank\" rel=\"noopener noreferrer\">チェジュ航空</a>",
         "news": "「48時間限定 ブラックフライデーセール」\n開催中！ソウル・釜山線 片道2,700円から"
@@ -13,15 +18,5 @@
         "date": "2025年11月25日",
         "company": "<a href=\"https://www.flyscoot.com/jp/promotions/tact-JP-gotta-scoot-tuesdays\" target=\"_blank\" rel=\"noopener noreferrer\">スクート</a>",
         "news": "「スクートしよう！TUESDAYS セール」\n開催中！台北/シンガポールほか東南アジア国際線 片道12,000円から"
-    },
-    {
-        "date": "2025年11月21日",
-        "company": "<a href=\"https://www.vietjetair.com/ja\" target=\"_blank\" rel=\"noopener noreferrer\">ベトジェットエア</a>",
-        "news": "「ブラックフライデーセール」\n11月24日深夜2時からセール開催！ベトナム国際線 運賃100%割引"
-    },
-    {
-        "date": "2025年11月19日",
-        "company": "<a href=\"https://www.eastarjet.com/newstar/PGWTA00002?eventNo=2308&gubun=I\" target=\"_blank\" rel=\"noopener noreferrer\">イースター航空</a>",
-        "news": "「1月～2月 早割特価」\nセール開催中！ソウル/釜山線 片道5,500円から"
     }
 ]

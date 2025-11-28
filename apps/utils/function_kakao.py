@@ -272,7 +272,10 @@ def get_template_object(
                 "button_title": title,
             }
 
-    return contents
+    template_object = {"object_type": object_type}
+    template_object.update(contents)
+    template_json = func.get_dumps_json(template_object)
+    return template_json
 
 
 def get_template_contents(
