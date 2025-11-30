@@ -64,18 +64,20 @@ def get_rank_info_data(json_data, update_flg: bool = const.FLG_OFF):
         number = json_data[const.STR_NUMBER]
         rank_time = json_data[const.STR_TIME].zfill(5)
         user_name = json_data[const.STR_USER]
+        updateDate = json_data[mongo_const.ITEM_UPDATE_DATE]
     else:
         number = json_data[mongo_const.FI_NUMBER]
         rank_time = json_data[mongo_const.FI_RANK_TIME]
         user_name = json_data[mongo_const.FI_USER_NAME]
+        updateDate = json_data[mongo_const.FI_UPDATE_DATE]
 
-    json_data = rankInfo(number, rank_time, user_name).get_data()
+    json_data = rankInfo(number, rank_time, user_name, updateDate).get_data()
     return json_data
 
 
 def get_ranking_data(json_data):
     """
-    JSONデータ取得（ランキング情報の取得）: itQuiz
+    JSONデータ取得（ランキング情報の取得）: sudoku, itQuiz
     """
     rank = json_data[mongo_const.FI_RANK]
     score = json_data[mongo_const.FI_SCORE]
@@ -88,11 +90,12 @@ def get_ranking_data(json_data):
 
 def get_update_data_for_ranking(div, json_data):
     """
-    JSONデータ取得（ランキング情報の登録・更新）
+    JSONデータ取得（ランキング情報の登録・更新）: sudoku, itQuiz
     """
     rank = json_data[mongo_const.ITEM_RANK]
     score = json_data[mongo_const.ITEM_SCORE]
     userName = json_data[mongo_const.ITEM_USER_NAME]
+    updateDate = json_data[mongo_const.ITEM_UPDATE_DATE]
 
-    json_data = ranking(div, rank, score, userName).get_data()
+    json_data = ranking(div, rank, score, userName, updateDate).get_data()
     return json_data, rank, score

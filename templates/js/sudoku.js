@@ -14,7 +14,7 @@ const PENALTY_SECONDS = 30;
 const INITIAL_HINTS = 3;
 
 // 空けるマス数（レベル）
-const HOLES_MEDIUM = 50;
+const HOLES_DEFAULT = 45;
 
 /**
  * グローバルな状態変数
@@ -242,9 +242,9 @@ function generatePuzzle() {
 
   let holes = 0;
   switch (levelVal) {
-    case LEVEL_EASY: holes = HOLES_MEDIUM - 10; break;
-    case LEVEL_MEDIUM: holes = HOLES_MEDIUM; break;
-    case LEVEL_HARD: holes = HOLES_MEDIUM + 10; break;
+    case LEVEL_EASY: holes = HOLES_DEFAULT - 15; break;
+    case LEVEL_MEDIUM: holes = HOLES_DEFAULT; break;
+    case LEVEL_HARD: holes = HOLES_DEFAULT + 15; break;
   }
 
   let attempts = 0;
@@ -719,7 +719,7 @@ async function updateRanking(rank, score) {
     rankNgMsg = MSG_ERR_RANK_EN;
   }
 
-  const requestBody = { rank: rank, score: score, userName: userName };
+  const requestBody = { rank: rank, score: score, userName: userName, updateDate: new Date() };
 
   try {
     const data = await getFetchApiData(ENDPOINT_RANKING_SUDOKU, requestBody);
@@ -748,7 +748,7 @@ function calculateScore() {
   let scoreTime = timeRemaining - INITIAL_TIME_SECONDS;
 
   switch (levelVal) {
-    case LEVEL_EASY: scoreTime = scoreTime - 60; break;
+    case LEVEL_EASY: scoreTime = scoreTime - 120; break;
     case LEVEL_MEDIUM: scoreTime = scoreTime; break;
     case LEVEL_HARD: scoreTime = scoreTime + 60; break;
   }

@@ -1,6 +1,8 @@
-# エラー区分：パス設定
+# エラー対応
 
-## エラー内容
+## パス設定
+
+### 内容
 
 `ModuleNotFoundError: No module named 'com'`
 
@@ -10,9 +12,9 @@
 | ---------- | --------------------- |
 | PYTHONPATH | C:\workspace\bot-repo |
 
-# エラー区分：仮想環境（.venv）
+## 仮想環境（.venv）
 
-## エラー内容
+### 内容
 
 フレームワークが未インストールされている状態で、実行できない
 
@@ -20,9 +22,9 @@
 
 仮想環境を削除し、再作成
 
-# キャッシュ削除
+## キャッシュ削除
 
-## パス
+### パス
 
 C:\Users\(ユーザー名)\AppData\Roaming\Code\Cache
 
@@ -30,9 +32,9 @@ C:\Users\(ユーザー名)\AppData\Roaming\Code\Cache
 
 定期的に削除（今後バッチ化）
 
-# 【Selenium, Playwright】Koyeb server
+## 【Selenium, Playwright】Koyeb server
 
-## エラー内容
+### エラー内容
 
 無料プランのサーバーだと、性能の問題で、実行できない
 
@@ -40,9 +42,9 @@ C:\Users\(ユーザー名)\AppData\Roaming\Code\Cache
 
 無料プランで実行できるまで、待ち
 
-# 【Selenium】Chrome ドライバー・バージョン・エラー
+## 【Selenium】Chrome ドライバー・バージョン・エラー
 
-## エラー内容
+### 内容
 
 `selenium.common.exceptions.WebDriverException: Message: 'chromedriver' executable needs to be in PATH.`
 

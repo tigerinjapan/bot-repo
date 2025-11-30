@@ -5,12 +5,12 @@ HTML定数
 HTML_KAKAO_BUTTON = """ <a href="/kakao{}" class="button{}">{}</a> """
 
 HTML_KAKAO_AUTH = f""" {HTML_KAKAO_BUTTON.format("/auth", "", "카카오 인증")} """
-HTML_KAKAO_LOGIN = f""" {HTML_KAKAO_BUTTON.format("/login", "","서버 로그인")} """
+HTML_KAKAO_LOGIN = f""" {HTML_KAKAO_BUTTON.format("/login", "", "서버 로그인")} """
 HTML_KAKAO_LOGOUT = (
-    f""" {HTML_KAKAO_BUTTON.format("/logout", " logout","서버 로그아웃")} """
+    f""" {HTML_KAKAO_BUTTON.format("/logout", " logout", "서버 로그아웃")} """
 )
 HTML_KAKAO_AUTH_SUCCESS = (
-    f""" {HTML_KAKAO_BUTTON.format("/logout", " logout","카카오 인증완료")} """
+    f""" {HTML_KAKAO_BUTTON.format("/logout", " logout", "카카오 인증완료")} """
 )
 HTML_KAKAO_SEND_TEST = (
     f""" {HTML_KAKAO_BUTTON.format("/send-test", "", "테스트 메시지 보내기")} """

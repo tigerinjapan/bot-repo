@@ -1,22 +1,18 @@
 [
     {
         "div": "日経",
-        "news": "<a href=\"https://www.nikkei.com/article/DGXZQOUA287A10Y5A121C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">介護保険料40〜120億円圧縮2割負担拡大巡り厚労省4案</a>"
+        "news": "<a href=\"https://www.nikkei.com/article/DGXZQOUA28AL70Y5A121C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">高市内閣\n支持率横ばい75%自民党の支持率41%に上昇</a>"
     },
     {
         "div": "AI",
-        "news": "<a href=\"https://www.itmedia.co.jp/enterprise/articles/2511/26/news006.html\" target=\"_blank\" rel=\"noopener noreferrer\">AIが奪うのは「仕事を持つ権利」アクセンチュア2.2万人削減とアサヒ400人転籍から読み解く</a>"
-    },
-    {
-        "div": "韓国",
-        "news": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56697\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 東京国立競技場で初のKPOP公演 IVEウォニョンらMC</a>"
+        "news": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2510/20/news101.html\" target=\"_blank\" rel=\"noopener noreferrer\">NTT、独自のAIモデル「tsuzumi2」発表“国産AI開発競争”に「負けられない」と島田社長</a>"
     },
     {
         "div": "エンタメ",
-        "news": "<a href=\"https://www.wowkorea.jp/news/read/509015.html\" target=\"_blank\" rel=\"noopener noreferrer\">故イスンジェさん\n失明直前にもドラマ撮影\n闘病生活を初公開</a>"
+        "news": "<a href=\"https://www.wowkorea.jp/news/read/509092.html\" target=\"_blank\" rel=\"noopener noreferrer\">≪韓国ドラマNOW≫「テプン商事」15話\nイジュノ(2PM)\nついに“借用証”発見奪われた会社は取り戻せるのか\n今夜最終回視聴率6.6%\nあらすじネタバレ</a>"
     },
     {
         "div": "kpop",
-        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/509027.html\" target=\"_blank\" rel=\"noopener noreferrer\">「EXOCBX」\n香港火災被害に50万香港ドルを寄付\n「心からお見舞い申し上げます」</a>"
+        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/509118.html\" target=\"_blank\" rel=\"noopener noreferrer\">【オフィシャルレポート】「SHINee」KEY(キー)日本ソロ公演『2025 KEYLAND : Uncanny Valley in TOKYO』開催 2026年にKEY “ソロデビュー8年目”にして初の日本ホールツアー開催決定</a>"
     }
 ]

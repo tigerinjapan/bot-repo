@@ -1,17 +1,17 @@
 [
     {
         "구분": "업데이트일시",
-        "뉴스": "2025/11/28(Fri) 22:05",
+        "뉴스": "2025/12/01(Mon) 03:05",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "뉴스": "아침 영하권 추위",
+        "뉴스": "약한 황사 영향",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "뉴스": "S&P500 6,812.61 (+0.69%)",
+        "뉴스": "S&P500 6,849.09 (+0.54%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
@@ -21,12 +21,12 @@
     },
     {
         "구분": "일본어",
-        "뉴스": "じしん\n지진.",
+        "뉴스": "テーブル\n테이블.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "뉴스": "Find public phone.\n공중전화를 찾아야 해요",
+        "뉴스": "Use this chair?\n이 의자를 써도 될까요?",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

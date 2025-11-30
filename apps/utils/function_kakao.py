@@ -228,7 +228,7 @@ def get_template_object(
         link_mo = const.URL_NAVER_MO
 
     if title == const.STR_TEST:
-        contents = get_template_contents(object_type, title)
+        contents = get_template_contents(object_type, title, message)
     else:
         if object_type == OBJECT_TYPE_FEED:
             func.print_debug_msg(const.STR_IMG, img_url)
@@ -397,10 +397,11 @@ def get_template_contents(
         }
 
     else:
-        current_time = func.get_now(const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_HHMM)
-        message = (
-            f"📢 메시지 보내기 테스트 📢\n\n테스트 중입니다.\n전송 시간: {current_time}"
-        )
+        if not message:
+            current_time = func.get_now(
+                const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_HHMM
+            )
+            message = f"📢 메시지 보내기 테스트 📢\n\n테스트 중입니다.\n전송 시간: {current_time}"
 
         contents = {
             "text": message,
@@ -554,14 +555,18 @@ def get_unlink_content(token: str) -> str:
     return content
 
 
-def get_test_message_content(token: str = const.SYM_BLANK) -> str:
+def get_test_message_content(
+    token: str = const.SYM_BLANK,
+    title: str = const.STR_TEST,
+    message: str = const.SYM_BLANK,
+) -> str:
     """
     テストメッセージのHTML取得
     """
     if not token:
         token = get_access_token()
 
-    result = send_kakao_msg(token)
+    result = send_kakao_msg(token, title, message)
     result_code = RESULT_CODE_OK
     result_data = const.SYM_BLANK
     if result:

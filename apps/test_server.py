@@ -70,8 +70,6 @@ async def logout(request: Request):
     return HTMLResponse(content=content)
 
 
-# @app.get("/kakao/oauth", response_class=HTMLResponse)
-# async def oauth(request: Request, code: str = Query(...)):
 @app.get("/kakao/oauth?code={code}", response_class=HTMLResponse)
 async def oauth(request: Request, code: str):
     """
@@ -112,9 +110,6 @@ async def send_test(request: Request):
     メッセージ送信テスト
     """
     token = func_kakao.get_token(request.session)
-    if not token:
-        return RedirectResponse(url="/kakao")
-
     content = func_kakao.get_test_message_content(token)
     return HTMLResponse(content=content)
 

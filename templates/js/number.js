@@ -720,7 +720,7 @@ async function sendRanking(number, time, langCd) {
 
   setUserName(inputMsg);
 
-  const requestBody = { number: number, user: userName, time: time, date: new Date() };
+  const requestBody = { number: number, user: userName, time: time, updateDate: new Date() };
 
   try {
     const data = await getFetchApiData(ENDPOINT_RANKING_NUMBER, requestBody);
