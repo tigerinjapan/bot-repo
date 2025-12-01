@@ -19,7 +19,7 @@ class log:
     sDiv: str
     sMessage: str
     dTargetDate: str
-    dUpdateDate: datetime = func.get_now()
+    dUpdateDate: datetime
 
     def get_data(self):
         return asdict(self)
@@ -47,6 +47,7 @@ def get_insert_data_for_log(data: list[str]):
     div = data[0]
     message = data[1]
     target_date = data[2]
+    updateDate = func.get_now()
 
-    json_data = log(div, message, target_date).get_data()
+    json_data = log(div, message, target_date, updateDate).get_data()
     return json_data

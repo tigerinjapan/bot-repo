@@ -147,14 +147,10 @@ def get_template_msg():
     """
     messages = []
 
-    alt_text = "今日も一日お疲れ様でした。"
-    template_title = "【今日の一言】"
-    template_text = today.get_today_phrase()
+    alt_text = today.get_today_phrase()
     actions = get_template_actions()
 
-    template_msg = func_line.get_template_msg_json(
-        alt_text, template_title, template_text, actions
-    )
+    template_msg = func_line.get_template_msg_json(alt_text, actions)
     messages.append(template_msg)
     return messages
 
@@ -243,7 +239,7 @@ def get_title(
     """
     タイトル取得
     """
-    title_div = func.convert_upper_lower(div)
+    title_div = func.upper_str(div)
 
     if msg_type == const.MSG_TYPE_TXT:
         total_length = len(const.DIV_MARK)

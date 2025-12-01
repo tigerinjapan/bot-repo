@@ -144,14 +144,19 @@ def get_news_list(
             a_href = a.get(const.ATTR_HREF)
             a_text = a.text
 
-            if func.check_in_list(a_text, LIST_KEYWORD_AI):
+            today = func.get_now(const.DATE_TODAY, const.DATE_FORMAT_MMDD_SLASH)
+            if not a_text or not today in a_text:
+                continue
+
+            hit_str = func.check_in_list(a_text, LIST_KEYWORD_AI)
+            if hit_str:
                 news_text = func.get_replace_data(a_text).replace(
                     const.SYM_SPACE, const.SYM_BLANK
                 )
                 news_contents = func.get_a_tag(a_href, news_text)
 
                 if url_flg:
-                    news_title = f"[{const.STR_AI}] {news_text}"
+                    news_title = f"[{hit_str}] {news_text}"
                     news_contents = [news_title, a_href]
 
                 if ai_flg:
@@ -244,6 +249,6 @@ def get_elem_list(div: str, url: str = const.SYM_BLANK):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    item_list = get_item_list()
-    # item_list = get_news_msg_list(DIV_AI_NEWS_LIST)
+    # item_list = get_item_list()
+    item_list = get_news_list(DIV_AI_NEWS, url_flg=const.FLG_ON)
     func.print_test_data(item_list)

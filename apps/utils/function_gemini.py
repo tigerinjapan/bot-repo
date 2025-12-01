@@ -54,7 +54,11 @@ def get_client():
 
 
 def get_gemini_response(
-    div: str, contents: str, model: str = GEMINI_MODEL, config=const.NONE_CONSTANT
+    div: str,
+    contents: str,
+    model: str = GEMINI_MODEL,
+    config=const.NONE_CONSTANT,
+    msg_flg: bool = const.FLG_OFF,
 ) -> list[str]:
     """
     GEMINI回答取得
@@ -75,7 +79,7 @@ def get_gemini_response(
             return const.NONE_CONSTANT
 
     if model == GEMINI_MODEL:
-        add_condition = get_sample_contents(const.FILE_TYPE_TXT)
+        add_condition = get_sample_contents(msg_flg=msg_flg)
         contents += add_condition
 
     result = []
@@ -481,17 +485,39 @@ def get_prompt_conditions(
     return prompt_conditions
 
 
-def get_sample_contents(div: str = const.STR_GEMINI) -> str:
+def get_sample_contents(
+    div: str = const.FILE_TYPE_TXT, msg_flg: bool = const.FLG_OFF
+) -> str:
     """
     サンプルコンテンツ取得
     """
-    if div == const.STR_TEST:
-        contents = "これからの未来について、100文字以内で説明お願いします。"
-        # contents = (
-        #     "Hi, can you create a 3d rendered image of a pig "
-        #     "with wings and a top hat flying over a happy "
-        #     "futuristic city with lots of greenery?"
-        # )
+    if div == const.FILE_TYPE_TXT:
+        text_length = const.MAX_TEXT_LENGTH
+        if msg_flg:
+            text_length /= 4
+
+        contents = (
+            f"{const.SYM_NEW_LINE}上記の内容と、関係ない内容は、不要。"
+            "レスポンス内容のための説明も不要。"
+            "分かりやすく見やすく内容をまとめる。"
+            f"最大文字数は、{text_length}文字。"
+            "記号と絵文字は、使用しない。"
+            "英数字は、全て半角に変換する。"
+        )
+
+        if msg_flg:
+            add_contents = (
+                "出力結果は、英語にする。"
+                f"※出力例{const.SYM_NEW_LINE}"
+                f"Winter in Japan,{const.SYM_TAB}Snow and hot springs, beautiful"
+            )
+        else:
+            add_contents = (
+                "適切なところで、改行する。"
+                f"1行で、最大{const.MAX_WRAP_WIDTH * 4}文字以内。"
+                "1行ずつ、文章として、完結する。"
+            )
+        contents += add_contents
 
     elif div == const.STR_REST:
         contents = (
@@ -501,18 +527,13 @@ def get_sample_contents(div: str = const.STR_GEMINI) -> str:
             "文字列は、一切表示しないでください。"
         )
 
-    elif div == const.FILE_TYPE_TXT:
-        contents = (
-            f"{const.SYM_NEW_LINE}上記の内容と、関係ない内容は、不要。"
-            "レスポンス内容のための説明も不要。"
-            "分かりやすく見やすく内容をまとめる。"
-            f"最大文字数は、{const.MAX_TEXT_LENGTH}文字。"
-            "記号と絵文字は、使用しない。"
-            "英数字は、全て半角に変換する。"
-            "適切なところで、改行する。"
-            f"1行で、最大{const.MAX_WRAP_WIDTH * 4}文字以内。"
-            "1行ずつ、文章として、完結する。"
-        )
+    elif div == const.STR_TEST:
+        contents = "これからの未来について、100文字以内で説明お願いします。"
+        # contents = (
+        #     "Hi, can you create a 3d rendered image of a pig "
+        #     "with wings and a top hat flying over a happy "
+        #     "futuristic city with lots of greenery?"
+        # )
 
     else:
         contents = (

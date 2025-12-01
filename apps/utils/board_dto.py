@@ -24,7 +24,7 @@ class board:
     sRemark: str
     nStatus: int
     sUserName: str
-    dUpdateDate: datetime = func.get_now()
+    dUpdateDate: datetime
 
     def get_data(self):
         return asdict(self)
@@ -41,9 +41,10 @@ def get_update_data_for_board_info(data, seq: int):
     remark = const.SYM_DASH
     status = const.STATUS_NEW
     userName = data[4]
+    updateDate = func.get_now()
 
     json_data = board(
-        seq, app, category, type, contents, remark, status, userName
+        seq, app, category, type, contents, remark, status, userName, updateDate
     ).get_data()
     return json_data
 

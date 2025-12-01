@@ -42,7 +42,7 @@ def main(
                 if list_flg:
                     receiver_uuids = func_kakao.get_receiver_uuids(token)
 
-                title = div
+                title = func.upper_str(div)
 
                 if div == const.APP_TODAY:
                     # 今日のニュース取得
@@ -80,6 +80,9 @@ def main(
                         link_mo,
                         receiver_uuids,
                     )
+                else:
+                    msg = msg_const.MSG_ERR_DATA_NOT_EXIST
+                    func.print_debug_msg(div, msg)
 
             except Exception as e:
                 if e.args[0] != "details":
@@ -96,5 +99,5 @@ def main(
 if __name__ == const.MAIN_FUNCTION:
     div = const.APP_TODAY
     # div = const.APP_LCC
-    # div = const.APP_NEWS
+    # div = const.STR_AI_NEWS
     main(div)

@@ -19,7 +19,7 @@ class rankInfo:
     nNumber: int
     sRankTime: str
     sUserName: str
-    dUpdateDate: datetime = func.get_now()
+    dUpdateDate: datetime
 
     def get_data(self):
         return asdict(self)
@@ -50,7 +50,7 @@ class ranking:
     nRank: int
     nScore: int
     sUserName: str
-    dUpdateDate: datetime = func.get_now()
+    dUpdateDate: datetime
 
     def get_data(self):
         return asdict(self)
@@ -64,7 +64,7 @@ def get_rank_info_data(json_data, update_flg: bool = const.FLG_OFF):
         number = json_data[const.STR_NUMBER]
         rank_time = json_data[const.STR_TIME].zfill(5)
         user_name = json_data[const.STR_USER]
-        updateDate = json_data[mongo_const.ITEM_UPDATE_DATE]
+        updateDate = func.get_now()
     else:
         number = json_data[mongo_const.FI_NUMBER]
         rank_time = json_data[mongo_const.FI_RANK_TIME]
@@ -95,7 +95,7 @@ def get_update_data_for_ranking(div, json_data):
     rank = json_data[mongo_const.ITEM_RANK]
     score = json_data[mongo_const.ITEM_SCORE]
     userName = json_data[mongo_const.ITEM_USER_NAME]
-    updateDate = json_data[mongo_const.ITEM_UPDATE_DATE]
+    updateDate = func.get_now()
 
     json_data = ranking(div, rank, score, userName, updateDate).get_data()
     return json_data, rank, score

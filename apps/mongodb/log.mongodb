@@ -31,11 +31,11 @@ use(database);
 // db.sequence.getIndexes();
 
 // find documents
-// cond = { sDiv: div, dUpdateDate: { $lte: now } };
-cond = {
-    sDiv: div,
-    sMessage: { $regex: "number_ko" }
-};
+cond = { sDiv: div, dUpdateDate: { $lte: now } };
+// cond = {
+//     sDiv: div,
+//     sMessage: { $regex: "number_ko" }
+// };
 
 selectData = { _id: 0 };
 selectData = {};

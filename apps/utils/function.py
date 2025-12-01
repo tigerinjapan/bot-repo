@@ -401,17 +401,17 @@ def get_random_choice(number_list: list[int]) -> int:
     return rand_int
 
 
-def check_in_list(target_str: str, target_list: list[str]) -> bool:
+def check_in_list(target_str: str, target_list: list[str]) -> str:
     """
     対象文字列がリストに含まれているかチェック
     """
-    hit_flg = const.FLG_OFF
+    hit_str = const.SYM_BLANK
     for target in target_list:
-        if target.upper() in target_str.upper():
-            hit_flg = const.FLG_ON
+        if upper_str(target) in upper_str(target_str):
+            hit_str = target
             break
 
-    return hit_flg
+    return hit_str
 
 
 def get_file_path(div: str, file_type: str, file_div: str = const.STR_INPUT) -> str:
@@ -810,7 +810,15 @@ def convert_half_char(target: str) -> str:
     return result
 
 
-def convert_upper_lower(before_str: str, div: str = const.STR_UPPER) -> str:
+def upper_str(before_str: str) -> str:
+    """
+    大文字変換
+    """
+    after_str = convert_str(before_str, const.STR_UPPER)
+    return after_str
+
+
+def convert_str(before_str: str, div: str) -> str:
     """
     文字列変換
     """

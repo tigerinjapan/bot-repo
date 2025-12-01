@@ -809,7 +809,7 @@ async function updateRanking(rank, score, userName) {
     rankNgMsg = MSG_ERR_RANK_EN;
   }
 
-  const requestBody = { rank: rank, score: score, userName: userName, updateDate: new Date() };
+  const requestBody = { rank: rank, score: score, userName: userName };
 
   try {
     const data = await getFetchApiData(ENDPOINT_RANKING_IT_QUIZ, requestBody);

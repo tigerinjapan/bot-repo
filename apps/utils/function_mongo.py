@@ -18,7 +18,7 @@ SCRIPT_NAME = func.get_app_name(__file__)
 app_name = const.STR_MONGO
 
 # DB名
-DB_NAME = app_name + func.convert_upper_lower(const.STR_DB)
+DB_NAME = app_name + func.upper_str(const.STR_DB)
 
 
 def db_connect():
@@ -49,9 +49,7 @@ def get_connect_info(db_div: str = const.STR_MONGO) -> str:
 
     auth_data = func.get_input_data(const.STR_AUTH, const.STR_MONGO)
     if auth_data:
-        db_user = db_div + func.convert_upper_lower(
-            const.STR_USER, const.STR_CAPITALIZE
-        )
+        db_user = db_div + func.convert_str(const.STR_USER, const.STR_CAPITALIZE)
         db_pw = db_div
 
         host = auth_data[const.STR_HOST]

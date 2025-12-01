@@ -1,5 +1,10 @@
 [
     {
+        "date": "2025年12月1日",
+        "company": "<a href=\"https://www.twayair.com/app/promotion/event/retrieve/0jSIRT9125syDsZOJbS4Dg==/being/n?regionCode=JP&langCode=ja-JP\" target=\"_blank\" rel=\"noopener noreferrer\">ティーウェイ航空</a>",
+        "news": "「t'割（ティーわり）」\nセール開催中！韓国国際線 片道6,100円から"
+    },
+    {
         "date": "2025年11月28日",
         "company": "<a href=\"https://www.china-airlines.com/ja-jp/jpn_blackfriday\" target=\"_blank\" rel=\"noopener noreferrer\">チャイナエアライン</a>",
         "news": "「ブラックフライデーセール」\n開催中！羽田/成田－台北線 最大15%割引"
@@ -8,15 +13,5 @@
         "date": "2025年11月26日",
         "company": "<a href=\"https://www.jejuair.net/ja/event/eventDetail.do?eventNo=0000003522\" target=\"_blank\" rel=\"noopener noreferrer\">チェジュ航空</a>",
         "news": "「48時間限定 ブラックフライデーセール」\n開催中！ソウル・釜山線 片道2,700円から"
-    },
-    {
-        "date": "2025年11月25日",
-        "company": "<a href=\"https://flyairseoul.com/CW/ja/eventView.do?seq=2093&type=I\" target=\"_blank\" rel=\"noopener noreferrer\">エアソウル×バビトーク</a>",
-        "news": "「K-メディカルツーリズム特別キャンペーン」\nソウル国際線 往復3,500円から"
-    },
-    {
-        "date": "2025年11月25日",
-        "company": "<a href=\"https://www.flyscoot.com/jp/promotions/tact-JP-gotta-scoot-tuesdays\" target=\"_blank\" rel=\"noopener noreferrer\">スクート</a>",
-        "news": "「スクートしよう！TUESDAYS セール」\n開催中！台北/シンガポールほか東南アジア国際線 片道12,000円から"
     }
 ]

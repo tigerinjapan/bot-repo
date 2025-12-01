@@ -200,6 +200,8 @@ async def app_exec(request: Request, app_name: str):
     """
     アプリケーション実行
     """
+    curr_func_nm = sys._getframe().f_code.co_name
+
     try:
         if app_name == const.APP_USER:
             target_html = const.HTML_USER_INFO
@@ -215,8 +217,6 @@ async def app_exec(request: Request, app_name: str):
 
     except Exception as e:
         target_html = const.HTML_INDEX
-
-        curr_func_nm = sys._getframe().f_code.co_name
         context = get_context_except(curr_func_nm, request, e)
 
     return templates.TemplateResponse(target_html, context)
@@ -227,6 +227,8 @@ async def apps(request: Request, app_name: str):
     """
     アプリケーション実行
     """
+    curr_func_nm = sys._getframe().f_code.co_name
+
     try:
         target_html = const.HTML_RESULT_2
         context = appl.get_context_data_2(request, app_name)
@@ -238,8 +240,6 @@ async def apps(request: Request, app_name: str):
 
     except Exception as e:
         target_html = const.HTML_INDEX
-
-        curr_func_nm = sys._getframe().f_code.co_name
         context = get_context_except(curr_func_nm, request, e)
 
     return templates.TemplateResponse(target_html, context)
@@ -579,7 +579,8 @@ def get_context_except(curr_func_nm: str, request, e):
     [例外] データ取得
     """
     message = msg_const.MSG_ERR_SERVER_PROC_FAILED
-    func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
+    if e.status_code != const.STATUS_CODE_NOT_FOUND:
+        func.print_error_msg(SCRIPT_NAME, curr_func_nm, message, e)
 
     context = {
         const.STR_REQUEST: request,

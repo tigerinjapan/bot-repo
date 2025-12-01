@@ -31,7 +31,7 @@ SCRIPT_NAME = func.get_app_name(__file__)
 
 # アプリケーションリスト
 LIST_APP_DIV = [today, news, drama, ranking, lcc, tv, study]
-LIST_APP_DIV_SITE = ([site] * 4)
+LIST_APP_DIV_SITE = [site] * 4
 LIST_APP_DIV_KOREA = [today_korea]
 LIST_ALL_APP_DIV = LIST_APP_DIV + LIST_APP_DIV_SITE + LIST_APP_DIV_KOREA
 
@@ -95,9 +95,11 @@ def get_context_data(request: Request, app_name: str):
     if const.APP_TODAY in app_name:
         app_title = const.TITLE_TODAY_NEWS
 
-    num_flg = const.FLG_ON
-    if func.check_in_list(app_name, const.LIST_APP_NUM_OFF):
-        num_flg = const.FLG_OFF
+    num_flg = (
+        const.FLG_OFF
+        if func.check_in_list(app_name, const.LIST_APP_NUM_OFF)
+        else const.FLG_ON
+    )
 
     app_exec = AppExec(app_div, app_name)
     app_exec.start()

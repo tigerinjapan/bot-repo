@@ -1,18 +1,22 @@
 [
     {
         "div": "日経",
-        "news": "<a href=\"https://www.nikkei.com/article/DGXZQOUA28AL70Y5A121C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">高市内閣\n支持率横ばい75%自民党の支持率41%に上昇</a>"
+        "news": "<a href=\"https://www.nikkei.com/article/DGXZQOGN01BHI0R01C25A2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">高市首相「黙って投資しろ」の違和感日本売りは止まるか</a>"
     },
     {
         "div": "AI",
-        "news": "<a href=\"https://www.itmedia.co.jp/aiplus/articles/2510/20/news101.html\" target=\"_blank\" rel=\"noopener noreferrer\">NTT、独自のAIモデル「tsuzumi2」発表“国産AI開発競争”に「負けられない」と島田社長</a>"
+        "news": "<a href=\"https://www.itmedia.co.jp/news/articles/2512/01/news051.html\" target=\"_blank\" rel=\"noopener noreferrer\">AIによるサイバー攻撃の民主化をUnit42が警告無料の「KawaiiGPT」巡り</a>"
+    },
+    {
+        "div": "韓国",
+        "news": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56715\" target=\"_blank\" rel=\"noopener noreferrer\">【旅行】 12月1日より自動出入国審査利用国18カ国に拡大</a>"
     },
     {
         "div": "エンタメ",
-        "news": "<a href=\"https://www.wowkorea.jp/news/read/509092.html\" target=\"_blank\" rel=\"noopener noreferrer\">≪韓国ドラマNOW≫「テプン商事」15話\nイジュノ(2PM)\nついに“借用証”発見奪われた会社は取り戻せるのか\n今夜最終回視聴率6.6%\nあらすじネタバレ</a>"
+        "news": "<a href=\"https://www.wowkorea.jp/topic/read/150039.html\" target=\"_blank\" rel=\"noopener noreferrer\">チチャンウク\n日本に2か月間留学した\n「ひとりで暮らしながら語学院に通った」</a>"
     },
     {
         "div": "kpop",
-        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/509118.html\" target=\"_blank\" rel=\"noopener noreferrer\">【オフィシャルレポート】「SHINee」KEY(キー)日本ソロ公演『2025 KEYLAND : Uncanny Valley in TOKYO』開催 2026年にKEY “ソロデビュー8年目”にして初の日本ホールツアー開催決定</a>"
+        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/509211.html\" target=\"_blank\" rel=\"noopener noreferrer\">「tripleS」\n新譜「Beyond Beauty」初動販売量36万枚と突破\nチーム内4ユニットの新曲が収録</a>"
     }
 ]

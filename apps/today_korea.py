@@ -347,7 +347,13 @@ def get_it_news_list() -> list:
             a_href = a_elem.get(const.ATTR_HREF)
             link_url = f"{URL_ET_NEWS}{a_href}"
 
-            if func.check_in_list(title, LIST_KEYWORD_AI):
+            today = func.get_now(const.DATE_TODAY)
+            if not today in link_url:
+                continue
+
+            hit_str = func.check_in_list(title, LIST_KEYWORD_AI)
+            if hit_str:
+                title = f"[{hit_str} title]"
                 news_info = [title, link_url]
                 news_list.append(news_info)
                 if 3 <= len(news_list):
@@ -359,3 +365,4 @@ def get_it_news_list() -> list:
 if __name__ == const.MAIN_FUNCTION:
     # get_today_info_list()
     get_today_info()
+    # get_it_news_list()

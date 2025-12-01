@@ -47,8 +47,8 @@ class userInfo:
     sTel: str
     sMenu: str
     nSeq: int
-    dModifiedDate: datetime = func.get_now()
-    dLastLoginDate: datetime = func.get_now()
+    dModifiedDate: datetime
+    dLastLoginDate: datetime
 
     def get_data(self):
         return asdict(self)
@@ -71,6 +71,7 @@ def get_json_data_for_user_info(form_data):
     station = form_data[mongo_const.ITEM_STATION]
     tel = form_data[mongo_const.ITEM_TEL]
     seq = form_data[mongo_const.ITEM_SEQ]
+    updateDate = func.get_now()
 
     menu_val_list = []
     for idx in range(const.MAX_USER_MENU):
@@ -95,5 +96,7 @@ def get_json_data_for_user_info(form_data):
         tel,
         const.SYM_BLANK.join(menu_val_list),
         int(seq),
+        updateDate,
+        updateDate,
     ).get_data()
     return json_data
