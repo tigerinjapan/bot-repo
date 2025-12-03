@@ -37,7 +37,7 @@ ITEM_NEWS_LIST = [
     const.STR_KPOP,
 ]
 
-DIV_WEEKLY_RANKING = "{}週間" + const.STR_RANKING_JA
+DIV_WEEKLY_RANKING = "{} weekly " + const.APP_RANKING
 DIV_KPOP_RANKING = DIV_WEEKLY_RANKING.format(const.STR_KPOP)
 
 # キーワードリスト
@@ -145,7 +145,7 @@ def get_news_list(
             a_text = a.text
 
             today = func.get_now(const.DATE_TODAY, const.DATE_FORMAT_MMDD_SLASH)
-            if not a_text or not today in a_text:
+            if not a_text or not today in a_href:
                 continue
 
             hit_str = func.check_in_list(a_text, LIST_KEYWORD_AI)
@@ -173,18 +173,6 @@ def get_news_list(
     if ai_flg:
         news_summary = func_gemini.get_news_summary(news_list)[0]
         news_list = news_summary
-
-    return news_list
-
-
-def get_temp_msg(list_flg: bool = const.FLG_OFF):
-    """
-    テンプレートメッセージ取得
-    """
-    news_list = get_news_list(DIV_AI_NEWS, url_flg=const.FLG_ON)
-    if not list_flg:
-        news_data = news_list[0]
-        return news_data[0], news_data[1]
 
     return news_list
 
@@ -249,6 +237,6 @@ def get_elem_list(div: str, url: str = const.SYM_BLANK):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # item_list = get_item_list()
-    item_list = get_news_list(DIV_AI_NEWS, url_flg=const.FLG_ON)
+    item_list = get_item_list()
+    # item_list = get_news_list(DIV_AI_NEWS, url_flg=const.FLG_ON)
     func.print_test_data(item_list)

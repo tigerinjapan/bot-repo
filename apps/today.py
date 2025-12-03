@@ -276,6 +276,15 @@ def get_today_phrase(div: str = const.STR_PHRASE):
     return phrase
 
 
+def get_english_conversation() -> str:
+    """
+    英会話取得
+    """
+    data = get_today_phrase(const.STR_ENGLISH)
+    english_conversation = f"{data[1]}{const.SYM_NEW_LINE}{data[2]}"
+    return english_conversation
+
+
 def get_elem_val_by_class(soup, class_: str) -> str:
     """
     要素値取得

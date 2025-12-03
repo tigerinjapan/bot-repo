@@ -57,8 +57,9 @@ def main(
                     link = today_korea.URL_LINK
                     link_mo = today_korea.URL_LINK_MO
 
-                elif div == const.APP_LCC:
-                    title, message = lcc.get_temp_msg(data_flg=const.FLG_ON)
+                elif div == const.STR_LCC_NEWS:
+                    object_type = func_kakao.OBJECT_TYPE_LIST
+                    message = lcc.get_lcc_news_list()
                     link = link_mo = const.URL_LCC
 
                 elif div == const.STR_AI_NEWS:

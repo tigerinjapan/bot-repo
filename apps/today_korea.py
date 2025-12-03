@@ -139,7 +139,7 @@ def get_today_info_list():
         get_stock,
         get_won,
         get_japanese_study,
-        get_english_conversation,
+        today.get_english_conversation,
         get_flight_sale,
     ]
 
@@ -313,15 +313,6 @@ def get_japanese_study() -> str:
     return japanese_study
 
 
-def get_english_conversation() -> str:
-    """
-    英会話取得
-    """
-    data = today.get_today_phrase(const.STR_ENGLISH)
-    english_conversation = f"{data[1]}{const.SYM_NEW_LINE}{data[2]}"
-    return english_conversation
-
-
 def get_phrase() -> str:
     """
     今日の一言取得
@@ -330,7 +321,7 @@ def get_phrase() -> str:
     return phrase
 
 
-def get_it_news_list() -> list:
+def get_it_news_list() -> list[str]:
     """
     ITニュース取得
     """
@@ -343,7 +334,7 @@ def get_it_news_list() -> list:
     if contents_list:
         for contents in contents_list:
             a_elem = func_bs.find_elem_by_attr(contents, tag=const.TAG_A)
-            title = a_elem.text
+            a_text = a_elem.text
             a_href = a_elem.get(const.ATTR_HREF)
             link_url = f"{URL_ET_NEWS}{a_href}"
 
@@ -351,12 +342,12 @@ def get_it_news_list() -> list:
             if not today in link_url:
                 continue
 
-            hit_str = func.check_in_list(title, LIST_KEYWORD_AI)
+            hit_str = func.check_in_list(a_text, LIST_KEYWORD_AI)
             if hit_str:
-                title = f"[{hit_str} title]"
+                title = f"[{hit_str}] {a_text}"
                 news_info = [title, link_url]
                 news_list.append(news_info)
-                if 3 <= len(news_list):
+                if len(news_list) == 3:
                     break
 
     return news_list
@@ -365,4 +356,3 @@ def get_it_news_list() -> list:
 if __name__ == const.MAIN_FUNCTION:
     # get_today_info_list()
     get_today_info()
-    # get_it_news_list()

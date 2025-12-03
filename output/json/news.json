@@ -1,22 +1,18 @@
 [
     {
         "div": "日経",
-        "news": "<a href=\"https://www.nikkei.com/article/DGXZQOGN01BHI0R01C25A2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">高市首相「黙って投資しろ」の違和感日本売りは止まるか</a>"
-    },
-    {
-        "div": "AI",
-        "news": "<a href=\"https://www.itmedia.co.jp/news/articles/2512/01/news051.html\" target=\"_blank\" rel=\"noopener noreferrer\">AIによるサイバー攻撃の民主化をUnit42が警告無料の「KawaiiGPT」巡り</a>"
+        "news": "<a href=\"https://www.nikkei.com/article/DGXZQOUB27B4P0X21C25A1000000/\" target=\"_blank\" rel=\"noopener noreferrer\">三菱UFJ\nMMF10年ぶり販売普通預金より高利回りでマネー呼び込み</a>"
     },
     {
         "div": "韓国",
-        "news": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56715\" target=\"_blank\" rel=\"noopener noreferrer\">【旅行】 12月1日より自動出入国審査利用国18カ国に拡大</a>"
+        "news": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56728\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 ドラマ「ダイナマイトキス」ネトフリ非英語部門1位</a>"
     },
     {
         "div": "エンタメ",
-        "news": "<a href=\"https://www.wowkorea.jp/topic/read/150039.html\" target=\"_blank\" rel=\"noopener noreferrer\">チチャンウク\n日本に2か月間留学した\n「ひとりで暮らしながら語学院に通った」</a>"
+        "news": "<a href=\"https://www.wowkorea.jp/news/read/509340.html\" target=\"_blank\" rel=\"noopener noreferrer\">【インタビュー】「テプン商事」イジュノ(2PM)\n「この仕事を一生続けたい」\n俳優への深い愛情を告白</a>"
     },
     {
         "div": "kpop",
-        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/509211.html\" target=\"_blank\" rel=\"noopener noreferrer\">「tripleS」\n新譜「Beyond Beauty」初動販売量36万枚と突破\nチーム内4ユニットの新曲が収録</a>"
+        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/509390.html\" target=\"_blank\" rel=\"noopener noreferrer\">ファサ(MAMAMOO)\n「Good Goodbye」がビルボード200で43位\nチャート逆走からビルボードまで</a>"
     }
 ]

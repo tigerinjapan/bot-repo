@@ -9,8 +9,8 @@ import apps.utils.function_beautiful_soup as func_bs
 
 # ランキング区分リスト
 LIST_RANKING_WEEKLY = [const.STR_KPOP]
-LIST_RANKING_DAILY = [const.STR_X_TREND_JA]
-DIV_DAILY_RANKING = "{}日間" + const.STR_RANKING_JA
+LIST_RANKING_DAILY = [const.STR_X_TREND]
+DIV_DAILY_RANKING = "{} daily " + const.APP_RANKING
 
 # カラムリスト
 col_list_weekly = [news.DIV_WEEKLY_RANKING.format(div) for div in LIST_RANKING_WEEKLY]
@@ -82,13 +82,13 @@ def get_weekly_ranking(div: str = const.STR_KPOP):
     return weekly_ranking
 
 
-def get_daily_ranking(div: str = const.STR_X_TREND_JA):
+def get_daily_ranking(div: str = const.STR_X_TREND):
     """
     Xトレンド日間ランキング
     """
     daily_ranking = []
 
-    if div == const.STR_X_TREND_JA:
+    if div == const.STR_X_TREND:
         url = f"{const.URL_ACHIKOCHI}{URL_X_PARAM}"
         soup = func_bs.get_elem_from_url(url, attr_val="panel")
         elem_list = func_bs.find_elem_by_attr(

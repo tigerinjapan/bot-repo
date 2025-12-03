@@ -4,14 +4,15 @@ TV番組検索
 
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.function_beautiful_soup as func_bs
 
 # ソートリスト
-sort_list = ["放送時間", "チャンネル"]
+sort_list = [const.STR_DATE, const.STR_CHANNEL]
 ascending_div = [const.FLG_ON, const.FLG_ON]
 
 # カラムリスト
-col_list = sort_list + ["番組名"]
+col_list = sort_list + [const.STR_PROGRAM]
 
 # 重複チェックリスト
 duplicates_list = sort_list
@@ -37,7 +38,7 @@ def get_item_list():
     return item_list
 
 
-def get_tv_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
+def get_tv_info_list() -> list[str]:
     """
     TV番組情報取得
     """
@@ -59,7 +60,7 @@ def get_tv_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
         date = func.convert_date_format(
             f"{func.get_now(const.DATE_YEAR)}年" + date_txt[0],
             new_format=const.DATE_FORMAT_YYYYMMDD_SLASH,
-            old_format=f"%Y年%m月%d日",
+            old_format=const.DATE_FORMAT_YYYYMMDD_JA,
         )
         time_text = date_txt[2]
         hour = time_text.split(":")[0]
@@ -68,17 +69,12 @@ def get_tv_info_list(list_flg: bool = const.FLG_ON) -> list[str]:
             date += f" {time_text}"
             channel = tv_info_text[1]
 
-            title = func_bs.find_elem_by_class(link_info, "program_title").text
+            program_title = func_bs.find_elem_by_class(link_info, "program_title").text
             link = const.URL_TV + link_info[const.ATTR_HREF]
-            title_link = func.get_a_tag(link, title)
+            program = func.get_a_tag(link, program_title)
 
-            if func.check_in_list(title, LIST_KEYWORD):
-                tv_info = [date, channel, title_link]
-
-                if not list_flg:
-                    tv_info = [time_text, channel, title, link]
-                    return tv_info
-
+            if func.check_in_list(program_title, LIST_KEYWORD):
+                tv_info = [date, channel, program]
                 tv_info_list.append(tv_info)
 
             if len(tv_info_list) == 5:
@@ -91,24 +87,17 @@ def get_temp_msg():
     """
     テンプレートメッセージ取得
     """
-    lbl, url = get_tv_info_today()
-    return lbl, url
+    program = url = const.SYM_BLANK
 
+    json_data = func_api.get_json_data_on_app(const.APP_TV)
+    if json_data:
+        tv_info = json_data[0]
+        contents = tv_info[const.STR_PROGRAM]
+        a_elem = func_bs.get_soup_from_contents(contents)
+        program = get_tv_title(a_elem.text)
+        url = func_bs.get_link_from_soup(a_elem)
 
-def get_tv_info_today():
-    """
-    TV番組情報取得
-    """
-    today_tv_info = link = const.SYM_BLANK
-
-    tv_info_today = get_tv_info_list(list_flg=const.FLG_OFF)
-    if tv_info_today:
-        time = tv_info_today[0]
-        channel = tv_info_today[1]
-        title = get_tv_title(tv_info_today[2])
-        today_tv_info = f"[{channel} {time}] {title}"
-        link = tv_info_today[3]
-    return today_tv_info, link
+    return program, url
 
 
 def get_tv_title(tv_title: str):
@@ -123,6 +112,6 @@ def get_tv_title(tv_title: str):
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # tv_info = get_tv_info_list()
-    tv_info = get_tv_info_today()
-    func.print_test_data(tv_info)
+    # item_list = get_item_list()
+    # func.print_test_data(item_list)
+    get_temp_msg()

@@ -299,10 +299,12 @@ def get_temp_img():
     """
     イメージ取得
     """
-    title = "CNN Weather"
     img_url = headline = const.SYM_BLANK
 
-    url = "https://edition.cnn.com/weather"
+    section = "world"
+    # section = "weather"
+    title = f"CNN {section}"
+    url = f"https://edition.cnn.com/{section}"
     class_ = "container__item--type-media-image"
     soup = func_bs.get_elem_from_url(url, attr_val=class_)
     if soup:
@@ -314,7 +316,7 @@ def get_temp_img():
             title, headline_text, msg_flg=const.FLG_ON
         )
         if response:
-            headline = [response]
+            headline = response[0]
         else:
             headline = f"{headline_text[57:]}..."
     return img_url, title, headline

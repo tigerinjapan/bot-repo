@@ -18,8 +18,8 @@ def get_board_info(json_flg: bool = const.FLG_ON):
 
     client = func_mongo.db_connect()
 
-    # 取得対象
-    target_date = func.get_calc_date(const.MAX_TARGET_DAYS_BOARD)
+    # 取得対象：直近4週間データ
+    target_date = func.get_calc_date(-const.MAX_TARGET_DAYS_BOARD)
 
     cond = {
         mongo_const.OPERATOR_OR: [

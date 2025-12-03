@@ -755,9 +755,13 @@ function calculateScore() {
   score = Math.floor(scoreTime / TIME_PER_POINT);
 
   switch (levelVal) {
-    case LEVEL_EASY: score -= 30; break;
-    case LEVEL_MEDIUM: score -= 10; break;
+    case LEVEL_EASY: score -= 10; break;
+    case LEVEL_MEDIUM: score = 0; break;
     case LEVEL_HARD: score += 10; break;
+  }
+
+  if (score < 0) {
+    score = 0;
   }
 
   return score;
@@ -804,7 +808,7 @@ function formatTime(seconds) {
 }
 
 /**
- * 画面切り替え
+ * 画面切替
  * 
  * @param {string} screenId - 画面id
  */

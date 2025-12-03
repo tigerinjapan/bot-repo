@@ -112,7 +112,7 @@ def daily_job_4():
     line.main(data_div=const.NUM_TWO)
     line.sub(const.APP_MLB)
     line.sub(const.STR_AI_NEWS)
-    kakao.main(const.APP_LCC)
+    kakao.main(const.STR_LCC_NEWS)
     kakao.main(const.STR_AI_NEWS)
 
 

@@ -1,32 +1,32 @@
 [
     {
         "구분": "업데이트일시",
-        "뉴스": "2025/12/02(Tue) 07:05",
+        "뉴스": "2025/12/04(Thu) 07:05",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "뉴스": "본격 강추위 대비",
+        "뉴스": "내일 아침 한파 절정",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "뉴스": "S&P500 6,812.63 (-0.53%)",
+        "뉴스": "S&P500 6,849.72 (+0.30%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "뉴스": "100엔 = 946원",
+        "뉴스": "100엔 = 944원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "뉴스": "テニス\n테니스.",
+        "뉴스": "いま\n거실; 거처방.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "뉴스": "Hotel fully booked?\n호텔이 만실인가요?",
+        "뉴스": "Time difference?\n시차는 어떻게 돼요?",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

@@ -4,8 +4,8 @@ LCCニュース
 
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.function_beautiful_soup as func_bs
-import apps.utils.message_constants as msg_const
 
 # カラムリスト
 col_list = [const.STR_DATE, const.STR_COMPANY, const.APP_NEWS]
@@ -22,7 +22,7 @@ def get_item_list():
     return item_list
 
 
-def get_lcc_info_list(url_flg: bool = const.FLG_OFF) -> list[str]:
+def get_lcc_info_list() -> list[str]:
     """
     LCC情報取得
     """
@@ -37,6 +37,13 @@ def get_lcc_info_list(url_flg: bool = const.FLG_OFF) -> list[str]:
         lcc_data = []
 
         date = func_bs.find_elem_by_class(lcc_info, "bgdate").text
+        date_time = func.convert_str_to_date(date, const.DATE_FORMAT_YYYYMMDD_JA)
+
+        # 7日前
+        target_date = func.get_calc_date(-const.NUM_TARGET_DAYS)
+        if date_time < target_date:
+            continue
+
         title_info = func_bs.find_elem_by_attr(lcc_info, tag=const.TAG_A)
         title_text = title_info.text.split(const.SYM_COMMA_JAP)
         company = title_text[0]
@@ -55,13 +62,8 @@ def get_lcc_info_list(url_flg: bool = const.FLG_OFF) -> list[str]:
                 continue
 
             url_official = func_bs.get_link_from_soup(lcc_info_details)
-
-            if url_flg:
-                lcc_data = [date, company, title, url_official]
-            else:
-                company = func.get_a_tag(url_official, company)
-                lcc_data = [date, company, title]
-
+            company = func.get_a_tag(url_official, company)
+            lcc_data = [date, company, title]
             lcc_info_list.append(lcc_data)
 
             if len(lcc_info_list) == const.MAX_DISPLAY_CNT:
@@ -69,27 +71,51 @@ def get_lcc_info_list(url_flg: bool = const.FLG_OFF) -> list[str]:
     return lcc_info_list
 
 
-def get_temp_msg(data_flg: bool = const.FLG_OFF):
+def get_temp_msg():
     """
     テンプレートメッセージ取得
     """
     lbl = url = const.SYM_BLANK
-    lcc_info = get_lcc_info_list(url_flg=const.FLG_ON)[0]
-    if lcc_info:
-        lbl = f"[{const.APP_LCC}] {lcc_info[1]}"
-        url = lcc_info[3]
-        if data_flg:
-            lcc_data = const.SYM_BLANK
-            today = func.get_now(const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_JA)
-            if lcc_info[0] == today:
-                lcc_data_list = [lbl] + lcc_info[2:]
-                lcc_data = const.SYM_NEW_LINE.join(lcc_data_list)
-            url = lcc_data
-
-    if not url:
-        func.print_debug_msg(const.APP_LCC, msg_const.MSG_INFO_DATA_NOT_EXIST)
+    json_data = func_api.get_json_data_on_app(const.APP_LCC)
+    if json_data:
+        lcc_info = json_data[0]
+        contents = lcc_info[const.STR_COMPANY]
+        a_elem = func_bs.get_soup_from_contents(contents)
+        company = a_elem.text
+        lbl = f"[{const.APP_LCC}] {company}"
+        url = func_bs.get_link_from_soup(a_elem)
 
     return lbl, url
+
+
+def get_lcc_news_list():
+    """
+    LCCニュースリスト取得
+    """
+    news_list = []
+    lcc_info_list = func_api.get_json_data_on_app(const.APP_LCC)
+    if lcc_info_list:
+        for lcc_info in lcc_info_list:
+            date = lcc_info[const.STR_DATE]
+            today = func.get_now(
+                const.DATE_TODAY, const.DATE_FORMAT_YYYYMMDD_JA_NO_ZERO
+            )
+            if date != today:
+                continue
+
+            contents = lcc_info[const.STR_COMPANY]
+            a_elem = func_bs.get_soup_from_contents(contents)
+            company = a_elem.text
+            news = lcc_info[const.APP_NEWS]
+
+            title = f"[{company}] {news}"
+            link_url = func_bs.get_link_from_soup(a_elem)
+            news_info = [title, link_url]
+            news_list.append(news_info)
+            if len(news_list) == 3:
+                break
+
+    return news_list
 
 
 def get_lcc_text(lcc_div, soup) -> str:
@@ -109,4 +135,4 @@ def get_lcc_text(lcc_div, soup) -> str:
 if __name__ == const.MAIN_FUNCTION:
     item_list = get_item_list()
     func.print_test_data(item_list)
-    # get_temp_msg()
+    # get_temp_msg(const.FLG_ON)

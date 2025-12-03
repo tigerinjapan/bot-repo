@@ -509,7 +509,7 @@ def get_sample_contents(
             add_contents = (
                 "出力結果は、英語にする。"
                 f"※出力例{const.SYM_NEW_LINE}"
-                f"Winter in Japan,{const.SYM_TAB}Snow and hot springs, beautiful"
+                f"Winter in Japan, Snow and beautiful"
             )
         else:
             add_contents = (

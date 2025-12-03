@@ -13,8 +13,6 @@ import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.message_constants as msg_const
 import apps.utils.function as func
-import apps.utils.function_api as func_api
-import apps.utils.function_gemini as func_gemini
 import apps.utils.function_line as func_line
 
 # スクリプト名
@@ -160,12 +158,12 @@ def get_template_actions():
     テンプレートアクション取得
     """
     actions = []
-    temp_item_list = [news, tv, lcc, study]
+    app_list = [tv, lcc, study]
 
-    for item in temp_item_list:
+    for app in app_list:
         try:
             # テンプレートメッセージ取得
-            label, url = item.get_temp_msg()
+            label, url = app.get_temp_msg()
         except:
             continue
 
@@ -319,11 +317,9 @@ def sub_test():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # get_template_actions()
-    # get_flex_data_list()
     main()
     # main(proc_flg=const.FLG_OFF)
     # main(data_div=const.NUM_TWO)
     # main(data_div=const.NUM_THREE)
     # main(auto_flg=const.FLG_OFF)
-    # sub_test()
+    # sub(const.STR_AI_NEWS)
