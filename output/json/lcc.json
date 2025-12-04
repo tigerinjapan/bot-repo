@@ -1,5 +1,15 @@
 [
     {
+        "date": "2025年12月4日",
+        "company": "<a href=\"https://www.jejuair.net/ja/event/eventDetail.do?eventNo=0000003525\" target=\"_blank\" rel=\"noopener noreferrer\">チェジュ航空</a>",
+        "news": "「函館からソウルへ 割引コードでお得に」\nセール開催中！片道7,900円から"
+    },
+    {
+        "date": "2025年12月4日",
+        "company": "<a href=\"https://www.jinair.com/promotion/eventView?evntSeq=14768\" target=\"_blank\" rel=\"noopener noreferrer\">ジンエアー</a>",
+        "news": "「12月の特別割引」\nセール開催中！ソウル/釜山国際線 最大10％割引"
+    },
+    {
         "date": "2025年12月1日",
         "company": "<a href=\"https://www.tigerairtw.com/ja-JP/EVENTS/2511S26P2/\" target=\"_blank\" rel=\"noopener noreferrer\">タイガーエア台湾</a>",
         "news": "「夏ダイヤセール」\n12月2日11時から開催！台湾国際線 片道9,000円から"
@@ -8,10 +18,5 @@
         "date": "2025年12月1日",
         "company": "<a href=\"https://www.twayair.com/app/promotion/event/retrieve/0jSIRT9125syDsZOJbS4Dg==/being/n?regionCode=JP&langCode=ja-JP\" target=\"_blank\" rel=\"noopener noreferrer\">ティーウェイ航空</a>",
         "news": "「t'割（ティーわり）」\nセール開催中！韓国国際線 片道6,100円から"
-    },
-    {
-        "date": "2025年11月28日",
-        "company": "<a href=\"https://www.china-airlines.com/ja-jp/jpn_blackfriday\" target=\"_blank\" rel=\"noopener noreferrer\">チャイナエアライン</a>",
-        "news": "「ブラックフライデーセール」\n開催中！羽田/成田－台北線 最大15%割引"
     }
 ]

@@ -10,7 +10,7 @@ import apps.utils.mongo_constants as mongo_const
 import apps.utils.sequence_dao as seq_dao
 
 
-def get_board_info(json_flg: bool = const.FLG_ON):
+def get_board_info(user_div: str = const.AUTH_DEV, json_flg: bool = const.FLG_ON):
     """
     掲示板データ取得
     """
@@ -35,6 +35,10 @@ def get_board_info(json_flg: bool = const.FLG_ON):
             },
         ]
     }
+    if user_div != const.AUTH_ADMIN:
+        add_cond = {mongo_const.FI_USER_NAME: {mongo_const.OPERATOR_NOT_EQUAL: const.AUTH_ADMIN}}
+        cond.update(add_cond)
+
     sort = {
         mongo_const.FI_STATUS: mongo_const.SORT_ASCENDING,
         mongo_const.FI_UPDATE_DATE: mongo_const.SORT_DESCENDING,

@@ -83,13 +83,13 @@ def get_tv_info_list() -> list[str]:
     return tv_info_list
 
 
-def get_temp_msg():
+def get_temp_msg(div: str = const.APP_TV):
     """
     テンプレートメッセージ取得
     """
     program = url = const.SYM_BLANK
 
-    json_data = func_api.get_json_data_on_app(const.APP_TV)
+    json_data = func_api.get_json_data_on_app(div)
     if json_data:
         tv_info = json_data[0]
         contents = tv_info[const.STR_PROGRAM]
@@ -97,7 +97,7 @@ def get_temp_msg():
         program = get_tv_title(a_elem.text)
         url = func_bs.get_link_from_soup(a_elem)
 
-    return program, url
+    return div, program, url
 
 
 def get_tv_title(tv_title: str):

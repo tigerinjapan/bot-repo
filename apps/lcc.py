@@ -71,21 +71,20 @@ def get_lcc_info_list() -> list[str]:
     return lcc_info_list
 
 
-def get_temp_msg():
+def get_temp_msg(div: str = const.APP_LCC):
     """
     テンプレートメッセージ取得
     """
-    lbl = url = const.SYM_BLANK
-    json_data = func_api.get_json_data_on_app(const.APP_LCC)
+    company = url = const.SYM_BLANK
+    json_data = func_api.get_json_data_on_app(div)
     if json_data:
         lcc_info = json_data[0]
         contents = lcc_info[const.STR_COMPANY]
         a_elem = func_bs.get_soup_from_contents(contents)
         company = a_elem.text
-        lbl = f"[{const.APP_LCC}] {company}"
         url = func_bs.get_link_from_soup(a_elem)
 
-    return lbl, url
+    return div, company, url
 
 
 def get_lcc_news_list():

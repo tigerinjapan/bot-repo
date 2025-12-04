@@ -52,7 +52,7 @@ def main(
                         title = "【오늘의 한마디】"
                         message = today_korea.get_phrase()
                     else:
-                        title = today_korea.TITLE_LINK
+                        title = func_kakao.BTN_TITLE_FLIGHT
 
                     link = today_korea.URL_LINK
                     link_mo = today_korea.URL_LINK_MO

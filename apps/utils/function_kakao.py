@@ -58,6 +58,10 @@ OBJECT_TYPE_FEED = "feed"
 OBJECT_TYPE_TEXT = "text"
 OBJECT_TYPE_LIST = "list"
 
+# ボタン
+BTN_TITLE_FLIGHT = "✈ 최저가 항공권 정보 ✈"
+BTN_TITLE_MORE = "더 보기"
+
 # 結果コード
 RESULT_CODE_OK = 0
 RESULT_CODE_NG = 1
@@ -233,9 +237,9 @@ def get_template_object(
         if object_type == OBJECT_TYPE_FEED:
             func.print_debug_msg(const.STR_IMG, img_url)
             content = {
+                "image_url": img_url,
                 "title": title,
                 "description": message,
-                "image_url": img_url,
                 "link": {"mobile_web_url": link_mo},
             }
 
@@ -250,16 +254,18 @@ def get_template_object(
             for param in param_list:
                 content = {
                     "title": param[0],
-                    "link": {"mobile_web_url": param[1]},
+                    "link": {"web_url": param[1], "mobile_web_url": param[1]},
                 }
                 content_list.append(content)
 
             contents = {
                 "header_title": title,
                 "header_link": {
+                    "web_url": link,
                     "mobile_web_url": link_mo,
                 },
                 "contents": content_list,
+                "button_title": BTN_TITLE_MORE,
             }
 
         else:

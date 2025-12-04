@@ -15,6 +15,10 @@ const INITIAL_HINTS = 3;
 
 // 空けるマス数（レベル：medium）
 const HOLES_DEFAULT = 55;
+const HOLES_LEVEL = 10;
+
+// スコア
+const SCORE_LEVEL = 20;
 
 /**
  * グローバルな状態変数
@@ -242,9 +246,9 @@ function generatePuzzle() {
 
   let holes = 0;
   switch (levelVal) {
-    case LEVEL_EASY: holes = HOLES_DEFAULT - 10; break;
+    case LEVEL_EASY: holes = HOLES_DEFAULT - HOLES_LEVEL; break;
     case LEVEL_MEDIUM: holes = HOLES_DEFAULT; break;
-    case LEVEL_HARD: holes = HOLES_DEFAULT + 10; break;
+    case LEVEL_HARD: holes = HOLES_DEFAULT + HOLES_LEVEL; break;
   }
 
   let attempts = 0;
@@ -755,9 +759,9 @@ function calculateScore() {
   score = Math.floor(scoreTime / TIME_PER_POINT);
 
   switch (levelVal) {
-    case LEVEL_EASY: score -= 10; break;
+    case LEVEL_EASY: score -= SCORE_LEVEL; break;
     case LEVEL_MEDIUM: score = 0; break;
-    case LEVEL_HARD: score += 10; break;
+    case LEVEL_HARD: score += SCORE_LEVEL; break;
   }
 
   if (score < 0) {

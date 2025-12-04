@@ -42,7 +42,7 @@ def get_df_data(app_div: str, user_div: str = const.AUTH_DEV):
     """
     # JSONデータ取得
     if app_div == const.APP_BOARD:
-        json_data = board_dao.get_board_info()
+        json_data = board_dao.get_board_info(user_div)
     else:
         json_data = func.get_input_data(app_div)
 

@@ -1,32 +1,32 @@
 [
     {
         "구분": "업데이트일시",
-        "뉴스": "2025/12/04(Thu) 07:05",
+        "뉴스": "2025/12/05(Fri) 03:05",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "뉴스": "내일 아침 한파 절정",
+        "뉴스": "첫눈 펑펑, 수도권 최고 8cm‥내일까지 강추위",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "뉴스": "S&P500 6,849.72 (+0.30%)",
+        "뉴스": "S&P500 6,857.33 (+0.11%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "뉴스": "100엔 = 944원",
+        "뉴스": "100엔 = 951원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "뉴스": "いま\n거실; 거처방.",
+        "뉴스": "にんぎょう\n인형; 꼭두각시.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "뉴스": "Time difference?\n시차는 어떻게 돼요?",
+        "뉴스": "Use the locker?\n사물함을 써도 될까요?",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

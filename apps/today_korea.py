@@ -16,8 +16,6 @@ import apps.utils.function_kakao as func_kakao
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
 
-TITLE_LINK = "✈ 최저가 항공권 정보 ✈"
-
 # 定数（韓国語）
 DIV_TITLE = "📢 {} 오늘의 뉴스 📢"
 DIV_UPDATE_TIME = "업데이트일시"

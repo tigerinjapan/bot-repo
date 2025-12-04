@@ -163,7 +163,8 @@ def get_template_actions():
     for app in app_list:
         try:
             # テンプレートメッセージ取得
-            label, url = app.get_temp_msg()
+            div, lbl, url = app.get_temp_msg()
+            label = f"[{func.upper_str(div)}] {lbl}"
         except:
             continue
 

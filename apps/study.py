@@ -97,24 +97,16 @@ def get_naver_news_summary(keyword: str) -> list[str]:
     return news_summary
 
 
-def get_today_korean():
+def get_temp_msg(div: str = const.STR_KOREAN):
     """
-    今日の韓国語
+    テンプレートメッセージ取得
     """
     url = f"{const.URL_KONEST}/contents/todays_korean_list.html"
     attr_val = "size12 blackg"
     a_elem = func_bs.get_elem_from_url(url, attr_val=attr_val).find(const.TAG_A)
-    today_korean = f"[韓国語] {a_elem[const.ATTR_TITLE]}"
+    today_korean = a_elem[const.ATTR_TITLE]
     url_korean = f"{const.URL_KONEST}" + a_elem[const.ATTR_HREF]
-    return today_korean, url_korean
-
-
-def get_temp_msg():
-    """
-    テンプレートメッセージ取得
-    """
-    lbl, url = get_today_korean()
-    return lbl, url
+    return div, today_korean, url_korean
 
 
 if __name__ == const.MAIN_FUNCTION:
