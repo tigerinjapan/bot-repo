@@ -1,22 +1,22 @@
 [
     {
         "구분": "업데이트일시",
-        "뉴스": "2025/12/05(Fri) 03:05",
+        "뉴스": "2025/12/05(Fri) 20:05",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "뉴스": "첫눈 펑펑, 수도권 최고 8cm‥내일까지 강추위",
+        "뉴스": "강추위 점차 물러가",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "뉴스": "S&P500 6,857.33 (+0.11%)",
+        "뉴스": "S&P500 6,857.12 (+0.11%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "뉴스": "100엔 = 951원",
+        "뉴스": "100엔 = 949원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
@@ -26,7 +26,7 @@
     },
     {
         "구분": "영어",
-        "뉴스": "Use the locker?\n사물함을 써도 될까요?",
+        "뉴스": "Catch next flight.\n다음 비행기를 타야 해요",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

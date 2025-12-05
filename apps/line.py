@@ -318,9 +318,9 @@ def sub_test():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    main()
+    # main()
     # main(proc_flg=const.FLG_OFF)
-    # main(data_div=const.NUM_TWO)
+    main(data_div=const.NUM_TWO)
     # main(data_div=const.NUM_THREE)
     # main(auto_flg=const.FLG_OFF)
     # sub(const.STR_AI_NEWS)

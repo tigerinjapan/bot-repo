@@ -53,11 +53,6 @@ GRANT_TYPE_REFRESH_TOKEN = "リフレッシュトークン"
 ISSUE_TYPE_ACCESS_TOKEN = "アクセストークン"
 ISSUE_TYPE_REFRESH_TOKEN = GRANT_TYPE_REFRESH_TOKEN
 
-# Kakaoメッセージタイプ
-OBJECT_TYPE_FEED = "feed"
-OBJECT_TYPE_TEXT = "text"
-OBJECT_TYPE_LIST = "list"
-
 # ボタン
 BTN_TITLE_FLIGHT = "✈ 최저가 항공권 정보 ✈"
 BTN_TITLE_MORE = "더 보기"
@@ -194,7 +189,7 @@ def get_receiver_uuids(access_token: str = const.SYM_BLANK) -> list[str]:
 
 def send_kakao_msg(
     access_token: str,
-    object_type: str = OBJECT_TYPE_TEXT,
+    object_type: str = const.OBJECT_TYPE_TEXT,
     title: str = const.SYM_BLANK,
     message: str = const.SYM_BLANK,
     link: str = const.SYM_BLANK,
@@ -234,20 +229,20 @@ def get_template_object(
     if title == const.STR_TEST:
         contents = get_template_contents(object_type, title, message)
     else:
-        if object_type == OBJECT_TYPE_FEED:
+        if object_type == const.OBJECT_TYPE_FEED:
             func.print_debug_msg(const.STR_IMG, img_url)
             content = {
                 "image_url": img_url,
                 "title": title,
                 "description": message,
-                "link": {"mobile_web_url": link_mo},
+                "link": {"web_url": link, "mobile_web_url": link_mo},
             }
 
             contents = {
                 "content": content,
             }
 
-        elif object_type == OBJECT_TYPE_LIST:
+        elif object_type == const.OBJECT_TYPE_LIST:
             param_list = message
 
             content_list = []
@@ -260,10 +255,7 @@ def get_template_object(
 
             contents = {
                 "header_title": title,
-                "header_link": {
-                    "web_url": link,
-                    "mobile_web_url": link_mo,
-                },
+                "header_link": {"web_url": link, "mobile_web_url": link_mo},
                 "contents": content_list,
                 "button_title": BTN_TITLE_MORE,
             }
@@ -285,7 +277,7 @@ def get_template_object(
 
 
 def get_template_contents(
-    object_type: str = OBJECT_TYPE_TEXT, title: str = const.SYM_BLANK
+    object_type: str = const.OBJECT_TYPE_TEXT, title: str = const.SYM_BLANK
 ):
     """
     テンプレートコンテンツ取得
@@ -358,7 +350,7 @@ def get_template_contents(
         },
     ]
 
-    if object_type == OBJECT_TYPE_FEED:
+    if object_type == const.OBJECT_TYPE_FEED:
         content = content_list[0]
         item_list = [
             {"item": "CakeTe", "item_op": "1,000,000원"},
@@ -389,7 +381,7 @@ def get_template_contents(
             "buttons": button_list,
         }
 
-    elif object_type == OBJECT_TYPE_LIST:
+    elif object_type == const.OBJECT_TYPE_LIST:
         contents = {
             "header_title": title,
             "header_link": {
@@ -600,6 +592,6 @@ def get_test_message_content(
 
 if __name__ == const.MAIN_FUNCTION:
     # token = get_access_token()
-    # object_type = OBJECT_TYPE_FEED
+    # object_type = const.OBJECT_TYPE_FEED
     # send_kakao_msg(token, object_type)
     get_test_message_content()

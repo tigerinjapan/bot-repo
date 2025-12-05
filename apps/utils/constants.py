@@ -292,6 +292,7 @@ STR_BROWSER = "browser"
 STR_CAPITALIZE = "capitalize"
 STR_CATEGORY = "category"
 STR_CHANNEL = "channel"
+STR_CHECK = "check"
 STR_CLIENT = "client"
 STR_COMPANY = "company"
 STR_CONTENTS = "contents"
@@ -310,6 +311,7 @@ STR_DIV = "div"
 STR_DUMMY = "dummy"
 STR_EASY = "easy"
 STR_ENGLISH = "english"
+STR_ENTERTAINMENT = "entertainment"
 STR_ERROR = "error"
 STR_ETC = "etc"
 STR_EXPIRATION = "expiration"
@@ -327,9 +329,11 @@ STR_INFO = "info"
 STR_INPUT = "input"
 STR_IP = "ip"
 STR_ITEM = "item"
+STR_JAPAN = "japan"
 STR_KAKAO = "kakao"
 STR_KEY = "key"
 STR_KEYWORD = "keyword"
+STR_KOREA = "korea"
 STR_KOREAN = "korean"
 STR_LABEL = "label"
 STR_LABELS = "labels"
@@ -346,6 +350,7 @@ STR_MESSAGE = "message"
 STR_MONGO = "mongo"
 STR_MONTH = "month"
 STR_NAME = "name"
+STR_NIKKEI = "nikkei"
 STR_NISA = "nisa"
 STR_NOTIFY = "notify"
 STR_NUMBER = "number"
@@ -374,15 +379,14 @@ STR_UPPER = "upper"
 STR_URL = "url"
 STR_USER = "user"
 STR_WEEK = "week"
+STR_WORLD = "world"
 STR_YEAR = "year"
 
 STR_AI = "AI"
-STR_AI_NEWS = "ai_news"
+STR_AI_NEWS = "AI NEWS"
 STR_ENV_VAR = "env_var"
-STR_JAPAN = "Japan"
-STR_KOREA = "Korea"
 STR_KPOP = "kpop"
-STR_LCC_NEWS = "lcc news"
+STR_LCC_NEWS = "LCC NEWS"
 STR_LINE_API = "LINE API"
 STR_PHRASE_KO = "phrase_ko"
 STR_SECRET_KEY = "secret_key"
@@ -390,10 +394,6 @@ STR_USER_INFO = "userInfo"
 STR_X_TREND = "x trend"
 STR_ZIP_CODE = "zipCode"
 
-STR_ENT_JA = "エンタメ"
-STR_KOREA_JA = "韓国"
-STR_NEWS_JA = "ニュース"
-STR_NIKKEI_JA = "日経"
 STR_WOMAN_JA = "女性"
 
 STR_JPY = "JPY"
@@ -485,6 +485,12 @@ DIV_MARK = "*----*----*----*----*----*"
 MARK_PATTERN_1 = "-"
 MARK_PATTERN_2 = "■"
 MARK_PATTERN_3 = "="
+
+##### Kakao #####
+# メッセージタイプ
+OBJECT_TYPE_FEED = "feed"
+OBJECT_TYPE_TEXT = "text"
+OBJECT_TYPE_LIST = "list"
 
 ##### ファンド #####
 FUND_NO_SP_500 = "182809"
@@ -653,7 +659,7 @@ LIST_APP_DOCUMENT = [
     APP_URL_DESIGN,
 ]
 
-LIST_CATEGORY = ["news", "entertainment", "service", "management", "document"]
+LIST_CATEGORY = [APP_NEWS, STR_ENTERTAINMENT, "service", "management", "document"]
 LIST_APP_CATEGORY = [
     LIST_APP_NEWS,
     LIST_APP_ENTERTAINMENT,

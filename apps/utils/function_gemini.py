@@ -133,7 +133,7 @@ def get_gemini_response(
         )
 
     if not result:
-        func.print_error_msg(
+        func.print_debug_msg(
             SCRIPT_NAME, curr_func_nm, msg_const.MSG_ERR_API_RESPONSE_NONE
         )
 
@@ -507,9 +507,9 @@ def get_sample_contents(
 
         if msg_flg:
             add_contents = (
-                "出力結果は、英語にする。"
+                "出力結果は、日本語にする。"
                 f"※出力例{const.SYM_NEW_LINE}"
-                f"Winter in Japan, Snow and beautiful"
+                f"雪景色と温泉、温かい鍋が心を満たす季節"
             )
         else:
             add_contents = (

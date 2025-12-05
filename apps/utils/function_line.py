@@ -295,20 +295,18 @@ def get_bubble_contents(data_list):
     return bubble_contents
 
 
-def get_temp_img():
+def get_temp_img(section: str = const.STR_WORLD):
     """
     イメージ取得
     """
     img_url = headline = const.SYM_BLANK
 
-    section = "world"
-    # section = "weather"
-    title = f"CNN {section}"
+    title = f"CNN {func.upper_str(section)}"
     url = f"https://edition.cnn.com/{section}"
     class_ = "container__item--type-media-image"
     soup = func_bs.get_elem_from_url(url, attr_val=class_)
     if soup:
-        img_elem = func_bs.find_elem_by_class(soup, "image image__hide-placeholder")
+        img_elem = func_bs.find_elem_by_class(soup, "image__hide-placeholder")
         img_url = img_elem.get("data-url").replace("?c=original", const.SYM_BLANK)
         headline_elem = func_bs.find_elem_by_class(soup, "container__headline-text")
         headline_text = headline_elem.text
@@ -323,5 +321,5 @@ def get_temp_img():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    get_channel_access_token()
-    # get_temp_img()
+    # get_channel_access_token()
+    get_temp_img()

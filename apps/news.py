@@ -14,10 +14,10 @@ col_list = [const.STR_DIV, const.APP_NEWS]
 NEW_LINE = const.SYM_NEW_LINE
 
 # 区分
-DIV_NEWS = "{}" + const.STR_NEWS_JA
-DIV_NIKKEI_NEWS = DIV_NEWS.format(const.STR_NIKKEI_JA)
-DIV_KOREA_NEWS = DIV_NEWS.format(const.STR_KOREA_JA)
-DIV_ENT_NEWS = DIV_NEWS.format(const.STR_ENT_JA)
+DIV_NEWS = "{} " + const.APP_NEWS
+DIV_NIKKEI_NEWS = DIV_NEWS.format(const.STR_NIKKEI)
+DIV_KOREA_NEWS = DIV_NEWS.format(const.STR_KOREA)
+DIV_ENT_NEWS = DIV_NEWS.format(const.STR_ENTERTAINMENT)
 DIV_KPOP_NEWS = DIV_NEWS.format(const.STR_KPOP)
 DIV_AI_NEWS = DIV_NEWS.format(const.STR_AI)
 DIV_AI_NEWS_LIST = [DIV_AI_NEWS]
@@ -30,10 +30,10 @@ DIV_NEWS_LIST = [
 ]
 
 ITEM_NEWS_LIST = [
-    const.STR_NIKKEI_JA,
+    const.STR_NIKKEI,
     const.STR_AI,
-    const.STR_KOREA_JA,
-    const.STR_ENT_JA,
+    const.STR_KOREA,
+    const.STR_ENTERTAINMENT,
     const.STR_KPOP,
 ]
 
@@ -128,7 +128,7 @@ def get_news_list(
                 news_contents = func.get_a_tag(url_news, news_text)
 
                 if url_flg:
-                    news_title = f"[{const.STR_NIKKEI_JA}] {news_text}"
+                    news_title = f"[{const.STR_NIKKEI}] {news_text}"
                     news_contents = [news_title, url_news]
 
                 if list_flg:

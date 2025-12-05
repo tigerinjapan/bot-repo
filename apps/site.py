@@ -15,20 +15,20 @@ col_list = [
     const.STR_TITLE,
     const.STR_CONTENTS,
 ]
-col_list_cafe = ["店名", "住所", "メニュー", "内観"]
-col_list_travel = ["区分", "内容", "アクセス", "画像"]
+col_list_cafe = [const.STR_NAME, const.STR_ADDR, "menu", "interior"]
+col_list_travel = [const.STR_DIV, const.STR_CONTENTS, const.STR_ACCESS, const.STR_IMG]
 col_list_board = [
-    "番号",
-    "アプリ",
-    "カテゴリー",
-    "区分",
-    "内容",
-    "備考",
-    "状態",
-    "作成者",
-    "更新日",
+    mongo_const.ITEM_SEQ,
+    mongo_const.ITEM_APP,
+    mongo_const.ITEM_CATEGORY,
+    mongo_const.ITEM_TYPE,
+    mongo_const.ITEM_CONTENTS,
+    mongo_const.ITEM_REMARK,
+    mongo_const.ITEM_STATUS,
+    const.STR_USER,
+    const.STR_UPDATE,
 ]
-col_list_board_all = col_list_board + ["完了状態"]
+col_list_board_all = col_list_board + [const.STR_CHECK]
 
 menu_travel_div = ["両替所", "観光地", "レストラン", "その他"]
 

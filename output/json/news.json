@@ -1,18 +1,18 @@
 [
     {
-        "div": "日経",
-        "news": "<a href=\"https://www.nikkei.com/article/DGXZQOUC03CFZ0T01C25A2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">NVIDIA幹部「日本\nもうロボット大国ではない」AIで一変</a>"
+        "div": "nikkei",
+        "news": "<a href=\"https://www.nikkei.com/article/DGXZQOUA054FY0V01C25A2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">70歳以上の外来「通い放題」を厳格化厚労省専門委\n限度額上げ提起へ</a>"
     },
     {
-        "div": "韓国",
-        "news": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56735\" target=\"_blank\" rel=\"noopener noreferrer\">【旅行】 釜山訪問した外国人 初の年間3百万人超え5百万人達成へ催し拡充</a>"
+        "div": "korea",
+        "news": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56746\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 BTSジョングクとaespaウィンター交際か 腕に同じタトゥー</a>"
     },
     {
-        "div": "エンタメ",
-        "news": "<a href=\"https://www.wowkorea.jp/news/read/509459.html\" target=\"_blank\" rel=\"noopener noreferrer\">GDRAGON(BIGBANG)&JENNIE(BLACKPINK)\n破局後3年ぶりに再会を選択\nとても嬉しいニュース</a>"
+        "div": "entertainment",
+        "news": "<a href=\"https://www.wowkorea.jp/news/read/509459.html\" target=\"_blank\" rel=\"noopener noreferrer\">GDRAGON(BIGBANG)&JENNIE(BLACKPINK)\n破局後3年ぶりに再会を選択\nとてもうれしいニュース</a>"
     },
     {
         "div": "kpop",
-        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/509464.html\" target=\"_blank\" rel=\"noopener noreferrer\">「iKON」BOBBY\n常勤予備役服務を終え除隊</a>"
+        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/509535.html\" target=\"_blank\" rel=\"noopener noreferrer\">「2PM」イジュノ\n「NEPA」ファンサイン会開催\n大盛況で終了</a>"
     }
 ]

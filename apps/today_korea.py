@@ -85,7 +85,7 @@ def get_item_list():
     return item_list
 
 
-def get_today_info(object_type: str = func_kakao.OBJECT_TYPE_FEED):
+def get_today_info():
     """
     今日の生活情報取得
     """

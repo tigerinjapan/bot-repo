@@ -60,7 +60,7 @@ def get_response_result(
             func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg)
             if not response:
                 err_msg = f"{url} {msg_const.MSG_ERR_API_RESPONSE_NONE}"
-                func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg)
+                func.print_debug_msg(SCRIPT_NAME, curr_func_nm, err_msg)
 
     except requests.exceptions.ConnectionError as ce:
         msg = f"{msg_const.MSG_ERR_SERVER_NOT_WORKING} {url}"

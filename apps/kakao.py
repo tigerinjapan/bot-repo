@@ -17,14 +17,14 @@ SCRIPT_NAME = func.get_app_name(__file__)
 
 def main(
     div: str = const.APP_TODAY,
-    object_type=func_kakao.OBJECT_TYPE_TEXT,
+    object_type: str = const.OBJECT_TYPE_TEXT,
     list_flg: bool = const.FLG_OFF,
 ):
     """
     メインの処理を実行
 
     引数:
-        div (str): today, ai_news, lcc, test
+        div (str): today, AI NEWS, LCC NEWS, test
         object_type (str): feed, list, text
         list_flg (bool): 一括送信フラグ # TODO: [pending] チャネル登録必要
     """
@@ -48,7 +48,7 @@ def main(
                     # 今日のニュース取得
                     message, file_path = today_korea.get_today_info()
                     if file_path:
-                        object_type = func_kakao.OBJECT_TYPE_FEED
+                        object_type = const.OBJECT_TYPE_FEED
                         title = "【오늘의 한마디】"
                         message = today_korea.get_phrase()
                     else:
@@ -58,12 +58,12 @@ def main(
                     link_mo = today_korea.URL_LINK_MO
 
                 elif div == const.STR_LCC_NEWS:
-                    object_type = func_kakao.OBJECT_TYPE_LIST
+                    object_type = const.OBJECT_TYPE_LIST
                     message = lcc.get_lcc_news_list()
                     link = link_mo = const.URL_LCC
 
                 elif div == const.STR_AI_NEWS:
-                    object_type = func_kakao.OBJECT_TYPE_LIST
+                    object_type = const.OBJECT_TYPE_LIST
                     message = today_korea.get_it_news_list()
                     link = link_mo = today_korea.URL_ET_NEWS
 
@@ -71,6 +71,11 @@ def main(
                     message = div
 
                 if title and message:
+                    if object_type == const.OBJECT_TYPE_LIST:
+                        if len(message) == 1:
+                            object_type = const.OBJECT_TYPE_TEXT
+                            message = const.SYM_NEW_LINE.join(message[0])
+
                     # メッセージ送信
                     func_kakao.send_kakao_msg(
                         token,
@@ -98,7 +103,7 @@ def main(
 
 
 if __name__ == const.MAIN_FUNCTION:
-    div = const.APP_TODAY
-    # div = const.APP_LCC
-    # div = const.STR_AI_NEWS
+    # div = const.APP_TODAY
+    # div = const.STR_LCC_NEWS
+    div = const.STR_AI_NEWS
     main(div)
