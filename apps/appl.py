@@ -284,7 +284,7 @@ def no_sleep():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # update_news()
+    # update_news(const.APP_STUDY)
     app_name_list = [const.APP_TODAY_KOREA, const.APP_TODAY]
     for app_name in app_name_list:
         update_news(app_name)

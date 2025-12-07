@@ -25,25 +25,37 @@ def get_item_list(keyword_list: list[str] = []) -> list[str]:
     データリスト取得
     """
     item_list = []
-
-    # 7時に一度のみ実施
-    if func.get_now(const.DATE_HOUR) != 7:
-        return item_list
+    news_summary = []
+    conversation = korean = const.SYM_BLANK
+    start_idx = end_idx = 0
 
     if not keyword_list:
         keyword_list = LIST_KEYWORD
 
     for keyword in keyword_list:
         news_summary = get_naver_news_summary(keyword)
-        if not news_summary or len(news_summary) != 3:
+        if not news_summary or len(news_summary) < 2:
             continue
 
-        conversation = news_summary[1]
-        korean = news_summary[2]
+        for i, contents in enumerate(news_summary):
+            if "[会話]" in contents:
+                start_idx = i
+            elif "[熟語]" in contents:
+                end_idx = i
 
-        if "[1]" in korean:
+            if start_idx < end_idx:
+                if len(news_summary) == 2:
+                    conversation = news_summary[start_idx]
+                    korean = news_summary[end_idx]
+                else:
+                    conversation = const.SYM_NEW_LINE(news_summary[start_idx:end_idx])
+                    korean = const.SYM_NEW_LINE(news_summary[end_idx:])
+                break
+
+        if conversation and korean:
             study_item = [conversation, korean]
             item_list.append(study_item)
+            break
 
     return item_list
 

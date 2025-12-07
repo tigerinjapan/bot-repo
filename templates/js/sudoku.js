@@ -14,7 +14,7 @@ const PENALTY_SECONDS = 30;
 const INITIAL_HINTS = 3;
 
 // 空けるマス数（レベル：medium）
-const HOLES_DEFAULT = 55;
+const HOLES_DEFAULT = 50;
 const HOLES_LEVEL = 10;
 
 // スコア
