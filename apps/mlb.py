@@ -256,13 +256,13 @@ def is_season_day() -> bool:
     """
     target_date = func.get_now()
 
-    # 1. 3月最終土曜日（期間の開始日）を求める
+    # 1. 3月最終土曜日 (期間の開始日)を求める
     d = target_date.replace(month=3, day=31)
     while d.weekday() != 5:
         d = func.get_calc_date(-1, calc_date=d)
     start_date = d
 
-    # 2. 11月最初の日曜日（期間の終了日）を求める
+    # 2. 11月最初の日曜日 (期間の終了日)を求める
     d = target_date.replace(month=11, day=1)
     while d.weekday() != 6:
         d = func.get_calc_date(1, calc_date=d)

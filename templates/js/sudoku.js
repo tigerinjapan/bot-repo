@@ -4,16 +4,16 @@ setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 /**
  * ゲーム設定定数
  */
-// ゲーム制限時間（秒）
+// ゲーム制限時間 (秒)
 const GAME_TIMEOUT_SECONDS = 1200;
 
-// 不正解時のペナルティ時間（秒）
+// 不正解時のペナルティ時間 (秒)
 const PENALTY_SECONDS = 30;
 
 // ヒント数
 const INITIAL_HINTS = 3;
 
-// 空けるマス数（レベル：medium）
+// 空けるマス数 (レベル：medium)
 const HOLES_DEFAULT = 50;
 const HOLES_LEVEL = 10;
 
@@ -35,7 +35,7 @@ let puzzle = [];
 // 正しい解答
 let solution = [];
 
-// 固定マス（変更不可）
+// 固定マス (変更不可)
 let initialPuzzle = [];
 
 // ユーザー名
@@ -51,8 +51,8 @@ const GAME_RULES = {
   ja: {
     title: "ゲーム ルール",
     body: `
-      ナンプレ（数独）は、9×9のマス目に1から9までの数字を入れるパズルです。\n
-      1. 横（行）・縦（列）に1から9までの数字が一つずつ入る。
+      ナンプレ (数独)は、9×9のマス目に1から9までの数字を入れるパズルです。\n
+      1. 横 (行)・縦 (列)に1から9までの数字が一つずつ入る。
       2. 9つの3×3のブロックそれぞれに1から9までの数字が一つずつ入る。
       3. 空のマスをタップし、表示された数字を入力できる。
       4. 間違える度に残り時間が1分短縮される。
@@ -83,7 +83,7 @@ const GAME_RULES = {
   }
 };
 
-// ゲームロジック（パズル生成・管理）
+// ゲームロジック (パズル生成・管理)
 // 9x9の完成した数独の解
 const SUDOKU_SOLUTION = [
   [5, 3, 4, 6, 7, 8, 9, 1, 2],
@@ -106,7 +106,7 @@ let ruleButton, hintButton, homeButton, hintCounter, modalOverlay, modalTitle, m
 document.addEventListener('DOMContentLoaded', initApp);
 
 /**
- * 初期化（DOM 要素の取得）
+ * 初期化 (DOM 要素の取得)
  */
 function initApp() {
   let btnParentElemId = "start-controls";
@@ -209,7 +209,7 @@ function startGame() {
   hintsLeft = INITIAL_HINTS;
   if (hintCounter) hintCounter.textContent = hintsLeft;
 
-  // ヒントボタンを有効化（リセット時）
+  // ヒントボタンを有効化 (リセット時)
   if (hintButton) {
     hintButton.disabled = false;
     hintButton.classList.remove('disabled-hint');
@@ -240,7 +240,7 @@ function startGame() {
  * ランダムロジック生成
  */
 function generatePuzzle() {
-  // 解答をシャッフルコピーで作成（毎回ランダムに）
+  // 解答をシャッフルコピーで作成 (毎回ランダムに)
   solution = shuffleSolution(SUDOKU_SOLUTION).map(row => [...row]);
   let initialBoard = solution.map(row => [...row]);
 
@@ -312,7 +312,7 @@ function cloneGrid(grid) {
 }
 
 /**
- * 配列を破壊的にシャッフル（Fisher-Yates）
+ * 配列を破壊的にシャッフル (Fisher-Yates)
  */
 function shuffleArray(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -324,7 +324,7 @@ function shuffleArray(arr) {
 
 /**
  * 表示のランダム化
- * （行/列の入れ替え・バンド/スタック入れ替え・数字置換）
+ *  (行/列の入れ替え・バンド/スタック入れ替え・数字置換)
  * 
  * @param {string} base - 固定の完成盤
  * @returns グリッド
@@ -333,7 +333,7 @@ function shuffleSolution(base) {
   // 1) コピー
   let grid = cloneGrid(base);
 
-  // 2) 数字をランダムマップする（1..9 -> permuted 1..9）
+  // 2) 数字をランダムマップする (1..9 -> permuted 1..9)
   const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const perm = shuffleArray(digits.slice());
   const mapDigit = (v) => perm[v - 1];
@@ -359,7 +359,7 @@ function shuffleSolution(base) {
   }
   grid = newGridRows;
 
-  // 4) 列（スタック）についても同様にシャッフル
+  // 4) 列 (スタック)についても同様にシャッフル
   // transpose, operate like rows, then transpose back
   function transpose(g) {
     const t = Array(9).fill(null).map(() => Array(9).fill(0));
@@ -514,7 +514,7 @@ function checkGameCompletion() {
   for (let r = 0; r < 9; r++) {
     for (let c = 0; c < 9; c++) {
       const value = puzzle[r][c];
-      // 0（空き）がないか、または解と一致しないマスがある
+      // 0 (空き)がないか、または解と一致しないマスがある
       if (value === 0 || value !== solution[r][c]) {
         return false;
       }
@@ -667,7 +667,7 @@ function updateTimer() {
     clearInterval(timer);
     timerText.textContent = "00:00 TIME OUT";
     showModal("TIME OUT", "TIME OVER !!");
-    // すべての入力を無効化（固定マス化）
+    // すべての入力を無効化 (固定マス化)
     initialPuzzle = solution.map(row => [...solution]);
     renderBoard();
   }
@@ -745,7 +745,7 @@ function calculateScore() {
   // 5分未満 = 0点
   const INITIAL_TIME_SECONDS = 300;
 
-  // 1点あたり秒数（6秒/点）
+  // 1点あたり秒数 (6秒/点)
   const TIME_PER_POINT = 6;
 
   // スコア対象秒数
@@ -776,7 +776,7 @@ function calculateScore() {
  * 
  * @param {Array<Object>} data - ランキングデータ
  * @param {string} targetUserName - 取得したいユーザー名
- * @return {number|string} ベストスコア（数値）またはデータがない場合は "-"
+ * @return {number|string} ベストスコア (数値)またはデータがない場合は "-"
  */
 function getUserBestScore() {
   // 1. 指定ユーザーのデータのみをフィルタリング
@@ -802,7 +802,7 @@ function getUserBestScore() {
  * 時間表示をMM:SS形式に変換
  * 
  * @param {number} seconds - 秒
- * @return {string} 時間（MM:SS形式）
+ * @return {string} 時間 (MM:SS形式)
  */
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);

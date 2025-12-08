@@ -142,7 +142,7 @@ function sendReview() {
       console.log(msg);
       alert(MSG_OK_SEND_EN);
 
-      // ページ全体をリセット（再読み込み）
+      // ページ全体をリセット (再読み込み)
       location.reload();
     } catch {
       setElemText(STR_MESSAGE, MSG_ERR_SEND_EN);

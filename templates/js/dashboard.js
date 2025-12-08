@@ -142,7 +142,7 @@ function updateLineBarChart(chartId, type, dataItems, title) {
 }
 
 /**
- * 円グラフ（ドーナツ型）を描画する共通関数
+ * 円グラフ (ドーナツ型)を描画する共通関数
  * 
  * @param {string} chartId - チャートID
  * @param {string} dataItems - データ

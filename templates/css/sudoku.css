@@ -3,7 +3,7 @@
 * 未来的なサイバーテーマ
 */
 :root {
-	/* カラーコード（英字名を使用） */
+	/* カラーコード (英字名を使用) */
 	--color-bg-primary: black;
 	--color-bg-secondary: darkslategray;
 	--color-neon-light: cyan;
@@ -288,14 +288,14 @@ input[type="text"] {
 	border-bottom-width: 1px;
 }
 
-/* 行の境界線（3x3ブロックの外側） */
+/* 行の境界線 (3x3ブロックの外側) */
 .sudoku-cell:nth-child(n + 19):nth-child(-n + 27),
 .sudoku-cell:nth-child(n + 46):nth-child(-n + 54) {
 	border-bottom-width: 3px;
 	border-bottom-color: var(--color-neon-light);
 }
 
-/* 固定値（最初から開いているマス） */
+/* 固定値 (最初から開いているマス) */
 .fixed-cell {
 	background-color: #0f1f2f;
 	color: var(--color-neon-light);
@@ -314,7 +314,7 @@ input[type="text"] {
 	box-shadow: 0 0 10px var(--color-neon-light) inset;
 }
 
-/* エラーセル（間違った入力） */
+/* エラーセル (間違った入力) */
 .error {
 	font-weight: 700;
 	background-color: rgba(255, 0, 0, 0.3);
@@ -392,7 +392,7 @@ input[type="text"] {
 }
 
 /*
-* モーダル（ルール、メッセージ表示）
+* モーダル (ルール、メッセージ表示)
 */
 #modal-overlay {
 	position: fixed;

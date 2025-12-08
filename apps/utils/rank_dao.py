@@ -116,7 +116,7 @@ def get_rank_top(
 
 def update_rank_info_of_api(json_data):
     """
-    ランク情報更新（API）: number
+    ランク情報更新 (API): number
     """
     coll_rank = mongo_const.COLL_RANK_INFO
     update_data = rank_dto.get_rank_info_data(json_data, update_flg=const.FLG_ON)
@@ -133,7 +133,7 @@ def update_rank_info_of_api(json_data):
 
 def update_ranking_of_api(app_name: str, json_data):
     """
-    ランキング情報更新（API）: sudoku, itQuiz
+    ランキング情報更新 (API): sudoku, itQuiz
     """
     coll_rank = mongo_const.COLL_RANKING
     insert_data, target_rank, target_score = rank_dto.get_update_data_for_ranking(

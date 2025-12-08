@@ -16,7 +16,7 @@ col_list = [const.STR_DIV, const.APP_NEWS]
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
 
-# 定数（日本語）
+# 定数 (日本語)
 DIV_DATE = "日時"
 DIV_WEATHER = "天気"
 DIV_WEATHER_PLUS = "天気+"

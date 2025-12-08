@@ -43,7 +43,7 @@ class AppExec:
 
     def __init__(self, app, name):
         """
-        初期化メソッド（コンストラクタ）
+        初期化メソッド (コンストラクタ)
         """
         self.app = app
         self.name = name

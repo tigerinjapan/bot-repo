@@ -64,7 +64,7 @@ function init() {
   const number = getElem("number-display");
   number.style.backgroundColor = "cyan";
 
-  // --- exprArea を必ず用意（存在しない場合は DOM に生成して挿入） ---
+  // --- exprArea を必ず用意 (存在しない場合は DOM に生成して挿入) ---
   let exprArea = getElem("exprArea");
   if (!exprArea) {
     exprArea = document.createElement("div");
@@ -73,10 +73,10 @@ function init() {
     if (number && number.parentNode) number.parentNode.insertBefore(exprArea, number.nextSibling);
     else document.body.appendChild(exprArea);
   }
-  // 内部保持用プロパティ初期化（expression id に依存しない）
+  // 内部保持用プロパティ初期化 (expression id に依存しない)
   exprArea.dataset.expr = exprArea.dataset.expr || SYM_BLANK;
   exprArea._tokens = exprArea._tokens || [];
-  // 初期は非表示にしておく（START 押下で表示）
+  // 初期は非表示にしておく (START 押下で表示)
   exprArea.style.opacity = "0";
   exprArea.style.pointerEvents = ATTR_NONE;
   exprArea.style.transition = "opacity 0.15s ease";
@@ -159,10 +159,10 @@ function setStartBtn() {
       const number = getElem("number-display");
       number.style.backgroundColor = COLOR_BLACK;
 
-      // START/STOP トグル（表示は opacity で制御）
+      // START/STOP トグル (表示は opacity で制御)
       let exprArea = getElem("exprArea");
       if (!isTimerRunning) {
-        // START: 表示してタイマー開始（操作可能に）
+        // START: 表示してタイマー開始 (操作可能に)
         if (exprArea) {
           exprArea.style.opacity = "1";
           exprArea.style.pointerEvents = "auto";
@@ -289,7 +289,7 @@ function checkAnswer(langCd) {
   const rankTime = getElemText("rank-time");
   const timeVal = getElemText("timer");
 
-  // exprArea の内部トークンから現在の式文字列を組み立てる（expression id に依存しない）
+  // exprArea の内部トークンから現在の式文字列を組み立てる (expression id に依存しない)
   const exprArea = getElem("exprArea");
   let expr = SYM_BLANK;
   if (exprArea && Array.isArray(exprArea._tokens)) {
@@ -336,7 +336,7 @@ function renderInputButtons(numberStr) {
   if (!exprArea) return;
   exprArea.innerHTML = SYM_BLANK;
 
-  // tokens 初期化（num と slot）
+  // tokens 初期化 (num と slot)
   const digits = String(numberStr).split("");
   const tokens = [];
   for (let i = 0; i < digits.length; i++) {
@@ -375,7 +375,7 @@ function renderInputButtons(numberStr) {
   }
 
   /**
-   * 数字ボタン押下: 選択肢の表示（√ と 上付き / back 対応）
+   * 数字ボタン押下: 選択肢の表示 (√ と 上付き / back 対応)
    */
   function onDigitClick(e) {
     const idx = Number(e.currentTarget.dataset.idx);
@@ -390,22 +390,22 @@ function renderInputButtons(numberStr) {
     // 判定: このトークンが「空箱削除で結合された2桁トークン」か
     const isMergedTwoDigit = /^\d{2}$/.test(raw) && token._history && token._history.some(h => h.type === "merge");
 
-    // 左側に空箱があるか（トークン構造上、左隣が slot で val===null）
+    // 左側に空箱があるか (トークン構造上、左隣が slot で val===null)
     const leftIdx = idx - 1;
     const leftIsEmptySlot = 0 <= leftIdx && exprArea._tokens[leftIdx] && exprArea._tokens[leftIdx].type === "slot" && exprArea._tokens[leftIdx].val == null;
 
     let choices = [];
 
-    // 装飾や履歴がある場合は back を常に提示（他候補も追加可能にする）
+    // 装飾や履歴がある場合は back を常に提示 (他候補も追加可能にする)
     if (hasSqrt || hasSup || hasHistory) {
       choices.push("back");
     }
 
     // merge による2桁合成トークンでは、合成向け候補を追加
     if (isMergedTwoDigit) {
-      // √（合成値に対して有効なら）
+      // √ (合成値に対して有効なら)
       if (isSqrtEligible(raw)) choices.push("√");
-      // base+上付き（右桁が0/1/2のとき）
+      // base+上付き (右桁が0/1/2のとき)
       const base = raw.charAt(0);
       const expo = raw.charAt(1);
       if (/[012]/.test(expo)) {
@@ -434,7 +434,7 @@ function renderInputButtons(numberStr) {
         popup.remove();
         if (!choice) return;
 
-        // back: 履歴があれば復元（merge の場合は split を復元）
+        // back: 履歴があれば復元 (merge の場合は split を復元)
         if (choice === "back") {
           if (token._history && 0 < token._history.length) {
             const last = token._history.pop();
@@ -444,7 +444,7 @@ function renderInputButtons(numberStr) {
               refresh();
               return;
             } else if (last.type === "merge") {
-              // split: leftPrev / rightPrev を復元（現在 token は leftPrev+rightPrev）
+              // split: leftPrev / rightPrev を復元 (現在 token は leftPrev+rightPrev)
               token.val = last.leftPrev;
               exprArea._tokens.splice(idx + 1, 0, { type: "slot", val: null }, { type: "num", val: last.rightPrev });
               if (token._history && token._history.length === 0) delete token._history;
@@ -477,7 +477,7 @@ function renderInputButtons(numberStr) {
           return;
         }
 
-        // 例: "2¹" のような base+上付き（merge 2桁向け）
+        // 例: "2¹" のような base+上付き (merge 2桁向け)
         if (/^[1-9][⁰¹²]$/.test(choice)) {
           token._history = token._history || [];
           token._history.push({ type: "modify", prevVal: token.val });
@@ -495,7 +495,7 @@ function renderInputButtons(numberStr) {
   function onSlotClick(e) {
     const idx = Number(e.currentTarget.dataset.idx);
     const token = exprArea._tokens[idx];
-    // options: back は表示しない（slot が空のとき）
+    // options: back は表示しない (slot が空のとき)
     const options = ["+", "-", "*", "/", "=", "del"];
     if (token.val) options.push("back");
     const popup = createSmallPopup(options, e.currentTarget);
@@ -504,18 +504,18 @@ function renderInputButtons(numberStr) {
         const choice = b.dataset.choice;
         popup.remove();
         if (choice === "del") {
-          // スロット削除 -> 左右の数を結合（文字列連結）
+          // スロット削除 -> 左右の数を結合 (文字列連結)
           const leftIdx = idx - 1;
           const rightIdx = idx + 1;
           if (0 <= leftIdx && rightIdx < exprArea._tokens.length &&
             exprArea._tokens[leftIdx].type === "num" &&
             exprArea._tokens[rightIdx].type === "num") {
-            // 履歴を残してからマージ（back で復元可能にする）
+            // 履歴を残してからマージ (back で復元可能にする)
             const leftTok = exprArea._tokens[leftIdx];
             const rightTok = exprArea._tokens[rightIdx];
             leftTok._history = leftTok._history || [];
             leftTok._history.push({ type: "merge", leftPrev: leftTok.val, rightPrev: rightTok.val });
-            // 文字列結合（既存装飾は保持される形で単純連結）
+            // 文字列結合 (既存装飾は保持される形で単純連結)
             leftTok.val = String(leftTok.val) + String(rightTok.val);
             exprArea._tokens.splice(rightIdx, 1);
             exprArea._tokens.splice(idx, 1);
@@ -549,7 +549,7 @@ function renderInputButtons(numberStr) {
     const popup = document.createElement("div");
     popup.className = "small-popup";
 
-    // ボタンを生成して popup に追加（重要: append を忘れない）
+    // ボタンを生成して popup に追加 (重要: append を忘れない)
     choices.forEach(ch => {
       const b = document.createElement("button");
       b.type = "button";
@@ -566,7 +566,7 @@ function renderInputButtons(numberStr) {
     const winW = window.innerWidth || document.documentElement.clientWidth;
     popup.style.position = "absolute";
     popup.style.top = (rect.bottom + window.scrollY + 8) + "px";
-    // 左位置を安定させる（右端にはみ出す場合は調整）
+    // 左位置を安定させる (右端にはみ出す場合は調整)
     let left = rect.left + window.scrollX;
     // 最小マージン
     if (left < 6) left = 6;
@@ -578,7 +578,7 @@ function renderInputButtons(numberStr) {
     popup.style.left = left + "px";
     popup.style.zIndex = "3000";
 
-    // クリック外で閉じる（1フレーム遅延してイベントを設置）
+    // クリック外で閉じる (1フレーム遅延してイベントを設置)
     setTimeout(() => {
       const onDoc = (ev) => {
         if (!popup.contains(ev.target) && ev.target !== anchorElem) {
@@ -592,7 +592,7 @@ function renderInputButtons(numberStr) {
   }
 
   /**
-   * √の適用可否（要求仕様: 4..81 の完全平方数で sqrt が 2..9 の整数）
+   * √の適用可否 (要求仕様: 4..81 の完全平方数で sqrt が 2..9 の整数)
    * 
    * @param {string} valStr - 対象文字
    * @return {boolean} true : √適用, false : √適用しない
@@ -657,10 +657,10 @@ function validate(num, ans, expr, langCd) {
     return noInputMsg;
   }
 
-  // 表示上の上付き文字（⁰¹²）は数字 0/1/2 として扱うため正規化
+  // 表示上の上付き文字 (⁰¹²)は数字 0/1/2 として扱うため正規化
   const exprNorm = String(expr).replace(/⁰/g, "0").replace(/¹/g, "1").replace(/²/g, "2");
 
-  // 数字チェック（表示中の数字文字のみ抽出）
+  // 数字チェック (表示中の数字文字のみ抽出)
   const numDigits = String(num).replace(/\D/g, "");
   const exprDigitsArr = exprNorm.match(/\d/g) || [];
   const exprDigits = exprDigitsArr.join("");
@@ -676,10 +676,10 @@ function validate(num, ans, expr, langCd) {
   const [left, right] = expr.split("=");
 
   try {
-    // 入力フォーマットチェック（数字・演算子・√・上付き0-2のみ許可）
+    // 入力フォーマットチェック (数字・演算子・√・上付き0-2のみ許可)
     // 許可する文字: 0-9, √, ⁰¹², + - * / . 空白
     const validRe = /^[\d√⁰¹²+\-*/.\s]+$/u;
-    // validate は表示上のままの left/right をチェック（上付きを許容）
+    // validate は表示上のままの left/right をチェック (上付きを許容)
     if (!validRe.test(left) || !validRe.test(right)) {
       return errFormatMsg;
     }
@@ -687,7 +687,7 @@ function validate(num, ans, expr, langCd) {
     return errFormatMsg;
   }
 
-  // ゼロ除算チェック（上付きを数字に戻してチェック）
+  // ゼロ除算チェック (上付きを数字に戻してチェック)
   if (exprNorm.includes("/0")) {
     return noDivideZeroMsg;
   }

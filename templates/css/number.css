@@ -180,7 +180,7 @@ footer {
 	flex-wrap: wrap;
 	align-items: center;
 
-	/* 領域の上下余白（ページとの余白） */
+	/* 領域の上下余白 (ページとの余白) */
 	margin-top: 10px;
 	margin-bottom: 80px;
 
@@ -243,7 +243,7 @@ footer {
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.14);
 }
 
-/* ポップアップ内のボタン（演算子） */
+/* ポップアップ内のボタン (演算子) */
 .popup-btn {
 	min-width: 44px;
 	height: 44px;

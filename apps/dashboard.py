@@ -165,7 +165,7 @@ def get_target_date(date_div: str):
 
 def calc_percentage(counts, etc_flg: bool = const.FLG_OFF):
     """
-    割合（パーセンテージ）計算
+    割合 (パーセンテージ)計算
     """
     total = counts.sum()
 
@@ -174,26 +174,26 @@ def calc_percentage(counts, etc_flg: bool = const.FLG_OFF):
     percentages_float = (counts / total) * 100
     percentages_int = percentages_float.astype(int)
 
-    # 合計が100になるように調整（端数を一番大きい項目に加算）
+    # 合計が100になるように調整 (端数を一番大きい項目に加算)
     current_sum = percentages_int.sum()
     diff = 100 - current_sum  # 100との差を計算
 
-    # 端数を加算する対象を見つける（元の割合が一番大きい項目）
-    # 元の割合（小数点以下を含む）でソートして、上位から差分を配分する
+    # 端数を加算する対象を見つける (元の割合が一番大きい項目)
+    # 元の割合 (小数点以下を含む)でソートして、上位から差分を配分する
 
     # 調整の必要がある場合のみ実行
     if diff != 0:
-        # 小数点以下の値が多い順（元の値が大きい順）に並べ替える
+        # 小数点以下の値が多い順 (元の値が大きい順)に並べ替える
         sorted_indices = percentages_float.sort_values(ascending=False).index
 
-        # 差分（diff）を大きい順に1ずつ配分する
+        # 差分 (diff)を大きい順に1ずつ配分する
         for i in range(abs(diff)):
             item_to_adjust = sorted_indices[i % len(sorted_indices)]
             if 0 < diff:
                 # 100未満の場合、大きい項目に1を加算
                 percentages_int[item_to_adjust] += 1
             elif diff < 0:
-                # 100を超過する場合、大きい項目から1を減算（ほぼ起こらないが念のため）
+                # 100を超過する場合、大きい項目から1を減算 (ほぼ起こらないが念のため)
                 percentages_int[item_to_adjust] -= 1
 
     # 結果をJSON形式に変換

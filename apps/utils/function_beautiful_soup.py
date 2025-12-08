@@ -113,7 +113,7 @@ def find_elem_by_attr(
 
 def find_elem_by_class(soup, attr_val: str, list_flg: bool = const.FLG_OFF):
     """
-    要素取得（class）
+    要素取得 (class)
     """
     elem = find_elem_by_attr(
         soup, attr_div=const.ATTR_CLASS, attr_val=attr_val, list_flg=list_flg
@@ -123,7 +123,7 @@ def find_elem_by_class(soup, attr_val: str, list_flg: bool = const.FLG_OFF):
 
 def get_link_from_soup(soup) -> str:
     """
-    要素取得（href）
+    要素取得 (href)
     """
     elem = find_elem_by_attr(soup, tag=const.TAG_A, attr_div=const.ATTR_HREF)
     link = elem if elem else const.SYM_BLANK

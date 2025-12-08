@@ -231,7 +231,7 @@ def get_generate_text_image(
     if not file_path:
         msg_div = model
         msg = msg_const.MSG_ERR_API_RESPONSE_NONE
-    
+
     func.print_debug_msg(msg_div, msg)
     return file_path
 

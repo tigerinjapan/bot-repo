@@ -58,7 +58,7 @@ class ranking:
 
 def get_rank_info_data(json_data, update_flg: bool = const.FLG_OFF):
     """
-    JSONデータ取得（ランク情報の登録・更新）: number
+    JSONデータ取得 (ランク情報の登録・更新): number
     """
     if update_flg:
         number = json_data[const.STR_NUMBER]
@@ -77,7 +77,7 @@ def get_rank_info_data(json_data, update_flg: bool = const.FLG_OFF):
 
 def get_ranking_data(json_data):
     """
-    JSONデータ取得（ランキング情報の取得）: sudoku, itQuiz
+    JSONデータ取得 (ランキング情報の取得): sudoku, itQuiz
     """
     rank = json_data[mongo_const.FI_RANK]
     score = json_data[mongo_const.FI_SCORE]
@@ -90,7 +90,7 @@ def get_ranking_data(json_data):
 
 def get_update_data_for_ranking(div, json_data):
     """
-    JSONデータ取得（ランキング情報の登録・更新）: sudoku, itQuiz
+    JSONデータ取得 (ランキング情報の登録・更新): sudoku, itQuiz
     """
     rank = json_data[mongo_const.ITEM_RANK]
     score = json_data[mongo_const.ITEM_SCORE]

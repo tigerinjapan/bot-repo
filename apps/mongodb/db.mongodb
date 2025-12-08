@@ -34,7 +34,7 @@ db.getCollectionNames().map(name => {
     // 各コレクションの統計情報を取得
     const stats = db.getCollection(name).stats();
 
-    // MBに変換（toFixed(3)で小数点以下3桁に）
+    // MBに変換 (toFixed(3)で小数点以下3桁に)
     // NumberLongなどBSON型に対応するため、toString().parseFloat()で数値に変換
     const totalSize = stats.totalSize;
     const totalSizeMB = (totalSize / (1024 * 1024)).toFixed(3);

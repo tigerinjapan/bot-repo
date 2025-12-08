@@ -75,7 +75,7 @@ async def logout(request: Request):
 async def oauth(request: Request, code: str):
     """
     認証コードで、アクセストークン発行
-    （初回のみ実施、リフレッシュトークンの確認にも使用）
+     (初回のみ実施、リフレッシュトークンの確認にも使用)
 
     引数:
         code (str): 認証コード
@@ -137,6 +137,6 @@ async def kakao_test():
     return result
 
 
-# メイン関数（サーバースレッド起動）
+# メイン関数 (サーバースレッド起動)
 if __name__ == const.MAIN_FUNCTION:
     run_server()

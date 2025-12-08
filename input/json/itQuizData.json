@@ -1503,7 +1503,7 @@
             {
                   "word": "TOGGLE",
                   "description_ko": "버튼 하나로 두 가지 상태(켜짐/꺼짐 등)를 번갈아 바꾸는 기능💡",
-                  "description_ja": "一つのボタンで二つの状態（オン/オフなど）を切り替える機能💡",
+                  "description_ja": "一つのボタンで二つの状態 (オン/オフなど)を切り替える機能💡",
                   "description_en": "A function to switch between two states (like on/off) with a single button💡"
             },
             {
@@ -1683,7 +1683,7 @@
             {
                   "word": "XR",
                   "description_ko": "가상 현실(VR)과 증강 현실(AR) 등 모든 현실 관련 기술을 합친 것🌍🔮",
-                  "description_ja": "仮想現実（VR）や拡張現実（AR）など、現実に関わる全ての技術を合わせたもの🌍🔮",
+                  "description_ja": "仮想現実 (VR)や拡張現実 (AR)など、現実に関わる全ての技術を合わせたもの🌍🔮",
                   "description_en": "An umbrella term for all reality-related technologies, including virtual (VR) and augmented (AR) reality"
             },
             {

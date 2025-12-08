@@ -32,7 +32,7 @@ class board:
 
 def get_update_data_for_board_info(data, seq: int):
     """
-    JSONデータ取得（掲示板情報の登録用）
+    JSONデータ取得 (掲示板情報の登録用)
     """
     app = int(data[0])
     category = int(data[1])

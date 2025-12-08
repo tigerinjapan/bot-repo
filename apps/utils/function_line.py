@@ -60,7 +60,7 @@ def get_channel_access_token(admin_flg: bool = const.FLG_OFF) -> str:
     # アクセストークン
     access_token = result["access_token"]
 
-    # 有効期限（秒）
+    # 有効期限 (秒)
     expires_in = result["expires_in"]
 
     token = f"{token_type} {access_token}"

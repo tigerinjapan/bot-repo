@@ -166,7 +166,7 @@ body {
 	transition: width 0.1s linear;
 }
 
-/* モーダル（ダイアログ）の基本スタイル */
+/* モーダル (ダイアログ)の基本スタイル */
 dialog {
 	max-width: 90%;
 	padding: 20px;

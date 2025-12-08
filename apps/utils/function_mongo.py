@@ -166,7 +166,7 @@ def db_find_one(
     sort=const.NONE_CONSTANT,
 ):
     """
-    データ検索（1件）
+    データ検索 (1件)
     """
     result = db_find(client, coll_nm, cond, select_data, sort, one_flg=const.FLG_ON)
     return result
@@ -195,7 +195,7 @@ def db_insert(client, coll_nm: str, insert_data, many_flg: bool = const.FLG_OFF)
 
 def db_insert_many(client, coll_nm: str, insert_data):
     """
-    データ登録（複数件）
+    データ登録 (複数件)
     """
     db_insert(client, coll_nm, insert_data, many_flg=const.FLG_ON)
 
@@ -234,7 +234,7 @@ def db_update(
 
 def db_update_many(client, coll_nm: str, cond, update_data):
     """
-    データ更新（複数件）
+    データ更新 (複数件)
     """
     db_update(client, coll_nm, cond, update_data, many_flg=const.FLG_ON)
 
@@ -292,7 +292,7 @@ def db_find_update(client, coll_nm: str, cond, update_data):
 
 def bulk_write(client, coll_nm: str, bulk_operations: list):
     """
-    複数の書き込み操作（挿入、更新、削除など）
+    複数の書き込み操作 (挿入、更新、削除など)
     """
     curr_func_nm = sys._getframe().f_code.co_name
     coll = get_collection(client, coll_nm)

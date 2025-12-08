@@ -127,7 +127,7 @@ async def issue_token(request: Request):
 @app.get(const.PATH_ROOT)
 async def root(request: Request):
     """
-    ルートページ（ログイン状態でリダイレクト）
+    ルートページ (ログイン状態でリダイレクト)
     """
     user = request.session.get(const.STR_USER)
     if user:
@@ -247,7 +247,7 @@ async def apps(request: Request, app_name: str):
 async def app_json(request: Request, app_name: str):
     """
     JSONデータ取得
-        （例）
+         (例)
         /json/today?token=token
     """
     if not app_name in const.LIST_APP_SERVER_ALL:
@@ -261,7 +261,7 @@ async def app_json(request: Request, app_name: str):
 async def app_api(request: Request):
     """
     APIデータ取得
-        （例）
+         (例)
         /api/zipCode/1000000
         /api/travelData/items
     """
@@ -306,7 +306,7 @@ async def gemini_api(request: Request):
 @app.post("/user/update")
 async def user_update(request: Request, userId: str = Form(...)):
     """
-    ユーザー情報更新（フォーム）
+    ユーザー情報更新 (フォーム)
     """
     curr_func_nm = sys._getframe().f_code.co_name
 
@@ -454,7 +454,7 @@ async def kakao_auth():
 async def kakao_oauth(request: Request, code: str):
     """
     認証コードで、アクセストークン発行
-    （初回のみ実施、リフレッシュトークンの確認にも使用）
+     (初回のみ実施、リフレッシュトークンの確認にも使用)
 
     引数:
         code (str): 認証コード
@@ -514,7 +514,7 @@ async def templates_file(file_name: str):
 async def file_response(request: Request, div: str, file_name: str):
     """
     ファイル取得
-        （例）
+         (例)
         /img/today
         /font/meiryo
         /log/error

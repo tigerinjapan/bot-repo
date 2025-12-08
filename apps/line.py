@@ -130,7 +130,7 @@ def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
     if auto_flg:
         msg_div = const.APP_TODAY
         msg_type = const.MSG_TYPE_IMG
-        img_url, date_today= today.get_today_image()
+        img_url, date_today = today.get_today_image()
         msg_data_list = get_msg_data_list(
             const.APP_TODAY, const.MSG_TYPE_IMG, img_url, date_today
         )
@@ -286,7 +286,7 @@ def get_title_mark(
         # 2. 左右のマーク部分の合計長を計算
         mark_total_len = total_length - insert_len
 
-        # 3. 左右のマークの長さを計算（左右で長さが違う場合は、右側を長くする）
+        # 3. 左右のマークの長さを計算 (左右で長さが違う場合は、右側を長くする)
         left_mark_len = mark_total_len // 2
         right_mark_len = mark_total_len - left_mark_len
 

@@ -36,7 +36,9 @@ def get_board_info(user_div: str = const.AUTH_DEV, json_flg: bool = const.FLG_ON
         ]
     }
     if user_div != const.AUTH_ADMIN:
-        add_cond = {mongo_const.FI_USER_NAME: {mongo_const.OPERATOR_NOT_EQUAL: const.AUTH_ADMIN}}
+        add_cond = {
+            mongo_const.FI_USER_NAME: {mongo_const.OPERATOR_NOT_EQUAL: const.AUTH_ADMIN}
+        }
         cond.update(add_cond)
 
     sort = {
@@ -60,7 +62,7 @@ def get_board_info(user_div: str = const.AUTH_DEV, json_flg: bool = const.FLG_ON
 
 def insert_board_data_of_api(json_data):
     """
-    掲示板データ登録（API）
+    掲示板データ登録 (API)
     """
     client = func_mongo.db_connect()
     data_list = json_data[const.STR_DATA]
@@ -91,7 +93,7 @@ def insert_board_data_of_api(json_data):
 
 def get_board_seq(client, coll: str = mongo_const.COLL_BOARD) -> int:
     """
-    掲示板連番取得（データ登録用）
+    掲示板連番取得 (データ登録用)
     """
     # すべての連番を取得し、ソート
     select_data = {mongo_const.FI_SEQ: 1, mongo_const.FI_ID: 0}

@@ -23,7 +23,7 @@ def get_auth_info(div: str):
 
 def get_auth_token(div: str, key: str = mongo_const.FI_TOKEN):
     """
-    権限情報取得（トークン）
+    権限情報取得 (トークン)
     """
     auth_info = get_auth_info(div)
     if key == mongo_const.FI_TOKEN:

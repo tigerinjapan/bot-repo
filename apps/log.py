@@ -122,14 +122,14 @@ def backup_data(log_div: str, backup_data_list, log_path: str):
             json_data = {const.STR_DATA: backup_data_list}
             json_data = func.get_dumps_json(json_data)
 
-            # DB登録（掲示板情報）
+            # DB登録 (掲示板情報)
             url = f"{func_api.URL_SERVER}{endpoint}"
             result = func_api.api_post_data(url, json_data)
             if result:
                 message = result[const.STR_MESSAGE]
 
         else:
-            # DB登録（ログ）
+            # DB登録 (ログ)
             log_dao.insert_log_data(backup_data_list)
             message = msg_const.MSG_INFO_PROC_COMPLETED
 

@@ -198,7 +198,7 @@ function openDialog(title, text) {
 }
 
 /**
- * APIリクエスト（ダイヤログ）
+ * APIリクエスト (ダイヤログ)
  */
 async function requestApiForDialog() {
   const dialog_title = getElemText("dialog-title");
@@ -218,7 +218,7 @@ async function requestApiForDialog() {
       throw new Error(MSG_ERR_SEND_EN);
     }
 
-    // ページ全体をリセット（再読み込み）
+    // ページ全体をリセット (再読み込み)
     location.reload();
   } catch (error) {
     console.error('エラー:', error);

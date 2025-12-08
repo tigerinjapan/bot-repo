@@ -63,7 +63,7 @@ RESULT_CODE_NG = 1
 
 def get_access_token(code: str = const.SYM_BLANK) -> str:
     """
-    アクセストークン取得（トークン発行、更新）
+    アクセストークン取得 (トークン発行、更新)
     """
     curr_func_nm = sys._getframe().f_code.co_name
 
@@ -108,7 +108,7 @@ def get_access_token(code: str = const.SYM_BLANK) -> str:
     # アクセストークン
     access_token = result["access_token"]
 
-    # 有効期限（有効期限：6時間）
+    # 有効期限 (有効期限：6時間)
     expires_in = result["expires_in"]
     expires_min = int(expires_in // 60)
     func.print_debug_msg(const.STR_TOKEN, f"{const.STR_EXPIRATION}: {expires_min} min")
@@ -123,7 +123,7 @@ def get_access_token(code: str = const.SYM_BLANK) -> str:
         grant_type = GRANT_TYPE_AUTH_CODE
         issue_type = ISSUE_TYPE_REFRESH_TOKEN
         # 認証コード：毎回アクセスし、アクセストークン取得が必要であるため、
-        # リフレッシュトークン方式でアクセストークン発行（有効期限：1か月）
+        # リフレッシュトークン方式でアクセストークン発行 (有効期限：1か月)
         refresh_token = result["refresh_token"]
         auth_token = func.get_masking_data(refresh_token)
         auth_dao.update_auth_token(app_name, auth_token)

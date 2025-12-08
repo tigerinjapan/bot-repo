@@ -45,16 +45,16 @@ def job_scheduler():
     if func.is_local_env():
         func.is_network()
     else:
-        # 毎週指定された時間に実行（例：09:00）
+        # 毎週指定された時間に実行 (例：09:00)
         schedule.every().monday.at(TIME_WEEKLY_JOB).do(weekly_job)
 
-        # 毎日指定された時間に実行（例：07:00）
+        # 毎日指定された時間に実行 (例：07:00)
         schedule.every().day.at(TIME_DAILY_JOB_1).do(daily_job_1)
         schedule.every().day.at(TIME_DAILY_JOB_2).do(daily_job_2)
         schedule.every().day.at(TIME_DAILY_JOB_3).do(daily_job_3)
         schedule.every().day.at(TIME_DAILY_JOB_4).do(daily_job_4)
 
-    # 1時間毎に実行（例：:30）
+    # 1時間毎に実行 (例：:30)
     schedule.every().hour.at(MIN_HOURLY_JOB).do(hourly_job)
 
     pending_cnt = 0
@@ -85,7 +85,7 @@ def weekly_job():
 
 def daily_job_1():
     """
-    日次ジョブ（00:00）
+    日次ジョブ (00:00)
     """
     log.backup_log()
     log.backup_log(const.STR_ERROR)
@@ -93,21 +93,21 @@ def daily_job_1():
 
 def daily_job_2():
     """
-    日次ジョブ（07:10）
+    日次ジョブ (07:10)
     """
     line.main()
 
 
 def daily_job_3():
     """
-    日次ジョブ（09:00）
+    日次ジョブ (09:00)
     """
     kakao.main()
 
 
 def daily_job_4():
     """
-    日次ジョブ（18:30）
+    日次ジョブ (18:30)
     """
     line.main(data_div=const.NUM_TWO)
     line.sub(const.APP_MLB)

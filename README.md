@@ -9,7 +9,7 @@ Messaging API Bot
 | **HTTP リクエスト**    | requests            | HTTP 通信                       |
 | **Web フレームワーク** | fastapi             | 高速な Web フレームワーク       |
 |                        | starlette           | 非同期 Web サーバー             |
-|                        | uvicorn             | 高速 ASGI（非同期処理）サーバー |
+|                        | uvicorn             | 高速 ASGI (非同期処理)サーバー |
 | **データ解析**         | pandas              | データ解析と操作                |
 | **Web スクレイピング** | bs4 (BeautifulSoup) | HTML スクレイピング             |
 | **テンプレート**       | jinja2              | HTML テンプレートエンジン       |

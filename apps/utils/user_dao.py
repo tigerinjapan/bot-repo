@@ -81,7 +81,7 @@ def update_user_info(client, update_data):
 
 def insert_user_info_on_form(form_data):
     """
-    ユーザー情報登録（フォーム）
+    ユーザー情報登録 (フォーム)
     """
     client = func_mongo.db_connect()
     insert_data = user_dto.get_json_data_for_user_info(form_data)
@@ -91,7 +91,7 @@ def insert_user_info_on_form(form_data):
 
 def update_user_info_on_form(form_data, form_flg: bool = const.FLG_ON):
     """
-    ユーザー情報更新（フォーム）
+    ユーザー情報更新 (フォーム)
     """
     client = func_mongo.db_connect()
     update_data = form_data

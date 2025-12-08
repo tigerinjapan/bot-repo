@@ -12,7 +12,7 @@
 | ---------- | --------------------- |
 | PYTHONPATH | C:\workspace\bot-repo |
 
-## 仮想環境（.venv）
+## 仮想環境 (.venv)
 
 ### 内容
 
@@ -30,7 +30,7 @@ C:\Users\(ユーザー名)\AppData\Roaming\Code\Cache
 
 ### 対応
 
-定期的に削除（今後バッチ化）
+定期的に削除 (今後バッチ化)
 
 ## 【Selenium, Playwright】Koyeb server
 

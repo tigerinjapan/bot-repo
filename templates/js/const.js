@@ -130,7 +130,7 @@ const LANG_CD_KO = "ko";
 const LANG_CD_EN = "en";
 const LIST_LANG_CD = [LANG_CD_JA, LANG_CD_KO, LANG_CD_EN];
 
-// 言語名（表示用）
+// 言語名 (表示用)
 const LANG_NM_JA = "日本語";
 const LANG_NM_KO = "한국어";
 const LANG_NM_EN = "English";

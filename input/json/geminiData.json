@@ -2,7 +2,7 @@
       "items": {
             "ja": {
                   "title": "✨🚀未来クリエイターラボ🚀✨",
-                  "subtitle": "（明るく楽しい未来を創ろう！）",
+                  "subtitle": " (明るく楽しい未来を創ろう！)",
                   "modeLabel": "どの未来を創る？",
                   "modeOptions": [
                         {
@@ -252,7 +252,7 @@
             },
             "ko": {
                   "title": "✨🚀미래 크리에이터 랩🚀✨",
-                  "subtitle": "（밝고 즐거운 미래를 만들자!）",
+                  "subtitle": " (밝고 즐거운 미래를 만들자!)",
                   "modeLabel": "어떤 미래를 만들까?",
                   "modeOptions": [
                         {

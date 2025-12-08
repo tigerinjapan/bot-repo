@@ -95,11 +95,11 @@ db.rankInfo.find(cond, selectData).sort(sortData).limit(10).pretty();
 //     {
 //         // 1. 更新するデータを探す条件
 //         sRankTime: {
-//             $regex: /^.{4}$/ // sRankTimeが4文字である（正規表現）
+//             $regex: /^.{4}$/ // sRankTimeが4文字である (正規表現)
 //         }
 //     },
 //     [
-//         // 2. データの更新内容（パイプライン形式で処理）
+//         // 2. データの更新内容 (パイプライン形式で処理)
 //         {
 //             $set: {
 //                 sRankTime: {

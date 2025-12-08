@@ -23,7 +23,7 @@ col_list = [
     mongo_const.ITEM_RANK_TIME,
 ]
 
-# ランク情報（デフォルト値）
+# ランク情報 (デフォルト値)
 DEFAULT_RANK = {
     const.STR_EASY: {
         mongo_const.FI_USER_NAME: const.STR_BEGINNER,
@@ -85,19 +85,19 @@ def get_game_data_list():
 
 def get_answer_list():
     """
-    CSVデータ取得（ランダム）
+    CSVデータ取得 (ランダム)
     """
     df = func.get_df_from_csv(const.APP_NUMBER)[0]
     df_result = df.sample(n=const.MAX_NUMBER_DATA)
 
-    # データの内容をリストのリスト（行のリスト）として取得
+    # データの内容をリストのリスト (行のリスト)として取得
     answer_list = df_result.values.tolist()
     return answer_list
 
 
 def output_df_to_csv():
     """
-    DataFrameよりCSVデータ取得（ランダム）
+    DataFrameよりCSVデータ取得 (ランダム)
     """
     csv_item_list = get_csv_item_list()
     csv_col_list = [const.STR_NUMBER, const.STR_ANSWER, const.STR_LEVEL]
@@ -115,7 +115,7 @@ def output_df_to_csv():
 
 def get_csv_item_list():
     """
-    アイテムリスト取得（CSV出力用）
+    アイテムリスト取得 (CSV出力用)
     """
     item_list = []
 
@@ -149,19 +149,19 @@ def get_csv_item_list():
 
 def find_answer(number):
     """
-    正解取得（CSV出力用）
+    正解取得 (CSV出力用)
     """
 
     """
-    4桁の数字（順番固定）から、四則演算・累乗・平方根・括弧を使った等式を全探索し、解となる式を返す。
-    桁間の「結合（空文字）」を演算子候補に追加し、隣接桁を連結して多桁数（例: 4 と 9 -> 49）を作れるようにした。
-    ただし連結は両側が純粋な桁（digit）の場合にのみ許可する（sqrt 適用などは連結不可）。
-    sqrt の許可範囲を 4..81（sqrt 値 2..9）に制限した（以前は 4..961）。
+    4桁の数字 (順番固定)から、四則演算・累乗・平方根・括弧を使った等式を全探索し、解となる式を返す。
+    桁間の「結合 (空文字)」を演算子候補に追加し、隣接桁を連結して多桁数 (例: 4 と 9 -> 49)を作れるようにした。
+    ただし連結は両側が純粋な桁 (digit)の場合にのみ許可する (sqrt 適用などは連結不可)。
+    sqrt の許可範囲を 4..81 (sqrt 値 2..9)に制限した (以前は 4..961)。
     """
 
     digits = list(number)
-    # 演算子候補に空文字（結合）を追加
-    operators = ["+", "-", "*", "/", "**", ""]  # '' は桁結合（concat）
+    # 演算子候補に空文字 (結合)を追加
+    operators = ["+", "-", "*", "/", "**", ""]  # '' は桁結合 (concat)
     answer = set()
 
     digits_a = const.SYM_BLANK.join(digits[0:2])
@@ -172,7 +172,7 @@ def find_answer(number):
         return answer
 
     n = len(digits)
-    # sqrt 適用パターン（各桁ごとに sqrt を使うか）
+    # sqrt 適用パターン (各桁ごとに sqrt を使うか)
     for sqrt_mask in range(1 << n):
         disp_digits = []
         eval_digits = []
@@ -184,7 +184,7 @@ def find_answer(number):
                 except Exception:
                     invalid_mask = True
                     break
-                # 修正: sqrt は 4 <= v <= 81（sqrt が 2..9 の整数）のみ許可
+                # 修正: sqrt は 4 <= v <= 81 (sqrt が 2..9 の整数)のみ許可
                 if not (4 <= v <= 81):
                     invalid_mask = True
                     break
@@ -200,9 +200,9 @@ def find_answer(number):
         if invalid_mask:
             continue
 
-        # 演算子数 1..3（各スロットに演算子または結合を入れる）
+        # 演算子数 1..3 (各スロットに演算子または結合を入れる)
         for ops in itertools.product(operators, repeat=3):
-            # '**' の右オペランド制約（単一桁 0/1/2 のみ）
+            # '**' の右オペランド制約 (単一桁 0/1/2 のみ)
             bad = False
             for i, op in enumerate(ops):
                 if op == "**":
@@ -214,7 +214,7 @@ def find_answer(number):
                     ):
                         bad = True
                         break
-                # 追加: 空文字（結合）は両側が純粋数字であることを要求
+                # 追加: 空文字 (結合)は両側が純粋数字であることを要求
                 if op == const.SYM_BLANK:
                     left_eval = eval_digits[i]
                     right_eval = eval_digits[i + 1]
@@ -225,7 +225,7 @@ def find_answer(number):
             if bad:
                 continue
 
-            # 表示/評価用トークン列を作成（空文字は要素間の文字連結として扱われる）
+            # 表示/評価用トークン列を作成 (空文字は要素間の文字連結として扱われる)
             disp_tokens = []
             eval_tokens = []
             for i in range(3):
@@ -256,17 +256,17 @@ def find_answer(number):
                     else:
                         out.append(t)
                         i2 += 1
-                # tokens に空文字 '' が含まれている場合、join でそのまま文字連結される（期待挙動）
+                # tokens に空文字 '' が含まれている場合、join でそのまま文字連結される (期待挙動)
                 return const.SYM_BLANK.join(out)
 
-            # k = 左辺の数トークン数（1～3） — ここでは元の桁単位で分割を試行
+            # k = 左辺の数トークン数 (1～3) — ここでは元の桁単位で分割を試行
             for k in range(1, 4):
-                # 左辺組立（eval用）
+                # 左辺組立 (eval用)
                 left_parts = [eval_digits[0]]
                 for i_num in range(0, k - 1):
                     left_parts.append(ops[i_num])
                     left_parts.append(eval_digits[i_num + 1])
-                # 右辺組立（eval用）
+                # 右辺組立 (eval用)
                 right_parts = [eval_digits[k]]
                 for i_num in range(k, 3):
                     right_parts.append(ops[i_num])
@@ -285,10 +285,10 @@ def find_answer(number):
                 except Exception:
                     continue
 
-                # 数値比較（浮動小数点誤差を許容）
+                # 数値比較 (浮動小数点誤差を許容)
                 try:
                     if abs(builtins.float(lv) - builtins.float(rv)) < 1e-9:
-                        # 表示用に組み立て（disp_digits と ops を同様に結合）
+                        # 表示用に組み立て (disp_digits と ops を同様に結合)
                         left_disp_parts = [disp_digits[0]]
                         for i_num in range(0, k - 1):
                             left_disp_parts.append(ops[i_num])
@@ -307,7 +307,7 @@ def find_answer(number):
                         if len(expr_digits) == 5 or func.re_search(ng_pattern, expr):
                             continue
 
-                        # 簡易フィルタ（不正な連結記号等）
+                        # 簡易フィルタ (不正な連結記号等)
                         bad_patterns = ["+=", "-=", "*=", "/=", "=-", "=*", "=/"]
                         if not any(p in expr for p in bad_patterns):
                             answer.add(expr)
@@ -319,7 +319,7 @@ def find_answer(number):
 
 def get_game_level(answer_list):
     """
-    ゲームレベル取得（CSV出力用）
+    ゲームレベル取得 (CSV出力用)
     """
     length = len(answer_list)
     if length == 0:

@@ -172,7 +172,7 @@ MAX_TARGET_DAYS_BOARD = 28
 MAX_NUMBER_DATA = 50
 MAX_MSG_API_CNT = 200
 
-# ランクタイム（DB更新用）
+# ランクタイム (DB更新用)
 RANK_TIME_NUMBER = 10.00
 
 ##### 型 #####
@@ -504,7 +504,7 @@ LIST_FUND_NO = [FUND_NO_SP_500, FUND_NO_AI, FUND_NO_US_TECH]
 LIST_FUND_NAME = [FUND_NAME_SP_500, FUND_NAME_AI, FUND_NAME_US_TECH]
 
 
-##### EX（為替） #####
+##### EX (為替) #####
 # JPY単位
 JPY_LIST = [100, 1000, 10000]
 

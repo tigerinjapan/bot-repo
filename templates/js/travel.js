@@ -83,7 +83,7 @@ function init() {
     }
     setElemContents("info-content", infoHtml);
 
-    // 言語（基本会話）
+    // 言語 (基本会話)
     setElemText("lang-title", `🌐 ${label.basicConversation}`);
     const langHtml = `
       ${basicConversation
@@ -221,7 +221,7 @@ function init() {
   const closeBtn = document.querySelector(".close-btn");
 
   /**
-   * クリックイベント設定（観光スポットリンクなど）
+   * クリックイベント設定 (観光スポットリンクなど)
    */
   function addEventListeners() {
     document.querySelectorAll(".spot-link").forEach((link) => {
@@ -252,7 +252,7 @@ function init() {
   langSelect.addEventListener(EVENT_CHANGE, updateContent);
   regionSelect.addEventListener(EVENT_CHANGE, updateContent);
 
-  // 初期表示（東京・日本語）
+  // 初期表示 (東京・日本語)
   updateContent();
 }
 

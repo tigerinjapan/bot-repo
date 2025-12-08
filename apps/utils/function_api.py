@@ -181,7 +181,7 @@ def get_target_data(
     """
     target_info = const.SYM_BLANK
 
-    # リストの要素（辞書）を一つずつ確認
+    # リストの要素 (辞書)を一つずつ確認
     for item in data:
         if item.get(search_key) == search_value:
             target_info = item.get(target_key)

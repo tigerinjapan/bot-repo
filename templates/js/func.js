@@ -40,7 +40,7 @@ function getElemText(elemId) {
 }
 
 /**
- * 要素取得（タグ）
+ * 要素取得 (タグ)
  * 
  * @param {string} tagName - タグ名
  * @return {HTMLElement} HTML要素
@@ -94,7 +94,7 @@ function setElemContents(elemId, innerHTML) {
 }
 
 /**
- * 要素のテキスト設定（タグ）
+ * 要素のテキスト設定 (タグ)
  * 
  * @param {string} tagName - タグ名
  * @param {string} text - テキスト
@@ -104,7 +104,7 @@ function setElemTextByTag(tagName, text) {
 }
 
 /**
-* 要素のHTML設定（タグ）
+* 要素のHTML設定 (タグ)
 * 
 * @param {string} tagName - タグ名
 * @param {string} innerHTML - HTMLの中身
@@ -220,7 +220,7 @@ function createOptionVal(selectElem, optValList, textValList) {
  * [fetch API] データを非同期で取得
  *
  * @param {string} url - APIのURL
- * @param {object} [requestBody] - 送信するデータ（省略可能）
+ * @param {object} [requestBody] - 送信するデータ (省略可能)
  * @returns {Promise<object>} JSONデータ
  */
 async function getFetchApiData(url, requestBody) {
@@ -270,19 +270,19 @@ async function getFetchApiData(url, requestBody) {
  * @returns {Promise<object>} JSONデータ
  */
 function getDataList(elemId) {
-  // 1. HTML要素（IDが'data'のpタグ）を取得
+  // 1. HTML要素 (IDが'data'のpタグ)を取得
   const dataElem = getElem(elemId);
 
-  // 2. その要素の中身（文字列）を取得
+  // 2. その要素の中身 (文字列)を取得
   const dataString = dataElem.textContent.trim();
 
-  // 3. 文字列をJavaScriptのリスト（配列）に変換
+  // 3. 文字列をJavaScriptのリスト (配列)に変換
   //    Pythonのリスト形式の文字列を、JavaScriptのJSON形式として解釈する。
   //    これにより、文字列がリストになる。
 
   let dataList = [];
   try {
-    // ※ Jinjaで渡されるリストの形式（二重引用符か単一引用符かなど）によっては、
+    // ※ Jinjaで渡されるリストの形式 (二重引用符か単一引用符かなど)によっては、
     //    この処理の前に、文字列の調整が必要になる場合がある。
     dataList = JSON.parse(dataString.replace(/'/g, '"'));
   } catch (e) {
@@ -300,7 +300,7 @@ function getDataList(elemId) {
  * @returns {Promise<object>} タイムアウトオブジェクト
  */
 function sleep(sec) {
-  // 待つ時間（ms:ミリ秒）が終わったら、処理を進める
+  // 待つ時間 (ms:ミリ秒)が終わったら、処理を進める
   const ms = sec * 1000;
   return new Promise(resolve => setTimeout(resolve, ms));
 }

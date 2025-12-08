@@ -56,7 +56,7 @@ class userInfo:
 
 def get_json_data_for_user_info(form_data):
     """
-    JSONデータ取得（ユーザー情報の登録・更新）
+    JSONデータ取得 (ユーザー情報の登録・更新)
     """
     user_id = form_data[mongo_const.ITEM_USER_ID]
     user_name = form_data[mongo_const.ITEM_USER_NAME]

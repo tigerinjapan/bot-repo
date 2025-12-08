@@ -1,7 +1,7 @@
 // ヘッダー設定
 setElemContentsByTag(TAG_HEAD, CONTENTS_HEAD_1);
 
-// イメージ生成の待機時間（秒）
+// イメージ生成の待機時間 (秒)
 const SLEEP_SEC = 5;
 
 // プロンプトに追加する共通の条件

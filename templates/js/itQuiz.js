@@ -34,7 +34,7 @@ const gameState = {
   selectedLanguage: LANG_CD_KO, // 初期言語設定は韓国語
   currentQuizIndex: 0,
   score: 0,
-  currentWord: [], // 現在の単語の状態（例: ['G', '_', 'M', '_', 'N', 'I']）
+  currentWord: [], // 現在の単語の状態 (例: ['G', '_', 'M', '_', 'N', 'I'])
   quizSet: [],
   timeRemaining: 0,
   initialTime: 0,
@@ -45,7 +45,7 @@ const gameState = {
 };
 
 /**
- * UI要素の多言語テキスト辞書（ボタン名やラベルなど）
+ * UI要素の多言語テキスト辞書 (ボタン名やラベルなど)
  */
 const textMap = {
   "title": { "ko": "IT 상식 퀴즈", "ja": "IT クイズ", "en": "IT Quiz" },
@@ -192,7 +192,7 @@ const closeDialog = (id) => {
 };
 
 /**
- * 配列シャッフル（フィッシャー・イェーツ）
+ * 配列シャッフル (フィッシャー・イェーツ)
  */
 const shuffleArray = (array) => {
   for (let i = array.length - 1; 0 < i; i--) {
@@ -273,7 +273,7 @@ const renderInitialScreen = () => {
 };
 
 /**
- * 言語選択ボタン押下時の処理（背景色変更＆START GAME活性化）
+ * 言語選択ボタン押下時の処理 (背景色変更＆START GAME活性化)
  * 
  * @param {string} lang - 言語コード
  */
@@ -458,9 +458,9 @@ const nextQuiz = () => {
   gameState.hintsUsed = 0;
   gameState.currentWord = Array(word.length).fill('_');
 
-  // 最初の文字を公開する（2文字の単語は除く）
+  // 最初の文字を公開する (2文字の単語は除く)
   if (2 < word.length) {
-    // 最初の有効な文字（スペース以外）を見つけて公開
+    // 最初の有効な文字 (スペース以外)を見つけて公開
     for (let i = 0; i < word.length; i++) {
       if (word[i] !== ' ') {
         gameState.currentWord[i] = word[i];
@@ -589,7 +589,7 @@ const checkAnswer = () => {
       // Math.ceil() で切り上げることにより、0.01秒遅れた時点で次の区間に入るようにする
       let segmentIndex = Math.ceil(delay / segmentTime);
 
-      // 区間インデックスを最大5（5等分）に制限
+      // 区間インデックスを最大5 (5等分)に制限
       if (5 < segmentIndex) {
         segmentIndex = 5;
       }
@@ -636,14 +636,14 @@ const openChoiceDialog = (index) => {
   } else if (isNumber) {
     availablePool = charPool.numbers.split(SYM_BLANK);
   } else {
-    // 文字でも数字でもない場合（通常はスペースのはずだが、_として残っている場合はエラー回避）
+    // 文字でも数字でもない場合 (通常はスペースのはずだが、_として残っている場合はエラー回避)
     return;
   }
 
-  // 正解文字をプールから除外（後のシャッフル用）
+  // 正解文字をプールから除外 (後のシャッフル用)
   const filteredPool = availablePool.filter(char => char !== correctChar);
 
-  // 候補を作成: 正解文字 + 誤答文字4つ（重複なし）
+  // 候補を作成: 正解文字 + 誤答文字4つ (重複なし)
   let choices = [correctChar];
   while (choices.length < 5 && 0 < filteredPool.length) {
     const randomIndex = Math.floor(Math.random() * filteredPool.length);
@@ -715,7 +715,7 @@ const handleChoice = (char) => {
  * キーボード入力のセットアップ
  */
 const setupKeyboardListener = () => {
-  // 既存のリスナーがあれば一度削除（二重登録防止）
+  // 既存のリスナーがあれば一度削除 (二重登録防止)
   document.removeEventListener('keydown', handleGlobalKeydown);
   document.addEventListener('keydown', handleGlobalKeydown);
 };
@@ -819,7 +819,7 @@ async function updateRanking(rank, score, userName) {
     alert(rankNgMsg);
   }
 
-  // ページ全体をリセット（再読み込み）
+  // ページ全体をリセット (再読み込み)
   location.reload();
 }
 
