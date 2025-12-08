@@ -226,10 +226,9 @@ def get_generate_text_image(
             image_open.close()
             break
 
-    msg_div = const.MSG_TYPE_IMG
-    msg = file_path
+    msg_div = model
+    msg = msg_const.MSG_INFO_PROC_COMPLETED
     if not file_path:
-        msg_div = model
         msg = msg_const.MSG_ERR_API_RESPONSE_NONE
 
     func.print_debug_msg(msg_div, msg)

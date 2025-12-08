@@ -129,6 +129,7 @@ def backup_data(log_div: str, backup_data_list, log_path: str):
                 message = result[const.STR_MESSAGE]
 
         else:
+            # TODO: [check] 直近3か月間のみDB保持。年度単位のデータは、dashboard_last.jsonで保持
             # DB登録 (ログ)
             log_dao.insert_log_data(backup_data_list)
             message = msg_const.MSG_INFO_PROC_COMPLETED

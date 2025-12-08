@@ -130,10 +130,8 @@ def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
     if auto_flg:
         msg_div = const.APP_TODAY
         msg_type = const.MSG_TYPE_IMG
-        img_url, date_today = today.get_today_image()
-        msg_data_list = get_msg_data_list(
-            const.APP_TODAY, const.MSG_TYPE_IMG, img_url, date_today
-        )
+        msg_data = URL_TODAY_IMG
+        date_today = today.get_today_image()
 
     else:
         msg_div = const.STR_NOTIFY
@@ -325,9 +323,9 @@ def sub_test():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    # main()
+    main()
     # main(proc_flg=const.FLG_OFF)
-    main(data_div=const.NUM_TWO)
+    # main(data_div=const.NUM_TWO)
     # main(data_div=const.NUM_THREE)
     # main(auto_flg=const.FLG_OFF)
     # sub(const.STR_AI_NEWS)

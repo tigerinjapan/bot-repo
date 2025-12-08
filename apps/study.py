@@ -25,6 +25,11 @@ def get_item_list(keyword_list: list[str] = []) -> list[str]:
     データリスト取得
     """
     item_list = []
+
+    # 7時に一度のみ実施
+    if func.get_now(const.DATE_HOUR) != 7:
+        return item_list
+
     news_summary = []
     conversation = korean = const.SYM_BLANK
     start_idx = end_idx = 0

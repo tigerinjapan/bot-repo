@@ -130,7 +130,7 @@ def get_today_image():
             func.print_debug_msg(const.STR_IMG, file_path)
         else:
             func_api.create_msg_img(const.APP_TODAY, text_msg, forecast)
-        return file_path, date_today
+        return date_today
 
 
 def get_today_weather() -> tuple[str, str]:

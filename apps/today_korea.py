@@ -11,7 +11,6 @@ import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
-import apps.utils.function_kakao as func_kakao
 
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)

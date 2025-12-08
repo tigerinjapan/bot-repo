@@ -53,7 +53,6 @@ def update_data():
         json_data = {}
         for date_div in LIST_DATE:
             dashboard_json = get_dashboard_json(df, date_div)
-
             if not dashboard_json:
                 break
 

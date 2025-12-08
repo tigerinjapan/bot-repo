@@ -1,32 +1,27 @@
 [
     {
         "구분": "업데이트일시",
-        "뉴스": "2025/12/08(Mon) 12:28",
+        "뉴스": "2025/12/09(Tue) 08:16",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "뉴스": "미세먼지 사라져",
-        "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
-    },
-    {
-        "구분": "해외증시",
-        "뉴스": "S&P500 6,870.40 (+0.19%)",
+        "뉴스": "S&P500 6,846.51 (-0.35%)",
         "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
-        "구분": "환율",
-        "뉴스": "100엔 = 947원",
+        "구분": "해외증시",
+        "뉴스": "100엔 = 942원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
-        "구분": "일본어",
-        "뉴스": "なくす\n없애다; 잃다; 분실하다.",
+        "구분": "환율",
+        "뉴스": "たずねる\n찾다; 방문하다.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
-        "구분": "영어",
-        "뉴스": "Coffee free?\n커피는 무료인가요?",
+        "구분": "일본어",
+        "뉴스": "Use safe box?\n금고를 써도 될까요?",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]
