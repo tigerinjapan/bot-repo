@@ -15,6 +15,9 @@ SCRIPT_NAME = func.get_app_name(__file__)
 
 # URL
 URL_SERVER = func.get_server_url()
+URL_KOYEB_APP = func.get_server_url(local_flg=const.FLG_OFF)
+URL_KOYEB_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}"
+URL_GEMINI_IMG = f"{URL_KOYEB_IMG}/{const.STR_GEMINI}"
 
 # プロパティ
 IMG_NO = func.get_env_val("LINE_IMG_DIV", div=const.STR_ENV_VAR)
@@ -60,7 +63,7 @@ def get_response_result(
             func.print_error_msg(SCRIPT_NAME, curr_func_nm, err_msg)
             if not response:
                 err_msg = f"{url} {msg_const.MSG_ERR_API_RESPONSE_NONE}"
-                func.print_debug_msg(SCRIPT_NAME, curr_func_nm, err_msg)
+                func.print_debug_msg(SCRIPT_NAME, err_msg)
 
     except requests.exceptions.ConnectionError as ce:
         msg = f"{msg_const.MSG_ERR_SERVER_NOT_WORKING} {url}"

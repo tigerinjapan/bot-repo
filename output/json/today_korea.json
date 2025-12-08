@@ -1,12 +1,12 @@
 [
     {
         "구분": "업데이트일시",
-        "뉴스": "2025/12/07(Sun) 11:10",
+        "뉴스": "2025/12/08(Mon) 12:28",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "뉴스": "강추위 점차 물러가",
+        "뉴스": "미세먼지 사라져",
         "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
@@ -16,17 +16,17 @@
     },
     {
         "구분": "환율",
-        "뉴스": "100엔 = 949원",
+        "뉴스": "100엔 = 947원",
         "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "뉴스": "いっしゅうかん\n한 주간; 일주일간; 7일간.",
+        "뉴스": "なくす\n없애다; 잃다; 분실하다.",
         "링크": "https://ja.dict.naver.com/#/main"
     },
     {
         "구분": "영어",
-        "뉴스": "Local currency?\n현지 통화가 뭐예요?",
+        "뉴스": "Coffee free?\n커피는 무료인가요?",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]

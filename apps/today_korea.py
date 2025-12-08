@@ -103,11 +103,11 @@ def get_today_info():
     today_info_list.insert(0, title)
     today_info = const.SYM_NEW_LINE.join(today_info_list)
 
-    file_path = create_news_image(today_info)
+    file_path = get_today_image(today_info)
     return today_info, file_path
 
 
-def create_news_image(text_msg: str) -> str:
+def get_today_image(text_msg: str) -> str:
     """
     ニュースイメージ取得
     """

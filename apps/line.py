@@ -13,10 +13,14 @@ import apps.tv as tv
 import apps.utils.constants as const
 import apps.utils.message_constants as msg_const
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.function_line as func_line
 
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
+
+# URL
+URL_TODAY_IMG = f"{func_api.URL_KOYEB_IMG}/{const.APP_TODAY}"
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -48,7 +52,7 @@ def main(
                         msg_list = get_msg_list(auto_flg)
 
                     else:
-                        msg_list = [[const.MSG_TYPE_IMG, func_line.URL_TODAY_IMG]]
+                        msg_list = [[const.MSG_TYPE_IMG, URL_TODAY_IMG]]
 
                     # メッセージ取得
                     messages = func_line.get_line_messages(msg_list)
@@ -124,18 +128,21 @@ def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
     """
     msg_list = []
     if auto_flg:
-        msg_data, date_today, img_url = today.get_msg_data_today()
+        msg_div = const.APP_TODAY
+        msg_type = const.MSG_TYPE_IMG
+        img_url, date_today= today.get_today_image()
         msg_data_list = get_msg_data_list(
             const.APP_TODAY, const.MSG_TYPE_IMG, img_url, date_today
         )
-        msg_list.append(msg_data_list)
 
     else:
         msg_div = const.STR_NOTIFY
+        msg_type = const.MSG_TYPE_TXT
         msg_data = func.get_input_data(const.STR_MESSAGE, msg_div)
-        msg_data_list = get_msg_data_list(msg_div, const.MSG_TYPE_TXT, msg_data)
-        msg_list.append(msg_data_list)
+        date_today = const.SYM_BLANK
 
+    msg_data_list = get_msg_data_list(msg_div, msg_type, msg_data, date_today)
+    msg_list.append(msg_data_list)
     return msg_list
 
 

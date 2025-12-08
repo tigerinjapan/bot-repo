@@ -13,13 +13,6 @@ import apps.utils.function_gemini as func_gemini
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
 
-# URL
-URL_KOYEB_APP = func.get_server_url(local_flg=const.FLG_OFF)
-URL_KOYEB_IMG = f"{URL_KOYEB_APP}/{const.STR_IMG}"
-URL_TODAY_IMG = f"{URL_KOYEB_IMG}/{const.APP_TODAY}"
-URL_GEMINI_IMG = f"{URL_KOYEB_IMG}/{const.STR_GEMINI}"
-URL_REST_IMG = f"{URL_KOYEB_IMG}/{const.STR_REST}"
-
 # LINE API情報
 LINE_CHANNEL_ID = func.get_env_val("LINE_CHANNEL_ID")
 LINE_CHANNEL_SECRET = func.get_env_val("LINE_CHANNEL_SECRET")
@@ -155,14 +148,7 @@ def get_template_msg_json(alt_text: str, actions):
     """
     テンプレート・メッセージ取得
     """
-    # base_url = URL_KOYEB_APP
-
-    # TODO: [check] 毎回同じイメージが生成される
-    # img_url = func_gemini.get_gemini_image(const.STR_REST)
-    # if img_url:
-    #     func.print_debug_msg(const.MSG_TYPE_IMG, URL_REST_IMG)
-    # img_url = URL_REST_IMG
-
+    # base_url = func_api.URL_KOYEB_APP
     img_url, template_title, template_text = get_temp_img()
 
     json_object = {

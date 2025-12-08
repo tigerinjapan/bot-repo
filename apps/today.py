@@ -9,7 +9,6 @@ import apps.utils.function as func
 import apps.utils.function_api as func_api
 import apps.utils.function_beautiful_soup as func_bs
 import apps.utils.function_gemini as func_gemini
-import apps.utils.function_line as func_line
 
 # カラムリスト
 col_list = [const.STR_DIV, const.APP_NEWS]
@@ -92,7 +91,7 @@ def get_today_info():
     return today_info_list
 
 
-def get_msg_data_today():
+def get_today_image():
     """
     メッセージデータ取得
     """
@@ -126,14 +125,12 @@ def get_msg_data_today():
             msg_data.append(msg)
 
         text_msg = NEW_LINE.join(msg_data)
-        img_url = func_line.URL_TODAY_IMG
-
         file_path = func_gemini.get_today_news_image(text_msg, forecast, outfit)
         if file_path:
-            func.print_debug_msg(const.STR_IMG, img_url)
+            func.print_debug_msg(const.STR_IMG, file_path)
         else:
             func_api.create_msg_img(const.APP_TODAY, text_msg, forecast)
-        return msg_data, date_today, img_url
+        return file_path, date_today
 
 
 def get_today_weather() -> tuple[str, str]:
@@ -302,4 +299,4 @@ def get_elem_val_by_class(soup, class_: str) -> str:
 
 if __name__ == const.MAIN_FUNCTION:
     # get_today_info()
-    get_msg_data_today()
+    get_today_image()

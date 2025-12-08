@@ -14,6 +14,7 @@ from google.genai.errors import ServerError
 
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.message_constants as msg_const
 
 # スクリプト名
@@ -172,9 +173,6 @@ def get_generate_text_image(
     if not response:
         return file_path
 
-    if response_content:
-        return file_path
-
     response_content = response.candidates[0].content
     for part in response_content.parts:
         if part.text:
@@ -228,9 +226,13 @@ def get_generate_text_image(
             image_open.close()
             break
 
+    msg_div = const.MSG_TYPE_IMG
+    msg = file_path
     if not file_path:
-        func.print_debug_msg(model, msg_const.MSG_ERR_API_RESPONSE_NONE)
-
+        msg_div = model
+        msg = msg_const.MSG_ERR_API_RESPONSE_NONE
+    
+    func.print_debug_msg(msg_div, msg)
     return file_path
 
 

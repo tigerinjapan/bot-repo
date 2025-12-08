@@ -12,6 +12,7 @@ from uvicorn import Config, Server
 
 import apps.utils.constants as const
 import apps.utils.function as func
+import apps.utils.function_api as func_api
 import apps.utils.function_kakao as func_kakao
 import apps.utils.message_constants as msg_const
 
@@ -40,7 +41,7 @@ async def root(request: Request):
     開始ページ
     """
     token = func_kakao.get_token(request.session)
-    content = func_kakao.get_login_content(token)
+    content = func_kakao.get_auth_content(token)
     return content
 
 
@@ -112,6 +113,28 @@ async def send_test(request: Request):
     token = func_kakao.get_token(request.session)
     content = func_kakao.get_test_message_content(token)
     return HTMLResponse(content=content)
+
+
+@app.get("/kakao/test")
+async def kakao_test():
+    """
+    テスト
+    """
+    url = func_kakao.URL_KAKAO_USER_ME
+    access_token = func_kakao.get_access_token()
+    headers = {"Authorization": access_token}
+    result = func_api.get_response_result(url, headers=headers)
+    if result:
+        try:
+            id = result["id"]
+            last_login_date = result["connected_at"]
+            func.print_debug_msg(SCRIPT_NAME, f"{id} {last_login_date}")
+
+        except KeyError as ke:
+            msg = msg_const.MSG_ERR_DATA_NOT_EXIST
+            func.print_error_msg(SCRIPT_NAME, url, msg, ke)
+
+    return result
 
 
 # メイン関数（サーバースレッド起動）

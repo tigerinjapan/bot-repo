@@ -8,7 +8,6 @@ import apps.utils.auth_dao as auth_dao
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
-import apps.utils.function_line as func_line
 import apps.utils.html_constants as html_const
 import apps.utils.message_constants as msg_const
 
@@ -27,19 +26,19 @@ KAKAO_API_SECRET = func.get_env_val("KAKAO_API_SECRET")
 URL_KAKAO_OAUTH = f"{const.URL_KAKAO_AUTH}/oauth"
 URL_KAKAO_TOKEN = f"{URL_KAKAO_OAUTH}/token"
 
-URL_KAKAO_API_LOGOUT = f"{const.URL_KAKAO_API}/v1/user/logout"
-URL_KAKAO_API_UNLINK = f"{const.URL_KAKAO_API}/v1/user/unlink"
-URL_KAKAO_API_SEND_ME = f"{const.URL_KAKAO_API}/v2/api/talk/memo/default/send"
-URL_KAKAO_API_USER_ME = f"{const.URL_KAKAO_API}/v2/user/me"
+URL_KAKAO_LOGOUT = f"{const.URL_KAKAO_API}/v1/user/logout"
+URL_KAKAO_UNLINK = f"{const.URL_KAKAO_API}/v1/user/unlink"
+URL_KAKAO_SEND_ME = f"{const.URL_KAKAO_API}/v2/api/talk/memo/default/send"
+URL_KAKAO_USER_ME = f"{const.URL_KAKAO_API}/v2/user/me"
 
 # TODO: [pending] チャネル登録必要
-URL_KAKAO_API_FRIENDS = f"{const.URL_KAKAO_API}/v1/api/talk/friends"
-URL_KAKAO_API_SEND_FRIENDS = f"{const.URL_KAKAO_API}/message/default/send"
+URL_KAKAO_FRIENDS = f"{const.URL_KAKAO_API}/v1/api/talk/friends"
+URL_KAKAO_SEND_FRIENDS = f"{const.URL_KAKAO_API}/message/default/send"
 
-URL_TODAY_KOREA_IMG = f"{func_line.URL_KOYEB_IMG}/{const.APP_TODAY_KOREA}"
+URL_TODAY_KOREA_IMG = f"{func_api.URL_KOYEB_IMG}/{const.APP_TODAY_KOREA}"
 
 # リダイレクトURI
-REDIRECT_URI = f"{func_line.URL_KOYEB_APP}/kakao/oauth"
+REDIRECT_URI = f"{func_api.URL_KOYEB_APP}/kakao/oauth"
 
 auth_url = (
     f"{URL_KAKAO_OAUTH}/authorize?client_id={KAKAO_API_KEY}&redirect_uri={REDIRECT_URI}"
@@ -150,7 +149,7 @@ def get_user_me(access_token: str = const.SYM_BLANK) -> list[str]:
     if not access_token:
         access_token = get_access_token()
 
-    url = URL_KAKAO_API_USER_ME
+    url = URL_KAKAO_USER_ME
     headers = {"Authorization": access_token}
     result = func_api.get_response_result(url, headers=headers)
     if result:
@@ -176,7 +175,7 @@ def get_receiver_uuids(access_token: str = const.SYM_BLANK) -> list[str]:
     if not access_token:
         access_token = get_access_token()
 
-    url = URL_KAKAO_API_FRIENDS
+    url = URL_KAKAO_FRIENDS
     headers = {"Authorization": access_token}
     result = func_api.get_response_result(url, headers=headers)
     if result:
@@ -199,12 +198,12 @@ def send_kakao_msg(
     """
     メッセージ送信
     """
-    url = URL_KAKAO_API_SEND_ME
+    url = URL_KAKAO_SEND_ME
     template_object = get_template_object(object_type, title, message, link, link_mo)
     data = {"template_object": template_object}
 
     if receiver_uuids:
-        url = URL_KAKAO_API_SEND_FRIENDS
+        url = URL_KAKAO_SEND_FRIENDS
         data.update({"receiver_uuids": receiver_uuids})
 
     result = func_api.api_post_data(url, data, access_token)
@@ -467,7 +466,7 @@ def get_logout_content(token: str) -> str:
     try:
         # if token:
         #     # ログアウト：トークン満了されるため、処理しない
-        # result = func_api.api_post_data(URL_KAKAO_API_LOGOUT, access_token=token)
+        # result = func_api.api_post_data(URL_KAKAO_LOGOUT, access_token=token)
         account_str = "카카오 계정 "
 
         # 結果表示
@@ -531,7 +530,7 @@ def get_unlink_content(token: str) -> str:
     """
     try:
         # 連携解除
-        result = func_api.api_post_data(URL_KAKAO_API_UNLINK, access_token=token)
+        result = func_api.api_post_data(URL_KAKAO_UNLINK, access_token=token)
 
         # 結果表示
         body = f"""

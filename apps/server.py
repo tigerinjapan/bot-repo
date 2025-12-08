@@ -19,7 +19,6 @@ from uvicorn import Config, Server
 
 import apps.appl as appl
 import apps.dashboard as dashboard
-import apps.kakao as kakao
 import apps.line as line
 import apps.test as test
 import apps.utils.auth_dao as auth_dao
@@ -28,8 +27,6 @@ import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_gemini as func_gemini
 import apps.utils.function_kakao as func_kakao
-import apps.utils.function_line as func_line
-import apps.utils.html_constants as html_const
 import apps.utils.message_constants as msg_const
 import apps.utils.mongo_constants as mongo_const
 import apps.utils.rank_dao as rank_dao
@@ -294,7 +291,6 @@ async def gemini_api(request: Request):
 
         if mode == const.STR_IMG:
             message = func_gemini.get_gemini_image(contents=contents)
-            func.print_debug_msg(const.MSG_TYPE_IMG, func_line.URL_GEMINI_IMG)
         else:
             response = func_gemini.get_gemini_response(curr_func_nm, contents)
             message = const.SYM_NEW_LINE.join(response)
