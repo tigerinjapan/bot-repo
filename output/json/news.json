@@ -1,11 +1,11 @@
 [
     {
         "div": "nikkei",
-        "news": "<a href=\"https://www.nikkei.com/article/DGXZQOUD08AE70Y5A201C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">青森で震度6強\n津波70センチ初の北海道三陸沖後発地震注意情報</a>"
+        "news": "<a href=\"https://www.nikkei.com/article/DGXZQOCD060DD0W5A201C2000000/\" target=\"_blank\" rel=\"noopener noreferrer\">日銀「歴史的」利上げ迫る35年ぶりの年間上げ幅\n0.5%の壁を突破</a>"
     },
     {
         "div": "korea",
-        "news": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56762\" target=\"_blank\" rel=\"noopener noreferrer\">【芸能】 SHINeeオンユ ソウル市響のXマス公演に出演13日COEX</a>"
+        "news": "<a href=\"https://www.konest.com/contents/news_detail.html?id=56773\" target=\"_blank\" rel=\"noopener noreferrer\">【旅行】 イースター航空仁川―徳島線の就航から1年4万5千人が利用</a>"
     },
     {
         "div": "entertainment",
@@ -13,6 +13,6 @@
     },
     {
         "div": "kpop",
-        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/509728.html\" target=\"_blank\" rel=\"noopener noreferrer\">「EVNNE」\n5人体制で再出発\nユスンオン\nチユンソが脱退</a>"
+        "news": "<a href=\"https://www.wowkorea.jp/news/pickup/509841.html\" target=\"_blank\" rel=\"noopener noreferrer\">「再起不能状態にさせ謝罪」カンヨンソク弁護士\nキムゴンモに6年越しで謝罪</a>"
     }
 ]

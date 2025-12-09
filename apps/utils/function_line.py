@@ -7,8 +7,6 @@ import sys
 import apps.utils.constants as const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
-import apps.utils.function_beautiful_soup as func_bs
-import apps.utils.function_gemini as func_gemini
 
 # スクリプト名
 SCRIPT_NAME = func.get_app_name(__file__)
@@ -144,12 +142,13 @@ def send_msg_for_admin(msg_json: list, admin_flg: bool = const.FLG_ON):
         send_line_msg(token, msg_json)
 
 
-def get_template_msg_json(alt_text: str, actions):
+def get_template_msg_json(
+    alt_text: str, img_url: str, template_title: str, template_text: str, actions
+):
     """
     テンプレート・メッセージ取得
     """
     # base_url = func_api.URL_KOYEB_APP
-    img_url, template_title, template_text = get_temp_img()
 
     json_object = {
         "type": const.MSG_TYPE_TMP,
@@ -281,31 +280,5 @@ def get_bubble_contents(data_list):
     return bubble_contents
 
 
-def get_temp_img(section: str = const.STR_WORLD):
-    """
-    イメージ取得
-    """
-    img_url = headline = const.SYM_BLANK
-
-    title = f"CNN {func.upper_str(section)}"
-    url = f"https://edition.cnn.com/{section}"
-    class_ = "container__item--type-media-image"
-    soup = func_bs.get_elem_from_url(url, attr_val=class_)
-    if soup:
-        img_elem = func_bs.find_elem_by_class(soup, "image__hide-placeholder")
-        img_url = img_elem.get("data-url").replace("?c=original", const.SYM_BLANK)
-        headline_elem = func_bs.find_elem_by_class(soup, "container__headline-text")
-        headline_text = headline_elem.text
-        response = func_gemini.get_gemini_response(
-            title, headline_text, msg_flg=const.FLG_ON
-        )
-        if response:
-            headline = response[0]
-        else:
-            headline = f"{headline_text[57:]}..."
-    return img_url, title, headline
-
-
 if __name__ == const.MAIN_FUNCTION:
-    # get_channel_access_token()
-    get_temp_img()
+    get_channel_access_token()

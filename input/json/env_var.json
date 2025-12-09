@@ -1,7 +1,7 @@
 {
     "GEMINI_MODEL": "gemini-2.5-flash-lite",
     "GEMINI_MODEL_IMG": "gemini-2.5-flash-image",
-    "LINE_IMG_DIV": "1",
+    "LINE_IMG_DIV": "2",
     "MIN_HOURLY_JOB": ":05",
     "SEC_NO_SLEEP": "600",
     "TIME_DAILY_JOB_1": "00:00",

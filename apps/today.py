@@ -39,6 +39,9 @@ DIV_LIST = [
     DIV_DINNER,
 ]
 
+# URL
+URL_WEATHER = f"{const.URL_TENKI}/forecast/3/"
+
 
 def get_item_list():
     """
@@ -137,7 +140,7 @@ def get_today_weather() -> tuple[str, str]:
     """
     今日の天気情報取得
     """
-    url = f"{const.URL_TENKI}/forecast/3/"
+    url = URL_WEATHER
     # location_id = 13101 # 東京
     location_id = 12100  # 千葉
 

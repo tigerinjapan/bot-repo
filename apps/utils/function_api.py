@@ -110,6 +110,29 @@ def create_msg_img(div: str, msg: str, forecast: str = const.SYM_BLANK) -> str:
     """
     画像に文字列挿入
     """
+    img_file_base = get_img_file_div(forecast)
+
+    font_type = const.FONT_TYPE_UZURA
+    font_size = 11
+    xy_size = (45, 90)
+    if div == const.APP_TODAY:
+        xy_size = (60, 200)
+        if int(IMG_NO) == const.NUM_ONE:
+            font_size = 16
+            xy_size = (20, 140)
+
+    file_path = insert_msg_to_img(
+        div, img_file_base, font_type, font_size, xy_size, msg
+    )
+
+    img_file_name = func.get_app_name(file_path)
+    return img_file_name
+
+
+def get_img_file_div(forecast: str = const.SYM_BLANK) -> str:
+    """
+    イメージファイル名取得
+    """
     if forecast:
         if "雨" in forecast:
             img_div = "rainy"
@@ -127,22 +150,7 @@ def create_msg_img(div: str, msg: str, forecast: str = const.SYM_BLANK) -> str:
     img_no = IMG_NO + img_seq.zfill(2)
 
     img_file_base = f"{img_div}_{img_no}"
-
-    font_type = const.FONT_TYPE_UZURA
-    font_size = 11
-    xy_size = (45, 90)
-    if div == const.APP_TODAY:
-        xy_size = (60, 200)
-        if int(IMG_NO) == const.NUM_ONE:
-            font_size = 16
-            xy_size = (20, 140)
-
-    file_path = insert_msg_to_img(
-        div, img_file_base, font_type, font_size, xy_size, msg
-    )
-
-    img_file_name = func.get_app_name(file_path)
-    return img_file_name
+    return img_file_base
 
 
 def insert_msg_to_img(

@@ -4,6 +4,7 @@ LINEメッセージ
 
 import sys
 
+import apps.event as event
 import apps.lcc as lcc
 import apps.mlb as mlb
 import apps.news as news
@@ -14,6 +15,8 @@ import apps.utils.constants as const
 import apps.utils.message_constants as msg_const
 import apps.utils.function as func
 import apps.utils.function_api as func_api
+import apps.utils.function_beautiful_soup as func_bs
+import apps.utils.function_gemini as func_gemini
 import apps.utils.function_line as func_line
 
 # スクリプト名
@@ -21,6 +24,9 @@ SCRIPT_NAME = func.get_app_name(__file__)
 
 # URL
 URL_TODAY_IMG = f"{func_api.URL_KOYEB_IMG}/{const.APP_TODAY}"
+URL_NISA = f"{const.URL_SMBC_FUND}/{const.FUND_NO_SP_500}/"
+URL_EX = f"{const.URL_GOOGLE}/finance/quote/JPY-KRW"
+
 
 # 改行
 NEW_LINE = const.SYM_NEW_LINE
@@ -58,12 +64,8 @@ def main(
                     messages = func_line.get_line_messages(msg_list)
 
                 else:
-                    if data_div == const.NUM_TWO:
-                        # テンプレートメッセージ取得
-                        messages = get_template_msg()
-                    else:
-                        # フレックスメッセージ取得
-                        messages = get_flex_msg()
+                    # テンプレートメッセージ取得
+                    messages = get_template_msg(data_div)
 
                 # メッセージ送信
                 func_line.send_line_msg(token, messages)
@@ -144,27 +146,83 @@ def get_msg_list(auto_flg: bool = const.FLG_ON) -> list[list[str]]:
     return msg_list
 
 
-def get_template_msg():
+def get_template_msg(data_div: int = const.NUM_TWO):
     """
     テンプレートメッセージ取得
     """
     messages = []
 
-    alt_text = today.get_today_phrase()
-    actions = get_template_actions()
+    if data_div == const.NUM_TWO:
+        temp_text = event.get_item_list()
+        forecast, temp_title, temp_msg_list = get_temp_msg_list()
+        img_file_name = func_api.get_img_file_div(forecast)
+        img_url = f"{func_api.URL_KOYEB_IMG}/{img_file_name}"
+    else:
+        img_url, temp_title, temp_text = get_temp_img()
+        temp_msg_list = get_temp_msg_list_2()
 
-    template_msg = func_line.get_template_msg_json(alt_text, actions)
+    alt_text = today.get_today_phrase()
+    actions = get_template_actions(temp_msg_list)
+    template_msg = func_line.get_template_msg_json(
+        alt_text, img_url, temp_title, temp_text, actions
+    )
     messages.append(template_msg)
     return messages
 
 
-def get_template_actions():
+def get_template_actions(temp_msg_list: list):
     """
     テンプレートアクション取得
     """
     actions = []
-    app_list = [tv, lcc, study]
+    if temp_msg_list:
+        for temp_msg in temp_msg_list:
+            label = temp_msg[0]
+            url = temp_msg[1]
+            label = label[: const.MAX_TEMP_MSG]
+            action = {"type": "uri", "label": label, "uri": url}
+            actions.append(action)
+    return actions
 
+
+def get_temp_msg_list():
+    """
+    メッセージデータ取得
+    """
+    temp_msg_list = []
+
+    url_list = [today.URL_WEATHER, URL_NISA, URL_EX]
+    today_info = func_api.get_json_data_on_app(const.APP_TODAY)
+    if today_info:
+        date = today_info[0][const.APP_NEWS]
+        temp_title = date.split(const.SYM_SPACE)[0]
+
+        weather = today_info[1][const.APP_NEWS]
+        forecast = weather.split("・")[0]
+
+        data_list = [list(info.values()) for info in today_info[1:4]]
+        for data, url in zip(data_list, url_list):
+            div = data[0]
+            lbl = data[1]
+            split_str = " = "
+            if split_str in lbl:
+                lbl_list = lbl.split(split_str)
+                div = lbl_list[0]
+                lbl = lbl_list[1]
+
+            label = f"[{func.upper_str(div)}] {lbl}"
+            temp_msg = [label, url]
+            temp_msg_list.append(temp_msg)
+        return forecast, temp_title, temp_msg_list
+
+
+def get_temp_msg_list_2():
+    """
+    メッセージデータ取得
+    """
+    temp_msg_list = []
+
+    app_list = [tv, lcc, study]
     for app in app_list:
         try:
             # テンプレートメッセージ取得
@@ -174,10 +232,35 @@ def get_template_actions():
             continue
 
         if label:
-            label = label[: const.MAX_TEMP_MSG]
-            action = {"type": "uri", "label": label, "uri": url}
-            actions.append(action)
-    return actions
+            temp_msg = [label, url]
+            temp_msg_list.append(temp_msg)
+
+    return temp_msg_list
+
+
+def get_temp_img(section: str = const.STR_WORLD):
+    """
+    イメージ取得
+    """
+    img_url = headline = const.SYM_BLANK
+
+    title = f"CNN {func.upper_str(section)}"
+    url = f"https://edition.cnn.com/{section}"
+    class_ = "container__item--type-media-image"
+    soup = func_bs.get_elem_from_url(url, attr_val=class_)
+    if soup:
+        img_elem = func_bs.find_elem_by_class(soup, "image__hide-placeholder")
+        img_url = img_elem.get("data-url").replace("?c=original", const.SYM_BLANK)
+        headline_elem = func_bs.find_elem_by_class(soup, "container__headline-text")
+        headline_text = headline_elem.text
+        response = func_gemini.get_gemini_response(
+            title, headline_text, msg_flg=const.FLG_ON
+        )
+        if response:
+            headline = response[0]
+        else:
+            headline = f"{headline_text[57:]}..."
+    return img_url, title, headline
 
 
 def get_flex_msg(alt_text: str = const.SYM_BLANK):
@@ -323,9 +406,9 @@ def sub_test():
 
 
 if __name__ == const.MAIN_FUNCTION:
-    main()
+    # main()
     # main(proc_flg=const.FLG_OFF)
-    # main(data_div=const.NUM_TWO)
+    main(data_div=const.NUM_TWO)
     # main(data_div=const.NUM_THREE)
     # main(auto_flg=const.FLG_OFF)
     # sub(const.STR_AI_NEWS)

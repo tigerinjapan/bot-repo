@@ -20,6 +20,12 @@ const HOLES_LEVEL = 10;
 // スコア
 const SCORE_LEVEL = 20;
 
+// 5分未満 = 0点
+const INITIAL_TIME_SECONDS = 300;
+
+// 1点あたり秒数 (6秒/点)
+const TIME_PER_POINT = 6;
+
 /**
  * グローバルな状態変数
  */
@@ -742,12 +748,6 @@ async function updateRanking(rank, score) {
 function calculateScore() {
   let score = 0;
 
-  // 5分未満 = 0点
-  const INITIAL_TIME_SECONDS = 300;
-
-  // 1点あたり秒数 (6秒/点)
-  const TIME_PER_POINT = 6;
-
   // スコア対象秒数
   let scoreTime = timeRemaining - INITIAL_TIME_SECONDS;
 
@@ -760,7 +760,7 @@ function calculateScore() {
 
   switch (levelVal) {
     case LEVEL_EASY: score -= SCORE_LEVEL; break;
-    case LEVEL_MEDIUM: score = 0; break;
+    case LEVEL_MEDIUM: score += 0; break;
     case LEVEL_HARD: score += SCORE_LEVEL; break;
   }
 

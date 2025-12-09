@@ -1,0 +1,32 @@
+{
+    "item": [
+        {
+            "title": "[丸亀] 釜揚げうどん半額",
+            "date": "mm01"
+        },
+        {
+            "title": "[TOHO] ファーストデイ",
+            "date": "mm01"
+        },
+        {
+            "title": "[FLO] ポイント2倍",
+            "date": "mm*6"
+        },
+        {
+            "title": "[ビアードパパ] クーポン",
+            "date": "mm*8"
+        },
+        {
+            "title": "[ベーカリー] ポイント2倍",
+            "date": "everyWed"
+        },
+        {
+            "title": "[花火] 幕張",
+            "date": "Aug1stSat"
+        },
+        {
+            "title": "[祭り] 船橋",
+            "date": "Sep4thSat"
+        }
+    ]
+}

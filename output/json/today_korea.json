@@ -1,27 +1,32 @@
 [
     {
         "구분": "업데이트일시",
-        "뉴스": "2025/12/09(Tue) 08:16",
+        "뉴스": "2025/12/10(Wed) 06:05",
         "링크": "-"
     },
     {
         "구분": "날씨",
-        "뉴스": "S&P500 6,846.51 (-0.35%)",
-        "링크": "https://m.stock.naver.com/worldstock/"
+        "뉴스": "당분간 큰 추위 없어",
+        "링크": "https://www.weather.go.kr/w/weather/forecast/short-term.do"
     },
     {
         "구분": "해외증시",
-        "뉴스": "100엔 = 942원",
-        "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
+        "뉴스": "S&P500 6,840.06 (-0.09%)",
+        "링크": "https://m.stock.naver.com/worldstock/"
     },
     {
         "구분": "환율",
-        "뉴스": "たずねる\n찾다; 방문하다.",
-        "링크": "https://ja.dict.naver.com/#/main"
+        "뉴스": "100엔 = 937원",
+        "링크": "https://m.stock.naver.com/marketindex/home/exchangeRate/exchange"
     },
     {
         "구분": "일본어",
-        "뉴스": "Use safe box?\n금고를 써도 될까요?",
+        "뉴스": "おんがく\n음악.",
+        "링크": "https://ja.dict.naver.com/#/main"
+    },
+    {
+        "구분": "영어",
+        "뉴스": "Want to try beer.\n맥주를 좀 마시고 싶어요",
         "링크": "https://learn.dict.naver.com/conversation#/"
     }
 ]
